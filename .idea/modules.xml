@@ -2,6 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/aliplayer/aliplayer.iml" filepath="$PROJECT_DIR$/aliplayer/aliplayer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/android-leke.iml" filepath="$PROJECT_DIR$/android-leke.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/leke.iml" filepath="$PROJECT_DIR$/leke.iml" />
       <module fileurl="file://$PROJECT_DIR$/library/library.iml" filepath="$PROJECT_DIR$/library/library.iml" />

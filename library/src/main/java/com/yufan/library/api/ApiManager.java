@@ -1,13 +1,14 @@
 package com.yufan.library.api;
 
+import android.content.Context;
 import android.os.Build;
 import android.text.TextUtils;
-import android.util.Base64;
 import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
-import com.yufan.library.manager.UserManager;
-import com.yufan.library.util.YFUtil;
+import com.yufan.library.base.BaseApplication;
+import com.yufan.library.util.DeviceUtil;
+import com.yufan.library.util.Netutil;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -17,7 +18,6 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.Headers;
-import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
@@ -48,19 +48,14 @@ public class ApiManager {
             @Override
             public Response intercept(Chain chain) throws IOException {
                 Request authorised = chain.request().newBuilder()
-                       .headers(Headers.of(getApiHeader()))
+                       .headers(Headers.of(getApiHeader(BaseApplication.getInstance())))
                         .build();
                 RequestBody requestBody= authorised.body();
                 Buffer buffer = new Buffer();
                 requestBody.writeTo(buffer);
                 Charset charset = Charset.forName("UTF-8");
- //               MediaType contentType = requestBody.contentType();
-//                if (contentType != null) {
-//                    charset = contentType.charset();
-//                }
-
                 String paramsStr = buffer.readString(charset);
-                Log.d("http","body"+paramsStr);
+                Log.d("http","body: "+paramsStr);
                 return  chain.proceed(authorised);
             }
         };
@@ -138,25 +133,21 @@ public class ApiManager {
      *
      * @return
      */
-    private  Map<String, String> getApiHeader() {
+    private  Map<String, String> getApiHeader(Context context) {
         LinkedHashMap apiHeaders = new LinkedHashMap<String, String>();
         apiHeaders.put("Accept-Language", Locale.getDefault().toString() );
         apiHeaders.put("Connection", "Keep-Alive");
         apiHeaders.put("User-Agent", "");
-        apiHeaders.put("cpu", YFUtil.getCpuName());
-        apiHeaders.put("hardware", YFUtil.getprop("ro.hardware", ""));
-        apiHeaders.put("cpu_abi", Build.CPU_ABI);
-        apiHeaders.put("product_cpu_abi", YFUtil.getCpuProduct());
-        apiHeaders.put("terminalType", "2"); // 1:ios; 2:android
-        apiHeaders.put("terminalName", Build.DEVICE + "");
-        apiHeaders.put("channelId", "");
-        apiHeaders.put("version", YFUtil.getVersionName() + "");
-        apiHeaders.put("devicesId", YFUtil.getIMEI());
-        apiHeaders.put("sid", "");
-        apiHeaders.put("apiVersion", "");
-        apiHeaders.put("paltform","android");
-        apiHeaders.put("userId","");
-        apiHeaders.put("token","");
+        apiHeaders.put("LK-App-Version", DeviceUtil.VersionName(context)+"_"+ DeviceUtil.VersionCode(context));//app版本  1.0.0_101_10
+        apiHeaders.put("LK-Device-Id", DeviceUtil.IMEI(context));//imei
+        apiHeaders.put("LK-Network-Type", Netutil.GetNetworkType(context));//网络类型
+        apiHeaders.put("LK-Vendor", Build.MANUFACTURER); //厂商
+        apiHeaders.put("LK-OS-Type", "Android");//系统类型
+        apiHeaders.put("LK-OS-Version",Build.VERSION.SDK_INT);//系统版本
+        apiHeaders.put("LK-Device-Model", Build.DEVICE);//设备型号
+        apiHeaders.put("LK-CPU", Build.CPU_ABI);//CPU 架构
+        apiHeaders.put("LK-Sid", "");//sid
+        apiHeaders.put("LK-App-Id", "com.yushi.leke");//包名
         return apiHeaders;
     }
 }
