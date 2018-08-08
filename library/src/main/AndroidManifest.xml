@@ -3,6 +3,13 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <application
      >
+        <activity
+            android:name=".share.ShareMenuActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:launchMode="singleTask"
+            android:theme="@style/ThemeActivity"
+            android:screenOrientation="portrait"
+           ></activity>
     </application>
 
 </manifest>

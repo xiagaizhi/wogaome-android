@@ -2,6 +2,7 @@ package com.yushi.leke.plugin;
 
 import android.util.Log;
 
+import com.umeng.socialize.PlatformConfig;
 import com.yufan.library.base.BaseApplication;
 
 /**
@@ -10,12 +11,12 @@ import com.yufan.library.base.BaseApplication;
 
 public class App extends BaseApplication {
     private static App instance;
-//    //TODO 申请第三方开发者账号
-//    {
-//        PlatformConfig.setWeixin("weixinid", "weixinsecret");
-//        PlatformConfig.setQQZone("qqid", "qqsecret");
-//        PlatformConfig.setSinaWeibo("xinlangid", "xinlangsecret", "xinlanghuidiao");
-//    }
+    //TODO 申请第三方开发者账号
+    {
+        PlatformConfig.setWeixin("weixinid", "weixinsecret");
+        PlatformConfig.setQQZone("qqid", "qqsecret");
+        PlatformConfig.setSinaWeibo("xinlangid", "xinlangsecret", "xinlanghuidiao");
+    }
     public static App getApp(){
         return instance;
     }

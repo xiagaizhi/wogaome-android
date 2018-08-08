@@ -44,7 +44,6 @@ dependencies {
     implementation 'com.squareup.leakcanary:leakcanary-android:1.5'
     implementation project(':library')
     implementation project(':multi-type')
-
     // 插件配置信息,放在文件最下面
     virtualApk {
         // 插件资源表中的packageId，需要确保不同插件有不同的packageId.
@@ -55,4 +54,5 @@ dependencies {
         //默认为true，如果插件有引用宿主的类，那么这个选项可以使得插件和宿主保持混淆一致
         //applyHostMapping = true
     }
+    implementation project(':aliplayer')
 }

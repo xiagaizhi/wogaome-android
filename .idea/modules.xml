@@ -8,6 +8,7 @@
       <module fileurl="file://$PROJECT_DIR$/leke.iml" filepath="$PROJECT_DIR$/leke.iml" />
       <module fileurl="file://$PROJECT_DIR$/library/library.iml" filepath="$PROJECT_DIR$/library/library.iml" />
       <module fileurl="file://$PROJECT_DIR$/multi-type/multi-type.iml" filepath="$PROJECT_DIR$/multi-type/multi-type.iml" />
+      <module fileurl="file://$PROJECT_DIR$/share/share.iml" filepath="$PROJECT_DIR$/share/share.iml" />
     </modules>
   </component>
 </project>

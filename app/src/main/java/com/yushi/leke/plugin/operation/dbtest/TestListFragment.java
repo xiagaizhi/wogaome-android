@@ -7,7 +7,9 @@ import android.view.View;
 
 import com.yufan.library.base.BaseListFragment;
 import com.yufan.library.inject.VuClass;
+import com.yufan.library.share.ShareMenuActivity;
 import com.yufan.library.view.recycler.PageInfo;
+import com.yufan.share.ShareModel;
 import com.yushi.leke.plugin.bean.Person;
 
 import java.util.List;
@@ -77,7 +79,7 @@ public class TestListFragment extends BaseListFragment<DbTestContract.View> impl
 
     @Override
     public void startPlayer() {
-
+        ShareMenuActivity.startShare(this,new ShareModel());
     }
 
     @Override
