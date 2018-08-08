@@ -1,4 +1,4 @@
-include ':app', ':library', ':multi-type'
+include ':app', ':library', ':multi-type', ':aliplayer'
 gradle.ext.supportLibraryVersion = '27.1.1'
 gradle.ext.buildToolsVersion = '26.0.2'
 gradle.ext.versionCode = 344
@@ -6,4 +6,3 @@ gradle.ext.versionName = "3.4.4"
 gradle.ext.compileSdkVersion = 27
 gradle.ext.minSdkVersion = 17
 gradle.ext.targetSdkVersion = 25
-gradle.ext.ijkPlayerVersion="0.8.8"
