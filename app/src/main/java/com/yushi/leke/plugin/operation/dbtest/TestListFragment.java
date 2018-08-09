@@ -75,6 +75,7 @@ public class TestListFragment extends BaseListFragment<DbTestContract.View> impl
     @Override
     public void batchinsert() {
 
+        getContext().getPackageName();
     }
 
     @Override

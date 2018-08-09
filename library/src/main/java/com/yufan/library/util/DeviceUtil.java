@@ -9,6 +9,7 @@ import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.telephony.TelephonyManager;
 import android.util.DisplayMetrics;
+import android.util.Log;
 
 import com.yufan.library.base.BaseApplication;
 
@@ -265,5 +266,25 @@ public class DeviceUtil {
         width = dm.widthPixels;
         return width;
     }
- 
+    /**
+     * 返回UserAgent
+     * @return
+     */
+    private  static String getUserAgent(){
+
+        StringBuffer sb = new StringBuffer();
+        String   userAgent = System.getProperty("http.agent");//Dalvik/2.1.0 (Linux; U; Android 6.0.1; vivo X9L Build/MMB29M)
+
+        for (int i = 0, length = userAgent.length(); i < length; i++) {
+            char c = userAgent.charAt(i);
+            if (c <= '\u001f' || c >= '\u007f') {
+                sb.append(String.format("\\u%04x", (int) c));
+            } else {
+                sb.append(c);
+            }
+        }
+        sb.append("/LekeApp");
+        Log.v("User-Agent","User-Agent: "+ sb.toString());
+        return sb.toString();
+    }
 }

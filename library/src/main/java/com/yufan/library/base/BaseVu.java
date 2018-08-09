@@ -67,6 +67,7 @@ public abstract class BaseVu<T extends Pr> implements Vu {
         addTitle(mToolbarLayout, initTitle(mToolbarLayout));
         initState();
         AnnotateUtils.injectViews(this);
+        initView(mRootLayout);
     }
 
     @Override

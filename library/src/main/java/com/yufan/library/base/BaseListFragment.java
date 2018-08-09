@@ -29,10 +29,7 @@ public abstract class BaseListFragment<V extends VuList> extends BaseFragment {
     public V getVu() {
         return vu;
     }
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        vu.initView(view);
-    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
