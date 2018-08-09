@@ -1,10 +1,9 @@
-package com.yushi.leke.wxapi;
+package com.yushi.leke.plugin.wxapi;
 
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.tencent.mm.sdk.modelbase.BaseReq;

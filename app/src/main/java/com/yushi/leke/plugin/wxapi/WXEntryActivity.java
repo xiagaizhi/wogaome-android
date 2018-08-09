@@ -1,4 +1,4 @@
-package com.yushi.leke.wxapi;
+package com.yushi.leke.plugin.wxapi;
 
 import android.os.Bundle;
 
