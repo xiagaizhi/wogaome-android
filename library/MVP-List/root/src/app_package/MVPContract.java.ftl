@@ -7,7 +7,7 @@ import com.yufan.library.inter.VuList;
 */
 
 public interface ${ContractName} {
-interface View  extends VuList {
+interface IView  extends VuList {
 
 }
 interface Presenter extends Pr {
