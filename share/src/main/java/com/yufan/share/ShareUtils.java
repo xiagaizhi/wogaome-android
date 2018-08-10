@@ -70,6 +70,7 @@ public class ShareUtils {
                 .withText(model.getContent())
                 .withMedia(model.getmUMWeb())
                 .share();
+
     }
     /**
      * 单平台分享(表情Media)
