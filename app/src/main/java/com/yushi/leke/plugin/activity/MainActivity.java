@@ -1,8 +1,10 @@
-package com.yushi.leke.plugin;
+package com.yushi.leke.plugin.activity;
 
 import android.os.Bundle;
 
 import com.yufan.library.base.BaseActivity;
+import com.yushi.leke.plugin.R;
+import com.yushi.leke.plugin.UIHelper;
 import com.yushi.leke.plugin.operation.test.TestListFragment;
 
 public class MainActivity extends BaseActivity {

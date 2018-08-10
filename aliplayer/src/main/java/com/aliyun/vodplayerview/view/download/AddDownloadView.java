@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import android.app.Activity;
 import android.content.Context;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
@@ -34,7 +35,6 @@ import com.aliyun.vodplayer.downloader.AliyunDownloadManager;
 import com.aliyun.vodplayer.downloader.AliyunDownloadMediaInfo;
 import com.aliyun.vodplayer.media.AliyunVidSts;
 import com.aliyun.vodplayer.media.IAliyunVodPlayer;
-import com.aliyun.vodplayerview.activity.AliyunPlayerSkinActivity;
 import com.aliyun.vodplayerview.utils.DensityUtil;
 import com.aliyun.vodplayerview.utils.ImageLoader;
 import com.aliyun.vodplayerview.utils.VidStsUtil;
@@ -73,7 +73,7 @@ public class AddDownloadView extends LinearLayout {
         init();
     }
 
-    public AddDownloadView(AliyunPlayerSkinActivity context, AliyunScreenMode screenMode) {
+    public AddDownloadView(Activity context, AliyunScreenMode screenMode) {
         super(context);
         this.screenMode = screenMode;
         init();

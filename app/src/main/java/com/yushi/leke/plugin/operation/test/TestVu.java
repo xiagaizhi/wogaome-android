@@ -30,38 +30,21 @@ public class TestVu extends BaseListVu<DbTestContract.Presenter> implements DbTe
     public boolean initTitle(AppToolbar toolbar) {
         super.initTitle(toolbar);
       TextView tvInsert=  toolbar.creatRightView(TextView.class);
-        tvInsert.setText("播放器");
+        tvInsert.setText("分享");
         tvInsert.setOnClickListener(new View.OnClickListener() {
           @Override
           public void onClick(View view) {
-              mPersenter.startPlayer();
+              mPersenter.share();
+
           }
       });
-        TextView tvBatchInsert=  toolbar.creatRightView(TextView.class);
-        tvBatchInsert.setText("批量插入");
-        tvBatchInsert.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                getPresenter().batchinsert();
-                getPresenter().onRefresh();
-            }
-        });
+
         TextView tvUpdate=  toolbar.creatRightView(TextView.class);
-        tvUpdate.setText("播放音频");
+        tvUpdate.setText("播放器");
         tvUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mPersenter.startMedia();
-            }
-        });
-        TextView tvDel=  toolbar.creatRightView(TextView.class);
-        tvDel.setText("删除");
-        tvDel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                getPresenter().onRefresh();
-
+                mPersenter.startPlayer();
             }
         });
         toolbar.build();

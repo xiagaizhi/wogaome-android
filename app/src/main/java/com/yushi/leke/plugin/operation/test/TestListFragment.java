@@ -1,5 +1,6 @@
 package com.yushi.leke.plugin.operation.test;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -10,6 +11,7 @@ import com.yufan.library.inject.VuClass;
 import com.yufan.library.share.ShareMenuActivity;
 import com.yufan.library.view.recycler.PageInfo;
 import com.yufan.share.ShareModel;
+import com.yushi.leke.plugin.activity.AliyunPlayerActivity;
 import com.yushi.leke.plugin.bean.Person;
 
 import java.util.List;
@@ -80,16 +82,18 @@ public class TestListFragment extends BaseListFragment<DbTestContract.View> impl
 
     @Override
     public void startPlayer() {
+        Intent intent=new Intent();
+        intent.setClass(getContext(),AliyunPlayerActivity.class);
+        startActivity(intent);
+    }
+
+    @Override
+    public void share() {
         ShareModel shareModel=  new ShareModel();
         shareModel.setContent("内容");
         shareModel.setTargetUrl("http://www.baidu.com");
         shareModel.setTitle("title");
         shareModel.setIcon("https://gitbook.cn/gitchat/author/5a002a147393bc6262dfb1c2");
         ShareMenuActivity.startShare(this,shareModel);
-    }
-
-    @Override
-    public void startMedia() {
-
     }
 }

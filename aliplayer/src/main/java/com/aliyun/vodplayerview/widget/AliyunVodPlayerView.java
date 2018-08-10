@@ -261,9 +261,6 @@ public class AliyunVodPlayerView extends RelativeLayout implements ITheme {
         return mAliyunVodPlayer.getScreenBrightness();
     }
 
-    public void updateScreenShow() {
-        mControlView.updateDownloadBtn();
-    }
 
 
     /**
