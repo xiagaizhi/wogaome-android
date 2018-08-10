@@ -48,13 +48,12 @@
 
 
 
-
         <activity
             android:name=".wxapi.WXEntryActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
-            android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
         <activity
             android:name=".wxapi.WXPayEntryActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
@@ -73,6 +72,12 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths_public" />
         </provider>
+
+
+
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="55b05e9de0f55a7f5e0006c3"/>
     </application>
 
 </manifest>

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.yushi.leke.plugin.operation.dbtest;
+package com.yushi.leke.plugin.operation.test;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;

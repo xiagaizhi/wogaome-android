@@ -219,7 +219,6 @@ public class BrowserBaseFragment extends BaseFragment<BrowserContract.View> impl
     protected void loadCookie(CookieManager cookie) {
         CookieSyncManager.createInstance(getActivity());
         cookie.setAcceptCookie(true);
-        cookie.removeSessionCookie();// 移除旧的[可以省略]
         cookie.setCookie(mIntentUrl, "token=" +  "");
         cookie.setCookie(mIntentUrl, "channelId=" + "");
         cookie.setCookie(mIntentUrl, "type=2");

@@ -1,4 +1,4 @@
-package com.yushi.leke.plugin.operation.dbtest;
+package com.yushi.leke.plugin.operation.test;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -80,7 +80,12 @@ public class TestListFragment extends BaseListFragment<DbTestContract.View> impl
 
     @Override
     public void startPlayer() {
-        ShareMenuActivity.startShare(this,new ShareModel());
+        ShareModel shareModel=  new ShareModel();
+        shareModel.setContent("内容");
+        shareModel.setTargetUrl("http://www.baidu.com");
+        shareModel.setTitle("title");
+        shareModel.setIcon("https://gitbook.cn/gitchat/author/5a002a147393bc6262dfb1c2");
+        ShareMenuActivity.startShare(this,shareModel);
     }
 
     @Override

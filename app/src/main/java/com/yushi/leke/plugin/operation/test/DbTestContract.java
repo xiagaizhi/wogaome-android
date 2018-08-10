@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.yushi.leke.plugin.operation.dbtest;
+package com.yushi.leke.plugin.operation.test;
 
 
 import com.yufan.library.base.Pr;

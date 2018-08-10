@@ -1,4 +1,4 @@
-package com.yushi.leke.plugin.operation.dbtest;
+package com.yushi.leke.plugin.operation.test;
 
 import android.view.View;
 import android.widget.TextView;

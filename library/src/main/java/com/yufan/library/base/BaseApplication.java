@@ -7,6 +7,7 @@ import android.support.multidex.MultiDexApplication;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.tencent.bugly.Bugly;
+import com.umeng.commonsdk.UMConfigure;
 
 import java.util.Iterator;
 import java.util.List;
@@ -31,6 +32,7 @@ private static BaseApplication instance;
         }
         instance=this;
         Bugly.init(getApplicationContext(), "6ab19dd791", false);
+        UMConfigure.init(this,"55b05e9de0f55a7f5e0006c3","leke", UMConfigure.DEVICE_TYPE_PHONE,"");
         Fresco.initialize(this);
     }
 
