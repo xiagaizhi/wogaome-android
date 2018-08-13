@@ -22,8 +22,8 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.yufan.library.R;
 import com.yufan.library.view.recycler.anim.FadeInUpAnimator;
+import com.yushi.leke.plugin.R;
 
 import java.util.ArrayList;
 import java.util.List;

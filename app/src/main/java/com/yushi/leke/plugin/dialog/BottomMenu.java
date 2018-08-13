@@ -1,4 +1,4 @@
-package com.yufan.library.widget;
+package com.yushi.leke.plugin.dialog;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -8,11 +8,10 @@ import android.view.Display;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.AdapterView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.yufan.library.R;
+
+import com.yushi.leke.plugin.R;
 
 import java.util.List;
 
