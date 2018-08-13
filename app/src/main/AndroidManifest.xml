@@ -55,7 +55,6 @@
         <activity
             android:name=".share.ShareMenuActivity"
             android:configChanges="keyboardHidden|orientation"
-
             android:theme="@style/ThemeActivity"
             android:screenOrientation="portrait"
             ></activity>
