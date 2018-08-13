@@ -8,11 +8,11 @@ import android.view.View;
 
 import com.yufan.library.base.BaseListFragment;
 import com.yufan.library.inject.VuClass;
-import com.yufan.library.share.ShareMenuActivity;
 import com.yufan.library.view.recycler.PageInfo;
 import com.yufan.share.ShareModel;
 import com.yushi.leke.plugin.activity.AliyunPlayerActivity;
 import com.yushi.leke.plugin.bean.Person;
+import com.yushi.leke.plugin.share.ShareMenuActivity;
 
 import java.util.List;
 

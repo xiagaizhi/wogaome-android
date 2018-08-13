@@ -1,4 +1,4 @@
-package com.yufan.library.share;
+package com.yushi.leke.plugin.share;
 
 import android.app.Activity;
 import android.content.DialogInterface;
@@ -8,22 +8,20 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
-import com.umeng.socialize.Config;
 import com.umeng.socialize.UMShareAPI;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.media.UMImage;
 import com.umeng.socialize.media.UMWeb;
-import com.yufan.library.R;
 import com.yufan.library.base.BaseActivity;
 import com.yufan.library.manager.DialogManager;
 import com.yufan.share.IShareCallback;
 import com.yufan.share.ShareModel;
 import com.yufan.share.ShareUtils;
+import com.yushi.leke.plugin.R;
 
 /**
  * Created by mengfantao on 17/8/28.
@@ -64,6 +62,7 @@ public class ShareMenuActivity extends BaseActivity {
     }
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+//       setTheme(R.style.ThemeActivity);
         super.onCreate(savedInstanceState);
          Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
@@ -73,27 +72,14 @@ public class ShareMenuActivity extends BaseActivity {
         if(types==null){
             types=new int []{};
         }
-        MenuType [] menus=new MenuType[types.length];
+        MenuType[] menus=new MenuType[types.length];
         for (int i=0;i<types.length;i++){
             menus[i]=  MenuType.getMenuTypeByType(types[i]);
         }
         if(types.length==0){
             menus=defaultType;
         }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            Window window = getWindow();
-            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS
-            );
-            window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                    | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            window.setStatusBarColor(Color.TRANSPARENT);
 
-        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            Window window = getWindow();
-            window.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
-                    WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        }
         setContentView(R.layout.fragment_blank_detail);
         su = new ShareUtils(this);
         mMenuDialog = new MenuDialog(this, menus,true) {

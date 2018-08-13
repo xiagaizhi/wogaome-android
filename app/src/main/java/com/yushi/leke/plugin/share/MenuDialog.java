@@ -1,4 +1,4 @@
-package com.yufan.library.share;
+package com.yushi.leke.plugin.share;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -21,7 +21,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 
 import com.yufan.library.R;
 import com.yufan.library.view.recycler.anim.FadeInUpAnimator;
@@ -217,8 +216,8 @@ public abstract class MenuDialog extends Dialog {
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if (ShareViewHolder.this.itemListener != null) {
-                        ShareViewHolder.this.itemListener.onItemClick(getLayoutPosition());
+                    if (MenuDialog.ShareViewHolder.this.itemListener != null) {
+                        MenuDialog.ShareViewHolder.this.itemListener.onItemClick(getLayoutPosition());
                     }
                 }
             });

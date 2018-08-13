@@ -40,19 +40,19 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-    implementation 'com.didi.virtualapk:core:0.9.6'
     implementation 'com.squareup.leakcanary:leakcanary-android:1.5'
+    implementation project(':aliplayer')
     implementation project(':library')
-    implementation project(':multi-type')
+
     // 插件配置信息,放在文件最下面
     virtualApk {
         // 插件资源表中的packageId，需要确保不同插件有不同的packageId.
         packageId = 0x6f
         // 宿主工程application模块的路径，插件的构建需要依赖这个路径,我这个宿主工程和插件工程在同一级目录下,所以下面这样写
-        targetHost = '../leke-host/app'
+        targetHost = '../android-leke-host/app'
 
         //默认为true，如果插件有引用宿主的类，那么这个选项可以使得插件和宿主保持混淆一致
         //applyHostMapping = true
     }
-    implementation project(':aliplayer')
+
 }

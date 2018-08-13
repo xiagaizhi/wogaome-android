@@ -1,4 +1,4 @@
-package com.yufan.library.share;
+package com.yushi.leke.plugin.share;
 
 import com.yufan.library.R;
 

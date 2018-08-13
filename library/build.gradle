@@ -30,7 +30,7 @@ android {
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
+    api fileTree(include: ['*.jar', '*.aar'], dir: 'libs')
     testImplementation 'junit:junit:4.12'
     compile 'com.github.bumptech.glide:glide:3.7.0'
     compile 'com.squareup.retrofit2:retrofit:2.1.0'
@@ -78,5 +78,5 @@ dependencies {
     compile 'com.amap.api:location:latest.integration'
     //    compile 'com.github.linger1216:labelview:v1.1.2'
     // compile project(path: ':multi-type')
-    compile project(':share')
+//    compile project(':share')
 }
