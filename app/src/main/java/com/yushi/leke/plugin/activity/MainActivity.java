@@ -5,7 +5,7 @@ import android.os.Bundle;
 import com.yufan.library.base.BaseActivity;
 import com.yushi.leke.plugin.R;
 import com.yushi.leke.plugin.UIHelper;
-import com.yushi.leke.plugin.operation.test.TestListFragment;
+import com.yushi.leke.plugin.fragment.test.TestListFragment;
 
 public class MainActivity extends BaseActivity {
 

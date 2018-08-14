@@ -42,7 +42,7 @@ public abstract class MenuDialog extends Dialog {
     private int shareRowCount = 4;
     private MenuType[] types;
     private ShareAdapter mShareAdapter;
-    private Handler handler = new Handler() {
+    private  Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
