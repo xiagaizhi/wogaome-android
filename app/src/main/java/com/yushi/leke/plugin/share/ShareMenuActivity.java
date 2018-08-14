@@ -31,7 +31,7 @@ import com.yushi.leke.plugin.R;
  */
 
 public class ShareMenuActivity extends BaseActivity {
-    private Handler handler=new Handler();
+
     private ShareUtils su;
     private ShareModel model;
     public static final int SHARE_REQUEST_CODE=201;
@@ -140,12 +140,7 @@ public class ShareMenuActivity extends BaseActivity {
         mMenuDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
             @Override
             public void onDismiss(DialogInterface dialogInterface) {
-               handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                       finish();
-                    }
-                },500);
+                finish();
             }
         });
         mMenuDialog.setCancelable(true);

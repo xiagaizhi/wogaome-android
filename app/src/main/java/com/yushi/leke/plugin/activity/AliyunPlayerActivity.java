@@ -48,7 +48,7 @@ import me.yokeyword.fragmentation.ISupportActivity;
 public class AliyunPlayerActivity extends BaseActivity {
 
     private AlivcShowMoreDialog showMoreDialog;
-    private ArrayList logStrs=new ArrayList();
+
 
     private boolean isStrangePhone() {
         boolean strangePhone = "mx5".equalsIgnoreCase(Build.DEVICE)
@@ -220,7 +220,7 @@ public class AliyunPlayerActivity extends BaseActivity {
     }
 
     private void onCompletion() {
-        logStrs.add(format.format(new Date()) + getString(R.string.log_play_completion));
+
 
         Toast.makeText(AliyunPlayerActivity.this.getApplicationContext(), R.string.toast_play_compleion,
             Toast.LENGTH_SHORT).show();

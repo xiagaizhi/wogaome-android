@@ -12,7 +12,9 @@
     <color name="color_333333">#333333</color>
     <color name="color_f0f0f0">#f0f0f0</color>
     <color name="color_666666">#666666</color>
+    <color name="color_gray_6">#666666</color>
     <color name="color_E5E5E5">#e5e5e5</color>
+    <color name="color_line_1">#eeeeee</color>
     <color name="ic_default_bg_color">#33000000</color>
     <!--统一颜色变化-->
     <color name="colorMainBackground">#eef1f4</color>
