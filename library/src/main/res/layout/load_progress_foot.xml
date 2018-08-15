@@ -27,6 +27,6 @@
         android:visibility="invisible"
         android:layout_alignTop="@+id/indicatorview"
         android:layout_centerHorizontal="true"
-        android:textColor="@color/color_un_enable"
+        android:textColor="@color/color_gray_level9"
         android:textSize="14sp" />
 </RelativeLayout>

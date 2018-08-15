@@ -1,23 +1,17 @@
-package com.yushi.leke.plugin.fragment.register;
+package com.yushi.leke.plugin.fragment.resetpassword;
 
-import android.text.Html;
 import android.text.InputType;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
-import com.facebook.drawee.view.SimpleDraweeView;
-import com.yufan.library.inject.FindView;
-import com.yufan.library.manager.DialogManager;
-import com.yufan.library.view.ResizeLayout;
 import com.yufan.library.widget.VerificationCodeTextView;
 import com.yushi.leke.plugin.R;
 import com.yufan.library.base.BaseVu;
 import com.yufan.library.inject.FindLayout;
+import com.yufan.library.inject.FindView;
 import com.yufan.library.inject.Title;
 import com.yufan.library.widget.StateLayout;
 import com.yufan.library.widget.AppToolbar;
@@ -25,9 +19,9 @@ import com.yufan.library.widget.AppToolbar;
 /**
  * Created by mengfantao on 18/8/2.
  */
-@FindLayout(layout = R.layout.fragment_layout_register)
-@Title("注册")
-public class RegisterVu extends BaseVu<RegisterContract.Presenter> implements RegisterContract.IView {
+@FindLayout(layout = R.layout.fragment_layout_resetpassword)
+@Title("重置登录密码")
+public class ResetPasswordVu extends BaseVu<ResetPasswordContract.Presenter> implements ResetPasswordContract.IView {
 
     @FindView(R.id.et_phone)
     EditText et_phone;
@@ -39,24 +33,14 @@ public class RegisterVu extends BaseVu<RegisterContract.Presenter> implements Re
     EditText et_verification_code;
     @FindView(R.id.tv_vcode)
     VerificationCodeTextView tv_vcode;
-    @FindView(R.id.bt_register)
-    Button bt_register;
-    @FindView(R.id.tv_protocol)
-    TextView tv_protocol;
-
+    @FindView(R.id.bt_reset)
+    Button bt_reset;
     @Override
     public void initView(View view) {
-        tv_protocol.setText(Html.fromHtml("注册即代表您已同意 <font color=#007AFF>《乐链服务协议》<font/>"));
-        tv_protocol.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
         tv_vcode.setOnGetCodeClickListener(new VerificationCodeTextView.OnGetCodeClickListener() {
             @Override
             public void getCode() {
-              mPersenter.getVerifcationCode();
+                mPersenter.getVerifcationCode();
             }
         });
         cb_showeye.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {

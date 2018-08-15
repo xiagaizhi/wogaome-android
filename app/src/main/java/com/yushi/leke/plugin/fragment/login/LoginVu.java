@@ -1,5 +1,7 @@
 package com.yushi.leke.plugin.fragment.login;
 
+import android.animation.Animator;
+import android.animation.LayoutTransition;
 import android.graphics.Matrix;
 import android.graphics.PointF;
 import android.graphics.drawable.Drawable;
@@ -10,9 +12,12 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.nineoldandroids.animation.ObjectAnimator;
+import com.nineoldandroids.animation.ValueAnimator;
 import com.yufan.library.inject.FindView;
 import com.yufan.library.view.ResizeLayout;
 import com.yushi.leke.plugin.R;
@@ -46,7 +51,7 @@ public class LoginVu extends BaseVu<LoginContract.Presenter> implements LoginCon
     TextView tv_forgetPassword;
     @FindView(R.id.tv_register)
     TextView tv_register;
-
+    private int titleHeight;
     @Override
     public void initView(View view) {
         tv_forgetPassword.setOnClickListener(this);
@@ -54,20 +59,43 @@ public class LoginVu extends BaseVu<LoginContract.Presenter> implements LoginCon
         PointF pointF = new PointF(1f, 0f);
         sd_login_bg.getHierarchy().setActualImageFocusPoint(pointF);
         sd_login_bg.getHierarchy().setPlaceholderImageFocusPoint(pointF);
+        LayoutTransition transition = new LayoutTransition();
+        resize_login.setLayoutTransition(transition);
         resize_login.setOnKeyboardShowListener(new ResizeLayout.OnKeyboardChangedListener() {
             @Override
             public void onKeyboardShow(int keyHeight) {
                 mPersenter.onKeyboardShow(keyHeight);
-                tv_login_title.animate().translationY(-300).alpha(0).scaleX(0.5f).scaleY(0.5f).setDuration(100).start();
-                ll_content.animate().translationY(-300).setDuration(100).start();
+                titleHeight= tv_login_title.getHeight();
+                final ValueAnimator animator = ValueAnimator.ofInt(titleHeight, 0);
+                animator.setDuration(100);
+                animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                    @Override
+                    public void onAnimationUpdate(ValueAnimator animation) {
+                        int value = (int) animation.getAnimatedValue();
+                        LinearLayout.LayoutParams layoutParams= (LinearLayout.LayoutParams) tv_login_title.getLayoutParams();
+                        layoutParams.height=value;
+                        tv_login_title.setLayoutParams(layoutParams);
+                    }
+                });
+                animator.start();
 
             }
 
             @Override
             public void onKeyboardHide() {
                 mPersenter.onKeyboardHide();
-                tv_login_title.animate().translationY(0).alpha(1).scaleX(1f).scaleY(1f).setDuration(100).start();
-                ll_content.animate().translationY(0).setDuration(100).start();
+                final ValueAnimator animator = ValueAnimator.ofInt(0, titleHeight);
+                animator.setDuration(100);
+                animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                    @Override
+                    public void onAnimationUpdate(ValueAnimator animation) {
+                        int value = (int) animation.getAnimatedValue();
+                        LinearLayout.LayoutParams layoutParams= (LinearLayout.LayoutParams) tv_login_title.getLayoutParams();
+                        layoutParams.height=value;
+                        tv_login_title.setLayoutParams(layoutParams);
+                    }
+                });
+                animator.start();
 
             }
 
@@ -114,4 +142,24 @@ public class LoginVu extends BaseVu<LoginContract.Presenter> implements LoginCon
                     break;
         }
     }
+    private void scaleAnim(final View view,int from, int to) {
+        //1.调用ofInt(int...values)方法创建ValueAnimator对象
+        ValueAnimator mAnimator = ValueAnimator.ofInt(from, to);
+        //2.为目标对象的属性变化设置监听器
+        mAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                // 3.为目标对象的属性设置计算好的属性值
+                int animatorValue = (int) animation.getAnimatedValue();
+                LinearLayout.LayoutParams marginLayoutParams = (LinearLayout.LayoutParams) view.getLayoutParams();
+                marginLayoutParams.height = animatorValue;
+                view.setLayoutParams(marginLayoutParams);
+            }
+        });
+        mAnimator.setDuration(100);
+        mAnimator.setTarget(view);
+        mAnimator.start();
+    }
+
 }

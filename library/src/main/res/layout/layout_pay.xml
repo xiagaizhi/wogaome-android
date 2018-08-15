@@ -20,7 +20,7 @@
 
             android:gravity="center_horizontal|center_vertical"
             android:text="支付"
-            android:textColor="@color/color_333333"
+            android:textColor="@color/color_gray_level3"
             android:textSize="18sp" />
 
         <RelativeLayout
@@ -35,7 +35,7 @@
                 android:layout_centerVertical="true"
                 android:text="充值:1000"
                 android:id="@+id/tv_message"
-                android:textColor="@color/color_666666"
+                android:textColor="@color/color_gray_level6"
                 android:textSize="13sp" />
 
             <TextView
@@ -45,7 +45,7 @@
                 android:layout_centerVertical="true"
                 android:text="¥1000"
                 android:id="@+id/tv_money"
-                android:textColor="@color/color_333333"
+                android:textColor="@color/color_gray_level3"
                 android:textSize="32sp"
                 android:textStyle="bold" />
         </RelativeLayout>
@@ -76,7 +76,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_toRightOf="@+id/iv_2"
                 android:text="支付宝支付"
-                android:textColor="@color/color_666666"
+                android:textColor="@color/color_gray_level6"
                 android:textSize="13sp" />
 
             <CheckBox
@@ -118,7 +118,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_toRightOf="@+id/iv_1"
                 android:text="微信支付"
-                android:textColor="@color/color_666666"
+                android:textColor="@color/color_gray_level6"
                 android:textSize="13sp" />
 
             <CheckBox

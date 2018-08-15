@@ -11,6 +11,9 @@ import android.view.WindowManager;
 
 import com.yufan.library.inject.VuClass;
 import com.yufan.library.manager.DialogManager;
+import com.yushi.leke.plugin.UIHelper;
+import com.yushi.leke.plugin.fragment.register.RegisterFragment;
+import com.yushi.leke.plugin.fragment.resetpassword.ResetPasswordFragment;
 
 /**
  * Created by mengfantao on 18/8/2.
@@ -53,11 +56,12 @@ public class LoginFragment extends BaseFragment<LoginContract.View> implements L
 
     @Override
     public void onRegister() {
-
+        start(UIHelper.creat(RegisterFragment.class).build());
     }
 
     @Override
     public void onForgetPassword() {
+        start(UIHelper.creat(ResetPasswordFragment.class).build());
 
     }
 
