@@ -53,6 +53,7 @@
             android:layout_width="match_parent"
             android:orientation="vertical"
             android:layout_marginRight="@dimen/px80"
+            android:layout_marginTop="@dimen/px30"
             android:layout_marginLeft="@dimen/px80"
             android:layout_height="@dimen/px100">
             <LinearLayout
@@ -90,6 +91,7 @@
             android:orientation="vertical"
             android:layout_marginRight="@dimen/px80"
             android:layout_marginLeft="@dimen/px80"
+            android:layout_marginTop="@dimen/px30"
             android:layout_height="@dimen/px100">
             <LinearLayout
                 android:layout_width="match_parent"
