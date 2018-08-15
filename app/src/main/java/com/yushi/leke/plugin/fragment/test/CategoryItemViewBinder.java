@@ -36,26 +36,25 @@ public class CategoryItemViewBinder extends ItemViewBinder<Person, CategoryItemV
 
   @Override
   protected @NonNull ViewHolder onCreateViewHolder(@NonNull LayoutInflater inflater, @NonNull ViewGroup parent) {
-    return new ViewHolder(inflater.inflate(R.layout.item_person, parent, false));
+   return null;
   }
 
 
   @Override
   protected void onBindViewHolder(@NonNull ViewHolder holder, @NonNull Person category) {
-    holder.title.setText(category.getName());
+
     holder.tv_age.setText(category.getAge()+"");
   }
 
 
   static class ViewHolder extends RecyclerView.ViewHolder {
 
-    private @NonNull final TextView title;
+
 
     private TextView tv_age;
     ViewHolder(@NonNull View itemView) {
       super(itemView);
-      tv_age=itemView.findViewById(R.id.tv_age);
-      title = itemView.findViewById(R.id.tv_name);
+
     }
   }
 }
