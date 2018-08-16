@@ -3,13 +3,11 @@ package com.yufan.library.base;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.yufan.library.inter.Pr;
 import com.yufan.library.inter.VuList;
 import com.yufan.library.view.recycler.PageInfo;
 import com.yufan.library.view.recycler.YFRecyclerView;
 import com.yufan.library.widget.StateLayout;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by mengfantao on 18/7/9.

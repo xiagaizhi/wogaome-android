@@ -1,6 +1,6 @@
 package com.yushi.leke.plugin.fragment.login;
 
-import com.yufan.library.base.Pr;
+import com.yufan.library.inter.Pr;
 import com.yufan.library.inter.Vu;
 
 /**

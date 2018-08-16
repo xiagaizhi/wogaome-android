@@ -17,7 +17,7 @@
 package com.yushi.leke.plugin.fragment.test;
 
 
-import com.yufan.library.base.Pr;
+import com.yufan.library.inter.Pr;
 import com.yufan.library.inter.VuList;
 
 /**

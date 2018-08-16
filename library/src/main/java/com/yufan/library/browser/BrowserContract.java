@@ -19,7 +19,7 @@ package com.yufan.library.browser;
 
 import com.tencent.smtt.export.external.interfaces.IX5WebChromeClient;
 import com.tencent.smtt.sdk.WebView;
-import com.yufan.library.base.Pr;
+import com.yufan.library.inter.Pr;
 import com.yufan.library.inter.Vu;
 import com.yufan.library.view.ptr.PtrClassicFrameLayout;
 
