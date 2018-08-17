@@ -54,6 +54,8 @@ public class MusicProvider {
 
     private MusicProviderSource mSource;
 
+    //音乐数据分类（按音乐类型）缓存
+    private ConcurrentMap<String, List<MediaMetadataCompat>> mMusicListByGenre;
     private final ConcurrentMap<String, MutableMediaMetadata> mMusicListById;
 
     private final Set<String> mFavoriteTracks;
@@ -73,11 +75,22 @@ public class MusicProvider {
     }
     public MusicProvider(MusicProviderSource source) {
         mSource = source;
+        mMusicListByGenre = new ConcurrentHashMap<>();
         mMusicListById = new ConcurrentHashMap<>();
         mFavoriteTracks = Collections.newSetFromMap(new ConcurrentHashMap<String, Boolean>());
     }
 
-
+    /**
+     * Get an iterator over the list of genres
+     *
+     * @return genres
+     */
+    public Iterable<String> getGenres() {
+        if (mCurrentState != State.INITIALIZED) {
+            return Collections.emptyList();
+        }
+        return mMusicListByGenre.keySet();
+    }
 
     /**
      * Get an iterator over a shuffled collection of all songs
@@ -95,6 +108,16 @@ public class MusicProvider {
         return shuffled;
     }
 
+    /**
+     * Get music tracks of the given genre
+     *
+     */
+    public List<MediaMetadataCompat> getMusicsByGenre(String genre) {
+        if (mCurrentState != State.INITIALIZED || !mMusicListByGenre.containsKey(genre)) {
+            return Collections.emptyList();
+        }
+        return mMusicListByGenre.get(genre);
+    }
 
     /**
      * Very basic implementation of a search that filter music tracks with title containing
@@ -235,6 +258,21 @@ public class MusicProvider {
         }.execute();
     }
 
+    private synchronized void buildListsByGenre() {
+        ConcurrentMap<String, List<MediaMetadataCompat>> newMusicListByGenre = new ConcurrentHashMap<>();
+
+        for (MutableMediaMetadata m : mMusicListById.values()) {
+            String genre = m.metadata.getString(MediaMetadataCompat.METADATA_KEY_GENRE);
+            List<MediaMetadataCompat> list = newMusicListByGenre.get(genre);
+            if (list == null) {
+                list = new ArrayList<>();
+                newMusicListByGenre.put(genre, list);
+            }
+            list.add(m.metadata);
+        }
+        mMusicListByGenre = newMusicListByGenre;
+    }
+
     /**
      * 通过MusicProviderSource（RemoteJSONSource）的迭代器检索Media资源
      */
@@ -249,7 +287,7 @@ public class MusicProvider {
                     String musicId = item.getString(MediaMetadataCompat.METADATA_KEY_MEDIA_ID);
                     mMusicListById.put(musicId, new MutableMediaMetadata(musicId, item));
                 }
-            
+                buildListsByGenre();
                 mCurrentState = State.INITIALIZED;
             }
         } finally {
@@ -262,7 +300,44 @@ public class MusicProvider {
     }
 
 
+    public List<MediaBrowserCompat.MediaItem> getChildren(String mediaId, Resources resources) {
+        List<MediaBrowserCompat.MediaItem> mediaItems = new ArrayList<>();
 
+        if (!MediaIDHelper.isBrowseable(mediaId)) {
+            return mediaItems;
+        }
+
+        if (MEDIA_ID_ROOT.equals(mediaId)) {
+            mediaItems.add(createBrowsableMediaItemForRoot(resources));
+
+        } else if (MEDIA_ID_MUSICS_BY_GENRE.equals(mediaId)) {
+            for (String genre : getGenres()) {
+                mediaItems.add(createBrowsableMediaItemForGenre(genre, resources));
+            }
+
+        } else if (mediaId.startsWith(MEDIA_ID_MUSICS_BY_GENRE)) {
+            String genre = MediaIDHelper.getHierarchy(mediaId)[1];
+            for (MediaMetadataCompat metadata : getMusicsByGenre(genre)) {
+                mediaItems.add(createMediaItem(metadata));
+            }
+
+        } else {
+            LogHelper.w(TAG, "Skipping unmatched mediaId: ", mediaId);
+        }
+        return mediaItems;
+    }
+
+    private MediaBrowserCompat.MediaItem createBrowsableMediaItemForRoot(Resources resources) {
+        MediaDescriptionCompat description = new MediaDescriptionCompat.Builder()
+                .setMediaId(MEDIA_ID_MUSICS_BY_GENRE)
+                .setTitle(resources.getString(R.string.browse_genres))
+                .setSubtitle(resources.getString(R.string.browse_genre_subtitle))
+                .setIconUri(Uri.parse("android.resource://" +
+                        "com.example.android.uamp/drawable/ic_by_genre"))
+                .build();
+        return new MediaBrowserCompat.MediaItem(description,
+                MediaBrowserCompat.MediaItem.FLAG_BROWSABLE);
+    }
 
     private MediaBrowserCompat.MediaItem createBrowsableMediaItemForGenre(String genre,
                                                                     Resources resources) {

@@ -57,7 +57,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.yushi.leke.plugin.musicplayer.uamp.utils.MediaIDHelper.MEDIA_ID_EMPTY_ROOT;
-import static com.yushi.leke.plugin.musicplayer.uamp.utils.MediaIDHelper.MEDIA_ID_MUSICS_BY_GENRE;
 import static com.yushi.leke.plugin.musicplayer.uamp.utils.MediaIDHelper.MEDIA_ID_ROOT;
 
 
@@ -308,7 +307,7 @@ public class MusicService extends MediaBrowserServiceCompat implements
                                  Bundle rootHints) {
         LogHelper.d(TAG, "OnGetRoot: clientPackageName=" + clientPackageName,
                 "; clientUid=" + clientUid + " ; rootHints=", rootHints);
-        return new BrowserRoot(MEDIA_ID_MUSICS_BY_GENRE, null);
+        return new BrowserRoot(MEDIA_ID_ROOT, null);
     }
 
     @Override
