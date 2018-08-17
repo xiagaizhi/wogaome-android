@@ -13,11 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.yufan.library.util;
+package com.yushi.leke.plugin.musicplayer.uamp.utils;
 
 import android.util.Log;
 
-import com.yufan.library.BuildConfig;
+import com.yushi.leke.plugin.musicplayer.BuildConfig;
 
 
 public class LogHelper {

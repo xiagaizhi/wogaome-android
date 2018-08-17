@@ -44,6 +44,13 @@ public class VerificationCodeTextView extends TextView {
         }
     };
 
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        handler.removeMessages(0);
+        handler.removeCallbacksAndMessages(null);
+    }
+
     public VerificationCodeTextView(Context context) {
         super(context);
     }

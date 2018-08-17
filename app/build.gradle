@@ -53,5 +53,5 @@ dependencies {
         //默认为true，如果插件有引用宿主的类，那么这个选项可以使得插件和宿主保持混淆一致
         //applyHostMapping = true
     }
-
+    implementation project(':musicplayer')
 }

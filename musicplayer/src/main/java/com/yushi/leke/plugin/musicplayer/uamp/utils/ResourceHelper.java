@@ -14,7 +14,7 @@
 * limitations under the License.
 */
 
-package com.yufan.library.util;
+package com.yushi.leke.plugin.musicplayer.uamp.utils;
 
 import android.content.Context;
 import android.content.pm.ApplicationInfo;

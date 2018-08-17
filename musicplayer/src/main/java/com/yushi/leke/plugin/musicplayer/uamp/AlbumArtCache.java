@@ -14,11 +14,14 @@
  * limitations under the License.
  */
 
-package com.yufan.library.util;
+package com.yushi.leke.plugin.musicplayer.uamp;
 
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.util.LruCache;
+
+import com.yushi.leke.plugin.musicplayer.uamp.utils.BitmapHelper;
+import com.yushi.leke.plugin.musicplayer.uamp.utils.LogHelper;
 
 import java.io.IOException;
 
@@ -27,7 +30,7 @@ import java.io.IOException;
  * 实现了专辑艺术封面的基本缓冲，支持异步加载
  */
 public final class AlbumArtCache {
-    private static final String TAG ="AlbumArtCache";
+    private static final String TAG = LogHelper.makeLogTag(AlbumArtCache.class);
 
     private static final int MAX_ALBUM_ART_CACHE_SIZE = 12*1024*1024;  // 12 MB
     private static final int MAX_ART_WIDTH = 800;  // pixels

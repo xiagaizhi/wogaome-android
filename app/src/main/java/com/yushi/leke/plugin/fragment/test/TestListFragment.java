@@ -10,8 +10,10 @@ import com.yufan.library.base.BaseListFragment;
 import com.yufan.library.inject.VuClass;
 import com.yufan.library.view.recycler.PageInfo;
 import com.yufan.share.ShareModel;
+import com.yushi.leke.plugin.UIHelper;
 import com.yushi.leke.plugin.activity.AliyunPlayerActivity;
 import com.yushi.leke.plugin.bean.Person;
+import com.yushi.leke.plugin.fragment.uamp.MediaBrowserFragment;
 import com.yushi.leke.plugin.share.ShareMenuActivity;
 
 import java.util.List;
@@ -76,8 +78,7 @@ public class TestListFragment extends BaseListFragment<DbTestContract.View> impl
 
     @Override
     public void batchinsert() {
-
-        getContext().getPackageName();
+        start(UIHelper.creat(MediaBrowserFragment.class).build());
     }
 
     @Override

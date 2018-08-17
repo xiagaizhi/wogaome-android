@@ -1,5 +1,6 @@
 package com.yushi.leke.plugin.fragment.login;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.yufan.library.base.BaseFragment;
@@ -14,6 +15,7 @@ import com.yufan.library.manager.DialogManager;
 import com.yushi.leke.plugin.UIHelper;
 import com.yushi.leke.plugin.fragment.register.RegisterFragment;
 import com.yushi.leke.plugin.fragment.resetpassword.ResetPasswordFragment;
+import com.yushi.leke.plugin.musicplayer.uamp.ui.FullScreenPlayerActivity;
 
 /**
  * Created by mengfantao on 18/8/2.
@@ -61,7 +63,10 @@ public class LoginFragment extends BaseFragment<LoginContract.View> implements L
 
     @Override
     public void onForgetPassword() {
-        start(UIHelper.creat(ResetPasswordFragment.class).build());
+        Intent intent=new Intent();
+        intent.setClass(getContext(),FullScreenPlayerActivity.class);
+        startActivity(intent);
+        //start(UIHelper.creat(ResetPasswordFragment.class).build());
 
     }
 

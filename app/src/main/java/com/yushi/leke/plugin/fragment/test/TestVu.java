@@ -38,6 +38,15 @@ public class TestVu extends BaseListVu<DbTestContract.Presenter> implements DbTe
 
           }
       });
+        TextView tv2=  toolbar.creatRightView(TextView.class);
+        tv2.setText("音乐播放");
+        tv2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mPersenter.batchinsert();
+
+            }
+        });
 
         TextView tvUpdate=  toolbar.creatRightView(TextView.class);
         tvUpdate.setText("播放器");
