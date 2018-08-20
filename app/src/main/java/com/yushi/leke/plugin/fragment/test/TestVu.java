@@ -56,6 +56,16 @@ public class TestVu extends BaseListVu<DbTestContract.Presenter> implements DbTe
                 mPersenter.startPlayer();
             }
         });
+
+        TextView tvSetPwd=  toolbar.creatRightView(TextView.class);
+        tvUpdate.setText("设置交易密码");
+        tvUpdate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mPersenter.setRechargePwd();
+            }
+        });
+
         toolbar.build();
         return true;
     }

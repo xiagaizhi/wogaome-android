@@ -13,6 +13,7 @@ import com.yufan.share.ShareModel;
 import com.yushi.leke.plugin.UIHelper;
 import com.yushi.leke.plugin.activity.AliyunPlayerActivity;
 import com.yushi.leke.plugin.bean.Person;
+import com.yushi.leke.plugin.fragment.setrechargepassword.SetRechargePasswordFragment;
 import com.yushi.leke.plugin.fragment.uamp.MediaBrowserFragment;
 import com.yushi.leke.plugin.share.ShareMenuActivity;
 
@@ -96,5 +97,10 @@ public class TestListFragment extends BaseListFragment<DbTestContract.View> impl
         shareModel.setTitle("title");
         shareModel.setIcon("https://gitbook.cn/gitchat/author/5a002a147393bc6262dfb1c2");
         ShareMenuActivity.startShare(this,shareModel);
+    }
+
+    @Override
+    public void setRechargePwd() {
+        start(UIHelper.creat(SetRechargePasswordFragment.class).build());
     }
 }
