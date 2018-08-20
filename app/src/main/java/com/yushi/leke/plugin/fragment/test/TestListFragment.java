@@ -15,6 +15,7 @@ import com.yushi.leke.plugin.activity.AliyunPlayerActivity;
 import com.yushi.leke.plugin.bean.Person;
 import com.yushi.leke.plugin.fragment.setrechargepassword.SetRechargePasswordFragment;
 import com.yushi.leke.plugin.fragment.uamp.MediaBrowserFragment;
+import com.yushi.leke.plugin.fragment.wallet.MyWalletFragment;
 import com.yushi.leke.plugin.share.ShareMenuActivity;
 
 import java.util.List;
@@ -100,7 +101,7 @@ public class TestListFragment extends BaseListFragment<DbTestContract.View> impl
     }
 
     @Override
-    public void setRechargePwd() {
-        start(UIHelper.creat(SetRechargePasswordFragment.class).build());
+    public void openMyWallet() {
+        start(UIHelper.creat(MyWalletFragment.class).build());
     }
 }

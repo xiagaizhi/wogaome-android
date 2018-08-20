@@ -1,4 +1,4 @@
-package com.yushi.leke.plugin.widget;
+package com.yufan.library.widget.customkeyboard;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.yushi.leke.plugin.R;
+import com.yufan.library.R;
 
 import java.util.List;
 

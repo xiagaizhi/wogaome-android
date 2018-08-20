@@ -57,12 +57,12 @@ public class TestVu extends BaseListVu<DbTestContract.Presenter> implements DbTe
             }
         });
 
-        TextView tvSetPwd=  toolbar.creatRightView(TextView.class);
-        tvUpdate.setText("设置交易密码");
-        tvUpdate.setOnClickListener(new View.OnClickListener() {
+        TextView myWallet=  toolbar.creatRightView(TextView.class);
+        myWallet.setText("我的钱包");
+        myWallet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mPersenter.setRechargePwd();
+                mPersenter.openMyWallet();
             }
         });
 

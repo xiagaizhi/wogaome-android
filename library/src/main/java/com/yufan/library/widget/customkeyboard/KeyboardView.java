@@ -1,4 +1,4 @@
-package com.yushi.leke.plugin.widget;
+package com.yufan.library.widget.customkeyboard;
 
 import android.content.Context;
 import android.support.v7.widget.GridLayoutManager;
@@ -10,7 +10,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.RelativeLayout;
 
-import com.yushi.leke.plugin.R;
+import com.yufan.library.R;
 
 import java.util.ArrayList;
 import java.util.List;

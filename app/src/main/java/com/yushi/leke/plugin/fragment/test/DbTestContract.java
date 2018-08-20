@@ -35,6 +35,6 @@ public interface DbTestContract {
         void batchinsert();
         void startPlayer();
         void share();
-        void setRechargePwd();
+        void openMyWallet();
     }
 }

@@ -1,4 +1,4 @@
-package com.yushi.leke.plugin.widget;
+package com.yufan.library.widget.customkeyboard;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -11,7 +11,7 @@ import android.text.InputFilter;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 
-import com.yushi.leke.plugin.R;
+import com.yufan.library.R;
 
 /**
  * Created by Allen on 2017/5/7.

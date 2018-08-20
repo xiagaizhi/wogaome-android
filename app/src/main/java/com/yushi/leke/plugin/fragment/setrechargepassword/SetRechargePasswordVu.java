@@ -5,6 +5,9 @@ import android.text.InputType;
 import android.view.View;
 import android.widget.EditText;
 
+import com.yufan.library.widget.customkeyboard.KeyboardAdapter;
+import com.yufan.library.widget.customkeyboard.KeyboardView;
+import com.yufan.library.widget.customkeyboard.PayPsdInputView;
 import com.yushi.leke.plugin.R;
 import com.yufan.library.base.BaseVu;
 import com.yufan.library.inject.FindLayout;
@@ -12,9 +15,6 @@ import com.yufan.library.inject.FindView;
 import com.yufan.library.inject.Title;
 import com.yufan.library.widget.StateLayout;
 import com.yufan.library.widget.AppToolbar;
-import com.yushi.leke.plugin.widget.KeyboardAdapter;
-import com.yushi.leke.plugin.widget.KeyboardView;
-import com.yushi.leke.plugin.widget.PayPsdInputView;
 
 import java.lang.reflect.Method;
 
