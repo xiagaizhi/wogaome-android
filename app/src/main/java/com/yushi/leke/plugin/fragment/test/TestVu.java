@@ -56,6 +56,16 @@ public class TestVu extends BaseListVu<DbTestContract.Presenter> implements DbTe
                 mPersenter.startPlayer();
             }
         });
+
+        TextView myWallet=  toolbar.creatRightView(TextView.class);
+        myWallet.setText("我的钱包");
+        myWallet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mPersenter.openMyWallet();
+            }
+        });
+
         toolbar.build();
         return true;
     }
