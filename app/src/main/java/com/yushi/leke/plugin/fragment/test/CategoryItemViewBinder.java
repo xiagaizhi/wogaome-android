@@ -17,6 +17,7 @@
 package com.yushi.leke.plugin.fragment.test;
 
 import android.support.annotation.NonNull;
+import android.support.v4.media.MediaBrowserCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,29 +33,44 @@ import me.drakeet.multitype.ItemViewBinder;
 /**
  * @author drakeet
  */
-public class CategoryItemViewBinder extends ItemViewBinder<Person, CategoryItemViewBinder.ViewHolder> {
+public class CategoryItemViewBinder extends ItemViewBinder<MediaBrowserCompat.MediaItem, CategoryItemViewBinder.ViewHolder> {
+
+  private OnItemClick clickListener;
+
+  public CategoryItemViewBinder(OnItemClick clickListener) {
+    this.clickListener = clickListener;
+  }
 
   @Override
   protected @NonNull ViewHolder onCreateViewHolder(@NonNull LayoutInflater inflater, @NonNull ViewGroup parent) {
-   return null;
+    View view=inflater.inflate(R.layout.media_list_item,null);
+
+   return new ViewHolder(view);
   }
 
-
   @Override
-  protected void onBindViewHolder(@NonNull ViewHolder holder, @NonNull Person category) {
+  protected void onBindViewHolder(@NonNull ViewHolder holder, @NonNull final MediaBrowserCompat.MediaItem category) {
 
-    holder.tv_age.setText(category.getAge()+"");
+    holder.title.setText(category.getMediaId()+"");
+    holder.itemView.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        clickListener.onClick(category);
+      }
+    });
   }
 
 
   static class ViewHolder extends RecyclerView.ViewHolder {
 
-
-
-    private TextView tv_age;
+    private TextView title;
     ViewHolder(@NonNull View itemView) {
       super(itemView);
 
+      title= itemView.findViewById(R.id.title);
     }
+  }
+  public interface OnItemClick{
+   void onClick(MediaBrowserCompat.MediaItem mediaItem);
   }
 }

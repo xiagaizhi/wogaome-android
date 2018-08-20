@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.media.MediaMetadataCompat;
 import android.view.View;
 
 import com.yufan.library.base.BaseListFragment;
@@ -13,7 +14,7 @@ import com.yufan.share.ShareModel;
 import com.yushi.leke.plugin.UIHelper;
 import com.yushi.leke.plugin.activity.AliyunPlayerActivity;
 import com.yushi.leke.plugin.bean.Person;
-import com.yushi.leke.plugin.fragment.uamp.MediaBrowserFragment;
+import com.yushi.leke.plugin.fragment.uamp.ui.MediaBrowserFragment;
 import com.yushi.leke.plugin.share.ShareMenuActivity;
 
 import java.util.List;
@@ -56,10 +57,8 @@ public class TestListFragment extends BaseListFragment<DbTestContract.View> impl
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-         adapter=new MultiTypeAdapter();
-        adapter.register(Person.class,new CategoryItemViewBinder());
-        adapter.setItems(list);
-        vu.getRecyclerView().setAdapter(adapter);
+
+
     }
 
     @Override
@@ -78,7 +77,7 @@ public class TestListFragment extends BaseListFragment<DbTestContract.View> impl
 
     @Override
     public void batchinsert() {
-        start(UIHelper.creat(MediaBrowserFragment.class).build());
+        start(UIHelper.creat(MediaBrowserFragment.class).put(MediaBrowserFragment.ARG_MEDIA_ID,"meng").build());
     }
 
     @Override

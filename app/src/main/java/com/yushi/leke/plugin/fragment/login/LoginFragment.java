@@ -14,8 +14,7 @@ import com.yufan.library.inject.VuClass;
 import com.yufan.library.manager.DialogManager;
 import com.yushi.leke.plugin.UIHelper;
 import com.yushi.leke.plugin.fragment.register.RegisterFragment;
-import com.yushi.leke.plugin.fragment.resetpassword.ResetPasswordFragment;
-import com.yushi.leke.plugin.musicplayer.uamp.ui.FullScreenPlayerActivity;
+import com.yushi.leke.plugin.fragment.uamp.ui.FullScreenPlayerActivity;
 
 /**
  * Created by mengfantao on 18/8/2.

@@ -2,9 +2,13 @@ package com.yushi.leke.plugin.activity;
 
 import android.app.ActivityManager;
 import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
+import android.content.ServiceConnection;
 import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.os.RemoteException;
 import android.support.annotation.NonNull;
 import android.support.v4.media.MediaBrowserCompat;
@@ -13,17 +17,20 @@ import android.support.v4.media.session.MediaControllerCompat;
 import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
 
+import com.didi.virtualapk.delegate.LocalService;
 import com.yufan.library.base.BaseActivity;
+import com.yufan.library.manager.DialogManager;
+import com.yushi.leke.plugin.MessengerService;
 import com.yushi.leke.plugin.R;
 import com.yushi.leke.plugin.UIHelper;
 import com.yushi.leke.plugin.fragment.login.LoginFragment;
 import com.yushi.leke.plugin.fragment.test.TestListFragment;
-import com.yushi.leke.plugin.musicplayer.uamp.MusicService;
-import com.yushi.leke.plugin.musicplayer.uamp.ui.MediaBrowserProvider;
-import com.yushi.leke.plugin.musicplayer.uamp.utils.LogHelper;
-import com.yushi.leke.plugin.musicplayer.uamp.utils.ResourceHelper;
+import com.yushi.leke.plugin.fragment.uamp.MusicService;
+import com.yushi.leke.plugin.fragment.uamp.ui.MediaBrowserProvider;
+import com.yushi.leke.plugin.fragment.uamp.utils.LogHelper;
+import com.yushi.leke.plugin.fragment.uamp.utils.ResourceHelper;
 
-public class MainActivity extends BaseActivity implements MediaBrowserProvider{
+public class MainActivity extends BaseActivity implements MediaBrowserProvider {
 private String     TAG="MainActivity";
     private MediaBrowserCompat mMediaBrowser;
     @Override
@@ -49,7 +56,18 @@ private String     TAG="MainActivity";
         mMediaBrowser = new MediaBrowserCompat(this,
                 new ComponentName(this, MusicService.class), mConnectionCallback, null);
        loadRootFragment(R.id.rl_fragment, UIHelper.creat(TestListFragment.class).build());//.put(Global.BUNDLE_KEY_BROWSER_URL,"http://www.baidu.com")
+        Intent service = new Intent(this, MessengerService.class);
+        bindService(service, new ServiceConnection() {
+            @Override
+            public void onServiceConnected(ComponentName name, IBinder service) {
+                DialogManager.getInstance().toast("");
+            }
 
+            @Override
+            public void onServiceDisconnected(ComponentName name) {
+
+            }
+        }, Context.BIND_AUTO_CREATE);
 
 
     }
@@ -58,7 +76,7 @@ private String     TAG="MainActivity";
     protected void onStart() {
         super.onStart();
         LogHelper.d(TAG, "Activity onStart");
-        mMediaBrowser.connect();
+       // mMediaBrowser.connect();
     }
 
     @Override

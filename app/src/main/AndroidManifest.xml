@@ -70,9 +70,28 @@
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <!-- Main activity for music browsing on phone -->
+        <activity
+            android:name=".fragment.uamp.ui.FullScreenPlayerActivity"
+            android:label="@string/app_name">
 
+        </activity>
+        <service
+            android:name=".fragment.uamp.MusicService"
+            android:exported="true"
+            tools:ignore="ExportedService">
+            <intent-filter>
+                <action android:name="android.media.browse.MediaBrowserService" />
+            </intent-filter>
+        </service>
 
-
+        <service
+            android:name=".MessengerService"
+            android:process=":remote" >
+            <intent-filter>
+                <action android:name="com.didi.MessengerService.launch" />
+            </intent-filter>
+        </service>
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="com.youximao.anew.myapplication.fileprovider"
@@ -83,6 +102,32 @@
                 android:resource="@xml/file_paths_public" />
         </provider>
 
+        <meta-data
+            android:name="com.google.android.gms.car.notification.SmallIcon"
+            android:resource="@drawable/ic_notification" />
+
+        <!--
+             (OPTIONAL) use this meta data to override the theme from which Android Auto will
+             look for colors. If you don't set this, Android Auto will look
+             for color attributes in your application theme.
+        -->
+
+
+
+        <!--
+             (REQUIRED) use this meta data to to declare the app OptionsProvider.
+        -->
+
+
+        <!-- A receiver that will receive media buttons and send as
+            intents to your MediaBrowserServiceCompat implementation.
+            Required on pre-Lollipop. More information at
+            http://developer.android.com/reference/android/support/v4/media/session/MediaButtonReceiver.html -->
+        <receiver android:name="android.support.v4.media.session.MediaButtonReceiver" >
+            <intent-filter>
+                <action android:name="android.intent.action.MEDIA_BUTTON" />
+            </intent-filter>
+        </receiver>
 
 
         <meta-data
