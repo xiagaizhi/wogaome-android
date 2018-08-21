@@ -96,4 +96,9 @@ public class TestListFragment extends BaseListFragment<DbTestContract.View> impl
         shareModel.setIcon("https://gitbook.cn/gitchat/author/5a002a147393bc6262dfb1c2");
         ShareMenuActivity.startShare(this,shareModel);
     }
+
+    @Override
+    public void openMyWallet() {
+
+    }
 }
