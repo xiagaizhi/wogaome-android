@@ -8,7 +8,7 @@ import com.yufan.library.base.Vu;
  */
 
 public interface LoginContract {
-    interface View extends Vu {
+    interface IView extends Vu {
 
     }
 

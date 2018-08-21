@@ -20,7 +20,8 @@ import com.yushi.leke.uamp.ui.FullScreenPlayerActivity;
  * Created by mengfantao on 18/8/2.
  */
 @VuClass(LoginVu.class)
-public class LoginFragment extends BaseFragment<LoginContract.View> implements LoginContract.Presenter {
+public class LoginFragment extends BaseFragment<LoginContract.IView> implements LoginContract.Presenter {
+
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {

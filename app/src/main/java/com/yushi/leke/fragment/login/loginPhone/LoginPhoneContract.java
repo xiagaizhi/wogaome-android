@@ -13,7 +13,12 @@ public interface LoginPhoneContract {
     }
 
     interface Presenter extends Pr {
-
+        void onKeyboardShow(int keyHeight);
+        void onKeyboardHide();
+        void onKeyboardShowOver();
+        void onRegister();
+        void onForgetPassword();
+        void onLogin(String phone ,String password);
 
     }
 }

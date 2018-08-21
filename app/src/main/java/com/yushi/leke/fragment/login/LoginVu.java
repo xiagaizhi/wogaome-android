@@ -26,7 +26,7 @@ import com.yufan.library.widget.AppToolbar;
  */
 @FindLayout(layout = R.layout.fragment_layout_login)
 @Title("登录")
-public class LoginVu extends BaseVu<LoginContract.Presenter> implements LoginContract.View, View.OnClickListener {
+public class LoginVu extends BaseVu<LoginContract.Presenter> implements LoginContract.IView, View.OnClickListener {
     @FindView(R.id.sd_login_bg)
     SimpleDraweeView sd_login_bg;
     @FindView(R.id.resize_login)
