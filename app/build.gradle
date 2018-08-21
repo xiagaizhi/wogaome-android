@@ -15,20 +15,77 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
     }
+    dexOptions {
+        preDexLibraries = false
+        javaMaxHeapSize "2048M"
+        jumboMode = true
+    }
+
+    lintOptions {
+        abortOnError false
+        checkReleaseBuilds false
+    }
+
+    packagingOptions {
+        exclude 'META-INF/ASL2.0'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+    }
+
     sourceSets {
 
         main {
             jniLibs.srcDirs = ['libs']
         }
     }
+
+    signingConfigs {
+        release {
+            storeFile file('leke.keystore')
+            storePassword 'yushikeji'
+            keyAlias 'leke'
+            keyPassword 'yushikeji'
+
+        }
+    }
+
     packagingOptions {
         packagingOptions { exclude 'META-INF/rxjava.properties' }
     }
 
     buildTypes {
         release {
+            //manifestPlaceholders = [IS_DEBUG: 'false']
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            proguardFile file('proguard.cfg')
+            signingConfig signingConfigs.release
+            shrinkResources false    // 开启去除无用资源
+            debuggable false
+
+        }
+        debug {
+            // 更改需调整debug/res/values/strings.xml其中的包名部分
+            proguardFile 'Unrecognized value'
+            signingConfig signingConfigs.release
+            debuggable true
+            minifyEnabled false
+            shrinkResources false
+        }
+    }
+
+    android.applicationVariants.all { variant ->
+        variant.outputs.all {
+            def versionName = variant.versionName
+            def newName = ""
+            if (variant.productFlavors.size() != 0) {
+                def flavor = variant.productFlavors.get(0)
+                newName = "leke-" + versionName + "-" + flavor.name + ".apk"
+            } else {
+                newName = "leke.apk"
+            }
+            outputFileName =newName
         }
     }
 }

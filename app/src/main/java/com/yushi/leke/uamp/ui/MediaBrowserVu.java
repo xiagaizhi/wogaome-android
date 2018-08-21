@@ -1,6 +1,9 @@
 package com.yushi.leke.uamp.ui;
 
+import android.content.Intent;
 import android.support.v4.media.MediaBrowserCompat;
+import android.view.View;
+import android.widget.TextView;
 
 import com.yufan.library.base.BaseListVu;
 import com.yufan.library.inject.FindLayout;
@@ -30,6 +33,16 @@ public class MediaBrowserVu extends BaseListVu<MediaBrowserContract.Presenter> i
 
     @Override
     public boolean initTitle(AppToolbar appToolbar) {
+      TextView textView=  appToolbar.creatRightView(TextView.class);
+      textView.setText("播放器");
+      textView.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View v) {
+              Intent openUI = new Intent(getContext(), FullScreenPlayerActivity.class);
+              openUI.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+              getContext().startActivity(openUI);
+          }
+      });
         return super.initTitle(appToolbar);
     }
 

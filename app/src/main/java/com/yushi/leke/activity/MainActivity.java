@@ -24,18 +24,27 @@ import com.yushi.leke.R;
 import com.yushi.leke.UIHelper;
 import com.yushi.leke.fragment.test.TestListFragment;
 import com.yushi.leke.uamp.MusicService;
+import com.yushi.leke.uamp.ui.FullScreenPlayerActivity;
 import com.yushi.leke.uamp.ui.MediaBrowserProvider;
 import com.yushi.leke.uamp.utils.LogHelper;
 import com.yushi.leke.uamp.utils.ResourceHelper;
 
 public class MainActivity extends BaseActivity implements MediaBrowserProvider {
 private String     TAG="MainActivity";
+    public static final String EXTRA_START_FULLSCREEN =
+            "com.yushi.leke.uamp.EXTRA_START_FULLSCREEN";
+    public static final String EXTRA_CURRENT_MEDIA_DESCRIPTION =
+            "com.yushi.leke.uamp.CURRENT_MEDIA_DESCRIPTION";
     private MediaBrowserCompat mMediaBrowser;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        //检查Activity重新创建时是否需要开启全屏播放器界面
+        // Only check if a full screen player is needed on the first time:
+        if (savedInstanceState == null) {
+            startFullScreenActivityIfNeeded(getIntent());
+        }
         if (Build.VERSION.SDK_INT >= 21) {
             // Since our app icon has the same color as colorPrimary, our entry in the Recent Apps
             // list gets weird. We need to change either the icon or the color
@@ -48,6 +57,7 @@ private String     TAG="MainActivity";
             setTaskDescription(taskDesc);
         }
 
+
         // Connect a media browser just to get the media session token. There are other ways
         // this can be done, for example by sharing the session token directly.
         //创建媒体浏览客户端（MediaBrowserCompat）
@@ -56,6 +66,16 @@ private String     TAG="MainActivity";
        loadRootFragment(R.id.rl_fragment, UIHelper.creat(TestListFragment.class).build());//.put(Global.BUNDLE_KEY_BROWSER_URL,"http://www.baidu.com")
 
 
+    }
+    private void startFullScreenActivityIfNeeded(Intent intent) {
+        if (intent != null && intent.getBooleanExtra(EXTRA_START_FULLSCREEN, false)) {
+            Intent fullScreenIntent = new Intent(this, FullScreenPlayerActivity.class)
+                    .setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP |
+                            Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                    .putExtra(EXTRA_CURRENT_MEDIA_DESCRIPTION,
+                            intent.getParcelableExtra(EXTRA_CURRENT_MEDIA_DESCRIPTION));
+            startActivity(fullScreenIntent);
+        }
     }
 
     @Override
