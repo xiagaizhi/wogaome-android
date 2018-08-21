@@ -13,7 +13,7 @@ import com.yufan.share.ShareModel;
 import com.yushi.leke.UIHelper;
 import com.yushi.leke.activity.AliyunPlayerActivity;
 import com.yushi.leke.bean.Person;
-import com.yushi.leke.fragment.uamp.ui.MediaBrowserFragment;
+import com.yushi.leke.uamp.ui.MediaBrowserFragment;
 import com.yushi.leke.share.ShareMenuActivity;
 
 import java.util.List;

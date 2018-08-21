@@ -72,12 +72,12 @@
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <!-- Main activity for music browsing on phone -->
         <activity
-            android:name="com.yushi.leke.fragment.uamp.ui.FullScreenPlayerActivity"
+            android:name=".uamp.ui.FullScreenPlayerActivity"
             android:label="@string/app_name">
 
         </activity>
         <service
-            android:name="com.yushi.leke.fragment.uamp.MusicService"
+            android:name=".uamp.MusicService"
             android:exported="true"
             tools:ignore="ExportedService">
             <intent-filter>

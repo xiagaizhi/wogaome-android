@@ -14,7 +14,7 @@ import com.yufan.library.inject.VuClass;
 import com.yufan.library.manager.DialogManager;
 import com.yushi.leke.UIHelper;
 import com.yushi.leke.fragment.register.RegisterFragment;
-import com.yushi.leke.fragment.uamp.ui.FullScreenPlayerActivity;
+import com.yushi.leke.uamp.ui.FullScreenPlayerActivity;
 
 /**
  * Created by mengfantao on 18/8/2.

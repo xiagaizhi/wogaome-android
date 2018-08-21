@@ -23,10 +23,10 @@ import com.yushi.leke.MessengerService;
 import com.yushi.leke.R;
 import com.yushi.leke.UIHelper;
 import com.yushi.leke.fragment.test.TestListFragment;
-import com.yushi.leke.fragment.uamp.MusicService;
-import com.yushi.leke.fragment.uamp.ui.MediaBrowserProvider;
-import com.yushi.leke.fragment.uamp.utils.LogHelper;
-import com.yushi.leke.fragment.uamp.utils.ResourceHelper;
+import com.yushi.leke.uamp.MusicService;
+import com.yushi.leke.uamp.ui.MediaBrowserProvider;
+import com.yushi.leke.uamp.utils.LogHelper;
+import com.yushi.leke.uamp.utils.ResourceHelper;
 
 public class MainActivity extends BaseActivity implements MediaBrowserProvider {
 private String     TAG="MainActivity";
