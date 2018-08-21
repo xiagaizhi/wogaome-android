@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.yushi.leke.plugin"
+    package="com.yushi.leke"
     >
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.INTERNET"/>
@@ -34,10 +34,10 @@
 
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:name=".App"
+        android:name="com.yushi.leke.App"
         tools:replace="theme,name,icon, label"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.MainActivity"
+        <activity android:name="com.yushi.leke.activity.MainActivity"
             android:configChanges="orientation|screenSize|keyboardHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -45,7 +45,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.AliyunPlayerActivity"
+        <activity android:name="com.yushi.leke.activity.AliyunPlayerActivity"
 
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
             android:configChanges="keyboardHidden|orientation|screenSize"
@@ -53,31 +53,31 @@
 
 
         <activity
-            android:name=".share.ShareMenuActivity"
+            android:name="com.yushi.leke.share.ShareMenuActivity"
             android:configChanges="keyboardHidden|orientation"
             android:theme="@style/ThemeActivity"
             android:screenOrientation="portrait"
             ></activity>
         <activity
-            android:name=".wxapi.WXEntryActivity"
+            android:name="com.yushi.leke.wxapi.WXEntryActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
 
         <activity
-            android:name=".wxapi.WXPayEntryActivity"
+            android:name="com.yushi.leke.wxapi.WXPayEntryActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <!-- Main activity for music browsing on phone -->
         <activity
-            android:name=".fragment.uamp.ui.FullScreenPlayerActivity"
+            android:name="com.yushi.leke.fragment.uamp.ui.FullScreenPlayerActivity"
             android:label="@string/app_name">
 
         </activity>
         <service
-            android:name=".fragment.uamp.MusicService"
+            android:name="com.yushi.leke.fragment.uamp.MusicService"
             android:exported="true"
             tools:ignore="ExportedService">
             <intent-filter>
@@ -85,13 +85,6 @@
             </intent-filter>
         </service>
 
-        <service
-            android:name=".MessengerService"
-            android:process=":remote" >
-            <intent-filter>
-                <action android:name="com.didi.MessengerService.launch" />
-            </intent-filter>
-        </service>
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="com.youximao.anew.myapplication.fileprovider"

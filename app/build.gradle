@@ -4,7 +4,7 @@ android {
     compileSdkVersion gradle.compileSdkVersion
     buildToolsVersion gradle.buildToolsVersion
     defaultConfig {
-        applicationId "com.yushi.leke.plugin"
+        applicationId "com.yushi.leke"
         minSdkVersion gradle.minSdkVersion
         targetSdkVersion gradle.targetSdkVersion
         versionCode gradle.versionCode
