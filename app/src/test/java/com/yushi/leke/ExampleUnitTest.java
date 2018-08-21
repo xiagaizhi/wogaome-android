@@ -1,4 +1,4 @@
-package com.yushi.leke.plugin.leke;
+package com.yushi.leke;
 
 import org.junit.Test;
 

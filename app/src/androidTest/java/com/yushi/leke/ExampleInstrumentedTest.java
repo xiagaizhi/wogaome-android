@@ -1,4 +1,4 @@
-package com.yushi.leke.plugin.leke;
+package com.yushi.leke;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.yushi.leke.plugin.leke", appContext.getPackageName());
+        assertEquals("com.yushi.leke", appContext.getPackageName());
     }
 }
