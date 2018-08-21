@@ -54,18 +54,6 @@ private String     TAG="MainActivity";
         mMediaBrowser = new MediaBrowserCompat(this,
                 new ComponentName(this, MusicService.class), mConnectionCallback, null);
        loadRootFragment(R.id.rl_fragment, UIHelper.creat(TestListFragment.class).build());//.put(Global.BUNDLE_KEY_BROWSER_URL,"http://www.baidu.com")
-        Intent service = new Intent(this, MessengerService.class);
-        bindService(service, new ServiceConnection() {
-            @Override
-            public void onServiceConnected(ComponentName name, IBinder service) {
-                DialogManager.getInstance().toast("");
-            }
-
-            @Override
-            public void onServiceDisconnected(ComponentName name) {
-
-            }
-        }, Context.BIND_AUTO_CREATE);
 
 
     }
@@ -74,7 +62,7 @@ private String     TAG="MainActivity";
     protected void onStart() {
         super.onStart();
         LogHelper.d(TAG, "Activity onStart");
-       // mMediaBrowser.connect();
+       mMediaBrowser.connect();
     }
 
     @Override
