@@ -17,8 +17,8 @@
 package com.yushi.leke.fragment.test;
 
 
-import com.yufan.library.inter.Pr;
-import com.yufan.library.inter.VuList;
+import com.yufan.library.base.Pr;
+import com.yufan.library.base.VuList;
 
 /**
  * This specifies the contract between the view and the presenter.

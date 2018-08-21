@@ -1,4 +1,4 @@
-package com.yufan.library.inter;
+package com.yufan.library.base;
 
 /**
  * Created by mengfantao on 18/7/16.

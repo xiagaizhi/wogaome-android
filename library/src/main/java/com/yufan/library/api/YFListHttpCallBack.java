@@ -1,11 +1,8 @@
 package com.yufan.library.api;
 
-import com.yufan.library.base.BaseListVu;
-import com.yufan.library.inter.VuList;
+import com.yufan.library.base.VuList;
 import com.yufan.library.manager.DialogManager;
 import com.yufan.library.view.recycler.PageInfo;
-
-import java.util.List;
 
 /**
  * Created by mengfantao on 18/4/20.

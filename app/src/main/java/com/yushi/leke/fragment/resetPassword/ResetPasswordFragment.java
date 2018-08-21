@@ -1,4 +1,4 @@
-package com.yushi.leke.fragment.wallet;
+package com.yushi.leke.fragment.resetPassword;
 
 import android.os.Bundle;
 
@@ -9,14 +9,12 @@ import android.support.annotation.Nullable;
 import android.view.View;
 
 import com.yufan.library.inject.VuClass;
-import com.yushi.leke.UIHelper;
-import com.yushi.leke.fragment.setRechargePassword.SetRechargePasswordFragment;
 
 /**
  * Created by mengfantao on 18/8/2.
  */
-@VuClass(MyWalletVu.class)
-public class MyWalletFragment extends BaseFragment<MyWalletContract.IView> implements MyWalletContract.Presenter {
+@VuClass(ResetPasswordVu.class)
+public class ResetPasswordFragment extends BaseFragment<ResetPasswordContract.IView> implements ResetPasswordContract.Presenter {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -31,7 +29,7 @@ public class MyWalletFragment extends BaseFragment<MyWalletContract.IView> imple
     }
 
     @Override
-    public void setRechargePwd() {
-        start(UIHelper.creat(SetRechargePasswordFragment.class).build());
+    public void getVerifcationCode() {
+
     }
 }

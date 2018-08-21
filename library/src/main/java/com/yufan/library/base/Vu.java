@@ -1,4 +1,4 @@
-package com.yufan.library.inter;
+package com.yufan.library.base;
 
 import android.view.LayoutInflater;
 import android.view.View;

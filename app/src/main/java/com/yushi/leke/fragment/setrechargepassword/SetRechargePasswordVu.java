@@ -1,4 +1,4 @@
-package com.yushi.leke.fragment.setrechargepassword;
+package com.yushi.leke.fragment.setRechargePassword;
 
 import android.os.Build;
 import android.text.InputType;

@@ -1,4 +1,4 @@
-package com.yushi.leke.fragment.resetpassword;
+package com.yushi.leke.fragment.resetPassword;
 
 import android.text.InputType;
 import android.view.View;

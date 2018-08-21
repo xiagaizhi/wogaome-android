@@ -9,8 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.yufan.library.inject.AnnotateUtils;
-import com.yufan.library.inter.Vu;
-import com.yufan.library.inter.VuList;
 
 import java.util.ArrayList;
 import java.util.List;

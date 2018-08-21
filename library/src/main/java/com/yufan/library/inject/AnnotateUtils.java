@@ -3,10 +3,9 @@ package com.yufan.library.inject;
 import android.content.Context;
 import android.content.res.Resources;
 import android.text.TextUtils;
-import android.view.TextureView;
 
 import com.yufan.library.base.BaseVu;
-import com.yufan.library.inter.Vu;
+import com.yufan.library.base.Vu;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;

@@ -2,8 +2,8 @@ package com.yushi.leke.uamp.ui;
 
 import android.support.v4.media.MediaBrowserCompat;
 
-import com.yufan.library.inter.Pr;
-import com.yufan.library.inter.VuList;
+import com.yufan.library.base.Pr;
+import com.yufan.library.base.VuList;
 
 import java.util.List;
 

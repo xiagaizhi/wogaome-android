@@ -1,7 +1,7 @@
-package com.yushi.leke.fragment.setrechargepassword;
+package com.yushi.leke.fragment.setRechargePassword;
 
-import com.yufan.library.inter.Pr;
-import com.yufan.library.inter.Vu;
+import com.yufan.library.base.Pr;
+import com.yufan.library.base.Vu;
 
 /**
  * Created by mengfantao on 18/8/2.

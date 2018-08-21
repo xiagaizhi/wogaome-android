@@ -1,4 +1,4 @@
-package com.yushi.leke.fragment.wallet;
+package com.yushi.leke.fragment.login.loginPhone;
 
 import com.yufan.library.base.Pr;
 import com.yufan.library.base.Vu;
@@ -7,13 +7,13 @@ import com.yufan.library.base.Vu;
  * Created by mengfantao on 18/8/2.
  */
 
-public interface MyWalletContract {
+public interface LoginPhoneContract {
     interface IView extends Vu {
 
     }
 
     interface Presenter extends Pr {
 
-        void setRechargePwd();
+
     }
 }

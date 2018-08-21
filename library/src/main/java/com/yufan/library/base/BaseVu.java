@@ -12,8 +12,6 @@ import android.widget.TextView;
 
 import com.yufan.library.R;
 import com.yufan.library.inject.AnnotateUtils;
-import com.yufan.library.inter.Pr;
-import com.yufan.library.inter.Vu;
 import com.yufan.library.util.PxUtil;
 import com.yufan.library.widget.AppToolbar;
 import com.yufan.library.widget.StateLayout;
