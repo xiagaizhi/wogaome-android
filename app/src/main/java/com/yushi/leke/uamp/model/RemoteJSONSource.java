@@ -138,31 +138,172 @@ public class RemoteJSONSource implements MusicProviderSource {
      * @return result JSONObject containing the parsed representation.
      */
     private JSONObject fetchJSONFromUrl(String urlString) throws JSONException {
-        BufferedReader reader = null;
+        String data="{\"music\" : [ \n" +
+                "\t{ \"title\" : \"Jazz in Paris\",\n" +
+                "\t  \"album\" : \"Jazz & Blues\",\n" +
+                "\t  \"artist\" : \"Media Right Productions\",\n" +
+                "\t  \"genre\" : \"Jazz & Blues\",\n" +
+                "\t  \"source\" : \"Jazz_In_Paris.mp3\",\n" +
+                "\t  \"image\" : \"album_art.jpg\",\n" +
+                "\t  \"trackNumber\" : 1,\n" +
+                "\t  \"totalTrackCount\" : 6,\n" +
+                "\t  \"duration\" : 103,\n" +
+                "\t  \"site\" : \"https://www.youtube.com/audiolibrary/music\"\n" +
+                "\t},\n" +
+                "\t{ \"title\" : \"The Messenger\",\n" +
+                "\t  \"album\" : \"Jazz & Blues\",\n" +
+                "\t  \"artist\" : \"Silent Partner\",\n" +
+                "\t  \"genre\" : \"Jazz & Blues\",\n" +
+                "\t  \"source\" : \"The_Messenger.mp3\",\n" +
+                "\t  \"image\" : \"album_art.jpg\",\n" +
+                "\t  \"trackNumber\" : 2,\n" +
+                "\t  \"totalTrackCount\" : 6,\n" +
+                "\t  \"duration\" : 132,\n" +
+                "\t  \"site\" : \"https://www.youtube.com/audiolibrary/music\"\n" +
+                "\t},\n" +
+                "\t{ \"title\" : \"Talkies\",\n" +
+                "\t  \"album\" : \"Jazz & Blues\",\n" +
+                "\t  \"artist\" : \"Huma-Huma\",\n" +
+                "\t  \"genre\" : \"Jazz & Blues\",\n" +
+                "\t  \"source\" : \"Talkies.mp3\",\n" +
+                "\t  \"image\" : \"album_art.jpg\",\n" +
+                "\t  \"trackNumber\" : 3,\n" +
+                "\t  \"totalTrackCount\" : 6,\n" +
+                "\t  \"duration\" : 162,\n" +
+                "\t  \"site\" : \"https://www.youtube.com/audiolibrary/music\"\n" +
+                "\t},\n" +
+                "\t{ \"title\" : \"On the Bach\",\n" +
+                "\t  \"album\" : \"Cinematic\",\n" +
+                "\t  \"artist\" : \"Jingle Punks\",\n" +
+                "\t  \"genre\" : \"Cinematic\",\n" +
+                "\t  \"source\" : \"On_the_Bach.mp3\",\n" +
+                "\t  \"image\" : \"album_art.jpg\",\n" +
+                "\t  \"trackNumber\" : 4,\n" +
+                "\t  \"totalTrackCount\" : 6,\n" +
+                "\t  \"duration\" : 66,\n" +
+                "\t  \"site\" : \"https://www.youtube.com/audiolibrary/music\"\n" +
+                "\t},\n" +
+                "\t{ \"title\" : \"The Story Unfolds\",\n" +
+                "\t  \"album\" : \"Cinematic\",\n" +
+                "\t  \"artist\" : \"Jingle Punks\",\n" +
+                "\t  \"genre\" : \"Cinematic\",\n" +
+                "\t  \"source\" : \"The_Story_Unfolds.mp3\",\n" +
+                "\t  \"image\" : \"album_art.jpg\",\n" +
+                "\t  \"trackNumber\" : 5,\n" +
+                "\t  \"totalTrackCount\" : 6,\n" +
+                "\t  \"duration\" : 91,\n" +
+                "\t  \"site\" : \"https://www.youtube.com/audiolibrary/music\"\n" +
+                "\t},\n" +
+                "\t{ \"title\" : \"Drop and Roll\",\n" +
+                "\t  \"album\" : \"Youtube Audio Library Rock\",\n" +
+                "\t  \"artist\" : \"Silent Partner\",\n" +
+                "\t  \"genre\" : \"Rock\",\n" +
+                "\t  \"source\" : \"Drop_and_Roll.mp3\",\n" +
+                "\t  \"image\" : \"album_art_2.jpg\",\n" +
+                "\t  \"trackNumber\" : 1,\n" +
+                "\t  \"totalTrackCount\" : 7,\n" +
+                "\t  \"duration\" : 121,\n" +
+                "\t  \"site\" : \"https://www.youtube.com/audiolibrary/music\"\n" +
+                "\t},\n" +
+                "\t{ \"title\" : \"Motocross\",\n" +
+                "\t  \"album\" : \"Youtube Audio Library Rock\",\n" +
+                "\t  \"artist\" : \"Topher Mohr and Alex Elena\",\n" +
+                "\t  \"genre\" : \"Rock\",\n" +
+                "\t  \"source\" : \"Motocross.mp3\",\n" +
+                "\t  \"image\" : \"album_art_2.jpg\",\n" +
+                "\t  \"trackNumber\" : 2,\n" +
+                "\t  \"totalTrackCount\" : 7,\n" +
+                "\t  \"duration\" : 182,\n" +
+                "\t  \"site\" : \"https://www.youtube.com/audiolibrary/music\"\n" +
+                "\t},\n" +
+                "\t{ \"title\" : \"Wish You'd Come True\",\n" +
+                "\t  \"album\" : \"Youtube Audio Library Rock\",\n" +
+                "\t  \"artist\" : \"The 126ers\",\n" +
+                "\t  \"genre\" : \"Rock\",\n" +
+                "\t  \"source\" : \"Wish_You_d_Come_True.mp3\",\n" +
+                "\t  \"image\" : \"album_art_2.jpg\",\n" +
+                "\t  \"trackNumber\" : 3,\n" +
+                "\t  \"totalTrackCount\" : 7,\n" +
+                "\t  \"duration\" : 169,\n" +
+                "\t  \"site\" : \"https://www.youtube.com/audiolibrary/music\"\n" +
+                "\t},\n" +
+                "\t{ \"title\" : \"Awakening\",\n" +
+                "\t  \"album\" : \"Youtube Audio Library Rock\",\n" +
+                "\t  \"artist\" : \"Silent Partner\",\n" +
+                "\t  \"genre\" : \"Rock\",\n" +
+                "\t  \"source\" : \"Awakening.mp3\",\n" +
+                "\t  \"image\" : \"album_art_2.jpg\",\n" +
+                "\t  \"trackNumber\" : 4,\n" +
+                "\t  \"totalTrackCount\" : 7,\n" +
+                "\t  \"duration\" : 220,\n" +
+                "\t  \"site\" : \"https://www.youtube.com/audiolibrary/music\"\n" +
+                "\t},\n" +
+                "\t{ \"title\" : \"Home\",\n" +
+                "\t  \"album\" : \"Youtube Audio Library Rock\",\n" +
+                "\t  \"artist\" : \"Letter Box\",\n" +
+                "\t  \"genre\" : \"Rock\",\n" +
+                "\t  \"source\" : \"Home.mp3\",\n" +
+                "\t  \"image\" : \"album_art_2.jpg\",\n" +
+                "\t  \"trackNumber\" : 5,\n" +
+                "\t  \"totalTrackCount\" : 7,\n" +
+                "\t  \"duration\" : 213,\n" +
+                "\t  \"site\" : \"https://www.youtube.com/audiolibrary/music\"\n" +
+                "\t},\n" +
+                "\t{ \"title\" : \"Tell The Angels\",\n" +
+                "\t  \"album\" : \"Youtube Audio Library Rock\",\n" +
+                "\t  \"artist\" : \"Letter Box\",\n" +
+                "\t  \"genre\" : \"Rock\",\n" +
+                "\t  \"source\" : \"Tell_The_Angels.mp3\",\n" +
+                "\t  \"image\" : \"album_art_2.jpg\",\n" +
+                "\t  \"trackNumber\" : 6,\n" +
+                "\t  \"totalTrackCount\" : 7,\n" +
+                "\t  \"duration\" : 208,\n" +
+                "\t  \"site\" : \"https://www.youtube.com/audiolibrary/music\"\n" +
+                "\t},\n" +
+                "\t{ \"title\" : \"Hey Sailor\",\n" +
+                "\t  \"album\" : \"Youtube Audio Library Rock\",\n" +
+                "\t  \"artist\" : \"Letter Box\",\n" +
+                "\t  \"genre\" : \"Rock\",\n" +
+                "\t  \"source\" : \"Hey_Sailor.mp3\",\n" +
+                "\t  \"image\" : \"album_art_2.jpg\",\n" +
+                "\t  \"trackNumber\" : 7,\n" +
+                "\t  \"totalTrackCount\" : 7,\n" +
+                "\t  \"duration\" : 193,\n" +
+                "\t  \"site\" : \"https://www.youtube.com/audiolibrary/music\"\n" +
+                "\t},\n" +
+                "\t{ \"title\" : \"Keys To The Kingdom\",\n" +
+                "\t  \"album\" : \"Youtube Audio Library Rock 2\",\n" +
+                "\t  \"artist\" : \"The 126ers\",\n" +
+                "\t  \"genre\" : \"Rock\",\n" +
+                "\t  \"source\" : \"Keys_To_The_Kingdom.mp3\",\n" +
+                "\t  \"image\" : \"album_art_3.jpg\",\n" +
+                "\t  \"trackNumber\" : 1,\n" +
+                "\t  \"totalTrackCount\" : 2,\n" +
+                "\t  \"duration\" : 221,\n" +
+                "\t  \"site\" : \"https://www.youtube.com/audiolibrary/music\"\n" +
+                "\t},\n" +
+                "\t{ \"title\" : \"The Coldest Shoulder\",\n" +
+                "\t  \"album\" : \"Youtube Audio Library Rock 2\",\n" +
+                "\t  \"artist\" : \"The 126ers\",\n" +
+                "\t  \"genre\" : \"Rock\",\n" +
+                "\t  \"source\" : \"The_Coldest_Shoulder.mp3\",\n" +
+                "\t  \"image\" : \"album_art_3.jpg\",\n" +
+                "\t  \"trackNumber\" : 2,\n" +
+                "\t  \"totalTrackCount\" : 2,\n" +
+                "\t  \"duration\" : 160,\n" +
+                "\t  \"site\" : \"https://www.youtube.com/audiolibrary/music\"\n" +
+                "\t}\n" +
+                "]}";
+
         try {
-            URLConnection urlConnection = new URL(urlString).openConnection();
-            reader = new BufferedReader(new InputStreamReader(
-                    urlConnection.getInputStream(), "iso-8859-1"));
-            StringBuilder sb = new StringBuilder();
-            String line;
-            while ((line = reader.readLine()) != null) {
-                sb.append(line);
-            }
-            Log.e(TAG,sb.toString());
-            return new JSONObject(sb.toString());
+            return new JSONObject(data);
         } catch (JSONException e) {
             throw e;
         } catch (Exception e) {
             LogHelper.e(TAG, "Failed to parse the json for media list", e);
             return null;
         } finally {
-            if (reader != null) {
-                try {
-                    reader.close();
-                } catch (IOException e) {
-                    // ignore
-                }
-            }
+
         }
     }
 }

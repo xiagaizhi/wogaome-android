@@ -18,8 +18,6 @@ import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
 
 import com.yufan.library.base.BaseActivity;
-import com.yufan.library.manager.DialogManager;
-import com.yushi.leke.MessengerService;
 import com.yushi.leke.R;
 import com.yushi.leke.UIHelper;
 import com.yushi.leke.fragment.test.TestListFragment;
