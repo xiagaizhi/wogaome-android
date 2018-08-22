@@ -1,4 +1,4 @@
-package com.yushi.leke.bean;
+package com.yushi.leke.fragment.main;
 
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;

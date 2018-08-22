@@ -13,7 +13,6 @@ import android.widget.Toast;
 import com.yufan.library.inject.VuClass;
 import com.yushi.leke.R;
 import com.yushi.leke.UIHelper;
-import com.yushi.leke.bean.MainVu;
 import com.yushi.leke.fragment.setPayPassword.SetRechargePasswordFragment;
 import com.yushi.leke.fragment.test.TestListFragment;
 import com.yushi.leke.fragment.wallet.MyWalletFragment;
