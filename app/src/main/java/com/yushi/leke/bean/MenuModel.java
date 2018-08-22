@@ -1,4 +1,4 @@
-package com.yushi.leke.fragment.main;
+package com.yushi.leke.bean;
 
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
@@ -8,6 +8,7 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.yushi.leke.R;
+import com.yushi.leke.fragment.main.MainMenu;
 
 /**
  * Created by mengfantao on 17/12/25.

@@ -3,7 +3,6 @@ package com.yushi.leke.fragment.splash;
 import android.Manifest;
 import android.os.Bundle;
 
-import com.yushi.leke.R;
 import com.yufan.library.base.BaseFragment;
 
 import android.os.Handler;
@@ -13,7 +12,6 @@ import android.support.v4.app.FragmentManager;
 import android.view.View;
 import android.view.WindowManager;
 
-import com.yufan.library.base.BaseFragment;
 import com.yufan.library.inject.VuClass;
 
 import java.util.List;
@@ -24,9 +22,10 @@ import pub.devrel.easypermissions.EasyPermissions;
  * Created by mengfantao on 18/8/2.
  */
 @VuClass(SplashVu.class)
-public class SplashFragment extends BaseFragment<SplashContract.IView> implements SplashContract.Presenter , EasyPermissions.PermissionCallbacks{
+public class SplashFragment extends BaseFragment<SplashContract.IView> implements SplashContract.Presenter, EasyPermissions.PermissionCallbacks {
     private static final int RC_LOCATION = 201;
     private Handler handler = new Handler();
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -46,12 +45,13 @@ public class SplashFragment extends BaseFragment<SplashContract.IView> implement
                     RC_LOCATION, perms);
         }
     }
+
     @Override
     public void onRefresh() {
 
     }
 
-    private void jumpToMain(){
+    private void jumpToMain() {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -65,7 +65,7 @@ public class SplashFragment extends BaseFragment<SplashContract.IView> implement
                     fragmentManager.beginTransaction().remove(SplashFragment.this).commit();
                 }
             }
-        }, 1000);
+        }, 3000);
     }
 
 
@@ -81,7 +81,7 @@ public class SplashFragment extends BaseFragment<SplashContract.IView> implement
     @Override
     public void onPermissionsGranted(int requestCode, @NonNull List<String> perms) {
         if (requestCode == RC_LOCATION) {
-
+            jumpToMain();
         }
     }
 
@@ -89,6 +89,4 @@ public class SplashFragment extends BaseFragment<SplashContract.IView> implement
     public void onPermissionsDenied(int requestCode, @NonNull List<String> perms) {
         jumpToMain();
     }
-
-
 }

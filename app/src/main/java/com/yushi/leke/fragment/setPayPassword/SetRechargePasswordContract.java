@@ -1,4 +1,4 @@
-package com.yushi.leke.fragment.setRechargePassword;
+package com.yushi.leke.fragment.setPayPassword;
 
 import com.yufan.library.base.Pr;
 import com.yufan.library.base.Vu;

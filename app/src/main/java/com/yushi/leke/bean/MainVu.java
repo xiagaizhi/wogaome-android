@@ -1,4 +1,4 @@
-package com.yushi.leke.fragment.main;
+package com.yushi.leke.bean;
 
 import android.view.View;
 
@@ -10,6 +10,8 @@ import com.yufan.library.inject.FindView;
 import com.yufan.library.inject.Title;
 import com.yufan.library.widget.StateLayout;
 import com.yufan.library.widget.AppToolbar;
+import com.yushi.leke.fragment.main.MainContract;
+import com.yushi.leke.fragment.main.MainMenu;
 
 /**
  * Created by mengfantao on 18/8/2.
