@@ -10,6 +10,7 @@ import android.view.View;
 
 import com.yufan.library.inject.VuClass;
 import com.yushi.leke.UIHelper;
+import com.yushi.leke.fragment.openTreasureBox.OpenTreasureBoxFragment;
 import com.yushi.leke.fragment.setRechargePassword.SetRechargePasswordFragment;
 
 /**
@@ -33,5 +34,10 @@ public class MyWalletFragment extends BaseFragment<MyWalletContract.IView> imple
     @Override
     public void setRechargePwd() {
         start(UIHelper.creat(SetRechargePasswordFragment.class).build());
+    }
+
+    @Override
+    public void openTreasureBox() {
+        start(UIHelper.creat(OpenTreasureBoxFragment.class).build());
     }
 }

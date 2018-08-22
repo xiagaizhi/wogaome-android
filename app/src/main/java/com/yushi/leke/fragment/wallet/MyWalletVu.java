@@ -33,7 +33,15 @@ public class MyWalletVu extends BaseVu<MyWalletContract.Presenter> implements My
             }
         });
 
-//        appToolbar.build();
+
+        TextView openBox=  appToolbar.creatRightView(TextView.class);
+        openBox.setText("打开宝箱");
+        openBox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mPersenter.openTreasureBox();
+            }
+        });
         return super.initTitle(appToolbar);
     }
 

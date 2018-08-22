@@ -6,7 +6,7 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="2px"
+        android:layout_height="@dimen/px1"
         android:background="@color/btn_gray" />
 
     <RelativeLayout
@@ -26,14 +26,15 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="1px"
+        android:layout_height="@dimen/px1"
+        android:visibility="gone"
         android:background="@color/btn_gray" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/keyboard_bg"
+        android:background="@color/white"
         android:overScrollMode="never"></android.support.v7.widget.RecyclerView>
 
 </LinearLayout>

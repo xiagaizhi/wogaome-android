@@ -13,6 +13,8 @@ import com.yufan.share.ShareModel;
 import com.yushi.leke.UIHelper;
 import com.yushi.leke.activity.AliyunPlayerActivity;
 import com.yushi.leke.bean.Person;
+import com.yushi.leke.fragment.main.MainFragment;
+import com.yushi.leke.fragment.wallet.MyWalletFragment;
 import com.yushi.leke.uamp.ui.MediaBrowserFragment;
 import com.yushi.leke.share.ShareMenuActivity;
 
@@ -76,7 +78,7 @@ public class TestListFragment extends BaseListFragment<DbTestContract.View> impl
 
     @Override
     public void batchinsert() {
-        start(UIHelper.creat(MediaBrowserFragment.class).put(MediaBrowserFragment.ARG_MEDIA_ID,"meng").build());
+        ((MainFragment)getParentFragment()).startBrotherFragment(UIHelper.creat(MediaBrowserFragment.class).put(MediaBrowserFragment.ARG_MEDIA_ID,"meng").build());
     }
 
     @Override
@@ -98,6 +100,6 @@ public class TestListFragment extends BaseListFragment<DbTestContract.View> impl
 
     @Override
     public void openMyWallet() {
-
+        ((MainFragment)getParentFragment()).startBrotherFragment(UIHelper.creat(MyWalletFragment.class).build());
     }
 }

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rl_game"
+    android:layout_width="wrap_content"
+    android:layout_weight="1"
+    android:layout_height="wrap_content">
+
+    <View
+        android:id="@+id/view0"
+        android:layout_width="@dimen/px65"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true" />
+
+    <RadioButton
+        android:id="@+id/rb_0"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+
+        android:layout_centerInParent="true"
+        android:button="@null"
+        android:checked="false"
+        android:drawableTop="@drawable/ic_launcher"
+        android:gravity="center"
+
+        android:text="游戏"
+        android:textColor="@color/primarybar_txt"
+        android:textSize="12sp" />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_badge"
+        android:layout_alignRight="@+id/view0"
+        android:background="@drawable/widget_view_badger_new"
+        android:gravity="center"
+        android:textColor="#ffffff"
+        android:textSize="1sp"
+        android:visibility="gone" />
+</RelativeLayout>
