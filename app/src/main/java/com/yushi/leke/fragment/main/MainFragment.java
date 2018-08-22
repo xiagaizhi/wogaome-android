@@ -55,13 +55,6 @@ public class MainFragment extends BaseFragment<MainContract.IView> implements Ma
 
     }
 
-    /**
-     * start other BrotherFragment
-     */
-    public void startBrotherFragment(SupportFragment targetFragment) {
-        start(targetFragment);
-    }
-
     @Override
     public boolean onBackPressedSupport() {
         System.arraycopy(mHits, 1, mHits, 0, mHits.length - 1);

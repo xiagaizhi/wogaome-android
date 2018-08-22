@@ -78,7 +78,7 @@ public class TestListFragment extends BaseListFragment<DbTestContract.View> impl
 
     @Override
     public void batchinsert() {
-        ((MainFragment)getParentFragment()).startBrotherFragment(UIHelper.creat(MediaBrowserFragment.class).put(MediaBrowserFragment.ARG_MEDIA_ID,"meng").build());
+        getRootFragment().start(UIHelper.creat(MediaBrowserFragment.class).put(MediaBrowserFragment.ARG_MEDIA_ID,"meng").build());
     }
 
     @Override
@@ -100,6 +100,6 @@ public class TestListFragment extends BaseListFragment<DbTestContract.View> impl
 
     @Override
     public void openMyWallet() {
-        ((MainFragment)getParentFragment()).startBrotherFragment(UIHelper.creat(MyWalletFragment.class).build());
+        getRootFragment().start(UIHelper.creat(MyWalletFragment.class).build());
     }
 }
