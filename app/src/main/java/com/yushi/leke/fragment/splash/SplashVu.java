@@ -23,7 +23,7 @@ public class SplashVu extends BaseVu<SplashContract.Presenter> implements Splash
 
     @Override
     public boolean initTitle(AppToolbar appToolbar) {
-        return super.initTitle(appToolbar);
+        return false;
     }
 
     @Override

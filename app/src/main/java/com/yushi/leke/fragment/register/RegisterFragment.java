@@ -2,6 +2,9 @@ package com.yushi.leke.fragment.register;
 
 import android.os.Bundle;
 
+import com.alibaba.verificationsdk.ui.IActivityCallback;
+import com.alibaba.verificationsdk.ui.VerifyActivity;
+import com.alibaba.verificationsdk.ui.VerifyType;
 import com.yufan.library.base.BaseFragment;
 
 import android.support.annotation.NonNull;
@@ -10,6 +13,8 @@ import android.view.View;
 import android.view.WindowManager;
 
 import com.yufan.library.inject.VuClass;
+
+import java.util.Map;
 
 /**
  * Created by mengfantao on 18/8/2.
@@ -39,5 +44,20 @@ public class RegisterFragment extends BaseFragment<RegisterContract.IView> imple
     @Override
     public void getVerifcationCode() {
 
+    }
+
+    @Override
+    public void verify() {
+       VerifyActivity.startSimpleVerifyUI(getContext(), VerifyType.TILTBALL, "code", null, new IActivityCallback() {
+           @Override
+           public void onNotifyBackPressed() {
+
+           }
+
+           @Override
+           public void onResult(int i, Map<String, String> map) {
+
+           }
+       });
     }
 }

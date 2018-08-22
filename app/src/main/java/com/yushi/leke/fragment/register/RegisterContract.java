@@ -14,6 +14,7 @@ public interface RegisterContract {
 
     interface Presenter extends Pr {
         void getVerifcationCode();
+        void verify();
 
     }
 }

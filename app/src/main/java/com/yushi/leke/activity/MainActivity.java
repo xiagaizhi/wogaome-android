@@ -20,6 +20,7 @@ import android.support.v4.media.session.PlaybackStateCompat;
 import com.yufan.library.base.BaseActivity;
 import com.yushi.leke.R;
 import com.yushi.leke.UIHelper;
+import com.yushi.leke.fragment.splash.SplashFragment;
 import com.yushi.leke.fragment.test.TestListFragment;
 import com.yushi.leke.uamp.MusicService;
 import com.yushi.leke.uamp.ui.FullScreenPlayerActivity;
@@ -38,11 +39,6 @@ private String     TAG="MainActivity";
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //检查Activity重新创建时是否需要开启全屏播放器界面
-        // Only check if a full screen player is needed on the first time:
-        if (savedInstanceState == null) {
-            startFullScreenActivityIfNeeded(getIntent());
-        }
         if (Build.VERSION.SDK_INT >= 21) {
             // Since our app icon has the same color as colorPrimary, our entry in the Recent Apps
             // list gets weird. We need to change either the icon or the color
@@ -55,15 +51,17 @@ private String     TAG="MainActivity";
             setTaskDescription(taskDesc);
         }
 
-
+        //检查Activity重新创建时是否需要开启全屏播放器界面
+        // Only check if a full screen player is needed on the first time:
+        if (savedInstanceState == null) {
+            startFullScreenActivityIfNeeded(getIntent());
+        }
         // Connect a media browser just to get the media session token. There are other ways
         // this can be done, for example by sharing the session token directly.
         //创建媒体浏览客户端（MediaBrowserCompat）
         mMediaBrowser = new MediaBrowserCompat(this,
                 new ComponentName(this, MusicService.class), mConnectionCallback, null);
        loadRootFragment(R.id.content_level0, UIHelper.creat(TestListFragment.class).build());//.put(Global.BUNDLE_KEY_BROWSER_URL,"http://www.baidu.com")
-
-
     }
     private void startFullScreenActivityIfNeeded(Intent intent) {
         if (intent != null && intent.getBooleanExtra(EXTRA_START_FULLSCREEN, false)) {
@@ -73,6 +71,8 @@ private String     TAG="MainActivity";
                     .putExtra(EXTRA_CURRENT_MEDIA_DESCRIPTION,
                             intent.getParcelableExtra(EXTRA_CURRENT_MEDIA_DESCRIPTION));
             startActivity(fullScreenIntent);
+        }else {
+            UIHelper.openFragment(this,UIHelper.creat(SplashFragment.class).build(),false);
         }
     }
 
