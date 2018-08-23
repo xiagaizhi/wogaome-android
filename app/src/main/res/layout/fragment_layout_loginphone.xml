@@ -48,8 +48,13 @@
                         android:background="@null"
                         android:id="@+id/et_phone"
                         android:layout_height="match_parent" />
+
                     <ImageView
                         android:layout_width="wrap_content"
+                        android:src="@drawable/iv_small_close"
+                        android:layout_marginRight="@dimen/px50"
+                        android:layout_gravity="center_vertical"
+                        android:visibility="gone"
                         android:id="@+id/iv_clear_phone"
                         android:layout_height="wrap_content" />
 
@@ -89,6 +94,7 @@
                         android:src="@drawable/iv_small_close"
                       android:layout_marginRight="@dimen/px50"
                         android:layout_gravity="center_vertical"
+                        android:visibility="gone"
                         android:id="@+id/iv_clear_password"
                         android:layout_height="wrap_content" />
 

@@ -16,7 +16,7 @@ import com.yufan.library.R;
 
 public class LoginLineView extends RelativeLayout {
     private View view;
-
+    private boolean inited;
     public LoginLineView(Context context) {
         super(context);
     }
@@ -36,16 +36,17 @@ public class LoginLineView extends RelativeLayout {
         view.setBackgroundColor(Color.parseColor("#80007AFF"));
         RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 1);
         addView(view, layoutParams);
-
+        inited=false;
     }
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        // 父容器传过来的宽度的值
-        int width = MeasureSpec.getSize(widthMeasureSpec) - getPaddingLeft()
-                - getPaddingRight();
-        view.setTranslationX(-width);
-        super.onMeasure(widthMeasureSpec,heightMeasureSpec);
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        if(!inited){
+            inited=true;
+            int width=   MeasureSpec.getSize(widthMeasureSpec);
+            view.setTranslationX(-width);
+        }
     }
 
     public void startAnim() {

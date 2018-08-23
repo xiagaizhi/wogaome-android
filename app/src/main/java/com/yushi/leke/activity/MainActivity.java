@@ -63,7 +63,7 @@ private String     TAG="MainActivity";
         //创建媒体浏览客户端（MediaBrowserCompat）
         mMediaBrowser = new MediaBrowserCompat(this,
                 new ComponentName(this, MusicService.class), mConnectionCallback, null);
-        if(1==1){
+        if(1!=1){
             loadRootFragment(R.id.content_level0, UIHelper.creat(MainFragment.class).build());//.put(Global.BUNDLE_KEY_BROWSER_URL,"http://www.baidu.com")
         }else {
             loadRootFragment(R.id.content_level0, UIHelper.creat(LoginFragment.class).build());
