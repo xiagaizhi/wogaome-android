@@ -4,4 +4,5 @@
     <string name="lkc_detail">LKC明细</string>
     <string name="lkc_yesterd_arith_num">昨日算力</string>
     <string name="lkc_treasure_instructions">宝箱可开出LKC和经验</string>
+    <string name="top_up_level">充值档位</string>
 </resources>

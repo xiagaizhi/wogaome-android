@@ -29,9 +29,6 @@ public class OpenTreasureBoxFragment extends BaseFragment<OpenTreasureBoxContrac
         datas.add("400");
         datas.add("500");
         datas.add("600");
-        datas.add("700");
-        datas.add("800");
-        datas.add("900");
         vu.getmRecyclerView().getAdapter().notifyDataSetChanged();
     }
 

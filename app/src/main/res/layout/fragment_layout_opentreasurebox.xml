@@ -1,13 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/id_recharge_container"
+
+    <ScrollView
         android:layout_width="match_parent"
-        android:padding="@dimen/px24"
-        android:layout_height="wrap_content" />
+        android:layout_height="match_parent">
 
-</LinearLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/id_treasure_box_top"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/treasure_box_top_bg" />
+
+            <TextView
+                android:id="@+id/id_topup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/px36"
+                android:layout_marginTop="@dimen/px570"
+                android:text="@string/top_up_level"
+                android:textColor="@color/color_gray_level3"
+                android:textSize="@dimen/px42" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/id_recharge_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/id_topup"
+                android:layout_marginLeft="@dimen/px36"
+                android:layout_marginRight="@dimen/px36"
+                android:layout_marginTop="@dimen/px40" />
+
+            <Button
+                android:id="@+id/id_open_pay"
+                android:layout_width="@dimen/px366"
+                android:layout_height="@dimen/px106"
+                android:layout_below="@+id/id_recharge_container"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/px60"
+                android:background="@drawable/open_pay_btn" />
+
+        </RelativeLayout>
+    </ScrollView>
+</RelativeLayout>

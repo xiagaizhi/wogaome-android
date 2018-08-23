@@ -2,7 +2,13 @@ package com.yushi.leke.fragment.openTreasureBox;
 
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.yufan.library.inject.AnnotateUtils;
+import com.yufan.library.util.PxUtil;
 import com.yushi.leke.R;
 import com.yufan.library.base.BaseVu;
 import com.yufan.library.inject.FindLayout;
@@ -24,14 +30,21 @@ public class OpenTreasureBoxVu extends BaseVu<OpenTreasureBoxContract.Presenter>
     @Override
     public void initView(View view) {
         id_recharge_container.setLayoutManager(new GridLayoutManager(getContext(), 3));
-        mAdapter = new OpenTreasureBoxAdapter(mPersenter.getDatas(),getContext());
+        mAdapter = new OpenTreasureBoxAdapter(mPersenter.getDatas(), getContext());
         mAdapter.setOnItemClickListener(this);
         id_recharge_container.setAdapter(mAdapter);
     }
 
     @Override
     public boolean initTitle(AppToolbar appToolbar) {
-        return super.initTitle(appToolbar);
+        String titleNameStr = AnnotateUtils.getTitle(this);
+        if (!TextUtils.isEmpty(titleNameStr)) {
+            TextView titleName = appToolbar.creatCenterView(TextView.class);
+            titleName.setText(titleNameStr);
+        }
+        appToolbar.creatLeftView(ImageView.class);
+        appToolbar.build(false);
+        return true;
     }
 
     @Override
