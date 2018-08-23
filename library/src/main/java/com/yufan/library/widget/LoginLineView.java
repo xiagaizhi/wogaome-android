@@ -44,7 +44,7 @@ public class LoginLineView extends RelativeLayout {
         // 父容器传过来的宽度的值
         int width = MeasureSpec.getSize(widthMeasureSpec) - getPaddingLeft()
                 - getPaddingRight();
-        view.setTranslationX(width);
+        view.setTranslationX(-width);
         super.onMeasure(widthMeasureSpec,heightMeasureSpec);
     }
 

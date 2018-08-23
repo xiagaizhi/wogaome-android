@@ -187,7 +187,7 @@ public class AppToolbar extends RelativeLayout {
     //单位为dp
     public <T> T creatLeftView(Class<T> t,int[] paddings,int[] margins) {
         if(paddings==null){
-            paddings=new int[]{16,5,5,5};
+            paddings=new int[]{0,5,21,5};
 
         }
         if(margins==null){
@@ -250,7 +250,7 @@ public class AppToolbar extends RelativeLayout {
     //单位为dp
     public <T> T creatRightView(Class<T> t,int[] paddings,int[] margins) {
         if(paddings==null){
-            paddings=new int[]{5,5,16,5};
+            paddings=new int[]{30,5,0,5};
 
         }
         if(margins==null){

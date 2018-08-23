@@ -60,6 +60,7 @@ public class RegisterVu extends BaseVu<RegisterContract.Presenter> implements Re
         tv_agreement.setOnClickListener(this);
         bt_register.setOnClickListener(this);
         bt_register.setOnClickListener(this);
+        iv_clear_password.setOnClickListener(this);
         verificationCodeTextView.setOnGetCodeClickListener(new VerificationCodeTextView.OnGetCodeClickListener() {
             @Override
             public void getCode() {
@@ -227,6 +228,15 @@ public class RegisterVu extends BaseVu<RegisterContract.Presenter> implements Re
                 if(CheckUtil.checkInputState(et_phone,et_password,et_verification_code,true)){
                     mPersenter.register(et_phone.getText().toString(),et_password.getText().toString(),et_verification_code.getText().toString());
                 }
+
+                break;
+
+            case R.id.iv_clear_password:
+                et_password.setText("");
+                break;
+
+            case R.id.iv_clear_phone:
+               et_phone.setText("");
 
                 break;
 
