@@ -2,6 +2,7 @@ package com.yushi.leke;
 
 import android.util.Log;
 
+import com.tencent.smtt.sdk.QbSdk;
 import com.umeng.socialize.PlatformConfig;
 import com.yufan.library.base.BaseApplication;
 
@@ -35,8 +36,7 @@ public class App extends BaseApplication {
             Log.e("service", "enter the service process!");
             return;
         }
-
-
+        QbSdk.initX5Environment(getApplicationContext(), null);
     }
 
 

@@ -323,7 +323,7 @@ public class AppToolbar extends RelativeLayout {
             TextView textView = new TextView(getContext());
             textView.setTextSize(18);
             textView.setSingleLine();
-            textView.setTextColor(getResources().getColor(R.color.white));
+            textView.setTextColor(getResources().getColor(R.color.color_gray_level3));
             textView.setPadding(PxUtil.convertDIP2PX(getContext(), paddings[0]), PxUtil.convertDIP2PX(getContext(), paddings[1]), PxUtil.convertDIP2PX(getContext(), paddings[2]), PxUtil.convertDIP2PX(getContext(), paddings[3]));
 //            textView.getPaint().setFakeBoldText(true);
             textView.setLayoutParams(centerLayoutParams);

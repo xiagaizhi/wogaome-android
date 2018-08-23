@@ -59,6 +59,7 @@ public class BrowserVu extends BaseVu<BrowserContract.Presenter>  implements Bro
     @Override
     public boolean initTitle(AppToolbar appToolbar) {
         ImageView leftView=  appToolbar.creatLeftView(ImageView.class);
+        leftView.setImageResource(R.drawable.left_back_black_arrows);
         leftView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

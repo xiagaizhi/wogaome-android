@@ -53,10 +53,6 @@ public class BrowserBaseFragment extends BaseFragment<BrowserContract.View> impl
         initbrowser(vu.getWebView());
     }
 
-    @Override
-    public void onBackPressed() {
-        onBackPressedSupport();
-    }
 
     @Override
     public boolean isPtrEnable() {
