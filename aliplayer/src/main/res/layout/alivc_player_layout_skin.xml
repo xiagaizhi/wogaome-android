@@ -8,13 +8,9 @@
     <com.aliyun.vodplayerview.widget.AliyunVodPlayerView
         android:id="@+id/video_view"
         android:layout_width="match_parent"
+
         android:layout_height="200dp" />
 
-<fragment
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:tag="TestListFragment"
-    android:name="com.yushi.leke.fragment.test.TestListFragment"
-    />
+
 
 </LinearLayout>

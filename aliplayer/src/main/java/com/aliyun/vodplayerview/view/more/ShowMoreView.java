@@ -29,7 +29,7 @@ public class ShowMoreView extends LinearLayout implements View.OnClickListener,R
     private OnScreenCastButtonClickListener mOnScreenCastButtonClickListener;
     private OnBarrageButtonClickListener mOnBarrageButtonClickListener;
 
-    public ShowMoreView(Activity context, AliyunShowMoreValue moreValue) {
+    public ShowMoreView(Context context, AliyunShowMoreValue moreValue) {
         super(context);
         this.context = context;
         this.moreValue = moreValue;

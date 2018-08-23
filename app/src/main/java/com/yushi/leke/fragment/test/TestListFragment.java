@@ -11,9 +11,9 @@ import com.yufan.library.inject.VuClass;
 import com.yufan.library.view.recycler.PageInfo;
 import com.yufan.share.ShareModel;
 import com.yushi.leke.UIHelper;
-import com.yushi.leke.activity.AliyunPlayerActivity;
 import com.yushi.leke.bean.Person;
 import com.yushi.leke.fragment.main.MainFragment;
+import com.yushi.leke.fragment.vodplayer.VodPlayerFragment;
 import com.yushi.leke.fragment.wallet.MyWalletFragment;
 import com.yushi.leke.uamp.ui.MediaBrowserFragment;
 import com.yushi.leke.share.ShareMenuActivity;
@@ -78,14 +78,13 @@ public class TestListFragment extends BaseListFragment<DbTestContract.View> impl
 
     @Override
     public void batchinsert() {
-        getRootFragment().start(UIHelper.creat(MediaBrowserFragment.class).put(MediaBrowserFragment.ARG_MEDIA_ID,"meng").build());
+        getRootFragment().start(UIHelper.creat(VodPlayerFragment.class).build());
+        //getRootFragment().start(UIHelper.creat(MediaBrowserFragment.class).put(MediaBrowserFragment.ARG_MEDIA_ID,"meng").build());
     }
 
     @Override
     public void startPlayer() {
-        Intent intent=new Intent();
-        intent.setClass(getContext(),AliyunPlayerActivity.class);
-        startActivity(intent);
+
     }
 
     @Override

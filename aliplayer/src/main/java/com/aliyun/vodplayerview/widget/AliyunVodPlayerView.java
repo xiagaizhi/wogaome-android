@@ -128,6 +128,8 @@ public class AliyunVodPlayerView extends RelativeLayout implements ITheme {
     private AliyunLocalSource mAliyunLocalSource;
     private AliyunVidSts mAliyunVidSts;
 
+
+
     //对外的各种事件监听
     private IAliyunVodPlayer.OnInfoListener mOutInfoListener = null;
     private IAliyunVodPlayer.OnErrorListener mOutErrorListener = null;
@@ -760,13 +762,10 @@ public class AliyunVodPlayerView extends RelativeLayout implements ITheme {
                     //设置为小屏状态
                     changeScreenMode(AliyunScreenMode.Small);
                 } else if (mCurrentScreenMode == AliyunScreenMode.Small) {
-                    //小屏状态下，就结束活动
-                    Context context = getContext();
-                    if (context instanceof Activity) {
-                        ((Activity) context).finish();
-                    }
+                  if(mOnPlayerViewClickListener!=null){
+                      mOnPlayerViewClickListener.onClick(AliyunScreenMode.Small,PlayViewType.BackPressed);
+                  }
                 }
-
                 if (mCurrentScreenMode == AliyunScreenMode.Small) {
                     mControlView.hideMoreButton();
                 }
@@ -2208,9 +2207,14 @@ public class AliyunVodPlayerView extends RelativeLayout implements ITheme {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (mIsFullScreenLocked && (keyCode != KeyEvent.KEYCODE_HOME)) {
-            return false;
+            return true;
+        }else {
+            if (mCurrentScreenMode != AliyunScreenMode.Small) {
+                changeScreenMode(AliyunScreenMode.Small);
+                return true;
+            }
         }
-        return true;
+        return false;
     }
 
 
@@ -2272,7 +2276,8 @@ public class AliyunVodPlayerView extends RelativeLayout implements ITheme {
         /**
          * click screen cast
          */
-        ScreenCast
+        ScreenCast,
+        BackPressed,
     }
 
     public interface OnPlayerViewClickListener {
