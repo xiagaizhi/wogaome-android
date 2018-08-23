@@ -14,7 +14,8 @@
     <!--统一颜色变化-->
     <color name="transparent">#00000000</color>
     <color name="tv_gray">#666666</color>
-    <color name="tv_blue">#308BE9</color>     //蓝色
+    <color name="tv_blue">#308BE9</color>
+    //蓝色
     <color name="divider_gray">#d9d9d9</color>//细分割线颜色
     <color name="message_widget_bg">#FA5A5A</color>
 
@@ -26,6 +27,7 @@
     <color name="color_bfbfbf">#bfbfbf</color>
     <color name="color_f67b29">#f67b29</color>
     <color name="color_999999">#999999</color>
+    <color name="color_151515">#151515</color>
 
 
 </resources>

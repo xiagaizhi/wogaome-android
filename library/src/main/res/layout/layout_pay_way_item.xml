@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:id="@+id/id_payway_root"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px120"
+        android:layout_marginLeft="@dimen/px36"
+        android:layout_marginRight="@dimen/px36">
+
+        <ImageView
+            android:id="@+id/icon_pay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:src="@drawable/icon_pay_ali" />
+
+        <TextView
+            android:id="@+id/tv_pay_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/px10"
+            android:layout_toRightOf="@+id/icon_pay"
+            android:text="支付宝支付"
+            android:textColor="@color/color_gray_level6"
+            android:textSize="@dimen/px28" />
+
+        <ImageView
+            android:id="@+id/icon_pay_choice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/icon_pay_choice" />
+    </RelativeLayout>
+</RelativeLayout>

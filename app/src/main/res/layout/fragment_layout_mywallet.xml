@@ -6,7 +6,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/px306"
-        android:background="@drawable/mywallet_top_bg" />
+        android:background="@drawable/bg_mywallet_top" />
 
     <RelativeLayout
         android:id="@+id/id_wallet_top"
@@ -15,7 +15,7 @@
         android:layout_marginLeft="@dimen/px24"
         android:layout_marginRight="@dimen/px12"
         android:layout_marginTop="@dimen/px200"
-        android:background="@drawable/lkc_remaining_card">
+        android:background="@drawable/bg_lkc_remaining_card">
 
         <TextView
             android:id="@+id/id_lkc_lable"
@@ -34,7 +34,7 @@
             android:layout_alignParentRight="true"
             android:layout_marginRight="@dimen/px38"
             android:layout_marginTop="@dimen/px38"
-            android:src="@drawable/lkc_detail_icon" />
+            android:src="@drawable/ic_lkc_detail_icon" />
 
         <TextView
             android:id="@+id/id_lkc_remain"
@@ -90,7 +90,7 @@
         android:layout_below="@+id/id_wallet_top"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/px33"
-        android:src="@drawable/wallet_box_icon" />
+        android:src="@drawable/ic_wallet_box" />
 
     <Button
         android:id="@+id/id_open_treasure"
@@ -98,7 +98,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/id_wallet_box"
         android:layout_centerHorizontal="true"
-        android:background="@drawable/open_treasure_box" />
+        android:background="@drawable/btn_open_treasure_box" />
 
     <TextView
         android:layout_width="wrap_content"

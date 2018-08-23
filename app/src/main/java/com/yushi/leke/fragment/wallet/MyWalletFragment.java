@@ -9,6 +9,7 @@ import android.support.annotation.Nullable;
 import android.view.View;
 
 import com.yufan.library.inject.VuClass;
+import com.yufan.library.pay.PayDialog;
 import com.yushi.leke.UIHelper;
 import com.yushi.leke.fragment.openTreasureBox.OpenTreasureBoxFragment;
 import com.yushi.leke.fragment.setPayPassword.SetRechargePasswordFragment;
@@ -33,7 +34,9 @@ public class MyWalletFragment extends BaseFragment<MyWalletContract.IView> imple
 
     @Override
     public void setRechargePwd() {
-        start(UIHelper.creat(SetRechargePasswordFragment.class).build());
+//        start(UIHelper.creat(SetRechargePasswordFragment.class).build());
+        PayDialog payDialog = new PayDialog(_mActivity,"开宝箱",1000);
+        payDialog.show();
     }
 
     @Override

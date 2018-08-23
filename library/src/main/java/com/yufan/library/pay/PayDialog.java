@@ -6,72 +6,56 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.CheckBox;
 import android.widget.TextView;
 
 
 import com.yufan.library.R;
-import com.yufan.library.pay.alipay.ToALiPay;
-import com.yufan.library.pay.wenchatpay.WeChatPay;
 
-import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by mengfantao on 18/3/21.
  */
 
-public class PayDialog extends Dialog {
+public class PayDialog extends Dialog implements PayWayAdapter.OnItemClickListener {
+    private RecyclerView id_payway;
+    private PayWayAdapter mAdapter;
+    private List<String> payways = new ArrayList<>();
 
-
-    private View content;
-    public PayDialog(@NonNull Context context, float message, float money) {
+    public PayDialog(@NonNull Context context, String message, float money) {
         super(context, R.style.dialog_common);
-        content = LayoutInflater.from(context).inflate(
-                R.layout.layout_pay, null);
-        setContentView(content);
-        content.findViewById(R.id.iv_close).setOnClickListener(new View.OnClickListener() {
+        View rootView = LayoutInflater.from(context).inflate(R.layout.layout_pay, null);
+        setContentView(rootView);
+        id_payway = rootView.findViewById(R.id.id_payway);
+        payways.add("1");
+        payways.add("2");
+        id_payway.setLayoutManager(new LinearLayoutManager(context));
+        mAdapter = new PayWayAdapter(this, payways, context);
+        id_payway.setAdapter(mAdapter);
+        mAdapter.notifyDataSetChanged();
+        rootView.findViewById(R.id.id_close).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 dismiss();
             }
         });
-       TextView tv_message= (TextView) content.findViewById(R.id.tv_message);
-       tv_message.setText("充值金币："+message);
-       TextView tv_money=(TextView)content.findViewById(R.id.tv_money);
-        tv_money.setText("¥"+money);
-     final CheckBox cb_zfb=(CheckBox) content.findViewById(R.id.cb_zfb);
-        final CheckBox cb_weixin=(CheckBox) content.findViewById(R.id.cb_weixin);
-       content.findViewById(R.id.rl_zfb).setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View view) {
-               cb_zfb.setChecked(true);
-               cb_weixin.setChecked(false);
-           }
-       });
-       content.findViewById(R.id.rl_weixin).setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View view) {
-               cb_weixin.setChecked(true);
-               cb_zfb.setChecked(false);
-           }
-       });
-        content.findViewById(R.id.btn_pay).setOnClickListener(new View.OnClickListener() {
+        TextView tv_goods_info = (TextView) rootView.findViewById(R.id.tv_goods_info);
+        tv_goods_info.setText(message);
+        TextView tv_money = (TextView) rootView.findViewById(R.id.tv_order_money);
+        tv_money.setText("¥" + money);
+        findViewById(R.id.btn_pay).setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                //PAY
-                if(cb_zfb.isChecked()){
-                    ToALiPay aLiPay=new ToALiPay();
-                    aLiPay.action(getContext(),new JSONObject());
+            public void onClick(View v) {
 
-                }else if(cb_weixin.isChecked()){
-                    WeChatPay.getInstance().toWeChatPay(getContext(),new JSONObject());
-
-                }
             }
         });
         setCanceledOnTouchOutside(false);
@@ -88,6 +72,11 @@ public class PayDialog extends Dialog {
         p.width = d.getWidth();
         getWindow().setAttributes(p);
         getWindow().setDimAmount(0.6f);
+
+    }
+
+    @Override
+    public void onItemClick(int position) {
 
     }
 }
