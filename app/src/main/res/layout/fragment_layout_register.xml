@@ -10,13 +10,13 @@
         android:textColor="@color/color_gray_level3"
         android:text="新用户注册"
         android:layout_marginLeft="@dimen/px80"
-        android:layout_marginTop="@dimen/y50"
+        android:layout_marginTop="@dimen/y45"
         android:textStyle="bold"
         android:layout_height="wrap_content" />
     <LinearLayout
         android:layout_width="match_parent"
         android:orientation="vertical"
-        android:paddingTop="@dimen/y40"
+        android:paddingTop="@dimen/y35"
         android:id="@+id/ll_content"
         android:layout_height="match_parent">
 
@@ -48,7 +48,7 @@
             </LinearLayout>
             <com.yufan.library.widget.LoginLineView
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
+                android:layout_height="@dimen/px1"
                 android:id="@+id/line_view1"
                 android:background="@color/color_line_1"
                 />
@@ -90,7 +90,7 @@
             </LinearLayout>
             <com.yufan.library.widget.LoginLineView
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
+                android:layout_height="@dimen/px1"
                 android:id="@+id/line_view2"
                 android:background="@color/color_line_1"
                 />
@@ -131,7 +131,7 @@
             </LinearLayout>
             <com.yufan.library.widget.LoginLineView
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
+                android:layout_height="@dimen/px1"
                 android:id="@+id/line_view3"
                 android:background="@color/color_line_1"
                 />
@@ -140,7 +140,7 @@
         <Button
             android:layout_width="match_parent"
             android:layout_marginLeft="@dimen/px60"
-            android:layout_marginTop="@dimen/y60"
+            android:layout_marginTop="@dimen/y22"
             android:layout_marginRight="@dimen/px60"
             android:text="注册"
             android:textColor="@color/white"
