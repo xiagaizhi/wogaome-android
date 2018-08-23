@@ -69,5 +69,10 @@ public class LoginPhoneFragment extends BaseFragment<LoginPhoneContract.IView> i
 
     }
 
+    @Override
+    public void login(String phone, String password) {
+
+    }
+
 
 }

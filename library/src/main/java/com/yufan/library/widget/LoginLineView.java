@@ -39,6 +39,22 @@ public class LoginLineView extends RelativeLayout {
         view.setTranslationX(-getWidth());
     }
 
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        // 父容器传过来的宽度方向上的模式
+        int widthMode = MeasureSpec.getMode(widthMeasureSpec);
+        // 父容器传过来的高度方向上的模式
+        int heightMode = MeasureSpec.getMode(heightMeasureSpec);
+
+        // 父容器传过来的宽度的值
+        int width = MeasureSpec.getSize(widthMeasureSpec) - getPaddingLeft()
+                - getPaddingRight();
+        // 父容器传过来的高度的值
+        int height = MeasureSpec.getSize(heightMeasureSpec) - getPaddingLeft()
+                - getPaddingRight();
+
+    }
+
     public void startAnim() {
         view.animate().translationX(0).setDuration(300).start();
     }

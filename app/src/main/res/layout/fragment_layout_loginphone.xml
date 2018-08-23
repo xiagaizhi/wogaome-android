@@ -122,6 +122,7 @@
                 android:text="登录"
                 android:textSize="17sp"
                 android:id="@+id/bt_login"
+                android:enabled="false"
                 android:textColor="@color/white"
                 android:background="@drawable/selector_big_btn_blue"
                 android:layout_height="wrap_content" />

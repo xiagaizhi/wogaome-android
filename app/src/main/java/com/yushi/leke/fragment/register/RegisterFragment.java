@@ -60,4 +60,9 @@ public class RegisterFragment extends BaseFragment<RegisterContract.IView> imple
            }
        });
     }
+
+    @Override
+    public void register(String phone, String password, String verifcationCode) {
+
+    }
 }
