@@ -20,6 +20,7 @@ import android.support.v4.media.session.PlaybackStateCompat;
 import com.yufan.library.base.BaseActivity;
 import com.yushi.leke.R;
 import com.yushi.leke.UIHelper;
+import com.yushi.leke.fragment.login.LoginFragment;
 import com.yushi.leke.fragment.main.MainFragment;
 import com.yushi.leke.fragment.splash.SplashFragment;
 import com.yushi.leke.fragment.test.TestListFragment;
@@ -62,7 +63,12 @@ private String     TAG="MainActivity";
         //创建媒体浏览客户端（MediaBrowserCompat）
         mMediaBrowser = new MediaBrowserCompat(this,
                 new ComponentName(this, MusicService.class), mConnectionCallback, null);
-       loadRootFragment(R.id.content_level0, UIHelper.creat(MainFragment.class).build());//.put(Global.BUNDLE_KEY_BROWSER_URL,"http://www.baidu.com")
+        if(1!=1){
+            loadRootFragment(R.id.content_level0, UIHelper.creat(MainFragment.class).build());//.put(Global.BUNDLE_KEY_BROWSER_URL,"http://www.baidu.com")
+        }else {
+            loadRootFragment(R.id.content_level0, UIHelper.creat(LoginFragment.class).build());
+        }
+
     }
     private void startFullScreenActivityIfNeeded(Intent intent) {
         if (intent != null && intent.getBooleanExtra(EXTRA_START_FULLSCREEN, false)) {

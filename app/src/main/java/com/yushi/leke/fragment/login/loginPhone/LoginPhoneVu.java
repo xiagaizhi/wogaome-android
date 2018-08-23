@@ -2,17 +2,24 @@ package com.yushi.leke.fragment.login.loginPhone;
 
 import android.animation.LayoutTransition;
 import android.graphics.PointF;
+import android.text.Editable;
 import android.text.InputType;
+import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.nineoldandroids.animation.ValueAnimator;
+import com.yufan.library.util.CheckUtil;
 import com.yufan.library.view.ResizeLayout;
+import com.yufan.library.widget.LoginLineView;
 import com.yushi.leke.R;
 import com.yufan.library.base.BaseVu;
 import com.yufan.library.inject.FindLayout;
@@ -27,14 +34,7 @@ import com.yufan.library.widget.AppToolbar;
 @FindLayout(layout = R.layout.fragment_layout_loginphone)
 @Title("手机登录")
 public class LoginPhoneVu extends BaseVu<LoginPhoneContract.Presenter> implements LoginPhoneContract.IView, View.OnClickListener  {
-    @FindView(R.id.sd_login_bg)
-    SimpleDraweeView sd_login_bg;
-    @FindView(R.id.resize_login)
-    ResizeLayout resize_login;
-    @FindView(R.id.tv_login_title)
-    TextView tv_login_title;
-    @FindView(R.id.ll_content)
-    LinearLayout ll_content;
+
     @FindView(R.id.et_phone)
     EditText et_phone;
     @FindView(R.id.et_password)
@@ -45,59 +45,30 @@ public class LoginPhoneVu extends BaseVu<LoginPhoneContract.Presenter> implement
     TextView tv_forgetPassword;
     @FindView(R.id.tv_register)
     TextView tv_register;
-    private int titleHeight;
+    @FindView(R.id.iv_clear_password)
+    ImageView iv_clear_password;
+    @FindView(R.id.iv_clear_phone)
+    ImageView iv_clear_phone;
+    @FindView(R.id.line_view1)
+    LoginLineView line_view1;
+    @FindView(R.id.line_view2)
+    LoginLineView line_view2;
+    @FindView(R.id.bt_login)
+    Button bt_login;
+    private void updateState(){
+        if(CheckUtil.checkInputState(et_phone,et_password,null,false)){
+            bt_login.setEnabled(true);
+        }else {
+            bt_login.setEnabled(false);
+        }
+    }
     @Override
     public void initView(View view) {
         tv_forgetPassword.setOnClickListener(this);
         tv_register.setOnClickListener(this);
-        PointF pointF = new PointF(1f, 0f);
-        sd_login_bg.getHierarchy().setActualImageFocusPoint(pointF);
-        sd_login_bg.getHierarchy().setPlaceholderImageFocusPoint(pointF);
-        LayoutTransition transition = new LayoutTransition();
-        resize_login.setLayoutTransition(transition);
-        resize_login.setOnKeyboardShowListener(new ResizeLayout.OnKeyboardChangedListener() {
-            @Override
-            public void onKeyboardShow(int keyHeight) {
-                mPersenter.onKeyboardShow(keyHeight);
-                titleHeight= tv_login_title.getHeight();
-                final ValueAnimator animator = ValueAnimator.ofInt(titleHeight, 0);
-                animator.setDuration(100);
-                animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-                    @Override
-                    public void onAnimationUpdate(ValueAnimator animation) {
-                        int value = (int) animation.getAnimatedValue();
-                        LinearLayout.LayoutParams layoutParams= (LinearLayout.LayoutParams) tv_login_title.getLayoutParams();
-                        layoutParams.height=value;
-                        tv_login_title.setLayoutParams(layoutParams);
-                    }
-                });
-                animator.start();
-
-            }
-
-            @Override
-            public void onKeyboardHide() {
-                mPersenter.onKeyboardHide();
-                final ValueAnimator animator = ValueAnimator.ofInt(0, titleHeight);
-                animator.setDuration(100);
-                animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-                    @Override
-                    public void onAnimationUpdate(ValueAnimator animation) {
-                        int value = (int) animation.getAnimatedValue();
-                        LinearLayout.LayoutParams layoutParams= (LinearLayout.LayoutParams) tv_login_title.getLayoutParams();
-                        layoutParams.height=value;
-                        tv_login_title.setLayoutParams(layoutParams);
-                    }
-                });
-                animator.start();
-
-            }
-
-            @Override
-            public void onKeyboardShowOver() {
-                mPersenter.onKeyboardShowOver();
-            }
-        });
+        bt_login.setOnClickListener(this);
+        iv_clear_password.setOnClickListener(this);
+        iv_clear_phone.setOnClickListener(this);
         cb_showeye.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -111,11 +82,99 @@ public class LoginPhoneVu extends BaseVu<LoginPhoneContract.Presenter> implement
                 }
             }
         });
+        et_password.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(TextUtils.isEmpty(s)){
+                    iv_clear_password.setVisibility(View.GONE);
+                }else {
+                    updateState();
+                    iv_clear_password.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+        et_password.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(hasFocus){
+                    if(!TextUtils.isEmpty( et_password.getText())){
+                        //显示
+                        iv_clear_password.setVisibility(View.VISIBLE);
+                    }
+                    line_view2.startAnim();
+                }else {
+                    //隐藏
+                    if(TextUtils.isEmpty( et_password.getText())){
+                        line_view2.hintAnim();
+                    }
+                    iv_clear_password.setVisibility(View.GONE);
+                }
+
+            }
+        });
+        et_phone.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(TextUtils.isEmpty(s)){
+                    iv_clear_phone.setVisibility(View.GONE);
+                }else {
+                    updateState();
+                    iv_clear_phone.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+        et_phone.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(hasFocus){
+                    if(!TextUtils.isEmpty( et_phone.getText())){
+                        //显示
+                        iv_clear_phone.setVisibility(View.VISIBLE);
+                    }
+                    line_view1.startAnim();
+                }else {
+                    //隐藏
+                    if(TextUtils.isEmpty( et_phone.getText())){
+                        line_view1.hintAnim();
+                    }
+                    iv_clear_phone.setVisibility(View.GONE);
+                }
+            }
+        });
     }
 
     @Override
     public boolean initTitle(AppToolbar appToolbar) {
-        return false;
+        ImageView imageView= appToolbar.creatLeftView(ImageView.class);
+        imageView.setImageResource(com.yufan.library.R.drawable.left_back_black_arrows);
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mPersenter.onBackPressed();
+            }
+        });
+        appToolbar.build();
+        return true;
     }
 
     @Override
@@ -132,27 +191,23 @@ public class LoginPhoneVu extends BaseVu<LoginPhoneContract.Presenter> implement
             case R.id.tv_register:
                 mPersenter.onRegister();
                 break;
+            case R.id.iv_clear_password:
+                et_password.setText("");
+                mPersenter.onClearPassword();
+                break;
+            case R.id.iv_clear_phone:
+                et_phone.setText("");
+                mPersenter.onClearPhone();
+                break;
+            case R.id.bt_login:
+                if(CheckUtil.checkInputState(et_phone,et_password,null,true)){
+                    mPersenter.login(et_phone.getText().toString(),et_password.getText().toString());
+                }
+
+                break;
             default:
                 break;
         }
     }
-    private void scaleAnim(final View view,int from, int to) {
-        //1.调用ofInt(int...values)方法创建ValueAnimator对象
-        ValueAnimator mAnimator = ValueAnimator.ofInt(from, to);
-        //2.为目标对象的属性变化设置监听器
-        mAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
 
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                // 3.为目标对象的属性设置计算好的属性值
-                int animatorValue = (int) animation.getAnimatedValue();
-                LinearLayout.LayoutParams marginLayoutParams = (LinearLayout.LayoutParams) view.getLayoutParams();
-                marginLayoutParams.height = animatorValue;
-                view.setLayoutParams(marginLayoutParams);
-            }
-        });
-        mAnimator.setDuration(100);
-        mAnimator.setTarget(view);
-        mAnimator.start();
-    }
 }

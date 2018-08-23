@@ -1,15 +1,21 @@
 package com.yushi.leke.fragment.register;
 
+import android.text.Editable;
 import android.text.Html;
 import android.text.InputType;
+import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.yufan.library.inject.FindView;
+import com.yufan.library.util.CheckUtil;
+import com.yufan.library.widget.LoginLineView;
 import com.yufan.library.widget.VerificationCodeTextView;
 import com.yushi.leke.R;
 import com.yufan.library.base.BaseVu;
@@ -23,7 +29,7 @@ import com.yufan.library.widget.AppToolbar;
  */
 @FindLayout(layout = R.layout.fragment_layout_register)
 @Title("注册")
-public class RegisterVu extends BaseVu<RegisterContract.Presenter> implements RegisterContract.IView {
+public class RegisterVu extends BaseVu<RegisterContract.Presenter> implements RegisterContract.IView, View.OnClickListener {
 
     @FindView(R.id.et_phone)
     EditText et_phone;
@@ -34,22 +40,28 @@ public class RegisterVu extends BaseVu<RegisterContract.Presenter> implements Re
     @FindView(R.id.et_verification_code)
     EditText et_verification_code;
     @FindView(R.id.tv_vcode)
-    VerificationCodeTextView tv_vcode;
+    VerificationCodeTextView verificationCodeTextView;
     @FindView(R.id.bt_register)
     Button bt_register;
-    @FindView(R.id.tv_protocol)
-    TextView tv_protocol;
-
+    @FindView(R.id.tv_agreement)
+    TextView tv_agreement;
+    @FindView(R.id.iv_clear_password)
+    ImageView iv_clear_password;
+    @FindView(R.id.iv_clear_phone)
+    ImageView iv_clear_phone;
+    @FindView(R.id.line_view1)
+    LoginLineView line_view1;
+    @FindView(R.id.line_view2)
+    LoginLineView line_view2;
+    @FindView(R.id.line_view3)
+    LoginLineView line_view3;
     @Override
     public void initView(View view) {
-        tv_protocol.setText(Html.fromHtml("注册即代表您已同意 <font color=#007AFF>《乐链服务协议》<font/>"));
-        tv_protocol.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-        tv_vcode.setOnGetCodeClickListener(new VerificationCodeTextView.OnGetCodeClickListener() {
+        tv_agreement.setText(Html.fromHtml("注册即代表您已同意 <font color=#007AFF>《乐链服务协议》<font/>"));
+        tv_agreement.setOnClickListener(this);
+        bt_register.setOnClickListener(this);
+        bt_register.setOnClickListener(this);
+        verificationCodeTextView.setOnGetCodeClickListener(new VerificationCodeTextView.OnGetCodeClickListener() {
             @Override
             public void getCode() {
               mPersenter.getVerifcationCode();
@@ -68,15 +80,158 @@ public class RegisterVu extends BaseVu<RegisterContract.Presenter> implements Re
                 }
             }
         });
+
+        et_password.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(TextUtils.isEmpty(s)){
+                    iv_clear_password.setVisibility(View.GONE);
+                }else {
+                    updateState();
+                    iv_clear_password.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+        et_password.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(hasFocus){
+                    if(!TextUtils.isEmpty( et_password.getText())){
+                        //显示
+                        iv_clear_password.setVisibility(View.VISIBLE);
+                    }
+                    line_view2.startAnim();
+                }else {
+                    //隐藏
+                    iv_clear_password.setVisibility(View.GONE);
+                    if(TextUtils.isEmpty( et_password.getText())){
+                        line_view2.hintAnim();
+                    }
+                }
+
+            }
+        });
+        et_phone.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(TextUtils.isEmpty(s)){
+                    iv_clear_phone.setVisibility(View.GONE);
+                }else {
+                    updateState();
+                    iv_clear_phone.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+        et_phone.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(hasFocus){
+                    if(!TextUtils.isEmpty( et_phone.getText())){
+                        //显示
+                        iv_clear_phone.setVisibility(View.VISIBLE);
+                    }
+                    line_view1.startAnim();
+                }else {
+                    //隐藏
+                    iv_clear_phone.setVisibility(View.GONE);
+                    if(TextUtils.isEmpty( et_phone.getText())){
+                        line_view1.hintAnim();
+                    }
+                }
+            }
+        });
+        et_verification_code.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(hasFocus){
+                    line_view3.startAnim();
+                }else {
+                    //隐藏
+                    if(TextUtils.isEmpty( et_verification_code.getText())){
+                        line_view3.hintAnim();
+                    }
+                }
+            }
+        });
+        et_verification_code.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                updateState();
+            }
+        });
+    }
+    private void updateState(){
+        if(CheckUtil.checkInputState(et_phone,et_password,et_verification_code,false)){
+            bt_register.setEnabled(true);
+        }else {
+            bt_register.setEnabled(false);
+        }
     }
 
     @Override
     public boolean initTitle(AppToolbar appToolbar) {
-        return super.initTitle(appToolbar);
+        ImageView imageView= appToolbar.creatLeftView(ImageView.class);
+        imageView.setImageResource(com.yufan.library.R.drawable.left_back_black_arrows);
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mPersenter.onBackPressed();
+            }
+        });
+        appToolbar.build();
+        return true;
     }
 
     @Override
     public void initStatusLayout(StateLayout stateLayout) {
         super.initStatusLayout(stateLayout);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.tv_agreement:
+
+
+                break;
+            case R.id.bt_register:
+                if(CheckUtil.checkInputState(et_phone,et_password,et_verification_code,true)){
+                    mPersenter.register(et_phone.getText().toString(),et_password.getText().toString(),et_verification_code.getText().toString());
+                }
+
+                break;
+
+
+        }
     }
 }

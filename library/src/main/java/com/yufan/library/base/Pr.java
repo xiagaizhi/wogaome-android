@@ -7,4 +7,5 @@ package com.yufan.library.base;
 public interface Pr {
     void onLoadMore(int index);
     void onRefresh();
+    void onBackPressed();
 }

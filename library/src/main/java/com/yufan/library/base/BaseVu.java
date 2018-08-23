@@ -76,7 +76,14 @@ public abstract class BaseVu<T extends Pr> implements Vu {
             TextView titleName = appToolbar.creatCenterView(TextView.class);
             titleName.setText(titleNameStr);
         }
-        appToolbar.creatLeftView(ImageView.class);
+        ImageView leftView=  appToolbar.creatLeftView(ImageView.class);
+        leftView.setImageResource(R.drawable.left_back_black_arrows);
+        leftView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mPersenter.onBackPressed();
+            }
+        });
         appToolbar.build();
         return true;
     }
@@ -105,12 +112,12 @@ public abstract class BaseVu<T extends Pr> implements Vu {
             RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, PxUtil.convertDIP2PX(mContext, 56));
             mRootLayout.addView(appToolbar, lp);
             if (appToolbar.isVertical()) {
-                appToolbar.getBackgroundView().setBackgroundResource(R.drawable.shape_title_backgound);
+               // appToolbar.getBackgroundView().setBackgroundResource(R.drawable.shape_title_backgound);
                 RelativeLayout.LayoutParams rlp = (RelativeLayout.LayoutParams) mContentLayout.getLayoutParams();
                 rlp.addRule(RelativeLayout.BELOW, R.id.title_id);
                 mContentLayout.setLayoutParams(rlp);
             } else {
-                appToolbar.getBackgroundView().setBackgroundResource(R.drawable.shape_title_backgound);
+               // appToolbar.getBackgroundView().setBackgroundResource(R.drawable.shape_title_backgound);
                 appToolbar.getBackgroundView().setAlpha(0);
                 RelativeLayout.LayoutParams rlp = (RelativeLayout.LayoutParams) mContentLayout.getLayoutParams();
                 rlp.removeRule(RelativeLayout.BELOW);

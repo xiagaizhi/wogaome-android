@@ -20,15 +20,36 @@ public class ShareUtils {
 
     public ShareUtils(Activity activity) {
         this.mActivity = activity;
-        if (mShareAPI == null) {
-            mShareAPI = UMShareAPI.get(activity);//获取UMShareAPI
-        }
+         mShareAPI = UMShareAPI.get(activity);//获取UMShareAPI
 
     }
 
     public void login(SHARE_MEDIA platform, ILoginCallback callback) {
         this.loginCallback = callback;
         mShareAPI.doOauthVerify(mActivity, platform, umAuthListener);//进行平台授权 umAuthListener授权是否成功的回调
+    }
+    public void logout(SHARE_MEDIA platform){
+        mShareAPI.deleteOauth(mActivity, platform, new UMAuthListener() {
+            @Override
+            public void onStart(SHARE_MEDIA share_media) {
+
+            }
+
+            @Override
+            public void onComplete(SHARE_MEDIA share_media, int i, Map<String, String> map) {
+
+            }
+
+            @Override
+            public void onError(SHARE_MEDIA share_media, int i, Throwable throwable) {
+
+            }
+
+            @Override
+            public void onCancel(SHARE_MEDIA share_media, int i) {
+
+            }
+        });
     }
     public void share(ShareModel model, IShareCallback shareCallback) {
         this.shareCallback = shareCallback;

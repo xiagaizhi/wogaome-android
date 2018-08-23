@@ -43,20 +43,7 @@ public class LoginPhoneFragment extends BaseFragment<LoginPhoneContract.IView> i
 
     }
 
-    @Override
-    public void onKeyboardShow(int keyHeight) {
-        DialogManager.getInstance().toast(keyHeight+"");
-    }
 
-    @Override
-    public void onKeyboardHide() {
-        DialogManager.getInstance().toast("onKeyboardHide");
-    }
-
-    @Override
-    public void onKeyboardShowOver() {
-
-    }
 
     @Override
     public void onRegister() {
@@ -73,7 +60,14 @@ public class LoginPhoneFragment extends BaseFragment<LoginPhoneContract.IView> i
     }
 
     @Override
-    public void onLogin(String phone, String password) {
+    public void onClearPhone() {
 
     }
+
+    @Override
+    public void onClearPassword() {
+
+    }
+
+
 }

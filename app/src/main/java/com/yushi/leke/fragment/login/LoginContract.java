@@ -13,12 +13,11 @@ public interface LoginContract {
     }
 
     interface Presenter extends Pr {
-        void onKeyboardShow(int keyHeight);
-        void onKeyboardHide();
-        void onKeyboardShowOver();
-        void onRegister();
-        void onForgetPassword();
-        void onLogin(String phone ,String password);
+        void onRegisterClick();
+        void onPhoneLoginClick();
+        void onWeixinLoginClick();
+        void onLogoClick();
+        void onAgreementClick();
 
     }
 }

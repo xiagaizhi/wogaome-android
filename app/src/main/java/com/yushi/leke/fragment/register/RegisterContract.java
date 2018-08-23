@@ -15,6 +15,7 @@ public interface RegisterContract {
     interface Presenter extends Pr {
         void getVerifcationCode();
         void verify();
+        void register(String phone,String password,String verifcationCode);
 
     }
 }

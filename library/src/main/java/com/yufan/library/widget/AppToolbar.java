@@ -156,11 +156,11 @@ public class AppToolbar extends RelativeLayout {
         centerViews.clear();
         leftViews.clear();
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && isVertical) {
-            setClipToPadding(false);
-            setOutlineProvider(ViewOutlineProvider.BOUNDS);
-            setElevation((float) PxUtil.convertDIP2PX(getContext(), 4));
-        }
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && isVertical) {
+//            setClipToPadding(false);
+//            setOutlineProvider(ViewOutlineProvider.BOUNDS);
+//            setElevation((float) PxUtil.convertDIP2PX(getContext(), 4));
+//        }
     }
 
     public void putRightView(View view) {

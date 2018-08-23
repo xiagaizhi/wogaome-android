@@ -75,4 +75,8 @@ public abstract class BaseFragment<V extends Vu> extends SupportFragment impleme
 
     }
 
+    @Override
+    public void onBackPressed() {
+        pop();
+    }
 }
