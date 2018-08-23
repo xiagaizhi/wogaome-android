@@ -2,7 +2,7 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
     android:shape="oval"
     android:useLevel="false">
-    <solid android:color="#f74c31" />
+    <solid android:color="@color/message_widget_bg" />
     <padding
         android:bottom="1dp"
         android:left="1dp"

@@ -65,7 +65,7 @@ public class SplashFragment extends BaseFragment<SplashContract.IView> implement
                     fragmentManager.beginTransaction().remove(SplashFragment.this).commit();
                 }
             }
-        }, 3000);
+        }, 1000);
     }
 
 

@@ -1,7 +1,112 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-</LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px306"
+        android:background="@drawable/mywallet_top_bg" />
+
+    <RelativeLayout
+        android:id="@+id/id_wallet_top"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px472"
+        android:layout_marginLeft="@dimen/px24"
+        android:layout_marginRight="@dimen/px12"
+        android:layout_marginTop="@dimen/px200"
+        android:background="@drawable/lkc_remaining_card">
+
+        <TextView
+            android:id="@+id/id_lkc_lable"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/px92"
+            android:layout_marginTop="@dimen/px56"
+            android:text="@string/lkc_remaining"
+            android:textColor="@color/color_gray_level6"
+            android:textSize="@dimen/px36" />
+
+        <ImageView
+            android:id="@+id/id_lck_instructions"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/px38"
+            android:layout_marginTop="@dimen/px38"
+            android:src="@drawable/lkc_detail_icon" />
+
+        <TextView
+            android:id="@+id/id_lkc_remain"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/id_lkc_lable"
+            android:layout_marginLeft="@dimen/px92"
+            android:layout_marginTop="@dimen/px39"
+            android:singleLine="true"
+            android:text="8888.88888"
+            android:textColor="@color/color_gray_level3"
+            android:textSize="@dimen/px60" />
+
+        <TextView
+            android:id="@+id/id_lkc_detail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="@dimen/px48"
+            android:layout_marginLeft="@dimen/px149"
+            android:text="@string/lkc_detail"
+            android:textColor="@color/color_f67b29"
+            android:textSize="@dimen/px30" />
+
+        <TextView
+            android:id="@+id/id_yesterd_arith_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="@dimen/px48"
+            android:layout_marginLeft="@dimen/px170"
+            android:layout_toRightOf="@+id/id_lkc_detail"
+            android:text="@string/lkc_yesterd_arith_num"
+            android:textColor="@color/color_f67b29"
+            android:textSize="@dimen/px30" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="@dimen/px75"
+            android:layout_toRightOf="@+id/id_yesterd_arith_num"
+            android:background="@drawable/message_widget_bg_shape"
+            android:text="999999"
+            android:textColor="@color/white"
+            android:textSize="@dimen/px18" />
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/id_wallet_box"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/id_wallet_top"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/px33"
+        android:src="@drawable/wallet_box_icon" />
+
+    <Button
+        android:id="@+id/id_open_treasure"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/id_wallet_box"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/open_treasure_box" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/id_open_treasure"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/px19"
+        android:text="@string/lkc_treasure_instructions"
+        android:textColor="@color/color_gray_level9"
+        android:textSize="@dimen/px24" />
+</RelativeLayout>
