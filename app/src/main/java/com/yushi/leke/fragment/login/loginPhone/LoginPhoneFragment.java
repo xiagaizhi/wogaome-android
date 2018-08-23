@@ -3,6 +3,8 @@ package com.yushi.leke.fragment.login.loginPhone;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.yufan.library.Global;
+import com.yufan.library.browser.BrowserBaseFragment;
 import com.yufan.library.manager.DialogManager;
 import com.yufan.library.util.SoftInputUtil;
 import com.yushi.leke.R;
@@ -72,6 +74,11 @@ public class LoginPhoneFragment extends BaseFragment<LoginPhoneContract.IView> i
     @Override
     public void login(String phone, String password) {
 
+    }
+
+    @Override
+    public void onAgreementClick() {
+        start(UIHelper.creat(BrowserBaseFragment.class).put(Global.BUNDLE_KEY_BROWSER_URL,"http://baidu.com").build());
     }
 
     @Override

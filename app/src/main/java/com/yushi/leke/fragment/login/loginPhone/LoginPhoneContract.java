@@ -19,6 +19,6 @@ public interface LoginPhoneContract {
         void onClearPhone();
         void onClearPassword();
         void login(String phone,String password);
-
+        void onAgreementClick();
     }
 }
