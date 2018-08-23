@@ -22,7 +22,7 @@ import com.yufan.library.widget.StateLayout;
  * vu view模块基础类,
  */
 
-public abstract class BaseVu<T extends Pr> implements Vu {
+public abstract class BaseVu<T extends Pr> implements Vu ,View.OnClickListener{
     protected RelativeLayout mRootLayout;
     protected View mContentLayout;
     protected StateLayout mStateLayout;
@@ -49,6 +49,10 @@ public abstract class BaseVu<T extends Pr> implements Vu {
         return mContext;
     }
 
+    @Override
+    public void onClick(View v) {
+
+    }
 
     @Override
     public final void init(LayoutInflater inflater, ViewGroup container) {
