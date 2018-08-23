@@ -12,6 +12,7 @@ import com.yufan.library.inject.VuClass;
 import com.yufan.library.pay.PayDialog;
 import com.yushi.leke.UIHelper;
 import com.yushi.leke.fragment.openTreasureBox.OpenTreasureBoxFragment;
+import com.yushi.leke.fragment.paySafe.PaySafetyFragment;
 import com.yushi.leke.fragment.setPayPassword.SetRechargePasswordFragment;
 
 /**
@@ -33,14 +34,13 @@ public class MyWalletFragment extends BaseFragment<MyWalletContract.IView> imple
     }
 
     @Override
-    public void setRechargePwd() {
-//        start(UIHelper.creat(SetRechargePasswordFragment.class).build());
-        PayDialog payDialog = new PayDialog(_mActivity,"开宝箱",1000);
-        payDialog.show();
+    public void openPaySafety() {
+        getRootFragment().start(UIHelper.creat(PaySafetyFragment.class).build());
     }
 
     @Override
-    public void openTreasureBox() {
-        start(UIHelper.creat(OpenTreasureBoxFragment.class).build());
+    public void openPlayer() {
+        PayDialog payDialog = new PayDialog(_mActivity,"开宝箱",100000);
+        payDialog.show();
     }
 }

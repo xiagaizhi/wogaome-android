@@ -42,7 +42,32 @@ public class OpenTreasureBoxVu extends BaseVu<OpenTreasureBoxContract.Presenter>
             TextView titleName = appToolbar.creatCenterView(TextView.class);
             titleName.setText(titleNameStr);
         }
-        appToolbar.creatLeftView(ImageView.class);
+        ImageView leftView = appToolbar.creatLeftView(ImageView.class);
+        leftView.setImageResource(com.yufan.library.R.drawable.left_back_white_arrows);
+        leftView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mPersenter.onBackPressed();
+            }
+        });
+
+        ImageView treasureBoxIcon = appToolbar.creatRightView(ImageView.class);
+        treasureBoxIcon.setImageResource(R.drawable.ic_toolbar_treasure_box);
+        treasureBoxIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        ImageView playerIcon = appToolbar.creatRightView(ImageView.class);
+        playerIcon.setImageResource(R.drawable.ic_toolbar_player_white);
+        playerIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
         appToolbar.build(false);
         return true;
     }

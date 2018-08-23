@@ -24,4 +24,5 @@ public class SetRechargePasswordFragment extends BaseFragment<SetRechargePasswor
         _mActivity.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
     }
 
+
 }
