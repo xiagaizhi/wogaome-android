@@ -50,23 +50,30 @@ public class MyWalletVu extends BaseVu<MyWalletContract.Presenter> implements My
             TextView titleName = appToolbar.creatCenterView(TextView.class);
             titleName.setText(titleNameStr);
         }
-        appToolbar.creatLeftView(ImageView.class);
-        TextView setRechargePwd = appToolbar.creatRightView(TextView.class);
-        setRechargePwd.setText("设置交易密码");
-        setRechargePwd.setOnClickListener(new View.OnClickListener() {
+        ImageView leftView = appToolbar.creatLeftView(ImageView.class);
+        leftView.setImageResource(com.yufan.library.R.drawable.left_back_white_arrows);
+        leftView.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                mPersenter.setRechargePwd();
+            public void onClick(View v) {
+                mPersenter.onBackPressed();
             }
         });
 
-
-        TextView openBox = appToolbar.creatRightView(TextView.class);
-        openBox.setText("打开宝箱");
-        openBox.setOnClickListener(new View.OnClickListener() {
+        ImageView keyIcon = appToolbar.creatRightView(ImageView.class);
+        keyIcon.setImageResource(R.drawable.ic_toolbar_key);
+        keyIcon.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                mPersenter.openTreasureBox();
+            public void onClick(View v) {
+                mPersenter.openPaySafety();
+            }
+        });
+
+        ImageView playerIcon = appToolbar.creatRightView(ImageView.class);
+        playerIcon.setImageResource(R.drawable.ic_toolbar_player_white);
+        playerIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mPersenter.openPlayer();
             }
         });
         appToolbar.build(false);
