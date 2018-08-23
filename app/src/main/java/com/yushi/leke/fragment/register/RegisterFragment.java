@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.WindowManager;
 
 import com.yufan.library.inject.VuClass;
+import com.yufan.library.util.SoftInputUtil;
 
 import java.util.Map;
 
@@ -64,5 +65,11 @@ public class RegisterFragment extends BaseFragment<RegisterContract.IView> imple
     @Override
     public void register(String phone, String password, String verifcationCode) {
 
+    }
+
+    @Override
+    public void onDestroyView() {
+        SoftInputUtil.hideSoftInput(getActivity(),getView());
+        super.onDestroyView();
     }
 }

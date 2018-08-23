@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.yufan.library.manager.DialogManager;
+import com.yufan.library.util.SoftInputUtil;
 import com.yushi.leke.R;
 import com.yufan.library.base.BaseFragment;
 
@@ -74,5 +75,9 @@ public class LoginPhoneFragment extends BaseFragment<LoginPhoneContract.IView> i
 
     }
 
-
+    @Override
+    public void onDestroyView() {
+        SoftInputUtil.hideSoftInput(getActivity(),getView());
+        super.onDestroyView();
+    }
 }

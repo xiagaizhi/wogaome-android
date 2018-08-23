@@ -57,7 +57,6 @@ public class RegisterVu extends BaseVu<RegisterContract.Presenter> implements Re
     LoginLineView line_view3;
     @Override
     public void initView(View view) {
-        tv_agreement.setText(Html.fromHtml("注册即代表您已同意 <font color=#007AFF>《乐链服务协议》<font/>"));
         tv_agreement.setOnClickListener(this);
         bt_register.setOnClickListener(this);
         bt_register.setOnClickListener(this);
