@@ -16,7 +16,7 @@
                 android:id="@+id/id_treasure_box_top"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/treasure_box_top_bg" />
+                android:background="@drawable/bg_treasure_box_top" />
 
             <TextView
                 android:id="@+id/id_topup"
@@ -44,7 +44,7 @@
                 android:layout_below="@+id/id_recharge_container"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="@dimen/px60"
-                android:background="@drawable/open_pay_btn" />
+                android:background="@drawable/btn_open_pay" />
 
         </RelativeLayout>
     </ScrollView>
