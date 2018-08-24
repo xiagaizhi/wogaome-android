@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.yufan.library.R;
+import com.yufan.library.manager.DialogManager;
 
 
 /**
@@ -76,12 +77,17 @@ public class VerificationCodeTextView extends TextView {
         setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(onGetCodeClickListener!=null&&onGetCodeClickListener.getCode()){
+                if(onGetCodeClickListener==null){
+                    throw new RuntimeException("需要调用 setOnGetCodeClickListener");
+                }
+                if(onGetCodeClickListener.getCode()){
                     setOnClickListener(null);
                     Message msg = Message.obtain();
                     msg.what = 0;
                     msg.arg1 = 60;
                     handler.sendMessage(msg);
+                }else {
+                    DialogManager.getInstance().toast("请输入手机号");
                 }
             }
         });

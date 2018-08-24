@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.yufan.library.manager.DialogManager;
 import com.yufan.library.util.CheckUtil;
 import com.yufan.library.widget.LoginLineView;
 import com.yufan.library.widget.VerificationCodeTextView;
