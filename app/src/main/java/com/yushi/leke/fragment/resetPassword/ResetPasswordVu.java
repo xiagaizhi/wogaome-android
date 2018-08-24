@@ -110,12 +110,12 @@ public class ResetPasswordVu extends BaseVu<ResetPasswordContract.Presenter> imp
                         //显示
                         iv_clear_password.setVisibility(View.VISIBLE);
                     }
-                    line_view2.startAnim();
+                    line_view3.startAnim();
                 }else {
                     //隐藏
                     iv_clear_password.setVisibility(View.GONE);
                     if(TextUtils.isEmpty( et_password.getText())){
-                        line_view2.hintAnim();
+                        line_view3.hintAnim();
                     }
                 }
 
@@ -164,11 +164,11 @@ public class ResetPasswordVu extends BaseVu<ResetPasswordContract.Presenter> imp
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if(hasFocus){
-                    line_view3.startAnim();
+                    line_view2.startAnim();
                 }else {
                     //隐藏
                     if(TextUtils.isEmpty( et_verification_code.getText())){
-                        line_view3.hintAnim();
+                        line_view2.hintAnim();
                     }
                 }
             }
