@@ -112,6 +112,7 @@ public class LoginFragment extends BaseFragment<LoginContract.IView> implements 
         System.arraycopy(mHits, 1, mHits, 0, mHits.length - 1);
         mHits[mHits.length - 1] = SystemClock.uptimeMillis();
         if (mHits[0] >= (SystemClock.uptimeMillis() - 1000)) {
+            mHits=new long[5];
             int apiType = SPManager.getInstance().getInt(Global.SP_KEY_SERVICE_TYPE, BuildConfig.API_TYPE);
             getVu().showServiceSelector(apiType);
         }

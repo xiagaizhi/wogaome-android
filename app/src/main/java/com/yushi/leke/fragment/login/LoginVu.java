@@ -20,8 +20,11 @@ import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.nineoldandroids.animation.ValueAnimator;
+import com.yufan.library.Global;
 import com.yufan.library.inject.FindView;
+import com.yufan.library.manager.SPManager;
 import com.yufan.library.view.ResizeLayout;
+import com.yushi.leke.BuildConfig;
 import com.yushi.leke.R;
 import com.yufan.library.base.BaseVu;
 import com.yufan.library.inject.FindLayout;
@@ -53,7 +56,11 @@ public class LoginVu extends BaseVu<LoginContract.Presenter> implements LoginCon
         tv_register.setOnClickListener(this);
         rl_login_weixin.setOnClickListener(this);
         rl_login_phone.setOnClickListener(this);
-        iv_logo.setOnClickListener(this);
+      int apiType=  SPManager.getInstance().getInt(Global.SP_KEY_SERVICE_TYPE, BuildConfig.API_TYPE);
+      if(apiType!=0){
+          iv_logo.setOnClickListener(this);
+         // SystemClock.elapsedRealtime();开机时间 相对时间，用于计算时间间隔
+      }
     }
 
 
