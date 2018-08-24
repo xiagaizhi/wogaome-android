@@ -13,7 +13,6 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:background="@drawable/shape_bg_top_ffffff">
 
         <RelativeLayout
@@ -37,6 +36,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
+                android:src="@drawable/ic_cancel_no_bgcolor"
                 android:layout_marginRight="@dimen/px36" />
         </RelativeLayout>
 

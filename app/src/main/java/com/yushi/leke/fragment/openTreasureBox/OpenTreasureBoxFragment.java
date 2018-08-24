@@ -9,8 +9,8 @@ import android.support.annotation.Nullable;
 import android.view.View;
 
 import com.yufan.library.inject.VuClass;
-import com.yushi.leke.UIHelper;
-import com.yushi.leke.fragment.setPayPassword.SetRechargePasswordFragment;
+import com.yufan.library.pay.SetRechargePwdDialog;
+import com.yushi.leke.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,6 +47,9 @@ public class OpenTreasureBoxFragment extends BaseFragment<OpenTreasureBoxContrac
 
     @Override
     public void openSetPwd() {
-        getRootFragment().start(UIHelper.creat(SetRechargePasswordFragment.class).build());
+//        getRootFragment().start(UIHelper.creat(SetRechargePasswordFragment.class).build());
+        SetRechargePwdDialog setRechargePwdDialog = new SetRechargePwdDialog(_mActivity,false);
+        setRechargePwdDialog.setmTitle(R.string.set_recharge_pwd);
+        setRechargePwdDialog.show();
     }
 }
