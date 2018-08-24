@@ -7,7 +7,11 @@ import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.yufan.library.Global;
+import com.yufan.library.api.ApiBean;
 import com.yufan.library.api.ApiManager;
+import com.yufan.library.api.BaseHttpCallBack;
+import com.yufan.library.api.EnhancedCall;
+import com.yufan.library.api.remote.YFApi;
 import com.yufan.library.base.BaseFragment;
 
 import android.os.SystemClock;
@@ -42,7 +46,24 @@ public class LoginFragment extends BaseFragment<LoginContract.IView> implements 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+      EnhancedCall call= ApiManager.getInstance().getCall(ApiManager.getInstance().create(YFApi.class).deleteData("","",1));//
+        call.useCache(true);
+        call.enqueue(new BaseHttpCallBack() {
+            @Override
+            public void onSuccess(ApiBean mApiBean) {
 
+            }
+
+            @Override
+            public void onError(int id, Exception e) {
+
+            }
+
+            @Override
+            public void onFinish() {
+
+            }
+        });
     }
 
     @Override
@@ -112,6 +133,7 @@ public class LoginFragment extends BaseFragment<LoginContract.IView> implements 
         System.arraycopy(mHits, 1, mHits, 0, mHits.length - 1);
         mHits[mHits.length - 1] = SystemClock.uptimeMillis();
         if (mHits[0] >= (SystemClock.uptimeMillis() - 1000)) {
+            mHits=new long[5];
             int apiType = SPManager.getInstance().getInt(Global.SP_KEY_SERVICE_TYPE, BuildConfig.API_TYPE);
             getVu().showServiceSelector(apiType);
         }

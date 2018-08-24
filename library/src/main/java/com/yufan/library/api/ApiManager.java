@@ -73,6 +73,7 @@ public class ApiManager {
                 return  chain.proceed(authorised);
             }
         };
+        builder.addInterceptor(new EnhancedCacheInterceptor());
         builder.addInterceptor(commonInterceptor);
          mApiConfig=new ApiConfig(apiType);
         // 创建Retrofit
@@ -106,40 +107,8 @@ public class ApiManager {
 
 
 
-    public  void callEnqueue(Call<ResponseBody> call, final BaseHttpCallBack handler) {
-        call.request().body();
-        call.enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
-                try {
-
-                    int code = response.code();
-                    if (code == 200) {
-                        String mjson = response.body().string();
-                        ApiBean mApiBean = JSON.parseObject(mjson, ApiBean.class);
-                        mApiBean.json=mjson;
-                            Log.i("http","response: " + mApiBean.json);
-                            if (TextUtils.equals(ApiBean.TOKEN_LOSE,mApiBean.code)) {
-                                //token失效
-                                return;
-                            }
-
-                        handler.onResponse(mApiBean);
-                    } else {
-                        handler.onError(code, new Exception(response.errorBody().string()));
-                    }
-                } catch (IOException e) {
-                    handler.onError(-1, new Exception("接口格式异常"));
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-                Exception exception = new Exception(t.getMessage());
-                handler.onError(-1, exception);
-            }
-        });
-
+    public EnhancedCall getCall(Call call){
+      return   new EnhancedCall(call);
     }
 
 
