@@ -12,6 +12,7 @@ import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
 
@@ -58,20 +59,28 @@ public class PayDialog extends Dialog implements PayWayAdapter.OnItemClickListen
 
             }
         });
+        rootView.findViewById(R.id.id_top_view).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dismiss();
+            }
+        });
         setCanceledOnTouchOutside(false);
     }
 
     @Override
     protected void onCreate(Bundle bundle) {
         super.onCreate(bundle);
-        getWindow().setGravity(Gravity.CENTER);
-        getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        WindowManager m = getWindow().getWindowManager();
+        Window window = getWindow();
+        window.setGravity(Gravity.CENTER);
+        window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        WindowManager m = window.getWindowManager();
         Display d = m.getDefaultDisplay();
         WindowManager.LayoutParams p = getWindow().getAttributes();
         p.width = d.getWidth();
-        getWindow().setAttributes(p);
-        getWindow().setDimAmount(0.6f);
+        window.setAttributes(p);
+        window.setDimAmount(0.6f);
+        window.setWindowAnimations(R.style.AnimBottomDialog);
 
     }
 

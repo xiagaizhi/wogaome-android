@@ -29,7 +29,7 @@ public class PayPsdInputView extends AppCompatEditText {
     /**
      * 实心圆的半径
      */
-    private int radius = 10;
+    private int radius = 20;
     /**
      * view的高度
      */
@@ -48,16 +48,16 @@ public class PayPsdInputView extends AppCompatEditText {
     /**
      * 圆的颜色   默认BLACK
      */
-    private int circleColor = Color.BLACK;
+    private int circleColor;
     /**
      * 底部线的颜色   默认GRAY
      */
-    private int bottomLineColor = Color.GRAY;
+    private int bottomLineColor;
 
     /**
      * 分割线的颜色
      */
-    private int borderColor = Color.GRAY;
+    private int borderColor;
     /**
      * 分割线的画笔
      */
@@ -70,11 +70,11 @@ public class PayPsdInputView extends AppCompatEditText {
     /**
      * 分割线的宽度  默认2
      */
-    private int divideLineWidth = 2;
+    private int divideLineWidth = 4;
     /**
      * 竖直分割线的颜色
      */
-    private int divideLineColor = Color.GRAY;
+    private int divideLineColor;
     private int focusedColor = Color.BLUE;
     private RectF rectF = new RectF();
     private RectF focusedRecF = new RectF();
@@ -110,6 +110,10 @@ public class PayPsdInputView extends AppCompatEditText {
     public PayPsdInputView(Context context, AttributeSet attrs) {
         super(context, attrs);
         mContext = context;
+        circleColor = mContext.getResources().getColor(R.color.color_gray_level3);
+        bottomLineColor = mContext.getResources().getColor(R.color.color_gray_levelc);
+        borderColor = mContext.getResources().getColor(R.color.color_gray_levelc);
+        divideLineColor = mContext.getResources().getColor(R.color.color_gray_levelc);
         getAtt(attrs);
         initPaint();
         this.setBackgroundColor(Color.TRANSPARENT);
@@ -138,7 +142,7 @@ public class PayPsdInputView extends AppCompatEditText {
     private void initPaint() {
         circlePaint = getPaint(5, Paint.Style.FILL, circleColor);
         bottomLinePaint = getPaint(2, Paint.Style.FILL, bottomLineColor);
-        borderPaint = getPaint(3, Paint.Style.STROKE, borderColor);
+        borderPaint = getPaint(6, Paint.Style.STROKE, borderColor);
         divideLinePaint = getPaint(divideLineWidth, Paint.Style.FILL, borderColor);
     }
 

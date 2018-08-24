@@ -48,39 +48,56 @@
             android:textColor="@color/color_gray_level3"
             android:textSize="@dimen/px60" />
 
-        <TextView
-            android:id="@+id/id_lkc_detail"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="@dimen/px48"
-            android:layout_marginLeft="@dimen/px149"
-            android:text="@string/lkc_detail"
-            android:textColor="@color/color_f67b29"
-            android:textSize="@dimen/px30" />
+            android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/id_yesterd_arith_num"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="@dimen/px48"
-            android:layout_marginLeft="@dimen/px170"
-            android:layout_toRightOf="@+id/id_lkc_detail"
-            android:text="@string/lkc_yesterd_arith_num"
-            android:textColor="@color/color_f67b29"
-            android:textSize="@dimen/px30" />
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="@dimen/px75"
-            android:layout_toRightOf="@+id/id_yesterd_arith_num"
-            android:background="@drawable/message_widget_bg_shape"
-            android:text="999999"
-            android:textColor="@color/white"
-            android:textSize="@dimen/px18" />
+                <TextView
+                    android:id="@+id/id_lkc_detail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:text="@string/lkc_detail"
+                    android:textColor="@color/color_f67b29"
+                    android:textSize="@dimen/px30" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/id_yesterd_arith_num"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:text="@string/lkc_yesterd_arith_num"
+                    android:textColor="@color/color_f67b29"
+                    android:textSize="@dimen/px30" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/id_yesterd_arith_num"
+                    android:background="@drawable/message_widget_bg_shape"
+                    android:text="999999"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/px18" />
+            </RelativeLayout>
+
+
+        </LinearLayout>
+
+
     </RelativeLayout>
 
     <ImageView
