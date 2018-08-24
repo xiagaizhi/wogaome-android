@@ -11,9 +11,7 @@ import android.view.View;
 import com.yufan.library.inject.VuClass;
 import com.yufan.library.pay.PayDialog;
 import com.yushi.leke.UIHelper;
-import com.yushi.leke.fragment.openTreasureBox.OpenTreasureBoxFragment;
 import com.yushi.leke.fragment.paySafe.PaySafetyFragment;
-import com.yushi.leke.fragment.setPayPassword.SetRechargePasswordFragment;
 
 /**
  * Created by mengfantao on 18/8/2.

@@ -1,4 +1,4 @@
-package com.aliyun.vodplayerview.utils;
+package com.yufan.library.util;
 
 import android.content.Context;
 import android.util.DisplayMetrics;

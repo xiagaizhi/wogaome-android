@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/id_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -10,10 +11,10 @@
 
     <RelativeLayout
         android:id="@+id/id_wallet_top"
-        android:layout_width="match_parent"
+        android:layout_width="@dimen/x714"
         android:layout_height="@dimen/px472"
-        android:layout_marginLeft="@dimen/px24"
-        android:layout_marginRight="@dimen/px12"
+        android:layout_marginLeft="@dimen/x24"
+        android:layout_marginRight="@dimen/x12"
         android:layout_marginTop="@dimen/px200"
         android:background="@drawable/bg_lkc_remaining_card">
 
@@ -32,7 +33,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_marginRight="@dimen/px38"
+            android:layout_marginRight="@dimen/x38"
             android:layout_marginTop="@dimen/px38"
             android:src="@drawable/ic_lkc_detail_icon" />
 
@@ -50,21 +51,23 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/px84"
             android:layout_alignParentBottom="true"
-            android:layout_marginBottom="@dimen/px48"
+            android:layout_marginBottom="@dimen/px22"
+            android:layout_marginLeft="@dimen/x30"
+            android:layout_marginRight="@dimen/x30"
             android:orientation="horizontal">
 
             <RelativeLayout
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1">
 
                 <TextView
                     android:id="@+id/id_lkc_detail"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
+                    android:layout_centerInParent="true"
                     android:text="@string/lkc_detail"
                     android:textColor="@color/color_f67b29"
                     android:textSize="@dimen/px30" />
@@ -72,14 +75,14 @@
 
             <RelativeLayout
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1">
 
                 <TextView
                     android:id="@+id/id_yesterd_arith_num"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
+                    android:layout_centerInParent="true"
                     android:text="@string/lkc_yesterd_arith_num"
                     android:textColor="@color/color_f67b29"
                     android:textSize="@dimen/px30" />
@@ -87,6 +90,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/px8"
                     android:layout_toRightOf="@+id/id_yesterd_arith_num"
                     android:background="@drawable/message_widget_bg_shape"
                     android:text="999999"

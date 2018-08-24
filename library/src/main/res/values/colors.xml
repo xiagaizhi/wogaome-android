@@ -8,6 +8,7 @@
     <color name="color_gray_levelc">#cccccc</color>
     <color name="color_gray_level3">#333333</color>
     <color name="color_blue_level6">#007AFF</color>
+    <color name="clolor_transparent">#00000000</color>
 
     <color name="color_E5E5E5">#e5e5e5</color>
     <color name="color_line_1">#eeeeee</color>
@@ -28,6 +29,7 @@
     <color name="color_f67b29">#f67b29</color>
     <color name="color_999999">#999999</color>
     <color name="color_151515">#151515</color>
+    <color name="color_7f000000">#7f000000</color>
 
 
 </resources>

@@ -76,12 +76,11 @@ public class PayDialog extends Dialog implements PayWayAdapter.OnItemClickListen
         window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         WindowManager m = window.getWindowManager();
         Display d = m.getDefaultDisplay();
-        WindowManager.LayoutParams p = getWindow().getAttributes();
+        WindowManager.LayoutParams p = window.getAttributes();
         p.width = d.getWidth();
         window.setAttributes(p);
         window.setDimAmount(0.6f);
         window.setWindowAnimations(R.style.AnimBottomDialog);
-
     }
 
     @Override
