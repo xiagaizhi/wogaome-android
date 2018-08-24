@@ -23,7 +23,7 @@ import com.yufan.library.widget.AppToolbar;
  * Created by mengfantao on 18/8/2.
  */
 @FindLayout(layoutName = "alivc_player_layout_skin")
-@Title("播放器")
+@Title("视频播放器")
 public class VodPlayerVu extends BaseVu<VodPlayerContract.Presenter> implements VodPlayerContract.IView {
     private AliyunVodPlayerView mAliyunVodPlayerView;
     private AlivcShowMoreDialog showMoreDialog;

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import com.alibaba.verificationsdk.ui.IActivityCallback;
 import com.alibaba.verificationsdk.ui.VerifyActivity;
 import com.alibaba.verificationsdk.ui.VerifyType;
+import com.yufan.library.Global;
 import com.yufan.library.base.BaseFragment;
 
 import android.support.annotation.NonNull;
@@ -12,8 +13,10 @@ import android.support.annotation.Nullable;
 import android.view.View;
 import android.view.WindowManager;
 
+import com.yufan.library.browser.BrowserBaseFragment;
 import com.yufan.library.inject.VuClass;
 import com.yufan.library.util.SoftInputUtil;
+import com.yushi.leke.UIHelper;
 
 import java.util.Map;
 
@@ -66,7 +69,10 @@ public class RegisterFragment extends BaseFragment<RegisterContract.IView> imple
     public void register(String phone, String password, String verifcationCode) {
 
     }
-
+    @Override
+    public void onAgreementClick() {
+        start(UIHelper.creat(BrowserBaseFragment.class).put(Global.BUNDLE_KEY_BROWSER_URL,"http://baidu.com").build());
+    }
     @Override
     public void onDestroyView() {
         SoftInputUtil.hideSoftInput(getActivity(),getView());

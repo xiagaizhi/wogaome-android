@@ -226,8 +226,7 @@ public class RegisterVu extends BaseVu<RegisterContract.Presenter> implements Re
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.tv_agreement:
-
-
+                mPersenter.onAgreementClick();
                 break;
             case R.id.bt_register:
                 if(CheckUtil.checkInputState(et_phone,et_password,et_verification_code,true)){
