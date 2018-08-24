@@ -33,6 +33,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.yushi.leke.activity.FullScreenPlayerActivity;
 import com.yushi.leke.uamp.AlbumArtCache;
 import com.yushi.leke.uamp.MusicService;
 import com.yushi.leke.uamp.utils.LogHelper;

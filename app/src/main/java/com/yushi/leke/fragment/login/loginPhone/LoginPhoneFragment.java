@@ -1,26 +1,20 @@
 package com.yushi.leke.fragment.login.loginPhone;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import com.yufan.library.Global;
 import com.yufan.library.browser.BrowserBaseFragment;
-import com.yufan.library.manager.DialogManager;
 import com.yufan.library.util.SoftInputUtil;
-import com.yushi.leke.R;
 import com.yufan.library.base.BaseFragment;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.View;
-import android.view.WindowManager;
 
-import com.yufan.library.base.BaseFragment;
 import com.yufan.library.inject.VuClass;
 import com.yushi.leke.UIHelper;
 import com.yushi.leke.fragment.register.RegisterFragment;
 import com.yushi.leke.fragment.resetPassword.ResetPasswordFragment;
-import com.yushi.leke.uamp.ui.FullScreenPlayerActivity;
 
 /**
  * Created by mengfantao on 18/8/2.

@@ -69,7 +69,7 @@
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <!-- Main activity for music browsing on phone -->
         <activity
-            android:name=".uamp.ui.FullScreenPlayerActivity"
+            android:name=".activity.FullScreenPlayerActivity"
             android:launchMode="singleInstance"
             android:parentActivityName=".activity.MainActivity"
             android:theme="@style/ThemeActivity"

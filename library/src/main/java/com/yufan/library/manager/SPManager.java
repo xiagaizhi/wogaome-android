@@ -16,7 +16,7 @@ import java.util.List;
  * sharedpreferences全局工具
  */
 
-public class SharedPreferencesClient {
+public class SPManager {
     public final static String DATA_APP = "_data_app";
     public final static String DATA_USER = "_data_user";
     public final static String DATA_SETTING = "_data_setting";
@@ -25,10 +25,10 @@ public class SharedPreferencesClient {
 
 
     private String DATA = DATA_APP;
-    private static SharedPreferencesClient appClient;
-    private static SharedPreferencesClient userClient;
-    private static SharedPreferencesClient settingClient;
-    private static SharedPreferencesClient client;
+    private static SPManager appClient;
+    private static SPManager userClient;
+    private static SPManager settingClient;
+    private static SPManager client;
 
 
     public void destroy(){
@@ -37,45 +37,45 @@ public class SharedPreferencesClient {
         settingClient=null;
         client=null;
     }
-    public static SharedPreferencesClient getInstance() {
+    public static SPManager getInstance() {
         return getInstance(DATA_APP);
     }
 
-    public static SharedPreferencesClient getInstance(String data_) {
+    public static SPManager getInstance(String data_) {
         switch (data_) {
 
             case DATA_APP:
                 if (appClient == null) {
-                    appClient = new SharedPreferencesClient(DATA_APP);
+                    appClient = new SPManager(DATA_APP);
                 }
 
                 return appClient;
             case DATA_USER:
                 if (userClient == null) {
-                 String userid=   SharedPreferencesClient.getInstance().getString("userid","");
-                    userClient = new SharedPreferencesClient(DATA_USER + userid);
+                 String userid=   SPManager.getInstance().getString("userid","");
+                    userClient = new SPManager(DATA_USER + userid);
                 }
                 return userClient;
             case DATA_SETTING:
                 if (settingClient == null) {
 
-                    settingClient = new SharedPreferencesClient(DATA_SETTING);
+                    settingClient = new SPManager(DATA_SETTING);
                 }
                 return settingClient;
             case DATA_COOKIES:
                 if (appClient == null) {
-                    appClient = new SharedPreferencesClient(DATA_COOKIES);
+                    appClient = new SPManager(DATA_COOKIES);
                 }
                 return appClient;
             default:
-                client = new SharedPreferencesClient(data_);
+                client = new SPManager(data_);
 
                 return client;
         }
 
     }
 
-    private SharedPreferencesClient(String data) {
+    private SPManager(String data) {
         DATA = data;
     }
 

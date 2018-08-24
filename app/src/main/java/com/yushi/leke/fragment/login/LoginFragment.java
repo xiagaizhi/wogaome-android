@@ -1,12 +1,16 @@
 package com.yushi.leke.fragment.login;
 
-import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.yufan.library.Global;
+import com.yufan.library.api.ApiManager;
 import com.yufan.library.base.BaseFragment;
 
+import android.os.SystemClock;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.View;
@@ -15,12 +19,13 @@ import android.view.WindowManager;
 import com.yufan.library.browser.BrowserBaseFragment;
 import com.yufan.library.inject.VuClass;
 import com.yufan.library.manager.DialogManager;
+import com.yufan.library.manager.SPManager;
 import com.yufan.share.ILoginCallback;
 import com.yufan.share.ShareUtils;
+import com.yushi.leke.BuildConfig;
 import com.yushi.leke.UIHelper;
 import com.yushi.leke.fragment.login.loginPhone.LoginPhoneFragment;
 import com.yushi.leke.fragment.register.RegisterFragment;
-import com.yushi.leke.uamp.ui.FullScreenPlayerActivity;
 
 import java.util.Map;
 
@@ -30,9 +35,8 @@ import java.util.Map;
 @VuClass(LoginVu.class)
 public class LoginFragment extends BaseFragment<LoginContract.IView> implements LoginContract.Presenter {
 
-
+    private long[] mHits = new long[5];
     private ShareUtils mShareUtils;
-
 
 
     @Override
@@ -44,8 +48,8 @@ public class LoginFragment extends BaseFragment<LoginContract.IView> implements 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE|WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
-        mShareUtils=new ShareUtils(getActivity());
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE | WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+        mShareUtils = new ShareUtils(getActivity());
     }
 
     @Override
@@ -53,10 +57,6 @@ public class LoginFragment extends BaseFragment<LoginContract.IView> implements 
 
     }
 
-    @Override
-    public void onBackPressed() {
-        pop();
-    }
 
 
     @Override
@@ -93,13 +93,27 @@ public class LoginFragment extends BaseFragment<LoginContract.IView> implements 
         });
     }
 
-    @Override
-    public void onLogoClick() {
-        DialogManager.getInstance().toast("logo");
-    }
 
     @Override
     public void onAgreementClick() {
-        start(UIHelper.creat(BrowserBaseFragment.class).put(Global.BUNDLE_KEY_BROWSER_URL,"http://baidu.com").build());
+        start(UIHelper.creat(BrowserBaseFragment.class).put(Global.BUNDLE_KEY_BROWSER_URL, "http://baidu.com").build());
+    }
+
+    @Override
+    public void onServiceSelector(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+        dialog.dismiss();
+        SPManager.getInstance().saveValue(Global.SP_KEY_SERVICE_TYPE, dialog.getSelectedIndex());
+        DialogManager.getInstance().toast("修改成功");
+        ApiManager.getInstance().init(SPManager.getInstance().getInt(Global.SP_KEY_SERVICE_TYPE,BuildConfig.API_TYPE));
+    }
+
+    @Override
+    public void onLogoClick() {
+        System.arraycopy(mHits, 1, mHits, 0, mHits.length - 1);
+        mHits[mHits.length - 1] = SystemClock.uptimeMillis();
+        if (mHits[0] >= (SystemClock.uptimeMillis() - 1000)) {
+            int apiType = SPManager.getInstance().getInt(Global.SP_KEY_SERVICE_TYPE, BuildConfig.API_TYPE);
+            getVu().showServiceSelector(apiType);
+        }
     }
 }

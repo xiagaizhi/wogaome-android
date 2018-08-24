@@ -6,7 +6,11 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
+import com.yufan.library.BuildConfig;
+import com.yufan.library.Global;
+import com.yufan.library.api.config.ApiConfig;
 import com.yufan.library.base.BaseApplication;
+import com.yufan.library.manager.SPManager;
 import com.yufan.library.util.DeviceUtil;
 import com.yufan.library.util.Netutil;
 
@@ -38,7 +42,17 @@ public class ApiManager {
     private static final int DEFAULT_TIME_OUT = 5;//超时时间 5s
     private static final int DEFAULT_READ_TIME_OUT = 10;
     private Retrofit mRetrofit;
+    private ApiConfig mApiConfig;
+
+    public ApiConfig getApiConfig() {
+        return mApiConfig;
+    }
+
     private ApiManager(){
+
+    }
+
+    public void init(int apiType){
         // 创建 OKHttpClient
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
         builder.connectTimeout(DEFAULT_TIME_OUT, TimeUnit.SECONDS);//连接超时时间        builder.writeTimeout(DEFAULT_READ_TIME_OUT,TimeUnit.SECONDS);//写操作 超时时间
@@ -48,7 +62,7 @@ public class ApiManager {
             @Override
             public Response intercept(Chain chain) throws IOException {
                 Request authorised = chain.request().newBuilder()
-                       .headers(Headers.of(getApiHeader(BaseApplication.getInstance())))
+                        .headers(Headers.of(getApiHeader(BaseApplication.getInstance())))
                         .build();
                 RequestBody requestBody= authorised.body();
                 Buffer buffer = new Buffer();
@@ -60,13 +74,14 @@ public class ApiManager {
             }
         };
         builder.addInterceptor(commonInterceptor);
+         mApiConfig=new ApiConfig(apiType);
         // 创建Retrofit
         mRetrofit = new Retrofit.Builder()
                 .client(builder.build())
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
 //                .baseUrl("http://47.98.52.243:8001")
-                .baseUrl("http://192.168.200.43:8001")
+                .baseUrl(mApiConfig.getBaseUrl())
                 .build();
     }
     private static class SingletonHolder{

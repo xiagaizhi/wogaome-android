@@ -23,13 +23,13 @@ public class UserManager {
 
     public void setToken(String token) {
         this.token = token;
-        SharedPreferencesClient.getInstance().saveValue("token",token);
+        SPManager.getInstance().saveValue("token",token);
     }
 
 
     public String getToken() {
         if(TextUtils.isEmpty(token)){
-            token=SharedPreferencesClient.getInstance().getString("token","");
+            token= SPManager.getInstance().getString("token","");
         }
         return token;
     }

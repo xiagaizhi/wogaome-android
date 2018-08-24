@@ -13,6 +13,7 @@ import com.yufan.library.view.recycler.YFRecyclerView;
 import com.yufan.library.widget.AppToolbar;
 import com.yufan.library.widget.StateLayout;
 import com.yushi.leke.R;
+import com.yushi.leke.activity.FullScreenPlayerActivity;
 
 import java.util.List;
 

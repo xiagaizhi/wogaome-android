@@ -4,7 +4,10 @@ import android.util.Log;
 
 import com.tencent.smtt.sdk.QbSdk;
 import com.umeng.socialize.PlatformConfig;
+import com.yufan.library.Global;
+import com.yufan.library.api.ApiManager;
 import com.yufan.library.base.BaseApplication;
+import com.yufan.library.manager.SPManager;
 
 /**
  * Created by mengfantao on 18/2/2.
@@ -37,6 +40,7 @@ public class App extends BaseApplication {
             return;
         }
         QbSdk.initX5Environment(getApplicationContext(), null);
+        ApiManager.getInstance().init(SPManager.getInstance().getInt(Global.SP_KEY_SERVICE_TYPE,BuildConfig.API_TYPE));
     }
 
 

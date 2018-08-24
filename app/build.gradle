@@ -13,6 +13,7 @@ android {
         aaptOptions.useNewCruncher = false
         multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        buildConfigField "int", "API_TYPE", "${gradle.apiType}"
 
     }
     dexOptions {

@@ -46,7 +46,7 @@ import com.yushi.leke.uamp.playback.LocalPlayback;
 import com.yushi.leke.uamp.playback.Playback;
 import com.yushi.leke.uamp.playback.PlaybackManager;
 import com.yushi.leke.uamp.playback.QueueManager;
-import com.yushi.leke.uamp.ui.FullScreenPlayerActivity;
+import com.yushi.leke.activity.FullScreenPlayerActivity;
 import com.yushi.leke.uamp.utils.CarHelper;
 import com.yushi.leke.uamp.utils.LogHelper;
 import com.yushi.leke.uamp.utils.TvHelper;
