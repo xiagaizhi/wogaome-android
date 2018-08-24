@@ -94,7 +94,7 @@ public class LoginVu extends BaseVu<LoginContract.Presenter> implements LoginCon
     public void showServiceSelector(int index){
         new MaterialDialog.Builder(getContext())
                 .title("选择环境")
-                .content("选择服务器环境，注意：切换到正式环境就不可以再切换回其他环境，并且不同环境包不能覆盖安装")
+                .content("注意：不同环境包不能覆盖安装")
                 .items(R.array.service_type)
                 .positiveText("确定")
                 .widgetColor(Color.BLUE)

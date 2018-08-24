@@ -126,9 +126,9 @@ public class MusicPlayerFragment extends BaseFragment<MusicPlayerContract.IView>
         }
     }
 
-    private void updateFromParams(Intent intent) {
+    private void updateFromParams(Bundle intent) {
         if (intent != null) {
-            MediaDescriptionCompat description = intent.getParcelableExtra(
+            MediaDescriptionCompat description = intent.getParcelable(
                     EXTRA_CURRENT_MEDIA_DESCRIPTION);
             if (description != null) {
                 updateMediaDescription(description);
@@ -169,7 +169,7 @@ public class MusicPlayerFragment extends BaseFragment<MusicPlayerContract.IView>
         }
         if (art != null) {
             // if we have the art cached or from the MediaDescription, use it:
-            getVu().getBackgroundImage().setImageBitmap(art);
+            getVu().setBackgroundImage(art);
 
         } else {
             // otherwise, fetch a high res version and update:
@@ -179,7 +179,7 @@ public class MusicPlayerFragment extends BaseFragment<MusicPlayerContract.IView>
                     // sanity check, in case a new fetch request has been done while
                     // the previous hasn't yet returned:
                     if (artUrl.equals(mCurrentArtUrl)) {
-                        getVu().getBackgroundImage().setImageBitmap(bitmap);
+                        getVu().setBackgroundImage(bitmap);
                     }
                 }
             });
@@ -191,8 +191,7 @@ public class MusicPlayerFragment extends BaseFragment<MusicPlayerContract.IView>
             return;
         }
         LogHelper.d(TAG, "updateMediaDescription called ");
-        mLine1.setText(description.getTitle());
-        mLine2.setText(description.getSubtitle());
+        getVu().onUpdateMediaDescription(description);
         fetchImageAsync(description);
     }
 
@@ -200,10 +199,10 @@ public class MusicPlayerFragment extends BaseFragment<MusicPlayerContract.IView>
         if (metadata == null) {
             return;
         }
+        getVu().onUpdateDuration(metadata);
         LogHelper.d(TAG, "updateDuration called ");
         int duration = (int) metadata.getLong(MediaMetadataCompat.METADATA_KEY_DURATION);
-        mSeekbar.setMax(duration);
-        mEnd.setText(DateUtils.formatElapsedTime(duration/1000));
+
     }
 
     private void updatePlaybackState(PlaybackStateCompat state) {
@@ -211,50 +210,7 @@ public class MusicPlayerFragment extends BaseFragment<MusicPlayerContract.IView>
             return;
         }
         mLastPlaybackState = state;
-        MediaControllerCompat controllerCompat = MediaControllerCompat.getMediaController(FullScreenPlayerActivity.this);
-        if (controllerCompat != null && controllerCompat.getExtras() != null) {
-            String castName = controllerCompat.getExtras().getString(MusicService.EXTRA_CONNECTED_CAST);
-            String line3Text = castName == null ? "" : getResources()
-                    .getString(com.yushi.leke.plugin.musicplayer.R.string.casting_to_device, castName);
-            mLine3.setText(line3Text);
-        }
-
-        switch (state.getState()) {
-            case PlaybackStateCompat.STATE_PLAYING:
-                mLoading.setVisibility(INVISIBLE);
-                mPlayPause.setVisibility(VISIBLE);
-                mPlayPause.setImageDrawable(mPauseDrawable);
-                mControllers.setVisibility(VISIBLE);
-                scheduleSeekbarUpdate();
-                break;
-            case PlaybackStateCompat.STATE_PAUSED:
-                mControllers.setVisibility(VISIBLE);
-                mLoading.setVisibility(INVISIBLE);
-                mPlayPause.setVisibility(VISIBLE);
-                mPlayPause.setImageDrawable(mPlayDrawable);
-                stopSeekbarUpdate();
-                break;
-            case PlaybackStateCompat.STATE_NONE:
-            case PlaybackStateCompat.STATE_STOPPED:
-                mLoading.setVisibility(INVISIBLE);
-                mPlayPause.setVisibility(VISIBLE);
-                mPlayPause.setImageDrawable(mPlayDrawable);
-                stopSeekbarUpdate();
-                break;
-            case PlaybackStateCompat.STATE_BUFFERING:
-                mPlayPause.setVisibility(INVISIBLE);
-                mLoading.setVisibility(VISIBLE);
-                mLine3.setText(com.yushi.leke.plugin.musicplayer.R.string.loading);
-                stopSeekbarUpdate();
-                break;
-            default:
-                LogHelper.d(TAG, "Unhandled state ", state.getState());
-        }
-
-        mSkipNext.setVisibility((state.getActions() & PlaybackStateCompat.ACTION_SKIP_TO_NEXT) == 0
-                ? INVISIBLE : VISIBLE );
-        mSkipPrev.setVisibility((state.getActions() & PlaybackStateCompat.ACTION_SKIP_TO_PREVIOUS) == 0
-                ? INVISIBLE : VISIBLE );
+      getVu().updatePlaybackState(state);
     }
 
     private void updateProgress() {
@@ -271,7 +227,7 @@ public class MusicPlayerFragment extends BaseFragment<MusicPlayerContract.IView>
                     mLastPlaybackState.getLastPositionUpdateTime();
             currentPosition += (int) timeDelta * mLastPlaybackState.getPlaybackSpeed();
         }
-        mSeekbar.setProgress((int) currentPosition);
+        getVu().updateProgress((int)currentPosition);
     }
     @Override
     public void onRefresh() {

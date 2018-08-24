@@ -1,6 +1,9 @@
 package com.yushi.leke.fragment.musicplayer;
 
 import android.graphics.Bitmap;
+import android.support.v4.media.MediaDescriptionCompat;
+import android.support.v4.media.MediaMetadataCompat;
+import android.support.v4.media.session.PlaybackStateCompat;
 import android.widget.ImageView;
 
 import com.yufan.library.base.Pr;
@@ -12,7 +15,11 @@ import com.yufan.library.base.Vu;
 
 public interface MusicPlayerContract {
     interface IView extends Vu {
-        ImageView getBackgroundImage();
+        void setBackgroundImage(Bitmap bitmap);
+        void onUpdateMediaDescription(MediaDescriptionCompat description);
+        void onUpdateDuration(MediaMetadataCompat metadata);
+        void updatePlaybackState(PlaybackStateCompat state);
+        void updateProgress(int currentPosition);
     }
 
     interface Presenter extends Pr {

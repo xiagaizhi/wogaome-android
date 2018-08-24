@@ -1,6 +1,11 @@
 package com.yushi.leke.fragment.musicplayer;
 
+import android.graphics.Bitmap;
+import android.support.v4.media.MediaDescriptionCompat;
+import android.support.v4.media.MediaMetadataCompat;
+import android.support.v4.media.session.PlaybackStateCompat;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.yushi.leke.R;
 import com.yufan.library.base.BaseVu;
@@ -29,5 +34,31 @@ public class MusicPlayerVu extends BaseVu<MusicPlayerContract.Presenter> impleme
     @Override
     public void initStatusLayout(StateLayout stateLayout) {
         super.initStatusLayout(stateLayout);
+    }
+
+
+    @Override
+    public void setBackgroundImage(Bitmap bitmap) {
+
+    }
+
+    @Override
+    public void onUpdateMediaDescription(MediaDescriptionCompat description) {
+
+    }
+
+    @Override
+    public void onUpdateDuration(MediaMetadataCompat metadata) {
+
+    }
+
+    @Override
+    public void updatePlaybackState(PlaybackStateCompat state) {
+
+    }
+
+    @Override
+    public void updateProgress(int currentPosition) {
+
     }
 }
