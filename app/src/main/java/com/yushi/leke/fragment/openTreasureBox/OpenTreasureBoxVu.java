@@ -56,7 +56,7 @@ public class OpenTreasureBoxVu extends BaseVu<OpenTreasureBoxContract.Presenter>
         treasureBoxIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                mPersenter.openSetPwd();
             }
         });
 

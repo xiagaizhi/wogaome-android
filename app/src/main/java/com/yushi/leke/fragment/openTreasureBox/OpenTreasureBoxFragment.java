@@ -9,6 +9,8 @@ import android.support.annotation.Nullable;
 import android.view.View;
 
 import com.yufan.library.inject.VuClass;
+import com.yushi.leke.UIHelper;
+import com.yushi.leke.fragment.setPayPassword.SetRechargePasswordFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,5 +43,10 @@ public class OpenTreasureBoxFragment extends BaseFragment<OpenTreasureBoxContrac
     @Override
     public List<String> getDatas() {
         return datas;
+    }
+
+    @Override
+    public void openSetPwd() {
+        getRootFragment().start(UIHelper.creat(SetRechargePasswordFragment.class).build());
     }
 }

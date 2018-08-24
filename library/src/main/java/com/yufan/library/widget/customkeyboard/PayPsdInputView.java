@@ -29,7 +29,7 @@ public class PayPsdInputView extends AppCompatEditText {
     /**
      * 实心圆的半径
      */
-    private int radius = 10;
+    private int radius = 12;
     /**
      * view的高度
      */

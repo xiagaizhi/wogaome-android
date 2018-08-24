@@ -18,5 +18,6 @@ public interface OpenTreasureBoxContract {
 
     interface Presenter extends Pr {
         List<String> getDatas();
+        void openSetPwd();
     }
 }
