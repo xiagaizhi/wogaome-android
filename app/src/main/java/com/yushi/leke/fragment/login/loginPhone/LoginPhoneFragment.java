@@ -19,6 +19,7 @@ import com.yufan.library.base.BaseFragment;
 import com.yufan.library.inject.VuClass;
 import com.yushi.leke.UIHelper;
 import com.yushi.leke.fragment.register.RegisterFragment;
+import com.yushi.leke.fragment.resetPassword.ResetPasswordFragment;
 import com.yushi.leke.uamp.ui.FullScreenPlayerActivity;
 
 /**
@@ -54,10 +55,8 @@ public class LoginPhoneFragment extends BaseFragment<LoginPhoneContract.IView> i
 
     @Override
     public void onForgetPassword() {
-        Intent intent=new Intent();
-        intent.setClass(getContext(),FullScreenPlayerActivity.class);
-        startActivity(intent);
-        //start(UIHelper.creat(ResetPasswordFragment.class).build());
+
+        start(UIHelper.creat(ResetPasswordFragment.class).build());
 
     }
 

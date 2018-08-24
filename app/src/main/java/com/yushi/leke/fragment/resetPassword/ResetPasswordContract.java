@@ -14,6 +14,7 @@ public interface ResetPasswordContract {
 
     interface Presenter extends Pr {
         void getVerifcationCode();
+        void resetPassword(String phone,String vcode,String newPassword);
 
     }
 }

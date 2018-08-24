@@ -76,17 +76,18 @@ public class VerificationCodeTextView extends TextView {
         setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                onGetCodeClickListener.getCode();
-                setOnClickListener(null);
-                Message msg = Message.obtain();
-                msg.what = 0;
-                msg.arg1 = 60;
-                handler.sendMessage(msg);
+                if(onGetCodeClickListener!=null&&onGetCodeClickListener.getCode()){
+                    setOnClickListener(null);
+                    Message msg = Message.obtain();
+                    msg.what = 0;
+                    msg.arg1 = 60;
+                    handler.sendMessage(msg);
+                }
             }
         });
     }
 
     public interface OnGetCodeClickListener {
-        void getCode();
+        boolean getCode();
     }
 }

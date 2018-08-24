@@ -9,6 +9,7 @@ import android.support.annotation.Nullable;
 import android.view.View;
 
 import com.yufan.library.inject.VuClass;
+import com.yufan.library.util.SoftInputUtil;
 
 /**
  * Created by mengfantao on 18/8/2.
@@ -31,5 +32,15 @@ public class ResetPasswordFragment extends BaseFragment<ResetPasswordContract.IV
     @Override
     public void getVerifcationCode() {
 
+    }
+
+    @Override
+    public void resetPassword(String phone, String vcode, String newPassword) {
+
+    }
+    @Override
+    public void onDestroyView() {
+        SoftInputUtil.hideSoftInput(getActivity(),getView());
+        super.onDestroyView();
     }
 }

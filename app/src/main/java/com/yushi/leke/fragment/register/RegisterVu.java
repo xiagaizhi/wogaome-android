@@ -61,10 +61,15 @@ public class RegisterVu extends BaseVu<RegisterContract.Presenter> implements Re
         bt_register.setOnClickListener(this);
         bt_register.setOnClickListener(this);
         iv_clear_password.setOnClickListener(this);
+        iv_clear_phone.setOnClickListener(this);
         verificationCodeTextView.setOnGetCodeClickListener(new VerificationCodeTextView.OnGetCodeClickListener() {
             @Override
-            public void getCode() {
-              mPersenter.getVerifcationCode();
+            public boolean getCode() {
+                if(!TextUtils.isEmpty(et_phone.getText())){
+                    mPersenter.getVerifcationCode();
+                    return true;
+                }
+            return false;
             }
         });
         cb_showeye.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
