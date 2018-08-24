@@ -35,19 +35,31 @@ import java.util.List;
  */
 
 public class SetRechargePwdDialog extends Dialog implements KeyboardAdapter.OnKeyboardClickListener {
+    public static final int SET_RECHARGE_PWD = 1;//设置交易密码
+    public static final int MODIFY_RECHARGE_PWD = 2;//修改交易密码
+    public static final int CHECK_RECHARGE_PWD = 3;//输入支付密码进行校验
     private PayPsdInputView tv_password;
     private KeyboardView id_keyboard_view;
     private TextView mTitle;
     private Context mContext;
-    private boolean isSetRecharge;//true:设置／修改交易密码 false:输入支付密码进行验证
+    private int type;//true:设置／修改交易密码 false:输入支付密码进行验证
+    private TextView mSetRechargeType;
 
 
-    public SetRechargePwdDialog(@NonNull Context context, final boolean isSetRecharge) {
+    public SetRechargePwdDialog(@NonNull Context context, final int type) {
         super(context, R.style.dialog_common);
         this.mContext = context;
-        this.isSetRecharge = isSetRecharge;
+        this.type = type;
         View rootView = LayoutInflater.from(context).inflate(R.layout.layout_setrechargepassword, null);
         setContentView(rootView);
+        mSetRechargeType = rootView.findViewById(R.id.tv_recharge_type);
+        if (type == SET_RECHARGE_PWD) {
+            mSetRechargeType.setText("设置交易密码");
+        } else if (type == MODIFY_RECHARGE_PWD) {
+            mSetRechargeType.setText("修改交易密码");
+        } else if (type == CHECK_RECHARGE_PWD) {
+            mSetRechargeType.setText("验证交易密码");
+        }
         mTitle = rootView.findViewById(R.id.tv_setpwd_title);
         rootView.findViewById(R.id.id_close).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -110,11 +122,11 @@ public class SetRechargePwdDialog extends Dialog implements KeyboardAdapter.OnKe
             @Override
             public void inputFinished(String inputPsd) {
                 //输完逻辑
-                if (isSetRecharge) {//设置交易
+                if (type == SET_RECHARGE_PWD || type == MODIFY_RECHARGE_PWD) {//设置交易、修改交易密码
                     tv_password.setComparePassword(inputPsd);
                     tv_password.cleanPsd();
                     mTitle.setText(R.string.set_recharge_pwd_again);
-                } else {//输入支付密码进行验证
+                } else if (type == CHECK_RECHARGE_PWD) {//输入支付密码进行验证
                     tv_password.setComparePassword("");
                     if (TextUtils.equals("123456", inputPsd)) {//成功
                         Toast.makeText(mContext, "去支付", Toast.LENGTH_SHORT).show();

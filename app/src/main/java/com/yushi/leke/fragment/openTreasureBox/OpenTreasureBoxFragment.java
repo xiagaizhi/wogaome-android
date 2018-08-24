@@ -48,7 +48,7 @@ public class OpenTreasureBoxFragment extends BaseFragment<OpenTreasureBoxContrac
     @Override
     public void openSetPwd() {
 //        getRootFragment().start(UIHelper.creat(SetRechargePasswordFragment.class).build());
-        SetRechargePwdDialog setRechargePwdDialog = new SetRechargePwdDialog(_mActivity,false);
+        SetRechargePwdDialog setRechargePwdDialog = new SetRechargePwdDialog(_mActivity,SetRechargePwdDialog.MODIFY_RECHARGE_PWD);
         setRechargePwdDialog.setmTitle(R.string.set_recharge_pwd);
         setRechargePwdDialog.show();
     }
