@@ -49,7 +49,7 @@ public class BindPhoneVu extends BaseVu<BindPhoneContract.Presenter> implements 
             @Override
             public boolean getCode() {
                 if (!TextUtils.isEmpty(et_phone.getText())) {
-                    mPersenter.getVerifcationCode();
+                    mPersenter.getVerifcationCode(et_phone.getText().toString());
                     return true;
                 }
                 return false;

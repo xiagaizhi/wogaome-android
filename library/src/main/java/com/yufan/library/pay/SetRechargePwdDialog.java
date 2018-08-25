@@ -142,11 +142,10 @@ public class SetRechargePwdDialog extends Dialog implements KeyboardAdapter.OnKe
 
             @Override
             public void onEqual(String psd) {
-                //两次输入密码相同，那就去进行支付楼
+                //两次输入密码相同，去设置密码
+                setRechargePwd(psd);
                 tv_password.setComparePassword("");
                 tv_password.cleanPsd();
-                Toast.makeText(mContext, "交易密码设置成功", Toast.LENGTH_SHORT).show();
-                dismiss();
             }
 
             @Override
@@ -196,6 +195,32 @@ public class SetRechargePwdDialog extends Dialog implements KeyboardAdapter.OnKe
             tv_password.setText(num.substring(0, num.length() - 1));
             tv_password.setSelection(tv_password.getText().length());
         }
+    }
+
+    private void setRechargePwd(String pwd) {
+        ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).setPayPwd("v1", "999", pwd))
+                .useCache(false)
+                .enqueue(new BaseHttpCallBack() {
+                    @Override
+                    public void onSuccess(ApiBean mApiBean) {
+                        if (TextUtils.equals("000", mApiBean.getCode())) {
+                            ToastUtil.normal(mContext, "交易密码设置成功", Toast.LENGTH_SHORT).show();
+                            dismiss();
+                        } else {
+                            ToastUtil.normal(mContext, "密码设置失败，请重新设置", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onError(int id, Exception e) {
+
+                    }
+
+                    @Override
+                    public void onFinish() {
+
+                    }
+                });
     }
 
 

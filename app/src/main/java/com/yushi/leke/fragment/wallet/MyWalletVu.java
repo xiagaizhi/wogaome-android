@@ -96,6 +96,7 @@ public class MyWalletVu extends BaseVu<MyWalletContract.Presenter> implements My
             case R.id.id_yesterd_arith_num://昨日算力
                 break;
             case R.id.id_open_treasure://点击开宝箱
+                mPersenter.openTreasureBox();
                 break;
         }
     }

@@ -12,6 +12,7 @@ import com.yufan.library.inject.VuClass;
 import com.yufan.library.pay.PayDialog;
 import com.yushi.leke.UIHelper;
 import com.yushi.leke.fragment.bindPhone.BindPhoneFragment;
+import com.yushi.leke.fragment.openTreasureBox.OpenTreasureBoxFragment;
 import com.yushi.leke.fragment.paySafe.PaySafetyFragment;
 import com.yushi.leke.fragment.resetPassword.ResetPasswordFragment;
 
@@ -41,5 +42,10 @@ public class MyWalletFragment extends BaseFragment<MyWalletContract.IView> imple
     @Override
     public void openPlayer() {
         getRootFragment().start(UIHelper.creat(BindPhoneFragment.class).build());
+    }
+
+    @Override
+    public void openTreasureBox() {
+        getRootFragment().start(UIHelper.creat(OpenTreasureBoxFragment.class).build());
     }
 }

@@ -16,5 +16,6 @@ public interface MyWalletContract {
 
         void openPaySafety();
         void openPlayer();
+        void openTreasureBox();
     }
 }

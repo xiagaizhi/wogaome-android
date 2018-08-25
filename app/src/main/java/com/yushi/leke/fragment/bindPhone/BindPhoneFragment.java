@@ -31,7 +31,7 @@ public class BindPhoneFragment extends BaseFragment<BindPhoneContract.IView> imp
     }
 
     @Override
-    public void getVerifcationCode() {
+    public void getVerifcationCode(String phone) {
 
     }
 

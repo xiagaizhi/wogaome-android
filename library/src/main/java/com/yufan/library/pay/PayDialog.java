@@ -126,7 +126,10 @@ public class PayDialog extends Dialog implements PayWayAdapter.OnItemClickListen
                                     setRechargePwdDialog.show();
                                     dismiss();
                                 } else {//没有交易密码
-                                    // TODO: 2018/8/25 指引到交易密码设置界面 
+                                    // TODO: 2018/8/25 指引到交易密码设置界面
+                                    dismiss();
+                                    SetRechargePwdDialog setRechargePwdDialog = new SetRechargePwdDialog(mContext, SetRechargePwdDialog.SET_RECHARGE_PWD);
+                                    setRechargePwdDialog.show();
                                 }
                             }
                         } catch (Exception e) {

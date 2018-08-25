@@ -28,49 +28,58 @@ public interface YFApi {
     @FormUrlEncoded
     @POST("/app/{interfVersion}/listTreatureBox")
     Call<ResponseBody>
-    listTreatureBox(
-            @Path("interfVersion") String interfVersion,
-            @Field("arg1") String goodsType
+    listTreatureBox(//获取宝箱列表
+                    @Path("interfVersion") String interfVersion,
+                    @Field("arg1") String goodsType
     );
 
     @FormUrlEncoded
     @POST("/app/{interfVersion}/payMethod")
     Call<ResponseBody>
-    payMethod(
-            @Path("interfVersion") String interfVersion,
-            @Field("arg1") int isInternalPayIos,
-            @Field("arg2") int goodsType,
-            @Field("arg3") String goodsId
+    payMethod(//获取商品支付方式界面（含ios内购）
+              @Path("interfVersion") String interfVersion,
+              @Field("arg1") int isInternalPayIos,
+              @Field("arg2") int goodsType,
+              @Field("arg3") String goodsId
     );
 
     @FormUrlEncoded
     @POST("/app/{interfVersion}/{function}")
     Call<ResponseBody>
-    toPay(
-            @Path("interfVersion") String interfVersion,
-            @Path("function") String function,
-            @Field("arg1") String orderTitle,
-            @Field("arg2") String orderPrice,
-            @Field("arg3") String payPrice,
-            @Field("arg4") String goodsId,
-            @Field("arg5") String payApiId,
-            @Field("arg6") String ioType
+    toPay(//发起支付（微信支付 wxPay ／支付宝支付 aliPay）
+          @Path("interfVersion") String interfVersion,
+          @Path("function") String function,
+          @Field("arg1") String orderTitle,
+          @Field("arg2") String orderPrice,
+          @Field("arg3") String payPrice,
+          @Field("arg4") String goodsId,
+          @Field("arg5") String payApiId,
+          @Field("arg6") String ioType
     );
 
     @FormUrlEncoded
     @POST("/app/{interfVersion}/havePayPwd")
     Call<ResponseBody>
-    havePayPwd(
-            @Path("interfVersion") String interfVersion,
-            @Field("arg1") String userId
+    havePayPwd(//检查是否已经设置了交易密码
+               @Path("interfVersion") String interfVersion,
+               @Field("arg1") String userId
     );
 
     @FormUrlEncoded
     @POST("/app/{interfVersion}/verifyPayPwd")
     Call<ResponseBody>
-    verifyPayPwd(
-            @Path("interfVersion") String interfVersion,
-            @Field("arg1") String userId,
-            @Field("arg2") String payPwd
+    verifyPayPwd(//验证交易密码
+                 @Path("interfVersion") String interfVersion,
+                 @Field("arg1") String userId,
+                 @Field("arg2") String payPwd
+    );
+
+    @FormUrlEncoded
+    @POST("/app/{interfVersion}/setPayPwd")
+    Call<ResponseBody>
+    setPayPwd(//设置/修改交易密码
+              @Path("interfVersion") String interfVersion,
+              @Field("arg1") String userId,
+              @Field("arg2") String payPwd
     );
 }
