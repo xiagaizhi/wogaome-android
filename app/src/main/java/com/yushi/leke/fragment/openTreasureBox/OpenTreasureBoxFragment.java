@@ -45,7 +45,7 @@ public class OpenTreasureBoxFragment extends BaseFragment<OpenTreasureBoxContrac
                 .enqueue(new BaseHttpCallBack() {
                     @Override
                     public void onSuccess(ApiBean mApiBean) {
-                        if (TextUtils.equals("000", mApiBean.getCode())) {
+                        if (TextUtils.equals(ApiBean.SUCCESS, mApiBean.getCode())) {
                             String data = mApiBean.getData();
                             goodsInfoList = JSON.parseObject(data, GoodsInfoList.class);
                             if (goodsInfoList != null && goodsInfoList.getGoodsInfo() != null && goodsInfoList.getGoodsInfo().size() > 0) {
@@ -93,7 +93,7 @@ public class OpenTreasureBoxFragment extends BaseFragment<OpenTreasureBoxContrac
                 .enqueue(new BaseHttpCallBack() {
                     @Override
                     public void onSuccess(ApiBean mApiBean) {
-                        if (TextUtils.equals("000", mApiBean.getCode())) {
+                        if (TextUtils.equals(ApiBean.SUCCESS, mApiBean.getCode())) {
                             String data = mApiBean.getData();
                             PayWayList payWayList = JSON.parseObject(data, PayWayList.class);
                             PayDialog payDialog = new PayDialog(_mActivity, payWayList);

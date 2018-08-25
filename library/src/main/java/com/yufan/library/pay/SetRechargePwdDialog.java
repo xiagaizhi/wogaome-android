@@ -203,7 +203,7 @@ public class SetRechargePwdDialog extends Dialog implements KeyboardAdapter.OnKe
                 .enqueue(new BaseHttpCallBack() {
                     @Override
                     public void onSuccess(ApiBean mApiBean) {
-                        if (TextUtils.equals("000", mApiBean.getCode())) {
+                        if (TextUtils.equals(ApiBean.SUCCESS, mApiBean.getCode())) {
                             ToastUtil.normal(mContext, "交易密码设置成功", Toast.LENGTH_SHORT).show();
                             dismiss();
                         } else {
@@ -233,7 +233,7 @@ public class SetRechargePwdDialog extends Dialog implements KeyboardAdapter.OnKe
                 enqueue(new BaseHttpCallBack() {
                     @Override
                     public void onSuccess(ApiBean mApiBean) {
-                        if (TextUtils.equals("000", mApiBean.getCode())) {
+                        if (TextUtils.equals(ApiBean.SUCCESS, mApiBean.getCode())) {
                             toPay();
                             dismiss();
                         } else {
@@ -274,7 +274,7 @@ public class SetRechargePwdDialog extends Dialog implements KeyboardAdapter.OnKe
                 .enqueue(new BaseHttpCallBack() {
                     @Override
                     public void onSuccess(ApiBean mApiBean) {
-                        if (TextUtils.equals("000", mApiBean.getCode())) {
+                        if (TextUtils.equals(ApiBean.SUCCESS, mApiBean.getCode())) {
                             String data = mApiBean.getData();
                             PayMetadata payMetadata = JSON.parseObject(data, PayMetadata.class);
                             if (TextUtils.equals("1", payApiId)) {

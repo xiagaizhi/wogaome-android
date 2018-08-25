@@ -114,7 +114,7 @@ public class PayDialog extends Dialog implements PayWayAdapter.OnItemClickListen
                     @Override
                     public void onSuccess(ApiBean mApiBean) {
                         try {
-                            if (TextUtils.equals("000", mApiBean.getCode())) {
+                            if (TextUtils.equals(ApiBean.SUCCESS, mApiBean.getCode())) {
                                 String data = mApiBean.getData();
                                 JSONObject jsonObject = new JSONObject(data);
                                 boolean isHave = jsonObject.optBoolean("isHave");
