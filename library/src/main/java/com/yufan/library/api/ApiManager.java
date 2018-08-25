@@ -57,31 +57,13 @@ public class ApiManager {
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
         builder.connectTimeout(DEFAULT_TIME_OUT, TimeUnit.SECONDS);//连接超时时间        builder.writeTimeout(DEFAULT_READ_TIME_OUT,TimeUnit.SECONDS);//写操作 超时时间
         builder.readTimeout(DEFAULT_READ_TIME_OUT,TimeUnit.SECONDS);//读操作超时时间
-        // 添加公共参数拦截器
-        HttpCommonInterceptor commonInterceptor = new HttpCommonInterceptor(){
-            @Override
-            public Response intercept(Chain chain) throws IOException {
-                Request authorised = chain.request().newBuilder()
-                        .headers(Headers.of(getApiHeader(BaseApplication.getInstance())))
-                        .build();
-                RequestBody requestBody= authorised.body();
-                Buffer buffer = new Buffer();
-                requestBody.writeTo(buffer);
-                Charset charset = Charset.forName("UTF-8");
-                String paramsStr = buffer.readString(charset);
-                Log.d("http","body: "+paramsStr);
-                return  chain.proceed(authorised);
-            }
-        };
         builder.addInterceptor(new EnhancedCacheInterceptor());
-        builder.addInterceptor(commonInterceptor);
          mApiConfig=new ApiConfig(apiType);
         // 创建Retrofit
         mRetrofit = new Retrofit.Builder()
                 .client(builder.build())
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
-//                .baseUrl("http://47.98.52.243:8001")
                 .baseUrl(mApiConfig.getBaseUrl())
                 .build();
     }
@@ -117,7 +99,7 @@ public class ApiManager {
      *
      * @return
      */
-    private  Map<String, String> getApiHeader(Context context) {
+    public   Map<String, String> getApiHeader(Context context) {
         LinkedHashMap apiHeaders = new LinkedHashMap<String, String>();
         apiHeaders.put("Accept-Language", Locale.getDefault().toString() );
         apiHeaders.put("Connection", "Keep-Alive");
@@ -127,7 +109,7 @@ public class ApiManager {
         apiHeaders.put("LK-Network-Type", Netutil.GetNetworkType(context));//网络类型
         apiHeaders.put("LK-Vendor", Build.MANUFACTURER); //厂商
         apiHeaders.put("LK-OS-Type", "Android");//系统类型
-        apiHeaders.put("LK-OS-Version",Build.VERSION.SDK_INT);//系统版本
+        apiHeaders.put("LK-OS-Version",Build.VERSION.SDK_INT+"");//系统版本
         apiHeaders.put("LK-Device-Model", Build.DEVICE);//设备型号
         apiHeaders.put("LK-CPU", Build.CPU_ABI);//CPU 架构
         apiHeaders.put("LK-Sid", "");//sid

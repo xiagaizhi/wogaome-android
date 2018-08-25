@@ -6,6 +6,7 @@ import android.util.Log;
 import com.alibaba.fastjson.JSON;
 import com.yufan.library.base.BaseApplication;
 import com.yufan.library.cache.CacheManager;
+import com.yufan.library.util.MD5Util;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -33,6 +34,7 @@ public class EnhancedCall{
         Charset charset = Charset.forName("UTF-8");
         StringBuilder sb = new StringBuilder();
         sb.append(url);
+        sb.append("?");
         if (request.method().equals("POST")) {
             MediaType contentType = requestBody.contentType();
             if (contentType != null) {
@@ -44,10 +46,13 @@ public class EnhancedCall{
             } catch (IOException e) {
                 e.printStackTrace();
             }
+
             sb.append(buffer.readString(charset));
             buffer.close();
         }
-        mCache = (String) CacheManager.readObject(BaseApplication.getInstance(),sb.toString());
+        mCache = (String) CacheManager.readObject(BaseApplication.getInstance(), MD5Util.MD5(sb.toString()));
+        Log.d("cache","cacheData: "+mCache);
+        Log.d("cache","cacheKey: "+MD5Util.MD5(sb.toString()));
     }
 
 
@@ -71,7 +76,6 @@ public class EnhancedCall{
                         String mjson = response.body().string();
                         ApiBean mApiBean = JSON.parseObject(mjson, ApiBean.class);
                         mApiBean.json=mjson;
-                        Log.i("http","response: " + mApiBean.json);
                         if (TextUtils.equals(ApiBean.TOKEN_LOSE,mApiBean.code)) {
                             //token失效
                             return;
