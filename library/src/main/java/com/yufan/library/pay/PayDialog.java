@@ -28,6 +28,9 @@ import com.yufan.library.pay.alipay.ToALiPay;
 import com.yufan.library.pay.wenchatpay.WeChatPay;
 
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -70,9 +73,7 @@ public class PayDialog extends Dialog implements PayWayAdapter.OnItemClickListen
         findViewById(R.id.btn_pay).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (selectPayWay != null) {
-                    toPay(selectPayWay.getPayApiId());
-                }
+                checkHavePayPwd();
             }
         });
         rootView.findViewById(R.id.id_top_view).setOnClickListener(new View.OnClickListener() {
@@ -105,42 +106,45 @@ public class PayDialog extends Dialog implements PayWayAdapter.OnItemClickListen
         id_payway.getAdapter().notifyDataSetChanged();
     }
 
-    private void toPay(final String payApiId) {
-        String payMethod = "";
-        if (TextUtils.equals("1", payApiId)) {
-            payMethod = "aliPay";
-        } else if (TextUtils.equals("2", payApiId)) {
-            payMethod = "wxPay";
-        }
-        if (TextUtils.isEmpty(payMethod)) {
-            return;
-        }
-        ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).toPay("v1", payMethod,
-                mPayWayList.getGoodsName(), mPayWayList.getGoodsPrice(), mPayWayList.getGoodsPrice(),
-                mPayWayList.getGoodsId(), selectPayWay.getPayApiId(), "2"))
+
+    private void checkHavePayPwd() {
+        ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).havePayPwd("v1", "9999"))
                 .useCache(false)
                 .enqueue(new BaseHttpCallBack() {
                     @Override
                     public void onSuccess(ApiBean mApiBean) {
-                        if (TextUtils.equals("000", mApiBean.getCode())) {
-                            String data = mApiBean.getData();
-                            PayMetadata payMetadata = JSON.parseObject(data, PayMetadata.class);
-                            if (TextUtils.equals("1", payApiId)) {
-                                ToALiPay toALiPay = new ToALiPay();
-                                toALiPay.action(mContext, payMetadata);
-                            } else if (TextUtils.equals("2", payApiId)) {
-                                WeChatPay.getInstance().toWeChatPay(mContext, payMetadata);
+                        try {
+                            if (TextUtils.equals("000", mApiBean.getCode())) {
+                                String data = mApiBean.getData();
+                                JSONObject jsonObject = new JSONObject(data);
+                                boolean isHave = jsonObject.optBoolean("isHave");
+                                if (isHave) {//拥有交易密码,验证交易密码
+                                    SetRechargePwdDialog setRechargePwdDialog = new SetRechargePwdDialog(mContext,
+                                            SetRechargePwdDialog.CHECK_RECHARGE_PWD, selectPayWay.getPayApiId(),
+                                            mPayWayList.getGoodsName(), mPayWayList.getGoodsPrice(),
+                                            mPayWayList.getGoodsPrice(), mPayWayList.getGoodsId());
+                                    setRechargePwdDialog.show();
+                                    dismiss();
+                                } else {//没有交易密码
+                                    // TODO: 2018/8/25 指引到交易密码设置界面 
+                                }
                             }
+                        } catch (Exception e) {
+                            e.printStackTrace();
                         }
                     }
 
                     @Override
                     public void onError(int id, Exception e) {
+
                     }
 
                     @Override
                     public void onFinish() {
+
                     }
                 });
     }
+
+
 }

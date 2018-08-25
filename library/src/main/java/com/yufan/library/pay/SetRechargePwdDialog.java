@@ -21,7 +21,15 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alibaba.fastjson.JSON;
 import com.yufan.library.R;
+import com.yufan.library.api.ApiBean;
+import com.yufan.library.api.ApiManager;
+import com.yufan.library.api.BaseHttpCallBack;
+import com.yufan.library.api.remote.YFApi;
+import com.yufan.library.pay.alipay.ToALiPay;
+import com.yufan.library.pay.wenchatpay.WeChatPay;
+import com.yufan.library.util.ToastUtil;
 import com.yufan.library.widget.customkeyboard.KeyboardAdapter;
 import com.yufan.library.widget.customkeyboard.KeyboardView;
 import com.yufan.library.widget.customkeyboard.PayPsdInputView;
@@ -44,14 +52,36 @@ public class SetRechargePwdDialog extends Dialog implements KeyboardAdapter.OnKe
     private Context mContext;
     private int type;//true:设置／修改交易密码 false:输入支付密码进行验证
     private TextView mSetRechargeType;
+    private String payApiId;
+    private String orderTitle;
+    private String orderPrice;
+    private String payPrice;
+    private String goodsId;
 
-
-    public SetRechargePwdDialog(@NonNull Context context, final int type) {
+    public SetRechargePwdDialog(@NonNull Context context, final int type, String payApiId, String orderTitle, String orderPrice, String payPrice, String goodsId) {
         super(context, R.style.dialog_common);
-        this.mContext = context;
-        this.type = type;
         View rootView = LayoutInflater.from(context).inflate(R.layout.layout_setrechargepassword, null);
         setContentView(rootView);
+        this.mContext = context;
+        this.type = type;
+        this.payApiId = payApiId;
+        this.orderTitle = orderTitle;
+        this.orderPrice = orderPrice;
+        this.payPrice = payPrice;
+        this.goodsId = goodsId;
+        initView(rootView);
+    }
+
+    public SetRechargePwdDialog(@NonNull Context context, final int type) {
+        super(context);
+        View rootView = LayoutInflater.from(context).inflate(R.layout.layout_setrechargepassword, null);
+        setContentView(rootView);
+        this.mContext = context;
+        this.type = type;
+        initView(rootView);
+    }
+
+    private void initView(View rootView) {
         mSetRechargeType = rootView.findViewById(R.id.tv_recharge_type);
         if (type == SET_RECHARGE_PWD) {
             mSetRechargeType.setText("设置交易密码");
@@ -127,21 +157,12 @@ public class SetRechargePwdDialog extends Dialog implements KeyboardAdapter.OnKe
                     tv_password.cleanPsd();
                     mTitle.setText(R.string.set_recharge_pwd_again);
                 } else if (type == CHECK_RECHARGE_PWD) {//输入支付密码进行验证
+                    checkPayPwd(inputPsd);
                     tv_password.setComparePassword("");
-                    if (TextUtils.equals("123456", inputPsd)) {//成功
-                        Toast.makeText(mContext, "去支付", Toast.LENGTH_SHORT).show();
-                        dismiss();
-                    } else {//失败
-                        Toast.makeText(mContext, "密码有误，请重新输入", Toast.LENGTH_SHORT).show();
-                        tv_password.cleanPsd();
-                    }
+                    tv_password.cleanPsd();
                 }
             }
         });
-    }
-
-    public void setmTitle(int resId) {
-        mTitle.setText(resId);
     }
 
     @Override
@@ -175,5 +196,77 @@ public class SetRechargePwdDialog extends Dialog implements KeyboardAdapter.OnKe
             tv_password.setText(num.substring(0, num.length() - 1));
             tv_password.setSelection(tv_password.getText().length());
         }
+    }
+
+
+    /**
+     * 验证交易密码
+     */
+    private void checkPayPwd(String pwd) {
+        ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).verifyPayPwd("v1", "999", pwd))
+                .useCache(false).
+                enqueue(new BaseHttpCallBack() {
+                    @Override
+                    public void onSuccess(ApiBean mApiBean) {
+                        if (TextUtils.equals("000", mApiBean.getCode())) {
+                            toPay();
+                            dismiss();
+                        } else {
+                            ToastUtil.normal(mContext, "密码有误，请重新输入", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onError(int id, Exception e) {
+
+                    }
+
+                    @Override
+                    public void onFinish() {
+
+                    }
+                });
+    }
+
+
+    /**
+     * 密码验证通过去支付
+     */
+    private void toPay() {
+        String payMethod = "";
+        if (TextUtils.equals("1", payApiId)) {
+            payMethod = "aliPay";
+        } else if (TextUtils.equals("2", payApiId)) {
+            payMethod = "wxPay";
+        }
+        if (TextUtils.isEmpty(payMethod)) {
+            return;
+        }
+        ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).toPay("v1", payMethod,
+                orderTitle, orderPrice, payPrice,
+                goodsId, payApiId, "2"))
+                .useCache(false)
+                .enqueue(new BaseHttpCallBack() {
+                    @Override
+                    public void onSuccess(ApiBean mApiBean) {
+                        if (TextUtils.equals("000", mApiBean.getCode())) {
+                            String data = mApiBean.getData();
+                            PayMetadata payMetadata = JSON.parseObject(data, PayMetadata.class);
+                            if (TextUtils.equals("1", payApiId)) {
+                                ToALiPay.getInstance().action(mContext, payMetadata);
+                            } else if (TextUtils.equals("2", payApiId)) {
+                                WeChatPay.getInstance().toWeChatPay(mContext, payMetadata);
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onError(int id, Exception e) {
+                    }
+
+                    @Override
+                    public void onFinish() {
+                    }
+                });
     }
 }

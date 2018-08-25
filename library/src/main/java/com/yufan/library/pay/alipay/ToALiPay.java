@@ -20,9 +20,16 @@ import java.net.URLEncoder;
  *
  */
 public class ToALiPay {
+    private static ToALiPay instance;
     private static final int SDK_PAY_FLAG = 1;
     private static final int SDK_CHECK_FLAG = 2;
 
+    public static ToALiPay getInstance() {
+        if (instance == null) {
+            instance = new ToALiPay();
+        }
+        return instance;
+    }
 
     private Handler mHandler = new Handler() {
         public void handleMessage(Message msg) {
