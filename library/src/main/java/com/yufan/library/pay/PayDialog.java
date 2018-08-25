@@ -18,11 +18,14 @@ import android.view.WindowManager;
 import android.widget.TextView;
 
 
+import com.alibaba.fastjson.JSON;
 import com.yufan.library.R;
 import com.yufan.library.api.ApiBean;
 import com.yufan.library.api.ApiManager;
 import com.yufan.library.api.BaseHttpCallBack;
 import com.yufan.library.api.remote.YFApi;
+import com.yufan.library.pay.alipay.ToALiPay;
+import com.yufan.library.pay.wenchatpay.WeChatPay;
 
 
 import java.util.ArrayList;
@@ -37,13 +40,17 @@ public class PayDialog extends Dialog implements PayWayAdapter.OnItemClickListen
     private PayWayAdapter mAdapter;
     private List<PayWay> payways = new ArrayList<>();
     private PayWay selectPayWay;
+    private PayWayList mPayWayList;
+    private Context mContext;
 
     public PayDialog(@NonNull Context context, PayWayList payWayList) {
         super(context, R.style.dialog_common);
+        this.mContext = context;
         View rootView = LayoutInflater.from(context).inflate(R.layout.layout_pay, null);
         setContentView(rootView);
-        if (payWayList != null && payWayList.getPayApi() != null && payWayList.getPayApi().size() > 0) {
-            selectPayWay = payWayList.getPayApi().get(0);
+        mPayWayList = payWayList;
+        if (mPayWayList != null && mPayWayList.getPayApi() != null && mPayWayList.getPayApi().size() > 0) {
+            selectPayWay = mPayWayList.getPayApi().get(0);
             selectPayWay.setSelect(true);
         }
         id_payway = rootView.findViewById(R.id.id_payway);
@@ -59,16 +66,12 @@ public class PayDialog extends Dialog implements PayWayAdapter.OnItemClickListen
         TextView tv_goods_info = (TextView) rootView.findViewById(R.id.tv_goods_info);
         tv_goods_info.setText("开宝箱");
         TextView tv_money = (TextView) rootView.findViewById(R.id.tv_order_money);
-        tv_money.setText("¥" + payWayList.getGoodsPrice());
+        tv_money.setText("¥" + mPayWayList.getGoodsPrice());
         findViewById(R.id.btn_pay).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (selectPayWay != null) {
-                    if (TextUtils.equals("1", selectPayWay.getPayApiId())) {
-
-                    } else if (TextUtils.equals("2", selectPayWay.getPayApiId())) {
-
-                    }
+                    toPay(selectPayWay.getPayApiId());
                 }
             }
         });
@@ -102,11 +105,42 @@ public class PayDialog extends Dialog implements PayWayAdapter.OnItemClickListen
         id_payway.getAdapter().notifyDataSetChanged();
     }
 
-    private void toAliPay() {
+    private void toPay(final String payApiId) {
+        String payMethod = "";
+        if (TextUtils.equals("1", payApiId)) {
+            payMethod = "aliPay";
+        } else if (TextUtils.equals("2", payApiId)) {
+            payMethod = "wxPay";
+        }
+        if (TextUtils.isEmpty(payMethod)) {
+            return;
+        }
+        ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).toPay("v1", payMethod,
+                mPayWayList.getGoodsName(), mPayWayList.getGoodsPrice(), mPayWayList.getGoodsPrice(),
+                mPayWayList.getGoodsId(), selectPayWay.getPayApiId(), "2"))
+                .useCache(false)
+                .enqueue(new BaseHttpCallBack() {
+                    @Override
+                    public void onSuccess(ApiBean mApiBean) {
+                        if (TextUtils.equals("000", mApiBean.getCode())) {
+                            String data = mApiBean.getData();
+                            PayMetadata payMetadata = JSON.parseObject(data, PayMetadata.class);
+                            if (TextUtils.equals("1", payApiId)) {
+                                ToALiPay toALiPay = new ToALiPay();
+                                toALiPay.action(mContext, payMetadata);
+                            } else if (TextUtils.equals("2", payApiId)) {
+                                WeChatPay.getInstance().toWeChatPay(mContext, payMetadata);
+                            }
+                        }
+                    }
 
-    }
+                    @Override
+                    public void onError(int id, Exception e) {
+                    }
 
-    private void toWChatPay() {
-
+                    @Override
+                    public void onFinish() {
+                    }
+                });
     }
 }

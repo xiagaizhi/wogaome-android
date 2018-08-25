@@ -14,6 +14,7 @@ public class PayWayList {
     private String goodsPrice;//商品单价
     private String goodsId;//商品ID
 
+
     public List<PayWay> getPayApi() {
         return payApi;
     }
