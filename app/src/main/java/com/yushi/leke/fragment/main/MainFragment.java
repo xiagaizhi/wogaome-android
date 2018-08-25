@@ -14,7 +14,6 @@ import com.yufan.library.inject.VuClass;
 import com.yushi.leke.R;
 import com.yushi.leke.UIHelper;
 import com.yushi.leke.fragment.openTreasureBox.OpenTreasureBoxFragment;
-import com.yushi.leke.fragment.setPayPassword.SetRechargePasswordFragment;
 import com.yushi.leke.fragment.test.TestListFragment;
 import com.yushi.leke.fragment.wallet.MyWalletFragment;
 
@@ -45,7 +44,7 @@ public class MainFragment extends BaseFragment<MainContract.IView> implements Ma
             // 这里我们需要拿到mFragments的引用
             mFragments[0] = firstFragment;
             mFragments[1] = findChildFragment(MyWalletFragment.class);
-            mFragments[2] = findChildFragment(SetRechargePasswordFragment.class);
+            mFragments[2] = findChildFragment(OpenTreasureBoxFragment.class);
         }
     }
 
