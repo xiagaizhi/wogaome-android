@@ -38,7 +38,6 @@ import java.util.Map;
  */
 @VuClass(LoginVu.class)
 public class LoginFragment extends BaseFragment<LoginContract.IView> implements LoginContract.Presenter {
-
     private long[] mHits = new long[5];
     private ShareUtils mShareUtils;
 
@@ -46,7 +45,7 @@ public class LoginFragment extends BaseFragment<LoginContract.IView> implements 
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-      EnhancedCall call= ApiManager.getInstance().getCall(ApiManager.getInstance().create(YFApi.class).postData("changjinglu2018","action","1","2"));//
+      EnhancedCall call= ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).postData("changjinglu2018","action","1","2"));//
         call.useCache(true);
         call.enqueue(new BaseHttpCallBack() {
             @Override

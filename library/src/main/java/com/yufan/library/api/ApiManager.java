@@ -89,7 +89,7 @@ public class ApiManager {
 
 
 
-    public EnhancedCall getCall(Call call){
+    public static EnhancedCall getCall(Call call){
       return   new EnhancedCall(call);
     }
 
