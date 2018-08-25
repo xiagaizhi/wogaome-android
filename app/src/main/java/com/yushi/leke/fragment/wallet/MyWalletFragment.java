@@ -38,7 +38,5 @@ public class MyWalletFragment extends BaseFragment<MyWalletContract.IView> imple
 
     @Override
     public void openPlayer() {
-        PayDialog payDialog = new PayDialog(_mActivity,"开宝箱",100000);
-        payDialog.show();
     }
 }

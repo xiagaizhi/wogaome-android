@@ -1,5 +1,6 @@
 package com.yufan.library.util;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
@@ -7,11 +8,10 @@ import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
+import android.support.v4.app.ActivityCompat;
 import android.telephony.TelephonyManager;
 import android.util.DisplayMetrics;
 import android.util.Log;
-
-import com.yufan.library.base.BaseApplication;
 
 import java.lang.reflect.Method;
 
@@ -29,14 +29,14 @@ public class DeviceUtil {
                     PackageManager.GET_PERMISSIONS);
             // 获取到所有的权限
             return packinfo.requestedPermissions;
- 
+
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
- 
+
         }
         return null;
     }
- 
+
     /**
      * 获取程序的签名
      */
@@ -48,14 +48,14 @@ public class DeviceUtil {
                     PackageManager.GET_SIGNATURES);
             // 获取到所有的权限
             return packinfo.signatures[0].toCharsString();
- 
+
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
- 
+
         }
         return "No Search";
     }
- 
+
     /**
      * 获得程序图标
      */
@@ -67,11 +67,11 @@ public class DeviceUtil {
             return info.loadIcon(pm);
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
- 
+
         }
         return null;
     }
- 
+
     /**
      * 获得程序名称
      */
@@ -86,7 +86,7 @@ public class DeviceUtil {
         }
         return "No Search";
     }
- 
+
     /**
      * 获得软件版本号
      */
@@ -98,10 +98,10 @@ public class DeviceUtil {
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
- 
+
         return versioncode;
     }
- 
+
     /**
      * 获得软件版本名
      */
@@ -113,10 +113,10 @@ public class DeviceUtil {
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
- 
+
         return versionname;
     }
- 
+
     /**
      * 得到软件包名
      */
@@ -130,40 +130,41 @@ public class DeviceUtil {
         }
         return packgename;
     }
- 
+
     /**
      * 获得imei号
      */
     public static String IMEI(Context context) {
-        String imei = "";
-        TelephonyManager telephonyManager = (TelephonyManager) context
-                .getSystemService(Context.TELEPHONY_SERVICE);
-        imei = telephonyManager.getDeviceId();
-        return imei;
+        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+            return "";
+        }
+        TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+        return telephonyManager.getDeviceId();
     }
- 
+
     /**
      * 获得imsi号
      */
     public static String IMSI(Context context) {
-        String imsi = "";
-        TelephonyManager telephonyManager = (TelephonyManager) context
-                .getSystemService(Context.TELEPHONY_SERVICE);
-        imsi = telephonyManager.getSubscriberId();
-        return imsi;
+        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+            return "";
+        }
+        TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+        return telephonyManager.getSubscriberId();
     }
- 
+
     /**
      * 返回本机电话号码
      */
     public static String Num(Context context) {
-        String num = "";
-        TelephonyManager telephonyManager = (TelephonyManager) context
-                .getSystemService(Context.TELEPHONY_SERVICE);
-        num = telephonyManager.getLine1Number();
-        return num;
+        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.READ_SMS) != PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(context, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+            return "";
+        }
+        TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+        return telephonyManager.getLine1Number();
     }
- 
+
     /**
      * 得到手机产品序列号
      */
@@ -175,25 +176,25 @@ public class DeviceUtil {
             Method get = c.getMethod("get", String.class);
             sn = (String) get.invoke(c, "ro.serialno");
         } catch (Exception e) {
- 
+
             e.printStackTrace();
         }
         return sn;
     }
- 
+
     /**
      * 获得手机sim号
      */
     public static String SIM(Context context) {
-        String sim = "";
- 
+        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+            return "";
+        }
         TelephonyManager telephonyManager = (TelephonyManager) context
                 .getSystemService(Context.TELEPHONY_SERVICE);
-        sim = telephonyManager.getSimSerialNumber();
- 
-        return sim;
+        return telephonyManager.getSimSerialNumber();
+
     }
- 
+
     /**
      * 返回安卓设备ID
      */
@@ -202,10 +203,10 @@ public class DeviceUtil {
         id = android.provider.Settings.Secure.getString(
                 context.getContentResolver(),
                 android.provider.Settings.Secure.ANDROID_ID);
- 
+
         return id;
     }
- 
+
     /**
      * 得到设备mac地址
      */
@@ -217,7 +218,7 @@ public class DeviceUtil {
         mac = info.getMacAddress();
         return mac;
     }
- 
+
     /**
      * 得到当前系统国家和地区
      */
@@ -226,7 +227,7 @@ public class DeviceUtil {
         country = context.getResources().getConfiguration().locale.getCountry();
         return country;
     }
- 
+
     /**
      * 得到当前系统语言
      */
@@ -246,7 +247,7 @@ public class DeviceUtil {
         }
         return language;
     }
- 
+
     /**
      * 返回系统屏幕的高度（像素单位）
      */
@@ -256,7 +257,7 @@ public class DeviceUtil {
         height = dm.heightPixels;
         return height;
     }
- 
+
     /**
      * 返回系统屏幕的宽度（像素单位）
      */
@@ -266,14 +267,16 @@ public class DeviceUtil {
         width = dm.widthPixels;
         return width;
     }
+
     /**
      * 返回UserAgent
+     *
      * @return
      */
-    private  static String getUserAgent(){
+    private static String getUserAgent() {
 
         StringBuffer sb = new StringBuffer();
-        String   userAgent = System.getProperty("http.agent");//Dalvik/2.1.0 (Linux; U; Android 6.0.1; vivo X9L Build/MMB29M)
+        String userAgent = System.getProperty("http.agent");//Dalvik/2.1.0 (Linux; U; Android 6.0.1; vivo X9L Build/MMB29M)
 
         for (int i = 0, length = userAgent.length(); i < length; i++) {
             char c = userAgent.charAt(i);
@@ -284,7 +287,7 @@ public class DeviceUtil {
             }
         }
         sb.append("/LekeApp");
-        Log.v("User-Agent","User-Agent: "+ sb.toString());
+        Log.v("User-Agent", "User-Agent: " + sb.toString());
         return sb.toString();
     }
 }
