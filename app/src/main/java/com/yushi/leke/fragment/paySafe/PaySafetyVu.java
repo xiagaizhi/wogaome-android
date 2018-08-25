@@ -1,14 +1,10 @@
 package com.yushi.leke.fragment.paySafe;
 
-import android.os.Handler;
-import android.os.Message;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.aliyun.vodplayerview.utils.DensityUtil;
 import com.yufan.library.base.BasePopupWindow;
 import com.yufan.library.inject.FindView;
 import com.yufan.library.widget.highlightview.HighLightInfo;
@@ -48,7 +44,7 @@ public class PaySafetyVu extends BaseVu<PaySafetyContract.Presenter> implements 
         HighLightInfo highLightInfo = new HighLightInfo(playerIcon, R.drawable.jt_up, HighLightInfo.ALIGN_LEFT_DOWN, HighLightInfo.HEIGHTLIGHT_CIR);
         highLightView.addHighLightInfo(0, highLightInfo);
         popupWindow.addView(highLightView);
-        popupWindow.showAtLocation(view, Gravity.NO_GRAVITY, 0, 100);
+        popupWindow.showAtLocation(view, Gravity.NO_GRAVITY, 0, 0);
     }
 
     @Override

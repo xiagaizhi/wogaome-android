@@ -4,6 +4,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -25,13 +26,16 @@ import com.yufan.library.widget.AppToolbar;
 public class OpenTreasureBoxVu extends BaseVu<OpenTreasureBoxContract.Presenter> implements OpenTreasureBoxContract.IView, OpenTreasureBoxAdapter.OnItemClickListener {
     @FindView(R.id.id_recharge_container)
     RecyclerView id_recharge_container;
+    @FindView(R.id.id_open_pay)
+    Button id_open_pay;
     private OpenTreasureBoxAdapter mAdapter;
+
 
     @Override
     public void initView(View view) {
+        id_open_pay.setOnClickListener(this);
         id_recharge_container.setLayoutManager(new GridLayoutManager(getContext(), 3));
-        mAdapter = new OpenTreasureBoxAdapter(mPersenter.getDatas(), getContext());
-        mAdapter.setOnItemClickListener(this);
+        mAdapter = new OpenTreasureBoxAdapter(mPersenter.getDatas(), getContext(), this);
         id_recharge_container.setAdapter(mAdapter);
     }
 
@@ -56,7 +60,7 @@ public class OpenTreasureBoxVu extends BaseVu<OpenTreasureBoxContract.Presenter>
         treasureBoxIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mPersenter.openSetPwd();
+                mPersenter.openTreasureBoxDetail();
             }
         });
 
@@ -83,7 +87,17 @@ public class OpenTreasureBoxVu extends BaseVu<OpenTreasureBoxContract.Presenter>
     }
 
     @Override
-    public void onItemClick(int position) {
+    public void onItemClick(GoodsInfo goodsInfo) {
+        mPersenter.selectGoodInfo(goodsInfo);
+    }
 
+    @Override
+    public void onClick(View v) {
+        super.onClick(v);
+        switch (v.getId()) {
+            case R.id.id_open_pay:
+                mPersenter.toPay();
+                break;
+        }
     }
 }

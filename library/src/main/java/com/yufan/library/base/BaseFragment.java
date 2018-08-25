@@ -29,7 +29,7 @@ public abstract class BaseFragment<V extends Vu> extends SupportFragment impleme
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-
+        super.onViewCreated(view,savedInstanceState);
     }
 
     @Override

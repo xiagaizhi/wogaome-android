@@ -3,6 +3,7 @@ package com.yufan.library.pay;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,10 +20,11 @@ import java.util.List;
 
 public class PayWayAdapter extends RecyclerView.Adapter<PayWayAdapter.PayWayViewHolder> {
     private OnItemClickListener onItemClickListener;
-    private List<String> datas;
+    private List<PayWay> datas;
     private Context mContext;
+    private int selectPosition;
 
-    public PayWayAdapter(OnItemClickListener onItemClickListener, List<String> datas, Context mContext) {
+    public PayWayAdapter(Context mContext, List<PayWay> datas, OnItemClickListener onItemClickListener) {
         this.onItemClickListener = onItemClickListener;
         this.datas = datas;
         this.mContext = mContext;
@@ -38,15 +40,33 @@ public class PayWayAdapter extends RecyclerView.Adapter<PayWayAdapter.PayWayView
 
     @Override
     public void onBindViewHolder(@NonNull PayWayViewHolder holder, final int position) {
-        if (position == 0) {
+        final PayWay payWay = datas.get(position);
+        if (TextUtils.equals(payWay.getPayApiId(), "1")) {//支付宝
             holder.icon_pay.setImageResource(R.drawable.icon_pay_ali);
             holder.tv_pay_title.setText("支付宝支付");
-            holder.icon_pay_choice.setVisibility(View.VISIBLE);
-        } else {
+        } else if (TextUtils.equals(payWay.getPayApiId(), "2")) {//微信
             holder.icon_pay.setImageResource(R.drawable.icon_pay_wechat);
             holder.tv_pay_title.setText("微信支付");
+        }
+        if (payWay.isSelect()) {
+            selectPosition = position;
+            holder.icon_pay_choice.setVisibility(View.VISIBLE);
+        } else {
             holder.icon_pay_choice.setVisibility(View.GONE);
         }
+        holder.id_payway_root.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (position != selectPosition) {
+                    if (onItemClickListener != null) {
+                        datas.get(selectPosition).setSelect(false);
+                        payWay.setSelect(true);
+                        onItemClickListener.onItemClick(payWay);
+                    }
+                }
+
+            }
+        });
     }
 
     @Override
@@ -58,16 +78,18 @@ public class PayWayAdapter extends RecyclerView.Adapter<PayWayAdapter.PayWayView
         ImageView icon_pay;
         TextView tv_pay_title;
         ImageView icon_pay_choice;
+        View id_payway_root;
 
         public PayWayViewHolder(View itemView) {
             super(itemView);
             icon_pay = itemView.findViewById(R.id.icon_pay);
             tv_pay_title = itemView.findViewById(R.id.tv_pay_title);
             icon_pay_choice = itemView.findViewById(R.id.icon_pay_choice);
+            id_payway_root = itemView.findViewById(R.id.id_payway_root);
         }
     }
 
     public interface OnItemClickListener {
-        void onItemClick(int position);
+        void onItemClick(PayWay payWay);
     }
 }

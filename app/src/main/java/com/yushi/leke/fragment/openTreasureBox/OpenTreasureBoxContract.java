@@ -17,7 +17,9 @@ public interface OpenTreasureBoxContract {
     }
 
     interface Presenter extends Pr {
-        List<String> getDatas();
-        void openSetPwd();
+        List<GoodsInfo> getDatas();
+        void selectGoodInfo(GoodsInfo goodsInfo);
+        void toPay();
+        void openTreasureBoxDetail();
     }
 }

@@ -31,4 +31,23 @@ public interface YFApi {
     );
 
 
+    @FormUrlEncoded
+    @POST("/app/{interfVersion}/{function}")
+    Call<ResponseBody>
+    listTreatureBox(
+            @Path("interfVersion") String interfVersion,
+            @Path("function") String function,
+            @Field("arg1") String goodsType
+    );
+
+    @FormUrlEncoded
+    @POST("/app/{interfVersion}/{function}")
+    Call<ResponseBody>
+    payMethod(
+            @Path("interfVersion") String interfVersion,
+            @Path("function") String function,
+            @Field("arg1") int isInternalPayIos,
+            @Field("arg2") int goodsType,
+            @Field("arg3") String goodsId
+    );///app/v1/payMethod
 }

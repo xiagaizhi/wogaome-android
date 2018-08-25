@@ -11,7 +11,7 @@
 
     <RelativeLayout
         android:id="@+id/id_wallet_top"
-        android:layout_width="@dimen/x714"
+        android:layout_width="match_parent"
         android:layout_height="@dimen/px472"
         android:layout_marginLeft="@dimen/x24"
         android:layout_marginRight="@dimen/x12"
@@ -54,8 +54,8 @@
             android:layout_height="@dimen/px84"
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="@dimen/px22"
-            android:layout_marginLeft="@dimen/x30"
-            android:layout_marginRight="@dimen/x30"
+            android:layout_marginLeft="@dimen/x40"
+            android:layout_marginRight="@dimen/x40"
             android:orientation="horizontal">
 
             <RelativeLayout

@@ -18,17 +18,15 @@ import java.util.List;
  */
 
 public class OpenTreasureBoxAdapter extends RecyclerView.Adapter<OpenTreasureBoxAdapter.OpenTreasureBoxViewHolder> {
-    private List<String> datas;
+    private List<GoodsInfo> datas;
     private Context mContext;
     private OnItemClickListener onItemClickListener;
+    private int selectPosition;
 
-    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
-        this.onItemClickListener = onItemClickListener;
-    }
-
-    public OpenTreasureBoxAdapter(List<String> datas, Context mContext) {
+    public OpenTreasureBoxAdapter(List<GoodsInfo> datas, Context mContext, OnItemClickListener onItemClickListener) {
         this.datas = datas;
         this.mContext = mContext;
+        this.onItemClickListener = onItemClickListener;
     }
 
     @NonNull
@@ -40,21 +38,28 @@ public class OpenTreasureBoxAdapter extends RecyclerView.Adapter<OpenTreasureBox
 
     @Override
     public void onBindViewHolder(@NonNull OpenTreasureBoxViewHolder holder, final int position) {
-        holder.id_money.setText("" + datas.get(position));
+        final GoodsInfo goodsInfo = datas.get(position);
+        holder.id_money.setText("¥" + goodsInfo.getGoodsPrice());
+        holder.id_treasure_name.setText(goodsInfo.getGoodsName());
         holder.id_treasure_root.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (onItemClickListener != null) {
-                    onItemClickListener.onItemClick(position);
+                if (position != selectPosition) {
+                    goodsInfo.setSelected(true);
+                    datas.get(selectPosition).setSelected(false);
+                    if (onItemClickListener != null) {
+                        onItemClickListener.onItemClick(goodsInfo);
+                    }
                 }
+
             }
         });
-        if (position % 2 == 0){
-            holder.id_treasure_box_bg.setSelected(true);
-        }else {
-            holder.id_treasure_box_bg.setSelected(false);
+        if (goodsInfo.isSelected()) {
+            selectPosition = position;
+            holder.id_treasure_box_bg.setImageResource(R.drawable.ic_treasure_box_active);
+        } else {
+            holder.id_treasure_box_bg.setImageResource(R.drawable.ic_treasure_box_nor);
         }
-
     }
 
     @Override
@@ -65,20 +70,20 @@ public class OpenTreasureBoxAdapter extends RecyclerView.Adapter<OpenTreasureBox
     class OpenTreasureBoxViewHolder extends RecyclerView.ViewHolder {
         View id_treasure_root;
         TextView id_money;
-        TextView id_treasure_num;
+        TextView id_treasure_name;
         ImageView id_treasure_box_bg;
 
 
         public OpenTreasureBoxViewHolder(View itemView) {
             super(itemView);
             id_money = itemView.findViewById(R.id.id_money);
-            id_treasure_num = itemView.findViewById(R.id.id_treasure_num);
+            id_treasure_name = itemView.findViewById(R.id.id_treasure_name);
             id_treasure_box_bg = itemView.findViewById(R.id.id_treasure_box_bg);
             id_treasure_root = itemView.findViewById(R.id.id_treasure_root);
         }
     }
 
     public interface OnItemClickListener {
-        void onItemClick(int position);
+        void onItemClick(GoodsInfo goodsInfo);
     }
 }
