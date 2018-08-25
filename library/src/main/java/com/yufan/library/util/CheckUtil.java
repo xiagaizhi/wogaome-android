@@ -29,7 +29,7 @@ public class CheckUtil {
             }
         }
         if(code!=null){
-            if(TextUtils.isEmpty(password.getText())){
+            if(TextUtils.isEmpty(code.getText())){
                 if(toast) {
                     DialogManager.getInstance().toast("验证码不能为空");
                 }
