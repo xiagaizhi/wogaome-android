@@ -52,9 +52,9 @@ public interface YFApi  {
     );
 
     @FormUrlEncoded
-    @POST("/app/{interfVersion}/payMethod")
+    @POST("/app/{interfVersion}/tradeMethod")
     Call<ResponseBody>
-    payMethod(//获取商品支付方式界面（含ios内购）
+    tradeMethod(//获取商品支付方式界面（含ios内购）
               @Path("interfVersion") String interfVersion,
               @Field("arg1") int isInternalPayIos,
               @Field("arg2") int goodsType,
@@ -98,9 +98,9 @@ public interface YFApi  {
 
 
     @FormUrlEncoded
-    @POST("/app/{interfVersion}/havePayPwd")
+    @POST("/app/{interfVersion}/haveTradePwd")
     Call<ResponseBody>
-    havePayPwd(//检查是否已经设置了交易密码
+    haveTradePwd(//检查是否已经设置了交易密码/
                @Path("interfVersion") String interfVersion,
                @Field("arg1") String userId
     );

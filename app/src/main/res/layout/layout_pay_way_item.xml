@@ -15,7 +15,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:src="@drawable/icon_pay_ali" />
+            android:src="@drawable/ic_pay_ali" />
 
         <TextView
             android:id="@+id/tv_pay_title"
@@ -34,6 +34,6 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:src="@drawable/icon_pay_choice" />
+            android:src="@drawable/ic_pay_choice" />
     </RelativeLayout>
 </RelativeLayout>

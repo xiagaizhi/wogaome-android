@@ -10,8 +10,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.yufan.library.R;
 import com.yufan.library.pay.PayWay;
+import com.yushi.leke.R;
 
 import java.util.List;
 
@@ -24,11 +24,13 @@ public class PayWayAdapter extends RecyclerView.Adapter<PayWayAdapter.PayWayView
     private List<PayWay> datas;
     private Context mContext;
     private int selectPosition;
+    private boolean isnormalPay;
 
-    public PayWayAdapter(Context mContext, List<PayWay> datas, OnItemClickListener onItemClickListener) {
+    public PayWayAdapter(Context mContext, List<PayWay> datas, boolean isnormalPay, OnItemClickListener onItemClickListener) {
         this.onItemClickListener = onItemClickListener;
         this.datas = datas;
         this.mContext = mContext;
+        this.isnormalPay = isnormalPay;
     }
 
 
@@ -43,11 +45,16 @@ public class PayWayAdapter extends RecyclerView.Adapter<PayWayAdapter.PayWayView
     public void onBindViewHolder(@NonNull PayWayViewHolder holder, final int position) {
         final PayWay payWay = datas.get(position);
         if (TextUtils.equals(payWay.getPayApiId(), "1")) {//支付宝
-            holder.icon_pay.setImageResource(R.drawable.icon_pay_ali);
+            holder.icon_pay.setImageResource(R.drawable.ic_pay_ali);
             holder.tv_pay_title.setText("支付宝支付");
         } else if (TextUtils.equals(payWay.getPayApiId(), "2")) {//微信
-            holder.icon_pay.setImageResource(R.drawable.icon_pay_wechat);
+            holder.icon_pay.setImageResource(R.drawable.ic_pay_wechat);
             holder.tv_pay_title.setText("微信支付");
+        }
+        if (isnormalPay) {
+            holder.icon_pay_choice.setImageResource(R.drawable.ic_pay_choice);
+        } else {
+            holder.icon_pay_choice.setImageResource(R.drawable.ic_pay_choice_metal);
         }
         if (payWay.isSelect()) {
             selectPosition = position;

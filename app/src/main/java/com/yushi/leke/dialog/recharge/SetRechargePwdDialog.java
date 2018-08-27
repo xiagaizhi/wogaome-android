@@ -20,7 +20,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
-import com.yufan.library.R;
 import com.yufan.library.api.ApiBean;
 import com.yufan.library.api.ApiManager;
 import com.yufan.library.api.BaseHttpCallBack;
@@ -31,6 +30,7 @@ import com.yufan.library.util.ToastUtil;
 import com.yufan.library.widget.customkeyboard.KeyboardAdapter;
 import com.yufan.library.widget.customkeyboard.KeyboardView;
 import com.yufan.library.widget.customkeyboard.PayPsdInputView;
+import com.yushi.leke.R;
 import com.yushi.leke.YFApi;
 
 import java.lang.reflect.Method;
@@ -257,9 +257,9 @@ public class SetRechargePwdDialog extends Dialog implements KeyboardAdapter.OnKe
     private void toPay() {
         String payMethod = "";
         if (TextUtils.equals("1", payApiId)) {
-            payMethod = "aliPay";
+            payMethod = "aliTrade";
         } else if (TextUtils.equals("2", payApiId)) {
-            payMethod = "wxPay";
+            payMethod = "wxTrade";
         }
         if (TextUtils.isEmpty(payMethod)) {
             return;

@@ -20,6 +20,8 @@ import com.yufan.library.inject.VuClass;
 import com.yufan.library.util.ToastUtil;
 import com.yushi.leke.UIHelper;
 import com.yushi.leke.YFApi;
+import com.yushi.leke.dialog.recharge.PayDialog;
+import com.yushi.leke.dialog.recharge.PayWayList;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -84,7 +86,7 @@ public class OpenTreasureBoxFragment extends BaseFragment<OpenTreasureBoxContrac
 
     @Override
     public void toPay() {
-        ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).payMethod("v1", 0, 1, mGoodsInfo.getGoodsId()))
+        ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).tradeMethod("v1", 0, 1, mGoodsInfo.getGoodsId()))
                 .useCache(true)
                 .enqueue(new BaseHttpCallBack() {
                     @Override
@@ -92,7 +94,7 @@ public class OpenTreasureBoxFragment extends BaseFragment<OpenTreasureBoxContrac
                         if (TextUtils.equals(ApiBean.SUCCESS, mApiBean.getCode())) {
                             String data = mApiBean.getData();
                             PayWayList payWayList = JSON.parseObject(data, PayWayList.class);
-                            PayDialog payDialog = new PayDialog(_mActivity, payWayList);
+                            PayDialog payDialog = new PayDialog(_mActivity, payWayList,true);
                             payDialog.show();
                         }
                     }
