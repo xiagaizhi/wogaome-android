@@ -9,9 +9,22 @@ import android.text.TextUtils;
 
 public class UserManager {
     private String token;
+    private String uid;
     private String qiNiuToken;
     private String latitude;
     private String longitude;
+
+    public String getUid() {
+        if(TextUtils.isEmpty(uid)){
+            uid= SPManager.getInstance().getString("uid","");
+        }
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
+        SPManager.getInstance().saveValue("uid",uid);
+    }
 
     private static UserManager instance=new UserManager();
     private UserManager(){

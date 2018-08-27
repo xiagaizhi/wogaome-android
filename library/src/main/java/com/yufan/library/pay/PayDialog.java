@@ -23,7 +23,7 @@ import com.yufan.library.R;
 import com.yufan.library.api.ApiBean;
 import com.yufan.library.api.ApiManager;
 import com.yufan.library.api.BaseHttpCallBack;
-import com.yufan.library.api.remote.YFApi;
+import com.yufan.library.api.remote.BaseApi;
 import com.yufan.library.pay.alipay.ToALiPay;
 import com.yufan.library.pay.wenchatpay.WeChatPay;
 
@@ -108,7 +108,7 @@ public class PayDialog extends Dialog implements PayWayAdapter.OnItemClickListen
 
 
     private void checkHavePayPwd() {
-        ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).havePayPwd("v1", "9999"))
+        ApiManager.getCall(ApiManager.getInstance().create(BaseApi.class).havePayPwd("v1", "9999"))
                 .useCache(false)
                 .enqueue(new BaseHttpCallBack() {
                     @Override

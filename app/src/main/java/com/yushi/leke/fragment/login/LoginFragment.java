@@ -9,9 +9,6 @@ import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.yufan.library.Global;
 import com.yufan.library.api.ApiBean;
 import com.yufan.library.api.ApiManager;
-import com.yufan.library.api.BaseHttpCallBack;
-import com.yufan.library.api.EnhancedCall;
-import com.yufan.library.api.remote.YFApi;
 import com.yufan.library.base.BaseFragment;
 
 import android.os.SystemClock;

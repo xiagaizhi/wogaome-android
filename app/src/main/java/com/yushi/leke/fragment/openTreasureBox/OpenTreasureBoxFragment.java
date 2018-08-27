@@ -7,7 +7,6 @@ import com.yufan.library.Global;
 import com.yufan.library.api.ApiBean;
 import com.yufan.library.api.ApiManager;
 import com.yufan.library.api.BaseHttpCallBack;
-import com.yufan.library.api.remote.YFApi;
 import com.yufan.library.base.BaseFragment;
 
 import android.support.annotation.NonNull;
@@ -24,6 +23,7 @@ import com.yufan.library.pay.SetRechargePwdDialog;
 import com.yufan.library.util.ToastUtil;
 import com.yushi.leke.R;
 import com.yushi.leke.UIHelper;
+import com.yushi.leke.YFApi;
 
 import java.util.ArrayList;
 import java.util.List;
