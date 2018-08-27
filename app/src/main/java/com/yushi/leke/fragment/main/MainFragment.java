@@ -16,6 +16,7 @@ import com.yushi.leke.UIHelper;
 import com.yushi.leke.fragment.home.SubscriptionsFragment;
 import com.yushi.leke.fragment.openTreasureBox.OpenTreasureBoxFragment;
 import com.yushi.leke.fragment.test.TestListFragment;
+import com.yushi.leke.fragment.ucenter.UCenterFragment;
 import com.yushi.leke.fragment.wallet.MyWalletFragment;
 
 import me.yokeyword.fragmentation.SupportFragment;
@@ -35,7 +36,7 @@ public class MainFragment extends BaseFragment<MainContract.IView> implements Ma
         if (firstFragment == null) {
             mFragments[0] = UIHelper.creat(SubscriptionsFragment.class).build();
             mFragments[1] = UIHelper.creat(MyWalletFragment.class).build();
-            mFragments[2] = UIHelper.creat(OpenTreasureBoxFragment.class).build();
+            mFragments[2] = UIHelper.creat(UCenterFragment.class).build();
             loadMultipleRootFragment(R.id.realtabcontent, 0,
                     mFragments[0],
                     mFragments[1],
@@ -45,7 +46,7 @@ public class MainFragment extends BaseFragment<MainContract.IView> implements Ma
             // 这里我们需要拿到mFragments的引用
             mFragments[0] = firstFragment;
             mFragments[1] = findChildFragment(MyWalletFragment.class);
-            mFragments[2] = findChildFragment(OpenTreasureBoxFragment.class);
+            mFragments[2] = findChildFragment(UCenterFragment.class);
         }
     }
 
