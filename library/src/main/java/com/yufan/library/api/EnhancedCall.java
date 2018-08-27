@@ -88,10 +88,10 @@ public class EnhancedCall{
 
                         handler.onResponse(mApiBean);
                     } else {
-                        handler.onError(code, new Exception(response.errorBody().string()));
+                        handler.onFailure(code, new Exception(response.errorBody().string()));
                     }
                 } catch (IOException e) {
-                    handler.onError(-1, new Exception("接口格式异常"));
+                    handler.onFailure(-1, new Exception("接口格式异常"));
                 }
             }
 
@@ -100,12 +100,12 @@ public class EnhancedCall{
                 if (!mUseCache ) {
                     //不使用缓存 或者网络可用 的情况下直接回调onFailure
                     Exception exception = new Exception(t.getMessage());
-                    handler.onError(-1, exception);
+                    handler.onFailure(-1, exception);
                     return;
                 }
                 if (TextUtils.isEmpty(mCache) ) {
                     Exception exception = new Exception(t.getMessage());
-                    handler.onError(-1, exception);
+                    handler.onFailure(-1, exception);
                 }
             }
         });

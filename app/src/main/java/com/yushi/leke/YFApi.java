@@ -21,7 +21,7 @@ public interface YFApi  {
      * @return
      */
     @FormUrlEncoded
-    @POST("/app/v1/uc/loginViaPwd")
+    @POST("app/v1/uc/loginViaPwd")
     Call<ResponseBody>
     loginViaPwd(
             @Field("mobile") String mobile,
@@ -35,7 +35,7 @@ public interface YFApi  {
      * @return
      */
     @FormUrlEncoded
-    @POST("/app/v1/security/resetPwd")
+    @POST("app/v1/security/resetPwd")
     Call<ResponseBody>
     resetPwd(
             @Field("mobile") String mobile,
@@ -44,7 +44,7 @@ public interface YFApi  {
     );
 
     @FormUrlEncoded
-    @POST("/app/{interfVersion}/listTreatureBox")
+    @POST("app/{interfVersion}/listTreatureBox")
     Call<ResponseBody>
     listTreatureBox(//获取宝箱列表
                     @Path("interfVersion") String interfVersion,
@@ -52,7 +52,7 @@ public interface YFApi  {
     );
 
     @FormUrlEncoded
-    @POST("/app/{interfVersion}/tradeMethod")
+    @POST("app/{interfVersion}/tradeMethod")
     Call<ResponseBody>
     tradeMethod(//获取商品支付方式界面（含ios内购）
               @Path("interfVersion") String interfVersion,
@@ -61,7 +61,7 @@ public interface YFApi  {
               @Field("arg3") String goodsId
     );
     @FormUrlEncoded
-    @POST("/app/v1/uc/registerViaVcode")
+    @POST("app/v1/uc/registerViaVcode")
     Call<ResponseBody>
     registerViaVcode(
             @Field("mobile") String mobile,
@@ -69,7 +69,7 @@ public interface YFApi  {
             @Field("vcode") String vcode
     );
     @FormUrlEncoded
-    @POST("/app/v1/uc/sendRegisterVcode")
+    @POST("app/v1/uc/sendRegisterVcode")
     Call<ResponseBody>
     sendRegisterVcode(
             @Field("mobile") String mobile,
@@ -77,13 +77,13 @@ public interface YFApi  {
 
     );
     @FormUrlEncoded
-    @POST("/app/v1/security/sendResetPwdVcode")
+    @POST("app/v1/security/sendResetPwdVcode")
     Call<ResponseBody> sendResetPwdVcode( @Field("mobile") String mobile,
                                           @Field("sessionId") String sessionId);
 
 
     @FormUrlEncoded
-    @POST("/app/{interfVersion}/{function}")
+    @POST("app/{interfVersion}/{function}")
     Call<ResponseBody>
     toPay(//发起支付（微信支付 wxPay ／支付宝支付 aliPay）
           @Path("interfVersion") String interfVersion,
@@ -98,14 +98,14 @@ public interface YFApi  {
 
 
     @FormUrlEncoded
-    @POST("/app/{interfVersion}/haveTradePwd")
+    @POST("app/{interfVersion}/haveTradePwd")
     Call<ResponseBody>
     haveTradePwd(//检查是否已经设置了交易密码/
                @Path("interfVersion") String interfVersion,
                @Field("arg1") String userId
     );
     @FormUrlEncoded
-    @POST("/app/{interfVersion}/setPayPwd")
+    @POST("app/{interfVersion}/setPayPwd")
     Call<ResponseBody>
     setPayPwd(//设置/修改交易密码
               @Path("interfVersion") String interfVersion,
@@ -114,7 +114,7 @@ public interface YFApi  {
     );
 
     @FormUrlEncoded
-    @POST("/app/{interfVersion}/verifyPayPwd")
+    @POST("app/{interfVersion}/verifyPayPwd")
     Call<ResponseBody>
     verifyPayPwd(//验证交易密码
                  @Path("interfVersion") String interfVersion,

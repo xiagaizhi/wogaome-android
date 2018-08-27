@@ -34,7 +34,7 @@ import java.lang.reflect.Field;
 public class MusicPlayerVu extends BaseVu<MusicPlayerContract.Presenter> implements MusicPlayerContract.IView {
     @FindView(R.id.view_pager)
     AlbumViewPager mViewPager;
-    @FindView(R.id.needle)
+    @FindView(R.id.iv_needle)
     ImageView mNeedle;
     @FindView(R.id.playing_playlist)
     ImageView playing_playlist;
