@@ -1,6 +1,7 @@
 package com.yushi.leke.fragment.ucenter;
 
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.yushi.leke.R;
@@ -17,11 +18,22 @@ import com.yufan.library.widget.AppToolbar;
 @FindLayout(layout = R.layout.fragment_layout_ucenter)
 @Title("我的")
 public class UCenterVu extends BaseVu<UCenterContract.Presenter> implements UCenterContract.IView {
+    @FindView(R.id.bt_1)
+    Button button;
     @Override
     public void initView(View view) {
-
+button.setOnClickListener(this);
     }
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.bt_1:
+                mPersenter.startPlayer();
+
+                break;
+        }
+    }
 
     @Override
     public boolean initTitle(AppToolbar appToolbar) {

@@ -137,11 +137,11 @@ public class RoundFragment extends Fragment {
 
             @Override
             public void onFailure(String id, Throwable throwable) {
-             sdv.setImageURI(Uri.parse("res:/" + R.drawable.placeholder_disk_play_song));
+           //  sdv.setImageURI(Uri.parse("res:/" + R.drawable.placeholder_disk_play_song));
             }
         };
         if (albumPath == null) {
-        sdv.setImageURI(Uri.parse("res:/" + R.drawable.placeholder_disk_play_song));
+       // sdv.setImageURI(Uri.parse("res:/" + R.drawable.placeholder_disk_play_song));
         } else {
             try {
 

@@ -11,6 +11,8 @@ import android.view.View;
 
 import com.yufan.library.base.BaseFragment;
 import com.yufan.library.inject.VuClass;
+import com.yushi.leke.UIHelper;
+import com.yushi.leke.fragment.musicplayer.MusicPlayerFragment;
 
 /**
  * Created by mengfantao on 18/8/2.
@@ -27,6 +29,12 @@ public class UCenterFragment extends BaseFragment<UCenterContract.IView> impleme
 
     @Override
     public void onRefresh() {
+
+    }
+
+    @Override
+    public void startPlayer() {
+        getRootFragment().start(UIHelper.creat(MusicPlayerFragment.class).build());
 
     }
 }

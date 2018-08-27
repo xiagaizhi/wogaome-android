@@ -2,16 +2,50 @@
 <layer-list
   xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:id="@android:id/background">
-        <nine-patch android:src="@drawable/play_plybar_bg" />
+
+        <clip>
+            <shape>
+                <corners android:radius="1dip" />
+                <gradient
+                    android:startColor="#eeeeee"
+                    android:centerColor="#eeeeee"
+                    android:endColor="#eeeeee"
+                    />
+            </shape>
+        </clip>
+
     </item>
     <item android:id="@android:id/secondaryProgress">
-        <scale android:scaleWidth="100%">
-            <nine-patch android:src="@drawable/play_plybar_ready" />
-        </scale>
+        <clip>
+            <shape>
+                <corners android:radius="1dip" />
+                <gradient
+                    android:startColor="#eeeeee"
+                    android:centerColor="#eeeeee"
+                    android:endColor="#eeeeee"
+
+                    />
+            </shape>
+        </clip>
+
     </item>
-    <item android:id="@android:id/progress">
-        <scale android:scaleWidth="100%">
-            <nine-patch android:src="@drawable/play_plybar_red" />
-        </scale>
+    <item android:id="@android:id/progress"
+        >
+
+        <clip
+
+            >
+            <shape>
+                <corners android:radius="2dip"
+                    />
+                <gradient
+
+                    android:startColor="#ff007AFF"
+                    android:centerColor="#ff007AFF"
+                    android:endColor="#ff007AFF"
+                    />
+            </shape>
+        </clip>
+
     </item>
 </layer-list>

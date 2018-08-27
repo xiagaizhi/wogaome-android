@@ -48,7 +48,7 @@ android {
             storePassword 'yushikeji'
             keyAlias 'leke'
             keyPassword 'yushikeji'
-//23:73:9E:2D:1C:0C:B6:05:29:A1:26:02:B6:34:A1:B7:55:AD:48:B0
+//02:F5:28:92:B2:C2:BF:15:82:5E:C7:4F:77:26:8B:3C 签名指纹信息
         }
     }
 
