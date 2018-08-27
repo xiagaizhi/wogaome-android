@@ -42,6 +42,7 @@ public  abstract class BaseHttpCallBack implements IHttpCallBack {
         }else {
             DialogManager.getInstance().toast(mApiBean.message);
         }
+        onFinish();
     }
 
     @Override
@@ -51,5 +52,6 @@ public  abstract class BaseHttpCallBack implements IHttpCallBack {
             vu.setStateError();
         }
         onError( id,  e);
+        onFinish();
     }
 }

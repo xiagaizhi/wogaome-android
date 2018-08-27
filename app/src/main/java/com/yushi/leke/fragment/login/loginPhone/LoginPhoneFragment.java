@@ -97,6 +97,8 @@ public class LoginPhoneFragment extends BaseFragment<LoginPhoneContract.IView> i
             public void onFinish() {
                 DialogManager.getInstance().dismiss();
             }
+
+
         });
     }
 

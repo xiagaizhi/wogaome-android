@@ -12,6 +12,7 @@ public abstract class YFListHttpCallBack extends BaseHttpCallBack {
 
     private PageInfo pageInfo;
     private VuList vu;
+
     public YFListHttpCallBack(VuList vu) {
         this.pageInfo = vu.getRecyclerView().getPageManager();
         this.vu=vu;
@@ -21,7 +22,7 @@ public abstract class YFListHttpCallBack extends BaseHttpCallBack {
     public void onSuccess(ApiBean mApiBean) {
         pageInfo.next();
         pageInfo.setPageState(PageInfo.PAGE_STATE_NONE);
-        onFinish();
+
     }
 
     @Override
@@ -29,11 +30,8 @@ public abstract class YFListHttpCallBack extends BaseHttpCallBack {
         vu.setStateError();
         pageInfo.setPageState(PageInfo.PAGE_STATE_ERROR);
         DialogManager.getInstance().toast(e.getMessage());
-        onFinish();
-    }
-
-    @Override
-    public void onFinish() {
 
     }
+
+
 }
