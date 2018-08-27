@@ -15,7 +15,6 @@ import android.widget.TextView;
 import com.yufan.library.manager.DialogManager;
 import com.yufan.library.util.CheckUtil;
 import com.yufan.library.widget.LoginLineView;
-import com.yufan.library.widget.VerificationCodeTextView;
 import com.yushi.leke.R;
 import com.yufan.library.base.BaseVu;
 import com.yufan.library.inject.FindLayout;
@@ -23,6 +22,9 @@ import com.yufan.library.inject.FindView;
 import com.yufan.library.inject.Title;
 import com.yufan.library.widget.StateLayout;
 import com.yufan.library.widget.AppToolbar;
+import com.yushi.leke.widget.VerificationCodeTextView;
+
+import java.util.Map;
 
 /**
  * Created by mengfantao on 18/8/2.
@@ -59,9 +61,9 @@ public class ResetPasswordVu extends BaseVu<ResetPasswordContract.Presenter> imp
         iv_clear_password.setOnClickListener(this);
         verificationCodeTextView.setOnGetCodeClickListener(new VerificationCodeTextView.OnGetCodeClickListener() {
             @Override
-            public boolean getCode() {
+            public boolean getCode(String sessionID) {
                 if(!TextUtils.isEmpty(et_phone.getText())){
-                    mPersenter.getVerifcationCode();
+                    mPersenter.getVerifcationCode(et_phone.getText().toString(),sessionID);
                     return true;
                 }
                 return false;

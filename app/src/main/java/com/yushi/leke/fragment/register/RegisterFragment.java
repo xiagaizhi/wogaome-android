@@ -2,10 +2,16 @@ package com.yushi.leke.fragment.register;
 
 import android.os.Bundle;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.alibaba.verificationsdk.ui.IActivityCallback;
 import com.alibaba.verificationsdk.ui.VerifyActivity;
 import com.alibaba.verificationsdk.ui.VerifyType;
 import com.yufan.library.Global;
+import com.yufan.library.api.ApiBean;
+import com.yufan.library.api.ApiManager;
+import com.yufan.library.api.BaseHttpCallBack;
+import com.yufan.library.api.EnhancedCall;
 import com.yufan.library.base.BaseFragment;
 
 import android.support.annotation.NonNull;
@@ -15,10 +21,17 @@ import android.view.WindowManager;
 
 import com.yufan.library.browser.BrowserBaseFragment;
 import com.yufan.library.inject.VuClass;
+import com.yufan.library.manager.DialogManager;
+import com.yufan.library.manager.UserManager;
 import com.yufan.library.util.SoftInputUtil;
 import com.yushi.leke.UIHelper;
+import com.yushi.leke.YFApi;
+import com.yushi.leke.fragment.login.LoginFragment;
+import com.yushi.leke.fragment.main.MainFragment;
 
 import java.util.Map;
+
+import okhttp3.Call;
 
 /**
  * Created by mengfantao on 18/8/2.
@@ -45,30 +58,55 @@ public class RegisterFragment extends BaseFragment<RegisterContract.IView> imple
 
     }
 
-    @Override
-    public void getVerifcationCode() {
 
-    }
-
-    @Override
-    public void verify() {
-       VerifyActivity.startSimpleVerifyUI(getContext(), VerifyType.TILTBALL, "code", null, new IActivityCallback() {
-           @Override
-           public void onNotifyBackPressed() {
-
-           }
-
-           @Override
-           public void onResult(int i, Map<String, String> map) {
-
-           }
-       });
-    }
 
     @Override
     public void register(String phone, String password, String verifcationCode) {
+        DialogManager.getInstance().showLoadingDialog();
+        EnhancedCall call= ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).registerViaVcode(phone,password,verifcationCode));
+      call.enqueue(new BaseHttpCallBack() {
+          @Override
+          public void onSuccess(ApiBean mApiBean) {
+              JSONObject jsonObject= JSON.parseObject(mApiBean.getData());
+              UserManager.getInstance().setToken(jsonObject.getString("token"));
+              UserManager.getInstance().setToken(jsonObject.getString("uid"));
+              startWithPopTo(UIHelper.creat(MainFragment.class).build(), LoginFragment.class,true);
 
+          }
+
+          @Override
+          public void onError(int id, Exception e) {
+
+          }
+
+          @Override
+          public void onFinish() {
+              DialogManager.getInstance().dismiss();
+          }
+      });
     }
+
+
+    @Override
+    public void getVerifcationCode(String phone, String sessionID) {
+        ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).sendRegisterVcode(phone,sessionID)).enqueue(new BaseHttpCallBack() {
+            @Override
+            public void onSuccess(ApiBean mApiBean) {
+                DialogManager.getInstance().toast("发送成功");
+            }
+
+            @Override
+            public void onError(int id, Exception e) {
+
+            }
+
+            @Override
+            public void onFinish() {
+
+            }
+        });
+    }
+
     @Override
     public void onAgreementClick() {
         start(UIHelper.creat(BrowserBaseFragment.class).put(Global.BUNDLE_KEY_BROWSER_URL,"http://baidu.com").build());

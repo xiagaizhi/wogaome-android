@@ -60,6 +60,23 @@ public interface YFApi extends BaseApi {
               @Field("arg3") String goodsId
     );
 
+    @POST("/app/v1/uc/registerViaVcode")
+    Call<ResponseBody>
+    registerViaVcode(
+            @Field("mobile") String mobile,
+            @Field("pwd") String pwd,
+            @Field("vcode") String vcode
+    );
 
+    @POST("/app/v1/uc/sendRegisterVcode")
+    Call<ResponseBody>
+    sendRegisterVcode(
+            @Field("mobile") String mobile,
+            @Field("sessionId") String sessionId
 
+    );
+
+    @POST("/app/v1/security/sendResetPwdVcode")
+    Call<ResponseBody> sendResetPwdVcode( @Field("mobile") String mobile,
+                                          @Field("sessionId") String sessionId);
 }

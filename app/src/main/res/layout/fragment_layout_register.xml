@@ -132,7 +132,7 @@
                     android:layout_height="match_parent" />
 
 
-                <com.yufan.library.widget.VerificationCodeTextView
+                <com.yushi.leke.widget.VerificationCodeTextView
                     android:layout_width="wrap_content"
                     android:text="获取验证码"
                     android:textColor="@color/color_blue_level6"

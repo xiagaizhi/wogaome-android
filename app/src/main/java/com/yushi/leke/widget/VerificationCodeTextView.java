@@ -1,4 +1,4 @@
-package com.yufan.library.widget;
+package com.yushi.leke.widget;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -9,8 +9,13 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.TextView;
 
+import com.alibaba.verificationsdk.ui.IActivityCallback;
+import com.alibaba.verificationsdk.ui.VerifyActivity;
+import com.alibaba.verificationsdk.ui.VerifyType;
 import com.yufan.library.R;
 import com.yufan.library.manager.DialogManager;
+
+import java.util.Map;
 
 
 /**
@@ -80,20 +85,33 @@ public class VerificationCodeTextView extends TextView {
                 if(onGetCodeClickListener==null){
                     throw new RuntimeException("需要调用 setOnGetCodeClickListener");
                 }
-                if(onGetCodeClickListener.getCode()){
-                    setOnClickListener(null);
-                    Message msg = Message.obtain();
-                    msg.what = 0;
-                    msg.arg1 = 60;
-                    handler.sendMessage(msg);
-                }else {
-                    DialogManager.getInstance().toast("请输入手机号");
-                }
+                VerifyActivity.startSimpleVerifyUI(getContext(), VerifyType.NOCAPTCHA, "0335", null, new IActivityCallback() {
+                    @Override
+                    public void onNotifyBackPressed() {
+
+                    }
+
+                    @Override
+                    public void onResult(int i, Map<String, String> map) {
+                        if(i==1){
+                            if(onGetCodeClickListener.getCode(map.get("sessionID"))){
+                                setOnClickListener(null);
+                                Message msg = Message.obtain();
+                                msg.what = 0;
+                                msg.arg1 = 60;
+                                handler.sendMessage(msg);
+                            }else {
+                                DialogManager.getInstance().toast("请输入手机号");
+                            }
+                        }
+                    }
+                });
+
             }
         });
     }
 
     public interface OnGetCodeClickListener {
-        boolean getCode();
+        boolean getCode(String sessionID);
     }
 }

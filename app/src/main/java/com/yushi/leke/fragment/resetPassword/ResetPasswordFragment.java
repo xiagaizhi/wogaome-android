@@ -17,6 +17,8 @@ import com.yufan.library.manager.DialogManager;
 import com.yufan.library.util.SoftInputUtil;
 import com.yushi.leke.YFApi;
 
+import java.util.Map;
+
 /**
  * Created by mengfantao on 18/8/2.
  */
@@ -35,9 +37,27 @@ public class ResetPasswordFragment extends BaseFragment<ResetPasswordContract.IV
 
     }
 
-    @Override
-    public void getVerifcationCode() {
 
+
+
+    @Override
+    public void getVerifcationCode(String phone, String sessionID) {
+        ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).sendResetPwdVcode(phone,sessionID)).enqueue(new BaseHttpCallBack() {
+            @Override
+            public void onSuccess(ApiBean mApiBean) {
+                DialogManager.getInstance().toast("发送成功");
+            }
+
+            @Override
+            public void onError(int id, Exception e) {
+
+            }
+
+            @Override
+            public void onFinish() {
+
+            }
+        });
     }
 
     @Override
