@@ -12,7 +12,7 @@ import retrofit2.http.Path;
 /**
  * Created by mengfantao on 18/2/27.
  */
-public interface YFApi {
+public interface YFApi  {
 
     /**
      * 手机号登录
@@ -20,6 +20,7 @@ public interface YFApi {
      * @param pwd
      * @return
      */
+    @FormUrlEncoded
     @POST("/app/v1/uc/loginViaPwd")
     Call<ResponseBody>
     loginViaPwd(
@@ -33,6 +34,7 @@ public interface YFApi {
      * @param vcode
      * @return
      */
+    @FormUrlEncoded
     @POST("/app/v1/security/resetPwd")
     Call<ResponseBody>
     resetPwd(
@@ -58,7 +60,7 @@ public interface YFApi {
               @Field("arg2") int goodsType,
               @Field("arg3") String goodsId
     );
-
+    @FormUrlEncoded
     @POST("/app/v1/uc/registerViaVcode")
     Call<ResponseBody>
     registerViaVcode(
@@ -66,7 +68,7 @@ public interface YFApi {
             @Field("pwd") String pwd,
             @Field("vcode") String vcode
     );
-
+    @FormUrlEncoded
     @POST("/app/v1/uc/sendRegisterVcode")
     Call<ResponseBody>
     sendRegisterVcode(
@@ -74,7 +76,7 @@ public interface YFApi {
             @Field("sessionId") String sessionId
 
     );
-
+    @FormUrlEncoded
     @POST("/app/v1/security/sendResetPwdVcode")
     Call<ResponseBody> sendResetPwdVcode( @Field("mobile") String mobile,
                                           @Field("sessionId") String sessionId);

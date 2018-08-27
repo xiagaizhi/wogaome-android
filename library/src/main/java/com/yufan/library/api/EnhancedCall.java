@@ -66,6 +66,11 @@ public class EnhancedCall{
     }
 
     public void enqueue(final BaseHttpCallBack handler) {
+    if(mUseCache&&!TextUtils.isEmpty(mCache)){
+        ApiBean mApiBean = JSON.parseObject(mCache, ApiBean.class);
+        mApiBean.json=mCache;
+        handler.onResponse(mApiBean);
+    }
 
         mCall.enqueue(new Callback<ResponseBody>() {
             @Override
