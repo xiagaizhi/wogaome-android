@@ -13,15 +13,14 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.Toast;
 
 import com.yufan.library.browser.BrowserBaseFragment;
 import com.yufan.library.inject.VuClass;
-import com.yufan.library.util.ToastUtil;
 import com.yushi.leke.UIHelper;
 import com.yushi.leke.YFApi;
 import com.yushi.leke.dialog.recharge.PayDialog;
 import com.yushi.leke.dialog.recharge.PayWayList;
+import com.yushi.leke.dialog.recharge.SetRechargePwdDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,33 +37,33 @@ public class OpenTreasureBoxFragment extends BaseFragment<OpenTreasureBoxContrac
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).listTreatureBox("v1", "1"))
-                .useCache(true)
-                .enqueue(new BaseHttpCallBack() {
-                    @Override
-                    public void onSuccess(ApiBean mApiBean) {
-                        if (TextUtils.equals(ApiBean.SUCCESS, mApiBean.getCode())) {
-                            String data = mApiBean.getData();
-                            goodsInfoList = JSON.parseObject(data, GoodsInfoList.class);
-                            if (goodsInfoList != null && goodsInfoList.getGoodsInfo() != null && goodsInfoList.getGoodsInfo().size() > 0) {
-                                goodsInfos.addAll(goodsInfoList.getGoodsInfo());
-                                mGoodsInfo = goodsInfos.get(0);
-                                mGoodsInfo.setSelected(true);
-                                vu.getmRecyclerView().getAdapter().notifyDataSetChanged();
-                            }
-                        } else {
-                            ToastUtil.normal(_mActivity, mApiBean.getMessage(), Toast.LENGTH_SHORT).show();
-                        }
-                    }
-
-                    @Override
-                    public void onError(int id, Exception e) {
-                    }
-
-                    @Override
-                    public void onFinish() {
-                    }
-                });
+//        ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).listTreatureBox("v1", "1"))
+//                .useCache(true)
+//                .enqueue(new BaseHttpCallBack() {
+//                    @Override
+//                    public void onSuccess(ApiBean mApiBean) {
+//                        if (TextUtils.equals(ApiBean.SUCCESS, mApiBean.getCode())) {
+//                            String data = mApiBean.getData();
+//                            goodsInfoList = JSON.parseObject(data, GoodsInfoList.class);
+//                            if (goodsInfoList != null && goodsInfoList.getGoodsInfo() != null && goodsInfoList.getGoodsInfo().size() > 0) {
+//                                goodsInfos.addAll(goodsInfoList.getGoodsInfo());
+//                                mGoodsInfo = goodsInfos.get(0);
+//                                mGoodsInfo.setSelected(true);
+//                                vu.getmRecyclerView().getAdapter().notifyDataSetChanged();
+//                            }
+//                        } else {
+//                            ToastUtil.normal(_mActivity, mApiBean.getMessage(), Toast.LENGTH_SHORT).show();
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onError(int id, Exception e) {
+//                    }
+//
+//                    @Override
+//                    public void onFinish() {
+//                    }
+//                });
     }
 
 
@@ -116,5 +115,8 @@ public class OpenTreasureBoxFragment extends BaseFragment<OpenTreasureBoxContrac
         if (goodsInfoList != null && !TextUtils.isEmpty(goodsInfoList.getTreatureBoxDetailUrl())) {
             start(UIHelper.creat(BrowserBaseFragment.class).put(Global.BUNDLE_KEY_BROWSER_URL, goodsInfoList.getTreatureBoxDetailUrl()).build());
         }
+        SetRechargePwdDialog setRechargePwdDialog = new SetRechargePwdDialog(_mActivity,SetRechargePwdDialog.SET_RECHARGE_PWD);
+        setRechargePwdDialog.show();
+
     }
 }
