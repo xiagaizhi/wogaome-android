@@ -29,6 +29,7 @@ import com.yufan.share.ShareUtils;
 import com.yushi.leke.BuildConfig;
 import com.yushi.leke.UIHelper;
 import com.yushi.leke.fragment.login.loginPhone.LoginPhoneFragment;
+import com.yushi.leke.fragment.musicplayer.MusicPlayerFragment;
 import com.yushi.leke.fragment.register.RegisterFragment;
 
 import java.util.Map;
@@ -45,24 +46,7 @@ public class LoginFragment extends BaseFragment<LoginContract.IView> implements 
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-      EnhancedCall call= ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).postData("changjinglu2018","action","1","2"));//
-        call.useCache(true);
-        call.enqueue(new BaseHttpCallBack() {
-            @Override
-            public void onSuccess(ApiBean mApiBean) {
 
-            }
-
-            @Override
-            public void onError(int id, Exception e) {
-
-            }
-
-            @Override
-            public void onFinish() {
-
-            }
-        });
     }
 
     @Override
@@ -91,26 +75,29 @@ public class LoginFragment extends BaseFragment<LoginContract.IView> implements 
 
     @Override
     public void onWeixinLoginClick() {
-        DialogManager.getInstance().showLoadingDialog();
-        mShareUtils.login(SHARE_MEDIA.WEIXIN, new ILoginCallback() {
-            @Override
-            public void onSuccess(Map<String, String> map, SHARE_MEDIA share_media, Map<String, String> map1) {
-                DialogManager.getInstance().dismiss();
-                DialogManager.getInstance().toast(map.toString());
-            }
 
-            @Override
-            public void onFaild(String s) {
-                DialogManager.getInstance().dismiss();
-                DialogManager.getInstance().toast("取消失败");
-            }
+        start(UIHelper.creat(MusicPlayerFragment.class).build());
 
-            @Override
-            public void onCancel() {
-                DialogManager.getInstance().dismiss();
-                DialogManager.getInstance().toast("取消登录");
-            }
-        });
+//        DialogManager.getInstance().showLoadingDialog();
+//        mShareUtils.login(SHARE_MEDIA.WEIXIN, new ILoginCallback() {
+//            @Override
+//            public void onSuccess(Map<String, String> map, SHARE_MEDIA share_media, Map<String, String> map1) {
+//                DialogManager.getInstance().dismiss();
+//                DialogManager.getInstance().toast(map.toString());
+//            }
+//
+//            @Override
+//            public void onFaild(String s) {
+//                DialogManager.getInstance().dismiss();
+//                DialogManager.getInstance().toast("取消失败");
+//            }
+//
+//            @Override
+//            public void onCancel() {
+//                DialogManager.getInstance().dismiss();
+//                DialogManager.getInstance().toast("取消登录");
+//            }
+//        });
     }
 
 

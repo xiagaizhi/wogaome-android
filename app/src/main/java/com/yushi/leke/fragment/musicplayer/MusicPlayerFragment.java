@@ -1,5 +1,8 @@
 package com.yushi.leke.fragment.musicplayer;
 
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -13,14 +16,21 @@ import android.os.RemoteException;
 import android.os.SystemClock;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.media.MediaBrowserCompat;
 import android.support.v4.media.MediaDescriptionCompat;
 import android.support.v4.media.MediaMetadataCompat;
 import android.support.v4.media.session.MediaControllerCompat;
 import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
+import android.support.v4.view.ViewPager;
 import android.text.format.DateUtils;
+import android.util.Log;
 import android.view.View;
+import android.view.animation.DecelerateInterpolator;
+import android.view.animation.LinearInterpolator;
 
 import com.yufan.library.base.BaseFragment;
 import com.yufan.library.inject.VuClass;
@@ -28,7 +38,9 @@ import com.yushi.leke.activity.FullScreenPlayerActivity;
 import com.yushi.leke.uamp.AlbumArtCache;
 import com.yushi.leke.uamp.MusicService;
 import com.yushi.leke.uamp.utils.LogHelper;
+import com.yushi.leke.widget.MyScroller;
 
+import java.lang.reflect.Field;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
@@ -55,7 +67,7 @@ public class MusicPlayerFragment extends BaseFragment<MusicPlayerContract.IView>
             updateProgress();
         }
     };
-
+    private MusicFragmentAdapter mAdapter;
     private final ScheduledExecutorService mExecutorService =
             Executors.newSingleThreadScheduledExecutor();
 
@@ -91,6 +103,7 @@ public class MusicPlayerFragment extends BaseFragment<MusicPlayerContract.IView>
                 }
             };
 
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -101,6 +114,70 @@ public class MusicPlayerFragment extends BaseFragment<MusicPlayerContract.IView>
 
         mMediaBrowser = new MediaBrowserCompat(getContext(),
                 new ComponentName(getContext(), MusicService.class), mConnectionCallback, null);
+        getVu().getViewPager().setOffscreenPageLimit(2);
+        mAdapter = new MusicPlayerFragment.MusicFragmentAdapter(getChildFragmentManager());
+        getVu().getViewPager().setAdapter(mAdapter);
+        PlaybarPagerTransformer transformer = new PlaybarPagerTransformer();
+        getVu().getViewPager().setPageTransformer(true, transformer);
+        // 改变viewpager动画时间
+        try {
+            Field mField = ViewPager.class.getDeclaredField("mScroller");
+            mField.setAccessible(true);
+            MyScroller mScroller = new MyScroller(getContext(), new LinearInterpolator());
+            mField.set(getVu().getViewPager(), mScroller);
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+
+        getVu().getViewPager().addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+
+            private int preState=-1;
+            @Override
+            public void onPageSelected(final int pPosition) {
+
+            }
+
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int pState) {
+                if(pState==ViewPager.SCROLL_STATE_DRAGGING&&preState==ViewPager.SCROLL_STATE_IDLE){
+                    preState=ViewPager.SCROLL_STATE_DRAGGING;
+                    Fragment fragment = (RoundFragment) getVu().getViewPager().getAdapter().instantiateItem(getVu().getViewPager(), getVu().getViewPager().getCurrentItem());
+                    ObjectAnimator   mRotateAnim = (ObjectAnimator) fragment.getView().getTag(R.id.tag_animator);
+                    if (mRotateAnim != null) {
+                        mRotateAnim.cancel();
+                        float valueAvatar = (float) mRotateAnim.getAnimatedValue();
+                        mRotateAnim.setFloatValues(valueAvatar, 360f + valueAvatar);
+                        Log.d("valueAvatar","valueAvatar"+valueAvatar);
+                    }
+                    ObjectAnimator animator=   ObjectAnimator.ofFloat(getVu().getNeedleImageView(), "rotation", 0,-25);
+                    animator.setDuration(300);
+                    animator.setInterpolator(new DecelerateInterpolator());
+                    animator.start();
+                }else if(pState==ViewPager.SCROLL_STATE_IDLE){
+                    preState=ViewPager.SCROLL_STATE_IDLE;
+                    Fragment fragment = (RoundFragment) getVu().getViewPager().getAdapter().instantiateItem(getVu().getViewPager(), getVu().getViewPager().getCurrentItem());
+                    ObjectAnimator   mRotateAnim = (ObjectAnimator) fragment.getView().getTag(R.id.tag_animator);
+                    ObjectAnimator animator=    ObjectAnimator.ofFloat(getVu().getNeedleImageView(), "rotation", -25, 0);
+                    animator.setDuration(300);
+                    animator.setInterpolator(new DecelerateInterpolator());
+                    if (mRotateAnim != null) {
+                        AnimatorSet  mAnimatorSet = new AnimatorSet();
+                        mAnimatorSet.playTogether(mRotateAnim,animator);
+                        mAnimatorSet.start();
+                    }
+                }
+            }
+        });
+
     }
 
     private void connectToSession(MediaSessionCompat.Token token) throws RemoteException {
@@ -231,6 +308,40 @@ public class MusicPlayerFragment extends BaseFragment<MusicPlayerContract.IView>
     }
     @Override
     public void onRefresh() {
+
+    }
+
+    @Override
+    public void showMusicListDialog() {
+        PlayQueueFragment playQueueFragment = new PlayQueueFragment();
+        playQueueFragment.show(getChildFragmentManager(), "PlayQueueFragment");
+    }
+
+    public class MusicFragmentAdapter extends FragmentPagerAdapter {
+        public MusicFragmentAdapter(FragmentManager fm) {
+            super(fm);
+        }
+        @Override
+        public Fragment getItem(int position) {
+            Fragment fragment=new RoundFragment();
+            return fragment;
+        }
+
+        @Override
+        public int getCount() {
+            return 10;
+        }
+    }
+
+
+
+    public class PlaybarPagerTransformer implements ViewPager.PageTransformer {
+
+
+        @Override
+        public void transformPage(View view, float position) {
+
+        }
 
     }
 }

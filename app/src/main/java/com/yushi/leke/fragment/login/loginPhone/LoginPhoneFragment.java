@@ -3,6 +3,11 @@ package com.yushi.leke.fragment.login.loginPhone;
 import android.os.Bundle;
 
 import com.yufan.library.Global;
+import com.yufan.library.api.ApiBean;
+import com.yufan.library.api.ApiManager;
+import com.yufan.library.api.BaseHttpCallBack;
+import com.yufan.library.api.EnhancedCall;
+import com.yufan.library.api.remote.YFApi;
 import com.yufan.library.browser.BrowserBaseFragment;
 import com.yufan.library.util.SoftInputUtil;
 import com.yufan.library.base.BaseFragment;
@@ -66,7 +71,23 @@ public class LoginPhoneFragment extends BaseFragment<LoginPhoneContract.IView> i
 
     @Override
     public void login(String phone, String password) {
+        EnhancedCall call= ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).loginViaPwd(phone,password));//
+        call.enqueue(new BaseHttpCallBack() {
+            @Override
+            public void onSuccess(ApiBean mApiBean) {
 
+            }
+
+            @Override
+            public void onError(int id, Exception e) {
+
+            }
+
+            @Override
+            public void onFinish() {
+
+            }
+        });
     }
 
     @Override

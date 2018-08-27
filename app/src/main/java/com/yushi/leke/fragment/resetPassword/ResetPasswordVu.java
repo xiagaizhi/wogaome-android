@@ -97,9 +97,10 @@ public class ResetPasswordVu extends BaseVu<ResetPasswordContract.Presenter> imp
                 if(TextUtils.isEmpty(s)){
                     iv_clear_password.setVisibility(View.GONE);
                 }else {
-                    updateState();
+
                     iv_clear_password.setVisibility(View.VISIBLE);
                 }
+                updateState();
             }
         });
         et_password.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -137,9 +138,10 @@ public class ResetPasswordVu extends BaseVu<ResetPasswordContract.Presenter> imp
                 if(TextUtils.isEmpty(s)){
                     iv_clear_phone.setVisibility(View.GONE);
                 }else {
-                    updateState();
+
                     iv_clear_phone.setVisibility(View.VISIBLE);
                 }
+                updateState();
             }
         });
         et_phone.setOnFocusChangeListener(new View.OnFocusChangeListener() {

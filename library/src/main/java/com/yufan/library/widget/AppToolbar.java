@@ -156,6 +156,7 @@ public class AppToolbar extends RelativeLayout {
         centerViews.clear();
         leftViews.clear();
 
+
 //        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && isVertical) {
 //            setClipToPadding(false);
 //            setOutlineProvider(ViewOutlineProvider.BOUNDS);

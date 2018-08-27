@@ -1,5 +1,6 @@
 package com.yushi.leke.fragment.musicplayer;
 
+import android.animation.ObjectAnimator;
 import android.graphics.Bitmap;
 import android.support.v4.media.MediaDescriptionCompat;
 import android.support.v4.media.MediaMetadataCompat;
@@ -8,6 +9,7 @@ import android.widget.ImageView;
 
 import com.yufan.library.base.Pr;
 import com.yufan.library.base.Vu;
+import com.yushi.leke.widget.AlbumViewPager;
 
 /**
  * Created by mengfantao on 18/8/2.
@@ -20,11 +22,13 @@ public interface MusicPlayerContract {
         void onUpdateDuration(MediaMetadataCompat metadata);
         void updatePlaybackState(PlaybackStateCompat state);
         void updateProgress(int currentPosition);
+        AlbumViewPager getViewPager();
+        ImageView getNeedleImageView();
     }
 
     interface Presenter extends Pr {
 
-
+    void showMusicListDialog();
 
     }
 }

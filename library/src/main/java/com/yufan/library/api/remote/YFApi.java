@@ -15,16 +15,34 @@ import retrofit2.http.Path;
  */
 public interface YFApi {
 
-    @FormUrlEncoded
-    @POST("/app/{partUrl}/{function}")
-    Call<ResponseBody>
-    postData(
-            @Path("partUrl") String partUrl,
-            @Path("function") String function,
-            @Field("arg1") String arg1,
-            @Field("arg2") String arg2
-    );
 
+
+    /**
+     * 手机号登录
+     * @param mobile
+     * @param pwd
+     * @return
+     */
+    @POST("/app/v1/uc/loginViaPwd")
+    Call<ResponseBody>
+    loginViaPwd(
+            @Field("mobile") String mobile,
+            @Field("pwd") String pwd
+    );
+    /**
+     * 重置密码
+     * @param mobile
+     * @param pwd
+     * @param vcode
+     * @return
+     */
+    @POST("/app/v1/security/resetPwd")
+    Call<ResponseBody>
+    resetPwd(
+            @Field("mobile") String mobile,
+            @Field("pwd") String pwd,
+            @Field("vcode") String vcode
+    );
     @FormUrlEncoded
     @POST("/app/{interfVersion}/listTreatureBox")
     Call<ResponseBody>
@@ -82,4 +100,5 @@ public interface YFApi {
               @Field("arg1") String userId,
               @Field("arg2") String payPwd
     );
+
 }
