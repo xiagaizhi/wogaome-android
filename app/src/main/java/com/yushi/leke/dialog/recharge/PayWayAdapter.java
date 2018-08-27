@@ -1,4 +1,4 @@
-package com.yufan.library.pay;
+package com.yushi.leke.dialog.recharge;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.yufan.library.R;
+import com.yufan.library.pay.PayWay;
 
 import java.util.List;
 

@@ -17,11 +17,7 @@ import android.widget.Toast;
 
 import com.yufan.library.browser.BrowserBaseFragment;
 import com.yufan.library.inject.VuClass;
-import com.yufan.library.pay.PayDialog;
-import com.yufan.library.pay.PayWayList;
-import com.yufan.library.pay.SetRechargePwdDialog;
 import com.yufan.library.util.ToastUtil;
-import com.yushi.leke.R;
 import com.yushi.leke.UIHelper;
 import com.yushi.leke.YFApi;
 

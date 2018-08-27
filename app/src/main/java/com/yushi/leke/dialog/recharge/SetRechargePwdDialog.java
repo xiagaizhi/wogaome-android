@@ -1,4 +1,4 @@
-package com.yufan.library.pay;
+package com.yushi.leke.dialog.recharge;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -24,13 +24,14 @@ import com.yufan.library.R;
 import com.yufan.library.api.ApiBean;
 import com.yufan.library.api.ApiManager;
 import com.yufan.library.api.BaseHttpCallBack;
-import com.yufan.library.api.remote.BaseApi;
+import com.yufan.library.pay.PayMetadata;
 import com.yufan.library.pay.alipay.ToALiPay;
 import com.yufan.library.pay.wenchatpay.WeChatPay;
 import com.yufan.library.util.ToastUtil;
 import com.yufan.library.widget.customkeyboard.KeyboardAdapter;
 import com.yufan.library.widget.customkeyboard.KeyboardView;
 import com.yufan.library.widget.customkeyboard.PayPsdInputView;
+import com.yushi.leke.YFApi;
 
 import java.lang.reflect.Method;
 
@@ -194,7 +195,7 @@ public class SetRechargePwdDialog extends Dialog implements KeyboardAdapter.OnKe
     }
 
     private void setRechargePwd(String pwd) {
-        ApiManager.getCall(ApiManager.getInstance().create(BaseApi.class).setPayPwd("v1", "999", pwd))
+        ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).setPayPwd("v1", "999", pwd))
                 .useCache(false)
                 .enqueue(new BaseHttpCallBack() {
                     @Override
@@ -224,7 +225,7 @@ public class SetRechargePwdDialog extends Dialog implements KeyboardAdapter.OnKe
      * 验证交易密码
      */
     private void checkPayPwd(String pwd) {
-        ApiManager.getCall(ApiManager.getInstance().create(BaseApi.class).verifyPayPwd("v1", "999", pwd))
+        ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).verifyPayPwd("v1", "999", pwd))
                 .useCache(false).
                 enqueue(new BaseHttpCallBack() {
                     @Override
@@ -263,7 +264,7 @@ public class SetRechargePwdDialog extends Dialog implements KeyboardAdapter.OnKe
         if (TextUtils.isEmpty(payMethod)) {
             return;
         }
-        ApiManager.getCall(ApiManager.getInstance().create(BaseApi.class).toPay("v1", payMethod,
+        ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).toPay("v1", payMethod,
                 orderTitle, orderPrice, payPrice,
                 goodsId, payApiId, "2"))
                 .useCache(false)

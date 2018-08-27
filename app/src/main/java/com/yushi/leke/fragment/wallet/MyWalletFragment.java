@@ -9,12 +9,10 @@ import android.support.annotation.Nullable;
 import android.view.View;
 
 import com.yufan.library.inject.VuClass;
-import com.yufan.library.pay.PayDialog;
 import com.yushi.leke.UIHelper;
 import com.yushi.leke.fragment.bindPhone.BindPhoneFragment;
 import com.yushi.leke.fragment.openTreasureBox.OpenTreasureBoxFragment;
 import com.yushi.leke.fragment.paySafe.PaySafetyFragment;
-import com.yushi.leke.fragment.resetPassword.ResetPasswordFragment;
 
 /**
  * Created by mengfantao on 18/8/2.
@@ -36,7 +34,7 @@ public class MyWalletFragment extends BaseFragment<MyWalletContract.IView> imple
 
     @Override
     public void openPaySafety() {
-        getRootFragment().start(UIHelper.creat(ResetPasswordFragment.class).build());
+        getRootFragment().start(UIHelper.creat(PaySafetyFragment.class).build());
     }
 
     @Override

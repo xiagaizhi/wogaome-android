@@ -1,4 +1,4 @@
-package com.yufan.library.pay;
+package com.yushi.leke.dialog.recharge;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -17,18 +17,13 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
 
-
-import com.alibaba.fastjson.JSON;
 import com.yufan.library.R;
 import com.yufan.library.api.ApiBean;
 import com.yufan.library.api.ApiManager;
 import com.yufan.library.api.BaseHttpCallBack;
-import com.yufan.library.api.remote.BaseApi;
-import com.yufan.library.pay.alipay.ToALiPay;
-import com.yufan.library.pay.wenchatpay.WeChatPay;
+import com.yufan.library.pay.PayWay;
+import com.yushi.leke.YFApi;
 
-
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -108,7 +103,7 @@ public class PayDialog extends Dialog implements PayWayAdapter.OnItemClickListen
 
 
     private void checkHavePayPwd() {
-        ApiManager.getCall(ApiManager.getInstance().create(BaseApi.class).havePayPwd("v1", "9999"))
+        ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).havePayPwd("v1", "9999"))
                 .useCache(false)
                 .enqueue(new BaseHttpCallBack() {
                     @Override
