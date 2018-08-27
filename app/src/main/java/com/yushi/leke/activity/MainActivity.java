@@ -13,8 +13,10 @@ import android.support.v4.media.MediaMetadataCompat;
 import android.support.v4.media.session.MediaControllerCompat;
 import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
+import android.text.TextUtils;
 
 import com.yufan.library.base.BaseActivity;
+import com.yufan.library.manager.UserManager;
 import com.yushi.leke.R;
 import com.yushi.leke.UIHelper;
 import com.yushi.leke.fragment.login.LoginFragment;
@@ -58,7 +60,7 @@ private String     TAG="MainActivity";
         //创建媒体浏览客户端（MediaBrowserCompat）
         mMediaBrowser = new MediaBrowserCompat(this,
                 new ComponentName(this, MusicService.class), mConnectionCallback, null);
-        if(1!=1){
+        if(!TextUtils.isEmpty(UserManager.getInstance().getToken())){
             loadRootFragment(R.id.content_level0, UIHelper.creat(MainFragment.class).build());//.put(Global.BUNDLE_KEY_BROWSER_URL,"http://www.baidu.com")
         }else {
             loadRootFragment(R.id.content_level0, UIHelper.creat(LoginFragment.class).build());
