@@ -34,6 +34,8 @@ public class PaySafetyVu extends BaseVu<PaySafetyContract.Presenter> implements 
     private int id;
     private HighLightView highLightView;
     private ImageView playerIcon;
+    private int isHavePwd;
+    private String phoneNumber;
 
     @Override
     public void initView(View view) {
@@ -73,5 +75,11 @@ public class PaySafetyVu extends BaseVu<PaySafetyContract.Presenter> implements 
             case R.id.rl_forget_pwd://忘记密码
                 break;
         }
+    }
+
+    @Override
+    public void updatePage(int isHavePwd, String phoneNumber) {
+        this.isHavePwd = isHavePwd;
+        this.phoneNumber = phoneNumber;
     }
 }
