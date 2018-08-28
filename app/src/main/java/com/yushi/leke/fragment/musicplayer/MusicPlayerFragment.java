@@ -164,61 +164,68 @@ public class MusicPlayerFragment extends BaseFragment<MusicPlayerContract.IView>
             e.printStackTrace();
         }
 
-        getVu().getViewPager().addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-
-            private int preState=-1;
-            private int pPosition;
-            @Override
-            public void onPageSelected(final int pPosition) {
-               this.pPosition=pPosition;
-            }
-
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int pState) {
-                if(pState==ViewPager.SCROLL_STATE_DRAGGING&&preState==ViewPager.SCROLL_STATE_IDLE){
-                    preState=ViewPager.SCROLL_STATE_DRAGGING;
-                    Fragment fragment = (RoundFragment) getVu().getViewPager().getAdapter().instantiateItem(getVu().getViewPager(), getVu().getViewPager().getCurrentItem());
-                    ObjectAnimator   mRotateAnim = (ObjectAnimator) fragment.getView().getTag(R.id.tag_animator);
-                    if (mRotateAnim != null) {
-                        mRotateAnim.cancel();
-                        float valueAvatar = (float) mRotateAnim.getAnimatedValue();
-                        mRotateAnim.setFloatValues(valueAvatar, 360f + valueAvatar);
-                        Log.d("valueAvatar","valueAvatar"+valueAvatar);
-                    }
-                    ObjectAnimator animator=   ObjectAnimator.ofFloat(getVu().getNeedleImageView(), "rotation", 0,-25);
-                    animator.setDuration(300);
-                    animator.setInterpolator(new DecelerateInterpolator());
-                    animator.start();
-                }else if(pState==ViewPager.SCROLL_STATE_IDLE){
-                    preState=ViewPager.SCROLL_STATE_IDLE;
-                    Fragment fragment = (RoundFragment) getVu().getViewPager().getAdapter().instantiateItem(getVu().getViewPager(), getVu().getViewPager().getCurrentItem());
-                    ObjectAnimator   mRotateAnim = (ObjectAnimator) fragment.getView().getTag(R.id.tag_animator);
-                    ObjectAnimator animator=    ObjectAnimator.ofFloat(getVu().getNeedleImageView(), "rotation", -25, 0);
-                    animator.setDuration(300);
-                    animator.setInterpolator(new DecelerateInterpolator());
-                    if (mRotateAnim != null) {
-                        AnimatorSet  mAnimatorSet = new AnimatorSet();
-                        mAnimatorSet.playTogether(mRotateAnim,animator);
-                        mAnimatorSet.start();
-                    }
-                    mHandler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            MediaControllerCompat.TransportControls controls = MediaControllerCompat.getMediaController(getActivity()).getTransportControls();
-                            controls.skipToQueueItem(pPosition);
-                        }
-                    },300);
-                }
-            }
-        });
+        getVu().getViewPager().addOnPageChangeListener(onPageChangeListener);
 
     }
+    ViewPager.OnPageChangeListener onPageChangeListener=new ViewPager.OnPageChangeListener() {
 
+        private int preState=-1;
+        private int pPosition;
+        @Override
+        public void onPageSelected(final int pPosition) {
+            this.pPosition=pPosition;
+        }
+
+        @Override
+        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+        }
+
+        @Override
+        public void onPageScrollStateChanged(int pState) {
+            if(pState==ViewPager.SCROLL_STATE_DRAGGING&&preState==ViewPager.SCROLL_STATE_IDLE){
+                preState=ViewPager.SCROLL_STATE_DRAGGING;
+                animScrollDragging();
+            }else if(pState==ViewPager.SCROLL_STATE_IDLE){
+                preState=ViewPager.SCROLL_STATE_IDLE;
+                animScrollIdle();
+                mHandler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        MediaControllerCompat.TransportControls controls = MediaControllerCompat.getMediaController(getActivity()).getTransportControls();
+                        controls.skipToQueueItem(pPosition);
+                    }
+                },300);
+            }
+        }
+    };
+    private void animScrollDragging(){
+        Fragment fragment = (RoundFragment) getVu().getViewPager().getAdapter().instantiateItem(getVu().getViewPager(), getVu().getViewPager().getCurrentItem());
+        ObjectAnimator   mRotateAnim = (ObjectAnimator) fragment.getView().getTag(R.id.tag_animator);
+        if (mRotateAnim != null) {
+            mRotateAnim.cancel();
+            float valueAvatar = (float) mRotateAnim.getAnimatedValue();
+            mRotateAnim.setFloatValues(valueAvatar, 360f + valueAvatar);
+            Log.d("valueAvatar","valueAvatar"+valueAvatar);
+        }
+        ObjectAnimator animator=   ObjectAnimator.ofFloat(getVu().getNeedleImageView(), "rotation", 0,-25);
+        animator.setDuration(300);
+        animator.setInterpolator(new DecelerateInterpolator());
+        animator.start();
+    }
+
+    private void animScrollIdle(){
+        Fragment fragment = (RoundFragment) getVu().getViewPager().getAdapter().instantiateItem(getVu().getViewPager(), getVu().getViewPager().getCurrentItem());
+        ObjectAnimator   mRotateAnim = (ObjectAnimator) fragment.getView().getTag(R.id.tag_animator);
+        ObjectAnimator animator=    ObjectAnimator.ofFloat(getVu().getNeedleImageView(), "rotation", -25, 0);
+        animator.setDuration(300);
+        animator.setInterpolator(new DecelerateInterpolator());
+        if (mRotateAnim != null) {
+            AnimatorSet  mAnimatorSet = new AnimatorSet();
+            mAnimatorSet.playTogether(mRotateAnim,animator);
+            mAnimatorSet.start();
+        }
+    }
     private void connectToSession(MediaSessionCompat.Token token) throws RemoteException {
         MediaControllerCompat mediaController = new MediaControllerCompat(
                 getContext(), token);
@@ -230,12 +237,15 @@ public class MusicPlayerFragment extends BaseFragment<MusicPlayerContract.IView>
         mediaController.registerCallback(mCallback);
         PlaybackStateCompat state = mediaController.getPlaybackState();
         updatePlaybackState(state);
+        if(state.getState()==PlaybackStateCompat.STATE_PLAYING){
+            animScrollIdle();
+        }
         MediaMetadataCompat metadata = mediaController.getMetadata();
         if (metadata != null) {
             updateMediaDescription(metadata.getDescription());
             updateDuration(metadata);
         }
-      queue=  mediaController.getQueue();
+
         updateProgress();
         if (state != null && (state.getState() == PlaybackStateCompat.STATE_PLAYING ||
                 state.getState() == PlaybackStateCompat.STATE_BUFFERING)) {
@@ -327,6 +337,7 @@ public class MusicPlayerFragment extends BaseFragment<MusicPlayerContract.IView>
         if (state == null) {
             return;
         }
+
         mLastPlaybackState = state;
       getVu().updatePlaybackState(state);
     }
@@ -384,14 +395,18 @@ public class MusicPlayerFragment extends BaseFragment<MusicPlayerContract.IView>
 
     @Override
     public void next() {
-        MediaControllerCompat.TransportControls controls = MediaControllerCompat.getMediaController(getActivity()).getTransportControls();
-        controls.skipToNext();
+//        MediaControllerCompat.TransportControls controls = MediaControllerCompat.getMediaController(getActivity()).getTransportControls();
+//        controls.skipToNext();
+        animScrollDragging();
+        getVu().getViewPager().setCurrentItem(getVu().getViewPager().getCurrentItem()+1,true);
     }
 
     @Override
     public void pre() {
-        MediaControllerCompat.TransportControls controls = MediaControllerCompat.getMediaController(getActivity()).getTransportControls();
-        controls.skipToPrevious();
+        animScrollDragging();
+        getVu().getViewPager().setCurrentItem(getVu().getViewPager().getCurrentItem()-1,true);
+//        MediaControllerCompat.TransportControls controls = MediaControllerCompat.getMediaController(getActivity()).getTransportControls();
+//        controls.skipToPrevious();
     }
 
     @Override
