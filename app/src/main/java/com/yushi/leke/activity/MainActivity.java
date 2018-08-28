@@ -14,6 +14,7 @@ import android.support.v4.media.session.MediaControllerCompat;
 import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
 import android.text.TextUtils;
+import android.view.WindowManager;
 
 import com.yufan.library.base.BaseActivity;
 import com.yufan.library.manager.UserManager;
@@ -69,6 +70,10 @@ private String     TAG="MainActivity";
     }
     private void startFullScreenActivityIfNeeded(Intent intent) {
         if (intent != null && intent.getBooleanExtra(EXTRA_START_FULLSCREEN, false)) {
+            WindowManager.LayoutParams lp = getWindow().getAttributes();
+            lp.flags &= (~WindowManager.LayoutParams.FLAG_FULLSCREEN);
+            getWindow().setAttributes(lp);
+            getWindow().setBackgroundDrawableResource(com.yufan.library.R.color.white);
             Intent fullScreenIntent = new Intent(this, MusicPlayerActivity.class)
                     .setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP |
                             Intent.FLAG_ACTIVITY_CLEAR_TOP)
@@ -79,7 +84,6 @@ private String     TAG="MainActivity";
             UIHelper.openFragment(this,UIHelper.creat(SplashFragment.class).build(),false);
         }
     }
-
     @Override
     protected void onStart() {
         super.onStart();

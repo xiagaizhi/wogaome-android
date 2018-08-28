@@ -35,9 +35,14 @@ public class PlayQueueFragment extends DialogFragment {
     private PlayQuueuListener mQueueListener;
     private TextView tv_queue_name;
     private long currentQueueId;
+    private CharSequence queueTitle;
 
     public void setCurrentQueue(long activeQueueItemId) {
         currentQueueId=activeQueueItemId;
+    }
+
+    public void setQueueTitle(CharSequence  queueTitle) {
+        this.queueTitle=queueTitle;
     }
 
     public interface PlayQuueuListener{
@@ -83,12 +88,13 @@ public class PlayQueueFragment extends DialogFragment {
         });
 
         tv_queue_name=  view.findViewById(R.id.tv_queue_name);
+
         recyclerView = (RecyclerView) view.findViewById(R.id.play_list);
         layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(new PlaylistAdapter(queue));
-
+        tv_queue_name.setText(queueTitle);
         return view;
     }
 

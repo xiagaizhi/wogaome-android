@@ -133,6 +133,7 @@ public class MusicPlayerFragment extends BaseFragment<MusicPlayerContract.IView>
     public void onDestroy() {
         super.onDestroy();
         stopSeekbarUpdate();
+        mHandler.removeCallbacksAndMessages(null);
         mExecutorService.shutdown();
     }
     @Override
@@ -239,6 +240,7 @@ public class MusicPlayerFragment extends BaseFragment<MusicPlayerContract.IView>
         PlaybackStateCompat state = mediaController.getPlaybackState();
         playQueueFragment = new PlayQueueFragment();
         playQueueFragment.setQueue(mediaController.getQueue());
+        playQueueFragment.setQueueTitle(mediaController.getQueueTitle());
         updatePlaybackState(state);
         if(state.getState()==PlaybackStateCompat.STATE_PLAYING){
             animScrollIdle();
@@ -343,6 +345,7 @@ public class MusicPlayerFragment extends BaseFragment<MusicPlayerContract.IView>
         mLastPlaybackState = state;
       getVu().updatePlaybackState(state);
       if(playQueueFragment!=null){
+
           playQueueFragment.setCurrentQueue(state.getActiveQueueItemId());
       }
 
