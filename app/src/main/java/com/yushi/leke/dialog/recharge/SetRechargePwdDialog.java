@@ -25,7 +25,6 @@ import com.yufan.library.api.ApiBean;
 import com.yufan.library.api.ApiManager;
 import com.yufan.library.api.BaseHttpCallBack;
 import com.yufan.library.manager.DialogManager;
-import com.yufan.library.pay.PayCallbackInterf;
 import com.yufan.library.pay.PayMetadata;
 import com.yufan.library.pay.alipay.ToALiPay;
 import com.yufan.library.pay.wenchatpay.WeChatPay;
@@ -56,11 +55,6 @@ public class SetRechargePwdDialog extends Dialog implements KeyboardAdapter.OnKe
     private String orderPrice;
     private String payPrice;
     private String goodsId;
-    private PayCallbackInterf payCallbackInterf;
-
-    public void setPayCallbackInterf(PayCallbackInterf payCallbackInterf) {
-        this.payCallbackInterf = payCallbackInterf;
-    }
 
     public SetRechargePwdDialog(@NonNull Context context, final int type, String payApiId, String orderTitle, String orderPrice, String payPrice, String goodsId) {
         super(context, R.style.dialog_common);
@@ -298,7 +292,7 @@ public class SetRechargePwdDialog extends Dialog implements KeyboardAdapter.OnKe
                             String data = mApiBean.getData();
                             PayMetadata payMetadata = JSON.parseObject(data, PayMetadata.class);
                             if (TextUtils.equals("1", payApiId)) {
-                                ToALiPay.getInstance().action(mContext, payMetadata,payCallbackInterf);
+                                ToALiPay.getInstance().action(mContext, payMetadata);
                             } else if (TextUtils.equals("2", payApiId)) {
                                 WeChatPay.getInstance().toWeChatPay(mContext, payMetadata);
                             }

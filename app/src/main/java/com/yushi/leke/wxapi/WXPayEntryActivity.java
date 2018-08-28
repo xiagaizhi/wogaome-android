@@ -4,13 +4,14 @@ package com.yushi.leke.wxapi;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Toast;
+import android.support.v4.content.LocalBroadcastManager;
 
 import com.tencent.mm.sdk.modelbase.BaseReq;
 import com.tencent.mm.sdk.modelbase.BaseResp;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.IWXAPIEventHandler;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
+import com.yufan.library.Global;
 
 public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler {
 
@@ -39,14 +40,14 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler {
 
     @Override
     public void onResp(BaseResp resp) {
-        if (resp.errCode == 0) {
-            Toast.makeText(this,"支付成功",Toast.LENGTH_SHORT).show();
-        } else {
-
+        Intent filter = new Intent();
+        if (resp.errCode == 0) {//成功
+            filter.putExtra(Global.INTENT_PAY_RESUIL_DATA, true);
+        } else {//失败
+            filter.putExtra(Global.INTENT_PAY_RESUIL_DATA, false);
         }
+        filter.setAction(Global.BROADCAST_PAY_RESUIL_ACTION);
+        LocalBroadcastManager.getInstance(this).sendBroadcast(filter);
         finish();
-
     }
-
-
 }

@@ -1,6 +1,11 @@
 package com.yushi.leke.fragment.openTreasureBox;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 
 import com.afollestad.materialdialogs.DialogAction;
@@ -14,13 +19,13 @@ import com.yufan.library.base.BaseFragment;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.content.LocalBroadcastManager;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Toast;
 
 import com.yufan.library.browser.BrowserBaseFragment;
 import com.yufan.library.inject.VuClass;
-import com.yufan.library.pay.PayCallbackInterf;
 import com.yufan.library.util.ToastUtil;
 import com.yushi.leke.UIHelper;
 import com.yushi.leke.YFApi;
@@ -34,10 +39,11 @@ import java.util.List;
  * Created by mengfantao on 18/8/2.
  */
 @VuClass(OpenTreasureBoxVu.class)
-public class OpenTreasureBoxFragment extends BaseFragment<OpenTreasureBoxContract.IView> implements OpenTreasureBoxContract.Presenter, PayDialog.OpenBindPhoneInterf, PayCallbackInterf {
+public class OpenTreasureBoxFragment extends BaseFragment<OpenTreasureBoxContract.IView> implements OpenTreasureBoxContract.Presenter, PayDialog.OpenBindPhoneInterf {
     private List<GoodsInfo> goodsInfos = new ArrayList<>();
     private GoodsInfo mGoodsInfo;
     private GoodsInfoList goodsInfoList;
+
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -74,6 +80,28 @@ public class OpenTreasureBoxFragment extends BaseFragment<OpenTreasureBoxContrac
                 });
     }
 
+    /**
+     * 消息
+     */
+    BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            switch (action) {
+                case Global.BROADCAST_PAY_RESUIL_ACTION:
+                    showDialog(intent.getBooleanExtra(Global.INTENT_PAY_RESUIL_DATA,false));
+                    break;
+            }
+        }
+    };
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(Global.BROADCAST_PAY_RESUIL_ACTION);
+        LocalBroadcastManager.getInstance(_mActivity).registerReceiver(broadcastReceiver, intentFilter);
+    }
 
     @Override
     public void onRefresh() {
@@ -94,7 +122,6 @@ public class OpenTreasureBoxFragment extends BaseFragment<OpenTreasureBoxContrac
     @Override
     public void toPay() {
         PayDialog payDialog = new PayDialog(_mActivity, mGoodsInfo.getGoodsId(), true, this);
-        payDialog.setPayCallbackInterf(this);
         payDialog.show();
     }
 
@@ -111,40 +138,38 @@ public class OpenTreasureBoxFragment extends BaseFragment<OpenTreasureBoxContrac
         start(UIHelper.creat(BindPhoneFragment.class).build());
     }
 
-    @Override
-    public void onSuccess() {
-        Bundle bundle = new Bundle();
-        setFragmentResult(RESULT_OK, bundle);
-        new MaterialDialog.Builder(_mActivity)
-                .title("充值成功")
-                .content("恭喜您，充值成功！")
-                .positiveText("确定")
-                .widgetColor(Color.BLUE)
-                .onAny(new MaterialDialog.SingleButtonCallback() {
-                    @Override
-                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                        if (which == DialogAction.POSITIVE) {
-                            pop();
+    private void showDialog(boolean isSuccess) {
+        if (isSuccess) {
+            Bundle bundle = new Bundle();
+            setFragmentResult(RESULT_OK, bundle);
+            new MaterialDialog.Builder(_mActivity)
+                    .title("充值成功")
+                    .content("恭喜您，充值成功！")
+                    .positiveText("确定")
+                    .widgetColor(Color.BLUE)
+                    .onAny(new MaterialDialog.SingleButtonCallback() {
+                        @Override
+                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                            if (which == DialogAction.POSITIVE) {
+                                pop();
+                            }
+                            dialog.dismiss();
                         }
-                        dialog.dismiss();
-                    }
-                })
-                .show();
-    }
-
-    @Override
-    public void onFail(String message) {
-        new MaterialDialog.Builder(_mActivity)
-                .title("充值失败")
-                .content("本次充值失败，请重新充值！")
-                .positiveText("确定")
-                .widgetColor(Color.BLUE)
-                .onAny(new MaterialDialog.SingleButtonCallback() {
-                    @Override
-                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                       dialog.dismiss();
-                    }
-                })
-                .show();
+                    })
+                    .show();
+        } else {
+            new MaterialDialog.Builder(_mActivity)
+                    .title("充值失败")
+                    .content("本次充值失败，请重新充值！")
+                    .positiveText("确定")
+                    .widgetColor(Color.BLUE)
+                    .onAny(new MaterialDialog.SingleButtonCallback() {
+                        @Override
+                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                            dialog.dismiss();
+                        }
+                    })
+                    .show();
+        }
     }
 }

@@ -24,7 +24,6 @@ import com.alibaba.fastjson.JSON;
 import com.yufan.library.api.ApiBean;
 import com.yufan.library.api.ApiManager;
 import com.yufan.library.api.BaseHttpCallBack;
-import com.yufan.library.pay.PayCallbackInterf;
 import com.yufan.library.pay.PayWay;
 import com.yushi.leke.R;
 import com.yushi.leke.YFApi;
@@ -49,11 +48,6 @@ public class PayDialog extends Dialog implements PayWayAdapter.OnItemClickListen
     private TextView tv_goods_info;
     private PayWayList mPayWayList;
     private OpenBindPhoneInterf openBindPhoneInterf;
-    private PayCallbackInterf payCallbackInterf;
-
-    public void setPayCallbackInterf(PayCallbackInterf payCallbackInterf) {
-        this.payCallbackInterf = payCallbackInterf;
-    }
 
     public PayDialog(@NonNull Context context, String goodsId, boolean isnormalPay, OpenBindPhoneInterf openBindPhoneInterf) {
         super(context, R.style.dialog_common);
@@ -174,7 +168,6 @@ public class PayDialog extends Dialog implements PayWayAdapter.OnItemClickListen
                                         setRechargePwdDialog = new SetRechargePwdDialog(mContext, SetRechargePwdDialog.SET_RECHARGE_PWD);
                                     }
                                     if (setRechargePwdDialog != null) {
-                                        setRechargePwdDialog.setPayCallbackInterf(payCallbackInterf);
                                         setRechargePwdDialog.show();
                                     }
                                 } else {//未绑定过手机
