@@ -72,7 +72,7 @@ public class PayDialog extends Dialog implements PayWayAdapter.OnItemClickListen
         if (isnormalPay) {
             btn_pay.setBackgroundResource(R.drawable.btn_bg_orange);
         } else {
-
+            btn_pay.setBackgroundResource(R.drawable.btn_bg_golden_deep);
         }
         btn_pay.setOnClickListener(new View.OnClickListener() {
             @Override
