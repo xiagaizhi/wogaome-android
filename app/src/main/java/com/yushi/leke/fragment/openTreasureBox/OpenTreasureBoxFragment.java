@@ -47,6 +47,7 @@ public class OpenTreasureBoxFragment extends BaseFragment<OpenTreasureBoxContrac
                             String data = mApiBean.getData();
                             goodsInfoList = JSON.parseObject(data, GoodsInfoList.class);
                             if (goodsInfoList != null && goodsInfoList.getGoodsInfo() != null && goodsInfoList.getGoodsInfo().size() > 0) {
+                                goodsInfos.clear();
                                 goodsInfos.addAll(goodsInfoList.getGoodsInfo());
                                 mGoodsInfo = goodsInfos.get(0);
                                 mGoodsInfo.setSelected(true);

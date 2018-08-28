@@ -17,12 +17,12 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.yufan.library.api.ApiBean;
 import com.yufan.library.api.ApiManager;
 import com.yufan.library.api.BaseHttpCallBack;
+import com.yufan.library.manager.DialogManager;
 import com.yufan.library.pay.PayMetadata;
 import com.yufan.library.pay.alipay.ToALiPay;
 import com.yufan.library.pay.wenchatpay.WeChatPay;
@@ -132,7 +132,7 @@ public class SetRechargePwdDialog extends Dialog implements KeyboardAdapter.OnKe
                 //和上次输入的密码不一致  做相应的业务逻辑处理
                 tv_password.setComparePassword("");
                 tv_password.cleanPsd();
-                Toast.makeText(mContext, "两次交易密码不一致，请重新输入", Toast.LENGTH_SHORT).show();
+                DialogManager.getInstance().toast("两次交易密码不一致，请重新输入");
                 mTitle.setText(R.string.set_recharge_pwd);
 
             }
@@ -194,28 +194,35 @@ public class SetRechargePwdDialog extends Dialog implements KeyboardAdapter.OnKe
         }
     }
 
+    private boolean isSuccess;
+
     private void setRechargePwd(String pwd) {
+
         ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).setPayPwd("v1", "999", pwd))
                 .useCache(false)
                 .enqueue(new BaseHttpCallBack() {
                     @Override
                     public void onSuccess(ApiBean mApiBean) {
                         if (TextUtils.equals(ApiBean.SUCCESS, mApiBean.getCode())) {
-                            ToastUtil.normal(mContext, "交易密码设置成功", Toast.LENGTH_SHORT).show();
-                            dismiss();
+                            isSuccess = true;
                         } else {
-                            ToastUtil.normal(mContext, "密码设置失败，请重新设置", Toast.LENGTH_SHORT).show();
+                            isSuccess = false;
                         }
                     }
 
                     @Override
                     public void onError(int id, Exception e) {
-
+                        isSuccess = false;
                     }
 
                     @Override
                     public void onFinish() {
-
+                        if (isSuccess){
+                            DialogManager.getInstance().toast("交易密码设置成功");
+                            dismiss();
+                        }else {
+                            mTitle.setText(R.string.set_recharge_pwd);
+                        }
                     }
                 });
     }
@@ -234,7 +241,7 @@ public class SetRechargePwdDialog extends Dialog implements KeyboardAdapter.OnKe
                             toPay();
                             dismiss();
                         } else {
-                            ToastUtil.normal(mContext, "密码有误，请重新输入", Toast.LENGTH_SHORT).show();
+                            DialogManager.getInstance().toast("密码有误，请重新输入");
                         }
                     }
 
