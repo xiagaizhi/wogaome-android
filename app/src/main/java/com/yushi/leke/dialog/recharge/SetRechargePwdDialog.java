@@ -18,15 +18,17 @@ import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.alibaba.fastjson.JSON;
 import com.yufan.library.api.ApiBean;
 import com.yufan.library.api.ApiManager;
 import com.yufan.library.api.BaseHttpCallBack;
 import com.yufan.library.manager.DialogManager;
+import com.yufan.library.pay.PayCallbackInterf;
 import com.yufan.library.pay.PayMetadata;
 import com.yufan.library.pay.alipay.ToALiPay;
 import com.yufan.library.pay.wenchatpay.WeChatPay;
-import com.yufan.library.util.ToastUtil;
 import com.yufan.library.widget.customkeyboard.KeyboardAdapter;
 import com.yufan.library.widget.customkeyboard.KeyboardView;
 import com.yufan.library.widget.customkeyboard.PayPsdInputView;
@@ -54,6 +56,11 @@ public class SetRechargePwdDialog extends Dialog implements KeyboardAdapter.OnKe
     private String orderPrice;
     private String payPrice;
     private String goodsId;
+    private PayCallbackInterf payCallbackInterf;
+
+    public void setPayCallbackInterf(PayCallbackInterf payCallbackInterf) {
+        this.payCallbackInterf = payCallbackInterf;
+    }
 
     public SetRechargePwdDialog(@NonNull Context context, final int type, String payApiId, String orderTitle, String orderPrice, String payPrice, String goodsId) {
         super(context, R.style.dialog_common);
@@ -132,8 +139,18 @@ public class SetRechargePwdDialog extends Dialog implements KeyboardAdapter.OnKe
                 //和上次输入的密码不一致  做相应的业务逻辑处理
                 tv_password.setComparePassword("");
                 tv_password.cleanPsd();
-                DialogManager.getInstance().toast("两次交易密码不一致，请重新输入");
                 mTitle.setText(R.string.set_recharge_pwd);
+                new MaterialDialog.Builder(mContext)
+                        .content("两次交易密码不一致，请重新输入")
+                        .positiveText("确定")
+                        .widgetColor(Color.BLUE)
+                        .onAny(new MaterialDialog.SingleButtonCallback() {
+                            @Override
+                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                dialog.dismiss();
+                            }
+                        })
+                        .show();
 
             }
 
@@ -197,7 +214,6 @@ public class SetRechargePwdDialog extends Dialog implements KeyboardAdapter.OnKe
     private boolean isSuccess;
 
     private void setRechargePwd(String pwd) {
-
         ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).setPayPwd("v1", "999", pwd))
                 .useCache(false)
                 .enqueue(new BaseHttpCallBack() {
@@ -217,10 +233,10 @@ public class SetRechargePwdDialog extends Dialog implements KeyboardAdapter.OnKe
 
                     @Override
                     public void onFinish() {
-                        if (isSuccess){
+                        if (isSuccess) {
                             DialogManager.getInstance().toast("交易密码设置成功");
                             dismiss();
-                        }else {
+                        } else {
                             mTitle.setText(R.string.set_recharge_pwd);
                         }
                     }
@@ -282,7 +298,7 @@ public class SetRechargePwdDialog extends Dialog implements KeyboardAdapter.OnKe
                             String data = mApiBean.getData();
                             PayMetadata payMetadata = JSON.parseObject(data, PayMetadata.class);
                             if (TextUtils.equals("1", payApiId)) {
-                                ToALiPay.getInstance().action(mContext, payMetadata);
+                                ToALiPay.getInstance().action(mContext, payMetadata,payCallbackInterf);
                             } else if (TextUtils.equals("2", payApiId)) {
                                 WeChatPay.getInstance().toWeChatPay(mContext, payMetadata);
                             }

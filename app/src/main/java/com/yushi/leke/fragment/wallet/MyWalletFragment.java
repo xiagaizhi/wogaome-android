@@ -7,6 +7,7 @@ import com.yufan.library.base.BaseFragment;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.View;
+import android.widget.Toast;
 
 import com.yufan.library.inject.VuClass;
 import com.yushi.leke.UIHelper;
@@ -44,6 +45,14 @@ public class MyWalletFragment extends BaseFragment<MyWalletContract.IView> imple
 
     @Override
     public void openTreasureBox() {
-        getRootFragment().start(UIHelper.creat(OpenTreasureBoxFragment.class).build());
+        getRootFragment().startForResult(UIHelper.creat(OpenTreasureBoxFragment.class).build(),100);
+    }
+
+    @Override
+    public void onFragmentResult(int requestCode, int resultCode, Bundle data) {
+        super.onFragmentResult(requestCode, resultCode, data);
+        if (requestCode == 100 && resultCode == RESULT_OK && data != null) {
+            // TODO: 2018/8/28 刷新界面 
+        }
     }
 }

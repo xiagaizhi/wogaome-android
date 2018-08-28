@@ -8,6 +8,8 @@ import android.text.TextUtils;
 import android.widget.Toast;
 
 import com.alipay.sdk.app.PayTask;
+import com.yufan.library.manager.DialogManager;
+import com.yufan.library.pay.PayCallbackInterf;
 import com.yufan.library.pay.PayMetadata;
 
 import org.json.JSONException;
@@ -23,6 +25,7 @@ public class ToALiPay {
     private static ToALiPay instance;
     private static final int SDK_PAY_FLAG = 1;
     private static final int SDK_CHECK_FLAG = 2;
+    private PayCallbackInterf mPayCallbackInterf;
 
     public static ToALiPay getInstance() {
         if (instance == null) {
@@ -41,7 +44,11 @@ public class ToALiPay {
                     String resultStatus = payResult.getResultStatus();
                     // 判断resultStatus 为“9000”则代表支付成功，具体状态码代表含义可参考接口文档
                     if (TextUtils.equals(resultStatus, "9000")) {
-                        // TODO: 2018/8/25 支付成功
+                        if (mPayCallbackInterf != null) {
+                            mPayCallbackInterf.onSuccess();
+                        }else {
+                            DialogManager.getInstance().toast("恭喜您，充值成功！");
+                        }
                     } else {
                         // 判断resultStatus 为非“9000”则代表可能支付失败
                         // “8000”代表支付结果因为支付渠道原因或者系统原因还在等待支付结果确认，最终交易是否成功以服务端异步通知为准（小概率状态）
@@ -55,7 +62,11 @@ public class ToALiPay {
                             }
                         } else {
                             // 其他值就可以判断为支付失败，包括用户主动取消支付，或者系统返回的错误
-                            // TODO: 2018/8/25 支付失败
+                            if (mPayCallbackInterf != null) {
+                                mPayCallbackInterf.onFail("支付失败");
+                            } else {
+                                DialogManager.getInstance().toast("支付失败");
+                            }
                         }
                     }
                     break;
@@ -76,7 +87,8 @@ public class ToALiPay {
         }
     };
 
-    public void action(final Context context, final PayMetadata payMetadata) {
+    public void action(final Context context, final PayMetadata payMetadata, PayCallbackInterf payCallbackInterf) {
+        this.mPayCallbackInterf = payCallbackInterf;
         try {
             Runnable payRunnable = new Runnable() {
                 @Override
