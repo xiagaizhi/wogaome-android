@@ -45,7 +45,7 @@ public class MyWalletFragment extends BaseFragment<MyWalletContract.IView> imple
 
     @Override
     public void openTreasureBox() {
-        getRootFragment().startForResult(UIHelper.creat(OpenTreasureBoxFragment.class).build(),100);
+        getRootFragment().startForResult(UIHelper.creat(OpenTreasureBoxFragment.class).build(), 100);
     }
 
     @Override
