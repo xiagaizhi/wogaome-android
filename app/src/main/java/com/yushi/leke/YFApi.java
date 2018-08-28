@@ -84,7 +84,7 @@ public interface YFApi  {
     tradeMethod(//获取商品支付方式界面（含ios内购）
               @Path("interfVersion") String interfVersion,
               @Field("arg1") int isInternalPayIos,
-              @Field("arg2") int goodsType,
+              @Field("arg2") int goodsType,//商品类型（1-宝箱; 2-内购宝箱;3-购买会员）
               @Field("arg3") String goodsId
     );
     @FormUrlEncoded

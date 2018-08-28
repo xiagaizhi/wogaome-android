@@ -62,7 +62,6 @@ public class PayDialog extends Dialog implements PayWayAdapter.OnItemClickListen
         mAdapter = new PayWayAdapter(context, payways, isnormalPay, this);
         id_payway.setAdapter(mAdapter);
         btn_pay = findViewById(R.id.btn_pay);
-        tv_goods_info.setText("开宝箱");
         getPayWays(goodsId);
         rootView.findViewById(R.id.id_close).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -102,6 +101,7 @@ public class PayDialog extends Dialog implements PayWayAdapter.OnItemClickListen
                             mPayWayList = JSON.parseObject(data, PayWayList.class);
                             if (mPayWayList != null) {
                                 tv_money.setText("¥" + mPayWayList.getGoodsPrice());
+                                tv_goods_info.setText("" + mPayWayList.getGoodsName());
                                 if (mPayWayList.getPayApi() != null && mPayWayList.getPayApi().size() > 0) {
                                     selectPayWay = mPayWayList.getPayApi().get(0);
                                     selectPayWay.setSelect(true);

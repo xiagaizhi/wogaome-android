@@ -72,7 +72,6 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:text="¥1000"
                 android:textColor="@color/color_151515"
                 android:textSize="@dimen/px64"
                 android:textStyle="bold" />
@@ -103,7 +102,6 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:text="开宝箱"
                 android:textColor="@color/color_gray_level3"
                 android:textSize="@dimen/px36" />
         </RelativeLayout>
