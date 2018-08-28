@@ -35,10 +35,7 @@ public class SubscriptionsVu extends BaseListVu<SubscriptionsContract.Presenter>
 
     @Override
     public boolean initTitle(AppToolbar appToolbar) {
-      TextView titltView=  appToolbar.creatCenterView(TextView.class);
-        titltView.setText("订阅专栏");
-        appToolbar.build();
-        return true;
+        return false;
     }
 
     @Override

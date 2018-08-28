@@ -234,6 +234,7 @@ public class MusicPlayerFragment extends BaseFragment<MusicPlayerContract.IView>
            onBackPressed();
             return;
         }
+
         MediaControllerCompat.setMediaController(getActivity(), mediaController);
         mediaController.registerCallback(mCallback);
 
@@ -404,16 +405,21 @@ public class MusicPlayerFragment extends BaseFragment<MusicPlayerContract.IView>
 
     @Override
     public void next() {
-//        MediaControllerCompat.TransportControls controls = MediaControllerCompat.getMediaController(getActivity()).getTransportControls();
-//        controls.skipToNext();
-        animScrollDragging();
-        getVu().getViewPager().setCurrentItem(getVu().getViewPager().getCurrentItem()+1,true);
+        MediaControllerCompat mediaMetadataCompat=    MediaControllerCompat.getMediaController(getActivity());
+        if(getVu().getViewPager().getCurrentItem()+1!= mediaMetadataCompat.getQueue().size()){
+            animScrollDragging();
+            getVu().getViewPager().setCurrentItem(getVu().getViewPager().getCurrentItem()+1,true);
+        }
+
     }
 
     @Override
     public void pre() {
-        animScrollDragging();
-        getVu().getViewPager().setCurrentItem(getVu().getViewPager().getCurrentItem()-1,true);
+        if(getVu().getViewPager().getCurrentItem()!=0){
+            animScrollDragging();
+            getVu().getViewPager().setCurrentItem(getVu().getViewPager().getCurrentItem()-1,true);
+        }
+
 //        MediaControllerCompat.TransportControls controls = MediaControllerCompat.getMediaController(getActivity()).getTransportControls();
 //        controls.skipToPrevious();
     }

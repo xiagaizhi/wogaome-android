@@ -49,6 +49,7 @@ android {
             keyAlias 'leke'
             keyPassword 'yushikeji'
 //02:F5:28:92:B2:C2:BF:15:82:5E:C7:4F:77:26:8B:3C 签名指纹信息
+            //02f52892b2c2bf15825ec74f77268b3c
         }
     }
 
