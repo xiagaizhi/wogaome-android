@@ -11,6 +11,8 @@ import android.view.View;
 
 import com.yufan.library.inject.VuClass;
 import com.yushi.leke.UIHelper;
+import com.yushi.leke.fragment.musicplayer.MusicPlayerFragment;
+import com.yushi.leke.fragment.wallet.MyWalletFragment;
 import com.yushi.leke.activity.QuarantineActivity;
 import com.yushi.leke.uamp.ui.MediaBrowserFragment;
 
@@ -42,5 +44,10 @@ public class UCenterFragment extends BaseFragment<UCenterContract.IView> impleme
     @Override
     public void startPlayerList() {
         getRootFragment().start(UIHelper.creat(MediaBrowserFragment.class).build());
+    }
+
+    @Override
+    public void openMyWallet() {
+        getRootFragment().start(UIHelper.creat(MyWalletFragment.class).build());
     }
 }

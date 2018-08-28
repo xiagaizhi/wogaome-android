@@ -21,7 +21,7 @@ import com.yufan.library.util.ToastUtil;
 import com.yushi.leke.UIHelper;
 import com.yushi.leke.YFApi;
 import com.yushi.leke.dialog.recharge.PayDialog;
-import com.yushi.leke.dialog.recharge.PayWayList;
+import com.yushi.leke.fragment.bindPhone.BindPhoneFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +30,7 @@ import java.util.List;
  * Created by mengfantao on 18/8/2.
  */
 @VuClass(OpenTreasureBoxVu.class)
-public class OpenTreasureBoxFragment extends BaseFragment<OpenTreasureBoxContract.IView> implements OpenTreasureBoxContract.Presenter {
+public class OpenTreasureBoxFragment extends BaseFragment<OpenTreasureBoxContract.IView> implements OpenTreasureBoxContract.Presenter, PayDialog.OpenBindPhoneInterf {
     private List<GoodsInfo> goodsInfos = new ArrayList<>();
     private GoodsInfo mGoodsInfo;
     private GoodsInfoList goodsInfoList;
@@ -47,6 +47,7 @@ public class OpenTreasureBoxFragment extends BaseFragment<OpenTreasureBoxContrac
                             String data = mApiBean.getData();
                             goodsInfoList = JSON.parseObject(data, GoodsInfoList.class);
                             if (goodsInfoList != null && goodsInfoList.getGoodsInfo() != null && goodsInfoList.getGoodsInfo().size() > 0) {
+                                goodsInfos.clear();
                                 goodsInfos.addAll(goodsInfoList.getGoodsInfo());
                                 mGoodsInfo = goodsInfos.get(0);
                                 mGoodsInfo.setSelected(true);
@@ -59,10 +60,12 @@ public class OpenTreasureBoxFragment extends BaseFragment<OpenTreasureBoxContrac
 
                     @Override
                     public void onError(int id, Exception e) {
+
                     }
 
                     @Override
                     public void onFinish() {
+
                     }
                 });
     }
@@ -86,29 +89,8 @@ public class OpenTreasureBoxFragment extends BaseFragment<OpenTreasureBoxContrac
 
     @Override
     public void toPay() {
-        ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).tradeMethod("v1", 0, 1, mGoodsInfo.getGoodsId()))
-                .useCache(true)
-                .enqueue(new BaseHttpCallBack() {
-                    @Override
-                    public void onSuccess(ApiBean mApiBean) {
-                        if (TextUtils.equals(ApiBean.SUCCESS, mApiBean.getCode())) {
-                            String data = mApiBean.getData();
-                            PayWayList payWayList = JSON.parseObject(data, PayWayList.class);
-                            PayDialog payDialog = new PayDialog(_mActivity, payWayList,true);
-                            payDialog.show();
-                        }
-                    }
-
-                    @Override
-                    public void onError(int id, Exception e) {
-
-                    }
-
-                    @Override
-                    public void onFinish() {
-
-                    }
-                });
+        PayDialog payDialog = new PayDialog(_mActivity, mGoodsInfo.getGoodsId(), true,this);
+        payDialog.show();
     }
 
     @Override
@@ -116,5 +98,10 @@ public class OpenTreasureBoxFragment extends BaseFragment<OpenTreasureBoxContrac
         if (goodsInfoList != null && !TextUtils.isEmpty(goodsInfoList.getTreatureBoxDetailUrl())) {
             start(UIHelper.creat(BrowserBaseFragment.class).put(Global.BUNDLE_KEY_BROWSER_URL, goodsInfoList.getTreatureBoxDetailUrl()).build());
         }
+    }
+
+    @Override
+    public void openBindPhone() {
+        start(UIHelper.creat(BindPhoneFragment.class).build());
     }
 }

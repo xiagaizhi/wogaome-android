@@ -16,10 +16,16 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.TextView;
+
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
+import com.alibaba.fastjson.JSON;
 import com.yufan.library.api.ApiBean;
 import com.yufan.library.api.ApiManager;
 import com.yufan.library.api.BaseHttpCallBack;
+import com.yufan.library.manager.DialogManager;
 import com.yufan.library.pay.PayWay;
 import com.yushi.leke.R;
 import com.yushi.leke.YFApi;
@@ -36,40 +42,36 @@ import java.util.List;
 public class PayDialog extends Dialog implements PayWayAdapter.OnItemClickListener {
     private RecyclerView id_payway;
     private PayWayAdapter mAdapter;
-    private List<PayWay> payways = new ArrayList<>();
     private PayWay selectPayWay;
-    private PayWayList mPayWayList;
     private Context mContext;
     private Button btn_pay;
+    private List<PayWay> payways = new ArrayList<>();
+    private TextView tv_money;
+    private TextView tv_goods_info;
+    private PayWayList mPayWayList;
+    private OpenBindPhoneInterf openBindPhoneInterf;
 
-    public PayDialog(@NonNull Context context, PayWayList payWayList, boolean isnormalPay) {
+    public PayDialog(@NonNull Context context, String goodsId, boolean isnormalPay, OpenBindPhoneInterf openBindPhoneInterf) {
         super(context, R.style.dialog_common);
         View rootView = LayoutInflater.from(context).inflate(R.layout.layout_pay, null);
         setContentView(rootView);
         this.mContext = context;
-        this.mPayWayList = payWayList;
-
+        this.openBindPhoneInterf = openBindPhoneInterf;
         id_payway = rootView.findViewById(R.id.id_payway);
+        tv_goods_info = (TextView) rootView.findViewById(R.id.tv_goods_info);
+        tv_money = (TextView) rootView.findViewById(R.id.tv_order_money);
         id_payway.setLayoutManager(new LinearLayoutManager(context));
-
-        if (mPayWayList != null && mPayWayList.getPayApi() != null && mPayWayList.getPayApi().size() > 0) {
-            selectPayWay = mPayWayList.getPayApi().get(0);
-            selectPayWay.setSelect(true);
-        }
-
         mAdapter = new PayWayAdapter(context, payways, isnormalPay, this);
         id_payway.setAdapter(mAdapter);
+        btn_pay = findViewById(R.id.btn_pay);
+        tv_goods_info.setText("开宝箱");
+        getPayWays(goodsId);
         rootView.findViewById(R.id.id_close).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 dismiss();
             }
         });
-        TextView tv_goods_info = (TextView) rootView.findViewById(R.id.tv_goods_info);
-        tv_goods_info.setText("开宝箱");
-        TextView tv_money = (TextView) rootView.findViewById(R.id.tv_order_money);
-        tv_money.setText("¥" + mPayWayList.getGoodsPrice());
-        btn_pay = findViewById(R.id.btn_pay);
         if (isnormalPay) {
             btn_pay.setBackgroundResource(R.drawable.btn_bg_orange);
         } else {
@@ -88,6 +90,38 @@ public class PayDialog extends Dialog implements PayWayAdapter.OnItemClickListen
             }
         });
         setCanceledOnTouchOutside(false);
+    }
+
+
+    private void getPayWays(String goodsId) {
+        ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).tradeMethod("v1", 0, 1, goodsId))
+                .useCache(false)
+                .enqueue(new BaseHttpCallBack() {
+                    @Override
+                    public void onSuccess(ApiBean mApiBean) {
+                        if (TextUtils.equals(ApiBean.SUCCESS, mApiBean.getCode())) {
+                            String data = mApiBean.getData();
+                            mPayWayList = JSON.parseObject(data, PayWayList.class);
+                            if (mPayWayList != null) {
+                                tv_money.setText("¥" + mPayWayList.getGoodsPrice());
+                                if (mPayWayList.getPayApi() != null && mPayWayList.getPayApi().size() > 0) {
+                                    selectPayWay = mPayWayList.getPayApi().get(0);
+                                    selectPayWay.setSelect(true);
+                                    payways.addAll(mPayWayList.getPayApi());
+                                    mAdapter.notifyDataSetChanged();
+                                }
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onError(int id, Exception e) {
+                    }
+
+                    @Override
+                    public void onFinish() {
+                    }
+                });
     }
 
     @Override
@@ -122,19 +156,40 @@ public class PayDialog extends Dialog implements PayWayAdapter.OnItemClickListen
                             if (TextUtils.equals(ApiBean.SUCCESS, mApiBean.getCode())) {
                                 String data = mApiBean.getData();
                                 JSONObject jsonObject = new JSONObject(data);
-                                boolean isHave = jsonObject.optBoolean("isHave");
-                                if (isHave) {//拥有交易密码,验证交易密码
-                                    SetRechargePwdDialog setRechargePwdDialog = new SetRechargePwdDialog(mContext,
-                                            SetRechargePwdDialog.CHECK_RECHARGE_PWD, selectPayWay.getPayApiId(),
-                                            mPayWayList.getGoodsName(), mPayWayList.getGoodsPrice(),
-                                            mPayWayList.getGoodsPrice(), mPayWayList.getGoodsId());
-                                    setRechargePwdDialog.show();
-                                    dismiss();
-                                } else {//没有交易密码
-                                    // TODO: 2018/8/25 指引到交易密码设置界面
-                                    dismiss();
-                                    SetRechargePwdDialog setRechargePwdDialog = new SetRechargePwdDialog(mContext, SetRechargePwdDialog.SET_RECHARGE_PWD);
-                                    setRechargePwdDialog.show();
+                                int isHave = jsonObject.optInt("isHave");
+                                int isBindPhone = jsonObject.optInt("isBindPhone");
+                                if (isBindPhone == 1) {//绑定手机
+                                    if (isHave == 1) {//拥有交易密码,验证交易密码
+                                        SetRechargePwdDialog setRechargePwdDialog = new SetRechargePwdDialog(mContext,
+                                                SetRechargePwdDialog.CHECK_RECHARGE_PWD, selectPayWay.getPayApiId(),
+                                                mPayWayList.getGoodsName(), mPayWayList.getGoodsPrice(),
+                                                mPayWayList.getGoodsPrice(), mPayWayList.getGoodsId());
+                                        setRechargePwdDialog.show();
+                                    } else {//没有交易密码
+                                        SetRechargePwdDialog setRechargePwdDialog = new SetRechargePwdDialog(mContext, SetRechargePwdDialog.SET_RECHARGE_PWD);
+                                        setRechargePwdDialog.show();
+                                    }
+                                } else {//未绑定过手机
+//                                    DialogManager.getInstance().toast("未绑定安全手机");
+
+
+                                    new MaterialDialog.Builder(mContext)
+                                            .content("您尚未绑定手机，请先绑定安全手机！")
+                                            .positiveText("去绑定")
+                                            .widgetColor(Color.BLUE)
+                                            .onAny(new MaterialDialog.SingleButtonCallback() {
+                                                @Override
+                                                public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                                    if (which == DialogAction.POSITIVE) {
+                                                        if (openBindPhoneInterf != null) {
+                                                            openBindPhoneInterf.openBindPhone();
+                                                        }
+                                                        dismiss();
+                                                    }
+                                                }
+                                            })
+                                            .show();
+
                                 }
                             }
                         } catch (Exception e) {
@@ -154,5 +209,8 @@ public class PayDialog extends Dialog implements PayWayAdapter.OnItemClickListen
                 });
     }
 
+    public interface OpenBindPhoneInterf {
+        void openBindPhone();
+    }
 
 }
