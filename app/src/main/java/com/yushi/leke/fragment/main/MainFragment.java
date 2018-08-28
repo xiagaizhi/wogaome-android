@@ -15,6 +15,7 @@ import com.yushi.leke.R;
 import com.yushi.leke.UIHelper;
 import com.yushi.leke.fragment.home.SubscriptionsFragment;
 import com.yushi.leke.fragment.openTreasureBox.OpenTreasureBoxFragment;
+import com.yushi.leke.fragment.roadShow.RoadshowHallFragment;
 import com.yushi.leke.fragment.test.TestListFragment;
 import com.yushi.leke.fragment.ucenter.UCenterFragment;
 import com.yushi.leke.fragment.wallet.MyWalletFragment;
@@ -35,7 +36,7 @@ public class MainFragment extends BaseFragment<MainContract.IView> implements Ma
         SupportFragment firstFragment = findChildFragment(TestListFragment.class);
         if (firstFragment == null) {
             mFragments[0] = UIHelper.creat(SubscriptionsFragment.class).build();
-            mFragments[1] = UIHelper.creat(MyWalletFragment.class).build();
+            mFragments[1] = UIHelper.creat(RoadshowHallFragment.class).build();
             mFragments[2] = UIHelper.creat(UCenterFragment.class).build();
             loadMultipleRootFragment(R.id.realtabcontent, 0,
                     mFragments[0],
@@ -45,7 +46,7 @@ public class MainFragment extends BaseFragment<MainContract.IView> implements Ma
             // 这里库已经做了Fragment恢复,所有不需要额外的处理了, 不会出现重叠问题
             // 这里我们需要拿到mFragments的引用
             mFragments[0] = firstFragment;
-            mFragments[1] = findChildFragment(MyWalletFragment.class);
+            mFragments[1] = findChildFragment(RoadshowHallFragment.class);
             mFragments[2] = findChildFragment(UCenterFragment.class);
         }
     }

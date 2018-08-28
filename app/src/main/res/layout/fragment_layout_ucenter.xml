@@ -9,4 +9,9 @@
         android:text="播放器"
         android:id="@+id/bt_1"
         android:layout_height="wrap_content" />
+    <Button
+        android:layout_width="match_parent"
+        android:text="我的钱包"
+        android:id="@+id/bt_mywallet"
+        android:layout_height="wrap_content" />
 </LinearLayout>

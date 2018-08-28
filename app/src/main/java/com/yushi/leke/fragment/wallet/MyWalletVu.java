@@ -4,6 +4,7 @@ import android.text.Html;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -31,7 +32,7 @@ public class MyWalletVu extends BaseVu<MyWalletContract.Presenter> implements My
     @FindView(R.id.id_yesterd_arith_num)
     TextView id_yesterd_arith_num;
     @FindView(R.id.id_open_treasure)
-    Button id_open_treasure;
+    ImageButton id_open_treasure;
 
     @Override
     public void initView(View view) {

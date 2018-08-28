@@ -13,6 +13,7 @@ import com.yufan.library.base.BaseFragment;
 import com.yufan.library.inject.VuClass;
 import com.yushi.leke.UIHelper;
 import com.yushi.leke.fragment.musicplayer.MusicPlayerFragment;
+import com.yushi.leke.fragment.wallet.MyWalletFragment;
 
 /**
  * Created by mengfantao on 18/8/2.
@@ -36,5 +37,10 @@ public class UCenterFragment extends BaseFragment<UCenterContract.IView> impleme
     public void startPlayer() {
         getRootFragment().start(UIHelper.creat(MusicPlayerFragment.class).build());
 
+    }
+
+    @Override
+    public void openMyWallet() {
+        getRootFragment().start(UIHelper.creat(MyWalletFragment.class).build());
     }
 }

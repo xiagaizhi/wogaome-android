@@ -1,20 +1,19 @@
-package com.yushi.leke.fragment.ucenter;
+package com.yushi.leke.fragment.roadShow;
 
 import com.yufan.library.base.Pr;
 import com.yufan.library.base.Vu;
 
 /**
- * Created by mengfantao on 18/8/2.
+ * Created by zhanyangyang on 18/8/25.
  */
 
-public interface UCenterContract {
+public interface RoadshowHallContract {
     interface IView extends Vu {
 
     }
 
     interface Presenter extends Pr {
-    void startPlayer();
-    void openMyWallet();
+
 
     }
 }

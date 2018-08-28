@@ -20,9 +20,12 @@ import com.yufan.library.widget.AppToolbar;
 public class UCenterVu extends BaseVu<UCenterContract.Presenter> implements UCenterContract.IView {
     @FindView(R.id.bt_1)
     Button button;
+    @FindView(R.id.bt_mywallet)
+    Button bt_mywallet;
     @Override
     public void initView(View view) {
 button.setOnClickListener(this);
+        bt_mywallet.setOnClickListener(this);
     }
 
     @Override
@@ -31,6 +34,9 @@ button.setOnClickListener(this);
             case R.id.bt_1:
                 mPersenter.startPlayer();
 
+                break;
+            case R.id.bt_mywallet:
+                mPersenter.openMyWallet();
                 break;
         }
     }
