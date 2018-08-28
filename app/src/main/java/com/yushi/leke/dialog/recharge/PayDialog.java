@@ -16,7 +16,6 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.DialogAction;
@@ -25,7 +24,7 @@ import com.alibaba.fastjson.JSON;
 import com.yufan.library.api.ApiBean;
 import com.yufan.library.api.ApiManager;
 import com.yufan.library.api.BaseHttpCallBack;
-import com.yufan.library.manager.DialogManager;
+import com.yufan.library.pay.PayCallbackInterf;
 import com.yufan.library.pay.PayWay;
 import com.yushi.leke.R;
 import com.yushi.leke.YFApi;
@@ -50,6 +49,11 @@ public class PayDialog extends Dialog implements PayWayAdapter.OnItemClickListen
     private TextView tv_goods_info;
     private PayWayList mPayWayList;
     private OpenBindPhoneInterf openBindPhoneInterf;
+    private PayCallbackInterf payCallbackInterf;
+
+    public void setPayCallbackInterf(PayCallbackInterf payCallbackInterf) {
+        this.payCallbackInterf = payCallbackInterf;
+    }
 
     public PayDialog(@NonNull Context context, String goodsId, boolean isnormalPay, OpenBindPhoneInterf openBindPhoneInterf) {
         super(context, R.style.dialog_common);
@@ -159,20 +163,21 @@ public class PayDialog extends Dialog implements PayWayAdapter.OnItemClickListen
                                 int isHave = jsonObject.optInt("isHave");
                                 int isBindPhone = jsonObject.optInt("isBindPhone");
                                 if (isBindPhone == 1) {//绑定手机
+                                    dismiss();
+                                    SetRechargePwdDialog setRechargePwdDialog;
                                     if (isHave == 1) {//拥有交易密码,验证交易密码
-                                        SetRechargePwdDialog setRechargePwdDialog = new SetRechargePwdDialog(mContext,
+                                        setRechargePwdDialog = new SetRechargePwdDialog(mContext,
                                                 SetRechargePwdDialog.CHECK_RECHARGE_PWD, selectPayWay.getPayApiId(),
                                                 mPayWayList.getGoodsName(), mPayWayList.getGoodsPrice(),
                                                 mPayWayList.getGoodsPrice(), mPayWayList.getGoodsId());
-                                        setRechargePwdDialog.show();
                                     } else {//没有交易密码
-                                        SetRechargePwdDialog setRechargePwdDialog = new SetRechargePwdDialog(mContext, SetRechargePwdDialog.SET_RECHARGE_PWD);
+                                        setRechargePwdDialog = new SetRechargePwdDialog(mContext, SetRechargePwdDialog.SET_RECHARGE_PWD);
+                                    }
+                                    if (setRechargePwdDialog != null) {
+                                        setRechargePwdDialog.setPayCallbackInterf(payCallbackInterf);
                                         setRechargePwdDialog.show();
                                     }
                                 } else {//未绑定过手机
-//                                    DialogManager.getInstance().toast("未绑定安全手机");
-
-
                                     new MaterialDialog.Builder(mContext)
                                             .content("您尚未绑定手机，请先绑定安全手机！")
                                             .positiveText("去绑定")
@@ -180,11 +185,11 @@ public class PayDialog extends Dialog implements PayWayAdapter.OnItemClickListen
                                             .onAny(new MaterialDialog.SingleButtonCallback() {
                                                 @Override
                                                 public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                                    dismiss();
                                                     if (which == DialogAction.POSITIVE) {
                                                         if (openBindPhoneInterf != null) {
                                                             openBindPhoneInterf.openBindPhone();
                                                         }
-                                                        dismiss();
                                                     }
                                                 }
                                             })
