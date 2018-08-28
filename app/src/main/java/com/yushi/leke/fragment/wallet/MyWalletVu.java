@@ -3,7 +3,6 @@ package com.yushi.leke.fragment.wallet;
 import android.text.Html;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -36,7 +35,7 @@ public class MyWalletVu extends BaseVu<MyWalletContract.Presenter> implements My
 
     @Override
     public void initView(View view) {
-        id_lkc_remain.setText(Html.fromHtml("<b><big><font color='#151515'>48321.</font></big></b><font color='#333333'>12345</font>"));
+        id_lkc_remain.setText(Html.fromHtml("<b><<font color='#151515'><size>12345.</size></font></b><font color='#333333'><size2>12345</size2></font>", null, new SizeLabel(getContext())));
         id_lck_instructions.setOnClickListener(this);
         id_lkc_detail.setOnClickListener(this);
         id_yesterd_arith_num.setOnClickListener(this);

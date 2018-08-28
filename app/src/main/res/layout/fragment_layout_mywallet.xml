@@ -45,10 +45,7 @@
             android:layout_below="@+id/id_lkc_lable"
             android:layout_marginLeft="@dimen/px92"
             android:layout_marginTop="@dimen/px39"
-            android:singleLine="true"
-            android:text="8888.88888"
-            android:textColor="@color/color_gray_level3"
-            android:textSize="@dimen/px60" />
+            android:singleLine="true" />
 
         <ImageView
             android:id="@+id/img_smallparts"
