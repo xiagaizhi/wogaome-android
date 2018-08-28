@@ -13,7 +13,7 @@ import com.yufan.library.view.recycler.YFRecyclerView;
 import com.yufan.library.widget.AppToolbar;
 import com.yufan.library.widget.StateLayout;
 import com.yushi.leke.R;
-import com.yushi.leke.activity.FullScreenPlayerActivity;
+import com.yushi.leke.activity.MusicPlayerActivity;
 
 import java.util.List;
 
@@ -39,7 +39,7 @@ public class MediaBrowserVu extends BaseListVu<MediaBrowserContract.Presenter> i
       textView.setOnClickListener(new View.OnClickListener() {
           @Override
           public void onClick(View v) {
-              Intent openUI = new Intent(getContext(), FullScreenPlayerActivity.class);
+              Intent openUI = new Intent(getContext(), MusicPlayerActivity.class);
               openUI.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
               getContext().startActivity(openUI);
           }

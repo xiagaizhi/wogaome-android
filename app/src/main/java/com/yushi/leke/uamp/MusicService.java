@@ -40,13 +40,13 @@ import com.google.android.gms.cast.framework.SessionManager;
 import com.google.android.gms.cast.framework.SessionManagerListener;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
+import com.yushi.leke.activity.MusicPlayerActivity;
 import com.yushi.leke.uamp.model.MusicProvider;
 import com.yushi.leke.uamp.playback.CastPlayback;
 import com.yushi.leke.uamp.playback.LocalPlayback;
 import com.yushi.leke.uamp.playback.Playback;
 import com.yushi.leke.uamp.playback.PlaybackManager;
 import com.yushi.leke.uamp.playback.QueueManager;
-import com.yushi.leke.activity.FullScreenPlayerActivity;
 import com.yushi.leke.uamp.utils.CarHelper;
 import com.yushi.leke.uamp.utils.LogHelper;
 import com.yushi.leke.uamp.utils.TvHelper;
@@ -202,7 +202,7 @@ public class MusicService extends MediaBrowserServiceCompat implements
                 MediaSessionCompat.FLAG_HANDLES_TRANSPORT_CONTROLS);
 
         Context context = getApplicationContext();
-        Intent intent = new Intent(context, FullScreenPlayerActivity.class);
+        Intent intent = new Intent(context, MusicPlayerActivity.class);
         PendingIntent pi = PendingIntent.getActivity(context, 99 /*request code*/,
                 intent, PendingIntent.FLAG_UPDATE_CURRENT);
         mSession.setSessionActivity(pi);

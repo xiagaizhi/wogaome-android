@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?><!-- 菜单点击 文字颜色 -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:color="@color/color_gray_level6" android:state_selected="false" />
+    <item android:color="@color/color_blue_level6" android:state_selected="true" />
+    <item android:color="@color/color_gray_level6" />
+</selector>

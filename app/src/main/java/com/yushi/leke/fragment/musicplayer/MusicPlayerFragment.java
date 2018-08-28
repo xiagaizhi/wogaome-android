@@ -36,7 +36,6 @@ import android.widget.TextView;
 
 import com.yufan.library.base.BaseFragment;
 import com.yufan.library.inject.VuClass;
-import com.yushi.leke.activity.FullScreenPlayerActivity;
 import com.yushi.leke.uamp.AlbumArtCache;
 import com.yushi.leke.uamp.MusicService;
 import com.yushi.leke.uamp.model.MusicProvider;
@@ -75,7 +74,7 @@ public class MusicPlayerFragment extends BaseFragment<MusicPlayerContract.IView>
     private MusicFragmentAdapter mAdapter;
     private final ScheduledExecutorService mExecutorService =
             Executors.newSingleThreadScheduledExecutor();
-
+    private     PlayQueueFragment   playQueueFragment;
     private ScheduledFuture<?> mScheduleFuture;
     private PlaybackStateCompat mLastPlaybackState;
 
@@ -107,7 +106,8 @@ public class MusicPlayerFragment extends BaseFragment<MusicPlayerContract.IView>
                     }
                 }
             };
-    private List<MediaSessionCompat.QueueItem> queue=new ArrayList<>();
+
+
 
 
     @Override
@@ -235,7 +235,10 @@ public class MusicPlayerFragment extends BaseFragment<MusicPlayerContract.IView>
         }
         MediaControllerCompat.setMediaController(getActivity(), mediaController);
         mediaController.registerCallback(mCallback);
+
         PlaybackStateCompat state = mediaController.getPlaybackState();
+        playQueueFragment = new PlayQueueFragment();
+        playQueueFragment.setQueue(mediaController.getQueue());
         updatePlaybackState(state);
         if(state.getState()==PlaybackStateCompat.STATE_PLAYING){
             animScrollIdle();
@@ -330,7 +333,6 @@ public class MusicPlayerFragment extends BaseFragment<MusicPlayerContract.IView>
         getVu().onUpdateDuration(metadata);
         LogHelper.d(TAG, "updateDuration called ");
         int duration = (int) metadata.getLong(MediaMetadataCompat.METADATA_KEY_DURATION);
-
     }
 
     private void updatePlaybackState(PlaybackStateCompat state) {
@@ -340,6 +342,10 @@ public class MusicPlayerFragment extends BaseFragment<MusicPlayerContract.IView>
 
         mLastPlaybackState = state;
       getVu().updatePlaybackState(state);
+      if(playQueueFragment!=null){
+          playQueueFragment.setCurrentQueue(state.getActiveQueueItemId());
+      }
+
     }
 
     private void updateProgress() {
@@ -365,7 +371,7 @@ public class MusicPlayerFragment extends BaseFragment<MusicPlayerContract.IView>
 
     @Override
     public void showMusicListDialog() {
-        PlayQueueFragment playQueueFragment = new PlayQueueFragment();
+
         playQueueFragment.show(getChildFragmentManager(), "PlayQueueFragment");
     }
 

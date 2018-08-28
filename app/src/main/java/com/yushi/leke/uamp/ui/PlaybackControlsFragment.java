@@ -33,7 +33,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.yushi.leke.activity.FullScreenPlayerActivity;
+import com.yushi.leke.activity.MusicPlayerActivity;
 import com.yushi.leke.uamp.AlbumArtCache;
 import com.yushi.leke.uamp.MusicService;
 import com.yushi.leke.uamp.utils.LogHelper;
@@ -90,14 +90,8 @@ public class PlaybackControlsFragment extends Fragment {
         rootView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), FullScreenPlayerActivity.class);
+                Intent intent = new Intent(getActivity(), MusicPlayerActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                MediaControllerCompat controller = MediaControllerCompat.getMediaController(getActivity());
-                MediaMetadataCompat metadata = controller.getMetadata();
-                if (metadata != null) {
-                    intent.putExtra(FullScreenPlayerActivity.EXTRA_CURRENT_MEDIA_DESCRIPTION,
-                        metadata.getDescription());
-                }
                 startActivity(intent);
             }
         });

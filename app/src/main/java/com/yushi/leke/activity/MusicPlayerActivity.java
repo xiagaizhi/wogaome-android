@@ -10,7 +10,7 @@ import com.yushi.leke.R;
  * Created by mengfantao on 18/8/28.
  */
 
-public class QuarantineActivity extends BaseActivity {
+public class MusicPlayerActivity extends BaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

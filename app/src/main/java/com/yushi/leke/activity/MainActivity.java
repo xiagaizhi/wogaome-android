@@ -69,7 +69,7 @@ private String     TAG="MainActivity";
     }
     private void startFullScreenActivityIfNeeded(Intent intent) {
         if (intent != null && intent.getBooleanExtra(EXTRA_START_FULLSCREEN, false)) {
-            Intent fullScreenIntent = new Intent(this, FullScreenPlayerActivity.class)
+            Intent fullScreenIntent = new Intent(this, MusicPlayerActivity.class)
                     .setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP |
                             Intent.FLAG_ACTIVITY_CLEAR_TOP)
                     .putExtra(EXTRA_CURRENT_MEDIA_DESCRIPTION,

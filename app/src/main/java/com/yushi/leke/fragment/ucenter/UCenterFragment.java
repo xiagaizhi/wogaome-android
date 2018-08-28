@@ -10,14 +10,12 @@ import android.support.annotation.Nullable;
 import android.view.View;
 
 import com.yufan.library.inject.VuClass;
-import com.yufan.library.manager.SPManager;
 import com.yufan.library.manager.UserManager;
 import com.yushi.leke.UIHelper;
 import com.yushi.leke.fragment.login.LoginFragment;
 import com.yushi.leke.fragment.main.MainFragment;
-import com.yushi.leke.fragment.musicplayer.MusicPlayerFragment;
 import com.yushi.leke.fragment.wallet.MyWalletFragment;
-import com.yushi.leke.activity.QuarantineActivity;
+import com.yushi.leke.activity.MusicPlayerActivity;
 import com.yushi.leke.uamp.ui.MediaBrowserFragment;
 
 /**
@@ -40,7 +38,7 @@ public class UCenterFragment extends BaseFragment<UCenterContract.IView> impleme
 
     @Override
     public void startPlayer() {
-        Intent intent=new Intent(getContext(),QuarantineActivity.class);
+        Intent intent=new Intent(getContext(),MusicPlayerActivity.class);
         startActivity(intent);
 
     }
