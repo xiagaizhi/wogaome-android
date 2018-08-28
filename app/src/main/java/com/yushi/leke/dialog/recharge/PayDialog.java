@@ -155,8 +155,8 @@ public class PayDialog extends Dialog implements PayWayAdapter.OnItemClickListen
                                 String data = mApiBean.getData();
                                 JSONObject jsonObject = new JSONObject(data);
                                 int isHave = jsonObject.optInt("isHave");
-                                int isBindPhone = jsonObject.optInt("isBindPhone");
-                                if (isBindPhone == 1) {//绑定手机
+                                String phoneNumber = jsonObject.optString("phoneNumber");
+                                if (!TextUtils.isEmpty(phoneNumber)) {//绑定手机
                                     dismiss();
                                     SetRechargePwdDialog setRechargePwdDialog;
                                     if (isHave == 1) {//拥有交易密码,验证交易密码
@@ -187,7 +187,6 @@ public class PayDialog extends Dialog implements PayWayAdapter.OnItemClickListen
                                                 }
                                             })
                                             .show();
-
                                 }
                             }
                         } catch (Exception e) {

@@ -9,7 +9,7 @@ import com.yufan.library.base.Vu;
 
 public interface PaySafetyContract {
     interface IView extends Vu {
-
+        void updatePage(int isHavePwd, String phoneNumber);
     }
 
     interface Presenter extends Pr {
