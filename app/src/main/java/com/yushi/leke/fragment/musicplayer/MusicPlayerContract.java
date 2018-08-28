@@ -6,6 +6,8 @@ import android.support.v4.media.MediaDescriptionCompat;
 import android.support.v4.media.MediaMetadataCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
 import android.widget.ImageView;
+import android.widget.SeekBar;
+import android.widget.TextView;
 
 import com.yufan.library.base.Pr;
 import com.yufan.library.base.Vu;
@@ -18,17 +20,28 @@ import com.yushi.leke.widget.AlbumViewPager;
 public interface MusicPlayerContract {
     interface IView extends Vu {
         void setBackgroundImage(Bitmap bitmap);
+
         void onUpdateMediaDescription(MediaDescriptionCompat description);
+
         void onUpdateDuration(MediaMetadataCompat metadata);
+
         void updatePlaybackState(PlaybackStateCompat state);
+
         void updateProgress(int currentPosition);
+
         AlbumViewPager getViewPager();
+
         ImageView getNeedleImageView();
     }
 
     interface Presenter extends Pr {
+        void showMusicListDialog();
+        void play();
+        void next();
+        void pre();
+        void onSeekBarChangeListener(TextView mStart, SeekBar mSeekbar);
+        void fav();
 
-    void showMusicListDialog();
-
+        void finish();
     }
 }

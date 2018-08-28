@@ -31,16 +31,21 @@ import android.util.Log;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.LinearInterpolator;
+import android.widget.SeekBar;
+import android.widget.TextView;
 
 import com.yufan.library.base.BaseFragment;
 import com.yufan.library.inject.VuClass;
 import com.yushi.leke.activity.FullScreenPlayerActivity;
 import com.yushi.leke.uamp.AlbumArtCache;
 import com.yushi.leke.uamp.MusicService;
+import com.yushi.leke.uamp.model.MusicProvider;
 import com.yushi.leke.uamp.utils.LogHelper;
 import com.yushi.leke.widget.MyScroller;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
@@ -102,8 +107,34 @@ public class MusicPlayerFragment extends BaseFragment<MusicPlayerContract.IView>
                     }
                 }
             };
+    private List<MediaSessionCompat.QueueItem> queue=new ArrayList<>();
 
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        if (mMediaBrowser != null) {
+            mMediaBrowser.connect();
+        }
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (mMediaBrowser != null) {
+            mMediaBrowser.disconnect();
+        }
+        MediaControllerCompat controllerCompat = MediaControllerCompat.getMediaController(getActivity());
+        if (controllerCompat != null) {
+            controllerCompat.unregisterCallback(mCallback);
+        }
+    }
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        stopSeekbarUpdate();
+        mExecutorService.shutdown();
+    }
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -136,9 +167,10 @@ public class MusicPlayerFragment extends BaseFragment<MusicPlayerContract.IView>
         getVu().getViewPager().addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
             private int preState=-1;
+            private int pPosition;
             @Override
             public void onPageSelected(final int pPosition) {
-
+               this.pPosition=pPosition;
             }
 
             @Override
@@ -174,6 +206,13 @@ public class MusicPlayerFragment extends BaseFragment<MusicPlayerContract.IView>
                         mAnimatorSet.playTogether(mRotateAnim,animator);
                         mAnimatorSet.start();
                     }
+                    mHandler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            MediaControllerCompat.TransportControls controls = MediaControllerCompat.getMediaController(getActivity()).getTransportControls();
+                            controls.skipToQueueItem(pPosition);
+                        }
+                    },300);
                 }
             }
         });
@@ -196,6 +235,7 @@ public class MusicPlayerFragment extends BaseFragment<MusicPlayerContract.IView>
             updateMediaDescription(metadata.getDescription());
             updateDuration(metadata);
         }
+      queue=  mediaController.getQueue();
         updateProgress();
         if (state != null && (state.getState() == PlaybackStateCompat.STATE_PLAYING ||
                 state.getState() == PlaybackStateCompat.STATE_BUFFERING)) {
@@ -270,6 +310,7 @@ public class MusicPlayerFragment extends BaseFragment<MusicPlayerContract.IView>
         LogHelper.d(TAG, "updateMediaDescription called ");
         getVu().onUpdateMediaDescription(description);
         fetchImageAsync(description);
+
     }
 
     private void updateDuration(MediaMetadataCompat metadata) {
@@ -317,19 +358,89 @@ public class MusicPlayerFragment extends BaseFragment<MusicPlayerContract.IView>
         playQueueFragment.show(getChildFragmentManager(), "PlayQueueFragment");
     }
 
+    @Override
+    public void play() {
+        PlaybackStateCompat state = MediaControllerCompat.getMediaController(getActivity()).getPlaybackState();
+        if (state != null) {
+            MediaControllerCompat.TransportControls controls = MediaControllerCompat.getMediaController(getActivity()).getTransportControls();
+            switch (state.getState()) {
+                case PlaybackStateCompat.STATE_PLAYING: // fall through
+                case PlaybackStateCompat.STATE_BUFFERING:
+                    controls.pause();
+                    stopSeekbarUpdate();
+
+                    break;
+                case PlaybackStateCompat.STATE_PAUSED:
+                case PlaybackStateCompat.STATE_STOPPED:
+                    controls.play();
+                    scheduleSeekbarUpdate();
+                    break;
+                default:
+                    LogHelper.d(TAG, "onClick with state ", state.getState());
+            }
+        }
+
+    }
+
+    @Override
+    public void next() {
+        MediaControllerCompat.TransportControls controls = MediaControllerCompat.getMediaController(getActivity()).getTransportControls();
+        controls.skipToNext();
+    }
+
+    @Override
+    public void pre() {
+        MediaControllerCompat.TransportControls controls = MediaControllerCompat.getMediaController(getActivity()).getTransportControls();
+        controls.skipToPrevious();
+    }
+
+    @Override
+    public void onSeekBarChangeListener(final TextView mStart, SeekBar mSeekbar) {
+        mSeekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                mStart.setText(DateUtils.formatElapsedTime(progress / 1000));
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                stopSeekbarUpdate();
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                MediaControllerCompat.getMediaController(getActivity()).getTransportControls().seekTo(seekBar.getProgress());
+                scheduleSeekbarUpdate();
+            }
+        });
+    }
+
+    @Override
+    public void fav() {
+
+    }
+
+    @Override
+    public void finish() {
+        if(getActivity()!=null){
+            getActivity().finish();
+        }
+    }
+
     public class MusicFragmentAdapter extends FragmentPagerAdapter {
         public MusicFragmentAdapter(FragmentManager fm) {
             super(fm);
         }
         @Override
         public Fragment getItem(int position) {
+          //  queue.get(position).getDescription();
             Fragment fragment=new RoundFragment();
             return fragment;
         }
 
         @Override
         public int getCount() {
-            return 10;
+            return 100;
         }
     }
 

@@ -20,6 +20,8 @@ import java.util.List;
 
 import me.drakeet.multitype.MultiTypeAdapter;
 
+import static com.yufan.library.Global.ARG_MEDIA_ID;
+
 /**
  * Created by mengfantao on 18/8/2.
  */
@@ -27,7 +29,7 @@ import me.drakeet.multitype.MultiTypeAdapter;
 public class MediaBrowserFragment extends BaseListFragment<MediaBrowserContract.IView> implements MediaBrowserContract.Presenter {
     private MultiTypeAdapter adapter;
     private String TAG="MediaBrowserFragment";
-    public static final String ARG_MEDIA_ID = "media_id";
+
 
     private MediaBrowserProvider mMediaFragmentListener;
     private String mMediaId="__BY_GENRE__/Rock";

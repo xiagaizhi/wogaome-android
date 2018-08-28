@@ -52,7 +52,7 @@ public class MusicProvider {
     //音乐数据分类（按音乐类型）缓存
     private List<MediaMetadataCompat> mMusicList;
     private final ConcurrentMap<String, MutableMediaMetadata> mMusicListById;
-
+    private static MusicProvider musicProvider;
     private final Set<String> mFavoriteTracks;
 
     enum State {
@@ -65,8 +65,15 @@ public class MusicProvider {
         void onMusicCatalogReady(boolean success);
     }
 
+
     public MusicProvider() {
         this(new RemoteJSONSource());
+    }
+    public static MusicProvider getInstance(){
+        if(musicProvider==null){
+            musicProvider=new MusicProvider();
+        }
+        return musicProvider;
     }
 
     public MusicProvider(MusicProviderSource source) {
@@ -77,21 +84,6 @@ public class MusicProvider {
     }
 
 
-    /**
-     * Get an iterator over a shuffled collection of all songs
-     * 获取 存储了所有音乐的列表 随机打乱顺序后的迭代器
-     */
-    public Iterable<MediaMetadataCompat> getShuffledMusic() {
-        if (mCurrentState != State.INITIALIZED) {
-            return Collections.emptyList();
-        }
-        List<MediaMetadataCompat> shuffled = new ArrayList<>(mMusicListById.size());
-        for (MutableMediaMetadata mutableMetadata : mMusicListById.values()) {
-            shuffled.add(mutableMetadata.metadata);
-        }
-        Collections.shuffle(shuffled);//打乱列表的顺序
-        return shuffled;
-    }
 
     /**
      * Get music tracks of the given genre
@@ -103,52 +95,6 @@ public class MusicProvider {
         return mMusicList;
     }
 
-    /**
-     * Very basic implementation of a search that filter music tracks with title containing
-     * the given query.
-     */
-    public List<MediaMetadataCompat> searchMusicBySongTitle(String query) {
-        return searchMusic(MediaMetadataCompat.METADATA_KEY_TITLE, query);
-    }
-
-    /**
-     * Very basic implementation of a search that filter music tracks with album containing
-     * the given query.
-     */
-    public List<MediaMetadataCompat> searchMusicByAlbum(String query) {
-        return searchMusic(MediaMetadataCompat.METADATA_KEY_ALBUM, query);
-    }
-
-    /**
-     * Very basic implementation of a search that filter music tracks with artist containing
-     * the given query.
-     */
-    public List<MediaMetadataCompat> searchMusicByArtist(String query) {
-        return searchMusic(MediaMetadataCompat.METADATA_KEY_ARTIST, query);
-    }
-
-    /**
-     * Very basic implementation of a search that filter music tracks with a genre containing
-     * the given query.
-     */
-    public List<MediaMetadataCompat> searchMusicByGenre(String query) {
-        return searchMusic(MediaMetadataCompat.METADATA_KEY_GENRE, query);
-    }
-
-    private List<MediaMetadataCompat> searchMusic(String metadataField, String query) {
-        if (mCurrentState != State.INITIALIZED) {
-            return Collections.emptyList();
-        }
-        ArrayList<MediaMetadataCompat> result = new ArrayList<>();
-        query = query.toLowerCase(Locale.US);
-        for (MutableMediaMetadata track : mMusicListById.values()) {
-            if (track.metadata.getString(metadataField).toLowerCase(Locale.US)
-                    .contains(query)) {
-                result.add(track.metadata);
-            }
-        }
-        return result;
-    }
 
 
     /**

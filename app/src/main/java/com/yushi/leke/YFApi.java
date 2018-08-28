@@ -14,6 +14,33 @@ import retrofit2.http.Path;
  */
 public interface YFApi  {
 
+
+    /**
+     * 初始化
+     * @param
+     * @param
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("app/v1/common/init")
+    Call<ResponseBody>
+    init(
+            @Field("s") String s
+    );
+    /**
+     * 第三方登录
+     * @param
+     * @param oauthType 授权第三方：1、微信， 2、QQ
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("app/v1/uc/loginViaOauth")
+    Call<ResponseBody>
+    loginViaOauth(
+            @Field("accessToken") String accessToken,
+            @Field("oauthType") String oauthType
+
+    );
     /**
      * 手机号登录
      * @param mobile

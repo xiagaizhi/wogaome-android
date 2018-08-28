@@ -1,18 +1,18 @@
 package com.yushi.leke.fragment.ucenter;
 
+import android.content.Intent;
 import android.os.Bundle;
 
-import com.yushi.leke.R;
 import com.yufan.library.base.BaseFragment;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.View;
 
-import com.yufan.library.base.BaseFragment;
 import com.yufan.library.inject.VuClass;
 import com.yushi.leke.UIHelper;
-import com.yushi.leke.fragment.musicplayer.MusicPlayerFragment;
+import com.yushi.leke.activity.QuarantineActivity;
+import com.yushi.leke.uamp.ui.MediaBrowserFragment;
 
 /**
  * Created by mengfantao on 18/8/2.
@@ -34,7 +34,13 @@ public class UCenterFragment extends BaseFragment<UCenterContract.IView> impleme
 
     @Override
     public void startPlayer() {
-        getRootFragment().start(UIHelper.creat(MusicPlayerFragment.class).build());
+        Intent intent=new Intent(getContext(),QuarantineActivity.class);
+        startActivity(intent);
 
+    }
+
+    @Override
+    public void startPlayerList() {
+        getRootFragment().start(UIHelper.creat(MediaBrowserFragment.class).build());
     }
 }

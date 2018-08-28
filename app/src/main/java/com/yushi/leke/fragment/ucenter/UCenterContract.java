@@ -15,5 +15,6 @@ public interface UCenterContract {
     interface Presenter extends Pr {
     void startPlayer();
 
+        void startPlayerList();
     }
 }

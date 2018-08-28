@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-
+    android:background="@color/white"
     android:layout_height="match_parent">
 
     <ImageView
@@ -19,7 +19,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingTop="@dimen/y100"
+        android:paddingTop="@dimen/y87"
         android:orientation="vertical">
 
         <FrameLayout
@@ -50,9 +50,9 @@
 
                 <ImageView
                     android:id="@+id/iv_needle"
-                    android:layout_width="@dimen/x408"
+                    android:layout_width="@dimen/y408"
                     android:layout_height="wrap_content"
-                    android:transformPivotX="@dimen/x204"
+                    android:transformPivotX="@dimen/y204"
                     android:transformPivotY="0dp"
                     android:rotation="-30"
                     android:layout_centerHorizontal="true"
@@ -76,10 +76,10 @@
             android:textStyle="bold"
             android:layout_below="@+id/headerView"
             android:layout_above="@+id/bottom_control"
-            android:layout_marginTop="@dimen/y50"
+
 
             android:layout_centerHorizontal="true"
-            android:textSize="@dimen/px50"
+            android:textSize="@dimen/y50"
             android:gravity="center_vertical"
             android:textColor="@color/white"
             android:layout_height="wrap_content" />
@@ -87,7 +87,7 @@
         <LinearLayout
             android:id="@+id/bottom_control"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/y222"
             android:layout_alignParentBottom="true"
             android:layout_gravity="center_horizontal|center_vertical"
             android:gravity="center_horizontal|center_vertical"
@@ -154,7 +154,6 @@
                     android:layout_gravity="center_vertical"
                     android:layout_weight="1"
                     android:src="@drawable/selector_music_subscription"
-
                     android:checked="true" />
 
                 <ImageView

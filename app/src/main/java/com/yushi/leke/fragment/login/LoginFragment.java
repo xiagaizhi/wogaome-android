@@ -25,6 +25,7 @@ import com.yufan.share.ILoginCallback;
 import com.yufan.share.ShareUtils;
 import com.yushi.leke.BuildConfig;
 import com.yushi.leke.UIHelper;
+import com.yushi.leke.YFApi;
 import com.yushi.leke.fragment.login.loginPhone.LoginPhoneFragment;
 import com.yushi.leke.fragment.musicplayer.MusicPlayerFragment;
 import com.yushi.leke.fragment.register.RegisterFragment;
@@ -73,28 +74,32 @@ public class LoginFragment extends BaseFragment<LoginContract.IView> implements 
     @Override
     public void onWeixinLoginClick() {
 
-        start(UIHelper.creat(MusicPlayerFragment.class).build());
+        DialogManager.getInstance().showLoadingDialog();
+        mShareUtils.login(SHARE_MEDIA.WEIXIN, new ILoginCallback() {
+            @Override
+            public void onSuccess(Map<String, String> map, SHARE_MEDIA share_media, Map<String, String> map1) {
+                DialogManager.getInstance().dismiss();
+                DialogManager.getInstance().toast(map.toString());
+                if(share_media==SHARE_MEDIA.WEIXIN){
+                    ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).loginViaOauth(map.get("oauthType"),"1"));
+                }else {
+                    ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).loginViaOauth(map.get("oauthType"),"2"));
+                }
 
-//        DialogManager.getInstance().showLoadingDialog();
-//        mShareUtils.login(SHARE_MEDIA.WEIXIN, new ILoginCallback() {
-//            @Override
-//            public void onSuccess(Map<String, String> map, SHARE_MEDIA share_media, Map<String, String> map1) {
-//                DialogManager.getInstance().dismiss();
-//                DialogManager.getInstance().toast(map.toString());
-//            }
-//
-//            @Override
-//            public void onFaild(String s) {
-//                DialogManager.getInstance().dismiss();
-//                DialogManager.getInstance().toast("取消失败");
-//            }
-//
-//            @Override
-//            public void onCancel() {
-//                DialogManager.getInstance().dismiss();
-//                DialogManager.getInstance().toast("取消登录");
-//            }
-//        });
+            }
+
+            @Override
+            public void onFaild(String s) {
+                DialogManager.getInstance().dismiss();
+                DialogManager.getInstance().toast("取消失败");
+            }
+
+            @Override
+            public void onCancel() {
+                DialogManager.getInstance().dismiss();
+                DialogManager.getInstance().toast("取消登录");
+            }
+        });
     }
 
 

@@ -159,7 +159,7 @@ public class MusicService extends MediaBrowserServiceCompat implements
         super.onCreate();
         LogHelper.d(TAG, "onCreate");
 
-        mMusicProvider = new MusicProvider();
+        mMusicProvider = MusicProvider.getInstance();
 
 
         //QueueManager提供四个回调接口
