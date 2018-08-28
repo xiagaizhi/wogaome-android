@@ -17,5 +17,7 @@ public interface UCenterContract {
     void openMyWallet();
 
         void startPlayerList();
+
+        void logout();
     }
 }

@@ -24,11 +24,14 @@ public class UCenterVu extends BaseVu<UCenterContract.Presenter> implements UCen
     Button bt_mywallet;
     @FindView(R.id.bt_2)
     Button button2;
+    @FindView(R.id.bt_logout)
+    Button bt_logout;
     @Override
     public void initView(View view) {
 button.setOnClickListener(this);
         bt_mywallet.setOnClickListener(this);
 button2.setOnClickListener(this);
+        bt_logout.setOnClickListener(this);
     }
 
     @Override
@@ -44,6 +47,9 @@ button2.setOnClickListener(this);
                 break;
             case R.id.bt_mywallet:
                 mPersenter.openMyWallet();
+                break;
+            case R.id.bt_logout:
+                mPersenter.logout();
                 break;
         }
     }

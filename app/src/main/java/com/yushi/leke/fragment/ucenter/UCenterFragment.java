@@ -10,7 +10,11 @@ import android.support.annotation.Nullable;
 import android.view.View;
 
 import com.yufan.library.inject.VuClass;
+import com.yufan.library.manager.SPManager;
+import com.yufan.library.manager.UserManager;
 import com.yushi.leke.UIHelper;
+import com.yushi.leke.fragment.login.LoginFragment;
+import com.yushi.leke.fragment.main.MainFragment;
 import com.yushi.leke.fragment.musicplayer.MusicPlayerFragment;
 import com.yushi.leke.fragment.wallet.MyWalletFragment;
 import com.yushi.leke.activity.QuarantineActivity;
@@ -44,6 +48,13 @@ public class UCenterFragment extends BaseFragment<UCenterContract.IView> impleme
     @Override
     public void startPlayerList() {
         getRootFragment().start(UIHelper.creat(MediaBrowserFragment.class).build());
+    }
+
+    @Override
+    public void logout() {
+        UserManager.getInstance().setToken("");
+        UserManager.getInstance().setUid("");
+        getRootFragment().startWithPopTo(UIHelper.creat(LoginFragment.class).build(), MainFragment.class,true);
     }
 
     @Override

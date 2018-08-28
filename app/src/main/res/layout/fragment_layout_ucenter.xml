@@ -10,7 +10,7 @@
         android:id="@+id/bt_1"
         android:layout_height="wrap_content" />
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:text="播放列表"
         android:id="@+id/bt_2"
         android:layout_height="wrap_content" />
@@ -18,5 +18,10 @@
         android:layout_width="match_parent"
         android:text="我的钱包"
         android:id="@+id/bt_mywallet"
+        android:layout_height="wrap_content" />
+    <Button
+        android:layout_width="match_parent"
+        android:text="退出"
+        android:id="@+id/bt_logout"
         android:layout_height="wrap_content" />
 </LinearLayout>

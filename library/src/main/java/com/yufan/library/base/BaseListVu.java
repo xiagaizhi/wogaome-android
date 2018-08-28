@@ -1,10 +1,16 @@
 package com.yufan.library.base;
 
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.yufan.library.R;
+import com.yufan.library.inject.AnnotateUtils;
 import com.yufan.library.view.recycler.PageInfo;
 import com.yufan.library.view.recycler.YFRecyclerView;
+import com.yufan.library.widget.AppToolbar;
 import com.yufan.library.widget.StateLayout;
 
 /**
@@ -70,4 +76,22 @@ public abstract class BaseListVu <T extends Pr>extends BaseVu implements VuList{
     protected final   void initState() {
     }
 
+    @Override
+    public boolean initTitle(AppToolbar appToolbar) {
+        String titleNameStr = AnnotateUtils.getTitle(this);
+        if (!TextUtils.isEmpty(titleNameStr)) {
+            TextView titleName = appToolbar.creatCenterView(TextView.class);
+            titleName.setText(titleNameStr);
+        }
+        ImageView leftView=  appToolbar.creatLeftView(ImageView.class);
+        leftView.setImageResource(R.drawable.left_back_black_arrows);
+        leftView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mPersenter.onBackPressed();
+            }
+        });
+        appToolbar.build();
+        return true;
+    }
 }
