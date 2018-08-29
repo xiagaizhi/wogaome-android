@@ -13,7 +13,8 @@ public interface PaySafetyContract {
     }
 
     interface Presenter extends Pr {
-
-
+        void openBindPhone();
+        void checkPhone(String phoneNumber);
+        void setRechargePwd(int isHavePwd);
     }
 }

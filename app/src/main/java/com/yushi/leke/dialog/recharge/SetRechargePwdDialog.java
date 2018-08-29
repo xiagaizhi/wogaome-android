@@ -44,6 +44,9 @@ public class SetRechargePwdDialog extends Dialog implements KeyboardAdapter.OnKe
     public static final int SET_RECHARGE_PWD = 1;//设置交易密码
     public static final int MODIFY_RECHARGE_PWD = 2;//修改交易密码
     public static final int CHECK_RECHARGE_PWD = 3;//输入支付密码进行校验
+    public static final int CHECK_ADN_MODIFY_RECHARGE_PWD = 4;//修改密码前的验证
+    public static final int FORGET_RECHARGE_PWD = 5;//忘记交易密码
+    public static final int SET_RECHARGE_PWD_NEW = 6;//设置新的交易密码
     private PayPsdInputView tv_password;
     private KeyboardView id_keyboard_view;
     private TextView mTitle;
@@ -55,6 +58,11 @@ public class SetRechargePwdDialog extends Dialog implements KeyboardAdapter.OnKe
     private String orderPrice;
     private String payPrice;
     private String goodsId;
+    private ReturnPwdState returnPwdState;
+
+    public void setReturnPwdState(ReturnPwdState returnPwdState) {
+        this.returnPwdState = returnPwdState;
+    }
 
     public SetRechargePwdDialog(@NonNull Context context, final int type, String payApiId, String orderTitle, String orderPrice, String payPrice, String goodsId) {
         super(context, R.style.dialog_common);
@@ -81,13 +89,6 @@ public class SetRechargePwdDialog extends Dialog implements KeyboardAdapter.OnKe
 
     private void initView(View rootView) {
         mSetRechargeType = rootView.findViewById(R.id.tv_recharge_type);
-        if (type == SET_RECHARGE_PWD) {
-            mSetRechargeType.setText("设置交易密码");
-        } else if (type == MODIFY_RECHARGE_PWD) {
-            mSetRechargeType.setText("修改交易密码");
-        } else if (type == CHECK_RECHARGE_PWD) {
-            mSetRechargeType.setText("验证交易密码");
-        }
         mTitle = rootView.findViewById(R.id.tv_setpwd_title);
         rootView.findViewById(R.id.id_close).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -104,6 +105,26 @@ public class SetRechargePwdDialog extends Dialog implements KeyboardAdapter.OnKe
         tv_password = rootView.findViewById(R.id.tv_password);
         id_keyboard_view = rootView.findViewById(R.id.id_keyboard_view);
         setCanceledOnTouchOutside(false);
+
+        if (type == SET_RECHARGE_PWD) {
+            mTitle.setText("请设置您的乐链APP的交易密码");
+            mSetRechargeType.setText("设置交易密码");
+        } else if (type == MODIFY_RECHARGE_PWD) {
+            mTitle.setText("请设置您的新交易密码");
+            mSetRechargeType.setText("修改交易密码");
+        } else if (type == CHECK_RECHARGE_PWD) {
+            mTitle.setText("请输入交易密码以验证身份");
+            mSetRechargeType.setText("验证交易密码");
+        } else if (type == CHECK_ADN_MODIFY_RECHARGE_PWD) {
+            mTitle.setText("请输入原交易密码以验证身份");
+            mSetRechargeType.setText("修改交易密码");
+        } else if (type == FORGET_RECHARGE_PWD) {
+            mTitle.setText("请设置您的乐链APP的交易密码");
+            mSetRechargeType.setText("忘记交易密码");
+        } else if (type == SET_RECHARGE_PWD_NEW) {
+            mTitle.setText("请设置您的新交易密码");
+            mSetRechargeType.setText("修改交易密码");
+        }
         //设置不调用系统键盘
         if (Build.VERSION.SDK_INT <= 10) {
             tv_password.setInputType(InputType.TYPE_NULL);
@@ -133,7 +154,11 @@ public class SetRechargePwdDialog extends Dialog implements KeyboardAdapter.OnKe
                 //和上次输入的密码不一致  做相应的业务逻辑处理
                 tv_password.setComparePassword("");
                 tv_password.cleanPsd();
-                mTitle.setText(R.string.set_recharge_pwd);
+                if (type == SET_RECHARGE_PWD_NEW) {
+                    mTitle.setText("请设置您的新交易密码");
+                } else {
+                    mTitle.setText("请设置您的乐链APP的交易密码");
+                }
                 new MaterialDialog.Builder(mContext)
                         .content("两次交易密码不一致，请重新输入")
                         .positiveText("确定")
@@ -159,11 +184,11 @@ public class SetRechargePwdDialog extends Dialog implements KeyboardAdapter.OnKe
             @Override
             public void inputFinished(String inputPsd) {
                 //输完逻辑
-                if (type == SET_RECHARGE_PWD || type == MODIFY_RECHARGE_PWD) {//设置交易、修改交易密码
+                if (type == SET_RECHARGE_PWD || type == SET_RECHARGE_PWD_NEW || type == MODIFY_RECHARGE_PWD || type == FORGET_RECHARGE_PWD) {//设置交易、修改交易密码
                     tv_password.setComparePassword(inputPsd);
                     tv_password.cleanPsd();
-                    mTitle.setText(R.string.set_recharge_pwd_again);
-                } else if (type == CHECK_RECHARGE_PWD) {//输入支付密码进行验证
+                    mTitle.setText("请再输入一次您的交易密码");
+                } else if (type == CHECK_RECHARGE_PWD || type == CHECK_ADN_MODIFY_RECHARGE_PWD) {//输入密码进行验证
                     checkPayPwd(inputPsd);
                     tv_password.setComparePassword("");
                     tv_password.cleanPsd();
@@ -214,6 +239,14 @@ public class SetRechargePwdDialog extends Dialog implements KeyboardAdapter.OnKe
                     @Override
                     public void onSuccess(ApiBean mApiBean) {
                         if (TextUtils.equals(ApiBean.SUCCESS, mApiBean.getCode())) {
+                            if (returnPwdState != null) {
+                                if (type == SET_RECHARGE_PWD || type == SET_RECHARGE_PWD) {
+                                    returnPwdState.toSetPwdReturnState();
+                                } else if (type == CHECK_ADN_MODIFY_RECHARGE_PWD) {
+                                    returnPwdState.toSetPwdReturnState();
+                                }
+
+                            }
                             isSuccess = true;
                         } else {
                             isSuccess = false;
@@ -228,10 +261,18 @@ public class SetRechargePwdDialog extends Dialog implements KeyboardAdapter.OnKe
                     @Override
                     public void onFinish() {
                         if (isSuccess) {
-                            DialogManager.getInstance().toast("交易密码设置成功");
+                            if (type == SET_RECHARGE_PWD_NEW) {
+                                DialogManager.getInstance().toast("交易密码修改成功");
+                            } else {
+                                DialogManager.getInstance().toast("交易密码设置成功");
+                            }
                             dismiss();
                         } else {
-                            mTitle.setText(R.string.set_recharge_pwd);
+                            if (type == SET_RECHARGE_PWD_NEW) {
+                                mTitle.setText("请设置您的新交易密码");
+                            } else {
+                                mTitle.setText("请设置您的乐链APP的交易密码");
+                            }
                         }
                     }
                 });
@@ -248,7 +289,13 @@ public class SetRechargePwdDialog extends Dialog implements KeyboardAdapter.OnKe
                     @Override
                     public void onSuccess(ApiBean mApiBean) {
                         if (TextUtils.equals(ApiBean.SUCCESS, mApiBean.getCode())) {
-                            toPay();
+                            if (type == CHECK_RECHARGE_PWD) {
+                                toPay();
+                            } else if (type == CHECK_ADN_MODIFY_RECHARGE_PWD) {
+                                if (returnPwdState != null) {
+                                    returnPwdState.toModifiyPwdReturnState();
+                                }
+                            }
                             dismiss();
                         } else {
                             DialogManager.getInstance().toast("密码有误，请重新输入");
@@ -307,5 +354,11 @@ public class SetRechargePwdDialog extends Dialog implements KeyboardAdapter.OnKe
                     public void onFinish() {
                     }
                 });
+    }
+
+    public interface ReturnPwdState {
+        void toSetPwdReturnState();
+
+        void toModifiyPwdReturnState();
     }
 }
