@@ -70,7 +70,7 @@
                     android:layout_below="@+id/img_smallparts"
                     android:layout_marginLeft="@dimen/px62"
                     android:layout_marginRight="@dimen/px62"
-                    android:layout_marginTop="@dimen/px10"
+                    android:layout_marginTop="@dimen/px15"
                     android:background="@color/color_gray_levele" />
 
                 <LinearLayout

@@ -157,16 +157,15 @@ public class PayDialog extends Dialog implements PayWayAdapter.OnItemClickListen
                                 String phoneNumber = jsonObject.optString("phoneNumber");
                                 if (!TextUtils.isEmpty(phoneNumber)) {//绑定手机
                                     dismiss();
-                                    SetRechargePwdDialog setRechargePwdDialog;
                                     if (isHave == 1) {//拥有交易密码,验证交易密码
-                                        setRechargePwdDialog = new SetRechargePwdDialog(mContext,
-                                                SetRechargePwdDialog.CHECK_RECHARGE_PWD, selectPayWay.getTradeApiId(),
+                                        CheckRechargePwdDialog checkRechargePwdDialog = new CheckRechargePwdDialog(mContext,
+                                                CheckRechargePwdDialog.CHECK_RECHARGE_PWD_PAY, selectPayWay.getTradeApiId(),
                                                 mPayWayList.getGoodsName(), mPayWayList.getGoodsPrice(),
                                                 mPayWayList.getGoodsPrice(), mPayWayList.getGoodsId());
+                                        checkRechargePwdDialog.show();
                                     } else {//没有交易密码
-                                        setRechargePwdDialog = new SetRechargePwdDialog(mContext, SetRechargePwdDialog.SET_RECHARGE_PWD);
-                                    }
-                                    if (setRechargePwdDialog != null) {
+                                        dismiss();
+                                        SetRechargePwdDialog setRechargePwdDialog = new SetRechargePwdDialog(mContext, SetRechargePwdDialog.SET_RECHARGE_PWD);
                                         setRechargePwdDialog.show();
                                     }
                                 } else {//未绑定过手机
