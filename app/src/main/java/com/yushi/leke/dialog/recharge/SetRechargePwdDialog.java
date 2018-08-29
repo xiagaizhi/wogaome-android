@@ -18,8 +18,6 @@ import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.afollestad.materialdialogs.DialogAction;
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.alibaba.fastjson.JSON;
 import com.yufan.library.api.ApiBean;
 import com.yufan.library.api.ApiManager;
@@ -33,6 +31,7 @@ import com.yufan.library.widget.customkeyboard.KeyboardView;
 import com.yufan.library.widget.customkeyboard.PayPsdInputView;
 import com.yushi.leke.R;
 import com.yushi.leke.YFApi;
+import com.yushi.leke.dialog.CommonDialog;
 
 import java.lang.reflect.Method;
 
@@ -159,17 +158,15 @@ public class SetRechargePwdDialog extends Dialog implements KeyboardAdapter.OnKe
                 } else {
                     mTitle.setText("请设置您的乐链APP的交易密码");
                 }
-                new MaterialDialog.Builder(mContext)
-                        .content("两次交易密码不一致，请重新输入")
-                        .positiveText("确定")
-                        .widgetColor(Color.BLUE)
-                        .onAny(new MaterialDialog.SingleButtonCallback() {
+                new CommonDialog(getContext()).setTitle("两次交易密码不一致，请重新输入")
+                        .setPositiveName("确定")
+                        .setHaveNegative(false)
+                        .setCommonClickListener(new CommonDialog.CommonDialogClick() {
                             @Override
-                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                dialog.dismiss();
+                            public void onClick(CommonDialog commonDialog, int actionType) {
+                                commonDialog.dismiss();
                             }
-                        })
-                        .show();
+                        }).show();
 
             }
 

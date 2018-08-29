@@ -55,8 +55,6 @@ public class BindPhoneVu extends BaseVu<BindPhoneContract.Presenter> implements 
     ImageView iv_clear_password;
     @FindView(R.id.line_view3)
     LoginLineView line_view3;
-    @FindView(R.id.ll_set_password)
-    View ll_set_password;
 
     TextView titleName;
 
