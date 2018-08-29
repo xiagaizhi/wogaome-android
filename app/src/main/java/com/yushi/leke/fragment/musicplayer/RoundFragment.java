@@ -44,13 +44,7 @@ public class RoundFragment extends Fragment {
     private SimpleDraweeView sdv;
     private String albumPath;
 
-    public static RoundFragment newInstance(String albumpath) {
-        RoundFragment fragment = new RoundFragment();
-        Bundle bundle = new Bundle();
-        bundle.putString("album", albumpath);
-        fragment.setArguments(bundle);
-        return fragment;
-    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -141,7 +135,7 @@ public class RoundFragment extends Fragment {
             }
         };
         if (albumPath == null) {
-       // sdv.setImageURI(Uri.parse("res:/" + R.drawable.placeholder_disk_play_song));
+       sdv.setImageURI(Uri.parse(albumPath));
         } else {
             try {
 
@@ -198,6 +192,7 @@ public class RoundFragment extends Fragment {
 //        RefWatcher refWatcher = MainApplication.getRefWatcher(getActivity());
 //        refWatcher.watch(this);
     }
+
 
 
 }
