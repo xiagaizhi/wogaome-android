@@ -65,6 +65,7 @@ public class MusicPlayerFragment extends BaseFragment<MusicPlayerContract.IView>
     public static final String EXTRA_CURRENT_MEDIA_DESCRIPTION = "EXTRA_CURRENT_MEDIA_DESCRIPTION";
     private MediaBrowserCompat mMediaBrowser;
     private String mCurrentArtUrl;
+    private boolean isUIPlaying;
     private static final String TAG = LogHelper.makeLogTag(MusicPlayerFragment.class);
     private final Runnable mUpdateProgressTask = new Runnable() {
         @Override
@@ -84,11 +85,26 @@ public class MusicPlayerFragment extends BaseFragment<MusicPlayerContract.IView>
         public void onPlaybackStateChanged(@NonNull PlaybackStateCompat state) {
             LogHelper.d(TAG, "onPlaybackstate changed", state);
             updatePlaybackState(state);
+            MediaControllerCompat mediaController       = MediaControllerCompat.getMediaController(getActivity());
+            List<MediaSessionCompat.QueueItem> queueItems = mediaController.getQueue();
+            for (int i = 0; i < queueItems.size(); i++) {
+                if (queueItems.get(i).getQueueId() == state.getActiveQueueItemId()) {
+
+                    getVu().getViewPager().setCurrentItem(i,false);
+                }
+            }
+            if(state.getState()==PlaybackStateCompat.STATE_PLAYING){
+                animScrollIdle();
+            }else {
+                animScrollUp();
+
+            }
         }
 
         @Override
         public void onMetadataChanged(MediaMetadataCompat metadata) {
             if (metadata != null) {
+
                 updateMediaDescription(metadata.getDescription());
                 updateDuration(metadata);
             }
@@ -107,6 +123,7 @@ public class MusicPlayerFragment extends BaseFragment<MusicPlayerContract.IView>
                     }
                 }
             };
+    private AnimatorSet mAnimatorSet;
 
 
     @Override
@@ -174,10 +191,12 @@ public class MusicPlayerFragment extends BaseFragment<MusicPlayerContract.IView>
 
         private int preState = -1;
         private int pPosition;
-
+        private int prePosition=0;
         @Override
         public void onPageSelected(final int pPosition) {
             this.pPosition = pPosition;
+            prePosition=pPosition;
+
         }
 
         @Override
@@ -189,10 +208,16 @@ public class MusicPlayerFragment extends BaseFragment<MusicPlayerContract.IView>
         public void onPageScrollStateChanged(int pState) {
             if (pState == ViewPager.SCROLL_STATE_DRAGGING && preState == ViewPager.SCROLL_STATE_IDLE) {
                 preState = ViewPager.SCROLL_STATE_DRAGGING;
-                animScrollDragging();
+                animScrollUp();
             } else if (pState == ViewPager.SCROLL_STATE_IDLE) {
                 preState = ViewPager.SCROLL_STATE_IDLE;
-                animScrollIdle();
+               if(prePosition==pPosition){
+                   MediaControllerCompat mediaController       = MediaControllerCompat.getMediaController(getActivity());
+                 PlaybackStateCompat stateCompat=  mediaController.getPlaybackState();
+                 if(stateCompat.getState()==PlaybackStateCompat.STATE_PLAYING){
+                     animScrollIdle();
+                 }
+               }
                 mHandler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
@@ -204,31 +229,41 @@ public class MusicPlayerFragment extends BaseFragment<MusicPlayerContract.IView>
         }
     };
 
-    private void animScrollDragging() {
-        Fragment fragment = (RoundFragment) getVu().getViewPager().getAdapter().instantiateItem(getVu().getViewPager(), getVu().getViewPager().getCurrentItem());
-        ObjectAnimator mRotateAnim = (ObjectAnimator) fragment.getView().getTag(R.id.tag_animator);
-        if (mRotateAnim != null) {
-            mRotateAnim.cancel();
-            float valueAvatar = (float) mRotateAnim.getAnimatedValue();
-            mRotateAnim.setFloatValues(valueAvatar, 360f + valueAvatar);
-            Log.d("valueAvatar", "valueAvatar" + valueAvatar);
+    private void animScrollUp() {
+        if(isUIPlaying){
+            isUIPlaying=false;
+            Fragment fragment = (RoundFragment) getVu().getViewPager().getAdapter().instantiateItem(getVu().getViewPager(), getVu().getViewPager().getCurrentItem());
+            ObjectAnimator mRotateAnim = (ObjectAnimator) fragment.getView().getTag(R.id.tag_animator);
+            if (mAnimatorSet != null) {
+                mAnimatorSet.cancel();
+                float valueAvatar = (float) mRotateAnim.getAnimatedValue();
+                mRotateAnim.setFloatValues(valueAvatar, 360f + valueAvatar);
+                Log.d("valueAvatar", "valueAvatar" + valueAvatar);
+            }
+            ObjectAnimator animator = ObjectAnimator.ofFloat(getVu().getNeedleImageView(), "rotation", 0, -25);
+            animator.setDuration(300);
+            animator.setInterpolator(new DecelerateInterpolator());
+            animator.start();
         }
-        ObjectAnimator animator = ObjectAnimator.ofFloat(getVu().getNeedleImageView(), "rotation", 0, -25);
-        animator.setDuration(300);
-        animator.setInterpolator(new DecelerateInterpolator());
-        animator.start();
+
     }
 
     private void animScrollIdle() {
-        Fragment fragment = (RoundFragment) getVu().getViewPager().getAdapter().instantiateItem(getVu().getViewPager(), getVu().getViewPager().getCurrentItem());
-        ObjectAnimator mRotateAnim = (ObjectAnimator) fragment.getView().getTag(R.id.tag_animator);
-        ObjectAnimator animator = ObjectAnimator.ofFloat(getVu().getNeedleImageView(), "rotation", -25, 0);
-        animator.setDuration(300);
-        animator.setInterpolator(new DecelerateInterpolator());
-        if (mRotateAnim != null) {
-            AnimatorSet mAnimatorSet = new AnimatorSet();
-            mAnimatorSet.playTogether(mRotateAnim, animator);
-            mAnimatorSet.start();
+        if(!isUIPlaying) {
+            isUIPlaying=true;
+            Fragment fragment = (RoundFragment) getVu().getViewPager().getAdapter().instantiateItem(getVu().getViewPager(), getVu().getViewPager().getCurrentItem());
+            ObjectAnimator mRotateAnim = (ObjectAnimator) fragment.getView().getTag(R.id.tag_animator);
+            ObjectAnimator animator = ObjectAnimator.ofFloat(getVu().getNeedleImageView(), "rotation", -25, 0);
+            animator.setDuration(300);
+            animator.setInterpolator(new DecelerateInterpolator());
+            if (mAnimatorSet != null && mAnimatorSet.isRunning()) {
+                mAnimatorSet.cancel();
+            }
+            if (mRotateAnim != null) {
+                mAnimatorSet = new AnimatorSet();
+                mAnimatorSet.playTogether(mRotateAnim, animator);
+                mAnimatorSet.start();
+            }
         }
     }
 
@@ -250,9 +285,10 @@ public class MusicPlayerFragment extends BaseFragment<MusicPlayerContract.IView>
         List<MediaSessionCompat.QueueItem> queueItems = mediaController.getQueue();
         for (int i = 0; i < queueItems.size(); i++) {
             if (queueItems.get(i).getQueueId() == state.getActiveQueueItemId()) {
-                getVu().getViewPager().setCurrentItem(i);
+                getVu().getViewPager().setCurrentItem(i,false);
             }
         }
+
         updatePlaybackState(state);
         if (state.getState() == PlaybackStateCompat.STATE_PLAYING) {
             animScrollIdle();
@@ -269,6 +305,7 @@ public class MusicPlayerFragment extends BaseFragment<MusicPlayerContract.IView>
             scheduleSeekbarUpdate();
         }
     }
+
 
     private void updateFromParams(Bundle intent) {
         if (intent != null) {
@@ -419,7 +456,7 @@ public class MusicPlayerFragment extends BaseFragment<MusicPlayerContract.IView>
     public void next() {
         MediaControllerCompat mediaMetadataCompat = MediaControllerCompat.getMediaController(getActivity());
         if (getVu().getViewPager().getCurrentItem() + 1 != mediaMetadataCompat.getQueue().size()) {
-            animScrollDragging();
+            animScrollUp();
             getVu().getViewPager().setCurrentItem(getVu().getViewPager().getCurrentItem() + 1, true);
         }
 
@@ -428,7 +465,7 @@ public class MusicPlayerFragment extends BaseFragment<MusicPlayerContract.IView>
     @Override
     public void pre() {
         if (getVu().getViewPager().getCurrentItem() != 0) {
-            animScrollDragging();
+            animScrollUp();
             getVu().getViewPager().setCurrentItem(getVu().getViewPager().getCurrentItem() - 1, true);
         }
 

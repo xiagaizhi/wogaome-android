@@ -35,14 +35,11 @@ import com.yushi.leke.R;
 import java.lang.ref.WeakReference;
 
 
-/**
- * Created by wm on 2016/3/11.
- */
 public class RoundFragment extends Fragment {
 
     private WeakReference<ObjectAnimator> animatorWeakReference;
     private SimpleDraweeView sdv;
-    private String albumPath;
+    private String albumPath="";
 
 
 
@@ -52,7 +49,7 @@ public class RoundFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_roundimage, container, false);
         ((ViewGroup) rootView).setAnimationCacheEnabled(false);
         if (getArguments() != null) {
-            albumPath = getArguments().getString("album");
+            albumPath = getArguments().getString("album","");
         }
         //  CircleImageView  circleImageView = (CircleImageView) rootView.findViewById(R.id.circle);
 
@@ -179,7 +176,12 @@ public class RoundFragment extends Fragment {
 
     }
 
+public void setUri(Uri uri){
+        if(!albumPath.equals(uri.toString())){
+            sdv.setImageURI(uri);
+        }
 
+}
     @Override
     public void onDestroy() {
         super.onDestroy();
