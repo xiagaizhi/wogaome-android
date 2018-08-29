@@ -9,7 +9,9 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.yufan.library.inject.AnnotateUtils;
 import com.yufan.library.util.CheckUtil;
 import com.yufan.library.widget.LoginLineView;
 import com.yushi.leke.R;
@@ -43,6 +45,8 @@ public class BindPhoneVu extends BaseVu<BindPhoneContract.Presenter> implements 
     LoginLineView line_view1;
     @FindView(R.id.line_view2)
     LoginLineView line_view2;
+    TextView titleName;
+    private boolean isSafetyCheck;
 
     public void initView(View view) {
         iv_clear_phone.setOnClickListener(this);
@@ -71,10 +75,12 @@ public class BindPhoneVu extends BaseVu<BindPhoneContract.Presenter> implements 
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (TextUtils.isEmpty(s)) {
-                    iv_clear_phone.setVisibility(View.GONE);
-                } else {
-                    iv_clear_phone.setVisibility(View.VISIBLE);
+                if (!isSafetyCheck){
+                    if (TextUtils.isEmpty(s)) {
+                        iv_clear_phone.setVisibility(View.GONE);
+                    } else {
+                        iv_clear_phone.setVisibility(View.VISIBLE);
+                    }
                 }
                 updateState();
             }
@@ -82,19 +88,22 @@ public class BindPhoneVu extends BaseVu<BindPhoneContract.Presenter> implements 
         et_phone.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus) {
-                    if (!TextUtils.isEmpty(et_phone.getText())) {
-                        //显示
-                        iv_clear_phone.setVisibility(View.VISIBLE);
-                    }
-                    line_view1.startAnim();
-                } else {
-                    //隐藏
-                    iv_clear_phone.setVisibility(View.GONE);
-                    if (TextUtils.isEmpty(et_phone.getText())) {
-                        line_view1.hintAnim();
+                if (!isSafetyCheck){
+                    if (hasFocus) {
+                        if (!TextUtils.isEmpty(et_phone.getText())) {
+                            //显示
+                            iv_clear_phone.setVisibility(View.VISIBLE);
+                        }
+                        line_view1.startAnim();
+                    } else {
+                        //隐藏
+                        iv_clear_phone.setVisibility(View.GONE);
+                        if (TextUtils.isEmpty(et_phone.getText())) {
+                            line_view1.hintAnim();
+                        }
                     }
                 }
+
             }
         });
         et_verification_code.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -153,11 +162,42 @@ public class BindPhoneVu extends BaseVu<BindPhoneContract.Presenter> implements 
 
     @Override
     public boolean initTitle(AppToolbar appToolbar) {
-        return super.initTitle(appToolbar);
+        String titleNameStr = AnnotateUtils.getTitle(this);
+        if (!TextUtils.isEmpty(titleNameStr)) {
+            titleName = appToolbar.creatCenterView(TextView.class);
+            titleName.setText(titleNameStr);
+        }
+        ImageView leftView = appToolbar.creatLeftView(ImageView.class);
+        leftView.setImageResource(com.yufan.library.R.drawable.left_back_black_arrows);
+        leftView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mPersenter.onBackPressed();
+            }
+        });
+        appToolbar.build();
+        return true;
     }
 
     @Override
     public void initStatusLayout(StateLayout stateLayout) {
         super.initStatusLayout(stateLayout);
+    }
+
+    @Override
+    public void connectData(boolean isSafetyCheck, boolean isNeedReturnState, String phoneNumber) {
+        this.isSafetyCheck = isSafetyCheck;
+        if (isSafetyCheck) {
+            titleName.setText("安全校验");
+            et_phone.setFocusable(false);
+            iv_clear_phone.setVisibility(View.GONE);
+            if (!TextUtils.isEmpty(phoneNumber)) {
+                et_phone.setText(phoneNumber.substring(0, 3) + "****" + phoneNumber.substring(7, phoneNumber.length()));
+            }
+        } else {
+            titleName.setText("绑定手机");
+            et_phone.setFocusable(true);
+            iv_clear_phone.setVisibility(View.VISIBLE);
+        }
     }
 }

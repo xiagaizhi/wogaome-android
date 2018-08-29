@@ -1,5 +1,6 @@
 package com.yushi.leke.fragment.paySafe;
 
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
@@ -15,6 +16,7 @@ import com.yufan.library.inject.FindLayout;
 import com.yufan.library.inject.Title;
 import com.yufan.library.widget.StateLayout;
 import com.yufan.library.widget.AppToolbar;
+import com.yushi.leke.dialog.recharge.SetRechargePwdDialog;
 
 /**
  * Created by mengfantao on 18/8/2.
@@ -71,8 +73,14 @@ public class PaySafetyVu extends BaseVu<PaySafetyContract.Presenter> implements 
         super.onClick(v);
         switch (v.getId()) {
             case R.id.rl_setpwd://设置密码／修改密码
+                mPersenter.setRechargePwd(isHavePwd);
                 break;
             case R.id.rl_forget_pwd://忘记密码
+                if (TextUtils.isEmpty(phoneNumber)) {//未绑定手机
+                    mPersenter.openBindPhone();
+                } else {//绑定过手机
+                    mPersenter.checkPhone(phoneNumber);
+                }
                 break;
         }
     }
@@ -81,5 +89,12 @@ public class PaySafetyVu extends BaseVu<PaySafetyContract.Presenter> implements 
     public void updatePage(int isHavePwd, String phoneNumber) {
         this.isHavePwd = isHavePwd;
         this.phoneNumber = phoneNumber;
+        if (isHavePwd == 1) {//设置过交易密码
+            tv_setpwd.setText("修改交易密码");
+            tv_tips.setVisibility(View.GONE);
+        } else {//未设置
+            tv_setpwd.setText("设置交易密码");
+            tv_tips.setVisibility(View.VISIBLE);
+        }
     }
 }

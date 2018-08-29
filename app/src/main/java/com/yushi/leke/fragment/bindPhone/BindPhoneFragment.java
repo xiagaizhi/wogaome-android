@@ -17,11 +17,20 @@ import com.yufan.library.inject.VuClass;
  */
 @VuClass(BindPhoneVu.class)
 public class BindPhoneFragment extends BaseFragment<BindPhoneContract.IView> implements BindPhoneContract.Presenter {
+    private boolean isNeedReturnState;
+    private String phoneNumber;
+    private boolean isSafetyCheck;//true:安全校验 false:绑定手机
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        Bundle bundle = getArguments();
+        if (bundle != null) {
+            isNeedReturnState = bundle.getBoolean("isNeedReturnState", false);
+            phoneNumber = bundle.getString("phoneNumber", "");
+            isSafetyCheck = bundle.getBoolean("isSafetyCheck", false);
+            getVu().connectData(isSafetyCheck, isNeedReturnState, phoneNumber);
+        }
     }
 
 
