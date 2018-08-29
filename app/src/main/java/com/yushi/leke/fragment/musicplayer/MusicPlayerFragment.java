@@ -66,7 +66,6 @@ public class MusicPlayerFragment extends BaseFragment<MusicPlayerContract.IView>
     private MediaBrowserCompat mMediaBrowser;
     private String mCurrentArtUrl;
     private boolean isUIPlaying;
-    private int currentMediaPosition;
     private static final String TAG = LogHelper.makeLogTag(MusicPlayerFragment.class);
     private final Runnable mUpdateProgressTask = new Runnable() {
         @Override
@@ -93,13 +92,12 @@ public class MusicPlayerFragment extends BaseFragment<MusicPlayerContract.IView>
                     getVu().getViewPager().setCurrentItem(i,false);
                 }
             }
-//                currentMediaId=state.getActiveQueueItemId();
                 if(state.getState()==PlaybackStateCompat.STATE_PLAYING){
                     animScrollIdle();
-                }else {
+                }else if(state.getState()==PlaybackStateCompat.STATE_PAUSED){
                     animScrollUp();
                 }
-//            }
+
 
         }
 
@@ -437,13 +435,13 @@ public class MusicPlayerFragment extends BaseFragment<MusicPlayerContract.IView>
                 case PlaybackStateCompat.STATE_BUFFERING:
                     controls.pause();
                     stopSeekbarUpdate();
-                    animScrollUp();
+
                     break;
                 case PlaybackStateCompat.STATE_PAUSED:
                 case PlaybackStateCompat.STATE_STOPPED:
                     controls.play();
                     scheduleSeekbarUpdate();
-                    animScrollIdle();
+
                     break;
                 default:
                     LogHelper.d(TAG, "onClick with state ", state.getState());

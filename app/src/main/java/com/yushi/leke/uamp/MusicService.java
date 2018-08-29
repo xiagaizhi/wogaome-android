@@ -178,7 +178,10 @@ public class MusicService extends MediaBrowserServiceCompat implements
 
                     @Override
                     public void onCurrentQueueIndexUpdated(int queueIndex) {
-                        mPlaybackManager.handlePlayRequest();
+                        if(mPlaybackManager.getPlayback().isPlaying()){
+                            mPlaybackManager.handlePlayRequest();
+                        }
+
                     }
 
                     @Override
