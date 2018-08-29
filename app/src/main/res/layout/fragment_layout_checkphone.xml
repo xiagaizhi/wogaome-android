@@ -3,8 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-
-
     <LinearLayout
         android:id="@+id/ll_content"
         android:layout_width="match_parent"
@@ -25,23 +23,15 @@
                 android:layout_weight="1"
                 android:orientation="horizontal">
 
-                <EditText
-                    android:id="@+id/et_phone"
+                <TextView
+                    android:id="@+id/tv_phone"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:background="@null"
+                    android:gravity="center_vertical"
                     android:hint="请输入你的手机号"
-                    android:inputType="phone"
                     android:textSize="17sp" />
-
-                <ImageView
-                    android:id="@+id/iv_clear_phone"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:src="@drawable/iv_small_close"
-                    android:visibility="gone" />
             </LinearLayout>
 
             <com.yufan.library.widget.LoginLineView
@@ -89,58 +79,6 @@
 
             <com.yufan.library.widget.LoginLineView
                 android:id="@+id/line_view2"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/px1"
-                android:background="@color/color_line_1" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/ll_set_password"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/y100"
-            android:layout_marginLeft="@dimen/px80"
-            android:layout_marginRight="@dimen/px80"
-            android:layout_marginTop="@dimen/y30"
-            android:orientation="vertical">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:orientation="horizontal">
-
-                <EditText
-                    android:id="@+id/et_password"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:background="@null"
-                    android:hint="请设置您的登录密码"
-                    android:inputType="textPassword"
-                    android:textSize="17sp" />
-
-                <ImageView
-                    android:id="@+id/iv_clear_password"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginRight="@dimen/px50"
-                    android:src="@drawable/iv_small_close"
-                    android:visibility="gone" />
-
-                <CheckBox
-                    android:id="@+id/cb_showeye"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:button="@drawable/selector_password_eye" />
-
-
-            </LinearLayout>
-
-            <com.yufan.library.widget.LoginLineView
-                android:id="@+id/line_view3"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/px1"
                 android:background="@color/color_line_1" />

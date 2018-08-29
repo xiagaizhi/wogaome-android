@@ -154,7 +154,7 @@ public class SetRechargePwdDialog extends Dialog implements KeyboardAdapter.OnKe
                 //和上次输入的密码不一致  做相应的业务逻辑处理
                 tv_password.setComparePassword("");
                 tv_password.cleanPsd();
-                if (type == SET_RECHARGE_PWD_NEW) {
+                if (type == SET_RECHARGE_PWD_NEW || type == FORGET_RECHARGE_PWD) {
                     mTitle.setText("请设置您的新交易密码");
                 } else {
                     mTitle.setText("请设置您的乐链APP的交易密码");
@@ -268,7 +268,7 @@ public class SetRechargePwdDialog extends Dialog implements KeyboardAdapter.OnKe
                             }
                             dismiss();
                         } else {
-                            if (type == SET_RECHARGE_PWD_NEW) {
+                            if (type == SET_RECHARGE_PWD_NEW || type == FORGET_RECHARGE_PWD) {
                                 mTitle.setText("请设置您的新交易密码");
                             } else {
                                 mTitle.setText("请设置您的乐链APP的交易密码");
