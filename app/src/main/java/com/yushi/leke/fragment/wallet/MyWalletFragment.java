@@ -7,11 +7,9 @@ import com.yufan.library.base.BaseFragment;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.View;
-import android.widget.Toast;
 
 import com.yufan.library.inject.VuClass;
 import com.yushi.leke.UIHelper;
-import com.yushi.leke.fragment.bindPhone.BindPhoneFragment;
 import com.yushi.leke.fragment.openTreasureBox.OpenTreasureBoxFragment;
 import com.yushi.leke.fragment.paySafe.PaySafetyFragment;
 
@@ -40,7 +38,6 @@ public class MyWalletFragment extends BaseFragment<MyWalletContract.IView> imple
 
     @Override
     public void openPlayer() {
-        getRootFragment().start(UIHelper.creat(BindPhoneFragment.class).build());
     }
 
     @Override

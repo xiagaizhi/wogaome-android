@@ -151,7 +151,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/id_open_treasure"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/px19"
+        android:layout_marginTop="@dimen/px10"
         android:text="@string/lkc_treasure_instructions"
         android:textColor="@color/color_gray_level9"
         android:textSize="@dimen/px24" />

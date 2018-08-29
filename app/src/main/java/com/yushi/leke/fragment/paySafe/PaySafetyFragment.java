@@ -17,6 +17,7 @@ import com.yushi.leke.UIHelper;
 import com.yushi.leke.YFApi;
 import com.yushi.leke.dialog.recharge.SetRechargePwdDialog;
 import com.yushi.leke.fragment.bindPhone.BindPhoneFragment;
+import com.yushi.leke.fragment.checkPhone.CheckPhoneFragment;
 
 import org.json.JSONObject;
 
@@ -69,19 +70,24 @@ public class PaySafetyFragment extends BaseFragment<PaySafetyContract.IView> imp
 
     @Override
     public void openBindPhone() {
-        startForResult(UIHelper.creat(BindPhoneFragment.class).put("isNeedReturnState", true).build(), 100);
+        startForResult(UIHelper.creat(BindPhoneFragment.class).build(), 100);
     }
 
     @Override
     public void checkPhone(String phoneNumber) {
-        startForResult(UIHelper.creat(BindPhoneFragment.class).put("isNeedReturnState", true).put("isSafetyCheck", true).put("phoneNumber", phoneNumber).build(), 100);
+        startForResult(UIHelper.creat(CheckPhoneFragment.class).put("phoneNumber", phoneNumber).build(), 200);
     }
 
     @Override
     public void onFragmentResult(int requestCode, int resultCode, Bundle data) {
         super.onFragmentResult(requestCode, resultCode, data);
-        if (requestCode == 100 && resultCode == RESULT_OK && data != null) {
-            // TODO: 2018/8/28 刷新界面
+        if (requestCode == 100 && resultCode == RESULT_OK && data != null) {//绑定手机成功返回
+            phoneNumber = data.getString("phoneNumber");
+            getVu().updatePage(isHave, phoneNumber);
+        } else if (requestCode == 200 && resultCode == RESULT_OK && data != null) {//校验密码通过返回
+            SetRechargePwdDialog setRechargePwdDialog = new SetRechargePwdDialog(getContext(), SetRechargePwdDialog.FORGET_RECHARGE_PWD);
+            setRechargePwdDialog.setReturnPwdState(this);
+            setRechargePwdDialog.show();
         }
     }
 

@@ -9,12 +9,12 @@ import com.yufan.library.base.Vu;
 
 public interface BindPhoneContract {
     interface IView extends Vu {
-        void connectData(boolean isSafetyCheck,boolean isNeedReturnState, String phoneNumber);
+
     }
 
     interface Presenter extends Pr {
         void getVerifcationCode(String phone);
 
-        void bindPhone(String phone, String code);
+        void bindPhone(String phone, String code, String pwd);
     }
 }
