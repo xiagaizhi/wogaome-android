@@ -14,8 +14,11 @@ android {
         multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         buildConfigField "int", "API_TYPE", "${gradle.apiType}"
-
+        ndk {
+            abiFilters "armeabi"   //  , "armeabi-v7a", "x86"
+        }
     }
+
     dexOptions {
         preDexLibraries = false
         javaMaxHeapSize "2048M"
@@ -42,6 +45,7 @@ android {
         }
     }
 
+
     signingConfigs {
         release {
             storeFile file('leke.keystore')
@@ -64,7 +68,7 @@ android {
             proguardFile file('proguard.cfg')
             signingConfig signingConfigs.release
             shrinkResources false    // 开启去除无用资源
-            debuggable false
+            debuggable true
 
         }
         debug {

@@ -85,6 +85,7 @@ public class VerificationCodeTextView extends TextView {
                 if(onGetCodeClickListener==null){
                     throw new RuntimeException("需要调用 setOnGetCodeClickListener");
                 }
+
                 VerifyActivity.startSimpleVerifyUI(getContext(), VerifyType.NOCAPTCHA, "0335", null, new IActivityCallback() {
                     @Override
                     public void onNotifyBackPressed() {
