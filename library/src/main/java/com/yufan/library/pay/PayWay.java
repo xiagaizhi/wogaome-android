@@ -6,8 +6,8 @@ package com.yufan.library.pay;
  */
 
 public class PayWay {
-    private String payApiId;
-    private String payApiDesc;
+    private String tradeApiId;
+    private String tradeApiDesc;
     private boolean isSelect;//客户端自己判断是否选中状态
 
     public boolean isSelect() {
@@ -18,19 +18,19 @@ public class PayWay {
         isSelect = select;
     }
 
-    public String getPayApiId() {
-        return payApiId;
+    public String getTradeApiId() {
+        return tradeApiId;
     }
 
-    public void setPayApiId(String payApiId) {
-        this.payApiId = payApiId;
+    public void setTradeApiId(String tradeApiId) {
+        this.tradeApiId = tradeApiId;
     }
 
-    public String getPayApiDesc() {
-        return payApiDesc;
+    public String getTradeApiDesc() {
+        return tradeApiDesc;
     }
 
-    public void setPayApiDesc(String payApiDesc) {
-        this.payApiDesc = payApiDesc;
+    public void setTradeApiDesc(String tradeApiDesc) {
+        this.tradeApiDesc = tradeApiDesc;
     }
 }

@@ -96,7 +96,6 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/ll_set_password"
             android:layout_width="match_parent"
             android:layout_height="@dimen/y100"
             android:layout_marginLeft="@dimen/px80"

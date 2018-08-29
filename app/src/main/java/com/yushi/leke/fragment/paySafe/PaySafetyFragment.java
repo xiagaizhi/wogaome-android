@@ -15,6 +15,7 @@ import android.view.View;
 import com.yufan.library.inject.VuClass;
 import com.yushi.leke.UIHelper;
 import com.yushi.leke.YFApi;
+import com.yushi.leke.dialog.recharge.CheckRechargePwdDialog;
 import com.yushi.leke.dialog.recharge.SetRechargePwdDialog;
 import com.yushi.leke.fragment.bindPhone.BindPhoneFragment;
 import com.yushi.leke.fragment.checkPhone.CheckPhoneFragment;
@@ -25,7 +26,7 @@ import org.json.JSONObject;
  * Created by mengfantao on 18/8/2.
  */
 @VuClass(PaySafetyVu.class)
-public class PaySafetyFragment extends BaseFragment<PaySafetyContract.IView> implements PaySafetyContract.Presenter, SetRechargePwdDialog.ReturnPwdState {
+public class PaySafetyFragment extends BaseFragment<PaySafetyContract.IView> implements PaySafetyContract.Presenter, SetRechargePwdDialog.SetRechargeInterf, CheckRechargePwdDialog.CheckRechargePwdInterf {
     private int isHave;
     private String phoneNumber;
 
@@ -85,35 +86,33 @@ public class PaySafetyFragment extends BaseFragment<PaySafetyContract.IView> imp
             phoneNumber = data.getString("phoneNumber");
             getVu().updatePage(isHave, phoneNumber);
         } else if (requestCode == 200 && resultCode == RESULT_OK && data != null) {//校验密码通过返回
-            SetRechargePwdDialog setRechargePwdDialog = new SetRechargePwdDialog(getContext(), SetRechargePwdDialog.FORGET_RECHARGE_PWD);
-            setRechargePwdDialog.setReturnPwdState(this);
+            SetRechargePwdDialog setRechargePwdDialog = new SetRechargePwdDialog(getContext(), SetRechargePwdDialog.SET_RECHARGE_PWD_FORGET);
             setRechargePwdDialog.show();
         }
     }
 
     @Override
     public void setRechargePwd(int isHavePwd) {
-        SetRechargePwdDialog setRechargePwdDialog;
-        if (isHavePwd == 1) {
-            setRechargePwdDialog = new SetRechargePwdDialog(getContext(), SetRechargePwdDialog.CHECK_ADN_MODIFY_RECHARGE_PWD);
+        if (isHavePwd == 1) {//修改，先校验
+            CheckRechargePwdDialog checkRechargePwdDialog = new CheckRechargePwdDialog(getContext(), CheckRechargePwdDialog.CHECK_RECHARGE_PWD_MODIFY, this);
+            checkRechargePwdDialog.show();
         } else {
-            setRechargePwdDialog = new SetRechargePwdDialog(getContext(), SetRechargePwdDialog.SET_RECHARGE_PWD);
+            SetRechargePwdDialog setRechargePwdDialog = new SetRechargePwdDialog(getContext(), SetRechargePwdDialog.SET_RECHARGE_PWD);
+            setRechargePwdDialog.setmSetRechargeInterf(this);
+            setRechargePwdDialog.show();
         }
-        setRechargePwdDialog.setReturnPwdState(this);
-        setRechargePwdDialog.show();
+
     }
 
     @Override
-    public void toSetPwdReturnState() {
+    public void returnSetPwdResult() {
         isHave = 1;
         getVu().updatePage(isHave, phoneNumber);
     }
 
     @Override
-    public void toModifiyPwdReturnState() {
-        //修改密码校验通过,设置交易密码
+    public void returnCheckResult() {
         SetRechargePwdDialog setRechargePwdDialog = new SetRechargePwdDialog(getContext(), SetRechargePwdDialog.SET_RECHARGE_PWD_NEW);
-        setRechargePwdDialog.setReturnPwdState(this);
         setRechargePwdDialog.show();
     }
 }

@@ -4,155 +4,159 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ImageView
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="@dimen/px306"
-        android:scaleType="centerCrop"
-        android:src="@drawable/bg_mywallet_top" />
+        android:layout_height="wrap_content">
 
-    <RelativeLayout
-        android:id="@+id/id_wallet_top"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/px24"
-        android:layout_marginRight="@dimen/px12"
-        android:layout_marginTop="@dimen/px200"
-        android:background="@drawable/bg_mywallet">
-
-        <TextView
-            android:id="@+id/id_lkc_lable"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/px92"
-            android:layout_marginTop="@dimen/px56"
-            android:text="@string/lkc_remaining"
-            android:textColor="@color/color_gray_level6"
-            android:textSize="@dimen/px36" />
-
-        <ImageView
-            android:id="@+id/id_lck_instructions"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="@dimen/px42"
-            android:layout_marginTop="@dimen/px38"
-            android:src="@drawable/ic_lkc_detail_icon" />
-
-        <TextView
-            android:id="@+id/id_lkc_remain"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/id_lkc_lable"
-            android:layout_marginLeft="@dimen/px92"
-            android:layout_marginTop="@dimen/px39"
-            android:singleLine="true" />
-
-        <ImageView
-            android:id="@+id/img_smallparts"
-            android:layout_width="@dimen/px242"
-            android:layout_height="@dimen/px110"
-            android:layout_alignParentRight="true"
-            android:layout_below="@+id/id_lkc_remain"
-            android:layout_marginTop="@dimen/px12"
-            android:src="@drawable/ic_mywallet_smallparts" />
-
-        <View
-            android:id="@+id/view_line"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/px1"
-            android:layout_below="@+id/img_smallparts"
-            android:layout_marginLeft="@dimen/px62"
-            android:layout_marginRight="@dimen/px62"
-            android:layout_marginTop="@dimen/px16"
-            android:background="@color/color_gray_levele" />
+            android:layout_height="wrap_content">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/px82"
-            android:layout_below="@+id/view_line"
-            android:layout_marginBottom="@dimen/px28"
-            android:layout_marginLeft="@dimen/x50"
-            android:layout_marginRight="@dimen/x50"
-            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/px306"
+                android:scaleType="centerCrop"
+                android:src="@drawable/bg_mywallet_top" />
 
             <RelativeLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
+                android:id="@+id/id_wallet_top"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/px24"
+                android:layout_marginRight="@dimen/px12"
+                android:layout_marginTop="@dimen/px180"
+                android:background="@drawable/bg_mywallet">
 
                 <TextView
-                    android:id="@+id/id_lkc_detail"
+                    android:id="@+id/id_lkc_lable"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:text="@string/lkc_detail"
-                    android:textColor="@color/color_f67b29"
-                    android:textSize="@dimen/px30" />
+                    android:layout_marginLeft="@dimen/px92"
+                    android:layout_marginTop="@dimen/px56"
+                    android:text="@string/lkc_remaining"
+                    android:textColor="@color/color_gray_level6"
+                    android:textSize="@dimen/px36" />
+
+                <ImageView
+                    android:id="@+id/id_lck_instructions"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="@dimen/px42"
+                    android:layout_marginTop="@dimen/px38"
+                    android:src="@drawable/ic_lkc_detail_icon" />
+
+                <TextView
+                    android:id="@+id/id_lkc_remain"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/id_lkc_lable"
+                    android:layout_marginLeft="@dimen/px92"
+                    android:singleLine="true" />
+
+                <ImageView
+                    android:id="@+id/img_smallparts"
+                    android:layout_width="@dimen/px242"
+                    android:layout_height="@dimen/px110"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@+id/id_lkc_remain"
+                    android:layout_marginTop="@dimen/px10"
+                    android:src="@drawable/ic_mywallet_smallparts" />
+
+                <View
+                    android:id="@+id/view_line"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/px1"
+                    android:layout_below="@+id/img_smallparts"
+                    android:layout_marginLeft="@dimen/px62"
+                    android:layout_marginRight="@dimen/px62"
+                    android:layout_marginTop="@dimen/px15"
+                    android:background="@color/color_gray_levele" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/px82"
+                    android:layout_below="@+id/view_line"
+                    android:layout_marginBottom="@dimen/px28"
+                    android:layout_marginLeft="@dimen/x50"
+                    android:layout_marginRight="@dimen/x50"
+                    android:orientation="horizontal">
+
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1">
+
+                        <TextView
+                            android:id="@+id/id_lkc_detail"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:text="@string/lkc_detail"
+                            android:textColor="@color/color_f67b29"
+                            android:textSize="@dimen/px30" />
+                    </RelativeLayout>
+
+                    <View
+                        android:layout_width="@dimen/px1"
+                        android:layout_height="@dimen/px20"
+                        android:layout_gravity="center_vertical"
+                        android:background="@color/color_gray_levele" />
+
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1">
+
+                        <TextView
+                            android:id="@+id/id_yesterd_arith_num"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:text="@string/lkc_yesterd_arith_num"
+                            android:textColor="@color/color_f67b29"
+                            android:textSize="@dimen/px30" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/px12"
+                            android:layout_toRightOf="@+id/id_yesterd_arith_num"
+                            android:background="@drawable/message_widget_bg_shape"
+                            android:text="999999"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/px18" />
+                    </RelativeLayout>
+                </LinearLayout>
             </RelativeLayout>
-            
-            <View
-                android:layout_width="@dimen/px1"
-                android:layout_gravity="center_vertical"
-                android:background="@color/color_gray_levele"
-                android:layout_height="@dimen/px20"/>
 
-            <RelativeLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
+            <ImageView
+                android:id="@+id/id_wallet_box"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/id_wallet_top"
+                android:layout_centerHorizontal="true"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_wallet_box" />
 
-                <TextView
-                    android:id="@+id/id_yesterd_arith_num"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:text="@string/lkc_yesterd_arith_num"
-                    android:textColor="@color/color_f67b29"
-                    android:textSize="@dimen/px30" />
+            <ImageButton
+                android:id="@+id/id_open_treasure"
+                android:layout_width="@dimen/px366"
+                android:layout_height="@dimen/px106"
+                android:layout_below="@+id/id_wallet_box"
+                android:layout_centerHorizontal="true"
+                android:background="@null"
+                android:src="@drawable/btn_open_treasure_box" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/px12"
-                    android:layout_toRightOf="@+id/id_yesterd_arith_num"
-                    android:background="@drawable/message_widget_bg_shape"
-                    android:text="999999"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/px18" />
-            </RelativeLayout>
-
-
-        </LinearLayout>
-
-
-    </RelativeLayout>
-
-    <ImageView
-        android:id="@+id/id_wallet_box"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/id_wallet_top"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/px33"
-        android:scaleType="centerCrop"
-        android:src="@drawable/ic_wallet_box" />
-
-    <ImageButton
-        android:id="@+id/id_open_treasure"
-        android:layout_width="@dimen/px366"
-        android:layout_height="@dimen/px106"
-        android:layout_below="@+id/id_wallet_box"
-        android:layout_centerHorizontal="true"
-        android:background="@null"
-        android:src="@drawable/btn_open_treasure_box" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/id_open_treasure"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/px10"
-        android:text="@string/lkc_treasure_instructions"
-        android:textColor="@color/color_gray_level9"
-        android:textSize="@dimen/px24" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/id_open_treasure"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/px10"
+                android:text="@string/lkc_treasure_instructions"
+                android:textColor="@color/color_gray_level9"
+                android:textSize="@dimen/px24" />
+        </RelativeLayout>
+    </ScrollView>
 </RelativeLayout>

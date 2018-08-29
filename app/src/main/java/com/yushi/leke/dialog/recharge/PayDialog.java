@@ -18,8 +18,6 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.afollestad.materialdialogs.DialogAction;
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.alibaba.fastjson.JSON;
 import com.yufan.library.api.ApiBean;
 import com.yufan.library.api.ApiManager;
@@ -27,6 +25,7 @@ import com.yufan.library.api.BaseHttpCallBack;
 import com.yufan.library.pay.PayWay;
 import com.yushi.leke.R;
 import com.yushi.leke.YFApi;
+import com.yushi.leke.dialog.CommonDialog;
 
 import org.json.JSONObject;
 
@@ -102,10 +101,10 @@ public class PayDialog extends Dialog implements PayWayAdapter.OnItemClickListen
                             if (mPayWayList != null) {
                                 tv_money.setText("¥" + mPayWayList.getGoodsPrice());
                                 tv_goods_info.setText("" + mPayWayList.getGoodsName());
-                                if (mPayWayList.getPayApi() != null && mPayWayList.getPayApi().size() > 0) {
-                                    selectPayWay = mPayWayList.getPayApi().get(0);
+                                if (mPayWayList.getTradeApi() != null && mPayWayList.getTradeApi().size() > 0) {
+                                    selectPayWay = mPayWayList.getTradeApi().get(0);
                                     selectPayWay.setSelect(true);
-                                    payways.addAll(mPayWayList.getPayApi());
+                                    payways.addAll(mPayWayList.getTradeApi());
                                     mAdapter.notifyDataSetChanged();
                                 }
                             }
@@ -158,35 +157,35 @@ public class PayDialog extends Dialog implements PayWayAdapter.OnItemClickListen
                                 String phoneNumber = jsonObject.optString("phoneNumber");
                                 if (!TextUtils.isEmpty(phoneNumber)) {//绑定手机
                                     dismiss();
-                                    SetRechargePwdDialog setRechargePwdDialog;
                                     if (isHave == 1) {//拥有交易密码,验证交易密码
-                                        setRechargePwdDialog = new SetRechargePwdDialog(mContext,
-                                                SetRechargePwdDialog.CHECK_RECHARGE_PWD, selectPayWay.getPayApiId(),
+                                        CheckRechargePwdDialog checkRechargePwdDialog = new CheckRechargePwdDialog(mContext,
+                                                CheckRechargePwdDialog.CHECK_RECHARGE_PWD_PAY, selectPayWay.getTradeApiId(),
                                                 mPayWayList.getGoodsName(), mPayWayList.getGoodsPrice(),
                                                 mPayWayList.getGoodsPrice(), mPayWayList.getGoodsId());
+                                        checkRechargePwdDialog.show();
                                     } else {//没有交易密码
-                                        setRechargePwdDialog = new SetRechargePwdDialog(mContext, SetRechargePwdDialog.SET_RECHARGE_PWD);
-                                    }
-                                    if (setRechargePwdDialog != null) {
+                                        dismiss();
+                                        SetRechargePwdDialog setRechargePwdDialog = new SetRechargePwdDialog(mContext, SetRechargePwdDialog.SET_RECHARGE_PWD);
                                         setRechargePwdDialog.show();
                                     }
                                 } else {//未绑定过手机
-                                    new MaterialDialog.Builder(mContext)
-                                            .content("您尚未绑定手机，请先绑定安全手机！")
-                                            .positiveText("去绑定")
-                                            .widgetColor(Color.BLUE)
-                                            .onAny(new MaterialDialog.SingleButtonCallback() {
+                                    new CommonDialog(getContext()).setTitle("您尚未绑定手机，请先绑定安全手机！")
+                                            .setNegativeName("取消")
+                                            .setPositiveName("去绑定")
+                                            .setHaveNegative(true)
+                                            .setCommonDialogCanceledOnTouchOutside2(false)
+                                            .setCommonClickListener(new CommonDialog.CommonDialogClick() {
                                                 @Override
-                                                public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                                    dismiss();
-                                                    if (which == DialogAction.POSITIVE) {
+                                                public void onClick(CommonDialog commonDialog, int actionType) {
+                                                    commonDialog.dismiss();
+                                                    if (actionType == CommonDialog.COMMONDIALOG_ACTION_POSITIVE) {
+                                                        dismiss();
                                                         if (openBindPhoneInterf != null) {
                                                             openBindPhoneInterf.openBindPhone();
                                                         }
                                                     }
                                                 }
-                                            })
-                                            .show();
+                                            }).show();
                                 }
                             }
                         } catch (Exception e) {
