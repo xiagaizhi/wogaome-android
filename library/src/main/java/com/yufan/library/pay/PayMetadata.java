@@ -21,7 +21,15 @@ public class PayMetadata {
      * 支付宝返回
      */
     private String orderStr;
+    private String webOrderSt;//安卓不需要
 
+    public String getWebOrderSt() {
+        return webOrderSt;
+    }
+
+    public void setWebOrderSt(String webOrderSt) {
+        this.webOrderSt = webOrderSt;
+    }
 
     public String getAppId() {
         return appId;

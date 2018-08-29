@@ -10,19 +10,18 @@ import java.util.List;
  */
 
 public class PayWayList {
-    private List<PayWay> payApi;
+    private List<PayWay> tradeApi;
 //    private int isInternalPayIos;//ios是否内购（0-第三方支付，1-ios内购）不用考虑
     private String goodsName;//商品名称
     private String goodsPrice;//商品单价
     private String goodsId;//商品ID
 
-
-    public List<PayWay> getPayApi() {
-        return payApi;
+    public List<PayWay> getTradeApi() {
+        return tradeApi;
     }
 
-    public void setPayApi(List<PayWay> payApi) {
-        this.payApi = payApi;
+    public void setTradeApi(List<PayWay> tradeApi) {
+        this.tradeApi = tradeApi;
     }
 
     public String getGoodsName() {

@@ -44,10 +44,10 @@ public class PayWayAdapter extends RecyclerView.Adapter<PayWayAdapter.PayWayView
     @Override
     public void onBindViewHolder(@NonNull PayWayViewHolder holder, final int position) {
         final PayWay payWay = datas.get(position);
-        if (TextUtils.equals(payWay.getPayApiId(), "1")) {//支付宝
+        if (TextUtils.equals(payWay.getTradeApiId(), "1")) {//支付宝
             holder.icon_pay.setImageResource(R.drawable.ic_pay_ali);
             holder.tv_pay_title.setText("支付宝支付");
-        } else if (TextUtils.equals(payWay.getPayApiId(), "2")) {//微信
+        } else if (TextUtils.equals(payWay.getTradeApiId(), "2")) {//微信
             holder.icon_pay.setImageResource(R.drawable.ic_pay_wechat);
             holder.tv_pay_title.setText("微信支付");
         }

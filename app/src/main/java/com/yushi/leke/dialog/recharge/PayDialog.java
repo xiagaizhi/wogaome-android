@@ -101,10 +101,10 @@ public class PayDialog extends Dialog implements PayWayAdapter.OnItemClickListen
                             if (mPayWayList != null) {
                                 tv_money.setText("¥" + mPayWayList.getGoodsPrice());
                                 tv_goods_info.setText("" + mPayWayList.getGoodsName());
-                                if (mPayWayList.getPayApi() != null && mPayWayList.getPayApi().size() > 0) {
-                                    selectPayWay = mPayWayList.getPayApi().get(0);
+                                if (mPayWayList.getTradeApi() != null && mPayWayList.getTradeApi().size() > 0) {
+                                    selectPayWay = mPayWayList.getTradeApi().get(0);
                                     selectPayWay.setSelect(true);
-                                    payways.addAll(mPayWayList.getPayApi());
+                                    payways.addAll(mPayWayList.getTradeApi());
                                     mAdapter.notifyDataSetChanged();
                                 }
                             }
@@ -160,7 +160,7 @@ public class PayDialog extends Dialog implements PayWayAdapter.OnItemClickListen
                                     SetRechargePwdDialog setRechargePwdDialog;
                                     if (isHave == 1) {//拥有交易密码,验证交易密码
                                         setRechargePwdDialog = new SetRechargePwdDialog(mContext,
-                                                SetRechargePwdDialog.CHECK_RECHARGE_PWD, selectPayWay.getPayApiId(),
+                                                SetRechargePwdDialog.CHECK_RECHARGE_PWD, selectPayWay.getTradeApiId(),
                                                 mPayWayList.getGoodsName(), mPayWayList.getGoodsPrice(),
                                                 mPayWayList.getGoodsPrice(), mPayWayList.getGoodsId());
                                     } else {//没有交易密码

@@ -160,7 +160,7 @@ public class OpenTreasureBoxFragment extends BaseFragment<OpenTreasureBoxContrac
                         public void onClick(CommonDialog commonDialog, int actionType) {
                             commonDialog.dismiss();
                             if (actionType == CommonDialog.COMMONDIALOG_ACTION_POSITIVE) {
-                                pop();
+//                                pop();
                             }
                         }
                     }).show();

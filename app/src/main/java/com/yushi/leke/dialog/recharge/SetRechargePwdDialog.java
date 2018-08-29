@@ -230,7 +230,7 @@ public class SetRechargePwdDialog extends Dialog implements KeyboardAdapter.OnKe
     private boolean isSuccess;
 
     private void setRechargePwd(String pwd) {
-        ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).setPayPwd("v1", "999", pwd))
+        ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).setTradePwd("v1", "999", pwd))
                 .useCache(false)
                 .enqueue(new BaseHttpCallBack() {
                     @Override
@@ -280,7 +280,7 @@ public class SetRechargePwdDialog extends Dialog implements KeyboardAdapter.OnKe
      * 验证交易密码
      */
     private void checkPayPwd(String pwd) {
-        ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).verifyPayPwd("v1", "999", pwd))
+        ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).verifyTradePwd("v1", "9999", pwd))
                 .useCache(false).
                 enqueue(new BaseHttpCallBack() {
                     @Override
