@@ -66,6 +66,7 @@ public class MusicPlayerFragment extends BaseFragment<MusicPlayerContract.IView>
     private MediaBrowserCompat mMediaBrowser;
     private String mCurrentArtUrl;
     private boolean isUIPlaying;
+    private int currentMediaPosition;
     private static final String TAG = LogHelper.makeLogTag(MusicPlayerFragment.class);
     private final Runnable mUpdateProgressTask = new Runnable() {
         @Override
@@ -89,16 +90,17 @@ public class MusicPlayerFragment extends BaseFragment<MusicPlayerContract.IView>
             List<MediaSessionCompat.QueueItem> queueItems = mediaController.getQueue();
             for (int i = 0; i < queueItems.size(); i++) {
                 if (queueItems.get(i).getQueueId() == state.getActiveQueueItemId()) {
-
                     getVu().getViewPager().setCurrentItem(i,false);
                 }
             }
-            if(state.getState()==PlaybackStateCompat.STATE_PLAYING){
-                animScrollIdle();
-            }else {
-                animScrollUp();
+//                currentMediaId=state.getActiveQueueItemId();
+                if(state.getState()==PlaybackStateCompat.STATE_PLAYING){
+                    animScrollIdle();
+                }else {
+                    animScrollUp();
+                }
+//            }
 
-            }
         }
 
         @Override
@@ -189,13 +191,13 @@ public class MusicPlayerFragment extends BaseFragment<MusicPlayerContract.IView>
 
     ViewPager.OnPageChangeListener onPageChangeListener = new ViewPager.OnPageChangeListener() {
 
-        private int preState = -1;
+        private int preState = ViewPager.SCROLL_STATE_IDLE;
         private int pPosition;
-        private int prePosition=0;
+        private int prePosition;
         @Override
         public void onPageSelected(final int pPosition) {
             this.pPosition = pPosition;
-            prePosition=pPosition;
+
 
         }
 
@@ -211,13 +213,10 @@ public class MusicPlayerFragment extends BaseFragment<MusicPlayerContract.IView>
                 animScrollUp();
             } else if (pState == ViewPager.SCROLL_STATE_IDLE) {
                 preState = ViewPager.SCROLL_STATE_IDLE;
-               if(prePosition==pPosition){
-                   MediaControllerCompat mediaController       = MediaControllerCompat.getMediaController(getActivity());
-                 PlaybackStateCompat stateCompat=  mediaController.getPlaybackState();
-                 if(stateCompat.getState()==PlaybackStateCompat.STATE_PLAYING){
-                     animScrollIdle();
-                 }
-               }
+                if(prePosition==pPosition){
+                    animScrollIdle();
+                }
+                prePosition=pPosition;
                 mHandler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
@@ -438,12 +437,13 @@ public class MusicPlayerFragment extends BaseFragment<MusicPlayerContract.IView>
                 case PlaybackStateCompat.STATE_BUFFERING:
                     controls.pause();
                     stopSeekbarUpdate();
-
+                    animScrollUp();
                     break;
                 case PlaybackStateCompat.STATE_PAUSED:
                 case PlaybackStateCompat.STATE_STOPPED:
                     controls.play();
                     scheduleSeekbarUpdate();
+                    animScrollIdle();
                     break;
                 default:
                     LogHelper.d(TAG, "onClick with state ", state.getState());
@@ -542,6 +542,13 @@ public class MusicPlayerFragment extends BaseFragment<MusicPlayerContract.IView>
 
         @Override
         public void transformPage(View view, float position) {
+            if (0.0f <= position && position <= 1.0f) {
+
+
+            } else if (-1.0f <= position && position < 0.0f) {
+
+
+            }
 
         }
 
