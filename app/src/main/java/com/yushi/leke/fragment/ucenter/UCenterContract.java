@@ -13,11 +13,8 @@ public interface UCenterContract {
     }
 
     interface Presenter extends Pr {
-    void startPlayer();
-    void openMyWallet();
+        void startPlayer();
 
-        void startPlayerList();
-
-        void logout();
+        void openMyWallet();
     }
 }
