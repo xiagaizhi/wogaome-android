@@ -59,7 +59,6 @@ public class TestListFragment extends BaseListFragment<DbTestContract.View> impl
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-
     }
 
     @Override

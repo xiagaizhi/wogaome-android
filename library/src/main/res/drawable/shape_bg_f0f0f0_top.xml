@@ -9,7 +9,7 @@
         android:topRightRadius="4dp"
         /><!-- 设置圆角半径 -->
     <solid
-        android:color="@color/color_f0f0f0"/><!-- 填充的颜色 -->
+        android:color="@color/color_gray_levelf0"/><!-- 填充的颜色 -->
     <stroke
         android:color="@color/color_E5E5E5"
         android:width="1px"

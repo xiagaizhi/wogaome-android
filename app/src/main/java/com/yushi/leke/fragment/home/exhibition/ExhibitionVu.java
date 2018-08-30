@@ -1,4 +1,4 @@
-package com.yushi.leke.fragment.home;
+package com.yushi.leke.fragment.home.exhibition;
 
 import com.yushi.leke.R;
 
@@ -16,10 +16,11 @@ import com.yufan.library.view.recycler.YFRecyclerView;
  * Created by mengfantao on 18/8/2.
  */
 @FindLayout(layout = R.layout.layout_fragment_list)
-@Title("订阅专栏")
-public class SubscriptionsVu extends BaseListVu<SubscriptionsContract.Presenter> implements SubscriptionsContract.IView {
+@Title("路演厅")
+public class ExhibitionVu extends BaseListVu<ExhibitionContract.Presenter> implements ExhibitionContract.IView {
     @FindView(R.id.recyclerview)
     private YFRecyclerView mYFRecyclerView;
+
 
 
     @Override

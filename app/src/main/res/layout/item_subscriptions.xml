@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:paddingLeft="@dimen/px36"
+    android:paddingRight="@dimen/px36"
+    android:paddingTop="@dimen/px35"
+    android:paddingBottom="@dimen/px35"
+    android:background="@color/white"
+    android:layout_height="wrap_content">
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:layout_width="@dimen/px217"
+        android:id="@+id/sdv"
+        android:layout_centerVertical="true"
+        fresco:roundedCornerRadius="2dp"
+        android:layout_height="@dimen/px168" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:orientation="vertical"
+      android:layout_toRightOf="@+id/sdv"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/px20"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:text="永不放弃"
+            android:textColor="@color/color_gray_level3"
+            android:textSize="@dimen/px32"
+            android:layout_height="wrap_content" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="@dimen/px15"
+            android:layout_marginBottom="@dimen/px15"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:textSize="@dimen/px22"
+                android:text="创业"
+                android:paddingRight="@dimen/px12"
+                android:paddingLeft="@dimen/px12"
+                android:paddingBottom="@dimen/px2"
+                android:paddingTop="@dimen/px2"
+                android:id="@+id/tv_tab1"
+                android:background="@drawable/shape_bg_tab_dash_blue6"
+              android:textColor="@color/color_blue_level6"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:textSize="@dimen/px22"
+                android:text="创业"
+                android:paddingRight="@dimen/px12"
+                android:paddingBottom="@dimen/px2"
+                android:paddingTop="@dimen/px2"
+                android:layout_marginLeft="@dimen/px10"
+                android:paddingLeft="@dimen/px12"
+                android:id="@+id/tv_tab2"
+                android:background="@drawable/shape_bg_tab_dash_blue6"
+                android:textColor="@color/color_blue_level6"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+      <LinearLayout
+          android:layout_width="wrap_content"
+          android:orientation="horizontal"
+          android:layout_height="wrap_content">
+          <TextView
+              android:layout_width="wrap_content"
+              android:text="马云"
+              android:textSize="@dimen/px24"
+              android:textColor="@color/color_gray_level6"
+              android:layout_height="wrap_content" />
+          <View
+              android:layout_width="@dimen/px2"
+              android:layout_height="@dimen/px17"
+              android:background="#d7d7d7"
+              android:layout_marginLeft="@dimen/px8"
+              android:layout_gravity="center_vertical"
+              android:layout_marginRight="@dimen/px8"
+              />
+          <TextView
+              android:layout_width="wrap_content"
+              android:text="阿里巴巴创始人"
+              android:textSize="@dimen/px24"
+              android:textColor="@color/color_gray_level6"
+              android:layout_height="wrap_content" />
+      </LinearLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:textColor="@color/color_gray_level6"
+            android:textSize="@dimen/px24"
+            android:text="这里显示副标题，简历奖励简历简历..."
+            android:layout_weight="1"
+            android:gravity="bottom"
+            android:layout_height="0dp" />
+    </LinearLayout>
+
+</RelativeLayout>

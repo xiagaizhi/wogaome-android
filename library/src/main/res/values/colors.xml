@@ -2,8 +2,10 @@
 <resources>
     <color name="color_gray_level9">#999999</color>
     <color name="color_gray_levele">#eeeeee</color>
+
     <color name="white">#ffffff</color>
     <color name="color_f0f0f0">#f0f0f0</color>
+    <color name="color_gray_levelf0">#f0f0f0</color>
     <color name="color_gray_level6">#666666</color>
     <color name="color_gray_levelc">#cccccc</color>
     <color name="color_gray_level3">#333333</color>

@@ -45,7 +45,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/px1"
             android:layout_below="@+id/id_pay_title"
-            android:background="@color/color_f0f0f0" />
+            android:background="@color/color_gray_levelf0" />
 
         <RelativeLayout
             android:id="@+id/rl_order"
