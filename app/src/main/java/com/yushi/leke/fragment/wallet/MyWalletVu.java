@@ -10,9 +10,11 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.yufan.library.Global;
 import com.yufan.library.base.BasePopupWindow;
 import com.yufan.library.inject.AnnotateUtils;
 import com.yufan.library.inject.FindView;
+import com.yufan.library.manager.SPManager;
 import com.yufan.library.util.PxUtil;
 import com.yufan.library.widget.highlightview.HighLightInfo;
 import com.yufan.library.widget.highlightview.HighLightView;
@@ -65,7 +67,10 @@ public class MyWalletVu extends BaseVu<MyWalletContract.Presenter> implements My
         id_lkc_detail.setOnClickListener(this);
         id_yesterd_arith_num.setOnClickListener(this);
         id_open_treasure.setOnClickListener(this);
-        mHandler.sendMessageDelayed(mHandler.obtainMessage(), 400);
+        if (SPManager.getInstance().getBoolean(Global.SP_KEY_NEW_GUIDE, true)) {//是新手
+            mHandler.sendMessageDelayed(mHandler.obtainMessage(), 400);
+            SPManager.getInstance().saveValue(Global.SP_KEY_NEW_GUIDE, false);
+        }
     }
 
     @Override

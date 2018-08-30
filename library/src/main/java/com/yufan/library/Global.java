@@ -10,6 +10,10 @@ public class Global {
      */
     public static final String BUNDLE_KEY_BROWSER_URL = "BUNDLE_KEY_BROWSER_URL";
     public static final String SP_KEY_SERVICE_TYPE = "SP_KEY_SERVICE_TYPE";
+    /**
+     * 新手指引
+     */
+    public static final String SP_KEY_NEW_GUIDE= "SP_KEY_NEW_GUIDE";
     public static final String ARG_MEDIA_ID = "media_id";
     /**
      * 支付结果通知广播action
