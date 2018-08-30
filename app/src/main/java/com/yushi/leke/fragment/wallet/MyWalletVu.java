@@ -1,14 +1,21 @@
 package com.yushi.leke.fragment.wallet;
 
+import android.os.Handler;
+import android.os.Message;
 import android.text.Html;
 import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.yufan.library.base.BasePopupWindow;
 import com.yufan.library.inject.AnnotateUtils;
 import com.yufan.library.inject.FindView;
+import com.yufan.library.util.PxUtil;
+import com.yufan.library.widget.highlightview.HighLightInfo;
+import com.yufan.library.widget.highlightview.HighLightView;
 import com.yushi.leke.R;
 import com.yufan.library.base.BaseVu;
 import com.yufan.library.inject.FindLayout;
@@ -32,14 +39,33 @@ public class MyWalletVu extends BaseVu<MyWalletContract.Presenter> implements My
     TextView id_yesterd_arith_num;
     @FindView(R.id.id_open_treasure)
     ImageButton id_open_treasure;
+    private HighLightView highLightView;
+    private ImageView keyIcon;
+    private View rootView;
+    private Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            BasePopupWindow popupWindow = new BasePopupWindow(getContext());
+            highLightView = new HighLightView(getContext(), popupWindow);
+            HighLightInfo highLightInfo = new HighLightInfo(keyIcon, R.drawable.jt_up, HighLightInfo.ALIGN_LEFT_DOWN, HighLightInfo.HEIGHTLIGHT_ROUNDREC);
+            highLightInfo.setOfftX(PxUtil.convertDIP2PX(getContext(), 25));
+            highLightInfo.setOfftY(PxUtil.convertDIP2PX(getContext(), -22));
+            highLightView.addHighLightInfo(0, highLightInfo);
+            popupWindow.addView(highLightView);
+            popupWindow.showAtLocation(rootView, Gravity.NO_GRAVITY, 0, 0);
+        }
+    };
 
     @Override
     public void initView(View view) {
+        rootView = view;
         id_lkc_remain.setText(Html.fromHtml("<b><<font color='#151515'><size>12345.</size></font></b><font color='#333333'><size2>12345</size2></font>", null, new SizeLabel(getContext())));
         id_lck_instructions.setOnClickListener(this);
         id_lkc_detail.setOnClickListener(this);
         id_yesterd_arith_num.setOnClickListener(this);
         id_open_treasure.setOnClickListener(this);
+        mHandler.sendMessageDelayed(mHandler.obtainMessage(), 400);
     }
 
     @Override
@@ -58,7 +84,7 @@ public class MyWalletVu extends BaseVu<MyWalletContract.Presenter> implements My
             }
         });
 
-        ImageView keyIcon = appToolbar.creatRightView(ImageView.class);
+        keyIcon = appToolbar.creatRightView(ImageView.class);
         keyIcon.setImageResource(R.drawable.ic_toolbar_key);
         keyIcon.setOnClickListener(new View.OnClickListener() {
             @Override

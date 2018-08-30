@@ -44,9 +44,10 @@ public class BasePopupWindow extends PopupWindow implements View.OnClickListener
         //设置SelectPicPopupWindow弹出窗体动画效果
         //this.setAnimationStyle(R.style.mystyle);
         //实例化一个ColorDrawable颜色为半透明
-        ColorDrawable dw = new ColorDrawable(context.getResources().getColor(R.color.color_7f000000));
+        ColorDrawable dw = new ColorDrawable(context.getResources().getColor(R.color.color_73000000));
         //设置SelectPicPopupWindow弹出窗体的背景
         this.setBackgroundDrawable(dw);
+        this.setAnimationStyle(R.style.AnimBottomPopupWindow);
 
         return mPopupWindowView;
     }

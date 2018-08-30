@@ -21,6 +21,7 @@ public class HighLightInfo {
 
     public final static int HEIGHTLIGHT_RE=0;
     public final static int HEIGHTLIGHT_CIR=1;
+    public final static int HEIGHTLIGHT_ROUNDREC = 2;
 
     private View tagView;
     private int icon_id;
