@@ -67,6 +67,7 @@ public class UCenterVu extends BaseVu<UCenterContract.Presenter> implements UCen
 
     @Override
     public void initView(View view) {
+        ll_personal_info.setOnClickListener(this);
         img_messgae.setOnClickListener(this);
         img_player.setOnClickListener(this);
         rl_roadshow.setOnClickListener(this);
@@ -87,6 +88,9 @@ public class UCenterVu extends BaseVu<UCenterContract.Presenter> implements UCen
                 break;
             case R.id.img_player://播放器
                 mPersenter.startPlayer();
+                break;
+            case R.id.ll_personal_info://个人资料
+                mPersenter.openPersonalpage();
                 break;
             case R.id.rl_roadshow://我的路演
                 break;

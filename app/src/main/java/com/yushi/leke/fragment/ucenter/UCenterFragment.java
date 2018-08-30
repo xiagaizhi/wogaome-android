@@ -10,13 +10,10 @@ import android.support.annotation.Nullable;
 import android.view.View;
 
 import com.yufan.library.inject.VuClass;
-import com.yufan.library.manager.UserManager;
 import com.yushi.leke.UIHelper;
-import com.yushi.leke.fragment.login.LoginFragment;
-import com.yushi.leke.fragment.main.MainFragment;
+import com.yushi.leke.fragment.ucenter.personalInfo.PersonalInfoFragment;
 import com.yushi.leke.fragment.wallet.MyWalletFragment;
 import com.yushi.leke.activity.MusicPlayerActivity;
-import com.yushi.leke.uamp.ui.MediaBrowserFragment;
 
 /**
  * Created by mengfantao on 18/8/2.
@@ -45,5 +42,10 @@ public class UCenterFragment extends BaseFragment<UCenterContract.IView> impleme
     @Override
     public void openMyWallet() {
         getRootFragment().start(UIHelper.creat(MyWalletFragment.class).build());
+    }
+
+    @Override
+    public void openPersonalpage() {
+        getRootFragment().start(UIHelper.creat(PersonalInfoFragment.class).build());
     }
 }

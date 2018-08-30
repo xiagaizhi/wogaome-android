@@ -16,5 +16,7 @@ public interface UCenterContract {
         void startPlayer();
 
         void openMyWallet();
+
+        void openPersonalpage();
     }
 }
