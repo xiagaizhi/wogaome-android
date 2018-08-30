@@ -1,4 +1,4 @@
-package com.yushi.leke.fragment.checkPhone;
+package com.yushi.leke.fragment.bindPhone.checkPhone;
 
 import com.yufan.library.base.Pr;
 import com.yufan.library.base.Vu;

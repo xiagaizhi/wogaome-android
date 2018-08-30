@@ -48,7 +48,6 @@
         android:theme="@style/AppTheme">
         <activity android:name="com.yushi.leke.activity.MainActivity"
             android:theme="@style/main_activity_style"
-            android:screenOrientation="portrait"
             android:configChanges="orientation|screenSize|keyboardHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

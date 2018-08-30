@@ -8,14 +8,17 @@ import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
+import android.graphics.RectF;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.util.Log;
 import android.view.View;
 import android.widget.PopupWindow;
 
 import com.yufan.library.R;
 import com.yufan.library.util.DensityUtil;
+import com.yufan.library.util.PxUtil;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -56,16 +59,21 @@ public class HighLightView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        canvas.drawColor(getResources().getColor(R.color.color_7f000000));
+        canvas.drawColor(getResources().getColor(R.color.color_73000000));
         paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_OUT));
         Rect rect;
         if ((rect = getRect(count)) != null) {
 
-            if (lightInfoMap.get(count).getHeightLight() == HighLightInfo.HEIGHTLIGHT_RE)
+            if (lightInfoMap.get(count).getHeightLight() == HighLightInfo.HEIGHTLIGHT_RE) {
                 canvas.drawRect(rect.left, rect.top, rect.right, rect.bottom, paint);
-            else if (lightInfoMap.get(count).getHeightLight() == HighLightInfo.HEIGHTLIGHT_CIR) {
+            } else if (lightInfoMap.get(count).getHeightLight() == HighLightInfo.HEIGHTLIGHT_CIR) {
                 float[] floats = getCR(rect);
                 canvas.drawCircle(floats[0], floats[1], floats[2], paint);
+            } else if (lightInfoMap.get(count).getHeightLight() == HighLightInfo.HEIGHTLIGHT_ROUNDREC) {
+                int padding = PxUtil.convertDIP2PX(getContext(), 4);
+                int radian = PxUtil.convertDIP2PX(getContext(), 6);
+                RectF rectF = new RectF(rect.left - padding, rect.top - padding, rect.right + padding, rect.bottom + padding);
+                canvas.drawRoundRect(rectF, radian, radian, paint);
             }
         }
         paint.setXfermode(null);
@@ -84,7 +92,9 @@ public class HighLightView extends View {
             View view = lightInfoMap.get(index).getTagView();
             if (view == null) return null;
             rect = getRect(view);
-            rect.offset(0,-DensityUtil.getStatusBarHeight(getContext()));
+            if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
+                rect.offset(0, -DensityUtil.getStatusBarHeight(getContext()));
+            }
             rect.set(rect.left + view.getPaddingLeft(), rect.top + view.getPaddingTop(), rect.right - view.getPaddingRight(), rect.bottom - view.getPaddingBottom());
             Log.i("heightview", "l" + rect.left + "t" + rect.top + "r" + rect.right + "b" + rect.bottom);
             return rect;

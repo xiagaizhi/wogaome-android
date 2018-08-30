@@ -33,9 +33,7 @@ public class PaySafetyVu extends BaseVu<PaySafetyContract.Presenter> implements 
 
     @FindView(R.id.rl_forget_pwd)
     View rl_forget_pwd;
-    private int id;
-    private HighLightView highLightView;
-    private ImageView playerIcon;
+
     private int isHavePwd;
     private String phoneNumber;
 
@@ -43,21 +41,14 @@ public class PaySafetyVu extends BaseVu<PaySafetyContract.Presenter> implements 
     public void initView(View view) {
         rl_setpwd.setOnClickListener(this);
         rl_forget_pwd.setOnClickListener(this);
-        BasePopupWindow popupWindow = new BasePopupWindow(getContext());
-        highLightView = new HighLightView(getContext(), popupWindow);
-        HighLightInfo highLightInfo = new HighLightInfo(playerIcon, R.drawable.jt_up, HighLightInfo.ALIGN_LEFT_DOWN, HighLightInfo.HEIGHTLIGHT_CIR);
-        highLightView.addHighLightInfo(0, highLightInfo);
-        popupWindow.addView(highLightView);
-        popupWindow.showAtLocation(view, Gravity.NO_GRAVITY, 0, 0);
+
     }
 
     @Override
     public boolean initTitle(AppToolbar appToolbar) {
         super.initTitle(appToolbar);
-        playerIcon = appToolbar.creatRightView(ImageView.class);
+        ImageView playerIcon = appToolbar.creatRightView(ImageView.class);
         playerIcon.setImageResource(R.drawable.ic_toolbar_player_blue);
-        id = View.generateViewId();
-        playerIcon.setId(id);
         appToolbar.build();
         return true;
     }

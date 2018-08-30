@@ -38,21 +38,8 @@ public class UCenterFragment extends BaseFragment<UCenterContract.IView> impleme
 
     @Override
     public void startPlayer() {
-        Intent intent=new Intent(getContext(),MusicPlayerActivity.class);
+        Intent intent = new Intent(getContext(), MusicPlayerActivity.class);
         startActivity(intent);
-
-    }
-
-    @Override
-    public void startPlayerList() {
-        getRootFragment().start(UIHelper.creat(MediaBrowserFragment.class).build());
-    }
-
-    @Override
-    public void logout() {
-        UserManager.getInstance().setToken("");
-        UserManager.getInstance().setUid("");
-        getRootFragment().startWithPopTo(UIHelper.creat(LoginFragment.class).build(), MainFragment.class,true);
     }
 
     @Override

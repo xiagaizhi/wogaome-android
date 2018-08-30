@@ -18,7 +18,7 @@ import com.yushi.leke.YFApi;
 import com.yushi.leke.dialog.recharge.CheckRechargePwdDialog;
 import com.yushi.leke.dialog.recharge.SetRechargePwdDialog;
 import com.yushi.leke.fragment.bindPhone.BindPhoneFragment;
-import com.yushi.leke.fragment.checkPhone.CheckPhoneFragment;
+import com.yushi.leke.fragment.bindPhone.checkPhone.CheckPhoneFragment;
 
 import org.json.JSONObject;
 
