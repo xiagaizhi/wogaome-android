@@ -64,7 +64,7 @@ public class SubscriptionsBannerViewBinder extends ItemViewBinder<SubscriptionBa
         holder.viewPager.setOffscreenPageLimit(3);
         List<String> list = new ArrayList<>();
         list.add("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1535618883148&di=2f748f45c0d1cdd47bc1617c59ca5e8f&imgtype=0&src=http%3A%2F%2Fimg.pintu360.com%2Feditor%2F5b2ef0f9-1071-d1a9-e76d-a9db826ddb70.jpg");
-        list.add("http://i1.hdslb.com/bfs/archive/183c9f82a3de3dda65848c8320ecba55a49388fe.jpg");
+        list.add("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1535627957737&di=97e2e0e75f0c17b859e6da832b260c02&imgtype=0&src=http%3A%2F%2Fpic116.nipic.com%2Ffile%2F20161202%2F24310187_164918489000_2.jpg");
         list.add("http://www.91danji.com/attachments/201612/12/11/3xowh1aml.jpg");
         list.add("http://www.sheng-han.com/images/webwxgetmsgimg.jpg");
         TopAdapter adapter = new TopAdapter(holder.itemView.getContext(), list);

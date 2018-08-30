@@ -1,6 +1,7 @@
 package com.yushi.leke.fragment.home;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.View;
@@ -51,43 +52,24 @@ public class SubscriptionsFragment extends BaseListFragment<SubscriptionsContrac
 
     @Override
     public void onLoadMore(int index) {
-        Observable.create(new ObservableOnSubscribe<List<Person>>() {
+        handler.postDelayed(new Runnable() {
             @Override
-            public void subscribe(@NonNull ObservableEmitter<List<Person>> e) throws Exception {
-
-                e.onComplete();
+            public void run() {
+                getVu().getRecyclerView().getPTR().refreshComplete();
+                getVu(). getRecyclerView().getPageManager().setPageState(PageInfo.PAGE_STATE_NONE);
             }
-        }).subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<List<Person>>() {
-                    @Override
-                    public void accept(@NonNull List<Person> persons) throws Exception {
-
-                        getVu().getRecyclerView().getPTR().refreshComplete();
-                        getVu(). getRecyclerView().getPageManager().setPageState(PageInfo.PAGE_STATE_NONE);
-                    }
-                });
+        },1000);
     }
 
-
+private Handler handler=new Handler();
     @Override
     public void onRefresh() {
-        Observable.create(new ObservableOnSubscribe<List<Person>>() {
+        handler.postDelayed(new Runnable() {
             @Override
-            public void subscribe(@NonNull ObservableEmitter<List<Person>> e) throws Exception {
-
-                e.onComplete();
+            public void run() {
+                getVu().getRecyclerView().getPTR().refreshComplete();
+                getVu(). getRecyclerView().getPageManager().setPageState(PageInfo.PAGE_STATE_NONE);
             }
-        }).subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<List<Person>>() {
-                    @Override
-                    public void accept(@NonNull List<Person> persons) throws Exception {
-
-                        getVu().getRecyclerView().getPTR().refreshComplete();
-                        getVu(). getRecyclerView().getPageManager().setPageState(PageInfo.PAGE_STATE_NONE);
-                    }
-                });
-
+        },1000);
     }
 }
