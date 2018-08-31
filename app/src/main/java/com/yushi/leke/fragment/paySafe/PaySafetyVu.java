@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.yufan.library.Global;
 import com.yufan.library.base.BasePopupWindow;
 import com.yufan.library.inject.FindView;
+import com.yufan.library.manager.DialogManager;
 import com.yufan.library.widget.highlightview.HighLightInfo;
 import com.yufan.library.widget.highlightview.HighLightView;
 import com.yushi.leke.R;
@@ -74,8 +75,8 @@ public class PaySafetyVu extends BaseVu<PaySafetyContract.Presenter> implements 
 
                 break;
             case R.id.rl_forget_pwd://忘记密码
-                if (TextUtils.isEmpty(phoneNumber)) {//未绑定手机
-                    mPersenter.openBindPhone(Global.BIND_PHONE_FROM_FORGETPWD);
+                if (isHavePwd == 0 || TextUtils.isEmpty(phoneNumber)) {//未绑定手机或者未设置交易密码 提示请先设置交易密码
+                    DialogManager.getInstance().toast("请先设置交易密码！");
                 } else {//绑定过手机
                     mPersenter.checkPhone(phoneNumber);
                 }

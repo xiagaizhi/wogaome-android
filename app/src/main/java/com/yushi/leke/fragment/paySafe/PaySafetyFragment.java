@@ -89,7 +89,7 @@ public class PaySafetyFragment extends BaseFragment<PaySafetyContract.IView> imp
             int bindPhoneType = data.getInt(Global.BIND_PHONE_TYPE_KEY, 0);
             if (bindPhoneType == Global.BIND_PHONE_FROM_SETPWD) {
                 setRechargePwd(isHave);
-            }else if (bindPhoneType == Global.BIND_PHONE_FROM_FORGETPWD){
+            } else if (bindPhoneType == Global.BIND_PHONE_FROM_FORGETPWD) {
                 setRechargePwd(isHave);
             }
         } else if (requestCode == 200 && resultCode == RESULT_OK && data != null) {//手机验证码校验过返回
