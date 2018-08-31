@@ -68,7 +68,7 @@ public class PaySafetyVu extends BaseVu<PaySafetyContract.Presenter> implements 
         switch (v.getId()) {
             case R.id.rl_setpwd://设置密码／修改密码
                 if (TextUtils.isEmpty(phoneNumber)) {//未绑定手机，先绑定手机
-                    mPersenter.openBindPhone(Global.BIND_PHONE_FROM_SETPWD);
+                    mPersenter.openBindPhone();
                 } else {
                     mPersenter.setRechargePwd(isHavePwd);
                 }

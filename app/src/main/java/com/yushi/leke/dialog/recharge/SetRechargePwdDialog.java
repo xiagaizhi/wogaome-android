@@ -45,10 +45,10 @@ public class SetRechargePwdDialog extends Dialog implements KeyboardAdapter.OnKe
     private Context mContext;
     private int type;//true:设置／修改交易密码 false:输入支付密码进行验证
     private TextView mSetRechargeType;
-    private SetRechargeInterf mSetRechargeInterf;
+    private RechargeUtil.SetRechargeInterf mSetRechargeInterf;
 
 
-    public void setmSetRechargeInterf(SetRechargeInterf setRechargeInterf) {
+    public void setmSetRechargeInterf(RechargeUtil.SetRechargeInterf setRechargeInterf) {
         this.mSetRechargeInterf = setRechargeInterf;
     }
 
@@ -227,10 +227,5 @@ public class SetRechargePwdDialog extends Dialog implements KeyboardAdapter.OnKe
                         }
                     }
                 });
-    }
-
-
-    public interface SetRechargeInterf {
-        void returnSetPwdResult();
     }
 }

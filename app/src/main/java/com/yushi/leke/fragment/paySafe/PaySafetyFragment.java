@@ -17,6 +17,7 @@ import com.yufan.library.inject.VuClass;
 import com.yushi.leke.UIHelper;
 import com.yushi.leke.YFApi;
 import com.yushi.leke.dialog.recharge.CheckRechargePwdDialog;
+import com.yushi.leke.dialog.recharge.RechargeUtil;
 import com.yushi.leke.dialog.recharge.SetRechargePwdDialog;
 import com.yushi.leke.fragment.bindPhone.BindPhoneFragment;
 import com.yushi.leke.fragment.bindPhone.checkPhone.CheckPhoneFragment;
@@ -27,7 +28,7 @@ import org.json.JSONObject;
  * Created by mengfantao on 18/8/2.
  */
 @VuClass(PaySafetyVu.class)
-public class PaySafetyFragment extends BaseFragment<PaySafetyContract.IView> implements PaySafetyContract.Presenter, SetRechargePwdDialog.SetRechargeInterf, CheckRechargePwdDialog.CheckRechargePwdInterf {
+public class PaySafetyFragment extends BaseFragment<PaySafetyContract.IView> implements PaySafetyContract.Presenter, RechargeUtil.SetRechargeInterf, RechargeUtil.CheckRechargePwdInterf {
     private int isHave;
     private String phoneNumber;
 
@@ -71,11 +72,6 @@ public class PaySafetyFragment extends BaseFragment<PaySafetyContract.IView> imp
     }
 
     @Override
-    public void openBindPhone(int type) {
-        startForResult(UIHelper.creat(BindPhoneFragment.class).put(Global.BIND_PHONE_TYPE_KEY, type).build(), 100);
-    }
-
-    @Override
     public void checkPhone(String phoneNumber) {
         startForResult(UIHelper.creat(CheckPhoneFragment.class).put("phoneNumber", phoneNumber).build(), 200);
     }
@@ -89,24 +85,18 @@ public class PaySafetyFragment extends BaseFragment<PaySafetyContract.IView> imp
             int bindPhoneType = data.getInt(Global.BIND_PHONE_TYPE_KEY, 0);
             if (bindPhoneType == Global.BIND_PHONE_FROM_SETPWD) {
                 setRechargePwd(isHave);
-            } else if (bindPhoneType == Global.BIND_PHONE_FROM_FORGETPWD) {
-                setRechargePwd(isHave);
             }
         } else if (requestCode == 200 && resultCode == RESULT_OK && data != null) {//手机验证码校验过返回
-            SetRechargePwdDialog setRechargePwdDialog = new SetRechargePwdDialog(getContext(), SetRechargePwdDialog.SET_RECHARGE_PWD_FORGET);
-            setRechargePwdDialog.show();
+            RechargeUtil.getInstance().setRechargePwd(_mActivity, SetRechargePwdDialog.SET_RECHARGE_PWD_FORGET, this);
         }
     }
 
     @Override
     public void setRechargePwd(int isHavePwd) {
         if (isHavePwd == 1) {//修改，先校验
-            CheckRechargePwdDialog checkRechargePwdDialog = new CheckRechargePwdDialog(getContext(), CheckRechargePwdDialog.CHECK_RECHARGE_PWD_MODIFY, this);
-            checkRechargePwdDialog.show();
+            RechargeUtil.getInstance().checkRechargePwd(1, _mActivity, "修改交易密码", this);
         } else {
-            SetRechargePwdDialog setRechargePwdDialog = new SetRechargePwdDialog(getContext(), SetRechargePwdDialog.SET_RECHARGE_PWD);
-            setRechargePwdDialog.setmSetRechargeInterf(this);
-            setRechargePwdDialog.show();
+            RechargeUtil.getInstance().setRechargePwd(_mActivity, SetRechargePwdDialog.SET_RECHARGE_PWD, this);
         }
 
     }
@@ -118,8 +108,14 @@ public class PaySafetyFragment extends BaseFragment<PaySafetyContract.IView> imp
     }
 
     @Override
-    public void returnCheckResult() {
-        SetRechargePwdDialog setRechargePwdDialog = new SetRechargePwdDialog(getContext(), SetRechargePwdDialog.SET_RECHARGE_PWD_NEW);
-        setRechargePwdDialog.show();
+    public void returnCheckResult(boolean isSuccess) {
+        if (isSuccess){
+            RechargeUtil.getInstance().setRechargePwd(_mActivity, SetRechargePwdDialog.SET_RECHARGE_PWD_NEW, this);
+        }
+    }
+
+    @Override
+    public void openBindPhone() {
+        startForResult(UIHelper.creat(BindPhoneFragment.class).put(Global.BIND_PHONE_TYPE_KEY, Global.BIND_PHONE_FROM_SETPWD).build(), 100);
     }
 }

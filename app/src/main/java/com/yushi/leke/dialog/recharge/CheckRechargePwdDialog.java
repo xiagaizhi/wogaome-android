@@ -40,42 +40,20 @@ import java.lang.reflect.Method;
  */
 
 public class CheckRechargePwdDialog extends Dialog implements KeyboardAdapter.OnKeyboardClickListener {
-    public static final int CHECK_RECHARGE_PWD_PAY = 1;//支付前的校验支付密码
-    public static final int CHECK_RECHARGE_PWD_MODIFY = 2;//修改密码前的校验
     private PayPsdInputView tv_password;
     private KeyboardView id_keyboard_view;
     private TextView mTitle;
     private Context mContext;
-    private int type;
     private TextView mSetRechargeType;
-    private String payApiId;
-    private String orderTitle;
-    private String orderPrice;
-    private String payPrice;
-    private String goodsId;
-    private CheckRechargePwdInterf mCheckRechargePwd;
+    private RechargeUtil.CheckRechargePwdInterf mCheckRechargePwd;
+    private String mExtMsg;
 
-    public CheckRechargePwdDialog(@NonNull Context context, final int type, String payApiId, String orderTitle,
-                                  String orderPrice, String payPrice, String goodsId) {
-        super(context, R.style.dialog_common);
-        View rootView = LayoutInflater.from(context).inflate(R.layout.layout_setrechargepassword, null);
-        setContentView(rootView);
-        this.mContext = context;
-        this.type = type;
-        this.payApiId = payApiId;
-        this.orderTitle = orderTitle;
-        this.orderPrice = orderPrice;
-        this.payPrice = payPrice;
-        this.goodsId = goodsId;
-        initView(rootView);
-    }
-
-    public CheckRechargePwdDialog(@NonNull Context context, final int type, CheckRechargePwdInterf checkRechargePwd) {
+    public CheckRechargePwdDialog(@NonNull Context context, String extMsg, RechargeUtil.CheckRechargePwdInterf checkRechargePwd) {
         super(context);
         View rootView = LayoutInflater.from(context).inflate(R.layout.layout_setrechargepassword, null);
         setContentView(rootView);
         this.mContext = context;
-        this.type = type;
+        this.mExtMsg = extMsg;
         this.mCheckRechargePwd = checkRechargePwd;
         initView(rootView);
     }
@@ -98,13 +76,10 @@ public class CheckRechargePwdDialog extends Dialog implements KeyboardAdapter.On
         tv_password = rootView.findViewById(R.id.tv_password);
         id_keyboard_view = rootView.findViewById(R.id.id_keyboard_view);
         setCanceledOnTouchOutside(false);
-        if (type == CHECK_RECHARGE_PWD_PAY) {
-            mTitle.setText("请输入交易密码以验证身份");
-            mSetRechargeType.setText("验证交易密码");
-        } else if (type == CHECK_RECHARGE_PWD_MODIFY) {
-            mTitle.setText("请输入原交易密码以验证身份");
-            mSetRechargeType.setText("修改交易密码");
-        }
+        mTitle.setText("请输入交易密码以验证身份");
+//        mSetRechargeType.setText("验证交易密码");
+//        mSetRechargeType.setText("修改交易密码");
+        mSetRechargeType.setText(mExtMsg);
 
         //设置不调用系统键盘
         if (Build.VERSION.SDK_INT <= 10) {
@@ -190,77 +165,42 @@ public class CheckRechargePwdDialog extends Dialog implements KeyboardAdapter.On
         ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).verifyTradePwd("v1", "9999", pwd))
                 .useCache(false).
                 enqueue(new BaseHttpCallBack() {
+
                     @Override
-                    public void onSuccess(ApiBean mApiBean) {
+                    public void onResponse(ApiBean mApiBean) {
                         if (TextUtils.equals(ApiBean.SUCCESS, mApiBean.getCode())) {
-                            if (type == CHECK_RECHARGE_PWD_PAY) {
-                                toPay();
-                            } else if (type == CHECK_RECHARGE_PWD_MODIFY) {
-                                if (mCheckRechargePwd != null) {
-                                    mCheckRechargePwd.returnCheckResult();
-                                }
+                            if (mCheckRechargePwd != null) {
+                                mCheckRechargePwd.returnCheckResult(true);
                             }
                             dismiss();
                         } else {
                             DialogManager.getInstance().toast("密码有误，请重新输入");
+                            mCheckRechargePwd.returnCheckResult(false);
                         }
                     }
 
                     @Override
-                    public void onError(int id, Exception e) {
-
+                    public void onFailure(int id, Exception e) {
+                        super.onFailure(id, e);
+                        mCheckRechargePwd.returnCheckResult(false);
                     }
 
-                    @Override
-                    public void onFinish() {
-
-                    }
-                });
-    }
-
-
-    /**
-     * 密码验证通过去支付
-     */
-    private void toPay() {
-        String payMethod = "";
-        if (TextUtils.equals("1", payApiId)) {
-            payMethod = "aliTrade";
-        } else if (TextUtils.equals("2", payApiId)) {
-            payMethod = "wxTrade";
-        }
-        if (TextUtils.isEmpty(payMethod)) {
-            return;
-        }
-        ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).toPay("v1", payMethod,
-                orderTitle, orderPrice, payPrice,
-                goodsId, payApiId, "2"))
-                .useCache(false)
-                .enqueue(new BaseHttpCallBack() {
                     @Override
                     public void onSuccess(ApiBean mApiBean) {
-                        if (TextUtils.equals(ApiBean.SUCCESS, mApiBean.getCode())) {
-                            String data = mApiBean.getData();
-                            PayMetadata payMetadata = JSON.parseObject(data, PayMetadata.class);
-                            if (TextUtils.equals("1", payApiId)) {
-                                ToALiPay.getInstance().action(mContext, payMetadata);
-                            } else if (TextUtils.equals("2", payApiId)) {
-                                WeChatPay.getInstance().toWeChatPay(mContext, payMetadata);
-                            }
-                        }
+
                     }
 
                     @Override
                     public void onError(int id, Exception e) {
+
                     }
 
                     @Override
                     public void onFinish() {
+
                     }
                 });
     }
 
-    public interface CheckRechargePwdInterf {
-        void returnCheckResult();
-    }
+
 }

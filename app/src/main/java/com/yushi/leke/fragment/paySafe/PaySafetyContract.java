@@ -13,7 +13,7 @@ public interface PaySafetyContract {
     }
 
     interface Presenter extends Pr {
-        void openBindPhone(int type);
+        void openBindPhone();
         void checkPhone(String phoneNumber);
         void setRechargePwd(int isHavePwd);
     }
