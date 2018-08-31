@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.yushi.leke.fragment.home.exhibition;
+package com.yushi.leke.fragment.exhibition;
 
 import android.net.Uri;
 import android.support.annotation.NonNull;

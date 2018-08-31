@@ -1,4 +1,4 @@
-package com.yushi.leke.fragment.home.exhibition;
+package com.yushi.leke.fragment.exhibition;
 
 /**
  * Created by mengfantao on 18/8/30.

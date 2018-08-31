@@ -6,21 +6,30 @@
     android:paddingLeft="@dimen/px36"
     android:paddingRight="@dimen/px36"
     android:paddingTop="@dimen/px35"
-    android:paddingBottom="@dimen/px35"
+
     android:background="@color/white"
     android:layout_height="wrap_content">
     <com.facebook.drawee.view.SimpleDraweeView
         android:layout_width="@dimen/px217"
         android:id="@+id/sdv"
-        android:layout_centerVertical="true"
         fresco:roundedCornerRadius="2dp"
         android:layout_height="@dimen/px168" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:textSize="@dimen/px20"
+        android:textColor="@color/white"
+        android:drawableLeft="@drawable/ic_subscription_headset"
+        android:drawablePadding="2dp"
+        android:text="123"
+       android:layout_alignBottom="@id/sdv"
+        android:padding="@dimen/px11"
+        android:layout_height="wrap_content" />
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:orientation="vertical"
       android:layout_toRightOf="@+id/sdv"
-        android:layout_centerVertical="true"
+
         android:layout_marginLeft="@dimen/px20"
         android:layout_height="wrap_content">
         <TextView
@@ -95,6 +104,12 @@
             android:layout_weight="1"
             android:gravity="bottom"
             android:layout_height="0dp" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/px1"
+            android:layout_marginTop="@dimen/px35"
+            android:background="@color/color_gray_levele"
+            />
     </LinearLayout>
 
 </RelativeLayout>

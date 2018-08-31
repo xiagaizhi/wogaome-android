@@ -40,6 +40,9 @@ public class StateLayout extends RelativeLayout {
     }
     public void setErrorView(View errorView){
         rl_error.removeAllViews();
+        if(errorView==null){
+            return;
+        }
         RelativeLayout.LayoutParams layoutParams2=  new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         rl_error.addView(errorView,layoutParams2);
     }

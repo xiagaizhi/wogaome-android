@@ -1,11 +1,16 @@
 package com.yushi.leke;
 
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.view.View;
+import android.widget.ImageView;
 
 import com.yufan.library.bean.FragmentInfo;
+import com.yufan.library.widget.AppToolbar;
+import com.yushi.leke.activity.MusicPlayerActivity;
 
 import me.yokeyword.fragmentation.SupportFragment;
 
@@ -42,6 +47,17 @@ public class UIHelper {
             beginTransaction.addToBackStack(fragment.getTag());
         }
         beginTransaction.commitAllowingStateLoss();
+    }
+
+    public static void showMusic(ImageView rightMusic){
+        rightMusic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), MusicPlayerActivity.class);
+                v.getContext().startActivity(intent);
+            }
+        });
+        rightMusic.setBackgroundResource(R.drawable.anim_music_player_icon);
     }
 
 }

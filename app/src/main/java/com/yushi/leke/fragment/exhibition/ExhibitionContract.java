@@ -1,4 +1,4 @@
-package com.yushi.leke.fragment.home.exhibition;
+package com.yushi.leke.fragment.exhibition;
 
 import com.yufan.library.base.Pr;
 import com.yufan.library.base.VuList;

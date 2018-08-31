@@ -1,8 +1,6 @@
-package com.yushi.leke.fragment.home.exhibition;
+package com.yushi.leke.fragment.exhibition;
 
 import com.yushi.leke.R;
-
-import android.view.View;
 
 import com.yufan.library.base.BaseListVu;
 import com.yufan.library.inject.FindLayout;

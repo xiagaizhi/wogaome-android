@@ -30,12 +30,15 @@ android:background="@color/white"
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:id="@+id/iv_anim_icon"
+                android:layout_centerVertical="true"
                 android:layout_alignParentRight="true" />
         </RelativeLayout>
 <RelativeLayout
     android:layout_width="match_parent"
     android:layout_marginLeft="@dimen/px36"
     android:layout_marginBottom="@dimen/px40"
+    android:id="@+id/rl_searchbar"
     android:layout_marginTop="@dimen/px36"
     android:layout_marginRight="@dimen/px36"
     android:background="@drawable/shape_bg_f0f0f0_10"

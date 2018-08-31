@@ -35,8 +35,7 @@ public class UCenterFragment extends BaseFragment<UCenterContract.IView> impleme
 
     @Override
     public void startPlayer() {
-        Intent intent = new Intent(getContext(), MusicPlayerActivity.class);
-        startActivity(intent);
+
     }
 
     @Override

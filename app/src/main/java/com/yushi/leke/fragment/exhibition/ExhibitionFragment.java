@@ -1,4 +1,4 @@
-package com.yushi.leke.fragment.home.exhibition;
+package com.yushi.leke.fragment.exhibition;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -9,9 +9,6 @@ import android.view.View;
 import com.yufan.library.base.BaseListFragment;
 import com.yufan.library.inject.VuClass;
 import com.yufan.library.view.recycler.PageInfo;
-import com.yushi.leke.fragment.home.SubscriptionBanner;
-import com.yushi.leke.fragment.home.SubscriptionInfo;
-import com.yushi.leke.fragment.home.SubscriptionsViewBinder;
 
 import me.drakeet.multitype.MultiTypeAdapter;
 

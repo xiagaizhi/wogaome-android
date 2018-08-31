@@ -134,6 +134,7 @@ public class MusicPlayerFragment extends BaseFragment<MusicPlayerContract.IView>
         }
     }
 
+
     @Override
     public void onStop() {
         super.onStop();

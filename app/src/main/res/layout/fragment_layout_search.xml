@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:background="@color/white"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_marginLeft="@dimen/px36"
+        android:layout_marginRight="@dimen/px36"
+        android:layout_height="@dimen/px88">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:src="@drawable/ic_searchbar"
+            android:layout_marginRight="@dimen/px14"
+            android:layout_centerVertical="true"
+            android:id="@+id/iv_searchbar"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:text="取消"
+            android:id="@+id/tv_search"
+            android:layout_alignParentRight="true"
+            android:textColor="@color/color_blue_level6"
+            android:layout_centerVertical="true"
+            android:textSize="@dimen/px30"
+            android:layout_height="wrap_content" />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:src="@drawable/ic_clearbar"
+            android:layout_toLeftOf="@+id/tv_search"
+            android:layout_marginRight="@dimen/px50"
+            android:layout_centerVertical="true"
+            android:visibility="invisible"
+            android:id="@+id/iv_clear_search"
+            android:layout_height="wrap_content" />
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_toRightOf="@+id/iv_searchbar"
+            android:layout_toLeftOf="@+id/iv_clear_search"
+            android:background="@null"
+            android:id="@+id/et_search"
+            android:layout_height="match_parent" />
+
+    </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px1"
+        android:background="@color/color_gray_levelf0"
+        />
+    <com.yufan.library.view.recycler.YFRecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/recyclerview"
+        app:needLoadMore="false"
+        android:background="@color/white"
+        />
+</LinearLayout>

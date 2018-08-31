@@ -14,10 +14,9 @@ import com.yufan.library.inject.VuClass;
 import com.yushi.leke.R;
 import com.yushi.leke.UIHelper;
 import com.yushi.leke.fragment.home.SubscriptionsFragment;
-import com.yushi.leke.fragment.home.exhibition.ExhibitionFragment;
+import com.yushi.leke.fragment.exhibition.ExhibitionFragment;
 import com.yushi.leke.fragment.test.TestListFragment;
 import com.yushi.leke.fragment.ucenter.UCenterFragment;
-import com.yushi.leke.fragment.wallet.MyWalletFragment;
 
 import me.yokeyword.fragmentation.SupportFragment;
 

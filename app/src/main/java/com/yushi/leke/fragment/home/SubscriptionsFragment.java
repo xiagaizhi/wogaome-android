@@ -1,5 +1,6 @@
 package com.yushi.leke.fragment.home;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -8,8 +9,12 @@ import android.view.View;
 
 import com.yufan.library.base.BaseListFragment;
 import com.yufan.library.inject.VuClass;
+import com.yufan.library.inter.ICallBack;
 import com.yufan.library.view.recycler.PageInfo;
+import com.yushi.leke.UIHelper;
+import com.yushi.leke.activity.MusicPlayerActivity;
 import com.yushi.leke.bean.Person;
+import com.yushi.leke.fragment.searcher.SearchFragment;
 
 import java.util.List;
 
@@ -32,7 +37,20 @@ public class SubscriptionsFragment extends BaseListFragment<SubscriptionsContrac
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         adapter=new MultiTypeAdapter();
-        adapter.register(SubscriptionBanner.class,new SubscriptionsBannerViewBinder());
+        adapter.register(SubscriptionBanner.class,new SubscriptionsBannerViewBinder(new ICallBack() {
+            @Override
+            public void OnBackResult(Object... s) {
+                switch ((int)s[0]){
+                    case SubscriptionsBannerViewBinder.BANNER_BINDER_MUSIC:
+                        Intent intent = new Intent(getActivity(), MusicPlayerActivity.class);
+                        startActivity(intent);
+                        break;
+                    case SubscriptionsBannerViewBinder.BANNER_BINDER_SEARCH:
+                        getRootFragment().start(UIHelper.creat(SearchFragment.class).build());
+                        break;
+                }
+            }
+        }));
         adapter.register(SubscriptionInfo.class,new SubscriptionsViewBinder());
         vu.getRecyclerView().setAdapter(adapter);
         list.add(new SubscriptionBanner());

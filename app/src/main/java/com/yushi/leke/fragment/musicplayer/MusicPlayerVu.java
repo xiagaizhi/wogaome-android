@@ -26,6 +26,7 @@ import com.yufan.library.inject.FindView;
 import com.yufan.library.inject.Title;
 import com.yufan.library.widget.StateLayout;
 import com.yufan.library.widget.AppToolbar;
+import com.yushi.leke.UIHelper;
 import com.yushi.leke.uamp.MusicService;
 import com.yushi.leke.uamp.utils.LogHelper;
 import com.yushi.leke.widget.AlbumViewPager;
@@ -94,6 +95,7 @@ public class MusicPlayerVu extends BaseVu<MusicPlayerContract.Presenter> impleme
                 mPersenter.finish();
             }
         });
+        UIHelper.showMusic(appToolbar.creatRightView(ImageView.class));
         appToolbar.build(false);
         return true;
     }
