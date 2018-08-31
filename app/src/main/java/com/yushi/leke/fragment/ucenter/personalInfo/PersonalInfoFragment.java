@@ -30,6 +30,11 @@ public class PersonalInfoFragment extends BaseFragment<PersonalInfoContract.IVie
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+    }
+
+    @Override
     public void openPlayer() {
 
     }

@@ -28,4 +28,6 @@ public class Global {
     public static final int BIND_PHONE_FROM_SETPWD = 1;//从设置密码跳转到绑定手机
     public static final int BIND_PHONE_FROM_FORGETPWD = 2;//从忘记密码跳转到绑定手机
     public static final int BIND_PHONE_FROM_PAY = 3;//从支付跳转到绑定手机
+
+    public static final String CITY_DATA = "china_city_data.json";
 }
