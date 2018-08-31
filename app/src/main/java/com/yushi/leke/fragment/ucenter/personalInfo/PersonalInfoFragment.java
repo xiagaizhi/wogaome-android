@@ -24,13 +24,6 @@ public class PersonalInfoFragment extends BaseFragment<PersonalInfoContract.IVie
 
     }
 
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        getVu().destoryBitmap();
-    }
-
     @Override
     public void onRefresh() {
 

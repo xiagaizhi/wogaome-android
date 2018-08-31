@@ -9,7 +9,6 @@ import com.yufan.library.base.Vu;
 
 public interface PersonalInfoContract {
     interface IView extends Vu {
-        void destoryBitmap();
 
     }
 
