@@ -2,6 +2,7 @@ package com.yushi.leke.fragment.paySafe;
 
 import android.os.Bundle;
 
+import com.yufan.library.Global;
 import com.yufan.library.api.ApiBean;
 import com.yufan.library.api.ApiManager;
 import com.yufan.library.api.BaseHttpCallBack;
@@ -70,8 +71,8 @@ public class PaySafetyFragment extends BaseFragment<PaySafetyContract.IView> imp
     }
 
     @Override
-    public void openBindPhone() {
-        startForResult(UIHelper.creat(BindPhoneFragment.class).build(), 100);
+    public void openBindPhone(int type) {
+        startForResult(UIHelper.creat(BindPhoneFragment.class).put(Global.BIND_PHONE_TYPE_KEY, type).build(), 100);
     }
 
     @Override
@@ -85,7 +86,13 @@ public class PaySafetyFragment extends BaseFragment<PaySafetyContract.IView> imp
         if (requestCode == 100 && resultCode == RESULT_OK && data != null) {//绑定手机成功返回
             phoneNumber = data.getString("phoneNumber");
             getVu().updatePage(isHave, phoneNumber);
-        } else if (requestCode == 200 && resultCode == RESULT_OK && data != null) {//校验密码通过返回
+            int bindPhoneType = data.getInt(Global.BIND_PHONE_TYPE_KEY, 0);
+            if (bindPhoneType == Global.BIND_PHONE_FROM_SETPWD) {
+                setRechargePwd(isHave);
+            }else if (bindPhoneType == Global.BIND_PHONE_FROM_FORGETPWD){
+                setRechargePwd(isHave);
+            }
+        } else if (requestCode == 200 && resultCode == RESULT_OK && data != null) {//手机验证码校验过返回
             SetRechargePwdDialog setRechargePwdDialog = new SetRechargePwdDialog(getContext(), SetRechargePwdDialog.SET_RECHARGE_PWD_FORGET);
             setRechargePwdDialog.show();
         }

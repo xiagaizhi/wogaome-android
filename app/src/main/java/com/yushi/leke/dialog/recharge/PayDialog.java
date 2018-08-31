@@ -47,12 +47,15 @@ public class PayDialog extends Dialog implements PayWayAdapter.OnItemClickListen
     private TextView tv_goods_info;
     private PayWayList mPayWayList;
     private OpenBindPhoneInterf openBindPhoneInterf;
+    private SetRechargePwdDialog.SetRechargeInterf mSetRechargeInterf;
 
-    public PayDialog(@NonNull Context context, String goodsId, boolean isnormalPay, OpenBindPhoneInterf openBindPhoneInterf) {
+    public PayDialog(@NonNull Context context, String goodsId, boolean isnormalPay,
+                     OpenBindPhoneInterf openBindPhoneInterf, SetRechargePwdDialog.SetRechargeInterf setRechargeInterf) {
         super(context, R.style.dialog_common);
         View rootView = LayoutInflater.from(context).inflate(R.layout.layout_pay, null);
         setContentView(rootView);
         this.mContext = context;
+        this.mSetRechargeInterf = setRechargeInterf;
         this.openBindPhoneInterf = openBindPhoneInterf;
         id_payway = rootView.findViewById(R.id.id_payway);
         tv_goods_info = (TextView) rootView.findViewById(R.id.tv_goods_info);
@@ -166,6 +169,7 @@ public class PayDialog extends Dialog implements PayWayAdapter.OnItemClickListen
                                     } else {//没有交易密码
                                         dismiss();
                                         SetRechargePwdDialog setRechargePwdDialog = new SetRechargePwdDialog(mContext, SetRechargePwdDialog.SET_RECHARGE_PWD);
+                                        setRechargePwdDialog.setmSetRechargeInterf(mSetRechargeInterf);
                                         setRechargePwdDialog.show();
                                     }
                                 } else {//未绑定过手机

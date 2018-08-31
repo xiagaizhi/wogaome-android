@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.yufan.library.Global;
 import com.yufan.library.base.BasePopupWindow;
 import com.yufan.library.inject.FindView;
 import com.yufan.library.widget.highlightview.HighLightInfo;
@@ -17,6 +18,7 @@ import com.yufan.library.inject.Title;
 import com.yufan.library.widget.StateLayout;
 import com.yufan.library.widget.AppToolbar;
 import com.yushi.leke.dialog.recharge.SetRechargePwdDialog;
+import com.yushi.leke.fragment.bindPhone.BindPhoneFragment;
 
 /**
  * Created by mengfantao on 18/8/2.
@@ -64,11 +66,16 @@ public class PaySafetyVu extends BaseVu<PaySafetyContract.Presenter> implements 
         super.onClick(v);
         switch (v.getId()) {
             case R.id.rl_setpwd://设置密码／修改密码
-                mPersenter.setRechargePwd(isHavePwd);
+                if (TextUtils.isEmpty(phoneNumber)) {//未绑定手机，先绑定手机
+                    mPersenter.openBindPhone(Global.BIND_PHONE_FROM_SETPWD);
+                } else {
+                    mPersenter.setRechargePwd(isHavePwd);
+                }
+
                 break;
             case R.id.rl_forget_pwd://忘记密码
                 if (TextUtils.isEmpty(phoneNumber)) {//未绑定手机
-                    mPersenter.openBindPhone();
+                    mPersenter.openBindPhone(Global.BIND_PHONE_FROM_FORGETPWD);
                 } else {//绑定过手机
                     mPersenter.checkPhone(phoneNumber);
                 }

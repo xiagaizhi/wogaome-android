@@ -27,6 +27,7 @@ import com.yushi.leke.UIHelper;
 import com.yushi.leke.YFApi;
 import com.yushi.leke.dialog.CommonDialog;
 import com.yushi.leke.dialog.recharge.PayDialog;
+import com.yushi.leke.dialog.recharge.SetRechargePwdDialog;
 import com.yushi.leke.fragment.bindPhone.BindPhoneFragment;
 
 import java.util.ArrayList;
@@ -36,7 +37,7 @@ import java.util.List;
  * Created by mengfantao on 18/8/2.
  */
 @VuClass(OpenTreasureBoxVu.class)
-public class OpenTreasureBoxFragment extends BaseFragment<OpenTreasureBoxContract.IView> implements OpenTreasureBoxContract.Presenter, PayDialog.OpenBindPhoneInterf {
+public class OpenTreasureBoxFragment extends BaseFragment<OpenTreasureBoxContract.IView> implements OpenTreasureBoxContract.Presenter, PayDialog.OpenBindPhoneInterf, SetRechargePwdDialog.SetRechargeInterf {
     private List<GoodsInfo> goodsInfos = new ArrayList<>();
     private GoodsInfo mGoodsInfo;
     private GoodsInfoList goodsInfoList;
@@ -118,7 +119,7 @@ public class OpenTreasureBoxFragment extends BaseFragment<OpenTreasureBoxContrac
 
     @Override
     public void toPay() {
-        PayDialog payDialog = new PayDialog(_mActivity, mGoodsInfo.getGoodsId(), true, this);
+        PayDialog payDialog = new PayDialog(_mActivity, mGoodsInfo.getGoodsId(), true, this, this);
         payDialog.show();
     }
 
@@ -132,7 +133,19 @@ public class OpenTreasureBoxFragment extends BaseFragment<OpenTreasureBoxContrac
 
     @Override
     public void openBindPhone() {
-        start(UIHelper.creat(BindPhoneFragment.class).build());
+        startForResult(UIHelper.creat(BindPhoneFragment.class).put(Global.BIND_PHONE_TYPE_KEY, Global.BIND_PHONE_FROM_PAY).build(), 100);
+    }
+
+    @Override
+    public void onFragmentResult(int requestCode, int resultCode, Bundle data) {
+        super.onFragmentResult(requestCode, resultCode, data);
+        if (requestCode == 100 && resultCode == RESULT_OK && data != null) {//绑定手机成功返回
+            int bindPhoneType = data.getInt(Global.BIND_PHONE_TYPE_KEY, 0);
+            if (bindPhoneType == Global.BIND_PHONE_FROM_PAY) {//设置交易密码
+                SetRechargePwdDialog setRechargePwdDialog = new SetRechargePwdDialog(getContext(), SetRechargePwdDialog.SET_RECHARGE_PWD);
+                setRechargePwdDialog.show();
+            }
+        }
     }
 
     private void showDialog(boolean isSuccess) {
@@ -165,5 +178,10 @@ public class OpenTreasureBoxFragment extends BaseFragment<OpenTreasureBoxContrac
                         }
                     }).show();
         }
+    }
+
+    @Override
+    public void returnSetPwdResult() {
+        toPay();
     }
 }
