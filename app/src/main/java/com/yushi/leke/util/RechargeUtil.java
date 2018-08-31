@@ -1,10 +1,9 @@
-package com.yushi.leke.dialog.recharge;
+package com.yushi.leke.util;
 
 import android.content.Context;
 import android.text.TextUtils;
 
 import com.alibaba.fastjson.JSON;
-import com.yufan.library.Global;
 import com.yufan.library.api.ApiBean;
 import com.yufan.library.api.ApiManager;
 import com.yufan.library.api.BaseHttpCallBack;
@@ -13,6 +12,8 @@ import com.yufan.library.pay.alipay.ToALiPay;
 import com.yufan.library.pay.wenchatpay.WeChatPay;
 import com.yushi.leke.YFApi;
 import com.yushi.leke.dialog.CommonDialog;
+import com.yushi.leke.dialog.recharge.CheckRechargePwdDialog;
+import com.yushi.leke.dialog.recharge.SetRechargePwdDialog;
 
 import org.json.JSONObject;
 

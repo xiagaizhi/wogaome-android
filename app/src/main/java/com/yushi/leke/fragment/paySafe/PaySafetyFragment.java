@@ -16,8 +16,7 @@ import android.view.View;
 import com.yufan.library.inject.VuClass;
 import com.yushi.leke.UIHelper;
 import com.yushi.leke.YFApi;
-import com.yushi.leke.dialog.recharge.CheckRechargePwdDialog;
-import com.yushi.leke.dialog.recharge.RechargeUtil;
+import com.yushi.leke.util.RechargeUtil;
 import com.yushi.leke.dialog.recharge.SetRechargePwdDialog;
 import com.yushi.leke.fragment.bindPhone.BindPhoneFragment;
 import com.yushi.leke.fragment.bindPhone.checkPhone.CheckPhoneFragment;
@@ -109,7 +108,7 @@ public class PaySafetyFragment extends BaseFragment<PaySafetyContract.IView> imp
 
     @Override
     public void returnCheckResult(boolean isSuccess) {
-        if (isSuccess){
+        if (isSuccess) {
             RechargeUtil.getInstance().setRechargePwd(_mActivity, SetRechargePwdDialog.SET_RECHARGE_PWD_NEW, this);
         }
     }

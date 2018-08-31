@@ -18,20 +18,16 @@ import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.alibaba.fastjson.JSON;
 import com.yufan.library.api.ApiBean;
 import com.yufan.library.api.ApiManager;
 import com.yufan.library.api.BaseHttpCallBack;
 import com.yufan.library.manager.DialogManager;
-import com.yufan.library.pay.PayMetadata;
-import com.yufan.library.pay.alipay.ToALiPay;
-import com.yufan.library.pay.wenchatpay.WeChatPay;
 import com.yufan.library.widget.customkeyboard.KeyboardAdapter;
 import com.yufan.library.widget.customkeyboard.KeyboardView;
 import com.yufan.library.widget.customkeyboard.PayPsdInputView;
 import com.yushi.leke.R;
 import com.yushi.leke.YFApi;
-import com.yushi.leke.dialog.CommonDialog;
+import com.yushi.leke.util.RechargeUtil;
 
 import java.lang.reflect.Method;
 

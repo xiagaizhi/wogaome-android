@@ -158,4 +158,12 @@ public interface YFApi {
                    @Field("userId") String userId,
                    @Field("tradePwd") String tradePwd
     );
+
+    @FormUrlEncoded
+    @POST("app/{interfVersion}/getAvatarUploadInfo")
+    Call<ResponseBody>
+    getAvatarUploadInfo(//上传图片
+                        @Path("interfVersion") String interfVersion,
+                        @Field("fileName") String fileName
+    );
 }
