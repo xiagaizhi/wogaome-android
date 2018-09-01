@@ -25,9 +25,7 @@ import com.yufan.library.api.BaseHttpCallBack;
 import com.yufan.library.pay.PayWay;
 import com.yushi.leke.R;
 import com.yushi.leke.YFApi;
-import com.yushi.leke.dialog.CommonDialog;
-
-import org.json.JSONObject;
+import com.yushi.leke.util.RechargeUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,17 +44,12 @@ public class PayDialog extends Dialog implements PayWayAdapter.OnItemClickListen
     private TextView tv_money;
     private TextView tv_goods_info;
     private PayWayList mPayWayList;
-    private OpenBindPhoneInterf openBindPhoneInterf;
-    private SetRechargePwdDialog.SetRechargeInterf mSetRechargeInterf;
 
-    public PayDialog(@NonNull Context context, String goodsId, boolean isnormalPay,
-                     OpenBindPhoneInterf openBindPhoneInterf, SetRechargePwdDialog.SetRechargeInterf setRechargeInterf) {
+    public PayDialog(@NonNull Context context, String goodsId, boolean isnormalPay) {
         super(context, R.style.dialog_common);
         View rootView = LayoutInflater.from(context).inflate(R.layout.layout_pay, null);
         setContentView(rootView);
         this.mContext = context;
-        this.mSetRechargeInterf = setRechargeInterf;
-        this.openBindPhoneInterf = openBindPhoneInterf;
         id_payway = rootView.findViewById(R.id.id_payway);
         tv_goods_info = (TextView) rootView.findViewById(R.id.tv_goods_info);
         tv_money = (TextView) rootView.findViewById(R.id.tv_order_money);
@@ -79,7 +72,8 @@ public class PayDialog extends Dialog implements PayWayAdapter.OnItemClickListen
         btn_pay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                checkHavePayPwd();
+                RechargeUtil.instance.toPay(mContext, mPayWayList.getGoodsName(), mPayWayList.getGoodsPrice(),
+                        mPayWayList.getGoodsPrice(), mPayWayList.getGoodsId(), selectPayWay.getTradeApiId());
             }
         });
         rootView.findViewById(R.id.id_top_view).setOnClickListener(new View.OnClickListener() {
@@ -143,74 +137,6 @@ public class PayDialog extends Dialog implements PayWayAdapter.OnItemClickListen
     public void onItemClick(PayWay payWay) {
         this.selectPayWay = payWay;
         id_payway.getAdapter().notifyDataSetChanged();
-    }
-
-
-    private void checkHavePayPwd() {
-        ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).haveTradePwd("v1", "9999"))
-                .useCache(false)
-                .enqueue(new BaseHttpCallBack() {
-                    @Override
-                    public void onSuccess(ApiBean mApiBean) {
-                        try {
-                            if (TextUtils.equals(ApiBean.SUCCESS, mApiBean.getCode())) {
-                                String data = mApiBean.getData();
-                                JSONObject jsonObject = new JSONObject(data);
-                                int isHave = jsonObject.optInt("isHave");
-                                String phoneNumber = jsonObject.optString("phoneNumber");
-                                if (!TextUtils.isEmpty(phoneNumber)) {//绑定手机
-                                    dismiss();
-                                    if (isHave == 1) {//拥有交易密码,验证交易密码
-                                        CheckRechargePwdDialog checkRechargePwdDialog = new CheckRechargePwdDialog(mContext,
-                                                CheckRechargePwdDialog.CHECK_RECHARGE_PWD_PAY, selectPayWay.getTradeApiId(),
-                                                mPayWayList.getGoodsName(), mPayWayList.getGoodsPrice(),
-                                                mPayWayList.getGoodsPrice(), mPayWayList.getGoodsId());
-                                        checkRechargePwdDialog.show();
-                                    } else {//没有交易密码
-                                        dismiss();
-                                        SetRechargePwdDialog setRechargePwdDialog = new SetRechargePwdDialog(mContext, SetRechargePwdDialog.SET_RECHARGE_PWD);
-                                        setRechargePwdDialog.setmSetRechargeInterf(mSetRechargeInterf);
-                                        setRechargePwdDialog.show();
-                                    }
-                                } else {//未绑定过手机
-                                    new CommonDialog(getContext()).setTitle("您尚未绑定手机，请先绑定安全手机！")
-                                            .setNegativeName("取消")
-                                            .setPositiveName("去绑定")
-                                            .setHaveNegative(true)
-                                            .setCommonDialogCanceledOnTouchOutside2(false)
-                                            .setCommonClickListener(new CommonDialog.CommonDialogClick() {
-                                                @Override
-                                                public void onClick(CommonDialog commonDialog, int actionType) {
-                                                    commonDialog.dismiss();
-                                                    if (actionType == CommonDialog.COMMONDIALOG_ACTION_POSITIVE) {
-                                                        dismiss();
-                                                        if (openBindPhoneInterf != null) {
-                                                            openBindPhoneInterf.openBindPhone();
-                                                        }
-                                                    }
-                                                }
-                                            }).show();
-                                }
-                            }
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
-
-                    @Override
-                    public void onError(int id, Exception e) {
-
-                    }
-
-                    @Override
-                    public void onFinish() {
-
-                    }
-                });
-    }
-
-    public interface OpenBindPhoneInterf {
-        void openBindPhone();
     }
 
 }

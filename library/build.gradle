@@ -79,5 +79,6 @@ dependencies {
     compile 'com.hedgehog.ratingbar:app:1.1.2'
     compile 'com.amap.api:location:latest.integration'
     //    compile 'com.github.linger1216:labelview:v1.1.2'
+    compile 'com.aliyun.dpa:oss-android-sdk:+'
 
 }

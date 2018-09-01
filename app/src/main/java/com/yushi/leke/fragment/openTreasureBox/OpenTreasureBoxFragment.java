@@ -37,7 +37,7 @@ import java.util.List;
  * Created by mengfantao on 18/8/2.
  */
 @VuClass(OpenTreasureBoxVu.class)
-public class OpenTreasureBoxFragment extends BaseFragment<OpenTreasureBoxContract.IView> implements OpenTreasureBoxContract.Presenter, PayDialog.OpenBindPhoneInterf, SetRechargePwdDialog.SetRechargeInterf {
+public class OpenTreasureBoxFragment extends BaseFragment<OpenTreasureBoxContract.IView> implements OpenTreasureBoxContract.Presenter {
     private List<GoodsInfo> goodsInfos = new ArrayList<>();
     private GoodsInfo mGoodsInfo;
     private GoodsInfoList goodsInfoList;
@@ -119,7 +119,7 @@ public class OpenTreasureBoxFragment extends BaseFragment<OpenTreasureBoxContrac
 
     @Override
     public void toPay() {
-        PayDialog payDialog = new PayDialog(_mActivity, mGoodsInfo.getGoodsId(), true, this, this);
+        PayDialog payDialog = new PayDialog(_mActivity, mGoodsInfo.getGoodsId(), true);
         payDialog.show();
     }
 
@@ -129,11 +129,6 @@ public class OpenTreasureBoxFragment extends BaseFragment<OpenTreasureBoxContrac
             start(UIHelper.creat(BrowserBaseFragment.class).put(Global.BUNDLE_KEY_BROWSER_URL, goodsInfoList.getTreatureBoxDetailUrl()).build());
         }
 
-    }
-
-    @Override
-    public void openBindPhone() {
-        startForResult(UIHelper.creat(BindPhoneFragment.class).put(Global.BIND_PHONE_TYPE_KEY, Global.BIND_PHONE_FROM_PAY).build(), 100);
     }
 
     @Override
@@ -173,15 +168,9 @@ public class OpenTreasureBoxFragment extends BaseFragment<OpenTreasureBoxContrac
                         public void onClick(CommonDialog commonDialog, int actionType) {
                             commonDialog.dismiss();
                             if (actionType == CommonDialog.COMMONDIALOG_ACTION_POSITIVE) {
-//                                pop();
                             }
                         }
                     }).show();
         }
-    }
-
-    @Override
-    public void returnSetPwdResult() {
-        toPay();
     }
 }
