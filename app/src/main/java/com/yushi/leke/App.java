@@ -17,7 +17,7 @@ public class App extends BaseApplication {
     private static App instance;
     //TODO 申请第三方开发者账号
     {
-        PlatformConfig.setWeixin("weixinid", "weixinsecret");
+        PlatformConfig.setWeixin("wxa78cb5eacb190d7f", "e05682fc1299b50066a491633c3a9820");
         PlatformConfig.setQQZone("qqid", "qqsecret");
         PlatformConfig.setSinaWeibo("xinlangid", "xinlangsecret", "xinlanghuidiao");
     }

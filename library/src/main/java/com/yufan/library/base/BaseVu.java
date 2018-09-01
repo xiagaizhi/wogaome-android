@@ -113,7 +113,7 @@ public abstract class BaseVu<T extends Pr> implements Vu ,View.OnClickListener{
      */
     private final void addTitle(AppToolbar appToolbar, boolean isShowTitle) {
         if (isShowTitle) {
-            RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, PxUtil.convertDIP2PX(mContext, 56));
+            RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, PxUtil.convertDIP2PX(mContext, 44));
             mRootLayout.addView(appToolbar, lp);
             if (appToolbar.isVertical()) {
                // appToolbar.getBackgroundView().setBackgroundResource(R.drawable.shape_title_backgound);
