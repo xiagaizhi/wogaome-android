@@ -172,7 +172,6 @@ public class ShareMenuActivity extends BaseActivity {
                 DialogManager.getInstance().toast("分享成功");
                 Intent intent=new Intent();
                 setResult(Activity.RESULT_OK,intent);
-
                 finish();
             }
 

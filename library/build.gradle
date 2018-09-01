@@ -80,5 +80,5 @@ dependencies {
     compile 'com.amap.api:location:latest.integration'
     //    compile 'com.github.linger1216:labelview:v1.1.2'
     compile 'com.aliyun.dpa:oss-android-sdk:+'
-
+    compile project(':share')
 }

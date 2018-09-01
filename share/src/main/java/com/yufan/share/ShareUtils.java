@@ -3,6 +3,7 @@ package com.yufan.share;
 import android.app.Activity;
 import android.content.Intent;
 
+import com.umeng.socialize.Config;
 import com.umeng.socialize.ShareAction;
 import com.umeng.socialize.UMAuthListener;
 import com.umeng.socialize.UMShareAPI;
@@ -13,19 +14,22 @@ import java.util.Map;
 
 
 public class ShareUtils {
-    private UMShareAPI mShareAPI = null;
+    private UMShareAPI mShareAPI ;
     private Activity mActivity;
     private ILoginCallback loginCallback;
     private IShareCallback shareCallback;
 
     public ShareUtils(Activity activity) {
         this.mActivity = activity;
-         mShareAPI = UMShareAPI.get(activity);//获取UMShareAPI
+            mShareAPI = UMShareAPI.get(activity);//获取UMShareAPI
+
 
     }
 
     public void login(SHARE_MEDIA platform, ILoginCallback callback) {
+
         this.loginCallback = callback;
+
         mShareAPI.doOauthVerify(mActivity, platform, umAuthListener);//进行平台授权 umAuthListener授权是否成功的回调
     }
     public void logout(SHARE_MEDIA platform){
@@ -51,6 +55,7 @@ public class ShareUtils {
             }
         });
     }
+
     public void share(ShareModel model, IShareCallback shareCallback) {
         this.shareCallback = shareCallback;
         //初始化分享面板
@@ -91,7 +96,6 @@ public class ShareUtils {
                 .withText(model.getContent())
                 .withMedia(model.getmUMWeb())
                 .share();
-
     }
     /**
      * 单平台分享(表情Media)

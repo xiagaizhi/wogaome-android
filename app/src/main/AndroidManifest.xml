@@ -137,11 +137,9 @@
                 <action android:name="android.intent.action.MEDIA_BUTTON" />
             </intent-filter>
         </receiver>
-
-
         <meta-data
             android:name="UMENG_APPKEY"
-            android:value="55b05e9de0f55a7f5e0006c3" />
+            android:value="5b6bafa0b27b0a7d06000033" />
     </application>
 
 </manifest>
