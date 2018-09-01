@@ -1,12 +1,7 @@
 package com.yufan.library.util;
-
 import android.content.Context;
-
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
-import com.google.gson.Gson;
 import com.yufan.library.bean.LocationBean;
-
 import org.json.JSONArray;
 
 import java.util.ArrayList;
@@ -18,10 +13,11 @@ import java.util.HashMap;
 
 public class AreaUtil {
 
-   private ArrayList<LocationBean> options1Items = new ArrayList<>();
+    private ArrayList<LocationBean> options1Items = new ArrayList<>();
     private ArrayList<ArrayList<LocationBean>> options2Items = new ArrayList<>();
     private ArrayList<ArrayList<ArrayList<LocationBean>>> options3Items = new ArrayList<>();
-    private static AreaUtil areaUtil=new AreaUtil();
+    private static AreaUtil areaUtil = new AreaUtil();
+
     public ArrayList<LocationBean> getOptions1Items() {
         return options1Items;
     }
@@ -34,7 +30,7 @@ public class AreaUtil {
         return options3Items;
     }
 
-    public static AreaUtil getInstance(){
+    public static AreaUtil getInstance() {
         return areaUtil;
     }
 
@@ -43,39 +39,40 @@ public class AreaUtil {
 
     }
 
-    public void init(Context context){
+    public void init(Context context) {
         options1Items.clear();
         options2Items.clear();
         options3Items.clear();
         initJsonData(context);
     }
 
-    private ArrayList<LocationBean> getSuperList(String jsonData){
+    private ArrayList<LocationBean> getSuperList(String jsonData) {
         ArrayList<LocationBean> items = new ArrayList<>();
-        HashMap<String ,JSONObject> jsonmap=   JSON.parseObject(jsonData, HashMap.class);
-        for (String key : jsonmap.keySet()){
-            JSONObject provin=  jsonmap.get(key);
-            LocationBean provinceBean=new LocationBean();
-            provinceBean.setId(key);
-            provinceBean.setName( provin.getString("name"));
-            provinceBean.setCity( provin.getString("child"));
-            items.add(provinceBean);
+        try {
+            JSONArray data = new JSONArray(jsonData);
+            for (int i = 0; i < data.length(); i++) {
+                LocationBean entity = JSON.parseObject(data.optJSONObject(i).toString(), LocationBean.class);
+                items.add(entity);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-    return items;
+        return items;
     }
 
-    private ArrayList<LocationBean> getAreaList(String jsonData){
+    private ArrayList<LocationBean> getAreaList(String jsonData) {
         ArrayList<LocationBean> items = new ArrayList<>();
-        HashMap<String ,String> jsonmap=   JSON.parseObject(jsonData, HashMap.class);
-        for (String key : jsonmap.keySet()){
-            String str=  jsonmap.get(key);
-            LocationBean provinceBean=new LocationBean();
+        HashMap<String, String> jsonmap = JSON.parseObject(jsonData, HashMap.class);
+        for (String key : jsonmap.keySet()) {
+            String str = jsonmap.get(key);
+            LocationBean provinceBean = new LocationBean();
             provinceBean.setId(key);
             provinceBean.setName(str);
             items.add(provinceBean);
         }
         return items;
     }
+
     private void initJsonData(Context context) {//解析数据
 
         /**
@@ -83,26 +80,30 @@ public class AreaUtil {
          * 关键逻辑在于循环体
          *
          * */
-        String jsonData = new GetJsonDataUtil().getJson(context, "province.json");//获取assets目录下的json文件数据
-        options1Items=  getSuperList(jsonData);
+        String provinceData = new GetJsonDataUtil().getJson(context, "china_city_data.json");//获取assets目录下的json文件数据
+        /**
+         * 添加省份数据
+         */
+        options1Items = getSuperList(provinceData);
         for (int i = 0; i < options1Items.size(); i++) {
-          String city=  options1Items.get(i).getCity();
             /**
              * 添加城市数据
              */
-            options2Items.add(getSuperList(city));
-
-            for (int j=0; i < options2Items.size(); j++){
-                /**
-                 * 添加地区数据
-                 */
-                options3Items.add(options2Items);
+            String cityData = options1Items.get(i).getCity();//城市json
+            ArrayList<LocationBean> cityList = getSuperList(cityData);
+            options2Items.add(cityList);
+            ArrayList<ArrayList<LocationBean>> areaList = new ArrayList<>();
+            for (int j = 0; j < cityList.size(); j++) {
+                String areaData = cityList.get(j).getCity();//地区数据
+                areaList.add(getSuperList(areaData));
             }
-
+            /**
+             * 添加地区数据
+             */
+            options3Items.add(areaList);
         }
 
     }
-
 
 
 }
