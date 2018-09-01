@@ -2,8 +2,11 @@ package com.yushi.leke.fragment.ucenter.personalInfo;
 
 import android.graphics.Color;
 import android.os.AsyncTask;
+import android.os.Handler;
+import android.os.Message;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -46,21 +49,40 @@ public class PersonalInfoVu extends BaseListVu<PersonalInfoContract.Presenter> i
     private ResizeLayout rsz_layout;
     @FindView(R.id.rl_edit_head)
     RelativeLayout rl_edit_head;
+    @FindView(R.id.rl_submit_container)
+    RelativeLayout rl_submit_container;
+    @FindView(R.id.tv_ok)
+    TextView tv_ok;
+    @FindView(R.id.tv_cancel)
+    TextView tv_cancel;
+    EditText mCurrentInputBox;
+
+    private Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            if (msg.what == 100) {
+                rl_submit_container.setVisibility(View.VISIBLE);
+            }
+        }
+    };
 
     @Override
     public void initView(View view) {
         rl_edit_head.setOnClickListener(this);
+        tv_cancel.setOnClickListener(this);
+        tv_ok.setOnClickListener(this);
         Glide.with(getContext()).load("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1535611272761&di=edb2ad0ac1e9fae8c791398bffecffdd&imgtype=0&src=http%3A%2F%2Fp1.wmpic.me%2Farticle%2F2017%2F10%2F23%2F1508744874_AaXhrBZE.jpg")
                 .bitmapTransform(new BlurTransformation(getContext(), 15)).into(img_personal_top_bg);
         img_head.setImageURI("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1535611272761&di=edb2ad0ac1e9fae8c791398bffecffdd&imgtype=0&src=http%3A%2F%2Fp1.wmpic.me%2Farticle%2F2017%2F10%2F23%2F1508744874_AaXhrBZE.jpg");
         rsz_layout.setOnKeyboardShowListener(new ResizeLayout.OnKeyboardChangedListener() {
-
             private boolean isShowed;
 
             @Override
             public void onKeyboardShow(int keyHeight) {
                 isShowed = true;
                 mPersenter.resetVu();
+                mHandler.sendEmptyMessage(100);
             }
 
             @Override
@@ -69,7 +91,7 @@ public class PersonalInfoVu extends BaseListVu<PersonalInfoContract.Presenter> i
                     isShowed = false;
                     mPersenter.resetTab();
                 }
-
+                rl_submit_container.setVisibility(View.GONE);
             }
 
             @Override
@@ -77,8 +99,6 @@ public class PersonalInfoVu extends BaseListVu<PersonalInfoContract.Presenter> i
 
             }
         });
-
-
     }
 
     @Override
@@ -130,6 +150,11 @@ public class PersonalInfoVu extends BaseListVu<PersonalInfoContract.Presenter> i
         pvOptions.setPicker(genderList);
         pvOptions.show();
         mPersenter.resetVu();
+    }
+
+    @Override
+    public void setCurrentInputBox(EditText editText) {
+        mCurrentInputBox = editText;
     }
 
     private void toShowCityPickView() {
@@ -192,6 +217,16 @@ public class PersonalInfoVu extends BaseListVu<PersonalInfoContract.Presenter> i
         super.onClick(v);
         switch (v.getId()) {
             case R.id.rl_edit_head:
+
+                break;
+            case R.id.tv_ok:
+                if (mCurrentInputBox != null) {
+                    mPersenter.toSubmitData(mCurrentInputBox.getText().toString());
+                }
+                mPersenter.hideSoftInput();
+                break;
+            case R.id.tv_cancel:
+                mPersenter.hideSoftInput();
                 break;
 
 
