@@ -1,5 +1,7 @@
 package com.yushi.leke.fragment.ucenter.personalInfo;
 
+import android.widget.EditText;
+
 import com.yufan.library.base.Pr;
 import com.yufan.library.base.Vu;
 import com.yufan.library.base.VuList;
@@ -16,6 +18,8 @@ public interface PersonalInfoContract {
 
         void showGenderPickerView(List<String> genderList);
 
+        void setCurrentInputBox(EditText editText);
+
     }
 
     interface Presenter extends Pr {
@@ -30,5 +34,9 @@ public interface PersonalInfoContract {
         void selectedCityInfo(int options1, int options2, int options3);
 
         void selectGender(String gender);
+
+        void hideSoftInput();
+
+        void toSubmitData(String content);
     }
 }

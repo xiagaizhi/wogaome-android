@@ -49,7 +49,7 @@ public class PersonalInfoViewBinder extends ItemViewBinder<PersonalItem, Persona
     }
 
     @Override
-    protected void onBindViewHolder(@NonNull ViewHolder holder, @NonNull final PersonalItem category) {
+    protected void onBindViewHolder(@NonNull final ViewHolder holder, @NonNull final PersonalItem category) {
         holder.tv_name.setText(category.tabName);
         holder.et_value.setText(category.tabValue);
         holder.et_value.setHint(category.tabEditHint);
@@ -62,7 +62,7 @@ public class PersonalInfoViewBinder extends ItemViewBinder<PersonalItem, Persona
                 @Override
                 public void onFocusChange(View v, boolean hasFocus) {
                     if (hasFocus) {
-                        callBack.OnBackResult(category, 0);
+                        callBack.OnBackResult(category, holder.et_value);
                     }
                 }
             });
@@ -82,7 +82,7 @@ public class PersonalInfoViewBinder extends ItemViewBinder<PersonalItem, Persona
                 if (TextUtils.equals("用户ID:", category.tabName) ||
                         TextUtils.equals("性别:", category.tabName) ||
                         TextUtils.equals("城市:", category.tabName)) {
-                    callBack.OnBackResult(category, 0);
+                    callBack.OnBackResult(category,holder.et_value);
                 }
             }
         });
@@ -91,7 +91,7 @@ public class PersonalInfoViewBinder extends ItemViewBinder<PersonalItem, Persona
             @Override
             public void onClick(View v) {
                 if (TextUtils.equals("用户ID:", category.tabName)) {
-                    callBack.OnBackResult(category, 0);
+                    callBack.OnBackResult(category,holder.et_value);
                 }
             }
         });
@@ -99,7 +99,7 @@ public class PersonalInfoViewBinder extends ItemViewBinder<PersonalItem, Persona
             @Override
             public void onClick(View v) {
                 if (TextUtils.equals("用户ID:", category.tabName)) {
-                    callBack.OnBackResult(category, 0);
+                    callBack.OnBackResult(category,holder.et_value);
                 }
             }
         });

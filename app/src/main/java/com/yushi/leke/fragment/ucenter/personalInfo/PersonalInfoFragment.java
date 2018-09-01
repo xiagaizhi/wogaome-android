@@ -5,25 +5,18 @@ import android.os.Bundle;
 
 import com.yufan.library.base.BaseListFragment;
 import com.yufan.library.bean.LocationBean;
-import com.yufan.library.inject.FindView;
 import com.yufan.library.inter.ICallBack;
 import com.yufan.library.util.AreaUtil;
-import com.yufan.library.view.recycler.YFRecyclerView;
-import com.yushi.leke.R;
-import com.yufan.library.base.BaseFragment;
+import com.yufan.library.util.SoftInputUtil;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.EditText;
 
-import com.yufan.library.base.BaseFragment;
 import com.yufan.library.inject.VuClass;
-import com.yushi.leke.fragment.exhibition.ExhibitionInfo;
-import com.yushi.leke.fragment.exhibition.ExhibitionTopInfo;
-import com.yushi.leke.fragment.exhibition.ExhibitionTopViewBinder;
-import com.yushi.leke.fragment.exhibition.ExhibitionViewBinder;
 import com.yushi.leke.util.StringUtil;
 
 import java.util.ArrayList;
@@ -40,6 +33,7 @@ public class PersonalInfoFragment extends BaseListFragment<PersonalInfoContract.
     private List<PersonalItem> tempList = new ArrayList<>();
     private PersonalItem personalItem;
     private List<String> genderList = new ArrayList<>();
+    private String currentTabName;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -65,21 +59,16 @@ public class PersonalInfoFragment extends BaseListFragment<PersonalInfoContract.
             @Override
             public void OnBackResult(Object... s) {
                 PersonalItem item = (PersonalItem) s[0];
+                getVu().setCurrentInputBox((EditText) s[1]);
+                currentTabName = item.tabName;
                 if (personalItem == null || !personalItem.tabName.equals(item.tabName)) {
                     upTab((PersonalItem) s[0]);
                 }
                 personalItem = (PersonalItem) s[0];
-
                 if (TextUtils.equals("用户ID:", item.tabName)) {
                     StringUtil.copyTextToBoard(personalItem.tabValue);
                 } else if (TextUtils.equals("性别:", item.tabName)) {
                     getVu().showGenderPickerView(genderList);
-                } else if (TextUtils.equals("", item.tabName)) {
-
-                } else if (TextUtils.equals("", item.tabName)) {
-
-                } else if (TextUtils.equals("", item.tabName)) {
-
                 } else if (TextUtils.equals("城市:", item.tabName)) {
                     getVu().showCityPickerView();
                 }
@@ -153,11 +142,50 @@ public class PersonalInfoFragment extends BaseListFragment<PersonalInfoContract.
         LocationBean county = AreaUtil.getInstance().getOptions3Items().get(options1).get(options2).get(options3);
         PersonalItem personalItem = (PersonalItem) list.get(7);
         personalItem.tabValue = province.getName() + city.getName() + county.getName();
+        /**
+         * 提交数据
+         */
     }
 
     @Override
     public void selectGender(String gender) {
         PersonalItem personalItem = (PersonalItem) list.get(2);
         personalItem.tabValue = gender;
+        /**
+         * 提交数据
+         */
+    }
+
+    @Override
+    public void hideSoftInput() {
+        SoftInputUtil.closeKeybordForActivity(_mActivity);
+    }
+
+    @Override
+    public void toSubmitData(String content) {
+        if (!TextUtils.isEmpty(currentTabName)) {
+            for (int i = 0; i < list.size(); i++) {
+                PersonalItem temp = (PersonalItem) list.get(i);
+                if (TextUtils.equals(currentTabName, temp.tabName)) {
+                    temp.tabValue = content;
+                }
+            }
+            /**
+             * 提交数据
+             */
+            if (TextUtils.equals("名字:", currentTabName)) {
+
+            } else if (TextUtils.equals("公司:", currentTabName)) {
+
+            } else if (TextUtils.equals("职务:", currentTabName)) {
+
+            } else if (TextUtils.equals("一句话介绍:", currentTabName)) {
+
+            } else if (TextUtils.equals("邮箱:", currentTabName)) {
+
+            } else if (TextUtils.equals("详情地址:", currentTabName)) {
+
+            }
+        }
     }
 }
