@@ -1,10 +1,13 @@
 package com.yushi.leke.fragment.ucenter.personalInfo;
 
+import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
 import com.yufan.library.base.BaseListFragment;
 import com.yufan.library.bean.LocationBean;
+import com.yufan.library.view.CustomGlideEngine;
 import com.yufan.library.inter.ICallBack;
 import com.yufan.library.util.AreaUtil;
 import com.yufan.library.util.SoftInputUtil;
@@ -17,7 +20,11 @@ import android.view.WindowManager;
 import android.widget.EditText;
 
 import com.yufan.library.inject.VuClass;
+import com.yushi.leke.R;
 import com.yushi.leke.util.StringUtil;
+import com.zhihu.matisse.Matisse;
+import com.zhihu.matisse.MimeType;
+import com.zhihu.matisse.internal.entity.CaptureStrategy;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +41,7 @@ public class PersonalInfoFragment extends BaseListFragment<PersonalInfoContract.
     private PersonalItem personalItem;
     private List<String> genderList = new ArrayList<>();
     private String currentTabName;
+    private static final int REQUEST_CODE_CHOOSE = 0x100;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -186,6 +194,31 @@ public class PersonalInfoFragment extends BaseListFragment<PersonalInfoContract.
             } else if (TextUtils.equals("详情地址:", currentTabName)) {
 
             }
+        }
+    }
+
+
+    @Override
+    public void choosePhotos() {
+        Matisse.from(_mActivity)
+                .choose(MimeType.allOf())//ofAll()
+                .theme(R.style.Matisse_Zhihu)//主题，夜间模式R.style.Matisse_Dracula
+                .countable(true)//是否显示选中数字
+                .capture(true)//是否提供拍照功能
+                .captureStrategy(new CaptureStrategy(true, "com.zhihu.matisse.sample.fileprovider"))//存储地址
+                .maxSelectable(9)//最大选择数
+                //.addFilter(new GifSizeFilter(320, 320, 5 * Filter.K * Filter.K))//筛选条件
+                .gridExpectedSize(getResources().getDimensionPixelSize(R.dimen.px100))//图片大小
+                .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)//屏幕方向
+                .thumbnailScale(0.85f)//缩放比例
+                .imageEngine(new CustomGlideEngine())//图片加载方式
+                .forResult(REQUEST_CODE_CHOOSE);//请求码
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE_CHOOSE && resultCode == RESULT_OK) {
         }
     }
 }

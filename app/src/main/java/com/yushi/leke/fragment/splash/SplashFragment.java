@@ -35,7 +35,7 @@ public class SplashFragment extends BaseFragment<SplashContract.IView> implement
     //初始化定位
     private void initMapLocation() {
         String[] perms = {Manifest.permission.ACCESS_COARSE_LOCATION,
-                Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.READ_PHONE_STATE};
+                Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.READ_PHONE_STATE,Manifest.permission.WRITE_EXTERNAL_STORAGE};
         if (EasyPermissions.hasPermissions(_mActivity, perms)) {
             //有权限
             jumpToMain();
