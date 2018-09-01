@@ -208,7 +208,7 @@ public class PersonalInfoFragment extends BaseListFragment<PersonalInfoContract.
                 .captureStrategy(new CaptureStrategy(true, "com.zhihu.matisse.sample.fileprovider"))//存储地址
                 .maxSelectable(9)//最大选择数
                 //.addFilter(new GifSizeFilter(320, 320, 5 * Filter.K * Filter.K))//筛选条件
-                .gridExpectedSize(getResources().getDimensionPixelSize(R.dimen.px100))//图片大小
+                .gridExpectedSize(getResources().getDimensionPixelSize(R.dimen.px300))//图片大小
                 .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)//屏幕方向
                 .thumbnailScale(0.85f)//缩放比例
                 .imageEngine(new CustomGlideEngine())//图片加载方式

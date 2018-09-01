@@ -104,7 +104,7 @@
 
         <provider
             android:name="android.support.v4.content.FileProvider"
-            android:authorities="com.yushi.leke.fileprovider"
+            android:authorities="com.zhihu.matisse.sample.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
@@ -140,6 +140,7 @@
         <meta-data
             android:name="UMENG_APPKEY"
             android:value="5b6bafa0b27b0a7d06000033" />
+
     </application>
 
 </manifest>
