@@ -42,6 +42,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import me.drakeet.multitype.ItemViewBinder;
+import me.relex.circleindicator.CircleIndicator;
 
 
 /**
@@ -92,13 +93,13 @@ public class SubscriptionsBannerViewBinder extends ItemViewBinder<SubscriptionBa
         list.add("http://www.sheng-han.com/images/webwxgetmsgimg.jpg");
         TopAdapter adapter = new TopAdapter(holder.itemView.getContext(), list);
         holder.viewPager.setAdapter(adapter);
-
+       holder.circleIndicator.setViewPager(holder.viewPager);
     }
 
 
     static class ViewHolder extends RecyclerView.ViewHolder {
 
-
+        private CircleIndicator circleIndicator;
         private ViewPager viewPager;
         private ImageView rightMusic;
         private RelativeLayout rl_searchbar;
@@ -108,6 +109,7 @@ public class SubscriptionsBannerViewBinder extends ItemViewBinder<SubscriptionBa
             viewPager = itemView.findViewById(R.id.viewpager);
             rightMusic = itemView.findViewById(R.id.iv_anim_icon);
             rl_searchbar = itemView.findViewById(R.id.rl_searchbar);
+            circleIndicator=itemView.findViewById(R.id.indicator);
         }
     }
 
