@@ -1,62 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.yufan.library.view.ResizeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:fresco="http://schemas.android.com/apk/res-auto"
     android:id="@+id/rsz_layout"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-            <ImageView
-                android:id="@+id/img_personal_top_bg"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/px346"
-                android:scaleType="centerCrop" />
+    <ImageView
+        android:id="@+id/img_personal_top_bg"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px346"
+        android:scaleType="centerCrop" />
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/px346"
-                android:background="@color/color_73000000" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px346"
+        android:background="@color/color_73000000" />
 
-            <RelativeLayout
-                android:id="@+id/rl_edit_head"
-                android:layout_width="@dimen/px236"
-                android:layout_height="@dimen/px236"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="@dimen/px210">
+    <RelativeLayout
+        android:id="@+id/rl_edit_head"
+        android:layout_width="@dimen/px236"
+        android:layout_height="@dimen/px236"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/px210">
 
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:src="@drawable/ic_headimg_bg" />
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_headimg_bg" />
 
-                <com.facebook.drawee.view.SimpleDraweeView
-                    android:id="@+id/img_head"
-                    android:layout_width="@dimen/px200"
-                    android:layout_height="@dimen/px200"
-                    android:layout_centerInParent="true"
-                    fresco:placeholderImageScaleType="focusCrop"
-                    fresco:roundAsCircle="true" />
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/img_head"
+            android:layout_width="@dimen/px200"
+            android:layout_height="@dimen/px200"
+            android:layout_centerInParent="true"
+            fresco:placeholderImageScaleType="focusCrop"
+            fresco:roundAsCircle="true" />
 
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:src="@drawable/ic_edit_headimg" />
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_edit_headimg" />
 
-            </RelativeLayout>
+    </RelativeLayout>
 
-            <View
-                android:id="@+id/view_line"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/px130"
-                android:layout_below="@+id/img_personal_top_bg" />
-            <com.yufan.library.view.recycler.YFRecyclerView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_below="@+id/view_line"
-                android:id="@+id/rv_personal"
-                app:needLoadMore="false"
-                android:background="@color/white"
-                />
+    <View
+        android:id="@+id/view_line"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px130"
+        android:layout_below="@+id/img_personal_top_bg" />
+
+    <com.yufan.library.view.recycler.YFRecyclerView
+        android:id="@+id/rv_personal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/view_line"
+        android:background="@color/white"
+        app:needLoadMore="false" />
 
 
 </com.yufan.library.view.ResizeLayout>
