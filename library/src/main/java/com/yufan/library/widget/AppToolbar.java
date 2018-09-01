@@ -1,6 +1,7 @@
 package com.yufan.library.widget;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.view.Gravity;
@@ -38,6 +39,7 @@ public class AppToolbar extends RelativeLayout {
     private List<View> rightViews = new ArrayList<>();
     private List<View> centerViews = new ArrayList<>();
     private boolean isVertical;
+    private View titleView;
 
     public AppToolbar(Context context) {
         super(context);
@@ -46,15 +48,16 @@ public class AppToolbar extends RelativeLayout {
         setId(R.id.title_id);
     }
 
-
     public AppToolbar(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context);
 
     }
 
+
+
     private void init(Context context) {
-        View titleView = View.inflate(context, R.layout.toptitle, this);
+         titleView = View.inflate(context, R.layout.toptitle, this);
         toptitle_left = (LinearLayout) titleView
                 .findViewById(R.id.toptitle_left);
         toptitle_right = (LinearLayout) titleView
@@ -63,7 +66,6 @@ public class AppToolbar extends RelativeLayout {
                 .findViewById(R.id.toptitle_center);
         background=  titleView.findViewById(R.id.background);
         line= titleView.findViewById(R.id.line);
-
 
     }
 
