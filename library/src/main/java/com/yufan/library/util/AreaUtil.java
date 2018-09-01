@@ -1,7 +1,10 @@
 package com.yufan.library.util;
+
 import android.content.Context;
+
 import com.alibaba.fastjson.JSON;
 import com.yufan.library.bean.LocationBean;
+
 import org.json.JSONArray;
 
 import java.util.ArrayList;

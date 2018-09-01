@@ -16,7 +16,7 @@
 
 package com.yushi.leke.fragment.ucenter.personalInfo;
 
-import android.net.Uri;
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -26,17 +26,18 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.yufan.library.inter.ICallBack;
 import com.yushi.leke.R;
-import com.yushi.leke.fragment.home.SubscriptionInfo;
 
 import me.drakeet.multitype.ItemViewBinder;
 
 public class PersonalInfoViewBinder extends ItemViewBinder<PersonalItem, PersonalInfoViewBinder.ViewHolder> {
     private ICallBack callBack;
-    public PersonalInfoViewBinder(ICallBack callBack) {
-        this.callBack=callBack;
+    private Context mContext;
+
+    public PersonalInfoViewBinder(ICallBack callBack, Context context) {
+        this.callBack = callBack;
+        this.mContext = context;
     }
 
     @Override
@@ -53,53 +54,80 @@ public class PersonalInfoViewBinder extends ItemViewBinder<PersonalItem, Persona
         holder.et_value.setText(category.tabValue);
         holder.et_value.setHint(category.tabEditHint);
         holder.tv_value.setText(category.tabValue);
-        if(category.inputTab){
+
+        if (category.inputTab) {
             holder.tv_value.setVisibility(View.GONE);
             holder.et_value.setVisibility(View.VISIBLE);
             holder.et_value.setOnFocusChangeListener(new View.OnFocusChangeListener() {
                 @Override
                 public void onFocusChange(View v, boolean hasFocus) {
-                    if(hasFocus){
-                        callBack.OnBackResult(category,0);
+                    if (hasFocus) {
+                        callBack.OnBackResult(category, 0);
                     }
                 }
             });
-        }else {
+        } else {
             holder.tv_value.setVisibility(View.VISIBLE);
             holder.et_value.setVisibility(View.GONE);
         }
-        if(category.tabExt){
+        if (category.tabExt) {
             holder.tv_ext.setVisibility(View.VISIBLE);
-        }else {
+        } else {
             holder.tv_ext.setVisibility(View.GONE);
         }
+
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                callBack.OnBackResult(category,0);
-
+                if (TextUtils.equals("用户ID:", category.tabName) ||
+                        TextUtils.equals("性别:", category.tabName) ||
+                        TextUtils.equals("城市:", category.tabName)) {
+                    callBack.OnBackResult(category, 0);
+                }
             }
         });
 
+        holder.tv_value.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (TextUtils.equals("用户ID:", category.tabName)) {
+                    callBack.OnBackResult(category, 0);
+                }
+            }
+        });
+        holder.tv_ext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (TextUtils.equals("用户ID:", category.tabName)) {
+                    callBack.OnBackResult(category, 0);
+                }
+            }
+        });
 
+        if (TextUtils.equals("城市:", category.tabName)) {
+            if (TextUtils.equals("请选择城市", category.tabValue)) {
+                holder.tv_value.setTextColor(mContext.getResources().getColor(R.color.color_gray_level9));
+            } else {
+                holder.tv_value.setTextColor(mContext.getResources().getColor(R.color.color_gray_level3));
+            }
+        }
     }
 
 
     static class ViewHolder extends RecyclerView.ViewHolder {
-    TextView tv_name;
-    TextView tv_value;
-    TextView tv_ext;
-    EditText et_value;
+        TextView tv_name;
+        TextView tv_value;
+        TextView tv_ext;
+        EditText et_value;
+
         ViewHolder(@NonNull View itemView) {
             super(itemView);
-            tv_name=itemView.findViewById(R.id.tv_name);
-            tv_value=itemView.findViewById(R.id.tv_value);
-            tv_ext=itemView.findViewById(R.id.tv_ext);
-            et_value=itemView.findViewById(R.id.et_value);
+            tv_name = itemView.findViewById(R.id.tv_name);
+            tv_value = itemView.findViewById(R.id.tv_value);
+            tv_ext = itemView.findViewById(R.id.tv_ext);
+            et_value = itemView.findViewById(R.id.et_value);
         }
     }
-
-
 
 
 }

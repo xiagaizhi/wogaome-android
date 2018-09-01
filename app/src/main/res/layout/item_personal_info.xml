@@ -26,7 +26,6 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="@dimen/px176"
                 android:text="123312321"
-
                 android:textColor="@color/color_gray_level3"
                 android:textSize="@dimen/px28" />
             <EditText

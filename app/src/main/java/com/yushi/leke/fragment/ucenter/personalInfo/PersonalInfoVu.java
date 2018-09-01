@@ -1,6 +1,7 @@
 package com.yushi.leke.fragment.ucenter.personalInfo;
 
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
@@ -8,6 +9,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bigkoo.pickerview.builder.OptionsPickerBuilder;
+import com.bigkoo.pickerview.listener.OnDismissListener;
 import com.bigkoo.pickerview.listener.OnOptionsSelectListener;
 import com.bigkoo.pickerview.view.OptionsPickerView;
 import com.bumptech.glide.Glide;
@@ -23,6 +25,8 @@ import com.yufan.library.inject.FindView;
 import com.yufan.library.inject.Title;
 import com.yufan.library.widget.StateLayout;
 import com.yufan.library.widget.AppToolbar;
+
+import java.util.List;
 
 import jp.wasabeef.glide.transformations.BlurTransformation;
 
@@ -77,25 +81,78 @@ public class PersonalInfoVu extends BaseListVu<PersonalInfoContract.Presenter> i
 
     }
 
+    @Override
+    public void showCityPickerView() {
+        if (AreaUtil.getInstance().getOptions1Items() == null ||
+                AreaUtil.getInstance().getOptions2Items() == null ||
+                AreaUtil.getInstance().getOptions3Items() == null) {
+            new AsyncTask<Void, Void, Void>() {
+                @Override
+                protected Void doInBackground(Void... voids) {
+                    AreaUtil.getInstance().init(getContext());
+                    return null;
+                }
 
-    private void showPickerView() {// 弹出选择器
-        AreaUtil.getInstance().init(getContext());
+                @Override
+                protected void onPostExecute(Void aVoid) {
+                    super.onPostExecute(aVoid);
+                    toShowCityPickView();
+                }
+            }.execute();
 
+        } else {
+            toShowCityPickView();
+        }
+
+    }
+
+    @Override
+    public void showGenderPickerView(final List<String> genderList) {
         OptionsPickerView pvOptions = new OptionsPickerBuilder(getContext(), new OnOptionsSelectListener() {
             @Override
             public void onOptionsSelect(int options1, int options2, int options3, View v) {
+                mPersenter.resetTab();
+                mPersenter.selectGender(genderList.get(options1));
+            }
+        })
+                .setTitleText("性别选择")
+                .setDividerColor(Color.BLACK)
+                .setTextColorCenter(Color.BLACK)
+                .setContentTextSize(20)
+                .build();
+        pvOptions.setOnDismissListener(new OnDismissListener() {
+            @Override
+            public void onDismiss(Object o) {
+                mPersenter.resetTab();
+            }
+        });
 
+        pvOptions.setPicker(genderList);
+        pvOptions.show();
+        mPersenter.resetVu();
+    }
+
+    private void toShowCityPickView() {
+        OptionsPickerView pvOptions = new OptionsPickerBuilder(getContext(), new OnOptionsSelectListener() {
+            @Override
+            public void onOptionsSelect(int options1, int options2, int options3, View v) {
+                mPersenter.resetTab();
+                mPersenter.selectedCityInfo(options1, options2, options3);
             }
         }).setTitleText("城市选择")
                 .setDividerColor(Color.BLACK)
                 .setTextColorCenter(Color.BLACK)
                 .setContentTextSize(20)
                 .build();
-
-        /*pvOptions.setPicker(options1Items);//一级选择器
-        pvOptions.setPicker(options1Items, options2Items);//二级选择器*/
+        pvOptions.setOnDismissListener(new OnDismissListener() {
+            @Override
+            public void onDismiss(Object o) {
+                mPersenter.resetTab();
+            }
+        });
         pvOptions.setPicker(AreaUtil.getInstance().getOptions1Items(), AreaUtil.getInstance().getOptions2Items(), AreaUtil.getInstance().getOptions3Items());//三级选择器
         pvOptions.show();
+        mPersenter.resetVu();
     }
 
 
@@ -135,7 +192,6 @@ public class PersonalInfoVu extends BaseListVu<PersonalInfoContract.Presenter> i
         super.onClick(v);
         switch (v.getId()) {
             case R.id.rl_edit_head:
-                showPickerView();
                 break;
 
 

@@ -1,11 +1,17 @@
 package com.yushi.leke.fragment.ucenter;
 
+import android.os.Handler;
+import android.os.Message;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.yufan.library.view.ptr.PtrClassicFrameLayout;
+import com.yufan.library.view.ptr.PtrDefaultHandler;
+import com.yufan.library.view.ptr.PtrFrameLayout;
+import com.yufan.library.view.ptr.PtrHandler;
 import com.yushi.leke.R;
 import com.yufan.library.base.BaseVu;
 import com.yufan.library.inject.FindLayout;
@@ -64,6 +70,16 @@ public class UCenterVu extends BaseVu<UCenterContract.Presenter> implements UCen
     TextView tv_share_num;
     @FindView(R.id.rl_setting)
     RelativeLayout rl_setting;
+    @FindView(R.id.ptr)
+    PtrClassicFrameLayout mPtrClassicFrameLayout;
+
+    private Handler mHandler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            mPtrClassicFrameLayout.refreshComplete();
+        }
+    };
 
     @Override
     public void initView(View view) {
@@ -79,6 +95,20 @@ public class UCenterVu extends BaseVu<UCenterContract.Presenter> implements UCen
         rl_share.setOnClickListener(this);
         rl_setting.setOnClickListener(this);
         img_head.setImageURI("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1535611272761&di=edb2ad0ac1e9fae8c791398bffecffdd&imgtype=0&src=http%3A%2F%2Fp1.wmpic.me%2Farticle%2F2017%2F10%2F23%2F1508744874_AaXhrBZE.jpg");
+        mPtrClassicFrameLayout.setPtrHandler(new PtrHandler() {
+            @Override
+            public boolean checkCanDoRefresh(PtrFrameLayout frame, View content, View header) {
+                return PtrDefaultHandler.checkContentCanBePulledDown(frame, content, header);
+            }
+
+            @Override
+            public void onRefreshBegin(PtrFrameLayout frame) {
+                mHandler.sendEmptyMessageDelayed(1,2000);
+            }
+        });
+
+
+
     }
 
     @Override
