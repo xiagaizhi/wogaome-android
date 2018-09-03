@@ -136,9 +136,10 @@ public class UCenterVu extends BaseVu<UCenterContract.Presenter> implements UCen
             case R.id.rl_myvip://我的会员
                 break;
             case R.id.rl_share://分享好友
-                mPersenter.share();
+//                mPersenter.share();
                 break;
             case R.id.rl_setting://设置
+                mPersenter.openSettingPage();
                 break;
         }
     }
