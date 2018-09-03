@@ -160,4 +160,13 @@ public interface YFApi {
     Call<ResponseBody>
     getWalletInfo(//我的钱包
     );
+
+    @FormUrlEncoded
+    @POST("app/v1/security/bindMobile")
+    Call<ResponseBody>
+    bindMobile(//上传图片
+               @Field("mobile") String mobile,
+               @Field("vcode") String vcode,
+               @Field("pwd") String pwd
+    );
 }

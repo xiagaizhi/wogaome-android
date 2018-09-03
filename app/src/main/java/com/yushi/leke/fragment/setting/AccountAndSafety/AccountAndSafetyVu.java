@@ -60,7 +60,7 @@ public class AccountAndSafetyVu extends BaseVu<AccountAndSafetyContract.Presente
 
     @Override
     public void updatePage(String phone) {
-        if (TextUtils.isEmpty(phone)) {
+        if (!TextUtils.isEmpty(phone)) {
             tv_bind_phone.setText(StringUtil.handlePhoneNumber(phone));
         } else {
             tv_bind_phone.setText("未绑定");

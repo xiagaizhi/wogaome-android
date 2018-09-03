@@ -110,7 +110,7 @@ public class CheckPhoneVu extends BaseVu<CheckPhoneContract.Presenter> implement
 
     @Override
     public void returnPhoneNumber(String phoneNumber) {
-        if (!TextUtils.isEmpty(phoneNumber) && phoneNumber.length()>3) {
+        if (!TextUtils.isEmpty(phoneNumber)) {
             tv_phone.setText(StringUtil.handlePhoneNumber(phoneNumber));
         }
     }
