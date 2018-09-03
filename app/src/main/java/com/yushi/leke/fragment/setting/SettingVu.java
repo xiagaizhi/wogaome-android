@@ -49,6 +49,12 @@ public class SettingVu extends BaseVu<SettingContract.Presenter> implements Sett
         super.initTitle(appToolbar);
         ImageView player = appToolbar.creatRightView(ImageView.class);
         player.setImageResource(R.drawable.ic_toolbar_player_blue);
+        player.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mPersenter.openPlayer();
+            }
+        });
         appToolbar.build();
         return true;
     }
@@ -70,6 +76,7 @@ public class SettingVu extends BaseVu<SettingContract.Presenter> implements Sett
             case R.id.rl_account_safety:
                 break;
             case R.id.rl_leke_about:
+                mPersenter.lekeAbout();
                 break;
             case R.id.rl_clear_cache:
                 mPersenter.cleanMemoryCache();

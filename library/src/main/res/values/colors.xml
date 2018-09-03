@@ -9,6 +9,7 @@
     <color name="color_gray_level6">#666666</color>
     <color name="color_gray_levelc">#cccccc</color>
     <color name="color_gray_level3">#333333</color>
+    <color name="color_blue_level3">#00B2FF</color>
     <color name="color_blue_level6">#007AFF</color>
     <color name="clolor_transparent">#00000000</color>
 
@@ -36,4 +37,6 @@
     <color name="color_BA9542">#BA9542</color>
     <color name="color_f7f7f7">#f7f7f7</color>
     <color name="color_C7C7C7">#C7C7C7</color>
+    <color name="color_33007AFF">#33007AFF</color>
+    <color name="color_FF4040">#FF4040</color>
 </resources>
