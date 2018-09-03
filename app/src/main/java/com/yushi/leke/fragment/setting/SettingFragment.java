@@ -4,6 +4,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 
 import com.yufan.library.cache.DataCleanManager;
+import com.yufan.library.manager.UserManager;
 import com.yufan.library.util.FileUtil;
 import com.yufan.library.util.MethodsCompat;
 import com.yufan.library.base.BaseFragment;
@@ -13,7 +14,10 @@ import android.support.annotation.Nullable;
 import android.view.View;
 
 import com.yufan.library.inject.VuClass;
+import com.yushi.leke.UIHelper;
 import com.yushi.leke.dialog.CommonDialog;
+import com.yushi.leke.fragment.login.LoginFragment;
+import com.yushi.leke.fragment.main.MainFragment;
 
 import java.io.File;
 
@@ -71,22 +75,46 @@ public class SettingFragment extends BaseFragment<SettingContract.IView> impleme
                 .setCommonClickListener(new CommonDialog.CommonDialogClick() {
                     @Override
                     public void onClick(CommonDialog commonDialog, int actionType) {
-                        new AsyncTask<Void, Void, Void>() {
-                            @Override
-                            protected Void doInBackground(Void... voids) {
-                                clearAppCache();
-                                return null;
-                            }
+                        if (actionType == CommonDialog.COMMONDIALOG_ACTION_POSITIVE) {
+                            new AsyncTask<Void, Void, Void>() {
+                                @Override
+                                protected Void doInBackground(Void... voids) {
+                                    clearAppCache();
+                                    return null;
+                                }
 
-                            @Override
-                            protected void onPostExecute(Void aVoid) {
-                                super.onPostExecute(aVoid);
-                                getVu().updataCacheSize("0KB");
-                            }
-                        }.execute();
+                                @Override
+                                protected void onPostExecute(Void aVoid) {
+                                    super.onPostExecute(aVoid);
+                                    getVu().updataCacheSize("0KB");
+                                }
+                            }.execute();
+                        }
                         commonDialog.dismiss();
                     }
                 }).show();
+    }
+
+    @Override
+    public void logout() {
+        UserManager.getInstance().setToken("");
+        UserManager.getInstance().setUid("");
+        getRootFragment().startWithPopTo(UIHelper.creat(LoginFragment.class).build(), MainFragment.class, true);
+    }
+
+    @Override
+    public void upgrade() {
+
+    }
+
+    @Override
+    public void lekeAbout() {
+
+    }
+
+    @Override
+    public void accountAndSafety() {
+
     }
 
     /**

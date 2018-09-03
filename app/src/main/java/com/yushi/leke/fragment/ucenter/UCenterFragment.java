@@ -9,17 +9,10 @@ import android.support.annotation.Nullable;
 import android.view.View;
 
 import com.yufan.library.inject.VuClass;
-import com.yufan.library.util.FileUtil;
-import com.yufan.library.util.MethodsCompat;
-import com.yufan.share.ShareModel;
 import com.yushi.leke.UIHelper;
 import com.yushi.leke.fragment.setting.SettingFragment;
 import com.yushi.leke.fragment.ucenter.personalInfo.PersonalInfoFragment;
 import com.yushi.leke.fragment.wallet.MyWalletFragment;
-import com.yushi.leke.share.ShareMenuActivity;
-
-import java.io.File;
-
 /**
  * Created by mengfantao on 18/8/2.
  */

@@ -15,5 +15,9 @@ public interface SettingContract {
 
     interface Presenter extends Pr {
         void cleanMemoryCache();
+        void logout();
+        void upgrade();
+        void lekeAbout();
+        void accountAndSafety();
     }
 }

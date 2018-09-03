@@ -77,6 +77,7 @@ public class SettingVu extends BaseVu<SettingContract.Presenter> implements Sett
             case R.id.rl_current_version:
                 break;
             case R.id.rl_logout:
+                mPersenter.logout();
                 break;
         }
     }
