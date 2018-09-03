@@ -2,11 +2,13 @@ package com.yushi.leke.fragment.ucenter.personalInfo;
 
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
 import com.yufan.library.base.BaseListFragment;
 import com.yufan.library.bean.LocationBean;
+import com.yufan.library.util.ImageUtil;
 import com.yufan.library.view.CustomGlideEngine;
 import com.yufan.library.inter.ICallBack;
 import com.yufan.library.util.AreaUtil;
@@ -15,12 +17,14 @@ import com.yufan.library.util.SoftInputUtil;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
 
 import com.yufan.library.inject.VuClass;
 import com.yushi.leke.R;
+import com.yushi.leke.util.OSSClientUtil;
 import com.yushi.leke.util.StringUtil;
 import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
@@ -200,18 +204,19 @@ public class PersonalInfoFragment extends BaseListFragment<PersonalInfoContract.
 
     @Override
     public void choosePhotos() {
-        Matisse.from(_mActivity)
-                .choose(MimeType.allOf())//ofAll()
+        Matisse.from(this)
+                .choose(MimeType.allOf())
                 .theme(R.style.Matisse_Zhihu)//主题，夜间模式R.style.Matisse_Dracula
                 .countable(true)//是否显示选中数字
                 .capture(true)//是否提供拍照功能
-                .captureStrategy(new CaptureStrategy(true, "com.zhihu.matisse.sample.fileprovider"))//存储地址
-                .maxSelectable(9)//最大选择数
+                .captureStrategy(new CaptureStrategy(false, "com.yushi.leke.fileprovider"))//存储地址
+                .maxSelectable(1)//最大选择数
                 //.addFilter(new GifSizeFilter(320, 320, 5 * Filter.K * Filter.K))//筛选条件
                 .gridExpectedSize(getResources().getDimensionPixelSize(R.dimen.px300))//图片大小
                 .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)//屏幕方向
                 .thumbnailScale(0.85f)//缩放比例
                 .imageEngine(new CustomGlideEngine())//图片加载方式
+                .spanCount(50)
                 .forResult(REQUEST_CODE_CHOOSE);//请求码
     }
 
@@ -219,6 +224,24 @@ public class PersonalInfoFragment extends BaseListFragment<PersonalInfoContract.
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CODE_CHOOSE && resultCode == RESULT_OK) {
+            List<Uri> uriList = Matisse.obtainResult(data);
+            uriList.toString();
+            uriList.get(0);
+            String imagePath = ImageUtil.getRealPathFromUri(_mActivity, uriList.get(0));
+            String imageName = ImageUtil.getPicNameFromPath(imagePath);
+            Log.e("PersonalInfoFragment", imagePath);
+            Log.e("PersonalInfoFragment", imageName);
+            OSSClientUtil.getInstance().uploadImgToOss(_mActivity, imageName, imagePath, new OSSClientUtil.UploadImageInterf() {
+                @Override
+                public void onSuccess(String url) {
+
+                }
+
+                @Override
+                public void onFail() {
+
+                }
+            });
         }
     }
 }
