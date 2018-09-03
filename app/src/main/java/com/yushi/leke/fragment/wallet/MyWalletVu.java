@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.yufan.library.Global;
 import com.yufan.library.base.BasePopupWindow;
+import com.yufan.library.browser.BrowserBaseFragment;
 import com.yufan.library.inject.AnnotateUtils;
 import com.yufan.library.inject.FindView;
 import com.yufan.library.manager.SPManager;
@@ -24,6 +25,7 @@ import com.yufan.library.inject.FindLayout;
 import com.yufan.library.inject.Title;
 import com.yufan.library.widget.StateLayout;
 import com.yufan.library.widget.AppToolbar;
+import com.yushi.leke.UIHelper;
 
 /**
  * Created by mengfantao on 18/8/2.
@@ -75,8 +77,8 @@ public class MyWalletVu extends BaseVu<MyWalletContract.Presenter> implements My
                 lkc2 = lkcs[1];
             }
         }
-        if (!TextUtils.isEmpty(lkc2)){
-            lkc1 = lkc1+".";
+        if (!TextUtils.isEmpty(lkc2)) {
+            lkc1 = lkc1 + ".";
         }
         tv_power.setText("8888");
         tv_power.setVisibility(View.VISIBLE);
@@ -138,13 +140,13 @@ public class MyWalletVu extends BaseVu<MyWalletContract.Presenter> implements My
         super.onClick(v);
         switch (v.getId()) {
             case R.id.id_lck_instructions://lkc说明页
-                mPersenter.openLkcInstruce();
+                mPersenter.openBrowserPage("lkc说明页");
                 break;
             case R.id.id_lkc_detail://lkc明细
-                mPersenter.openLkcDetail();
+                mPersenter.openBrowserPage("lkc明细");
                 break;
             case R.id.id_yesterd_arith_num://昨日算力
-                mPersenter.openYesterPower();
+                mPersenter.openBrowserPage("昨日算力");
                 break;
             case R.id.id_open_treasure://点击开宝箱
                 mPersenter.openTreasureBox();

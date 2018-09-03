@@ -37,6 +37,7 @@ public class CheckPhoneFragment extends BaseFragment<CheckPhoneContract.IView> i
     @Override
     public boolean getVerifcationCode() {
         if (TextUtils.isEmpty(phoneNumber)) {
+
             return false;
         } else {
             return true;

@@ -164,9 +164,16 @@ public interface YFApi {
     @FormUrlEncoded
     @POST("app/v1/security/bindMobile")
     Call<ResponseBody>
-    bindMobile(//上传图片
+    bindMobile(//绑定手机
                @Field("mobile") String mobile,
                @Field("vcode") String vcode,
                @Field("pwd") String pwd
+    );
+
+    @FormUrlEncoded
+    @POST("app/v1/security/sendBindMobileVcode")
+    Call<ResponseBody>
+    sendBindMobileVcode(//绑定手机发验证码
+                        @Field("mobile") String mobile
     );
 }

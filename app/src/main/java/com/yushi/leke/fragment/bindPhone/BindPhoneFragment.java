@@ -24,6 +24,24 @@ public class BindPhoneFragment extends BaseFragment<BindPhoneContract.IView> imp
 
     @Override
     public void getVerifcationCode(String phone) {
+        ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).sendBindMobileVcode(phone))
+                .useCache(false)
+                .enqueue(new BaseHttpCallBack() {
+                    @Override
+                    public void onSuccess(ApiBean mApiBean) {
+
+                    }
+
+                    @Override
+                    public void onError(int id, Exception e) {
+
+                    }
+
+                    @Override
+                    public void onFinish() {
+
+                    }
+                });
 
     }
 
