@@ -10,6 +10,8 @@ import com.yufan.library.base.Vu;
 public interface MyWalletContract {
     interface IView extends Vu {
 
+        void upDataMyWallet(MyWalletInfo myWalletInfo);
+
     }
 
     interface Presenter extends Pr {
@@ -17,5 +19,8 @@ public interface MyWalletContract {
         void openPaySafety();
         void openPlayer();
         void openTreasureBox();
+        void openLkcDetail();
+        void openYesterPower();
+        void openLkcInstruce();
     }
 }

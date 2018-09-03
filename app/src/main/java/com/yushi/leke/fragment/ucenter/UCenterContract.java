@@ -19,5 +19,6 @@ public interface UCenterContract {
 
         void openPersonalpage();
         void share();
+        void openSettingPage();
     }
 }

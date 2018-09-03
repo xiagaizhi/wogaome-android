@@ -1,6 +1,5 @@
 package com.yushi.leke.fragment.ucenter;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import com.yufan.library.base.BaseFragment;
@@ -10,13 +9,10 @@ import android.support.annotation.Nullable;
 import android.view.View;
 
 import com.yufan.library.inject.VuClass;
-import com.yufan.share.ShareModel;
 import com.yushi.leke.UIHelper;
+import com.yushi.leke.fragment.setting.SettingFragment;
 import com.yushi.leke.fragment.ucenter.personalInfo.PersonalInfoFragment;
 import com.yushi.leke.fragment.wallet.MyWalletFragment;
-import com.yushi.leke.activity.MusicPlayerActivity;
-import com.yushi.leke.share.ShareMenuActivity;
-
 /**
  * Created by mengfantao on 18/8/2.
  */
@@ -52,11 +48,10 @@ public class UCenterFragment extends BaseFragment<UCenterContract.IView> impleme
 
     @Override
     public void share() {
-        ShareModel shareModel=  new ShareModel();
-        shareModel.setContent("内容");
-        shareModel.setTargetUrl("http://www.baidu.com");
-        shareModel.setTitle("title");
-        shareModel.setIcon("https://gitbook.cn/gitchat/author/5a002a147393bc6262dfb1c2");
-        ShareMenuActivity.startShare(this,shareModel);
+    }
+
+    @Override
+    public void openSettingPage() {
+        getRootFragment().start(UIHelper.creat(SettingFragment.class).build());
     }
 }

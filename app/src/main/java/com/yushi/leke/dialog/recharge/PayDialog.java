@@ -87,7 +87,7 @@ public class PayDialog extends Dialog implements PayWayAdapter.OnItemClickListen
 
 
     private void getPayWays(String goodsId) {
-        ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).tradeMethod("v1", 0, 1, goodsId))
+        ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).tradeMethod(0, 1, goodsId))
                 .useCache(false)
                 .enqueue(new BaseHttpCallBack() {
                     @Override

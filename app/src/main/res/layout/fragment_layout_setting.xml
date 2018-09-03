@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_f7f7f7"
+    android:orientation="vertical">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px40"
+        android:background="@color/white" />
+
+    <RelativeLayout
+        android:id="@+id/rl_account_safety"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px100"
+        android:background="@color/white">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/px36"
+            android:text="账号与安全"
+            android:textColor="@color/color_gray_level3"
+            android:textSize="@dimen/px30" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/px36"
+            android:src="@drawable/ic_arrows_right" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/px1"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="@dimen/px36"
+            android:background="@color/color_f0f0f0" />
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px40"
+        android:background="@color/white" />
+
+    <RelativeLayout
+        android:id="@+id/rl_leke_about"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px100"
+        android:background="@color/white">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/px36"
+            android:text="关于乐客"
+            android:textColor="@color/color_gray_level3"
+            android:textSize="@dimen/px30" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/px36"
+            android:src="@drawable/ic_arrows_right" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/px1"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="@dimen/px36"
+            android:background="@color/color_f0f0f0" />
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px40"
+        android:background="@color/white" />
+
+    <RelativeLayout
+        android:id="@+id/rl_clear_cache"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px100"
+        android:background="@color/white">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/px36"
+            android:text="清除缓存"
+            android:textColor="@color/color_gray_level3"
+            android:textSize="@dimen/px30" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/px36"
+            android:src="@drawable/ic_arrows_right" />
+
+        <TextView
+            android:id="@+id/tv_memory_cache"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/px68"
+            android:textColor="@color/color_gray_level9"
+            android:textSize="@dimen/px24" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/px1"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="@dimen/px36"
+            android:background="@color/color_f0f0f0" />
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px40"
+        android:background="@color/white" />
+
+    <RelativeLayout
+        android:id="@+id/rl_current_version"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px100"
+        android:background="@color/white">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/px36"
+            android:text="当前版本"
+            android:textColor="@color/color_gray_level3"
+            android:textSize="@dimen/px30" />
+
+        <TextView
+            android:id="@+id/tv_current_version"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/px36"
+            android:text="1.0.0(最新版本)"
+            android:textColor="@color/color_gray_level9"
+            android:textSize="@dimen/px24" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/px1"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="@dimen/px36"
+            android:background="@color/color_f0f0f0" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_logout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px120"
+        android:layout_marginTop="@dimen/px100"
+        android:background="@color/white">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="退出登录222222"
+            android:textColor="@color/color_blue_level6"
+            android:textSize="@dimen/px34" />
+
+    </RelativeLayout>
+
+</LinearLayout>

@@ -34,7 +34,7 @@ public class PaySafetyFragment extends BaseFragment<PaySafetyContract.IView> imp
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).haveTradePwd("v1", "9999"))
+        ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).haveTradePwd())
                 .useCache(false)
                 .enqueue(new BaseHttpCallBack() {
                     @Override

@@ -38,5 +38,7 @@ public interface PersonalInfoContract {
         void hideSoftInput();
 
         void toSubmitData(String content);
+
+        void choosePhotos();
     }
 }

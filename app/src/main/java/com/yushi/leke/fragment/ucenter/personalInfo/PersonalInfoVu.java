@@ -217,7 +217,7 @@ public class PersonalInfoVu extends BaseListVu<PersonalInfoContract.Presenter> i
         super.onClick(v);
         switch (v.getId()) {
             case R.id.rl_edit_head:
-
+                mPersenter.choosePhotos();
                 break;
             case R.id.tv_ok:
                 if (mCurrentInputBox != null) {

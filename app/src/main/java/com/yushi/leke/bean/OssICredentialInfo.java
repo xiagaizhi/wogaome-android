@@ -12,6 +12,15 @@ public class OssICredentialInfo {
     private String key;
     private String bucket;
     private String downloadPath;
+    private String endPoint;
+
+    public String getEndPoint() {
+        return endPoint;
+    }
+
+    public void setEndPoint(String endPoint) {
+        this.endPoint = endPoint;
+    }
 
     public String getSecurityToken() {
         return securityToken;
