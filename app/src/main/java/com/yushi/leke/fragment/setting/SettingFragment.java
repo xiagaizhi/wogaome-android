@@ -18,6 +18,7 @@ import com.yushi.leke.UIHelper;
 import com.yushi.leke.dialog.CommonDialog;
 import com.yushi.leke.fragment.login.LoginFragment;
 import com.yushi.leke.fragment.main.MainFragment;
+import com.yushi.leke.fragment.setting.about.AboutLekeFragment;
 
 import java.io.File;
 
@@ -109,11 +110,17 @@ public class SettingFragment extends BaseFragment<SettingContract.IView> impleme
 
     @Override
     public void lekeAbout() {
+        start(UIHelper.creat(AboutLekeFragment.class).build());
 
     }
 
     @Override
     public void accountAndSafety() {
+
+    }
+
+    @Override
+    public void openPlayer() {
 
     }
 
