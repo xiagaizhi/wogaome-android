@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/rl_bind_phone"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px100">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/px36"
+            android:text="手机号"
+            android:textColor="@color/color_gray_level3"
+            android:textSize="@dimen/px30" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/px36"
+            android:src="@drawable/ic_arrows_right" />
+
+        <TextView
+            android:id="@+id/tv_bind_phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/px68"
+            android:text="未绑定"
+            android:textColor="@color/color_gray_level9"
+            android:textSize="@dimen/px24" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px1"
+        android:layout_marginLeft="@dimen/px36"
+        android:background="@color/color_line_1" />
+
+    <RelativeLayout
+        android:id="@+id/rl_modify_pwd"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px100"
+        android:layout_marginTop="@dimen/px30">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/px36"
+            android:text="登录密码"
+            android:textColor="@color/color_gray_level3"
+            android:textSize="@dimen/px30" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/px36"
+            android:src="@drawable/ic_arrows_right" />
+
+        <TextView
+            android:id="@+id/tv_modify_pwd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/px68"
+            android:text="点击修改登录密码"
+            android:textColor="@color/color_gray_level9"
+            android:textSize="@dimen/px24" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px1"
+        android:layout_marginLeft="@dimen/px36"
+        android:background="@color/color_line_1" />
+
+</LinearLayout>

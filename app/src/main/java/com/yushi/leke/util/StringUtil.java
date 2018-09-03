@@ -20,4 +20,16 @@ public class StringUtil {
         clip.setText(string);
         DialogManager.getInstance().toast("复制成功");
     }
+
+    public static String handlePhoneNumber(String phoneNumber) {
+        if (TextUtils.isEmpty(phoneNumber)) {
+            return "";
+        } else {
+            if (phoneNumber.length() >= 8) {
+                return phoneNumber.substring(0, 3) + "****" + phoneNumber.substring(7, phoneNumber.length());
+            } else {
+                return phoneNumber;
+            }
+        }
+    }
 }

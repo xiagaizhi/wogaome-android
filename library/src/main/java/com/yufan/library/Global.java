@@ -24,9 +24,5 @@ public class Global {
      */
     public static final String INTENT_PAY_RESUIL_DATA = "INTENT_PAY_RESUIL_DATA";
 
-    public static final String BIND_PHONE_TYPE_KEY = "BIND_PHONE_TYPE_KEY";
-    public static final int BIND_PHONE_FROM_SETPWD = 1;//从设置密码跳转到绑定手机
-    public static final int BIND_PHONE_FROM_PAY = 2;//从支付跳转到绑定手机
-
     public static final String CITY_DATA = "china_city_data.json";
 }

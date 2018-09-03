@@ -2,7 +2,6 @@ package com.yushi.leke.fragment.paySafe;
 
 import android.os.Bundle;
 
-import com.yufan.library.Global;
 import com.yufan.library.api.ApiBean;
 import com.yufan.library.api.ApiManager;
 import com.yufan.library.api.BaseHttpCallBack;
@@ -14,6 +13,7 @@ import android.text.TextUtils;
 import android.view.View;
 
 import com.yufan.library.inject.VuClass;
+import com.yufan.library.manager.DialogManager;
 import com.yushi.leke.UIHelper;
 import com.yushi.leke.YFApi;
 import com.yushi.leke.util.RechargeUtil;
@@ -71,8 +71,12 @@ public class PaySafetyFragment extends BaseFragment<PaySafetyContract.IView> imp
     }
 
     @Override
-    public void checkPhone(String phoneNumber) {
-        startForResult(UIHelper.creat(CheckPhoneFragment.class).put("phoneNumber", phoneNumber).build(), 200);
+    public void forgetPwd() {
+        if (isHave == 0 || TextUtils.isEmpty(phoneNumber)) {//未绑定手机或者未设置交易密码 提示请先设置交易密码
+            DialogManager.getInstance().toast("请先设置交易密码！");
+        } else {//绑定过手机验证手机 通过后修改
+            startForResult(UIHelper.creat(CheckPhoneFragment.class).put("phoneNumber", phoneNumber).build(), 200);
+        }
     }
 
     @Override
@@ -81,23 +85,23 @@ public class PaySafetyFragment extends BaseFragment<PaySafetyContract.IView> imp
         if (requestCode == 100 && resultCode == RESULT_OK && data != null) {//绑定手机成功返回
             phoneNumber = data.getString("phoneNumber");
             getVu().updatePage(isHave, phoneNumber);
-            int bindPhoneType = data.getInt(Global.BIND_PHONE_TYPE_KEY, 0);
-            if (bindPhoneType == Global.BIND_PHONE_FROM_SETPWD) {
-                setRechargePwd(isHave);
-            }
+            setRechargePwd();
         } else if (requestCode == 200 && resultCode == RESULT_OK && data != null) {//手机验证码校验过返回
             RechargeUtil.getInstance().setRechargePwd(_mActivity, SetRechargePwdDialog.SET_RECHARGE_PWD_FORGET, this);
         }
     }
 
     @Override
-    public void setRechargePwd(int isHavePwd) {
-        if (isHavePwd == 1) {//修改，先校验
-            RechargeUtil.getInstance().checkRechargePwd(1, _mActivity, "修改交易密码", this);
+    public void setRechargePwd() {
+        if (TextUtils.isEmpty(phoneNumber)) {//未绑定手机，先绑定手机
+            startForResult(UIHelper.creat(BindPhoneFragment.class).build(), 100);
         } else {
-            RechargeUtil.getInstance().setRechargePwd(_mActivity, SetRechargePwdDialog.SET_RECHARGE_PWD, this);
+            if (isHave == 1) {//修改，先校验
+                RechargeUtil.getInstance().checkRechargePwd(1, _mActivity, "修改交易密码", this);
+            } else {
+                RechargeUtil.getInstance().setRechargePwd(_mActivity, SetRechargePwdDialog.SET_RECHARGE_PWD, this);
+            }
         }
-
     }
 
     @Override
@@ -115,6 +119,6 @@ public class PaySafetyFragment extends BaseFragment<PaySafetyContract.IView> imp
 
     @Override
     public void openBindPhone() {
-        startForResult(UIHelper.creat(BindPhoneFragment.class).put(Global.BIND_PHONE_TYPE_KEY, Global.BIND_PHONE_FROM_SETPWD).build(), 100);
+        startForResult(UIHelper.creat(BindPhoneFragment.class).build(), 100);
     }
 }

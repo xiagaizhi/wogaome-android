@@ -1,7 +1,8 @@
-package com.yushi.leke.fragment.bindPhone.checkPhone;
+package com.yushi.leke.fragment.setting.modifyLoginPwd;
 
 import android.os.Bundle;
 
+import com.yushi.leke.R;
 import com.yufan.library.base.BaseFragment;
 
 import android.support.annotation.NonNull;
@@ -9,13 +10,14 @@ import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.View;
 
+import com.yufan.library.base.BaseFragment;
 import com.yufan.library.inject.VuClass;
 
 /**
  * Created by zhanyangyang on 18/8/25.
  */
-@VuClass(CheckPhoneVu.class)
-public class CheckPhoneFragment extends BaseFragment<CheckPhoneContract.IView> implements CheckPhoneContract.Presenter {
+@VuClass(ModifyLoginPwdVu.class)
+public class ModifyLoginPwdFragment extends BaseFragment<ModifyLoginPwdContract.IView> implements ModifyLoginPwdContract.Presenter {
     private String phoneNumber;
 
     @Override
@@ -24,7 +26,7 @@ public class CheckPhoneFragment extends BaseFragment<CheckPhoneContract.IView> i
         Bundle bundle = getArguments();
         if (bundle != null) {
             phoneNumber = bundle.getString("phoneNumber");
-            getVu().returnPhoneNumber(phoneNumber);
+            getVu().updataPhoneNumber(phoneNumber);
         }
     }
 
@@ -41,10 +43,11 @@ public class CheckPhoneFragment extends BaseFragment<CheckPhoneContract.IView> i
         } else {
             return true;
         }
+
     }
 
     @Override
-    public void checkPhone(String code) {
+    public void modifyLoginPwd(String code) {
 
     }
 }
