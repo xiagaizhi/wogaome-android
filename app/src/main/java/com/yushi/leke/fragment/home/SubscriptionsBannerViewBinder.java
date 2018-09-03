@@ -84,7 +84,7 @@ public class SubscriptionsBannerViewBinder extends ItemViewBinder<SubscriptionBa
         });
         holder.rightMusic.setBackgroundResource(R.drawable.ic_blue_music);
         holder.viewPager.setPageTransformer(false, new ScaleTransformer());
-        holder.viewPager.setPageMargin(20);
+        holder.viewPager.setPageMargin(10);
         holder.viewPager.setOffscreenPageLimit(3);
         List<String> list = new ArrayList<>();
         list.add("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1535618883148&di=2f748f45c0d1cdd47bc1617c59ca5e8f&imgtype=0&src=http%3A%2F%2Fimg.pintu360.com%2Feditor%2F5b2ef0f9-1071-d1a9-e76d-a9db826ddb70.jpg");

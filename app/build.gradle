@@ -18,8 +18,8 @@ android {
             abiFilters "armeabi"   //  , "armeabi-v7a", "x86"
         }
         manifestPlaceholders = [
-                XG_ACCESS_ID:"注册应用的accessid",
-                XG_ACCESS_KEY : "注册应用的accesskey",
+                XG_ACCESS_ID:"f01636373e16a",
+                XG_ACCESS_KEY : "0fcf238796985b594941809088b99089",
         ]
     }
 
