@@ -9,10 +9,14 @@ import android.view.WindowManager;
 import com.yufan.library.base.BaseListFragment;
 import com.yufan.library.inject.VuClass;
 import com.yufan.library.util.SoftInputUtil;
+import com.yufan.library.widget.anim.AFVerticalAnimator;
 import com.yushi.leke.fragment.home.SubscriptionInfo;
 import com.yushi.leke.fragment.home.SubscriptionsViewBinder;
 
 import me.drakeet.multitype.MultiTypeAdapter;
+import me.yokeyword.fragmentation.anim.DefaultHorizontalAnimator;
+import me.yokeyword.fragmentation.anim.DefaultVerticalAnimator;
+import me.yokeyword.fragmentation.anim.FragmentAnimator;
 
 /**
  * Created by mengfantao on 18/8/2.
@@ -73,5 +77,10 @@ public class SearchFragment extends BaseListFragment<SearchContract.IView> imple
         list.add(new SearchActionInfo());
         vu.getRecyclerView().getAdapter().notifyDataSetChanged();
         SoftInputUtil.hideSoftInput(getActivity(),getView());
+    }
+
+    @Override
+    public FragmentAnimator onCreateFragmentAnimator() {
+        return new AFVerticalAnimator();
     }
 }

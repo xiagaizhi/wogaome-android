@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.yufan.library.inject.AnnotateUtils;
+import com.yufan.library.widget.anim.AFHorizontalAnimator;
 
 import me.yokeyword.fragmentation.SupportFragment;
 import me.yokeyword.fragmentation.anim.DefaultHorizontalAnimator;
@@ -34,7 +35,7 @@ public abstract class BaseFragment<V extends Vu> extends SupportFragment impleme
 
     @Override
     public FragmentAnimator onCreateFragmentAnimator() {
-        return new DefaultHorizontalAnimator(); //super.onCreateFragmentAnimator();
+        return new AFHorizontalAnimator(); //super.onCreateFragmentAnimator();
     }
 
     @Nullable

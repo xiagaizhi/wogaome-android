@@ -28,6 +28,7 @@
             android:textColor="@color/color_blue_level6"
             android:layout_centerVertical="true"
             android:textSize="@dimen/px30"
+            android:padding="@dimen/px10"
             android:layout_height="wrap_content" />
         <ImageView
             android:layout_width="wrap_content"
