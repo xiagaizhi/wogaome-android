@@ -50,7 +50,7 @@ public class OSSClientUtil {
 
 
     public void uploadImgToOss(final Context context, String fileName, final String filePath, final UploadImageInterf uploadImageInterf) {
-        ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).getAvatarUploadInfo("v1", fileName))
+        ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).getAvatarUploadInfo(fileName))
                 .useCache(false)
                 .enqueue(new BaseHttpCallBack() {
                     @Override
@@ -64,7 +64,7 @@ public class OSSClientUtil {
                                     String securityToken = ossICredentialInfo.getSecurityToken();
                                     String bucketName = ossICredentialInfo.getBucket();
                                     String objectKey = ossICredentialInfo.getKey();
-                                    String endpoint = "";
+                                    String endpoint = ossICredentialInfo.getEndPoint();
                                     // TODO: 2018/8/31  
                                     final String imgUrl = ossICredentialInfo.getDownloadPath();
                                     OSSCredentialProvider credentialProvider = new OSSStsTokenCredentialProvider(accessKeyId, secretKeyId, securityToken);

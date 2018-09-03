@@ -46,7 +46,7 @@ public class OpenTreasureBoxFragment extends BaseFragment<OpenTreasureBoxContrac
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).listTreatureBox("v1", "1"))
+        ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).listTreatureBox())
                 .useCache(true)
                 .enqueue(new BaseHttpCallBack() {
                     @Override

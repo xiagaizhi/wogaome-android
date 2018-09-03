@@ -53,7 +53,7 @@ public class RechargeUtil {
             CheckRechargePwdDialog checkRechargePwdDialog = new CheckRechargePwdDialog(context, extMsg, checkRechargeInterf);
             checkRechargePwdDialog.show();
         } else {
-            ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).haveTradePwd("v1", "9999"))
+            ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).haveTradePwd())
                     .useCache(false)
                     .enqueue(new BaseHttpCallBack() {
                         @Override
@@ -138,7 +138,7 @@ public class RechargeUtil {
         if (TextUtils.isEmpty(payMethod)) {
             return;
         }
-        ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).toPay("v1", payMethod,"9999",
+        ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).toPay(payMethod, "9999",
                 orderTitle, orderPrice, tradePrice,
                 goodsId, tradeApiId, "2"))
                 .useCache(false)

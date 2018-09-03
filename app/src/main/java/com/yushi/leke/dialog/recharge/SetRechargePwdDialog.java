@@ -190,7 +190,7 @@ public class SetRechargePwdDialog extends Dialog implements KeyboardAdapter.OnKe
     private boolean isSuccess;
 
     private void setRechargePwd(String pwd) {
-        ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).setTradePwd("v1", "999", pwd))
+        ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).setTradePwd(pwd))
                 .useCache(false)
                 .enqueue(new BaseHttpCallBack() {
                     @Override

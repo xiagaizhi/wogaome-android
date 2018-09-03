@@ -158,7 +158,7 @@ public class CheckRechargePwdDialog extends Dialog implements KeyboardAdapter.On
      * 验证交易密码
      */
     private void checkPayPwd(String pwd) {
-        ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).verifyTradePwd("v1", "9999", pwd))
+        ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).verifyTradePwd(pwd))
                 .useCache(false).
                 enqueue(new BaseHttpCallBack() {
 
