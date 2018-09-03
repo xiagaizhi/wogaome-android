@@ -131,18 +131,6 @@ public class OpenTreasureBoxFragment extends BaseFragment<OpenTreasureBoxContrac
 
     }
 
-    @Override
-    public void onFragmentResult(int requestCode, int resultCode, Bundle data) {
-        super.onFragmentResult(requestCode, resultCode, data);
-        if (requestCode == 100 && resultCode == RESULT_OK && data != null) {//绑定手机成功返回
-            int bindPhoneType = data.getInt(Global.BIND_PHONE_TYPE_KEY, 0);
-            if (bindPhoneType == Global.BIND_PHONE_FROM_PAY) {//设置交易密码
-                SetRechargePwdDialog setRechargePwdDialog = new SetRechargePwdDialog(getContext(), SetRechargePwdDialog.SET_RECHARGE_PWD);
-                setRechargePwdDialog.show();
-            }
-        }
-    }
-
     private void showDialog(boolean isSuccess) {
         if (isSuccess) {
             Bundle bundle = new Bundle();

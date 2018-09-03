@@ -14,7 +14,7 @@ public interface CheckPhoneContract {
     }
 
     interface Presenter extends Pr {
-       void getVerifcationCode(String phoneNumber);
-       void checkPhone(String phoneNumber,String code);
+       boolean getVerifcationCode();
+       void checkPhone(String code);
     }
 }

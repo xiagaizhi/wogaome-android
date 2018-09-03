@@ -17,6 +17,7 @@ import com.yufan.library.inject.FindView;
 import com.yufan.library.inject.Title;
 import com.yufan.library.widget.StateLayout;
 import com.yufan.library.widget.AppToolbar;
+import com.yushi.leke.util.StringUtil;
 import com.yushi.leke.widget.VerificationCodeTextView;
 
 /**
@@ -35,15 +36,13 @@ public class CheckPhoneVu extends BaseVu<CheckPhoneContract.Presenter> implement
     Button bt_submit;
     @FindView(R.id.line_view2)
     LoginLineView line_view2;
-    private String mPhoneNumber;
 
     public void initView(View view) {
         bt_submit.setOnClickListener(this);
         verificationCodeTextView.setOnGetCodeClickListener(new VerificationCodeTextView.OnGetCodeClickListener() {
             @Override
             public boolean getCode(String sessionId) {
-                if (!TextUtils.isEmpty(mPhoneNumber)) {
-                    mPersenter.getVerifcationCode(mPhoneNumber);
+                if (mPersenter.getVerifcationCode()) {
                     return true;
                 }
                 return false;
@@ -93,7 +92,7 @@ public class CheckPhoneVu extends BaseVu<CheckPhoneContract.Presenter> implement
         switch (v.getId()) {
             case R.id.bt_submit:
                 if (CheckUtil.checkInputState(null, null, et_verification_code, true)) {
-                    mPersenter.checkPhone(mPhoneNumber, et_verification_code.getText().toString());
+                    mPersenter.checkPhone(et_verification_code.getText().toString());
                 }
                 break;
         }
@@ -111,9 +110,8 @@ public class CheckPhoneVu extends BaseVu<CheckPhoneContract.Presenter> implement
 
     @Override
     public void returnPhoneNumber(String phoneNumber) {
-        mPhoneNumber = phoneNumber;
-        if (!TextUtils.isEmpty(mPhoneNumber)) {
-            tv_phone.setText(mPhoneNumber.substring(0, 3) + "****" + mPhoneNumber.substring(7, mPhoneNumber.length()));
+        if (!TextUtils.isEmpty(phoneNumber) && phoneNumber.length()>3) {
+            tv_phone.setText(StringUtil.handlePhoneNumber(phoneNumber));
         }
     }
 }

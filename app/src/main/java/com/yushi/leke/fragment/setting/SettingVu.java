@@ -74,6 +74,7 @@ public class SettingVu extends BaseVu<SettingContract.Presenter> implements Sett
         super.onClick(v);
         switch (v.getId()) {
             case R.id.rl_account_safety:
+                mPersenter.accountAndSafety();
                 break;
             case R.id.rl_leke_about:
                 mPersenter.lekeAbout();
