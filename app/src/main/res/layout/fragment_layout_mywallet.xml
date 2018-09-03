@@ -118,12 +118,14 @@
                             android:textSize="@dimen/px30" />
 
                         <TextView
+                            android:id="@+id/tv_power"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/px12"
                             android:layout_toRightOf="@+id/id_yesterd_arith_num"
                             android:background="@drawable/message_widget_bg_shape"
-                            android:text="999999"
+                            android:text=""
+                            android:visibility="gone"
                             android:textColor="@color/white"
                             android:textSize="@dimen/px18" />
                     </RelativeLayout>

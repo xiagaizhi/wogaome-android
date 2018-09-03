@@ -41,6 +41,8 @@ public class MyWalletVu extends BaseVu<MyWalletContract.Presenter> implements My
     TextView id_yesterd_arith_num;
     @FindView(R.id.id_open_treasure)
     ImageButton id_open_treasure;
+    @FindView(R.id.tv_power)
+    TextView tv_power;
     private HighLightView highLightView;
     private ImageView keyIcon;
     private View rootView;
@@ -62,7 +64,21 @@ public class MyWalletVu extends BaseVu<MyWalletContract.Presenter> implements My
     @Override
     public void initView(View view) {
         rootView = view;
-        id_lkc_remain.setText(Html.fromHtml("<b><<font color='#151515'><size>12345.</size></font></b><font color='#333333'><size2>12345</size2></font>", null, new SizeLabel(getContext())));
+        String[] lkcs = "1233.3434".split("\\.");
+        String lkc1 = "0";
+        String lkc2 = "";
+        if (lkcs != null) {
+            if (lkcs.length > 0) {
+                lkc1 = lkcs[0];
+            }
+            if (lkcs.length > 1) {
+                lkc2 = lkcs[1];
+            }
+        }
+        if (!TextUtils.isEmpty(lkc2)){
+            lkc1 = lkc1+".";
+        }
+        id_lkc_remain.setText(Html.fromHtml("<b><<font color='#151515'><size>" + lkc1 + "</size></font></b><font color='#333333'><size2>" + lkc2 + "</size2></font>", null, new SizeLabel(getContext())));
         id_lck_instructions.setOnClickListener(this);
         id_lkc_detail.setOnClickListener(this);
         id_yesterd_arith_num.setOnClickListener(this);
@@ -120,14 +136,41 @@ public class MyWalletVu extends BaseVu<MyWalletContract.Presenter> implements My
         super.onClick(v);
         switch (v.getId()) {
             case R.id.id_lck_instructions://lkc说明页
+                mPersenter.openLkcInstruce();
                 break;
             case R.id.id_lkc_detail://lkc明细
+                mPersenter.openLkcDetail();
                 break;
             case R.id.id_yesterd_arith_num://昨日算力
+                mPersenter.openYesterPower();
                 break;
             case R.id.id_open_treasure://点击开宝箱
                 mPersenter.openTreasureBox();
                 break;
+        }
+    }
+
+    @Override
+    public void upDataMyWallet(MyWalletInfo myWalletInfo) {
+        if (myWalletInfo != null) {
+            String[] lkcs = myWalletInfo.getLkc().split("//.");
+            String lkc1 = "0";
+            String lkc2 = "";
+            if (lkcs != null) {
+                if (lkcs.length > 0) {
+                    lkc1 = lkcs[0];
+                }
+                if (lkcs.length > 1) {
+                    lkc2 = lkcs[1];
+                }
+            }
+            id_lkc_remain.setText(Html.fromHtml("<b><<font color='#151515'><size>" + lkc1 + "</size></font></b><font color='#333333'><size2>" + lkc2 + "</size2></font>", null, new SizeLabel(getContext())));
+            if (myWalletInfo.getPower() > 0) {
+                tv_power.setVisibility(View.VISIBLE);
+                tv_power.setText(String.valueOf(myWalletInfo.getPower()));
+            } else {
+                tv_power.setVisibility(View.GONE);
+            }
         }
     }
 }

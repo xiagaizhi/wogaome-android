@@ -167,4 +167,11 @@ public interface YFApi {
                         @Path("interfVersion") String interfVersion,
                         @Field("fileName") String fileName
     );
+
+
+    @POST("app/v1/account/getWalletInfo")
+    Call<ResponseBody>
+    getWalletInfo(//我的钱包
+
+    );
 }
