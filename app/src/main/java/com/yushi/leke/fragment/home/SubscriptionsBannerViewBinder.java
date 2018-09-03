@@ -138,8 +138,7 @@ public class SubscriptionsBannerViewBinder extends ItemViewBinder<SubscriptionBa
         });
         holder.mConvenientBanner.setIndicatorGravity(BannerConfig.CENTER);
         holder.mConvenientBanner.setDelayTime(5000);
-        holder.mConvenientBanner.isAutoPlay(true);
-        holder.mConvenientBanner. start();
+        holder.mConvenientBanner.start();
     }
 
 
@@ -156,8 +155,21 @@ public class SubscriptionsBannerViewBinder extends ItemViewBinder<SubscriptionBa
             rightMusic = itemView.findViewById(R.id.iv_anim_icon);
             rl_searchbar = itemView.findViewById(R.id.rl_searchbar);
             mConvenientBanner=itemView.findViewById(R.id.viewpager);
+            mConvenientBanner.addOnAttachStateChangeListener(new View.OnAttachStateChangeListener() {
+                @Override
+                public void onViewAttachedToWindow(View view) {
+                  mConvenientBanner.startAutoPlay();
+
+                }
+
+                @Override
+                public void onViewDetachedFromWindow(View view) {
+                   mConvenientBanner.stopAutoPlay();
+                }
+            });
         }
     }
+
 
 
 }
