@@ -4,7 +4,7 @@ import android.support.v4.view.ViewPager;
 import android.view.View;
 
 public class ScaleTransformer implements ViewPager.PageTransformer {
-    private static final float MIN_SCALE = 0.97f;
+    private static final float MIN_SCALE = 0.95f;
     private static final float MAX_SCALE = 0.9f;
     public void transformPage(View page, float position) {
         if (position < -1 || position > 1) {

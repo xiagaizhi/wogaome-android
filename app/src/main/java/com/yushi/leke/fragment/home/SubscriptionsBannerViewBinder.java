@@ -19,6 +19,7 @@ package com.yushi.leke.fragment.home;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -34,6 +35,11 @@ import com.facebook.drawee.generic.GenericDraweeHierarchyBuilder;
 import com.facebook.drawee.generic.RoundingParams;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.yufan.library.inter.ICallBack;
+import com.yufan.library.util.FormatImageUrlUtils;
+import com.yufan.library.view.banner.Banner;
+import com.yufan.library.view.banner.BannerConfig;
+import com.yufan.library.view.banner.listener.OnBannerClickListener;
+import com.yufan.library.view.banner.loader.ImageLoaderInterface;
 import com.yushi.leke.R;
 import com.yushi.leke.activity.MusicPlayerActivity;
 import com.yushi.leke.widget.transformer.ScaleTransformer;
@@ -83,84 +89,73 @@ public class SubscriptionsBannerViewBinder extends ItemViewBinder<SubscriptionBa
             }
         });
         holder.rightMusic.setBackgroundResource(R.drawable.ic_blue_music);
-        holder.viewPager.setPageTransformer(false, new ScaleTransformer());
-        holder.viewPager.setPageMargin(10);
-        holder.viewPager.setOffscreenPageLimit(3);
+        holder.mConvenientBanner.setPageTransformer(false, new ScaleTransformer());
+        holder.mConvenientBanner.setOffscreenPageLimit(3);
         List<String> list = new ArrayList<>();
         list.add("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1535618883148&di=2f748f45c0d1cdd47bc1617c59ca5e8f&imgtype=0&src=http%3A%2F%2Fimg.pintu360.com%2Feditor%2F5b2ef0f9-1071-d1a9-e76d-a9db826ddb70.jpg");
         list.add("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1535627957737&di=97e2e0e75f0c17b859e6da832b260c02&imgtype=0&src=http%3A%2F%2Fpic116.nipic.com%2Ffile%2F20161202%2F24310187_164918489000_2.jpg");
         list.add("http://www.91danji.com/attachments/201612/12/11/3xowh1aml.jpg");
         list.add("http://www.sheng-han.com/images/webwxgetmsgimg.jpg");
-        TopAdapter adapter = new TopAdapter(holder.itemView.getContext(), list);
-        holder.viewPager.setAdapter(adapter);
-       holder.circleIndicator.setViewPager(holder.viewPager);
+        holder.mConvenientBanner.setImages(list).setImageLoader(new ImageLoaderInterface<View>() {
+            @Override
+            public void displayImage(int position, Context context, Object path, View view) {
+                SimpleDraweeView simpleDraweeView = (SimpleDraweeView) view;
+                simpleDraweeView.setImageURI((String)path);
+            }
+
+            @Override
+            public View createImageView(Context context) {
+                SimpleDraweeView simpleDraweeView = new SimpleDraweeView(context);
+                GenericDraweeHierarchy hierarchy = GenericDraweeHierarchyBuilder.newInstance(context.getResources())
+                        //设置圆形圆角参数
+                        //设置圆角半径
+                        .setRoundingParams(RoundingParams.fromCornersRadius(20))
+                        //分别设置左上角、右上角、左下角、右下角的圆角半径
+                        //.setRoundingParams(RoundingParams.fromCornersRadii(20,25,30,35))
+                        //分别设置（前2个）左上角、(3、4)右上角、(5、6)左下角、(7、8)右下角的圆角半径
+                        //.setRoundingParams(RoundingParams.fromCornersRadii(new float[]{20,25,30,35,40,45,50,55}))
+                        //设置圆形圆角参数；RoundingParams.asCircle()是将图像设置成圆形
+                        //.setRoundingParams(RoundingParams.asCircle())
+                        //设置淡入淡出动画持续时间(单位：毫秒ms)
+                        .setFadeDuration(300)
+                        //构建
+                        .build();
+                //设置Hierarchy
+
+                simpleDraweeView.setHierarchy(hierarchy);
+                ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+                simpleDraweeView.setLayoutParams(layoutParams);
+                return simpleDraweeView;
+            }
+        });
+        holder.mConvenientBanner.setOnBannerClickListener(new OnBannerClickListener() {
+
+
+            @Override
+            public void OnBannerClick(int position) {
+
+            }
+        });
+        holder.mConvenientBanner.setIndicatorGravity(BannerConfig.CENTER);
+        holder.mConvenientBanner.setDelayTime(5000);
+        holder.mConvenientBanner.isAutoPlay(true);
+        holder.mConvenientBanner. start();
     }
 
 
     static class ViewHolder extends RecyclerView.ViewHolder {
 
-        private CircleIndicator circleIndicator;
-        private ViewPager viewPager;
+
         private ImageView rightMusic;
         private RelativeLayout rl_searchbar;
+        private Banner mConvenientBanner;
 
         ViewHolder(@NonNull View itemView) {
             super(itemView);
-            viewPager = itemView.findViewById(R.id.viewpager);
+
             rightMusic = itemView.findViewById(R.id.iv_anim_icon);
             rl_searchbar = itemView.findViewById(R.id.rl_searchbar);
-            circleIndicator=itemView.findViewById(R.id.indicator);
-        }
-    }
-
-    public class TopAdapter extends PagerAdapter {
-        private List<String> list;
-        private Context context;
-
-        public TopAdapter(Context context, List<String> list) {
-            this.context = context;
-            this.list = list;
-        }
-
-        @Override
-        public int getCount() {
-            return list.size();
-        }
-
-        @Override
-        public boolean isViewFromObject(View view, Object object) {
-            return view == object;
-        }
-
-        @Override
-        public Object instantiateItem(ViewGroup container, int position) {
-            SimpleDraweeView simpleDraweeView = new SimpleDraweeView(container.getContext());
-            GenericDraweeHierarchy hierarchy = GenericDraweeHierarchyBuilder.newInstance(container.getContext().getResources())
-                    //设置圆形圆角参数
-                    //设置圆角半径
-                    .setRoundingParams(RoundingParams.fromCornersRadius(20))
-                    //分别设置左上角、右上角、左下角、右下角的圆角半径
-                    //.setRoundingParams(RoundingParams.fromCornersRadii(20,25,30,35))
-                    //分别设置（前2个）左上角、(3、4)右上角、(5、6)左下角、(7、8)右下角的圆角半径
-                    //.setRoundingParams(RoundingParams.fromCornersRadii(new float[]{20,25,30,35,40,45,50,55}))
-                    //设置圆形圆角参数；RoundingParams.asCircle()是将图像设置成圆形
-                    //.setRoundingParams(RoundingParams.asCircle())
-                    //设置淡入淡出动画持续时间(单位：毫秒ms)
-                    .setFadeDuration(300)
-                    //构建
-                    .build();
-            //设置Hierarchy
-
-            simpleDraweeView.setHierarchy(hierarchy);
-            simpleDraweeView.setImageURI(Uri.parse(list.get(position)));
-            ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-            container.addView(simpleDraweeView, layoutParams);
-            return simpleDraweeView;
-        }
-
-        @Override
-        public void destroyItem(ViewGroup container, int position, Object object) {
-            container.removeView((View) object);
+            mConvenientBanner=itemView.findViewById(R.id.viewpager);
         }
     }
 
