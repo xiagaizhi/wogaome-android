@@ -76,7 +76,7 @@ public interface YFApi {
             @Field("vcode") String vcode
     );
 
-    @POST("app/v1/listTreatureBox")
+    @POST("app/v1/trade/listTreatureBox")
     Call<ResponseBody>
     listTreatureBox(//获取宝箱列表
     );
