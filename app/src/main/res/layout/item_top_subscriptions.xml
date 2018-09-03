@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/white"
     android:clipChildren="false"
     android:orientation="vertical">
@@ -65,19 +66,18 @@
         android:clipChildren="false"
         android:layout_height="@dimen/px436">
 
-        <android.support.v4.view.ViewPager
+        <com.yufan.library.view.banner.Banner
             android:id="@+id/viewpager"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/px436"
+            android:layout_height="match_parent"
             android:layout_marginLeft="@dimen/px36"
             android:layout_marginRight="@dimen/px36"
+            app:canLoop="true"
+            app:indicator_margin_bottom="3dp"
+            app:indicator_margin="3dp"
             android:clipChildren="false" />
 
-        <me.relex.circleindicator.CircleIndicator
-            android:id="@+id/indicator"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:layout_alignParentBottom="true" />
+
     </RelativeLayout>
 
     <View
