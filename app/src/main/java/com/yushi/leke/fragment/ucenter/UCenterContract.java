@@ -18,7 +18,11 @@ public interface UCenterContract {
         void openMyWallet();
 
         void openPersonalpage();
+
         void share();
+
         void openSettingPage();
+
+        void openBrowserPage(String key);
     }
 }

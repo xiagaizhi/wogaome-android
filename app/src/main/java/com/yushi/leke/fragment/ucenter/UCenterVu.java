@@ -123,20 +123,25 @@ public class UCenterVu extends BaseVu<UCenterContract.Presenter> implements UCen
                 mPersenter.openPersonalpage();
                 break;
             case R.id.rl_roadshow://我的路演
+                mPersenter.openBrowserPage("我的路演");
                 break;
             case R.id.rl_subscribe://我的订阅
+                mPersenter.openBrowserPage("我的订阅");
                 break;
             case R.id.rl_vote://我的投票
+                mPersenter.openBrowserPage("我的投票");
                 break;
             case R.id.rl_wallet://我的钱包
                 mPersenter.openMyWallet();
                 break;
             case R.id.rl_level://我的等级
+                mPersenter.openBrowserPage("我的等级");
                 break;
             case R.id.rl_myvip://我的会员
+                mPersenter.openBrowserPage("我的会员");
                 break;
             case R.id.rl_share://分享好友
-//                mPersenter.share();
+                mPersenter.openBrowserPage("分享好友");
                 break;
             case R.id.rl_setting://设置
                 mPersenter.openSettingPage();

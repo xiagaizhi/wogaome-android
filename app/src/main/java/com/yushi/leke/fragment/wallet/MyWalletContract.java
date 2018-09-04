@@ -19,8 +19,6 @@ public interface MyWalletContract {
         void openPaySafety();
         void openPlayer();
         void openTreasureBox();
-        void openLkcDetail();
-        void openYesterPower();
-        void openLkcInstruce();
+        void openBrowserPage(String key);
     }
 }

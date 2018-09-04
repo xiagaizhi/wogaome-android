@@ -22,7 +22,7 @@ public class SoftInputUtil {
      * 关闭软键盘
      *
      * @param mEditText 输入框
-     * @param mContext 上下文
+     * @param mContext  上下文
      */
     public static void closeKeybord(EditText mEditText, Context mContext) {
 
@@ -38,7 +38,7 @@ public class SoftInputUtil {
      * 关闭软键盘
      *
      * @param mEditText 输入框
-     * @param mContext 上下文
+     * @param mContext  上下文
      */
     public static void showCloseKeybord(EditText mEditText, Context mContext) {
         mEditText.clearFocus();
@@ -54,7 +54,7 @@ public class SoftInputUtil {
      * 打卡软键盘
      *
      * @param mEditText 输入框
-     * @param mContext 上下文
+     * @param mContext  上下文
      */
     public static void openKeybord(EditText mEditText, Context mContext) {
 
@@ -66,7 +66,7 @@ public class SoftInputUtil {
      * 打卡软键盘
      *
      * @param mEditText 输入框
-     * @param mContext 上下文
+     * @param mContext  上下文
      */
     public static void showOpenKeybord(EditText mEditText, Context mContext) {
         mEditText.requestFocus();

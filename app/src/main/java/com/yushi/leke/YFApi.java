@@ -76,7 +76,7 @@ public interface YFApi {
             @Field("vcode") String vcode
     );
 
-    @POST("app/v1/listTreatureBox")
+    @POST("app/v1/trade/listTreatureBox")
     Call<ResponseBody>
     listTreatureBox(//获取宝箱列表
     );
@@ -159,5 +159,21 @@ public interface YFApi {
     @POST("app/v1/account/getWalletInfo")
     Call<ResponseBody>
     getWalletInfo(//我的钱包
+    );
+
+    @FormUrlEncoded
+    @POST("app/v1/security/bindMobile")
+    Call<ResponseBody>
+    bindMobile(//绑定手机
+               @Field("mobile") String mobile,
+               @Field("vcode") String vcode,
+               @Field("pwd") String pwd
+    );
+
+    @FormUrlEncoded
+    @POST("app/v1/security/sendBindMobileVcode")
+    Call<ResponseBody>
+    sendBindMobileVcode(//绑定手机发验证码
+                        @Field("mobile") String mobile
     );
 }
