@@ -2,6 +2,7 @@ package com.yushi.leke.fragment.ucenter;
 
 import android.os.Bundle;
 
+import com.alibaba.fastjson.JSON;
 import com.yufan.library.Global;
 import com.yufan.library.api.ApiBean;
 import com.yufan.library.api.ApiManager;
@@ -33,12 +34,70 @@ import org.json.JSONObject;
  */
 @VuClass(UCenterVu.class)
 public class UCenterFragment extends BaseFragment<UCenterContract.IView> implements UCenterContract.Presenter {
-
+    private MyProfileInfo myProfileInfo;
+    private MyBaseInfo myBaseInfo;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-      //  hasUnreadmsg();
+        hasUnreadmsg();
+        getMyProfile();
+        getMyBaseInfo();
+    }
+
+    /**
+     * 获取用户信息（不可编辑）
+     */
+    private void getMyProfile() {
+        ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).getMyProfile())
+                .useCache(true)
+                .enqueue(new BaseHttpCallBack() {
+                    @Override
+                    public void onSuccess(ApiBean mApiBean) {
+                        if (!TextUtils.isEmpty(mApiBean.getData())) {
+                            myProfileInfo = JSON.parseObject(mApiBean.getData(), MyProfileInfo.class);
+                            getVu().updateMyInfo(myProfileInfo, myBaseInfo);
+                        }
+                    }
+
+                    @Override
+                    public void onError(int id, Exception e) {
+
+                    }
+
+                    @Override
+                    public void onFinish() {
+
+                    }
+                });
+    }
+
+
+    /**
+     * /获取用户信息（可编辑）
+     */
+    private void getMyBaseInfo() {
+        ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).getMyBaseInfo())
+                .useCache(true)
+                .enqueue(new BaseHttpCallBack() {
+                    @Override
+                    public void onSuccess(ApiBean mApiBean) {
+                        if (!TextUtils.isEmpty(mApiBean.getData())) {
+                            myBaseInfo = JSON.parseObject(mApiBean.getData(), MyBaseInfo.class);
+                            getVu().updateMyInfo(myProfileInfo, myBaseInfo);
+                        }
+                    }
+
+                    @Override
+                    public void onError(int id, Exception e) {
+
+                    }
+
+                    @Override
+                    public void onFinish() {
+
+                    }
+                });
     }
 
     /**

@@ -6,6 +6,9 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
+import com.yufan.library.api.ApiBean;
+import com.yufan.library.api.ApiManager;
+import com.yufan.library.api.BaseHttpCallBack;
 import com.yufan.library.base.BaseListFragment;
 import com.yufan.library.bean.LocationBean;
 import com.yufan.library.util.ImageUtil;
@@ -25,6 +28,7 @@ import android.widget.EditText;
 
 import com.yufan.library.inject.VuClass;
 import com.yushi.leke.R;
+import com.yushi.leke.YFApi;
 import com.yushi.leke.util.OSSClientUtil;
 import com.yushi.leke.util.StringUtil;
 import com.zhihu.matisse.Matisse;
@@ -161,18 +165,14 @@ public class PersonalInfoFragment extends BaseListFragment<PersonalInfoContract.
         LocationBean county = AreaUtil.getInstance().getOptions3Items().get(options1).get(options2).get(options3);
         PersonalItem personalItem = (PersonalItem) list.get(7);
         personalItem.tabValue = province.getName() + city.getName() + county.getName();
-        /**
-         * 提交数据
-         */
+        updateInfo("", "", "", "", "", "", personalItem.tabValue, "", "");
     }
 
     @Override
     public void selectGender(String gender) {
         PersonalItem personalItem = (PersonalItem) list.get(2);
         personalItem.tabValue = gender;
-        /**
-         * 提交数据
-         */
+        updateInfo("", "", "", "", "", "", "", "", gender);
     }
 
     @Override
@@ -193,19 +193,43 @@ public class PersonalInfoFragment extends BaseListFragment<PersonalInfoContract.
              * 提交数据
              */
             if (TextUtils.equals("名字:", currentTabName)) {
-
+                updateInfo("", content, "", "", "", "", "", "", "");
             } else if (TextUtils.equals("公司:", currentTabName)) {
-
+                updateInfo("", "", content, "", "", "", "", "", "");
             } else if (TextUtils.equals("职务:", currentTabName)) {
-
+                updateInfo("", "", "", content, "", "", "", "", "");
             } else if (TextUtils.equals("一句话介绍:", currentTabName)) {
-
+                updateInfo("", "", "", "", content, "", "", "", "");
             } else if (TextUtils.equals("邮箱:", currentTabName)) {
-
+                updateInfo("", "", "", "", "", content, "", "", "");
             } else if (TextUtils.equals("详情地址:", currentTabName)) {
-
+                updateInfo("", "", "", "", "", "", "", content, "");
             }
         }
+    }
+
+    private void updateInfo(String avatar, String userName, String company,
+                            String position, String motto, String email,
+                            String city, String adress, String gender) {
+        ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).editMyBaseInfo(avatar, userName, company,
+                position, motto, email, city, adress, gender))
+                .useCache(false)
+                .enqueue(new BaseHttpCallBack() {
+                    @Override
+                    public void onSuccess(ApiBean mApiBean) {
+
+                    }
+
+                    @Override
+                    public void onError(int id, Exception e) {
+
+                    }
+
+                    @Override
+                    public void onFinish() {
+
+                    }
+                });
     }
 
 

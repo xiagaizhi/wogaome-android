@@ -114,7 +114,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/px59"
-                        android:text="乐客"
                         android:textColor="@color/color_gray_level3"
                         android:textSize="@dimen/px36" />
 

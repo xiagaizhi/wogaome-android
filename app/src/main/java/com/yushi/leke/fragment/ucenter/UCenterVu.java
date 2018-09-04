@@ -72,6 +72,8 @@ public class UCenterVu extends BaseVu<UCenterContract.Presenter> implements UCen
     RelativeLayout rl_setting;
     @FindView(R.id.ptr)
     PtrClassicFrameLayout mPtrClassicFrameLayout;
+    @FindView(R.id.tv_vote_num)
+    TextView tv_vote_num;
 
     private Handler mHandler = new Handler() {
         @Override
@@ -94,7 +96,6 @@ public class UCenterVu extends BaseVu<UCenterContract.Presenter> implements UCen
         rl_myvip.setOnClickListener(this);
         rl_share.setOnClickListener(this);
         rl_setting.setOnClickListener(this);
-        img_head.setImageURI("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1535611272761&di=edb2ad0ac1e9fae8c791398bffecffdd&imgtype=0&src=http%3A%2F%2Fp1.wmpic.me%2Farticle%2F2017%2F10%2F23%2F1508744874_AaXhrBZE.jpg");
         mPtrClassicFrameLayout.setPtrHandler(new PtrHandler() {
             @Override
             public boolean checkCanDoRefresh(PtrFrameLayout frame, View content, View header) {
@@ -166,6 +167,23 @@ public class UCenterVu extends BaseVu<UCenterContract.Presenter> implements UCen
             view_red_point.setVisibility(View.VISIBLE);
         } else {
             view_red_point.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    public void updateMyInfo(MyProfileInfo myProfileInfo, MyBaseInfo myBaseInfo) {
+        if (myProfileInfo != null) {
+            tv_roadshow_num.setText("" + myProfileInfo.getRoadShow());
+            tv_subscribe_num.setText("" + myProfileInfo.getSubscription());
+            tv_vote_num.setText("" + myProfileInfo.getVote());
+            tv_mylkc.setText("" + myProfileInfo.getToken());
+            tv_mylevel.setText("" + myProfileInfo.getLevel());
+            tv_share_num.setText("已邀请：" + myProfileInfo.getInvitation() + "名好友");
+        }
+        if (myBaseInfo != null) {
+            img_head.setImageURI(myBaseInfo.getAvatar());
+            tv_name.setText(myBaseInfo.getUserName());
+            tv_personal_introduce.setText(myBaseInfo.getMotto());
         }
     }
 }
