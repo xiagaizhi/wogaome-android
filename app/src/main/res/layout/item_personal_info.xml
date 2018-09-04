@@ -1,62 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:paddingRight="@dimen/px36"
-            android:paddingLeft="@dimen/px36"
-            android:focusable="true"
-            android:focusableInTouchMode="true"
-            android:layout_height="@dimen/px100">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:text="用户ID:"
-                android:id="@+id/tv_name"
-                android:textColor="@color/color_gray_level3"
-                android:textSize="@dimen/px28" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px100"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:paddingLeft="@dimen/px36"
+        android:paddingRight="@dimen/px36">
 
-            <TextView
-                android:id="@+id/tv_value"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/px176"
-                android:text="123312321"
-                android:textColor="@color/color_gray_level3"
-                android:textSize="@dimen/px28" />
-            <EditText
-                android:id="@+id/et_value"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/px176"
-                android:text="123312321"
-                android:background="@null"
-                android:textColor="@color/color_gray_level3"
-                android:textSize="@dimen/px28" />
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="用户ID:"
+            android:textColor="@color/color_gray_level3"
+            android:textSize="@dimen/px28" />
 
-            <TextView
-                android:id="@+id/tv_ext"
-                android:layout_width="@dimen/px57"
-                android:layout_height="@dimen/px28"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/px5"
-                android:layout_toRightOf="@+id/tv_value"
-                android:background="@drawable/shape_bg_999_100"
-                android:gravity="center"
-                android:text="复制"
-                android:visibility="invisible"
-                android:textColor="@color/color_gray_level9"
-                android:textSize="@dimen/px18" />
-        </RelativeLayout>
+        <TextView
+            android:id="@+id/tv_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/px176"
+            android:text="123312321"
+            android:textColor="@color/color_gray_level3"
+            android:textSize="@dimen/px28" />
+
+        <EditText
+            android:id="@+id/et_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/px176"
+            android:background="@null"
+            android:text="123312321"
+            android:textColor="@color/color_gray_level3"
+            android:textSize="@dimen/px28" />
+
+        <TextView
+            android:id="@+id/tv_ext"
+            android:layout_width="@dimen/px57"
+            android:layout_height="@dimen/px28"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/px5"
+            android:layout_toRightOf="@+id/tv_value"
+            android:background="@drawable/shape_bg_999_100"
+            android:gravity="center"
+            android:text="复制"
+            android:textColor="@color/color_gray_level9"
+            android:textSize="@dimen/px18"
+            android:visibility="invisible" />
 
         <View
             android:layout_width="match_parent"
             android:layout_height="@dimen/px1"
+            android:layout_alignParentBottom="true"
             android:background="@color/color_f0f0f0" />
+    </RelativeLayout>
 
 </LinearLayout>

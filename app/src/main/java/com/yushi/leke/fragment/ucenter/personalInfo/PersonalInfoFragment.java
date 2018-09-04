@@ -14,6 +14,7 @@ import com.yufan.library.inter.ICallBack;
 import com.yufan.library.util.AreaUtil;
 import com.yufan.library.util.SoftInputUtil;
 
+
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
@@ -46,6 +47,7 @@ public class PersonalInfoFragment extends BaseListFragment<PersonalInfoContract.
     private List<String> genderList = new ArrayList<>();
     private String currentTabName;
     private static final int REQUEST_CODE_CHOOSE = 0x100;
+    private EditText currentEdit;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -71,7 +73,12 @@ public class PersonalInfoFragment extends BaseListFragment<PersonalInfoContract.
             @Override
             public void OnBackResult(Object... s) {
                 PersonalItem item = (PersonalItem) s[0];
-                getVu().setCurrentInputBox((EditText) s[1]);
+                currentEdit = (EditText) s[1];
+                getVu().setCurrentInputBox(currentEdit);
+                boolean showSoftInput = (boolean) s[2];
+                if (showSoftInput) {
+                    SoftInputUtil.showOpenKeybord(currentEdit, _mActivity);
+                }
                 currentTabName = item.tabName;
                 if (personalItem == null || !personalItem.tabName.equals(item.tabName)) {
                     upTab((PersonalItem) s[0]);
@@ -170,7 +177,7 @@ public class PersonalInfoFragment extends BaseListFragment<PersonalInfoContract.
 
     @Override
     public void hideSoftInput() {
-        SoftInputUtil.closeKeybordForActivity(_mActivity);
+        SoftInputUtil.closeKeybord(currentEdit, _mActivity);
     }
 
     @Override

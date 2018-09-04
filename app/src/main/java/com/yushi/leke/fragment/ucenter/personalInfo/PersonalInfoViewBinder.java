@@ -62,7 +62,8 @@ public class PersonalInfoViewBinder extends ItemViewBinder<PersonalItem, Persona
                 @Override
                 public void onFocusChange(View v, boolean hasFocus) {
                     if (hasFocus) {
-                        callBack.OnBackResult(category, holder.et_value);
+
+                        callBack.OnBackResult(category, holder.et_value,true);
                     }
                 }
             });
@@ -79,30 +80,32 @@ public class PersonalInfoViewBinder extends ItemViewBinder<PersonalItem, Persona
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (TextUtils.equals("用户ID:", category.tabName) ||
-                        TextUtils.equals("性别:", category.tabName) ||
+                if (TextUtils.equals("性别:", category.tabName) ||
                         TextUtils.equals("城市:", category.tabName)) {
-                    callBack.OnBackResult(category,holder.et_value);
+                    callBack.OnBackResult(category, holder.et_value,false);
                 }
             }
         });
 
-        holder.tv_value.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (TextUtils.equals("用户ID:", category.tabName)) {
-                    callBack.OnBackResult(category,holder.et_value);
+
+        if (TextUtils.equals("用户ID:", category.tabName)) {
+            holder.tv_value.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (TextUtils.equals("用户ID:", category.tabName)) {
+                        callBack.OnBackResult(category, holder.et_value,false);
+                    }
                 }
-            }
-        });
-        holder.tv_ext.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (TextUtils.equals("用户ID:", category.tabName)) {
-                    callBack.OnBackResult(category,holder.et_value);
+            });
+            holder.tv_ext.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (TextUtils.equals("用户ID:", category.tabName)) {
+                        callBack.OnBackResult(category, holder.et_value,false);
+                    }
                 }
-            }
-        });
+            });
+        }
 
         if (TextUtils.equals("城市:", category.tabName)) {
             if (TextUtils.equals("请选择城市", category.tabValue)) {
