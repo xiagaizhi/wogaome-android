@@ -5,7 +5,7 @@ package com.yufan.library.api.config;
  */
 
 public class ApiConfig {
-    private String[] domains=new String []{"https://gitee.com/","https://gitee.com/","https://gitee.com/","https://gitee.com/","http://yapi.youximao.cn/mock/29/"};//域名
+    private String[] domains=new String []{"http://app.leke-dev.com/","http://app.leke-dev.com/","http://app.leke-dev.com/","http://app.leke-dev.com/","http://yapi.youximao.cn/mock/29/"};//域名
     private int apiType;//环境
 
     public ApiConfig(int apiType) {

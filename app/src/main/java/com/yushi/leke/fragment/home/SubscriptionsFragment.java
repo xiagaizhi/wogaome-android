@@ -13,17 +13,7 @@ import com.yufan.library.inter.ICallBack;
 import com.yufan.library.view.recycler.PageInfo;
 import com.yushi.leke.UIHelper;
 import com.yushi.leke.activity.MusicPlayerActivity;
-import com.yushi.leke.bean.Person;
 import com.yushi.leke.fragment.searcher.SearchFragment;
-
-import java.util.List;
-
-import io.reactivex.Observable;
-import io.reactivex.ObservableEmitter;
-import io.reactivex.ObservableOnSubscribe;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.functions.Consumer;
-import io.reactivex.schedulers.Schedulers;
 import me.drakeet.multitype.MultiTypeAdapter;
 
 /**

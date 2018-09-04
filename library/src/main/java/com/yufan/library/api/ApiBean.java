@@ -8,7 +8,7 @@ import android.text.TextUtils;
 
 public class ApiBean {
     public final static String  TOKEN_LOSE="002";
-    public final static String  SUCCESS="200";
+    public final static String  SUCCESS="2000";
 
 
     public String code;
