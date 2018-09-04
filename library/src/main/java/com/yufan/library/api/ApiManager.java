@@ -11,17 +11,24 @@ import com.yufan.library.Global;
 import com.yufan.library.api.config.ApiConfig;
 import com.yufan.library.base.BaseApplication;
 import com.yufan.library.manager.SPManager;
+import com.yufan.library.manager.UserManager;
 import com.yufan.library.util.DeviceUtil;
 import com.yufan.library.util.Netutil;
 
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.nio.charset.Charset;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
+import okhttp3.Cookie;
+import okhttp3.CookieJar;
 import okhttp3.Headers;
+import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
@@ -48,17 +55,18 @@ public class ApiManager {
         return mApiConfig;
     }
 
-    private ApiManager(){
+    private ApiManager() {
 
     }
 
-    public void init(int apiType){
+    public void init(int apiType) {
         // 创建 OKHttpClient
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
         builder.connectTimeout(DEFAULT_TIME_OUT, TimeUnit.SECONDS);//连接超时时间        builder.writeTimeout(DEFAULT_READ_TIME_OUT,TimeUnit.SECONDS);//写操作 超时时间
-        builder.readTimeout(DEFAULT_READ_TIME_OUT,TimeUnit.SECONDS);//读操作超时时间
+        builder.readTimeout(DEFAULT_READ_TIME_OUT, TimeUnit.SECONDS);//读操作超时时间
         builder.addInterceptor(new EnhancedCacheInterceptor());
-         mApiConfig=new ApiConfig(apiType);
+        builder.cookieJar(getCookieJar());
+        mApiConfig = new ApiConfig(apiType);
         // 创建Retrofit
         mRetrofit = new Retrofit.Builder()
                 .client(builder.build())
@@ -67,30 +75,56 @@ public class ApiManager {
                 .baseUrl(mApiConfig.getBaseUrl())
                 .build();
     }
-    private static class SingletonHolder{
+
+    private static class SingletonHolder {
         private static final ApiManager INSTANCE = new ApiManager();
     }
+
+    protected static CookieJar getCookieJar() {
+        return new CookieJar() {
+            @Override
+            public void saveFromResponse(HttpUrl url, List<Cookie> cookies) {
+            }
+
+            @Override
+            public List<Cookie> loadForRequest(HttpUrl url) {
+                String mainHost = url.host();
+                List<Cookie> resultCookies = new ArrayList<>();
+                Cookie.Builder builder = new Cookie.Builder();
+                Cookie cookie_tmpKey = builder
+                        .name("token")
+                        .value(UserManager.getInstance().getToken())
+                        .domain(mainHost)
+                        .build();
+                resultCookies.add(cookie_tmpKey);
+                return resultCookies != null ? resultCookies : new ArrayList<Cookie>();
+            }
+        };
+    }
+
     /**
      * 获取RetrofitServiceManager
+     *
      * @return
      */
-    public static ApiManager getInstance(){
+    public static ApiManager getInstance() {
         return SingletonHolder.INSTANCE;
     }
+
     /**
      * 获取对应的Service
+     *
      * @param service Service 的 class
      * @param <T>
      * @return
      */
-    public <T> T create(Class<T> service){
+    public <T> T create(Class<T> service) {
         return mRetrofit.create(service);
     }
 
 
-
-    public static EnhancedCall getCall(Call call){
-      return   new EnhancedCall(call);
+    public static EnhancedCall getCall(Call call) {
+        return new EnhancedCall(call);
     }
 
 
@@ -99,18 +133,18 @@ public class ApiManager {
      *
      * @return
      */
-    public   Map<String, String> getApiHeader(Context context) {
+    public Map<String, String> getApiHeader(Context context) {
         LinkedHashMap apiHeaders = new LinkedHashMap<String, String>();
-        apiHeaders.put("Accept-Language", Locale.getDefault().toString() );
+        apiHeaders.put("Accept-Language", Locale.getDefault().toString());
         apiHeaders.put("Connection", "Keep-Alive");
         apiHeaders.put("Content-Type", "application/x-www-form-urlencoded");
         apiHeaders.put("User-Agent", "");
-        apiHeaders.put("LK-App-Version", DeviceUtil.VersionName(context)+"_"+ DeviceUtil.VersionCode(context));//app版本  1.0.0_101_10
+        apiHeaders.put("LK-App-Version", DeviceUtil.VersionName(context) + "_" + DeviceUtil.VersionCode(context));//app版本  1.0.0_101_10
         apiHeaders.put("LK-Device-Id", DeviceUtil.IMEI(context));//imei
         apiHeaders.put("LK-Network-Type", Netutil.GetNetworkType(context));//网络类型
         apiHeaders.put("LK-Vendor", Build.MANUFACTURER); //厂商
         apiHeaders.put("LK-OS-Type", "Android");//系统类型
-        apiHeaders.put("LK-OS-Version",Build.VERSION.SDK_INT+"");//系统版本
+        apiHeaders.put("LK-OS-Version", Build.VERSION.SDK_INT + "");//系统版本
         apiHeaders.put("LK-Device-Model", Build.DEVICE);//设备型号
         apiHeaders.put("LK-CPU", Build.CPU_ABI);//CPU 架构
         apiHeaders.put("LK-Sid", "");//sid

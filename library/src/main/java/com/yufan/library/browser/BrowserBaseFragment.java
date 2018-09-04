@@ -56,7 +56,7 @@ public class BrowserBaseFragment extends BaseFragment<BrowserContract.View> impl
 
     @Override
     public boolean isPtrEnable() {
-        return true;
+        return false;
     }
 
 

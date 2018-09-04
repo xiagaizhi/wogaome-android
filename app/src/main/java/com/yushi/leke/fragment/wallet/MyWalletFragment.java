@@ -85,7 +85,7 @@ public class MyWalletFragment extends BaseFragment<MyWalletContract.IView> imple
         }else if (TextUtils.equals(key,"lkc明细")){
             start(UIHelper.creat(BrowserBaseFragment.class).put(Global.BUNDLE_KEY_BROWSER_URL, "http://web.leke-dev.com/#/myWallet/LKCDetail").build());
         }else if (TextUtils.equals(key,"昨日算力")){
-            start(UIHelper.creat(BrowserBaseFragment.class).put(Global.BUNDLE_KEY_BROWSER_URL, "http://web.leke-dev.com/#/myPower/powerInstruction").build());
+            start(UIHelper.creat(BrowserBaseFragment.class).put(Global.BUNDLE_KEY_BROWSER_URL, "http://web.leke-dev.com/#/myPower").build());
         }
     }
 
