@@ -223,10 +223,10 @@ public class PersonalInfoVu extends BaseListVu<PersonalInfoContract.Presenter> i
                 if (mCurrentInputBox != null) {
                     mPersenter.toSubmitData(mCurrentInputBox.getText().toString());
                 }
-                mPersenter.hideSoftInput();
+                mPersenter.tohideSoftInput();
                 break;
             case R.id.tv_cancel:
-                mPersenter.hideSoftInput();
+                mPersenter.tohideSoftInput();
                 break;
 
 

@@ -35,7 +35,7 @@ public interface PersonalInfoContract {
 
         void selectGender(String gender);
 
-        void hideSoftInput();
+        void tohideSoftInput();
 
         void toSubmitData(String content);
 

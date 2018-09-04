@@ -73,7 +73,7 @@ public class UCenterVu extends BaseVu<UCenterContract.Presenter> implements UCen
     @FindView(R.id.ptr)
     PtrClassicFrameLayout mPtrClassicFrameLayout;
 
-    private Handler mHandler = new Handler(){
+    private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
@@ -103,10 +103,9 @@ public class UCenterVu extends BaseVu<UCenterContract.Presenter> implements UCen
 
             @Override
             public void onRefreshBegin(PtrFrameLayout frame) {
-                mHandler.sendEmptyMessageDelayed(1,2000);
+                mHandler.sendEmptyMessageDelayed(1, 2000);
             }
         });
-
 
 
     }
@@ -159,5 +158,14 @@ public class UCenterVu extends BaseVu<UCenterContract.Presenter> implements UCen
     @Override
     public void initStatusLayout(StateLayout stateLayout) {
         super.initStatusLayout(stateLayout);
+    }
+
+    @Override
+    public void hasUnreadMsg(boolean hasUnreadMsg) {
+        if (hasUnreadMsg) {
+            view_red_point.setVisibility(View.VISIBLE);
+        } else {
+            view_red_point.setVisibility(View.GONE);
+        }
     }
 }

@@ -60,4 +60,13 @@ public class MainVu extends BaseVu<MainContract.Presenter> implements MainContra
     public void initStatusLayout(StateLayout stateLayout) {
         super.initStatusLayout(stateLayout);
     }
+
+    @Override
+    public void hasUnreadMsg(boolean hasUnreadMsg) {
+        if (hasUnreadMsg){
+            menuModels[2].mBadge.setVisibility(View.VISIBLE);
+        }else {
+            menuModels[2].mBadge.setVisibility(View.GONE);
+        }
+    }
 }

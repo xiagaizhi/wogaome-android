@@ -36,7 +36,7 @@ public class MyWalletFragment extends BaseFragment<MyWalletContract.IView> imple
 
     private void getWalletInfo() {
         ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).getWalletInfo())
-                .useCache(true)
+                .useCache(false)
                 .enqueue(new BaseHttpCallBack() {
                     @Override
                     public void onSuccess(ApiBean mApiBean) {
@@ -82,11 +82,11 @@ public class MyWalletFragment extends BaseFragment<MyWalletContract.IView> imple
     public void openBrowserPage(String key) {
         if (myWalletInfo == null) return;
         if (TextUtils.equals(key, "lkc说明页")) {
-            start(UIHelper.creat(BrowserBaseFragment.class).put(Global.BUNDLE_KEY_BROWSER_URL, myWalletInfo.getLkcDescUrl()).build());
+            start(UIHelper.creat(BrowserBaseFragment.class).put(Global.BUNDLE_KEY_BROWSER_URL, ApiManager.getInstance().getApiConfig().getLKCInstruction()).build());
         } else if (TextUtils.equals(key, "lkc明细")) {
-            start(UIHelper.creat(BrowserBaseFragment.class).put(Global.BUNDLE_KEY_BROWSER_URL, myWalletInfo.getLkcDetailUrl()).build());
+            start(UIHelper.creat(BrowserBaseFragment.class).put(Global.BUNDLE_KEY_BROWSER_URL, ApiManager.getInstance().getApiConfig().getLkcDetail()).build());
         } else if (TextUtils.equals(key, "昨日算力")) {
-            start(UIHelper.creat(BrowserBaseFragment.class).put(Global.BUNDLE_KEY_BROWSER_URL, myWalletInfo.getPowerDescUrl()).build());
+            start(UIHelper.creat(BrowserBaseFragment.class).put(Global.BUNDLE_KEY_BROWSER_URL, ApiManager.getInstance().getApiConfig().getMyPower()).build());
         }
     }
 

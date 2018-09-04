@@ -49,6 +49,10 @@ public class MainFragment extends BaseFragment<MainContract.IView> implements Ma
         }
     }
 
+    public void hasUnreadMsg(boolean hasUnreadMsg){
+        getVu().hasUnreadMsg(hasUnreadMsg);
+    }
+
 
     @Override
     public void onRefresh() {

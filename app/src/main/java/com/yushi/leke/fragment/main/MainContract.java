@@ -10,6 +10,8 @@ import com.yufan.library.base.Vu;
 public interface MainContract {
     interface IView extends Vu {
 
+        void hasUnreadMsg(boolean hasUnreadMsg);
+
     }
 
     interface Presenter extends Pr {

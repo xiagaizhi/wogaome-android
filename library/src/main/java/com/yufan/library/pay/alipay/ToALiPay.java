@@ -8,6 +8,7 @@ import android.os.Message;
 import android.support.v4.content.LocalBroadcastManager;
 import android.text.TextUtils;
 
+import com.alipay.sdk.app.EnvUtils;
 import com.alipay.sdk.app.PayTask;
 import com.yufan.library.Global;
 import com.yufan.library.manager.DialogManager;
@@ -93,6 +94,7 @@ public class ToALiPay {
 
     public void action(Context context, final PayMetadata payMetadata) {
         this.mContext = context;
+        EnvUtils.setEnv(EnvUtils.EnvEnum.SANDBOX);//使用沙箱
         try {
             Runnable payRunnable = new Runnable() {
                 @Override
