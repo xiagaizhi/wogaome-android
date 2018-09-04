@@ -80,12 +80,13 @@ public class MyWalletFragment extends BaseFragment<MyWalletContract.IView> imple
 
     @Override
     public void openBrowserPage(String key) {
-        if (TextUtils.equals(key,"lkc说明页")){
-            start(UIHelper.creat(BrowserBaseFragment.class).put(Global.BUNDLE_KEY_BROWSER_URL, "http://web.leke-dev.com/#/myWallet/LKCInstruction").build());
-        }else if (TextUtils.equals(key,"lkc明细")){
-            start(UIHelper.creat(BrowserBaseFragment.class).put(Global.BUNDLE_KEY_BROWSER_URL, "http://web.leke-dev.com/#/myWallet/LKCDetail").build());
-        }else if (TextUtils.equals(key,"昨日算力")){
-            start(UIHelper.creat(BrowserBaseFragment.class).put(Global.BUNDLE_KEY_BROWSER_URL, "http://web.leke-dev.com/#/myPower").build());
+        if (myWalletInfo == null) return;
+        if (TextUtils.equals(key, "lkc说明页")) {
+            start(UIHelper.creat(BrowserBaseFragment.class).put(Global.BUNDLE_KEY_BROWSER_URL, myWalletInfo.getLkcDescUrl()).build());
+        } else if (TextUtils.equals(key, "lkc明细")) {
+            start(UIHelper.creat(BrowserBaseFragment.class).put(Global.BUNDLE_KEY_BROWSER_URL, myWalletInfo.getLkcDetailUrl()).build());
+        } else if (TextUtils.equals(key, "昨日算力")) {
+            start(UIHelper.creat(BrowserBaseFragment.class).put(Global.BUNDLE_KEY_BROWSER_URL, myWalletInfo.getPowerDescUrl()).build());
         }
     }
 

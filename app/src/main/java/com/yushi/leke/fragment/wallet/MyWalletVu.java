@@ -66,23 +66,8 @@ public class MyWalletVu extends BaseVu<MyWalletContract.Presenter> implements My
     @Override
     public void initView(View view) {
         rootView = view;
-        String[] lkcs = "1233.3434".split("\\.");
-        String lkc1 = "0";
-        String lkc2 = "";
-        if (lkcs != null) {
-            if (lkcs.length > 0) {
-                lkc1 = lkcs[0];
-            }
-            if (lkcs.length > 1) {
-                lkc2 = lkcs[1];
-            }
-        }
-        if (!TextUtils.isEmpty(lkc2)) {
-            lkc1 = lkc1 + ".";
-        }
-        tv_power.setText("8888");
-        tv_power.setVisibility(View.VISIBLE);
-        id_lkc_remain.setText(Html.fromHtml("<b><<font color='#151515'><size>" + lkc1 + "</size></font></b><font color='#333333'><size2>" + lkc2 + "</size2></font>", null, new SizeLabel(getContext())));
+        tv_power.setText("");
+        tv_power.setVisibility(View.GONE);
         id_lck_instructions.setOnClickListener(this);
         id_lkc_detail.setOnClickListener(this);
         id_yesterd_arith_num.setOnClickListener(this);
