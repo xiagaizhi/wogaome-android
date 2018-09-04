@@ -18,17 +18,13 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.Toast;
 
 import com.yufan.library.browser.BrowserBaseFragment;
 import com.yufan.library.inject.VuClass;
-import com.yufan.library.util.ToastUtil;
 import com.yushi.leke.UIHelper;
 import com.yushi.leke.YFApi;
 import com.yushi.leke.dialog.CommonDialog;
 import com.yushi.leke.dialog.recharge.PayDialog;
-import com.yushi.leke.dialog.recharge.SetRechargePwdDialog;
-import com.yushi.leke.fragment.bindPhone.BindPhoneFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,22 +43,18 @@ public class OpenTreasureBoxFragment extends BaseFragment<OpenTreasureBoxContrac
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).listTreatureBox())
-                .useCache(true)
+                .useCache(false)
                 .enqueue(new BaseHttpCallBack() {
                     @Override
                     public void onSuccess(ApiBean mApiBean) {
-                        if (TextUtils.equals(ApiBean.SUCCESS, mApiBean.getCode())) {
-                            String data = mApiBean.getData();
-                            goodsInfoList = JSON.parseObject(data, GoodsInfoList.class);
-                            if (goodsInfoList != null && goodsInfoList.getGoodsInfo() != null && goodsInfoList.getGoodsInfo().size() > 0) {
-                                goodsInfos.clear();
-                                goodsInfos.addAll(goodsInfoList.getGoodsInfo());
-                                mGoodsInfo = goodsInfos.get(0);
-                                mGoodsInfo.setSelected(true);
-                                vu.getmRecyclerView().getAdapter().notifyDataSetChanged();
-                            }
-                        } else {
-                            ToastUtil.normal(_mActivity, mApiBean.getMessage(), Toast.LENGTH_SHORT).show();
+                        String data = mApiBean.getData();
+                        goodsInfoList = JSON.parseObject(data, GoodsInfoList.class);
+                        if (goodsInfoList != null && goodsInfoList.getGoodsInfo() != null && goodsInfoList.getGoodsInfo().size() > 0) {
+                            goodsInfos.clear();
+                            goodsInfos.addAll(goodsInfoList.getGoodsInfo());
+                            mGoodsInfo = goodsInfos.get(0);
+                            mGoodsInfo.setSelected(true);
+                            vu.getmRecyclerView().getAdapter().notifyDataSetChanged();
                         }
                     }
 
@@ -119,15 +111,14 @@ public class OpenTreasureBoxFragment extends BaseFragment<OpenTreasureBoxContrac
 
     @Override
     public void toPay() {
+        if (mGoodsInfo == null) return;
         PayDialog payDialog = new PayDialog(_mActivity, mGoodsInfo.getGoodsId(), true);
         payDialog.show();
     }
 
     @Override
     public void openTreasureBoxDetail() {
-        if (goodsInfoList != null && !TextUtils.isEmpty(goodsInfoList.getTreatureBoxDetailUrl())) {
-            start(UIHelper.creat(BrowserBaseFragment.class).put(Global.BUNDLE_KEY_BROWSER_URL, goodsInfoList.getTreatureBoxDetailUrl()).build());
-        }
+        start(UIHelper.creat(BrowserBaseFragment.class).put(Global.BUNDLE_KEY_BROWSER_URL, ApiManager.getInstance().getApiConfig().getTreasureDetail()).build());
 
     }
 
@@ -156,6 +147,7 @@ public class OpenTreasureBoxFragment extends BaseFragment<OpenTreasureBoxContrac
                         public void onClick(CommonDialog commonDialog, int actionType) {
                             commonDialog.dismiss();
                             if (actionType == CommonDialog.COMMONDIALOG_ACTION_POSITIVE) {
+
                             }
                         }
                     }).show();

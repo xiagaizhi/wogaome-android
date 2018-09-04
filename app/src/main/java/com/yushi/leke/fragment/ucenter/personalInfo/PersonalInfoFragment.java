@@ -176,8 +176,8 @@ public class PersonalInfoFragment extends BaseListFragment<PersonalInfoContract.
     }
 
     @Override
-    public void hideSoftInput() {
-        SoftInputUtil.closeKeybord(currentEdit, _mActivity);
+    public void tohideSoftInput() {
+        hideSoftInput();
     }
 
     @Override

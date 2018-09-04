@@ -176,4 +176,10 @@ public interface YFApi {
     sendBindMobileVcode(//绑定手机发验证码
                         @Field("mobile") String mobile
     );
+
+
+    @POST("app/v1/msg/hasUnreadMsg")
+    Call<ResponseBody>
+    hasUnreadMsg(//用户是否有未读消息
+    );
 }
