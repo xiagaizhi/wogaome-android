@@ -46,7 +46,7 @@ public class SearchActionViewBinder extends ItemViewBinder<SearchActionInfo, Sea
     @Override
     protected void onBindViewHolder(@NonNull ViewHolder holder, @NonNull final SearchActionInfo category) {
 
-        holder.sdv.setImageURI(Uri.parse("http://pic177.nipic.com/file/20180819/21016066_152012729087_2.jpg"));
+        holder.sdv.setImageURI(Uri.parse(category.url));
         if (category.isLast) {
             holder.view_bottom_line.setVisibility(View.INVISIBLE);
         } else {

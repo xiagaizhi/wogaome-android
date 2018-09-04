@@ -56,7 +56,7 @@ public class SubscriptionsViewBinder extends ItemViewBinder<SubscriptionInfo, Su
     @Override
     protected void onBindViewHolder(@NonNull ViewHolder holder, @NonNull final SubscriptionInfo category) {
 
-        holder.sdv.setImageURI(Uri.parse("http://i1.hdslb.com/bfs/archive/183c9f82a3de3dda65848c8320ecba55a49388fe.jpg"));
+        holder.sdv.setImageURI(Uri.parse(category.url));
         if (category.isLast) {
             holder.view_bottom_line.setVisibility(View.INVISIBLE);
         } else {

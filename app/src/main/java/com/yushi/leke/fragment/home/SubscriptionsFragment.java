@@ -44,15 +44,15 @@ public class SubscriptionsFragment extends BaseListFragment<SubscriptionsContrac
         adapter.register(SubscriptionInfo.class,new SubscriptionsViewBinder());
         vu.getRecyclerView().setAdapter(adapter);
         list.add(new SubscriptionBanner());
-        list.add(new SubscriptionInfo(false));
-        list.add(new SubscriptionInfo(false));
-        list.add(new SubscriptionInfo(false));
-        list.add(new SubscriptionInfo(false));
-        list.add(new SubscriptionInfo(false));
-        list.add(new SubscriptionInfo(false));
-        list.add(new SubscriptionInfo(false));
-        list.add(new SubscriptionInfo(false));
-        list.add(new SubscriptionInfo(true));
+        list.add(new SubscriptionInfo(false,"http://oss.cyzone.cn/2018/0830/20180830040720965.jpg"));
+        list.add(new SubscriptionInfo(false,"http://oss.cyzone.cn/2018/0823/20180823105708870.png"));
+        list.add(new SubscriptionInfo(false,"http://oss.cyzone.cn/2018/0830/20180830040720965.jpg"));
+        list.add(new SubscriptionInfo(false,"http://oss.cyzone.cn/2018/0823/20180823105708870.png"));
+        list.add(new SubscriptionInfo(false,"http://oss.cyzone.cn/2018/0830/20180830040720965.jpg"));
+        list.add(new SubscriptionInfo(false,"http://oss.cyzone.cn/2018/0823/20180823105708870.png"));
+        list.add(new SubscriptionInfo(false,"http://oss.cyzone.cn/2018/0830/20180830040720965.jpg"));
+        list.add(new SubscriptionInfo(false,"http://oss.cyzone.cn/2018/0823/20180823105708870.png"));
+        list.add(new SubscriptionInfo(true,"http://oss.cyzone.cn/2018/0830/20180830040720965.jpg"));
         adapter.setItems(list);
         vu.getRecyclerView().getAdapter().notifyDataSetChanged();
     }

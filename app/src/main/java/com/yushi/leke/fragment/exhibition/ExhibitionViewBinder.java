@@ -48,7 +48,7 @@ public class ExhibitionViewBinder extends ItemViewBinder<ExhibitionInfo, Exhibit
 
     @Override
     protected void onBindViewHolder(@NonNull ViewHolder holder, @NonNull final ExhibitionInfo category) {
-        holder.sdv.setImageURI(Uri.parse("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1535627957733&di=8b95349d33b93897f2ffed94029cc448&imgtype=0&src=http%3A%2F%2Fpic.58pic.com%2F58pic%2F17%2F76%2F54%2F02e58PICQJd_1024.jpg"));
+        holder.sdv.setImageURI(Uri.parse(category.url));
 
     }
 

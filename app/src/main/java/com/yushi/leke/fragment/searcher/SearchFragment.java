@@ -64,14 +64,14 @@ public class SearchFragment extends BaseListFragment<SearchContract.IView> imple
     @Override
     public void search() {
         list.add("音频");
-        list.add(new SubscriptionInfo(false));
-        list.add(new SubscriptionInfo(false));
-        list.add(new SubscriptionInfo(true));
+        list.add(new SubscriptionInfo(false,"http://oss.cyzone.cn/2018/0823/20180823043455198.jpg"));
+        list.add(new SubscriptionInfo(false,"http://oss.cyzone.cn/2018/0824/20180824122615453.jpeg"));
+        list.add(new SubscriptionInfo(true,"http://oss.cyzone.cn/2018/0823/20180823043455198.jpg"));
         list.add(new SearchBottomInfo(true));
         list.add("活动");
-        list.add(new SearchActionInfo(false));
-        list.add(new SearchActionInfo(false));
-        list.add(new SearchActionInfo(true));
+        list.add(new SearchActionInfo(false,"http://oss.cyzone.cn/2018/0822/20180822015244231.png"));
+        list.add(new SearchActionInfo(false,"http://oss.cyzone.cn/2018/0818/20180818024625113.jpg"));
+        list.add(new SearchActionInfo(true,"http://oss.cyzone.cn/2018/0817/20180817095437396.jpg"));
         list.add(new SearchBottomInfo(false));
         vu.getRecyclerView().getAdapter().notifyDataSetChanged();
         SoftInputUtil.hideSoftInput(getActivity(),getView());

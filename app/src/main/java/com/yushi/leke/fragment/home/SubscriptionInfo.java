@@ -7,8 +7,10 @@ package com.yushi.leke.fragment.home;
 public class SubscriptionInfo {
 
     public boolean isLast;
+    public String url;
 
-    public SubscriptionInfo(boolean isLast) {
+    public SubscriptionInfo(boolean isLast, String url) {
         this.isLast = isLast;
+        this.url = url;
     }
 }

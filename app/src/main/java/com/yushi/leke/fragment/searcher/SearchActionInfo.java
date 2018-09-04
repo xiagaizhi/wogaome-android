@@ -6,8 +6,10 @@ package com.yushi.leke.fragment.searcher;
 
 public class SearchActionInfo {
     public boolean isLast;
+    public String url;
 
-    public SearchActionInfo(boolean isLast) {
+    public SearchActionInfo(boolean isLast, String url) {
         this.isLast = isLast;
+        this.url = url;
     }
 }

@@ -26,15 +26,15 @@ public class ExhibitionFragment extends BaseListFragment<ExhibitionContract.IVie
         adapter.register(ExhibitionInfo.class,new ExhibitionViewBinder());
         vu.getRecyclerView().setAdapter(adapter);
         list.add(new ExhibitionTopInfo());
-        list.add(new ExhibitionInfo());
-        list.add(new ExhibitionInfo());
-        list.add(new ExhibitionInfo());
-        list.add(new ExhibitionInfo());
-        list.add(new ExhibitionInfo());
-        list.add(new ExhibitionInfo());
-        list.add(new ExhibitionInfo());
-        list.add(new ExhibitionInfo());
-        list.add(new ExhibitionInfo());
+        list.add(new ExhibitionInfo("http://oss.cyzone.cn/2018/0724/20180724094636938.png"));
+        list.add(new ExhibitionInfo("http://oss.cyzone.cn/2018/0614/20180614093809181.jpg"));
+        list.add(new ExhibitionInfo("http://oss.cyzone.cn/2018/0724/20180724094636938.png"));
+        list.add(new ExhibitionInfo("http://oss.cyzone.cn/2018/0609/20180609064513960.png"));
+        list.add(new ExhibitionInfo("http://oss.cyzone.cn/2018/0609/20180609064513960.png"));
+        list.add(new ExhibitionInfo("http://oss.cyzone.cn/2018/0724/20180724094636938.png"));
+        list.add(new ExhibitionInfo("http://oss.cyzone.cn/2018/0609/20180609064513960.png"));
+        list.add(new ExhibitionInfo("http://oss.cyzone.cn/2018/0903/8a46c3cdd06dd931d05eebcdcb5ad8a9.png"));
+        list.add(new ExhibitionInfo("http://oss.cyzone.cn/2018/0609/20180609064513960.png"));
         adapter.setItems(list);
         vu.getRecyclerView().getAdapter().notifyDataSetChanged();
     }

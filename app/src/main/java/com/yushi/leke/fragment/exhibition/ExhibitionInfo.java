@@ -5,4 +5,9 @@ package com.yushi.leke.fragment.exhibition;
  */
 
 public class ExhibitionInfo {
+    public String url;
+
+    public ExhibitionInfo(String url) {
+        this.url = url;
+    }
 }
