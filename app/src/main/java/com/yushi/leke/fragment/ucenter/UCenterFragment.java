@@ -67,7 +67,6 @@ public class UCenterFragment extends BaseFragment<UCenterContract.IView> impleme
 
                     @Override
                     public void onFinish() {
-
                     }
                 });
     }
@@ -95,7 +94,6 @@ public class UCenterFragment extends BaseFragment<UCenterContract.IView> impleme
 
                     @Override
                     public void onFinish() {
-
                     }
                 });
     }
@@ -191,5 +189,12 @@ public class UCenterFragment extends BaseFragment<UCenterContract.IView> impleme
         } else if (TextUtils.equals("分享好友", key)) {
             getRootFragment().start(UIHelper.creat(BrowserBaseFragment.class).put(Global.BUNDLE_KEY_BROWSER_URL, ApiManager.getInstance().getApiConfig().getFriendShare()).build());
         }
+    }
+
+    @Override
+    public void toRefresh() {
+        hasUnreadmsg();
+        getMyProfile();
+        getMyBaseInfo();
     }
 }
