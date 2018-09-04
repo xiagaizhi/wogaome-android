@@ -11,6 +11,7 @@ import com.yufan.library.base.BaseFragment;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.View;
+import android.view.WindowManager;
 
 import com.yufan.library.inject.VuClass;
 import com.yufan.library.manager.DialogManager;
@@ -39,6 +40,12 @@ public class ResetPasswordFragment extends BaseFragment<ResetPasswordContract.IV
 
 
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING|WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+
+    }
 
     @Override
     public void getVerifcationCode(String phone, String sessionID) {
