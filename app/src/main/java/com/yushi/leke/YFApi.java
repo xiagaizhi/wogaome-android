@@ -36,9 +36,9 @@ public interface YFApi {
      * @return
      */
     @FormUrlEncoded
-    @POST("app/v1/uc/loginViaOauth")
+    @POST("app/v1/uc/registerViaOAuth")
     Call<ResponseBody>
-    loginViaOauth(
+    registerViaOAuth(
             @Field("accessToken") String accessToken,
             @Field("oauthType") String oauthType
 

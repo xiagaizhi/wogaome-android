@@ -59,12 +59,12 @@ android {
 //02:F5:28:92:B2:C2:BF:15:82:5E:C7:4F:77:26:8B:3C 签名指纹信息
             //02f52892b2c2bf15825ec74f77268b3c
         }
+
     }
 
     packagingOptions {
         packagingOptions { exclude 'META-INF/rxjava.properties' }
     }
-
     buildTypes {
         release {
             //manifestPlaceholders = [IS_DEBUG: 'false']
@@ -72,7 +72,7 @@ android {
             proguardFile file('proguard.cfg')
             signingConfig signingConfigs.release
             shrinkResources false    // 开启去除无用资源
-            debuggable true
+            debuggable false
 
         }
         debug {
@@ -84,7 +84,6 @@ android {
             shrinkResources false
         }
     }
-
     android.applicationVariants.all { variant ->
         variant.outputs.all {
             def versionName = variant.versionName
