@@ -33,10 +33,10 @@ private static BaseApplication instance;
         }
         instance=this;
        if(!BuildConfig.DEBUG){
-           Bugly.init(getApplicationContext(), "6ab19dd791", false);
+           Bugly.init(getApplicationContext(), "f01636373e16a", false);
        }
 
-        UMConfigure.init(this,"55b05e9de0f55a7f5e0006c3","leke", UMConfigure.DEVICE_TYPE_PHONE,"");
+        UMConfigure.init(this,"5b6bafa0b27b0a7d06000033","leke", UMConfigure.DEVICE_TYPE_PHONE,"");
         Fresco.initialize(this);
     }
 
