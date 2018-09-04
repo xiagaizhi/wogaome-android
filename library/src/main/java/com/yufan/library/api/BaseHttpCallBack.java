@@ -1,5 +1,6 @@
 package com.yufan.library.api;
 
+import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -38,7 +39,10 @@ public abstract class BaseHttpCallBack implements IHttpCallBack {
             }
 
             onSuccess(mApiBean);
-        } else {
+        } else if(TextUtils.equals(ApiBean.TOKEN_LOSE, mApiBean.getCode())){
+            //登录
+
+        }else {
             DialogManager.getInstance().toast(mApiBean.message);
         }
         onFinish();

@@ -5,4 +5,9 @@ package com.yushi.leke.fragment.searcher;
  */
 
 public class SearchActionInfo {
+    public boolean isLast;
+
+    public SearchActionInfo(boolean isLast) {
+        this.isLast = isLast;
+    }
 }

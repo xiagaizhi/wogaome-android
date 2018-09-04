@@ -5,4 +5,10 @@ package com.yushi.leke.fragment.home;
  */
 
 public class SubscriptionInfo {
+
+    public boolean isLast;
+
+    public SubscriptionInfo(boolean isLast) {
+        this.isLast = isLast;
+    }
 }

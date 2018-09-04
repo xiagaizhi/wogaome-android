@@ -60,6 +60,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/px1"
             android:layout_marginTop="@dimen/px35"
+            android:id="@+id/view_bottom_line"
             android:background="@color/color_gray_levele"
             />
     </LinearLayout>

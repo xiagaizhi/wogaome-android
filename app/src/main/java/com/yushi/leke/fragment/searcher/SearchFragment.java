@@ -31,6 +31,7 @@ public class SearchFragment extends BaseListFragment<SearchContract.IView> imple
         adapter.register(SearchActionInfo.class,new SearchActionViewBinder());
         adapter.register(SubscriptionInfo.class,new SubscriptionsViewBinder());
         adapter.register(String.class,new SearchTabTitleViewBinder());
+        adapter.register(SearchBottomInfo.class,new SearchTabBottomViewBinder());
         vu.getRecyclerView().setAdapter(adapter);
         adapter.setItems(list);
         vu.getRecyclerView().getAdapter().notifyDataSetChanged();
@@ -63,18 +64,15 @@ public class SearchFragment extends BaseListFragment<SearchContract.IView> imple
     @Override
     public void search() {
         list.add("音频");
-        list.add(new SubscriptionInfo());
-        list.add(new SubscriptionInfo());
-        list.add(new SubscriptionInfo());
-        list.add(new SubscriptionInfo());
-        list.add(new SubscriptionInfo());
+        list.add(new SubscriptionInfo(false));
+        list.add(new SubscriptionInfo(false));
+        list.add(new SubscriptionInfo(true));
+        list.add(new SearchBottomInfo(true));
         list.add("活动");
-        list.add(new SearchActionInfo());
-        list.add(new SearchActionInfo());
-        list.add(new SearchActionInfo());
-        list.add(new SearchActionInfo());
-        list.add(new SearchActionInfo());
-        list.add(new SearchActionInfo());
+        list.add(new SearchActionInfo(false));
+        list.add(new SearchActionInfo(false));
+        list.add(new SearchActionInfo(true));
+        list.add(new SearchBottomInfo(false));
         vu.getRecyclerView().getAdapter().notifyDataSetChanged();
         SoftInputUtil.hideSoftInput(getActivity(),getView());
     }

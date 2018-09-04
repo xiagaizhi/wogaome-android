@@ -46,22 +46,26 @@ public class SearchActionViewBinder extends ItemViewBinder<SearchActionInfo, Sea
     @Override
     protected void onBindViewHolder(@NonNull ViewHolder holder, @NonNull final SearchActionInfo category) {
 
-holder.sdv.setImageURI(Uri.parse("http://pic177.nipic.com/file/20180819/21016066_152012729087_2.jpg"));
+        holder.sdv.setImageURI(Uri.parse("http://pic177.nipic.com/file/20180819/21016066_152012729087_2.jpg"));
+        if (category.isLast) {
+            holder.view_bottom_line.setVisibility(View.INVISIBLE);
+        } else {
+            holder.view_bottom_line.setVisibility(View.VISIBLE);
+        }
 
     }
 
 
     static class ViewHolder extends RecyclerView.ViewHolder {
         SimpleDraweeView sdv;
+        View view_bottom_line;
 
         ViewHolder(@NonNull View itemView) {
             super(itemView);
-       sdv= itemView.findViewById(R.id.sdv);
-
+            sdv = itemView.findViewById(R.id.sdv);
+            view_bottom_line = itemView.findViewById(R.id.view_bottom_line);
         }
     }
-
-
 
 
 }

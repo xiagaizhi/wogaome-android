@@ -44,15 +44,15 @@ public class SubscriptionsFragment extends BaseListFragment<SubscriptionsContrac
         adapter.register(SubscriptionInfo.class,new SubscriptionsViewBinder());
         vu.getRecyclerView().setAdapter(adapter);
         list.add(new SubscriptionBanner());
-        list.add(new SubscriptionInfo());
-        list.add(new SubscriptionInfo());
-        list.add(new SubscriptionInfo());
-        list.add(new SubscriptionInfo());
-        list.add(new SubscriptionInfo());
-        list.add(new SubscriptionInfo());
-        list.add(new SubscriptionInfo());
-        list.add(new SubscriptionInfo());
-        list.add(new SubscriptionInfo());
+        list.add(new SubscriptionInfo(false));
+        list.add(new SubscriptionInfo(false));
+        list.add(new SubscriptionInfo(false));
+        list.add(new SubscriptionInfo(false));
+        list.add(new SubscriptionInfo(false));
+        list.add(new SubscriptionInfo(false));
+        list.add(new SubscriptionInfo(false));
+        list.add(new SubscriptionInfo(false));
+        list.add(new SubscriptionInfo(true));
         adapter.setItems(list);
         vu.getRecyclerView().getAdapter().notifyDataSetChanged();
     }

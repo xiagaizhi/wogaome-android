@@ -57,17 +57,21 @@ public class SubscriptionsViewBinder extends ItemViewBinder<SubscriptionInfo, Su
     protected void onBindViewHolder(@NonNull ViewHolder holder, @NonNull final SubscriptionInfo category) {
 
         holder.sdv.setImageURI(Uri.parse("http://i1.hdslb.com/bfs/archive/183c9f82a3de3dda65848c8320ecba55a49388fe.jpg"));
-
+        if (category.isLast) {
+            holder.view_bottom_line.setVisibility(View.INVISIBLE);
+        } else {
+            holder.view_bottom_line.setVisibility(View.VISIBLE);
+        }
     }
 
 
     static class ViewHolder extends RecyclerView.ViewHolder {
         SimpleDraweeView sdv;
-
+        View view_bottom_line;
         ViewHolder(@NonNull View itemView) {
             super(itemView);
             sdv=itemView.findViewById(R.id.sdv);
-
+            view_bottom_line=itemView.findViewById(R.id.view_bottom_line);
         }
     }
 
