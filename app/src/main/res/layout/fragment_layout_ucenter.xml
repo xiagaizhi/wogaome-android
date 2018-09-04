@@ -52,6 +52,7 @@
                         android:layout_width="@dimen/px16"
                         android:layout_height="@dimen/px16"
                         android:layout_alignParentRight="true"
+                        android:visibility="gone"
                         android:background="@drawable/red_point_widget_bg_shape" />
                 </RelativeLayout>
 

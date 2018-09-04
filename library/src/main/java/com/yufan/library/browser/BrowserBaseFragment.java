@@ -241,6 +241,15 @@ public class BrowserBaseFragment extends BaseFragment<BrowserContract.View> impl
 
     }
 
+    @Override
+    public void onBackPressed() {
+        SoftInputUtil.closeKeybordForActivity(getActivity());
+        if (vu.getWebView().canGoBack()){
+            vu.getWebView().goBack();
+        }else {
+            super.onBackPressed();
+        }
+    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
