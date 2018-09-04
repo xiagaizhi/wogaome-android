@@ -52,8 +52,8 @@
                         android:layout_width="@dimen/px16"
                         android:layout_height="@dimen/px16"
                         android:layout_alignParentRight="true"
-                        android:visibility="gone"
-                        android:background="@drawable/red_point_widget_bg_shape" />
+                        android:background="@drawable/red_point_widget_bg_shape"
+                        android:visibility="gone" />
                 </RelativeLayout>
 
                 <ImageView
@@ -80,9 +80,9 @@
 
                     <ImageView
                         android:layout_width="wrap_content"
-                        android:src="@drawable/bg_mine_head_shadow"
+                        android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
-                        android:layout_height="wrap_content" />
+                        android:src="@drawable/bg_mine_head_shadow" />
 
                     <com.facebook.drawee.view.SimpleDraweeView
                         android:id="@+id/img_head"
@@ -266,10 +266,10 @@
 
             <RelativeLayout
                 android:id="@+id/rl_wallet"
+                style="@style/click_state_style"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/px100"
                 android:layout_marginTop="@dimen/px20"
-                android:background="@color/white"
                 android:orientation="horizontal">
 
                 <ImageView
@@ -292,12 +292,6 @@
                     android:textSize="@dimen/px32"
                     android:textStyle="bold" />
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/px1"
-                    android:layout_alignLeft="@+id/tv_wallet"
-                    android:layout_alignParentBottom="true"
-                    android:background="@color/color_gray_levele" />
 
                 <ImageView
                     android:id="@+id/img_arrows_wallet"
@@ -321,12 +315,25 @@
                     android:textSize="@dimen/px24" />
             </RelativeLayout>
 
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/px1"
+                android:background="@color/white">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/px1"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginLeft="@dimen/px36"
+                    android:background="@color/color_gray_levele" />
+            </RelativeLayout>
+
 
             <RelativeLayout
                 android:id="@+id/rl_level"
+                style="@style/click_state_style"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/px100"
-                android:background="@color/white"
                 android:orientation="horizontal">
 
                 <ImageView
@@ -348,13 +355,6 @@
                     android:textColor="@color/color_gray_level3"
                     android:textSize="@dimen/px32"
                     android:textStyle="bold" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/px1"
-                    android:layout_alignLeft="@+id/tv_level"
-                    android:layout_alignParentBottom="true"
-                    android:background="@color/color_gray_levele" />
 
                 <ImageView
                     android:id="@+id/img_arrows_level"
@@ -378,12 +378,25 @@
                     android:textSize="@dimen/px24" />
             </RelativeLayout>
 
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/px1"
+                android:background="@color/white">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/px1"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginLeft="@dimen/px36"
+                    android:background="@color/color_gray_levele" />
+            </RelativeLayout>
+
 
             <RelativeLayout
                 android:id="@+id/rl_myvip"
+                style="@style/click_state_style"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/px100"
-                android:background="@color/white"
                 android:orientation="horizontal">
 
                 <ImageView
@@ -428,10 +441,10 @@
 
             <RelativeLayout
                 android:id="@+id/rl_share"
+                style="@style/click_state_style"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/px100"
                 android:layout_marginTop="@dimen/px20"
-                android:background="@color/white"
                 android:orientation="horizontal">
 
                 <ImageView
@@ -454,12 +467,6 @@
                     android:textSize="@dimen/px32"
                     android:textStyle="bold" />
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/px1"
-                    android:layout_alignLeft="@+id/tv_share"
-                    android:layout_alignParentBottom="true"
-                    android:background="@color/color_gray_levele" />
 
                 <ImageView
                     android:id="@+id/img_arrows_share"
@@ -485,10 +492,10 @@
 
             <RelativeLayout
                 android:id="@+id/rl_setting"
+                style="@style/click_state_style"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/px100"
                 android:layout_marginTop="@dimen/px20"
-                android:background="@color/white"
                 android:orientation="horizontal">
 
                 <ImageView
@@ -510,13 +517,6 @@
                     android:textColor="@color/color_gray_level3"
                     android:textSize="@dimen/px32"
                     android:textStyle="bold" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/px1"
-                    android:layout_alignLeft="@+id/tv_setting"
-                    android:layout_alignParentBottom="true"
-                    android:background="@color/color_gray_levele" />
 
                 <ImageView
                     android:id="@+id/img_arrows_setting"
