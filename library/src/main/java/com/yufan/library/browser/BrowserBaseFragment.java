@@ -27,6 +27,7 @@ import com.tencent.smtt.utils.TbsLog;
 import com.yufan.library.Global;
 import com.yufan.library.base.BaseFragment;
 import com.yufan.library.inject.VuClass;
+import com.yufan.library.manager.UserManager;
 import com.yufan.library.util.SoftInputUtil;
 import com.yufan.library.view.ptr.PtrDefaultHandler;
 import com.yufan.library.view.ptr.PtrFrameLayout;
@@ -215,7 +216,7 @@ public class BrowserBaseFragment extends BaseFragment<BrowserContract.View> impl
     protected void loadCookie(CookieManager cookie) {
         CookieSyncManager.createInstance(getActivity());
         cookie.setAcceptCookie(true);
-        cookie.setCookie(mIntentUrl, "token=" +  "");
+        cookie.setCookie(mIntentUrl, "token=" +  UserManager.getInstance().getToken());
         cookie.setCookie(mIntentUrl, "channelId=" + "");
         cookie.setCookie(mIntentUrl, "type=2");
         cookie.setCookie(mIntentUrl, "sid=" + "");

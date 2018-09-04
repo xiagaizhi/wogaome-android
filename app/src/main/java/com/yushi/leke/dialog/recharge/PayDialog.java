@@ -72,8 +72,8 @@ public class PayDialog extends Dialog implements PayWayAdapter.OnItemClickListen
         btn_pay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                RechargeUtil.instance.toPay(mContext, mPayWayList.getGoodsName(), mPayWayList.getGoodsPrice(),
-                        mPayWayList.getGoodsPrice(), mPayWayList.getGoodsId(), selectPayWay.getTradeApiId());
+                if (selectPayWay == null || mPayWayList == null) return;
+                RechargeUtil.getInstance().toPay(mContext, mPayWayList.getGoodsName(), mPayWayList.getGoodsPrice(), mPayWayList.getGoodsPrice(), mPayWayList.getGoodsId(), selectPayWay.getTradeApiId());
             }
         });
         rootView.findViewById(R.id.id_top_view).setOnClickListener(new View.OnClickListener() {
@@ -98,10 +98,11 @@ public class PayDialog extends Dialog implements PayWayAdapter.OnItemClickListen
                             if (mPayWayList != null) {
                                 tv_money.setText("¥" + mPayWayList.getGoodsPrice());
                                 tv_goods_info.setText("" + mPayWayList.getGoodsName());
-                                if (mPayWayList.getTradeApi() != null && mPayWayList.getTradeApi().size() > 0) {
-                                    selectPayWay = mPayWayList.getTradeApi().get(0);
+                                if (mPayWayList.getList() != null && mPayWayList.getList().size() > 0) {
+                                    selectPayWay = mPayWayList.getList().get(0);
                                     selectPayWay.setSelect(true);
-                                    payways.addAll(mPayWayList.getTradeApi());
+                                    payways.clear();
+                                    payways.addAll(mPayWayList.getList());
                                     mAdapter.notifyDataSetChanged();
                                 }
                             }

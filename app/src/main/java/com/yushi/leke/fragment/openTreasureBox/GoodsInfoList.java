@@ -10,7 +10,7 @@ import java.util.List;
 public class GoodsInfoList {
     private String goodsType;
     private String treatureBoxDetailUrl;
-    private List<GoodsInfo> goodsInfo;
+    private List<GoodsInfo> list;
 
     public String getGoodsType() {
         return goodsType;
@@ -20,12 +20,12 @@ public class GoodsInfoList {
         this.goodsType = goodsType;
     }
 
-    public List<GoodsInfo> getGoodsInfo() {
-        return goodsInfo;
+    public List<GoodsInfo> getList() {
+        return list;
     }
 
-    public void setGoodsInfo(List<GoodsInfo> goodsInfo) {
-        this.goodsInfo = goodsInfo;
+    public void setList(List<GoodsInfo> list) {
+        this.list = list;
     }
 
     public String getTreatureBoxDetailUrl() {
