@@ -16,7 +16,9 @@ import android.support.v4.media.session.PlaybackStateCompat;
 import android.text.TextUtils;
 import android.view.WindowManager;
 
+import com.umeng.socialize.UMShareAPI;
 import com.yufan.library.base.BaseActivity;
+import com.yufan.library.inter.ICallBack;
 import com.yufan.library.manager.UserManager;
 import com.yushi.leke.R;
 import com.yushi.leke.UIHelper;
@@ -28,6 +30,9 @@ import com.yushi.leke.uamp.ui.MediaBrowserProvider;
 import com.yushi.leke.uamp.utils.LogHelper;
 import com.yushi.leke.uamp.utils.ResourceHelper;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MainActivity extends BaseActivity implements MediaBrowserProvider {
 private String     TAG="MainActivity";
     public static final String EXTRA_START_FULLSCREEN =
@@ -35,6 +40,19 @@ private String     TAG="MainActivity";
     public static final String EXTRA_CURRENT_MEDIA_DESCRIPTION =
             "com.yushi.leke.uamp.CURRENT_MEDIA_DESCRIPTION";
     private MediaBrowserCompat mMediaBrowser;
+    private List<IActivityResult> results=new ArrayList<>();
+
+    public void registerIActivityResult(IActivityResult callBack) {
+        if(!results.contains(callBack)){
+            results.add(callBack);
+        }
+    }
+    public void unregisterIActivityResult(IActivityResult callBack){
+        if(results.contains(callBack)){
+            results.remove(callBack);
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -192,6 +210,22 @@ private String     TAG="MainActivity";
                     }
                 }
             };
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        for (int i=0;i<results.size();i++){
+          IActivityResult result=  results.get(i);
+            if(result!=null){
+                result.onActivityResult(requestCode,resultCode,data);
+            }
+        }
+
+    }
+    public interface IActivityResult{
+        void onActivityResult(int requestCode, int resultCode, Intent data) ;
+    }
+
 
 
 

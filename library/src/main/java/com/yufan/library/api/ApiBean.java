@@ -7,7 +7,7 @@ import android.text.TextUtils;
  */
 
 public class ApiBean {
-    public final static String  TOKEN_LOSE="002";
+    public final static String  TOKEN_LOSE="2001";
     public final static String  SUCCESS="2000";
 
 

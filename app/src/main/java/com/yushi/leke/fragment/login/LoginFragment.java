@@ -1,14 +1,20 @@
 package com.yushi.leke.fragment.login;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.umeng.socialize.UMShareAPI;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.yufan.library.Global;
 import com.yufan.library.api.ApiBean;
 import com.yufan.library.api.ApiManager;
+import com.yufan.library.api.BaseHttpCallBack;
+import com.yufan.library.api.EnhancedCall;
 import com.yufan.library.base.BaseFragment;
 
 import android.os.SystemClock;
@@ -19,14 +25,18 @@ import android.view.WindowManager;
 
 import com.yufan.library.browser.BrowserBaseFragment;
 import com.yufan.library.inject.VuClass;
+import com.yufan.library.inter.ICallBack;
 import com.yufan.library.manager.DialogManager;
 import com.yufan.library.manager.SPManager;
+import com.yufan.library.manager.UserManager;
 import com.yufan.share.ILoginCallback;
 import com.yufan.share.ShareUtils;
 import com.yushi.leke.BuildConfig;
 import com.yushi.leke.UIHelper;
 import com.yushi.leke.YFApi;
+import com.yushi.leke.activity.MainActivity;
 import com.yushi.leke.fragment.login.loginPhone.LoginPhoneFragment;
+import com.yushi.leke.fragment.main.MainFragment;
 import com.yushi.leke.fragment.musicplayer.MusicPlayerFragment;
 import com.yushi.leke.fragment.register.RegisterFragment;
 
@@ -43,15 +53,25 @@ public class LoginFragment extends BaseFragment<LoginContract.IView> implements 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-
     }
-
+    private  MainActivity.IActivityResult  mResult=   new MainActivity.IActivityResult() {
+        @Override
+        public void onActivityResult(int requestCode, int resultCode, Intent data) {
+            UMShareAPI.get(getActivity()).onActivityResult(requestCode,resultCode,data);
+        }
+    };
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE | WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         mShareUtils = new ShareUtils(getActivity());
+        ((MainActivity) getActivity()).registerIActivityResult(mResult);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        ((MainActivity) getActivity()).unregisterIActivityResult(mResult);
     }
 
     @Override
@@ -79,11 +99,29 @@ public class LoginFragment extends BaseFragment<LoginContract.IView> implements 
             @Override
             public void onSuccess(Map<String, String> map, SHARE_MEDIA share_media, Map<String, String> map1) {
                 DialogManager.getInstance().dismiss();
-                DialogManager.getInstance().toast(map.toString());
                 if(share_media==SHARE_MEDIA.WEIXIN){
-                    ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).loginViaOauth(map.get("oauthType"),"1"));
+               EnhancedCall call= ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).registerViaOAuth(map.get("accessToken"),"1"));
+                    call.enqueue(new BaseHttpCallBack() {
+                        @Override
+                        public void onSuccess(ApiBean mApiBean) {
+                            JSONObject jsonObject= JSON.parseObject(mApiBean.getData());
+                            UserManager.getInstance().setToken(jsonObject.getString("token"));
+                            UserManager.getInstance().setToken(jsonObject.getString("uid"));
+                            startWithPopTo(UIHelper.creat(MainFragment.class).build(), LoginFragment.class,true);
+                        }
+
+                        @Override
+                        public void onError(int id, Exception e) {
+
+                        }
+
+                        @Override
+                        public void onFinish() {
+
+                        }
+                    });
                 }else {
-                    ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).loginViaOauth(map.get("oauthType"),"2"));
+                   // ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).registerViaOAuth(map.get("accessToken"),"2"));
                 }
 
             }
@@ -126,4 +164,7 @@ public class LoginFragment extends BaseFragment<LoginContract.IView> implements 
             getVu().showServiceSelector(apiType);
         }
     }
+
+
+
 }
