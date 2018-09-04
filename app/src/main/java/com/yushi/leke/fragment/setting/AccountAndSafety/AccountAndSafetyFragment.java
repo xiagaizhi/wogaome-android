@@ -18,6 +18,7 @@ import com.yushi.leke.UIHelper;
 import com.yushi.leke.dialog.recharge.SetRechargePwdDialog;
 import com.yushi.leke.fragment.bindPhone.BindPhoneFragment;
 import com.yushi.leke.fragment.bindPhone.checkPhone.CheckPhoneFragment;
+import com.yushi.leke.fragment.bindPhone.updatePhone.UpdatePhoneFragment;
 import com.yushi.leke.fragment.setting.modifyLoginPwd.ModifyLoginPwdFragment;
 import com.yushi.leke.util.RechargeUtil;
 
@@ -66,7 +67,7 @@ public class AccountAndSafetyFragment extends BaseFragment<AccountAndSafetyContr
             phoneNumber = data.getString("phoneNumber");
             getVu().updatePage(phoneNumber);
         } else if (requestCode == 200 && resultCode == RESULT_OK && data != null) {//手机验证码校验过通过，换绑
-            startForResult(UIHelper.creat(BindPhoneFragment.class).build(), 100);
+            startForResult(UIHelper.creat(UpdatePhoneFragment.class).build(), 100);
         }
     }
 }

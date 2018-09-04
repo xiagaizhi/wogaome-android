@@ -119,7 +119,6 @@ public interface YFApi {
     Call<ResponseBody>
     toPay(//发起支付（微信支付 wxPay ／支付宝支付 aliPay）
           @Path("function") String function,
-          @Path("userId") String userId,
           @Field("orderTitle") String orderTitle,
           @Field("orderPrice") String orderPrice,
           @Field("tradePrice") String tradePrice,

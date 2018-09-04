@@ -138,7 +138,7 @@ public class RechargeUtil {
         if (TextUtils.isEmpty(payMethod)) {
             return;
         }
-        ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).toPay(payMethod, "9999",
+        ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).toPay(payMethod,
                 orderTitle, orderPrice, tradePrice,
                 goodsId, tradeApiId, "2"))
                 .useCache(false)

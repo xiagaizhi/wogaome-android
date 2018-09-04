@@ -54,6 +54,7 @@ public class AccountAndSafetyVu extends BaseVu<AccountAndSafetyContract.Presente
                 mPersenter.openBindPhone();
                 break;
             case R.id.rl_modify_pwd:
+                mPersenter.modifyPwd();
                 break;
         }
     }
