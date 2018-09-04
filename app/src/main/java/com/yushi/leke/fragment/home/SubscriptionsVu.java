@@ -60,7 +60,11 @@ public class SubscriptionsVu extends BaseListVu<SubscriptionsContract.Presenter>
                             Log.d("offset","appToolbar:"+offset);
                             mTitleView.setAlpha( offset);
                         }
+                    }else {
+                        mTitleView.setAlpha( 1);
                     }
+                }else {
+                    mTitleView.setAlpha( 1);
                 }
             }
         });

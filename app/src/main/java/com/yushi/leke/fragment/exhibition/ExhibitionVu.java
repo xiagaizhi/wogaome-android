@@ -55,7 +55,11 @@ public class ExhibitionVu extends BaseListVu<ExhibitionContract.Presenter> imple
                             Log.d("offset","appToolbar:"+offset);
                             mTitleView.setAlpha( offset);
                         }
+                    }else {
+                        mTitleView.setAlpha( 1);
                     }
+                }else {
+                    mTitleView.setAlpha( 1);
                 }
             }
         });
