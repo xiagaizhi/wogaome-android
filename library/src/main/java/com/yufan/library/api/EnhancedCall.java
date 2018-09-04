@@ -51,8 +51,7 @@ public class EnhancedCall{
             buffer.close();
         }
         mCache = (String) CacheManager.readObject(BaseApplication.getInstance(), MD5Util.MD5(sb.toString()));
-        Log.d("cache","cacheData: "+mCache);
-        Log.d("cache","cacheKey: "+MD5Util.MD5(sb.toString()));
+
     }
 
 

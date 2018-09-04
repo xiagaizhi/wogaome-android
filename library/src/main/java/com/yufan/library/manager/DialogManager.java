@@ -78,8 +78,8 @@ public class DialogManager {
 
     ////dialog
     public final void showLoadingDialog() {
-        String hint = "加载中...";
-        showLoadingDialog(hint);
+
+        showLoadingDialog(null);
     }
 
     public final void showLoadingDialog(String hint) {

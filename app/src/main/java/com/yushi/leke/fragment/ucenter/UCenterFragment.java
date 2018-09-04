@@ -38,7 +38,7 @@ public class UCenterFragment extends BaseFragment<UCenterContract.IView> impleme
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        hasUnreadmsg();
+      //  hasUnreadmsg();
     }
 
     /**
