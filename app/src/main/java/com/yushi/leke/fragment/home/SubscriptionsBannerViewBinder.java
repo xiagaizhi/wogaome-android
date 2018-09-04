@@ -48,11 +48,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import me.drakeet.multitype.ItemViewBinder;
-import me.relex.circleindicator.CircleIndicator;
 
 
 /**
- * @author drakeet
+ * 首页订阅专栏，头部
  */
 public class SubscriptionsBannerViewBinder extends ItemViewBinder<SubscriptionBanner, SubscriptionsBannerViewBinder.ViewHolder> {
     private ICallBack callBack;

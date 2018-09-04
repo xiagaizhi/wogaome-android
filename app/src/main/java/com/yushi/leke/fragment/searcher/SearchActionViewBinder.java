@@ -29,6 +29,9 @@ import com.yushi.leke.fragment.home.SubscriptionInfo;
 
 import me.drakeet.multitype.ItemViewBinder;
 
+/**
+ * 搜索主页 搜索活动
+ */
 public class SearchActionViewBinder extends ItemViewBinder<SearchActionInfo, SearchActionViewBinder.ViewHolder> {
 
     public SearchActionViewBinder() {
