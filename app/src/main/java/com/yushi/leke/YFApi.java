@@ -181,4 +181,29 @@ public interface YFApi {
     Call<ResponseBody>
     hasUnreadMsg(//用户是否有未读消息
     );
+
+    @POST("app/v1/uc/getMyProfile")
+    Call<ResponseBody>
+    getMyProfile(//获取用户信息（不可编辑）
+    );
+
+    @POST("app/v1/uc/getMyBaseInfo")
+    Call<ResponseBody>
+    getMyBaseInfo(//获取用户信息（可编辑）
+    );
+
+    @FormUrlEncoded
+    @POST("app/v1/uc/editMyBaseInfo")
+    Call<ResponseBody>
+    editMyBaseInfo(//绑定手机发验证码
+                   @Field("avatar") String avatar,
+                   @Field("userName") String userName,
+                   @Field("company") String company,
+                   @Field("position") String position,
+                   @Field("motto") String motto,
+                   @Field("email") String email,
+                   @Field("city") String city,
+                   @Field("adress") String adress,
+                   @Field("gender") String gender);
+
 }
