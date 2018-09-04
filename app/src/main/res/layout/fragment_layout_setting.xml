@@ -5,22 +5,18 @@
     android:background="@color/color_f7f7f7"
     android:orientation="vertical">
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/px40"
-        android:background="@color/white" />
-
     <RelativeLayout
         android:id="@+id/rl_account_safety"
+        style="@style/click_state_style"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/px100"
+        android:layout_height="@dimen/px140"
         android:background="@color/white">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/px36"
+            android:layout_marginTop="@dimen/px65"
             android:text="账号与安全"
             android:textColor="@color/color_gray_level3"
             android:textSize="@dimen/px30" />
@@ -29,35 +25,35 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/px36"
+            android:layout_marginTop="@dimen/px52"
             android:src="@drawable/ic_arrows_right" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px1"
+        android:background="@color/white">
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="@dimen/px1"
-            android:layout_alignParentBottom="true"
+            android:layout_height="match_parent"
             android:layout_marginLeft="@dimen/px36"
             android:background="@color/color_f0f0f0" />
-
     </RelativeLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/px40"
-        android:background="@color/white" />
 
     <RelativeLayout
         android:id="@+id/rl_leke_about"
+        style="@style/click_state_style"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/px100"
+        android:layout_height="@dimen/px140"
         android:background="@color/white">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/px36"
+            android:layout_marginTop="@dimen/px65"
             android:text="关于乐客"
             android:textColor="@color/color_gray_level3"
             android:textSize="@dimen/px30" />
@@ -66,35 +62,35 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/px36"
+            android:layout_marginTop="@dimen/px52"
             android:src="@drawable/ic_arrows_right" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px1"
+        android:background="@color/white">
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="@dimen/px1"
-            android:layout_alignParentBottom="true"
+            android:layout_height="match_parent"
             android:layout_marginLeft="@dimen/px36"
             android:background="@color/color_f0f0f0" />
-
     </RelativeLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/px40"
-        android:background="@color/white" />
 
     <RelativeLayout
         android:id="@+id/rl_clear_cache"
+        style="@style/click_state_style"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/px100"
+        android:layout_height="@dimen/px140"
         android:background="@color/white">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/px36"
+            android:layout_marginTop="@dimen/px65"
             android:text="清除缓存"
             android:textColor="@color/color_gray_level3"
             android:textSize="@dimen/px30" />
@@ -103,8 +99,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/px36"
+            android:layout_marginTop="@dimen/px52"
             android:src="@drawable/ic_arrows_right" />
 
         <TextView
@@ -112,36 +108,36 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/px68"
+            android:layout_marginTop="@dimen/px67"
             android:textColor="@color/color_gray_level9"
             android:textSize="@dimen/px24" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px1"
+        android:background="@color/white">
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="@dimen/px1"
-            android:layout_alignParentBottom="true"
+            android:layout_height="match_parent"
             android:layout_marginLeft="@dimen/px36"
             android:background="@color/color_f0f0f0" />
-
     </RelativeLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/px40"
-        android:background="@color/white" />
 
     <RelativeLayout
         android:id="@+id/rl_current_version"
+        style="@style/click_state_style"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/px100"
+        android:layout_height="@dimen/px140"
         android:background="@color/white">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/px36"
+            android:layout_marginTop="@dimen/px65"
             android:text="当前版本"
             android:textColor="@color/color_gray_level3"
             android:textSize="@dimen/px30" />
@@ -151,23 +147,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/px36"
+            android:layout_marginTop="@dimen/px67"
             android:text="1.0.0(最新版本)"
             android:textColor="@color/color_gray_level9"
             android:textSize="@dimen/px24" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/px1"
-            android:layout_alignParentBottom="true"
-            android:layout_marginLeft="@dimen/px36"
-            android:background="@color/color_f0f0f0" />
 
     </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/rl_logout"
+        style="@style/click_state_style"
         android:layout_width="match_parent"
         android:layout_height="@dimen/px120"
         android:layout_marginTop="@dimen/px100"
@@ -180,7 +170,6 @@
             android:text="退出登录"
             android:textColor="@color/color_blue_level6"
             android:textSize="@dimen/px34" />
-
     </RelativeLayout>
 
 </LinearLayout>
