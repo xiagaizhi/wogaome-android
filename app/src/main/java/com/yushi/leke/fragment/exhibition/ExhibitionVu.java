@@ -16,7 +16,6 @@ import com.yufan.library.widget.StateLayout;
 import com.yufan.library.widget.AppToolbar;
 import com.yufan.library.view.recycler.YFRecyclerView;
 
-import me.relex.circleindicator.CircleIndicator;
 
 /**
  * Created by mengfantao on 18/8/2.

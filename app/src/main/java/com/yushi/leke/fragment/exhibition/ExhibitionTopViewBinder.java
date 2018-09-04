@@ -31,7 +31,7 @@ import me.drakeet.multitype.ItemViewBinder;
 
 
 /**
- * @author drakeet
+ *路演大厅 头部
  */
 public class ExhibitionTopViewBinder extends ItemViewBinder<ExhibitionTopInfo, ExhibitionTopViewBinder.ViewHolder> {
 

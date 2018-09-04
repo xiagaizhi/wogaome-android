@@ -29,6 +29,9 @@ import com.yushi.leke.fragment.test.DbTestContract;
 
 import me.drakeet.multitype.ItemViewBinder;
 
+/**
+ * 搜索主页 底部进入条目
+ */
 public class SearchTabBottomViewBinder extends ItemViewBinder<SearchBottomInfo, SearchTabBottomViewBinder.ViewHolder> {
 
     public SearchTabBottomViewBinder() {

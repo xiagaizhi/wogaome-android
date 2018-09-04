@@ -30,6 +30,9 @@ import com.yushi.leke.fragment.home.SubscriptionInfo;
 
 import me.drakeet.multitype.ItemViewBinder;
 
+/**
+ * 搜索主页 头部标题
+ */
 public class SearchTabTitleViewBinder extends ItemViewBinder<String, SearchTabTitleViewBinder.ViewHolder> {
 
     public SearchTabTitleViewBinder() {
