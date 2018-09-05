@@ -41,13 +41,15 @@ public class CheckPhoneVu extends BaseVu<CheckPhoneContract.Presenter> implement
         bt_submit.setOnClickListener(this);
         verificationCodeTextView.setOnGetCodeClickListener(new VerificationCodeTextView.OnGetCodeClickListener() {
             @Override
-            public boolean getCode(String sessionId) {
-                if (mPersenter.getVerifcationCode()) {
-                    return true;
-                }
-                return false;
+            public void getCode(String sessionId) {
+                mPersenter.getVerifcationCode();
+            }
+            @Override
+            public boolean canShow() {
+                return !TextUtils.isEmpty(tv_phone.getText());
             }
         });
+
         et_verification_code.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {

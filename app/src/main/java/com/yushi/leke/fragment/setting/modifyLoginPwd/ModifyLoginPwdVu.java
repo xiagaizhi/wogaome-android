@@ -111,11 +111,13 @@ public class ModifyLoginPwdVu extends BaseVu<ModifyLoginPwdContract.Presenter> i
 
         verificationCodeTextView.setOnGetCodeClickListener(new VerificationCodeTextView.OnGetCodeClickListener() {
             @Override
-            public boolean getCode(String sessionId) {
-                if (mPersenter.getVerifcationCode()) {
-                    return true;
-                }
-                return false;
+            public void getCode(String sessionId) {
+                mPersenter.getVerifcationCode();
+            }
+
+            @Override
+            public boolean canShow() {
+                return true;
             }
         });
         et_verification_code.setOnFocusChangeListener(new View.OnFocusChangeListener() {

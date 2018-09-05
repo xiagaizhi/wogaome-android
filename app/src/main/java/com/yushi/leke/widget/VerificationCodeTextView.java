@@ -35,14 +35,14 @@ public class VerificationCodeTextView extends TextView {
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             if (msg.what == 0) {
-                if(msg.arg1>0){
+                if (msg.arg1 > 0) {
                     setText("重新获取(" + msg.arg1 + ")");
                     setTextColor(getResources().getColor(R.color.color_gray_levelc));
                     Message message = Message.obtain();
                     message.arg1 = msg.arg1 - 1;
-                    message.what=0;
+                    message.what = 0;
                     sendMessageDelayed(message, 1000);
-                }else {
+                } else {
                     reset();
                 }
 
@@ -82,8 +82,12 @@ public class VerificationCodeTextView extends TextView {
         setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(onGetCodeClickListener==null){
+                if (onGetCodeClickListener == null) {
                     throw new RuntimeException("需要调用 setOnGetCodeClickListener");
+                }
+                if (!onGetCodeClickListener.canShow()) {
+                    DialogManager.getInstance().toast("请输入手机号");
+                    return;
                 }
 
                 VerifyActivity.startSimpleVerifyUI(getContext(), VerifyType.NOCAPTCHA, "0335", null, new IActivityCallback() {
@@ -94,16 +98,15 @@ public class VerificationCodeTextView extends TextView {
 
                     @Override
                     public void onResult(int i, Map<String, String> map) {
-                        if(i==1){
-                            if(onGetCodeClickListener.getCode(map.get("sessionID"))){
-                                setOnClickListener(null);
-                                Message msg = Message.obtain();
-                                msg.what = 0;
-                                msg.arg1 = 60;
-                                handler.sendMessage(msg);
-                            }else {
-                                DialogManager.getInstance().toast("请输入手机号");
-                            }
+                        if (i == 1) {
+
+                            onGetCodeClickListener.getCode(map.get("sessionID"));
+                            setOnClickListener(null);
+                            Message msg = Message.obtain();
+                            msg.what = 0;
+                            msg.arg1 = 60;
+                            handler.sendMessage(msg);
+
                         }
                     }
                 });
@@ -113,6 +116,8 @@ public class VerificationCodeTextView extends TextView {
     }
 
     public interface OnGetCodeClickListener {
-        boolean getCode(String sessionID);
+        void getCode(String sessionID);
+
+        boolean canShow();
     }
 }

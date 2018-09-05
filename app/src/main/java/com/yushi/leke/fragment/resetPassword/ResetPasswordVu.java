@@ -61,12 +61,13 @@ public class ResetPasswordVu extends BaseVu<ResetPasswordContract.Presenter> imp
         iv_clear_password.setOnClickListener(this);
         verificationCodeTextView.setOnGetCodeClickListener(new VerificationCodeTextView.OnGetCodeClickListener() {
             @Override
-            public boolean getCode(String sessionID) {
-                if(!TextUtils.isEmpty(et_phone.getText())){
-                    mPersenter.getVerifcationCode(et_phone.getText().toString(),sessionID);
-                    return true;
-                }
-                return false;
+            public void getCode(String sessionID) {
+                mPersenter.getVerifcationCode(et_phone.getText().toString(),sessionID);
+            }
+
+            @Override
+            public boolean canShow() {
+                return !TextUtils.isEmpty(et_phone.getText());
             }
         });
         cb_showeye.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {

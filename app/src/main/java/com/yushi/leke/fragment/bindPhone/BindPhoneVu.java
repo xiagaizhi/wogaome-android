@@ -63,12 +63,12 @@ public class BindPhoneVu extends BaseVu<BindPhoneContract.Presenter> implements 
         bt_submit.setOnClickListener(this);
         verificationCodeTextView.setOnGetCodeClickListener(new VerificationCodeTextView.OnGetCodeClickListener() {
             @Override
-            public boolean getCode(String sessionId) {
-                if (!TextUtils.isEmpty(et_phone.getText())) {
-                    mPersenter.getVerifcationCode(et_phone.getText().toString());
-                    return true;
-                }
-                return false;
+            public void getCode(String sessionId) {
+                mPersenter.getVerifcationCode(et_phone.getText().toString());
+            }
+            @Override
+            public boolean canShow() {
+                return !TextUtils.isEmpty(et_phone.getText());
             }
         });
 

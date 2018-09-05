@@ -117,7 +117,7 @@ public class LoginFragment extends BaseFragment<LoginContract.IView> implements 
 
                         @Override
                         public void onFinish() {
-
+                            mShareUtils.logout(SHARE_MEDIA.WEIXIN);
                         }
                     });
                 }else {
