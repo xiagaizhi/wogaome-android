@@ -37,6 +37,7 @@ public class SubscriptionsVu extends BaseListVu<SubscriptionsContract.Presenter>
     private TextView mTitleView;
     private AppToolbar appToolbar;
     private ImageView musicAnim;
+    private ImageView searchBar;
 
     @Override
     public void initView(View view) {
@@ -59,15 +60,23 @@ public class SubscriptionsVu extends BaseListVu<SubscriptionsContract.Presenter>
                     float top_offset = -topChild.getTop();
                     if(top_offset<topHeight){
                         if(mTitleView!=null){
-                            float height=topHeight*2/3;
+                            float height=topHeight/2;
                          float offset=  (top_offset-height) /height;
-                            Log.d("offset","appToolbar:"+offset);
+                         if(offset<0){
+                             offset=0;
+                         }
+                            Log.d("offset","appToolbar:"+height);
                             mTitleView.setAlpha( offset);
                             musicAnim.setAlpha(offset);
+                         TextView tv_top_title=   topChild.findViewById(R.id.tv_anim_title);
+                      ImageView iv_anim_icon=   topChild.findViewById(R.id.iv_anim_icon);
+                          tv_top_title.setAlpha(1-offset);
+                            iv_anim_icon.setAlpha(1-offset);
                         }
                     }else {
                         mTitleView.setAlpha( 1f);
                         musicAnim.setAlpha(1f);
+
                     }
                 }else {
                     mTitleView.setAlpha( 1f);
@@ -85,6 +94,8 @@ public class SubscriptionsVu extends BaseListVu<SubscriptionsContract.Presenter>
         this.appToolbar=appToolbar;
          mTitleView=     appToolbar.creatCenterView(TextView.class);
       musicAnim=  appToolbar.creatRightView(ImageView.class);
+    searchBar=  appToolbar.creatRightView(ImageView.class);
+    searchBar.setImageResource(R.drawable.ic_search_blue);
         musicAnim.setImageResource(R.drawable.anim_player_blue);
         musicAnim.setPadding(0,0, (int)getContext().getResources().getDimension(R.dimen.px36),0);
         ((AnimationDrawable) musicAnim.getDrawable()).start();

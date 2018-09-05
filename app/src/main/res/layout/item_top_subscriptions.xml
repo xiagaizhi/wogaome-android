@@ -27,6 +27,7 @@
                 android:textColor="@color/color_black"
                 android:layout_centerVertical="true"
                 android:textSize="@dimen/px64"
+                android:id="@+id/tv_anim_title"
                 android:textStyle="bold" />
 
             <ImageView

@@ -17,6 +17,7 @@
 package com.yushi.leke.fragment.exhibition;
 
 import android.content.Intent;
+import android.graphics.drawable.AnimationDrawable;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -56,7 +57,7 @@ public class ExhibitionTopViewBinder extends ItemViewBinder<ExhibitionTopInfo, E
                 v.getContext().startActivity(intent);
             }
         });
-        holder.rightMusic.setBackgroundResource(R.drawable.anim_music_player_icon);
+        ((AnimationDrawable) holder.rightMusic.getDrawable()).start();
 
     }
 

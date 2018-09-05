@@ -1,9 +1,11 @@
 package com.yushi.leke.fragment.exhibition;
 
+import android.graphics.drawable.AnimationDrawable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.yushi.leke.R;
@@ -28,6 +30,7 @@ public class ExhibitionVu extends BaseListVu<ExhibitionContract.Presenter> imple
     private AppToolbar appToolbar;
     private TextView mTitleView;
     private float topHeight;
+    private ImageView musicAnim;
 
     @Override
     public void initView(View view) {
@@ -50,15 +53,27 @@ public class ExhibitionVu extends BaseListVu<ExhibitionContract.Presenter> imple
                     float top_offset = -topChild.getTop();
                     if(top_offset<topHeight){
                         if(mTitleView!=null){
-                            float offset=   top_offset/topHeight;
-                            Log.d("offset","appToolbar:"+offset);
+                            float height=topHeight/2;
+                            float offset=  (top_offset-height) /height;
+                            if(offset<0){
+                                offset=0;
+                            }
+                            Log.d("offset","appToolbar:"+height);
                             mTitleView.setAlpha( offset);
+                            musicAnim.setAlpha(offset);
+                            TextView tv_top_title=   topChild.findViewById(R.id.tv_anim_title);
+                            ImageView iv_anim_icon=   topChild.findViewById(R.id.iv_anim_icon);
+                            tv_top_title.setAlpha(1-offset);
+                            iv_anim_icon.setAlpha(1-offset);
                         }
                     }else {
-                        mTitleView.setAlpha( 1);
+                        mTitleView.setAlpha( 1f);
+                        musicAnim.setAlpha(1f);
+
                     }
                 }else {
-                    mTitleView.setAlpha( 1);
+                    mTitleView.setAlpha( 1f);
+                    musicAnim.setAlpha(1f);
                 }
             }
         });
@@ -73,6 +88,10 @@ public class ExhibitionVu extends BaseListVu<ExhibitionContract.Presenter> imple
     public boolean initTitle(AppToolbar appToolbar) {
         this.appToolbar=appToolbar;
         mTitleView=     appToolbar.creatCenterView(TextView.class);
+        musicAnim=  appToolbar.creatRightView(ImageView.class);
+        musicAnim.setImageResource(R.drawable.anim_player_blue);
+        musicAnim.setPadding(0,0, (int)getContext().getResources().getDimension(R.dimen.px36),0);
+        ((AnimationDrawable) musicAnim.getDrawable()).start();
         mTitleView.setText("路演厅");
         mTitleView.setAlpha(0);
         appToolbar.build();
