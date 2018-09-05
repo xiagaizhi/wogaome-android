@@ -105,6 +105,7 @@ public class SubscriptionsVu extends BaseListVu<SubscriptionsContract.Presenter>
         ((AnimationDrawable) musicAnim.getDrawable()).start();
         mTitleView.setText("订阅专栏");
         mTitleView.setAlpha(0f);
+        mTitleView .getPaint().setFakeBoldText(true);
         searchBar.setAlpha(0f);
         appToolbar.build();
         return true;

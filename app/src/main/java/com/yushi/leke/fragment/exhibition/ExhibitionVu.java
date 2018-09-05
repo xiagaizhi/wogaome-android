@@ -90,6 +90,7 @@ public class ExhibitionVu extends BaseListVu<ExhibitionContract.Presenter> imple
         ((AnimationDrawable) musicAnim.getDrawable()).start();
         mTitleView.setText("路演厅");
         mTitleView.setAlpha(0);
+        mTitleView .getPaint().setFakeBoldText(true);
         appToolbar.build();
         return true;
     }
