@@ -16,6 +16,7 @@ import com.yufan.library.inject.VuClass;
 import com.yufan.library.manager.DialogManager;
 import com.yushi.leke.UIHelper;
 import com.yushi.leke.YFApi;
+import com.yushi.leke.dialog.CommonDialog;
 import com.yushi.leke.util.RechargeUtil;
 import com.yushi.leke.dialog.recharge.SetRechargePwdDialog;
 import com.yushi.leke.fragment.bindPhone.BindPhoneFragment;
@@ -105,9 +106,25 @@ public class PaySafetyFragment extends BaseFragment<PaySafetyContract.IView> imp
     }
 
     @Override
-    public void returnSetPwdResult() {
-        isHave = 1;
-        getVu().updatePage(isHave, phoneNumber);
+    public void returnSetPwdResult(boolean isSuccess, final int type) {
+        DialogManager.getInstance().dismiss();
+        if (isSuccess) {
+            isHave = 1;
+            getVu().updatePage(isHave, phoneNumber);
+        } else {
+            new CommonDialog(_mActivity).setTitle("密码设置失败，请重新设置")
+                    .setPositiveName("确定")
+                    .setNegativeName("取消")
+                    .setCommonClickListener(new CommonDialog.CommonDialogClick() {
+                        @Override
+                        public void onClick(CommonDialog commonDialog, int actionType) {
+                            commonDialog.dismiss();
+                            if (actionType == CommonDialog.COMMONDIALOG_ACTION_POSITIVE){
+                                RechargeUtil.getInstance().setRechargePwd(_mActivity, type, PaySafetyFragment.this);
+                            }
+                        }
+                    }).show();
+        }
     }
 
     @Override

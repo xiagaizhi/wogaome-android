@@ -174,6 +174,6 @@ public class RechargeUtil {
     }
 
     public interface SetRechargeInterf {
-        void returnSetPwdResult();
+        void returnSetPwdResult(boolean isSuccess,int type);
     }
 }

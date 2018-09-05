@@ -194,8 +194,9 @@ public class UCenterFragment extends BaseFragment<UCenterContract.IView> impleme
 
     @Override
     public void toRefresh() {
-        hasUnreadmsg();
-        getMyProfile();
-        getMyBaseInfo();
+//        hasUnreadmsg();
+//        getMyProfile();
+//        getMyBaseInfo();
+        getVu().refreshComplete();
     }
 }
