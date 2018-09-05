@@ -145,8 +145,8 @@ public class RechargeUtil {
                 .enqueue(new BaseHttpCallBack() {
                     @Override
                     public void onSuccess(ApiBean mApiBean) {
-                        if (TextUtils.equals(ApiBean.SUCCESS, mApiBean.getCode())) {
-                            String data = mApiBean.getData();
+                        String data = mApiBean.getData();
+                        if (!TextUtils.isEmpty(data)) {
                             PayMetadata payMetadata = JSON.parseObject(data, PayMetadata.class);
                             if (TextUtils.equals("1", tradeApiId)) {
                                 ToALiPay.getInstance().action(context, payMetadata);

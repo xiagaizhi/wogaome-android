@@ -124,7 +124,7 @@ public class SetRechargePwdDialog extends Dialog implements KeyboardAdapter.OnKe
                 } else {
                     mTitle.setText("请设置您的乐链APP的交易密码");
                 }
-                new CommonDialog(getContext()).setTitle("两次交易密码不一致，请重新输入")
+                new CommonDialog(mContext).setTitle("两次交易密码不一致，请重新输入")
                         .setPositiveName("确定")
                         .setHaveNegative(false)
                         .setCommonClickListener(new CommonDialog.CommonDialogClick() {

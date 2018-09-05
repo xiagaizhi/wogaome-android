@@ -74,6 +74,7 @@ public class PayDialog extends Dialog implements PayWayAdapter.OnItemClickListen
             public void onClick(View v) {
                 if (selectPayWay == null || mPayWayList == null) return;
                 RechargeUtil.getInstance().toPay(mContext, mPayWayList.getGoodsName(), mPayWayList.getGoodsPrice(), mPayWayList.getGoodsPrice(), mPayWayList.getGoodsId(), selectPayWay.getTradeApiId());
+                dismiss();
             }
         });
         rootView.findViewById(R.id.id_top_view).setOnClickListener(new View.OnClickListener() {

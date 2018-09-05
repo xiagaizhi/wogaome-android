@@ -17,6 +17,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 
 import com.yufan.library.browser.BrowserBaseFragment;
@@ -81,6 +82,7 @@ public class OpenTreasureBoxFragment extends BaseFragment<OpenTreasureBoxContrac
             String action = intent.getAction();
             switch (action) {
                 case Global.BROADCAST_PAY_RESUIL_ACTION:
+                    Log.e("OpenTreasureBoxFragment", "1");
                     showDialog(intent.getBooleanExtra(Global.INTENT_PAY_RESUIL_DATA, false));
                     break;
             }
@@ -128,7 +130,7 @@ public class OpenTreasureBoxFragment extends BaseFragment<OpenTreasureBoxContrac
         if (isSuccess) {
             Bundle bundle = new Bundle();
             setFragmentResult(RESULT_OK, bundle);
-            new CommonDialog(getContext()).setTitle("恭喜您，充值成功！")
+            new CommonDialog(_mActivity).setTitle("恭喜您，充值成功！")
                     .setPositiveName("确定")
                     .setHaveNegative(false)
                     .setCommonClickListener(new CommonDialog.CommonDialogClick() {
@@ -141,7 +143,7 @@ public class OpenTreasureBoxFragment extends BaseFragment<OpenTreasureBoxContrac
                         }
                     }).show();
         } else {
-            new CommonDialog(getContext()).setTitle("本次充值失败，请重新充值！")
+            new CommonDialog(_mActivity).setTitle("本次充值失败，请重新充值！")
                     .setPositiveName("确定")
                     .setHaveNegative(false)
                     .setCommonClickListener(new CommonDialog.CommonDialogClick() {
