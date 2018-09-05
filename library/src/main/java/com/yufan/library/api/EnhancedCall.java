@@ -20,7 +20,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class EnhancedCall{
+public class EnhancedCall {
     private Call<okhttp3.ResponseBody> mCall;
     // 是否使用缓存 x
     private boolean mUseCache = false;
@@ -55,7 +55,6 @@ public class EnhancedCall{
     }
 
 
-
     /**
      * 是否使用缓存 默认使用
      */
@@ -65,11 +64,15 @@ public class EnhancedCall{
     }
 
     public void enqueue(final BaseHttpCallBack handler) {
-    if(mUseCache&&!TextUtils.isEmpty(mCache)){
-        ApiBean mApiBean = JSON.parseObject(mCache, ApiBean.class);
-        mApiBean.json=mCache;
-        handler.onResponse(mApiBean);
-    }
+        if (mUseCache && !TextUtils.isEmpty(mCache)) {
+            try {
+                ApiBean mApiBean = JSON.parseObject(mCache, ApiBean.class);
+                mApiBean.json = mCache;
+                handler.onResponse(mApiBean);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
 
         mCall.enqueue(new Callback<ResponseBody>() {
             @Override
@@ -79,8 +82,8 @@ public class EnhancedCall{
                     if (code == 200) {
                         String mjson = response.body().string();
                         ApiBean mApiBean = JSON.parseObject(mjson, ApiBean.class);
-                        mApiBean.json=mjson;
-                        if (TextUtils.equals(ApiBean.TOKEN_LOSE,mApiBean.code)) {
+                        mApiBean.json = mjson;
+                        if (TextUtils.equals(ApiBean.TOKEN_LOSE, mApiBean.code)) {
                             //token失效
                             return;
                         }
@@ -89,20 +92,20 @@ public class EnhancedCall{
                     } else {
                         handler.onFailure(code, new Exception(response.errorBody().string()));
                     }
-                } catch (IOException e) {
+                } catch (Exception e) {
                     handler.onFailure(-1, new Exception("接口格式异常"));
                 }
             }
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-                if (!mUseCache ) {
+                if (!mUseCache) {
                     //不使用缓存 或者网络可用 的情况下直接回调onFailure
                     Exception exception = new Exception(t.getMessage());
                     handler.onFailure(-1, exception);
                     return;
                 }
-                if (TextUtils.isEmpty(mCache) ) {
+                if (TextUtils.isEmpty(mCache)) {
                     Exception exception = new Exception(t.getMessage());
                     handler.onFailure(-1, exception);
                 }

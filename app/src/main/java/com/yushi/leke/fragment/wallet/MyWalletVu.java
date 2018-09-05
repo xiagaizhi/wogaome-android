@@ -26,6 +26,7 @@ import com.yufan.library.inject.Title;
 import com.yufan.library.widget.StateLayout;
 import com.yufan.library.widget.AppToolbar;
 import com.yushi.leke.UIHelper;
+import com.yushi.leke.util.StringUtil;
 
 /**
  * Created by mengfantao on 18/8/2.
@@ -68,6 +69,7 @@ public class MyWalletVu extends BaseVu<MyWalletContract.Presenter> implements My
         rootView = view;
         tv_power.setText("");
         tv_power.setVisibility(View.GONE);
+        id_lkc_remain.setText(StringUtil.getMoneySpannble("0",getContext()));
         id_lck_instructions.setOnClickListener(this);
         id_lkc_detail.setOnClickListener(this);
         id_yesterd_arith_num.setOnClickListener(this);
@@ -142,18 +144,7 @@ public class MyWalletVu extends BaseVu<MyWalletContract.Presenter> implements My
     @Override
     public void upDataMyWallet(MyWalletInfo myWalletInfo) {
         if (myWalletInfo != null) {
-            String[] lkcs = myWalletInfo.getLkc().split("//.");
-            String lkc1 = "0";
-            String lkc2 = "";
-            if (lkcs != null) {
-                if (lkcs.length > 0) {
-                    lkc1 = lkcs[0];
-                }
-                if (lkcs.length > 1) {
-                    lkc2 = lkcs[1];
-                }
-            }
-            id_lkc_remain.setText(Html.fromHtml("<b><<font color='#151515'><size>" + lkc1 + "</size></font></b><font color='#333333'><size2>" + lkc2 + "</size2></font>", null, new SizeLabel(getContext())));
+            id_lkc_remain.setText(StringUtil.getMoneySpannble(myWalletInfo.getLkc(),getContext()));
             if (myWalletInfo.getPower() > 0) {
                 tv_power.setVisibility(View.VISIBLE);
                 tv_power.setText(String.valueOf(myWalletInfo.getPower()));
