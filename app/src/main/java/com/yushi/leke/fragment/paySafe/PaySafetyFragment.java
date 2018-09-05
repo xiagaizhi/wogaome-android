@@ -104,7 +104,7 @@ public class PaySafetyFragment extends BaseFragment<PaySafetyContract.IView> imp
             startForResult(UIHelper.creat(BindPhoneFragment.class).build(), 100);
         } else {
             if (isHave == 1) {//修改，先校验
-                RechargeUtil.getInstance().checkRechargePwd(1, _mActivity, "修改交易密码", this);
+                RechargeUtil.getInstance().checkRechargePwd(_mActivity, "修改交易密码", this);
             } else {
                 startForResult(UIHelper.creat(CheckPhoneFragment.class).put("phoneNumber", phoneNumber).build(), 300);
             }
@@ -125,10 +125,5 @@ public class PaySafetyFragment extends BaseFragment<PaySafetyContract.IView> imp
         if (isSuccess) {
             RechargeUtil.getInstance().setRechargePwd(_mActivity, null, null, originalPwd, SetRechargePwdDialog.SET_RECHARGE_PWD_NEW, this);
         }
-    }
-
-    @Override
-    public void openBindPhone() {
-        startForResult(UIHelper.creat(BindPhoneFragment.class).build(), 100);
     }
 }

@@ -35,46 +35,39 @@ public class RechargeUtil {
         return instance;
     }
 
-    /**
-     * 校验支付密码  不清楚是否设置过有交易密码
-     */
-    public void checkRechargePwd(final Context context, final String extMsg, CheckRechargePwdInterf checkRechargeInterf) {
-        checkRechargePwd(0, context, extMsg, checkRechargeInterf);
+
+    public void checkRechargePwd(Context context, String extMsg, CheckRechargePwdInterf checkRechargeInterf) {
+        CheckRechargePwdDialog checkRechargePwdDialog = new CheckRechargePwdDialog(context, extMsg, checkRechargeInterf);
+        checkRechargePwdDialog.show();
     }
 
     /**
-     * @param isHavePwd           是否有交易密码
      * @param context
      * @param extMsg
-     * @param checkRechargeInterf
+     * @param haveRechargePwdInterf
      */
-    public void checkRechargePwd(int isHavePwd, final Context context, final String extMsg, final CheckRechargePwdInterf checkRechargeInterf) {
-        if (isHavePwd == 1) {//拥有交易密码
-            CheckRechargePwdDialog checkRechargePwdDialog = new CheckRechargePwdDialog(context, extMsg, checkRechargeInterf);
-            checkRechargePwdDialog.show();
-        } else {
-            ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).haveTradePwd())
-                    .useCache(false)
-                    .enqueue(new BaseHttpCallBack() {
-                        @Override
-                        public void onSuccess(ApiBean mApiBean) {
-                            try {
-                                if (TextUtils.equals(ApiBean.SUCCESS, mApiBean.getCode())) {
-                                    String data = mApiBean.getData();
-                                    JSONObject jsonObject = new JSONObject(data);
-                                    int isHave = jsonObject.optInt("isHave");
-                                    String phoneNumber = jsonObject.optString("phoneNumber");
-                                    if (!TextUtils.isEmpty(phoneNumber)) {//绑定手机
-                                        if (isHave == 1) {//拥有交易密码,验证交易密码
-                                            CheckRechargePwdDialog checkRechargePwdDialog = new CheckRechargePwdDialog(context, extMsg, checkRechargeInterf);
-                                            checkRechargePwdDialog.show();
-                                        } else {//没有交易密码
-//                                            setRechargePwd(context, SetRechargePwdDialog.SET_RECHARGE_PWD, null);
+    public void haveRechargePwd(final Context context, final String extMsg, final HaveRechargePwdInterf haveRechargePwdInterf) {
+        ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).haveTradePwd())
+                .useCache(false)
+                .enqueue(new BaseHttpCallBack() {
+                    @Override
+                    public void onSuccess(ApiBean mApiBean) {
+                        try {
+                            if (TextUtils.equals(ApiBean.SUCCESS, mApiBean.getCode())) {
+                                String data = mApiBean.getData();
+                                JSONObject jsonObject = new JSONObject(data);
+                                int isHave = jsonObject.optInt("isHave");
+                                String phoneNumber = jsonObject.optString("phoneNumber");
+                                if (!TextUtils.isEmpty(phoneNumber)) {//绑定手机
+                                    if (isHave == 1) {//拥有交易密码,验证交易密码
+                                        if (haveRechargePwdInterf != null) {
+                                            haveRechargePwdInterf.haveRechargePwd(true);
                                         }
-                                    } else {//未绑定过手机
-                                        new CommonDialog(context).setTitle("您尚未绑定手机，请先绑定安全手机！")
+                                    } else {//没有交易密码
+//                                            setRechargePwd(context, SetRechargePwdDialog.SET_RECHARGE_PWD, null);
+                                        new CommonDialog(context).setTitle("您尚未设置交易密码，请前往设置")
                                                 .setNegativeName("取消")
-                                                .setPositiveName("去绑定")
+                                                .setPositiveName("去设置")
                                                 .setHaveNegative(true)
                                                 .setCommonDialogCanceledOnTouchOutside2(false)
                                                 .setCommonClickListener(new CommonDialog.CommonDialogClick() {
@@ -82,30 +75,49 @@ public class RechargeUtil {
                                                     public void onClick(CommonDialog commonDialog, int actionType) {
                                                         commonDialog.dismiss();
                                                         if (actionType == CommonDialog.COMMONDIALOG_ACTION_POSITIVE) {
-                                                            if (checkRechargeInterf != null) {
-                                                                checkRechargeInterf.openBindPhone();//打开绑定手机
+                                                            // TODO: 2018/9/5  去设置密码
+                                                            if (haveRechargePwdInterf != null) {
+                                                                haveRechargePwdInterf.setRechargePwd();
                                                             }
                                                         }
                                                     }
                                                 }).show();
                                     }
+                                } else {//未绑定过手机
+                                    new CommonDialog(context).setTitle("您尚未绑定手机，请先绑定安全手机！")
+                                            .setNegativeName("取消")
+                                            .setPositiveName("去绑定")
+                                            .setHaveNegative(true)
+                                            .setCommonDialogCanceledOnTouchOutside2(false)
+                                            .setCommonClickListener(new CommonDialog.CommonDialogClick() {
+                                                @Override
+                                                public void onClick(CommonDialog commonDialog, int actionType) {
+                                                    commonDialog.dismiss();
+                                                    if (actionType == CommonDialog.COMMONDIALOG_ACTION_POSITIVE) {
+                                                        // TODO: 2018/9/5  去绑定手机
+                                                        if (haveRechargePwdInterf != null) {
+                                                            haveRechargePwdInterf.bindPhone();
+                                                        }
+                                                    }
+                                                }
+                                            }).show();
                                 }
-                            } catch (Exception e) {
-                                e.printStackTrace();
                             }
+                        } catch (Exception e) {
+                            e.printStackTrace();
                         }
+                    }
 
-                        @Override
-                        public void onError(int id, Exception e) {
+                    @Override
+                    public void onError(int id, Exception e) {
 
-                        }
+                    }
 
-                        @Override
-                        public void onFinish() {
+                    @Override
+                    public void onFinish() {
 
-                        }
-                    });
-        }
+                    }
+                });
 
     }
 
@@ -118,7 +130,7 @@ public class RechargeUtil {
      * @param setRechargeInterf
      */
     public void setRechargePwd(Context context, String token, String verificationCode, String originalPwd, int type, SetRechargeInterf setRechargeInterf) {
-        SetRechargePwdDialog setRechargePwdDialog = new SetRechargePwdDialog(context, type,token,verificationCode,originalPwd);
+        SetRechargePwdDialog setRechargePwdDialog = new SetRechargePwdDialog(context, type, token, verificationCode, originalPwd);
         setRechargePwdDialog.setmSetRechargeInterf(setRechargeInterf);
         setRechargePwdDialog.show();
     }
@@ -168,9 +180,15 @@ public class RechargeUtil {
 
 
     public interface CheckRechargePwdInterf {
-        void returnCheckResult(boolean isSuccess,String originalPwd);
+        void returnCheckResult(boolean isSuccess, String originalPwd);
+    }
 
-        void openBindPhone();
+    public interface HaveRechargePwdInterf {
+        void haveRechargePwd(boolean haveRechargePwe);
+
+        void bindPhone();
+
+        void setRechargePwd();
     }
 
     public interface SetRechargeInterf {
