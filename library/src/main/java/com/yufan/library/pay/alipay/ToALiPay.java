@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v4.content.LocalBroadcastManager;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.alipay.sdk.app.PayTask;
 import com.yufan.library.Global;
@@ -64,6 +65,7 @@ public class ToALiPay {
                         } else {
                             // 其他值就可以判断为支付失败，包括用户主动取消支付，或者系统返回的错误
                             if (mContext != null) {
+                                Log.e("OpenTreasureBoxFragment", "2=="+System.currentTimeMillis());
                                 Intent filter = new Intent();
                                 filter.putExtra(Global.INTENT_PAY_RESUIL_DATA, false);
                                 filter.setAction(Global.BROADCAST_PAY_RESUIL_ACTION);

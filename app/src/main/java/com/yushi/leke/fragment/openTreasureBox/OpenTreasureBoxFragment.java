@@ -44,7 +44,7 @@ public class OpenTreasureBoxFragment extends BaseFragment<OpenTreasureBoxContrac
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).listTreatureBox())
-                .useCache(false)
+                .useCache(true)
                 .enqueue(new BaseHttpCallBack() {
                     @Override
                     public void onSuccess(ApiBean mApiBean) {
@@ -82,7 +82,7 @@ public class OpenTreasureBoxFragment extends BaseFragment<OpenTreasureBoxContrac
             String action = intent.getAction();
             switch (action) {
                 case Global.BROADCAST_PAY_RESUIL_ACTION:
-                    Log.e("OpenTreasureBoxFragment", "1");
+                    Log.e("OpenTreasureBoxFragment", "1=="+System.currentTimeMillis());
                     showDialog(intent.getBooleanExtra(Global.INTENT_PAY_RESUIL_DATA, false));
                     break;
             }

@@ -93,6 +93,19 @@
             android:theme="@android:style/Theme.NoTitleBar"
             android:windowSoftInputMode="adjustResize"></activity>
 
+        <activity
+            android:name="com.alipay.sdk.app.H5AuthActivity"
+            android:configChanges="orientation|keyboardHidden|navigation"
+            android:exported="false"
+            android:screenOrientation="behind"
+            android:windowSoftInputMode="adjustResize|stateHidden"></activity>
+
+        <activity
+            android:name="com.alipay.sdk.auth.AuthActivity"
+            android:configChanges="orientation|keyboardHidden|navigation"
+            android:exported="false"
+            android:screenOrientation="behind"></activity>
+
         <service
             android:name=".uamp.MusicService"
             android:exported="true"
@@ -137,8 +150,9 @@
                 <action android:name="android.intent.action.MEDIA_BUTTON" />
             </intent-filter>
         </receiver>
-        <receiver android:name="com.yushi.leke.receiver.MessageReceiver"
-            android:exported="true" >
+        <receiver
+            android:name="com.yushi.leke.receiver.MessageReceiver"
+            android:exported="true">
             <intent-filter>
                 <!-- 接收消息透传 -->
                 <action android:name="com.tencent.android.tpush.action.PUSH_MESSAGE" />
@@ -146,6 +160,7 @@
                 <action android:name="com.tencent.android.tpush.action.FEEDBACK" />
             </intent-filter>
         </receiver>
+
         <meta-data
             android:name="UMENG_APPKEY"
             android:value="5b6bafa0b27b0a7d06000033" />
