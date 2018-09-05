@@ -2,17 +2,29 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
+
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/px110">
+        android:layout_height="@dimen/px110"
+        android:layout_marginLeft="@dimen/px36"
+        android:layout_marginRight="@dimen/px36">
+
         <TextView
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:text="订阅专栏"
-            android:layout_marginLeft="@dimen/px54"
-            android:textSize="@dimen/px64"
             android:textColor="@color/color_black"
-            android:layout_height="wrap_content" />
+            android:textSize="@dimen/px64"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/iv_anim_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true" />
     </RelativeLayout>
+
 
     <com.yufan.library.view.ptr.PtrClassicFrameLayout
         xmlns:app="http://schemas.android.com/apk/res-auto"

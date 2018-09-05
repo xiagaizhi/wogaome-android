@@ -207,7 +207,7 @@ public class ResetPasswordVu extends BaseVu<ResetPasswordContract.Presenter> imp
     }
 
     private void updateState(){
-        if(CheckUtil.checkInputState(et_phone,et_password,et_verification_code,false)){
+        if(CheckUtil.checkInputEmpty(et_phone,et_password,et_verification_code,false)){
             bt_reset.setEnabled(true);
         }else {
             bt_reset.setEnabled(false);

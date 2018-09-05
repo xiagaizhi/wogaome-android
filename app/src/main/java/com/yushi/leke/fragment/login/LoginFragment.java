@@ -29,6 +29,7 @@ import com.yufan.library.inter.ICallBack;
 import com.yufan.library.manager.DialogManager;
 import com.yufan.library.manager.SPManager;
 import com.yufan.library.manager.UserManager;
+import com.yufan.library.util.SoftInputUtil;
 import com.yufan.library.widget.anim.AFVerticalAnimator;
 import com.yufan.share.ILoginCallback;
 import com.yufan.share.ShareUtils;
@@ -66,7 +67,7 @@ public class LoginFragment extends BaseFragment<LoginContract.IView> implements 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE | WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING|WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         mShareUtils = new ShareUtils(getActivity());
         ((MainActivity) getActivity()).registerIActivityResult(mResult);
     }
@@ -175,4 +176,9 @@ public class LoginFragment extends BaseFragment<LoginContract.IView> implements 
     }
 
 
+    @Override
+    public void onSupportInvisible() {
+        super.onSupportInvisible();
+        SoftInputUtil.hideSoftInput(getActivity(),getView());
+    }
 }

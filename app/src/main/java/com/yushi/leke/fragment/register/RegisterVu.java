@@ -210,7 +210,7 @@ public class RegisterVu extends BaseVu<RegisterContract.Presenter> implements Re
         });
     }
     private void updateState(){
-        if(CheckUtil.checkInputState(et_phone,et_password,et_verification_code,false)){
+        if(CheckUtil.checkInputEmpty(et_phone,et_password,et_verification_code,false)){
             bt_register.setEnabled(true);
         }else {
             bt_register.setEnabled(false);

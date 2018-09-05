@@ -82,7 +82,7 @@ public class CheckPhoneVu extends BaseVu<CheckPhoneContract.Presenter> implement
 
 
     private void updateState() {
-        if (CheckUtil.checkInputState(null, null, et_verification_code, false)) {
+        if (CheckUtil.checkInputEmpty(null, null, et_verification_code, false)) {
             bt_submit.setEnabled(true);
         } else {
             bt_submit.setEnabled(false);

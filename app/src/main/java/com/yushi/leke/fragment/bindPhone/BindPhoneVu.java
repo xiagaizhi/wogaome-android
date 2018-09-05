@@ -197,7 +197,7 @@ public class BindPhoneVu extends BaseVu<BindPhoneContract.Presenter> implements 
     }
 
     private void updateState() {
-        if (CheckUtil.checkInputState(et_phone, et_password, et_verification_code, false)) {
+        if (CheckUtil.checkInputEmpty(et_phone, et_password, et_verification_code, false)) {
             bt_submit.setEnabled(true);
         } else {
             bt_submit.setEnabled(false);

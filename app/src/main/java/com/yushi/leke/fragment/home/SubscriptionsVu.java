@@ -1,9 +1,11 @@
 package com.yushi.leke.fragment.home;
 
+import com.yufan.library.util.PxUtil;
 import com.yushi.leke.R;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.AnimationDrawable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -34,6 +36,7 @@ public class SubscriptionsVu extends BaseListVu<SubscriptionsContract.Presenter>
     private float topHeight;
     private TextView mTitleView;
     private AppToolbar appToolbar;
+    private ImageView musicAnim;
 
     @Override
     public void initView(View view) {
@@ -56,15 +59,19 @@ public class SubscriptionsVu extends BaseListVu<SubscriptionsContract.Presenter>
                     float top_offset = -topChild.getTop();
                     if(top_offset<topHeight){
                         if(mTitleView!=null){
-                         float offset=   top_offset/topHeight;
+                            float height=topHeight*2/3;
+                         float offset=  (top_offset-height) /height;
                             Log.d("offset","appToolbar:"+offset);
                             mTitleView.setAlpha( offset);
+                            musicAnim.setAlpha(offset);
                         }
                     }else {
-                        mTitleView.setAlpha( 1);
+                        mTitleView.setAlpha( 1f);
+                        musicAnim.setAlpha(1f);
                     }
                 }else {
-                    mTitleView.setAlpha( 1);
+                    mTitleView.setAlpha( 1f);
+                    musicAnim.setAlpha(1f);
                 }
             }
         });
@@ -77,6 +84,10 @@ public class SubscriptionsVu extends BaseListVu<SubscriptionsContract.Presenter>
     public boolean initTitle(AppToolbar appToolbar) {
         this.appToolbar=appToolbar;
          mTitleView=     appToolbar.creatCenterView(TextView.class);
+      musicAnim=  appToolbar.creatRightView(ImageView.class);
+        musicAnim.setImageResource(R.drawable.anim_player_blue);
+        musicAnim.setPadding(0,0, (int)getContext().getResources().getDimension(R.dimen.px36),0);
+        ((AnimationDrawable) musicAnim.getDrawable()).start();
         mTitleView.setText("订阅专栏");
         mTitleView.setAlpha(0);
         appToolbar.build();

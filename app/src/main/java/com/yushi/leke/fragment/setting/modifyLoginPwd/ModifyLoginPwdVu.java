@@ -151,7 +151,7 @@ public class ModifyLoginPwdVu extends BaseVu<ModifyLoginPwdContract.Presenter> i
     }
 
     private void updateState() {
-        if (CheckUtil.checkInputState(null, et_password, et_verification_code, false)) {
+        if (CheckUtil.checkInputEmpty(null, et_password, et_verification_code, false)) {
             bt_submit.setEnabled(true);
         } else {
             bt_submit.setEnabled(false);

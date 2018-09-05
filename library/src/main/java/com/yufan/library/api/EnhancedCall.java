@@ -22,7 +22,7 @@ import retrofit2.Response;
 
 public class EnhancedCall{
     private Call<okhttp3.ResponseBody> mCall;
-    // 是否使用缓存 默认开启
+    // 是否使用缓存 x
     private boolean mUseCache = false;
     private String mCache;
 

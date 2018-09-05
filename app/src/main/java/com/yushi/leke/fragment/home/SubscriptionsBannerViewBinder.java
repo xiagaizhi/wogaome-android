@@ -18,6 +18,7 @@ package com.yushi.leke.fragment.home;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.AnimationDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -87,7 +88,7 @@ public class SubscriptionsBannerViewBinder extends ItemViewBinder<SubscriptionBa
                 callBack.OnBackResult(BANNER_BINDER_SEARCH);
             }
         });
-        holder.rightMusic.setBackgroundResource(R.drawable.ic_blue_music);
+        ((AnimationDrawable) holder.rightMusic.getDrawable()).start();
         holder.mConvenientBanner.setPageTransformer(false, new ScaleTransformer());
         holder.mConvenientBanner.setOffscreenPageLimit(3);
         List<String> list = new ArrayList<>();

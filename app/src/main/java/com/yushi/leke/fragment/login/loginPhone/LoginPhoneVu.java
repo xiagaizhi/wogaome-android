@@ -59,7 +59,7 @@ public class LoginPhoneVu extends BaseVu<LoginPhoneContract.Presenter> implement
     @FindView(R.id.resize_login)
     ResizeLayout resize_login;
     private void updateState(){
-        if(CheckUtil.checkInputState(et_phone,et_password,null,false)){
+        if(CheckUtil.checkInputEmpty(et_phone,et_password,null,false)){
             bt_login.setEnabled(true);
         }else {
             bt_login.setEnabled(false);
