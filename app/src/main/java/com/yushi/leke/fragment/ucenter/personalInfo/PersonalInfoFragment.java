@@ -1,23 +1,25 @@
 package com.yushi.leke.fragment.ucenter.personalInfo;
 
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
+import com.lwkandroid.imagepicker.ImagePicker;
+import com.lwkandroid.imagepicker.data.ImageBean;
+import com.lwkandroid.imagepicker.data.ImagePickType;
 import com.yufan.library.api.ApiBean;
 import com.yufan.library.api.ApiManager;
 import com.yufan.library.api.BaseHttpCallBack;
 import com.yufan.library.base.BaseListFragment;
 import com.yufan.library.bean.LocationBean;
+import com.yufan.library.util.CustomDisplayer;
 import com.yufan.library.util.ImageUtil;
-import com.yufan.library.view.CustomGlideEngine;
 import com.yufan.library.inter.ICallBack;
 import com.yufan.library.util.AreaUtil;
 import com.yufan.library.util.SoftInputUtil;
 
 
+import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
@@ -27,13 +29,9 @@ import android.view.WindowManager;
 import android.widget.EditText;
 
 import com.yufan.library.inject.VuClass;
-import com.yushi.leke.R;
 import com.yushi.leke.YFApi;
 import com.yushi.leke.util.OSSClientUtil;
 import com.yushi.leke.util.StringUtil;
-import com.zhihu.matisse.Matisse;
-import com.zhihu.matisse.MimeType;
-import com.zhihu.matisse.internal.entity.CaptureStrategy;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,11 +50,17 @@ public class PersonalInfoFragment extends BaseListFragment<PersonalInfoContract.
     private String currentTabName;
     private static final int REQUEST_CODE_CHOOSE = 0x100;
     private EditText currentEdit;
+    private String cachePath;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE | WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+
+//                cachePath = getFilesDir().getAbsolutePath() + "/mypics/photos/";
+        cachePath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/mypics/photos/";
+//        cachePath = _mActivity.getCacheDir().getAbsolutePath() + "/mypics/photos/";
+        //        cachePath = getExternalCacheDir().getAbsolutePath() + "/mypics/photos/";
     }
 
 
@@ -235,44 +239,55 @@ public class PersonalInfoFragment extends BaseListFragment<PersonalInfoContract.
 
     @Override
     public void choosePhotos() {
-        Matisse.from(this)
-                .choose(MimeType.allOf())
-                .theme(R.style.Matisse_Zhihu)//主题，夜间模式R.style.Matisse_Dracula
-                .countable(true)//是否显示选中数字
-                .capture(true)//是否提供拍照功能
-                .captureStrategy(new CaptureStrategy(false, "com.yushi.leke.fileprovider"))//存储地址
-                .maxSelectable(1)//最大选择数
-                //.addFilter(new GifSizeFilter(320, 320, 5 * Filter.K * Filter.K))//筛选条件
-                .gridExpectedSize(getResources().getDimensionPixelSize(R.dimen.px300))//图片大小
-                .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)//屏幕方向
-                .thumbnailScale(0.85f)//缩放比例
-                .imageEngine(new CustomGlideEngine())//图片加载方式
-                .spanCount(50)
-                .forResult(REQUEST_CODE_CHOOSE);//请求码
+//        Matisse.from(this)
+//                .choose(MimeType.allOf())
+//                .theme(R.style.Matisse_Zhihu)//主题，夜间模式R.style.Matisse_Dracula
+//                .countable(true)//是否显示选中数字
+//                .capture(true)//是否提供拍照功能
+//                .captureStrategy(new CaptureStrategy(false, "com.yushi.leke.fileprovider"))//存储地址
+//                .maxSelectable(1)//最大选择数
+//                //.addFilter(new GifSizeFilter(320, 320, 5 * Filter.K * Filter.K))//筛选条件
+//                .gridExpectedSize(getResources().getDimensionPixelSize(R.dimen.px300))//图片大小
+//                .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)//屏幕方向
+//                .thumbnailScale(0.85f)//缩放比例
+//                .imageEngine(new CustomGlideEngine())//图片加载方式
+//                .spanCount(50)
+//                .forResult(REQUEST_CODE_CHOOSE);//请求码
+
+        new ImagePicker()
+                .pickType(ImagePickType.SINGLE)//设置选取类型(拍照、单选、多选)
+                .maxNum(1)//设置最大选择数量(拍照和单选都是1，修改后也无效)
+                .needCamera(true)//是否需要在界面中显示相机入口(类似微信)
+                .cachePath(cachePath)//自定义缓存路径
+                .doCrop(1, 1, 300, 300)//裁剪功能需要调用这个方法，多选模式下无效
+                .displayer(new CustomDisplayer())//自定义图片加载器，默认是Glide实现的,可自定义图片加载器
+                .start(this, REQUEST_CODE_CHOOSE);
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_CODE_CHOOSE && resultCode == RESULT_OK) {
-            List<Uri> uriList = Matisse.obtainResult(data);
-            uriList.toString();
-            uriList.get(0);
-            String imagePath = ImageUtil.getRealPathFromUri(_mActivity, uriList.get(0));
-            String imageName = ImageUtil.getPicNameFromPath(imagePath);
-            Log.e("PersonalInfoFragment", imagePath);
-            Log.e("PersonalInfoFragment", imageName);
-            OSSClientUtil.getInstance().uploadImgToOss(_mActivity, imageName, imagePath, new OSSClientUtil.UploadImageInterf() {
-                @Override
-                public void onSuccess(String url) {
+        if (requestCode == REQUEST_CODE_CHOOSE && resultCode == RESULT_OK && data != null) {
+            List<ImageBean> resultList = data.getExtras().getParcelableArrayList(ImagePicker.INTENT_RESULT_DATA);
+            Log.i("ImagePickerDemo", "选择的图片：" + resultList.toString());
+            if (resultList != null && resultList.size() > 0) {
+                ImageBean imageBean = resultList.get(0);
+                String imagePath = imageBean.getImagePath();
+                String imageName = ImageUtil.getPicNameFromPath(imagePath);
+                Log.e("PersonalInfoFragment", imagePath);
+                Log.e("PersonalInfoFragment", imageName);
+                OSSClientUtil.getInstance().uploadImgToOss(_mActivity, imageName, imagePath, new OSSClientUtil.UploadImageInterf() {
+                    @Override
+                    public void onSuccess(String url) {
 
-                }
+                    }
 
-                @Override
-                public void onFail() {
+                    @Override
+                    public void onFail() {
 
-                }
-            });
+                    }
+                });
+            }
         }
     }
 }
