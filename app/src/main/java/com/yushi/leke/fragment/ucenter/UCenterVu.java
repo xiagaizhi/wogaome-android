@@ -75,14 +75,6 @@ public class UCenterVu extends BaseVu<UCenterContract.Presenter> implements UCen
     @FindView(R.id.tv_vote_num)
     TextView tv_vote_num;
 
-    private Handler mHandler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            mPtrClassicFrameLayout.refreshComplete();
-        }
-    };
-
     @Override
     public void initView(View view) {
         ll_personal_info.setOnClickListener(this);
@@ -104,7 +96,7 @@ public class UCenterVu extends BaseVu<UCenterContract.Presenter> implements UCen
 
             @Override
             public void onRefreshBegin(PtrFrameLayout frame) {
-                mHandler.sendEmptyMessageDelayed(1, 2000);
+                mPersenter.toRefresh();
             }
         });
 

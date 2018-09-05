@@ -26,5 +26,6 @@ public interface UCenterContract {
         void openSettingPage();
 
         void openBrowserPage(String key);
+        void toRefresh();
     }
 }
