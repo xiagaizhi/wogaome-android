@@ -16,6 +16,15 @@ public class MyProfileInfo implements Serializable {
     private int roadShow;
     private int subscription;
     private int invitation;
+    private boolean vip;
+
+    public boolean isVip() {
+        return vip;
+    }
+
+    public void setVip(boolean vip) {
+        this.vip = vip;
+    }
 
     public String getToken() {
         return token;

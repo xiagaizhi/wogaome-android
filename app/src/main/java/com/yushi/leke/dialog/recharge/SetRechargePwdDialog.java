@@ -47,18 +47,24 @@ public class SetRechargePwdDialog extends Dialog implements KeyboardAdapter.OnKe
     private int type;//true:设置／修改交易密码 false:输入支付密码进行验证
     private TextView mSetRechargeType;
     private RechargeUtil.SetRechargeInterf mSetRechargeInterf;
+    private String token;
+    private String verificationCode;
+    private String originalPwd;
 
 
     public void setmSetRechargeInterf(RechargeUtil.SetRechargeInterf setRechargeInterf) {
         this.mSetRechargeInterf = setRechargeInterf;
     }
 
-    public SetRechargePwdDialog(@NonNull Context context, final int type) {
+    public SetRechargePwdDialog(@NonNull Context context, final int type, String token, String verificationCode, String originalPwd) {
         super(context);
         View rootView = LayoutInflater.from(context).inflate(R.layout.layout_setrechargepassword, null);
         setContentView(rootView);
         this.mContext = context;
         this.type = type;
+        this.token = token;
+        this.verificationCode = verificationCode;
+        this.originalPwd = originalPwd;
         initView(rootView);
     }
 
@@ -218,11 +224,11 @@ public class SetRechargePwdDialog extends Dialog implements KeyboardAdapter.OnKe
                                 DialogManager.getInstance().toast("交易密码设置成功");
                             }
                         } else {
-//                            if (type == SET_RECHARGE_PWD_NEW) {
-//                                DialogManager.getInstance().toast("交易密码修改失败");
-//                            } else {
-//                                DialogManager.getInstance().toast("交易密码设置失败");
-//                            }
+                            if (type == SET_RECHARGE_PWD_NEW) {
+                                DialogManager.getInstance().toast("交易密码修改失败");
+                            } else {
+                                DialogManager.getInstance().toast("交易密码设置失败");
+                            }
 //                            if (type == SET_RECHARGE_PWD_NEW || type == SET_RECHARGE_PWD_FORGET) {
 //                                mTitle.setText("请设置您的新交易密码");
 //                            } else {

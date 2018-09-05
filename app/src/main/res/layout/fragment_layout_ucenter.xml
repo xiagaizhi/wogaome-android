@@ -100,6 +100,7 @@
                         android:layout_alignParentRight="true"
                         android:layout_marginBottom="@dimen/px16"
                         android:layout_marginRight="@dimen/px26"
+                        android:visibility="gone"
                         android:src="@drawable/ic_level_bronze" />
                 </RelativeLayout>
 

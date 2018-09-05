@@ -69,7 +69,7 @@ public class RechargeUtil {
                                             CheckRechargePwdDialog checkRechargePwdDialog = new CheckRechargePwdDialog(context, extMsg, checkRechargeInterf);
                                             checkRechargePwdDialog.show();
                                         } else {//没有交易密码
-                                            setRechargePwd(context, SetRechargePwdDialog.SET_RECHARGE_PWD, null);
+//                                            setRechargePwd(context, SetRechargePwdDialog.SET_RECHARGE_PWD, null);
                                         }
                                     } else {//未绑定过手机
                                         new CommonDialog(context).setTitle("您尚未绑定手机，请先绑定安全手机！")
@@ -117,8 +117,8 @@ public class RechargeUtil {
      * @param type
      * @param setRechargeInterf
      */
-    public void setRechargePwd(Context context, int type, SetRechargeInterf setRechargeInterf) {
-        SetRechargePwdDialog setRechargePwdDialog = new SetRechargePwdDialog(context, type);
+    public void setRechargePwd(Context context, String token, String verificationCode, String originalPwd, int type, SetRechargeInterf setRechargeInterf) {
+        SetRechargePwdDialog setRechargePwdDialog = new SetRechargePwdDialog(context, type,token,verificationCode,originalPwd);
         setRechargePwdDialog.setmSetRechargeInterf(setRechargeInterf);
         setRechargePwdDialog.show();
     }
@@ -168,12 +168,12 @@ public class RechargeUtil {
 
 
     public interface CheckRechargePwdInterf {
-        void returnCheckResult(boolean isSuccess);
+        void returnCheckResult(boolean isSuccess,String originalPwd);
 
         void openBindPhone();
     }
 
     public interface SetRechargeInterf {
-        void returnSetPwdResult(boolean isSuccess,int type);
+        void returnSetPwdResult(boolean isSuccess, int type);
     }
 }
