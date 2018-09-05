@@ -124,7 +124,7 @@ public class SetRechargePwdDialog extends Dialog implements KeyboardAdapter.OnKe
                 } else {
                     mTitle.setText("请设置您的乐链APP的交易密码");
                 }
-                new CommonDialog(getContext()).setTitle("两次交易密码不一致，请重新输入")
+                new CommonDialog(mContext).setTitle("两次交易密码不一致，请重新输入")
                         .setPositiveName("确定")
                         .setHaveNegative(false)
                         .setCommonClickListener(new CommonDialog.CommonDialogClick() {
@@ -190,19 +190,14 @@ public class SetRechargePwdDialog extends Dialog implements KeyboardAdapter.OnKe
     private boolean isSuccess;
 
     private void setRechargePwd(String pwd) {
+        DialogManager.getInstance().showLoadingDialog();
+        isSuccess = false;
         ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).setTradePwd(pwd))
                 .useCache(false)
                 .enqueue(new BaseHttpCallBack() {
                     @Override
                     public void onSuccess(ApiBean mApiBean) {
-                        if (TextUtils.equals(ApiBean.SUCCESS, mApiBean.getCode())) {
-                            if (mSetRechargeInterf != null) {
-                                mSetRechargeInterf.returnSetPwdResult();
-                            }
-                            isSuccess = true;
-                        } else {
-                            isSuccess = false;
-                        }
+                        isSuccess = true;
                     }
 
                     @Override
@@ -212,19 +207,27 @@ public class SetRechargePwdDialog extends Dialog implements KeyboardAdapter.OnKe
 
                     @Override
                     public void onFinish() {
+                        dismiss();
+                        if (mSetRechargeInterf != null) {
+                            mSetRechargeInterf.returnSetPwdResult(isSuccess, type);
+                        }
                         if (isSuccess) {
                             if (type == SET_RECHARGE_PWD_NEW) {
                                 DialogManager.getInstance().toast("交易密码修改成功");
                             } else {
                                 DialogManager.getInstance().toast("交易密码设置成功");
                             }
-                            dismiss();
                         } else {
-                            if (type == SET_RECHARGE_PWD_NEW || type == SET_RECHARGE_PWD_FORGET) {
-                                mTitle.setText("请设置您的新交易密码");
-                            } else {
-                                mTitle.setText("请设置您的乐链APP的交易密码");
-                            }
+//                            if (type == SET_RECHARGE_PWD_NEW) {
+//                                DialogManager.getInstance().toast("交易密码修改失败");
+//                            } else {
+//                                DialogManager.getInstance().toast("交易密码设置失败");
+//                            }
+//                            if (type == SET_RECHARGE_PWD_NEW || type == SET_RECHARGE_PWD_FORGET) {
+//                                mTitle.setText("请设置您的新交易密码");
+//                            } else {
+//                                mTitle.setText("请设置您的乐链APP的交易密码");
+//                            }
                         }
                     }
                 });

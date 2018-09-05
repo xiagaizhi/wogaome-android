@@ -178,4 +178,9 @@ public class UCenterVu extends BaseVu<UCenterContract.Presenter> implements UCen
             tv_personal_introduce.setText(myBaseInfo.getMotto());
         }
     }
+
+    @Override
+    public void refreshComplete() {
+        mPtrClassicFrameLayout.refreshComplete();
+    }
 }

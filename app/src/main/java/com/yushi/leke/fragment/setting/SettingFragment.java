@@ -68,7 +68,7 @@ public class SettingFragment extends BaseFragment<SettingContract.IView> impleme
 
     @Override
     public void cleanMemoryCache() {
-        new CommonDialog(getContext())
+        new CommonDialog(_mActivity)
                 .setTitle("是否清空缓存？")
                 .setPositiveName("确定")
                 .setNegativeName("取消")

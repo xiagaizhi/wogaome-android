@@ -36,7 +36,7 @@ public class MyWalletFragment extends BaseFragment<MyWalletContract.IView> imple
 
     private void getWalletInfo() {
         ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).getWalletInfo())
-                .useCache(false)
+                .useCache(true)
                 .enqueue(new BaseHttpCallBack() {
                     @Override
                     public void onSuccess(ApiBean mApiBean) {

@@ -10,7 +10,10 @@ import com.yufan.library.base.Vu;
 public interface UCenterContract {
     interface IView extends Vu {
         void hasUnreadMsg(boolean hasUnreadMsg);
-        void updateMyInfo(MyProfileInfo myProfileInfo,MyBaseInfo myBaseInfo);
+
+        void updateMyInfo(MyProfileInfo myProfileInfo, MyBaseInfo myBaseInfo);
+
+        void refreshComplete();
 
     }
 
@@ -26,6 +29,7 @@ public interface UCenterContract {
         void openSettingPage();
 
         void openBrowserPage(String key);
+
         void toRefresh();
     }
 }

@@ -1,5 +1,7 @@
 package com.yushi.leke.fragment.ucenter;
 
+import java.io.Serializable;
+
 /**
  * 作者：Created by zhanyangyang on 2018/9/4 20:36
  * 邮箱：zhanyangyang@hzyushi.cn
@@ -7,7 +9,7 @@ package com.yushi.leke.fragment.ucenter;
  * 获取我的个人基本信息 ：自己编辑的信息
  */
 
-public class MyBaseInfo {
+public class MyBaseInfo implements Serializable{
     private String avatar;
     private String userName;
     private String gender;
