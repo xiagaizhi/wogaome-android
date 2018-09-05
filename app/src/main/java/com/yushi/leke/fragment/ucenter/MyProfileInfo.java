@@ -1,5 +1,7 @@
 package com.yushi.leke.fragment.ucenter;
 
+import java.io.Serializable;
+
 /**
  * 作者：Created by zhanyangyang on 2018/9/4 20:32
  * 邮箱：zhanyangyang@hzyushi.cn
@@ -7,7 +9,7 @@ package com.yushi.leke.fragment.ucenter;
  * 用户信息（不可编辑部分）
  */
 
-public class MyProfileInfo {
+public class MyProfileInfo implements Serializable {
     private String token;
     private String level;
     private int vote;

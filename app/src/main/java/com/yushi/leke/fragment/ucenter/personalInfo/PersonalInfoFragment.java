@@ -57,15 +57,6 @@ public class PersonalInfoFragment extends BaseListFragment<PersonalInfoContract.
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE | WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
-        new AsyncTask<Void, Void, Void>() {
-            @Override
-            protected Void doInBackground(Void... voids) {
-                AreaUtil.getInstance().init(getContext());
-                return null;
-            }
-        }.execute();
-        genderList.add("男");
-        genderList.add("女");
     }
 
 
@@ -109,6 +100,15 @@ public class PersonalInfoFragment extends BaseListFragment<PersonalInfoContract.
         list.add(new PersonalItem("详情地址:", "", "请填写您的详细地址", false, true));
         adapter.setItems(list);
         vu.getRecyclerView().getAdapter().notifyDataSetChanged();
+        new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... voids) {
+                AreaUtil.getInstance().init(getContext());
+                return null;
+            }
+        }.execute();
+        genderList.add("男");
+        genderList.add("女");
     }
 
     @Override
