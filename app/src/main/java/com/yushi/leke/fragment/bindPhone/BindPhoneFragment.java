@@ -46,7 +46,7 @@ public class BindPhoneFragment extends BaseFragment<BindPhoneContract.IView> imp
     }
 
     @Override
-    public void bindPhone(String phone, String code, String pwd) {
+    public void bindPhone(final String phone, String code, String pwd) {
         // TODO: 2018/9/3 发起绑定手机 失败弹窗提示
         ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).bindMobile(phone, code, pwd))
                 .useCache(false)
@@ -56,6 +56,9 @@ public class BindPhoneFragment extends BaseFragment<BindPhoneContract.IView> imp
                         String code = mApiBean.getCode();
                         if (ApiBean.checkOK(code)) {
                             DialogManager.getInstance().toast("操作成功");
+                            Bundle bundle = new Bundle();
+                            bundle.putString("phoneNumber", phone);
+                            setFragmentResult(RESULT_OK, bundle);
                             pop();
                         } else {
                             new CommonDialog(_mActivity).setTitle("" + mApiBean.getMessage())
@@ -93,8 +96,5 @@ public class BindPhoneFragment extends BaseFragment<BindPhoneContract.IView> imp
                     }
                 });
 
-        Bundle bundle = new Bundle();
-        bundle.putString("phoneNumber", phone);
-        setFragmentResult(RESULT_OK, bundle);
     }
 }

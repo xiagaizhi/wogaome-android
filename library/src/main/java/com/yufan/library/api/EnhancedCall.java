@@ -92,7 +92,7 @@ public class EnhancedCall {
                     } else {
                         handler.onFailure(code, new Exception(response.errorBody().string()));
                     }
-                } catch (IOException e) {
+                } catch (Exception e) {
                     handler.onFailure(-1, new Exception("接口格式异常"));
                 }
             }

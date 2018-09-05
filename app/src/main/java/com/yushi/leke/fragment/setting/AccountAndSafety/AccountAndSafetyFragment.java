@@ -53,7 +53,7 @@ public class AccountAndSafetyFragment extends BaseFragment<AccountAndSafetyContr
     @Override
     public void modifyPwd() {
         if (TextUtils.isEmpty(phoneNumber)) {
-            DialogManager.getInstance().toast("请先绑定手");
+            DialogManager.getInstance().toast("请先绑定手机");
         } else {//修改密码
             start(UIHelper.creat(ModifyLoginPwdFragment.class).put("phoneNumber", phoneNumber).build());
         }
