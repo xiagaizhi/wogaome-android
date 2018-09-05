@@ -29,15 +29,16 @@ public class ExhibitionVu extends BaseListVu<ExhibitionContract.Presenter> imple
     private YFRecyclerView mYFRecyclerView;
     private AppToolbar appToolbar;
     private TextView mTitleView;
-    private float topHeight;
+    private float topHeightMax;
+    private float topHeightMin;
     private ImageView musicAnim;
 
     @Override
     public void initView(View view) {
         super.initView(view);
-        topHeight=getContext().getResources().getDimension(R.dimen.px88);
+        topHeightMin = getContext().getResources().getDimension(R.dimen.px88);
+        topHeightMax=getContext().getResources().getDimension(R.dimen.px110);
         mYFRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
@@ -51,28 +52,24 @@ public class ExhibitionVu extends BaseListVu<ExhibitionContract.Presenter> imple
                 if (lastVisibleItemPosition == 0) {
                     View topChild = layoutManager.getChildAt(0);
                     float top_offset = -topChild.getTop();
-                    if(top_offset<topHeight){
-                        if(mTitleView!=null){
-                            float height=topHeight/2;
-                            float offset=  (top_offset-height) /height;
-                            if(offset<0){
-                                offset=0;
+                    if (top_offset > topHeightMin) {
+                        if (top_offset < topHeightMax) {
+                            if (mTitleView != null) {
+                                float offset = (top_offset - topHeightMin) / (topHeightMax-topHeightMin);
+                                Log.d("offset", "appToolbar:" + topHeightMax);
+                                mTitleView.setAlpha(offset);
+                                musicAnim.setAlpha(offset);
                             }
-                            Log.d("offset","appToolbar:"+height);
-                            mTitleView.setAlpha( offset);
-                            musicAnim.setAlpha(offset);
-                            TextView tv_top_title=   topChild.findViewById(R.id.tv_anim_title);
-                            ImageView iv_anim_icon=   topChild.findViewById(R.id.iv_anim_icon);
-                            tv_top_title.setAlpha(1-offset);
-                            iv_anim_icon.setAlpha(1-offset);
+                        }else {
+                            mTitleView.setAlpha(1f);
+                            musicAnim.setAlpha(1f);
                         }
-                    }else {
-                        mTitleView.setAlpha( 1f);
-                        musicAnim.setAlpha(1f);
-
+                    } else {
+                        mTitleView.setAlpha(0f);
+                        musicAnim.setAlpha(0f);
                     }
                 }else {
-                    mTitleView.setAlpha( 1f);
+                    mTitleView.setAlpha(1f);
                     musicAnim.setAlpha(1f);
                 }
             }
@@ -90,7 +87,6 @@ public class ExhibitionVu extends BaseListVu<ExhibitionContract.Presenter> imple
         mTitleView=     appToolbar.creatCenterView(TextView.class);
         musicAnim=  appToolbar.creatRightView(ImageView.class);
         musicAnim.setImageResource(R.drawable.anim_player_blue);
-        musicAnim.setPadding(0,0, (int)getContext().getResources().getDimension(R.dimen.px36),0);
         ((AnimationDrawable) musicAnim.getDrawable()).start();
         mTitleView.setText("路演厅");
         mTitleView.setAlpha(0);

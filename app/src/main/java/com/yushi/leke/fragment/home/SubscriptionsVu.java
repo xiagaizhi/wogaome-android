@@ -33,7 +33,9 @@ import com.yushi.leke.activity.MusicPlayerActivity;
 public class SubscriptionsVu extends BaseListVu<SubscriptionsContract.Presenter> implements SubscriptionsContract.IView {
     @FindView(R.id.recyclerview)
     private YFRecyclerView mYFRecyclerView;
-    private float topHeight;
+    private float topHeightMax;
+    private float topHeightMin;
+    private float searchBarBottom;
     private TextView mTitleView;
     private AppToolbar appToolbar;
     private ImageView musicAnim;
@@ -42,9 +44,10 @@ public class SubscriptionsVu extends BaseListVu<SubscriptionsContract.Presenter>
     @Override
     public void initView(View view) {
         super.initView(view);
-        topHeight=getContext().getResources().getDimension(R.dimen.px88);
+        topHeightMin = getContext().getResources().getDimension(R.dimen.px88);
+        topHeightMax = topHeightMin * 3 / 2;
+        searchBarBottom=getContext().getResources().getDimension(R.dimen.px170);
         mYFRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
@@ -58,49 +61,51 @@ public class SubscriptionsVu extends BaseListVu<SubscriptionsContract.Presenter>
                 if (lastVisibleItemPosition == 0) {
                     View topChild = layoutManager.getChildAt(0);
                     float top_offset = -topChild.getTop();
-                    if(top_offset<topHeight){
-                        if(mTitleView!=null){
-                            float height=topHeight/2;
-                         float offset=  (top_offset-height) /height;
-                         if(offset<0){
-                             offset=0;
-                         }
-                            Log.d("offset","appToolbar:"+height);
-                            mTitleView.setAlpha( offset);
-                            musicAnim.setAlpha(offset);
-                         TextView tv_top_title=   topChild.findViewById(R.id.tv_anim_title);
-                      ImageView iv_anim_icon=   topChild.findViewById(R.id.iv_anim_icon);
-                          tv_top_title.setAlpha(1-offset);
-                            iv_anim_icon.setAlpha(1-offset);
+                    if (top_offset > topHeightMin) {
+                        if (top_offset < topHeightMax) {
+                            if (mTitleView != null) {
+                                float offset = (top_offset - topHeightMin) / (topHeightMax-topHeightMin);
+                                Log.d("offset", "appToolbar:" + topHeightMin);
+                                mTitleView.setAlpha(offset);
+                                musicAnim.setAlpha(offset);
+                            }
+                        }else {
+                            mTitleView.setAlpha(1f);
+                            musicAnim.setAlpha(1f);
                         }
-                    }else {
-                        mTitleView.setAlpha( 1f);
-                        musicAnim.setAlpha(1f);
-
+                    } else {
+                        mTitleView.setAlpha(0f);
+                        musicAnim.setAlpha(0f);
                     }
-                }else {
-                    mTitleView.setAlpha( 1f);
-                    musicAnim.setAlpha(1f);
+                    if(top_offset>searchBarBottom){
+                        float offset=(top_offset-searchBarBottom)/(topHeightMax-topHeightMin);
+                        searchBar.setAlpha(offset);
+                    }else {
+                        searchBar.setAlpha(0f);
+                    }
                 }
             }
         });
     }
+
     @Override
     public void initStatusLayout(StateLayout stateLayout) {
         super.initStatusLayout(stateLayout);
     }
+
     @Override
     public boolean initTitle(AppToolbar appToolbar) {
-        this.appToolbar=appToolbar;
-         mTitleView=     appToolbar.creatCenterView(TextView.class);
-      musicAnim=  appToolbar.creatRightView(ImageView.class);
-    searchBar=  appToolbar.creatRightView(ImageView.class);
-    searchBar.setImageResource(R.drawable.ic_search_blue);
+        this.appToolbar = appToolbar;
+        mTitleView = appToolbar.creatCenterView(TextView.class);
+        searchBar = appToolbar.creatRightView(ImageView.class);
+        musicAnim = appToolbar.creatRightView(ImageView.class);
+        searchBar.setImageResource(R.drawable.ic_search_blue);
         musicAnim.setImageResource(R.drawable.anim_player_blue);
-        musicAnim.setPadding(0,0, (int)getContext().getResources().getDimension(R.dimen.px36),0);
+        musicAnim.setPadding(0, 0, (int) getContext().getResources().getDimension(R.dimen.px36), 0);
         ((AnimationDrawable) musicAnim.getDrawable()).start();
         mTitleView.setText("订阅专栏");
-        mTitleView.setAlpha(0);
+        mTitleView.setAlpha(0f);
+        searchBar.setAlpha(0f);
         appToolbar.build();
         return true;
     }

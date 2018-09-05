@@ -20,8 +20,8 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:background="@color/color_bfbfbf" />
+            android:layout_height="@dimen/px1"
+            android:background="@color/color_gray_levele" />
 
         <com.yufan.library.widget.NestRadioGroup
             android:id="@+id/rg_main_bar"
