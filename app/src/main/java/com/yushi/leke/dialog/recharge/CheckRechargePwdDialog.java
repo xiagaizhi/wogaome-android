@@ -157,7 +157,7 @@ public class CheckRechargePwdDialog extends Dialog implements KeyboardAdapter.On
     /**
      * 验证交易密码
      */
-    private void checkPayPwd(String pwd) {
+    private void checkPayPwd(final String pwd) {
         ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).verifyTradePwd(pwd))
                 .useCache(false).
                 enqueue(new BaseHttpCallBack() {
@@ -166,19 +166,19 @@ public class CheckRechargePwdDialog extends Dialog implements KeyboardAdapter.On
                     public void onResponse(ApiBean mApiBean) {
                         if (TextUtils.equals(ApiBean.SUCCESS, mApiBean.getCode())) {
                             if (mCheckRechargePwd != null) {
-                                mCheckRechargePwd.returnCheckResult(true);
+                                mCheckRechargePwd.returnCheckResult(true,pwd);
                             }
                             dismiss();
                         } else {
                             DialogManager.getInstance().toast("密码有误，请重新输入");
-                            mCheckRechargePwd.returnCheckResult(false);
+                            mCheckRechargePwd.returnCheckResult(false,pwd);
                         }
                     }
 
                     @Override
                     public void onFailure(int id, Exception e) {
                         super.onFailure(id, e);
-                        mCheckRechargePwd.returnCheckResult(false);
+                        mCheckRechargePwd.returnCheckResult(false,pwd);
                     }
 
                     @Override

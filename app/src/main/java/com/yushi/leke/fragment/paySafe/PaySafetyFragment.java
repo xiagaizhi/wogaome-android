@@ -75,7 +75,7 @@ public class PaySafetyFragment extends BaseFragment<PaySafetyContract.IView> imp
     public void forgetPwd() {
         if (isHave == 0 || TextUtils.isEmpty(phoneNumber)) {//未绑定手机或者未设置交易密码 提示请先设置交易密码
             DialogManager.getInstance().toast("请先设置交易密码！");
-        } else {//绑定过手机验证手机 通过后修改
+        } else {//绑定过手机验证手机 通过后修改交易密码
             startForResult(UIHelper.creat(CheckPhoneFragment.class).put("phoneNumber", phoneNumber).build(), 200);
         }
     }
@@ -85,10 +85,16 @@ public class PaySafetyFragment extends BaseFragment<PaySafetyContract.IView> imp
         super.onFragmentResult(requestCode, resultCode, data);
         if (requestCode == 100 && resultCode == RESULT_OK && data != null) {//绑定手机成功返回
             phoneNumber = data.getString("phoneNumber");
+            String token = data.getString("token");
             getVu().updatePage(isHave, phoneNumber);
-            setRechargePwd();
-        } else if (requestCode == 200 && resultCode == RESULT_OK && data != null) {//手机验证码校验过返回
-            RechargeUtil.getInstance().setRechargePwd(_mActivity, SetRechargePwdDialog.SET_RECHARGE_PWD_FORGET, this);
+//            setRechargePwd();
+            RechargeUtil.getInstance().setRechargePwd(_mActivity, token, null, null, SetRechargePwdDialog.SET_RECHARGE_PWD_FORGET, this);
+        } else if (requestCode == 200 && resultCode == RESULT_OK && data != null) {//手机验证码校验过返回,修改密码
+            String verificationCode = data.getString("verificationCode");
+            RechargeUtil.getInstance().setRechargePwd(_mActivity, null, verificationCode, null, SetRechargePwdDialog.SET_RECHARGE_PWD_FORGET, this);
+        } else if (requestCode == 300 && resultCode == RESULT_OK && data != null) {//初次设置交易密码手机验证通过，设置密码
+            String verificationCode = data.getString("verificationCode");
+            RechargeUtil.getInstance().setRechargePwd(_mActivity, null, verificationCode, null, SetRechargePwdDialog.SET_RECHARGE_PWD, this);
         }
     }
 
@@ -100,7 +106,7 @@ public class PaySafetyFragment extends BaseFragment<PaySafetyContract.IView> imp
             if (isHave == 1) {//修改，先校验
                 RechargeUtil.getInstance().checkRechargePwd(1, _mActivity, "修改交易密码", this);
             } else {
-                RechargeUtil.getInstance().setRechargePwd(_mActivity, SetRechargePwdDialog.SET_RECHARGE_PWD, this);
+                startForResult(UIHelper.creat(CheckPhoneFragment.class).put("phoneNumber", phoneNumber).build(), 300);
             }
         }
     }
@@ -111,26 +117,13 @@ public class PaySafetyFragment extends BaseFragment<PaySafetyContract.IView> imp
         if (isSuccess) {
             isHave = 1;
             getVu().updatePage(isHave, phoneNumber);
-        } else {
-            new CommonDialog(_mActivity).setTitle("密码设置失败，请重新设置")
-                    .setPositiveName("确定")
-                    .setNegativeName("取消")
-                    .setCommonClickListener(new CommonDialog.CommonDialogClick() {
-                        @Override
-                        public void onClick(CommonDialog commonDialog, int actionType) {
-                            commonDialog.dismiss();
-                            if (actionType == CommonDialog.COMMONDIALOG_ACTION_POSITIVE){
-                                RechargeUtil.getInstance().setRechargePwd(_mActivity, type, PaySafetyFragment.this);
-                            }
-                        }
-                    }).show();
         }
     }
 
     @Override
-    public void returnCheckResult(boolean isSuccess) {
+    public void returnCheckResult(boolean isSuccess, String originalPwd) {
         if (isSuccess) {
-            RechargeUtil.getInstance().setRechargePwd(_mActivity, SetRechargePwdDialog.SET_RECHARGE_PWD_NEW, this);
+            RechargeUtil.getInstance().setRechargePwd(_mActivity, null, null, originalPwd, SetRechargePwdDialog.SET_RECHARGE_PWD_NEW, this);
         }
     }
 

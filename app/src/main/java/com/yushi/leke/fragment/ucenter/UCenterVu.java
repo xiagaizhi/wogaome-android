@@ -1,5 +1,6 @@
 package com.yushi.leke.fragment.ucenter;
 
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -75,6 +76,9 @@ public class UCenterVu extends BaseVu<UCenterContract.Presenter> implements UCen
 
     @Override
     public void initView(View view) {
+        img_head.setImageURI("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1535611272761&di=edb2ad0ac1e9fae8c791398bffecffdd&imgtype=0&src=http%3A%2F%2Fp1.wmpic.me%2Farticle%2F2017%2F10%2F23%2F1508744874_AaXhrBZE.jpg");
+        img_mylevel.setVisibility(View.VISIBLE);
+        img_mylevel.setImageResource(R.drawable.ic_level_diamond);
         ll_personal_info.setOnClickListener(this);
         img_messgae.setOnClickListener(this);
         img_player.setOnClickListener(this);
@@ -169,6 +173,30 @@ public class UCenterVu extends BaseVu<UCenterContract.Presenter> implements UCen
             tv_mylkc.setText("" + myProfileInfo.getToken());
             tv_mylevel.setText("" + myProfileInfo.getLevel());
             tv_share_num.setText("已邀请：" + myProfileInfo.getInvitation() + "名好友");
+            if (TextUtils.equals("青铜", myProfileInfo.getLevel())) {
+                img_mylevel.setVisibility(View.VISIBLE);
+                img_mylevel.setImageResource(R.drawable.ic_level_bronze);
+            } else if (TextUtils.equals("白银", myProfileInfo.getLevel())) {
+                img_mylevel.setVisibility(View.VISIBLE);
+                img_mylevel.setImageResource(R.drawable.ic_level_silver);
+            } else if (TextUtils.equals("黄金", myProfileInfo.getLevel())) {
+                img_mylevel.setVisibility(View.VISIBLE);
+                img_mylevel.setImageResource(R.drawable.ic_level_gold);
+            } else if (TextUtils.equals("铂金", myProfileInfo.getLevel())) {
+                img_mylevel.setVisibility(View.VISIBLE);
+                img_mylevel.setImageResource(R.drawable.ic_level_platinum);
+            } else if (TextUtils.equals("钻石", myProfileInfo.getLevel())) {
+                img_mylevel.setVisibility(View.VISIBLE);
+                img_mylevel.setImageResource(R.drawable.ic_level_diamond);
+            } else if (TextUtils.equals("至尊", myProfileInfo.getLevel())) {
+                img_mylevel.setVisibility(View.VISIBLE);
+                img_mylevel.setImageResource(R.drawable.ic_level_supreme);
+            } else {
+                img_mylevel.setVisibility(View.GONE);
+            }
+            if (myProfileInfo.isVip()) {
+
+            }
         }
         if (myBaseInfo != null) {
             img_head.setImageURI(myBaseInfo.getAvatar());
