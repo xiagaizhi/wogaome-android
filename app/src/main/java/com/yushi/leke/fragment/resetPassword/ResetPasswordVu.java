@@ -10,10 +10,12 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.yufan.library.manager.DialogManager;
 import com.yufan.library.util.CheckUtil;
+import com.yufan.library.util.SoftInputUtil;
 import com.yufan.library.widget.LoginLineView;
 import com.yushi.leke.R;
 import com.yufan.library.base.BaseVu;
@@ -54,6 +56,8 @@ public class ResetPasswordVu extends BaseVu<ResetPasswordContract.Presenter> imp
     LoginLineView line_view2;
     @FindView(R.id.line_view3)
     LoginLineView line_view3;
+    @FindView(R.id.ll_root)
+    LinearLayout ll_root;
     @Override
     public void initView(View view) {
         iv_clear_phone.setOnClickListener(this);
@@ -192,6 +196,12 @@ public class ResetPasswordVu extends BaseVu<ResetPasswordContract.Presenter> imp
             @Override
             public void afterTextChanged(Editable s) {
                 updateState();
+            }
+        });
+        ll_root.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SoftInputUtil.hideSoftInput(getContext(),getView());
             }
         });
     }

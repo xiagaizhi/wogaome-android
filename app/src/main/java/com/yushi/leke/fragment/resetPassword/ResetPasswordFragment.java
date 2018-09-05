@@ -89,8 +89,8 @@ public class ResetPasswordFragment extends BaseFragment<ResetPasswordContract.IV
         });
     }
     @Override
-    public void onDestroyView() {
+    public void onSupportInvisible() {
+        super.onSupportInvisible();
         SoftInputUtil.hideSoftInput(getActivity(),getView());
-        super.onDestroyView();
     }
 }

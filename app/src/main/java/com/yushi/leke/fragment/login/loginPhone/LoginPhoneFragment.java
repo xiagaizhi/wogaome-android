@@ -27,6 +27,7 @@ import com.yushi.leke.fragment.main.MainFragment;
 import com.yushi.leke.fragment.register.RegisterFragment;
 import com.yushi.leke.fragment.resetPassword.ResetPasswordFragment;
 
+
 /**
  * Created by mengfantao on 18/8/2.
  */
@@ -104,12 +105,14 @@ public class LoginPhoneFragment extends BaseFragment<LoginPhoneContract.IView> i
 
     @Override
     public void onAgreementClick() {
-        start(UIHelper.creat(BrowserBaseFragment.class).put(Global.BUNDLE_KEY_BROWSER_URL,"http://baidu.com").build());
+        start(UIHelper.creat(BrowserBaseFragment.class).put(Global.BUNDLE_KEY_BROWSER_URL,ApiManager.getInstance().getApiConfig().getProtocol()).build());
     }
 
+
     @Override
-    public void onDestroyView() {
+    public void onSupportInvisible() {
+        super.onSupportInvisible();
         SoftInputUtil.hideSoftInput(getActivity(),getView());
-        super.onDestroyView();
     }
+
 }

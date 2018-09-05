@@ -59,7 +59,6 @@ public class LoginVu extends BaseVu<LoginContract.Presenter> implements LoginCon
       int apiType=  SPManager.getInstance().getInt(Global.SP_KEY_SERVICE_TYPE, BuildConfig.API_TYPE);
       if(apiType!=0){
           iv_logo.setOnClickListener(this);
-         // SystemClock.elapsedRealtime();开机时间 相对时间，用于计算时间间隔
       }
     }
 

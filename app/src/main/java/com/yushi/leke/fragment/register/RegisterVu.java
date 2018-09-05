@@ -11,10 +11,12 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.yufan.library.inject.FindView;
 import com.yufan.library.util.CheckUtil;
+import com.yufan.library.util.SoftInputUtil;
 import com.yufan.library.widget.LoginLineView;
 import com.yushi.leke.R;
 import com.yufan.library.base.BaseVu;
@@ -57,6 +59,8 @@ public class RegisterVu extends BaseVu<RegisterContract.Presenter> implements Re
     LoginLineView line_view2;
     @FindView(R.id.line_view3)
     LoginLineView line_view3;
+    @FindView(R.id.ll_content)
+    LinearLayout ll_content;
     @Override
     public void initView(View view) {
         tv_agreement.setOnClickListener(this);
@@ -196,6 +200,12 @@ public class RegisterVu extends BaseVu<RegisterContract.Presenter> implements Re
             @Override
             public void afterTextChanged(Editable s) {
                 updateState();
+            }
+        });
+        ll_content.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SoftInputUtil.hideSoftInput(getContext(),getView());
             }
         });
     }

@@ -29,6 +29,7 @@ import com.yufan.library.inter.ICallBack;
 import com.yufan.library.manager.DialogManager;
 import com.yufan.library.manager.SPManager;
 import com.yufan.library.manager.UserManager;
+import com.yufan.library.widget.anim.AFVerticalAnimator;
 import com.yufan.share.ILoginCallback;
 import com.yufan.share.ShareUtils;
 import com.yushi.leke.BuildConfig;
@@ -41,6 +42,8 @@ import com.yushi.leke.fragment.musicplayer.MusicPlayerFragment;
 import com.yushi.leke.fragment.register.RegisterFragment;
 
 import java.util.Map;
+
+import me.yokeyword.fragmentation.anim.FragmentAnimator;
 
 /**
  * Created by mengfantao on 18/8/2.
@@ -108,6 +111,7 @@ public class LoginFragment extends BaseFragment<LoginContract.IView> implements 
                             UserManager.getInstance().setToken(jsonObject.getString("token"));
                             UserManager.getInstance().setToken(jsonObject.getString("uid"));
                             startWithPopTo(UIHelper.creat(MainFragment.class).build(), LoginFragment.class,true);
+                            mShareUtils.logout(SHARE_MEDIA.WEIXIN);
                         }
 
                         @Override
@@ -117,7 +121,7 @@ public class LoginFragment extends BaseFragment<LoginContract.IView> implements 
 
                         @Override
                         public void onFinish() {
-                            mShareUtils.logout(SHARE_MEDIA.WEIXIN);
+
                         }
                     });
                 }else {
@@ -143,7 +147,7 @@ public class LoginFragment extends BaseFragment<LoginContract.IView> implements 
 
     @Override
     public void onAgreementClick() {
-        start(UIHelper.creat(BrowserBaseFragment.class).put(Global.BUNDLE_KEY_BROWSER_URL, "http://baidu.com").build());
+        start(UIHelper.creat(BrowserBaseFragment.class).put(Global.BUNDLE_KEY_BROWSER_URL, ApiManager.getInstance().getApiConfig().getProtocol()).build());
     }
 
     @Override
@@ -165,6 +169,10 @@ public class LoginFragment extends BaseFragment<LoginContract.IView> implements 
         }
     }
 
+    @Override
+    public FragmentAnimator onCreateFragmentAnimator() {
+        return new AFVerticalAnimator(); //super.onCreateFragmentAnimator();
+    }
 
 
 }

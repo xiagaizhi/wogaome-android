@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.nineoldandroids.animation.ValueAnimator;
 import com.yufan.library.util.CheckUtil;
+import com.yufan.library.util.SoftInputUtil;
 import com.yufan.library.view.ResizeLayout;
 import com.yufan.library.widget.LoginLineView;
 import com.yushi.leke.R;
@@ -55,6 +56,8 @@ public class LoginPhoneVu extends BaseVu<LoginPhoneContract.Presenter> implement
     LoginLineView line_view2;
     @FindView(R.id.bt_login)
     Button bt_login;
+    @FindView(R.id.resize_login)
+    ResizeLayout resize_login;
     private void updateState(){
         if(CheckUtil.checkInputState(et_phone,et_password,null,false)){
             bt_login.setEnabled(true);
@@ -160,6 +163,12 @@ public class LoginPhoneVu extends BaseVu<LoginPhoneContract.Presenter> implement
                     }
                     iv_clear_phone.setVisibility(View.GONE);
                 }
+            }
+        });
+        resize_login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SoftInputUtil.hideSoftInput(getContext(),getView());
             }
         });
     }

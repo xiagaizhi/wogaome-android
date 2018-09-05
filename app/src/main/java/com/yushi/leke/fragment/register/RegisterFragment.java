@@ -29,6 +29,7 @@ import com.yushi.leke.YFApi;
 import com.yushi.leke.fragment.login.LoginFragment;
 import com.yushi.leke.fragment.main.MainFragment;
 
+
 import java.util.Map;
 
 import okhttp3.Call;
@@ -48,6 +49,7 @@ public class RegisterFragment extends BaseFragment<RegisterContract.IView> imple
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
      getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING|WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
     }
@@ -109,11 +111,11 @@ public class RegisterFragment extends BaseFragment<RegisterContract.IView> imple
 
     @Override
     public void onAgreementClick() {
-        start(UIHelper.creat(BrowserBaseFragment.class).put(Global.BUNDLE_KEY_BROWSER_URL,"http://baidu.com").build());
+        start(UIHelper.creat(BrowserBaseFragment.class).put(Global.BUNDLE_KEY_BROWSER_URL,ApiManager.getInstance().getApiConfig().getProtocol()).build());
     }
     @Override
-    public void onDestroyView() {
+    public void onSupportInvisible() {
+        super.onSupportInvisible();
         SoftInputUtil.hideSoftInput(getActivity(),getView());
-        super.onDestroyView();
     }
 }
