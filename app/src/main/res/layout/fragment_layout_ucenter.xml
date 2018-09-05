@@ -172,7 +172,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:singleLine="true"
-                            android:text="8"
+                            android:text="0"
                             android:textColor="@color/color_gray_level3"
                             android:textSize="@dimen/px34" />
 
@@ -209,7 +209,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:singleLine="true"
-                            android:text="8"
+                            android:text="0"
                             android:textColor="@color/color_gray_level3"
                             android:textSize="@dimen/px34" />
 
@@ -246,7 +246,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:singleLine="true"
-                            android:text="8"
+                            android:text="0"
                             android:textColor="@color/color_gray_level3"
                             android:textSize="@dimen/px34" />
 
@@ -309,7 +309,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginRight="@dimen/px68"
                     android:singleLine="true"
-                    android:text="123.1221LKC"
+                    android:text="0LKC"
                     android:textColor="@color/color_gray_level9"
                     android:textSize="@dimen/px24" />
             </RelativeLayout>
@@ -372,7 +372,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginRight="@dimen/px68"
                     android:singleLine="true"
-                    android:text="黄金"
+                    android:text="青铜"
                     android:textColor="@color/color_gray_level9"
                     android:textSize="@dimen/px24" />
             </RelativeLayout>
@@ -484,7 +484,6 @@
                     android:layout_centerVertical="true"
                     android:layout_marginRight="@dimen/px68"
                     android:singleLine="true"
-                    android:text="已邀请：100名好友"
                     android:textColor="@color/color_gray_level9"
                     android:textSize="@dimen/px24" />
             </RelativeLayout>
