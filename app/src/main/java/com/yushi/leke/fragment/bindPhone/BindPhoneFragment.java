@@ -11,6 +11,9 @@ import com.yufan.library.manager.DialogManager;
 import com.yushi.leke.YFApi;
 import com.yushi.leke.dialog.CommonDialog;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 /**
  * Created by zhanyangyang on 18/8/25.
  */
@@ -47,7 +50,6 @@ public class BindPhoneFragment extends BaseFragment<BindPhoneContract.IView> imp
 
     @Override
     public void bindPhone(final String phone, String code, String pwd) {
-        // TODO: 2018/9/3 发起绑定手机 失败弹窗提示
         ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).bindMobile(phone, code, pwd))
                 .useCache(false)
                 .enqueue(new BaseHttpCallBack() {
@@ -55,8 +57,16 @@ public class BindPhoneFragment extends BaseFragment<BindPhoneContract.IView> imp
                     public void onResponse(ApiBean mApiBean) {
                         String code = mApiBean.getCode();
                         if (ApiBean.checkOK(code)) {
+                            String token = "";
+                            try {
+                                JSONObject jsonObject = new JSONObject(mApiBean.getData());
+                                token = jsonObject.getString("token");
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
                             DialogManager.getInstance().toast("操作成功");
                             Bundle bundle = new Bundle();
+                            bundle.putString("token", token);
                             bundle.putString("phoneNumber", phone);
                             setFragmentResult(RESULT_OK, bundle);
                             pop();

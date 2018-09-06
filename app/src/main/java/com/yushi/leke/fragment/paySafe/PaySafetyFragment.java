@@ -16,7 +16,6 @@ import com.yufan.library.inject.VuClass;
 import com.yufan.library.manager.DialogManager;
 import com.yushi.leke.UIHelper;
 import com.yushi.leke.YFApi;
-import com.yushi.leke.dialog.CommonDialog;
 import com.yushi.leke.util.RechargeUtil;
 import com.yushi.leke.dialog.recharge.SetRechargePwdDialog;
 import com.yushi.leke.fragment.bindPhone.BindPhoneFragment;
@@ -41,13 +40,11 @@ public class PaySafetyFragment extends BaseFragment<PaySafetyContract.IView> imp
                     @Override
                     public void onSuccess(ApiBean mApiBean) {
                         try {
-                            if (TextUtils.equals(ApiBean.SUCCESS, mApiBean.getCode())) {
-                                String data = mApiBean.getData();
-                                JSONObject jsonObject = new JSONObject(data);
-                                isHave = jsonObject.optInt("isHave");
-                                phoneNumber = jsonObject.optString("phoneNumber");
-                                getVu().updatePage(isHave, phoneNumber);
-                            }
+                            String data = mApiBean.getData();
+                            JSONObject jsonObject = new JSONObject(data);
+                            isHave = jsonObject.optInt("isHave");
+                            phoneNumber = jsonObject.optString("phoneNumber");
+                            getVu().updatePage(isHave, phoneNumber);
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
@@ -81,24 +78,6 @@ public class PaySafetyFragment extends BaseFragment<PaySafetyContract.IView> imp
     }
 
     @Override
-    public void onFragmentResult(int requestCode, int resultCode, Bundle data) {
-        super.onFragmentResult(requestCode, resultCode, data);
-        if (requestCode == 100 && resultCode == RESULT_OK && data != null) {//绑定手机成功返回
-            phoneNumber = data.getString("phoneNumber");
-            String token = data.getString("token");
-            getVu().updatePage(isHave, phoneNumber);
-//            setRechargePwd();
-            RechargeUtil.getInstance().setRechargePwd(_mActivity, token, null, null, SetRechargePwdDialog.SET_RECHARGE_PWD_BYTOKEN, this);
-        } else if (requestCode == 200 && resultCode == RESULT_OK && data != null) {//手机验证码校验过返回,忘记密码
-            String verificationCode = data.getString("verificationCode");
-            RechargeUtil.getInstance().setRechargePwd(_mActivity, null, verificationCode, null, SetRechargePwdDialog.FORGET_RECHARGE_PWD_BYCODE, this);
-        } else if (requestCode == 300 && resultCode == RESULT_OK && data != null) {//初次设置交易密码手机验证通过，设置密码
-            String verificationCode = data.getString("verificationCode");
-            RechargeUtil.getInstance().setRechargePwd(_mActivity, null, verificationCode, null, SetRechargePwdDialog.SET_RECHARGE_PWD_BYCODE, this);
-        }
-    }
-
-    @Override
     public void setRechargePwd() {
         if (TextUtils.isEmpty(phoneNumber)) {//未绑定手机，先绑定手机
             startForResult(UIHelper.creat(BindPhoneFragment.class).build(), 100);
@@ -112,6 +91,24 @@ public class PaySafetyFragment extends BaseFragment<PaySafetyContract.IView> imp
     }
 
     @Override
+    public void onFragmentResult(int requestCode, int resultCode, Bundle data) {
+        super.onFragmentResult(requestCode, resultCode, data);
+        if (requestCode == 100 && resultCode == RESULT_OK && data != null) {//绑定手机成功返回
+            phoneNumber = data.getString("phoneNumber");
+            String token = data.getString("token");
+            getVu().updatePage(isHave, phoneNumber);
+            RechargeUtil.getInstance().setRechargePwd(_mActivity, token, null, SetRechargePwdDialog.SET_RECHARGE_PWD_BYTOKEN, this);
+        } else if (requestCode == 200 && resultCode == RESULT_OK && data != null) {//手机验证码校验过返回,忘记密码
+            String token = data.getString("token");
+            RechargeUtil.getInstance().setRechargePwd(_mActivity, token, null, SetRechargePwdDialog.SET_RECHARGE_PWD_BYTOKEN, this);
+        } else if (requestCode == 300 && resultCode == RESULT_OK && data != null) {//初次设置交易密码手机验证通过，设置密码
+            String token = data.getString("token");
+            RechargeUtil.getInstance().setRechargePwd(_mActivity, token, null, SetRechargePwdDialog.SET_RECHARGE_PWD_BYTOKEN, this);
+        }
+    }
+
+
+    @Override
     public void returnSetPwdResult(boolean isSuccess) {
         if (isSuccess) {
             isHave = 1;
@@ -122,7 +119,7 @@ public class PaySafetyFragment extends BaseFragment<PaySafetyContract.IView> imp
     @Override
     public void returnCheckResult(boolean isSuccess, String originalPwd) {
         if (isSuccess) {
-            RechargeUtil.getInstance().setRechargePwd(_mActivity, null, null, originalPwd, SetRechargePwdDialog.SET_RECHARGE_PWD_BYOLDPWD, this);
+            RechargeUtil.getInstance().setRechargePwd(_mActivity, null, originalPwd, SetRechargePwdDialog.SET_RECHARGE_PWD_BYOLDPWD, this);
         }
     }
 }

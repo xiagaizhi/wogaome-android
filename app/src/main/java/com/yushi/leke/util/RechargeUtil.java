@@ -129,8 +129,8 @@ public class RechargeUtil {
      * @param type
      * @param setRechargeInterf
      */
-    public void setRechargePwd(Context context, String token, String verificationCode, String originalPwd, int type, SetRechargeInterf setRechargeInterf) {
-        SetRechargePwdDialog setRechargePwdDialog = new SetRechargePwdDialog(context, type, token, verificationCode, originalPwd);
+    public void setRechargePwd(Context context, String token, String originalPwd, int type, SetRechargeInterf setRechargeInterf) {
+        SetRechargePwdDialog setRechargePwdDialog = new SetRechargePwdDialog(context, type, token, originalPwd);
         setRechargePwdDialog.setmSetRechargeInterf(setRechargeInterf);
         setRechargePwdDialog.show();
     }

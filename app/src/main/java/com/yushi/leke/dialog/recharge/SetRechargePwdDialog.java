@@ -37,9 +37,8 @@ import java.lang.reflect.Method;
 
 public class SetRechargePwdDialog extends Dialog implements KeyboardAdapter.OnKeyboardClickListener {
     public static final int SET_RECHARGE_PWD_BYTOKEN = 1;
-    public static final int SET_RECHARGE_PWD_BYCODE = 2;
-    public static final int FORGET_RECHARGE_PWD_BYCODE = 3;
-    public static final int SET_RECHARGE_PWD_BYOLDPWD = 4;
+    public static final int FORGET_RECHARGE_PWD_BYTOKEN = 2;
+    public static final int SET_RECHARGE_PWD_BYOLDPWD = 3;
     private PayPsdInputView tv_password;
     private KeyboardView id_keyboard_view;
     private TextView mTitle;
@@ -48,7 +47,6 @@ public class SetRechargePwdDialog extends Dialog implements KeyboardAdapter.OnKe
     private TextView mSetRechargeType;
     private RechargeUtil.SetRechargeInterf mSetRechargeInterf;
     private String token;
-    private String verificationCode;
     private String originalPwd;
 
 
@@ -56,14 +54,13 @@ public class SetRechargePwdDialog extends Dialog implements KeyboardAdapter.OnKe
         this.mSetRechargeInterf = setRechargeInterf;
     }
 
-    public SetRechargePwdDialog(@NonNull Context context, final int type, String token, String verificationCode, String originalPwd) {
+    public SetRechargePwdDialog(@NonNull Context context, final int type, String token, String originalPwd) {
         super(context);
         View rootView = LayoutInflater.from(context).inflate(R.layout.layout_setrechargepassword, null);
         setContentView(rootView);
         this.mContext = context;
         this.type = type;
         this.token = token;
-        this.verificationCode = verificationCode;
         this.originalPwd = originalPwd;
         initView(rootView);
     }
@@ -86,13 +83,13 @@ public class SetRechargePwdDialog extends Dialog implements KeyboardAdapter.OnKe
         tv_password = rootView.findViewById(R.id.tv_password);
         id_keyboard_view = rootView.findViewById(R.id.id_keyboard_view);
         setCanceledOnTouchOutside(false);
-        if (type == SET_RECHARGE_PWD_BYTOKEN || type == SET_RECHARGE_PWD_BYCODE) {
+        if (type == SET_RECHARGE_PWD_BYTOKEN) {
             mSetRechargeType.setText("设置交易密码");
             mTitle.setText("请设置您的乐链APP的交易密码");
         } else if (type == SET_RECHARGE_PWD_BYOLDPWD) {
             mSetRechargeType.setText("修改交易密码");
             mTitle.setText("请设置您的新交易密码");
-        } else if (type == FORGET_RECHARGE_PWD_BYCODE) {
+        } else if (type == FORGET_RECHARGE_PWD_BYTOKEN) {
             mSetRechargeType.setText("忘记交易密码");
             mTitle.setText("请设置您的乐链APP的交易密码");
         }
@@ -125,11 +122,11 @@ public class SetRechargePwdDialog extends Dialog implements KeyboardAdapter.OnKe
                 //和上次输入的密码不一致  做相应的业务逻辑处理
                 tv_password.setComparePassword("");
                 tv_password.cleanPsd();
-                if (type == SET_RECHARGE_PWD_BYTOKEN || type == SET_RECHARGE_PWD_BYCODE) {
+                if (type == SET_RECHARGE_PWD_BYTOKEN) {
                     mTitle.setText("请设置您的乐链APP的交易密码");
                 } else if (type == SET_RECHARGE_PWD_BYOLDPWD) {
                     mTitle.setText("请设置您的新交易密码");
-                } else if (type == FORGET_RECHARGE_PWD_BYCODE) {
+                } else if (type == FORGET_RECHARGE_PWD_BYTOKEN) {
                     mTitle.setText("请设置您的乐链APP的交易密码");
                 }
                 new CommonDialog(mContext).setTitle("两次交易密码不一致，请重新输入")
@@ -200,10 +197,8 @@ public class SetRechargePwdDialog extends Dialog implements KeyboardAdapter.OnKe
     private void setRechargePwd(String pwd) {
         DialogManager.getInstance().showLoadingDialog();
         isSuccess = false;
-        if (type == SET_RECHARGE_PWD_BYTOKEN) {
+        if (type == SET_RECHARGE_PWD_BYTOKEN || type == FORGET_RECHARGE_PWD_BYTOKEN) {
             setRechargePwdByToken(token, pwd);
-        } else if (type == SET_RECHARGE_PWD_BYCODE || type == FORGET_RECHARGE_PWD_BYCODE) {
-            setRechargePwdByVerificationCode(verificationCode, pwd);
         } else if (type == SET_RECHARGE_PWD_BYOLDPWD) {
             setRechargePwdByOriginalPwd(originalPwd, pwd);
         }
@@ -249,13 +244,6 @@ public class SetRechargePwdDialog extends Dialog implements KeyboardAdapter.OnKe
      */
     private void setRechargePwdByToken(String token, String pwd) {
         ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).setTradePwdWithToken(token, pwd)).useCache(false).enqueue(baseHttpCallBack);
-    }
-
-    /**
-     * 通过验证受发送验证码(1、已经绑定过手机初次设置密码；2、设置过密码忘记交易密码《也即通过手机验证码进行密码找回功能》)
-     */
-    private void setRechargePwdByVerificationCode(String verificationCode, String pwd) {
-        ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).setTradePwdwithVCode(verificationCode, pwd)).useCache(false).enqueue(baseHttpCallBack);
     }
 
 
