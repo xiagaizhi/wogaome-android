@@ -1,6 +1,8 @@
 package com.yushi.leke.share;
 
 import android.app.Activity;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -31,7 +33,7 @@ public class ShareMenuActivity extends BaseActivity {
     public static final int SHARE_REQUEST_CODE=201;
     public static final String TYPES = "TYPES";
     public static final String SHARE_DATA = "SHARE_DATA";
-    protected MenuType[] defaultType = new MenuType[]{MenuType.WEIXIN, MenuType.QQ, MenuType.WEIXIN_MOMENTS, MenuType.WEIBO, MenuType.QQ_SPACE};
+    protected MenuType[] defaultType = new MenuType[]{MenuType.WEIXIN, MenuType.QQ, MenuType.WEIXIN_MOMENTS, MenuType.WEIBO, MenuType.QQ_SPACE,MenuType.COPY};
     private int[] types;
     private MenuDialog mMenuDialog;
     public static void startShare(Fragment context, ShareModel model, int[] types) {
@@ -126,7 +128,13 @@ public class ShareMenuActivity extends BaseActivity {
 
                         }
                         break;
-
+                    case COPY:
+                        ClipboardManager cm = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                        // 将文本内容放到系统剪贴板里。
+                        cm.setText(model.getTargetUrl());
+                        DialogManager.getInstance().toast("复制成功");
+                        finish();
+                        break;
                 }
             }
         };
