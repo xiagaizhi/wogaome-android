@@ -3,11 +3,8 @@
     <string-array name="service_type">
         　　
         <item>正式</item>
-        　　
         <item>预发</item>
-        　　
         <item>测试</item>
-        　　
         <item>开发</item>
         <item>MOCK</item>
     </string-array>

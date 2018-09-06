@@ -9,6 +9,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 
+import com.yufan.library.widget.anim.AFVerticalAnimator;
 import com.yushi.leke.R;
 import com.yufan.library.base.BaseFragment;
 
@@ -50,6 +51,8 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
+
+import me.yokeyword.fragmentation.anim.FragmentAnimator;
 
 import static android.view.View.INVISIBLE;
 import static android.view.View.VISIBLE;
@@ -279,7 +282,7 @@ public class MusicPlayerFragment extends BaseFragment<MusicPlayerContract.IView>
         MediaControllerCompat mediaController = new MediaControllerCompat(
                 getContext(), token);
         if (mediaController.getMetadata() == null) {
-            onBackPressed();
+            getActivity().finish();
             return;
         }
 
@@ -374,6 +377,7 @@ public class MusicPlayerFragment extends BaseFragment<MusicPlayerContract.IView>
             });
         }
     }
+
 
     private void updateMediaDescription(MediaDescriptionCompat description) {
         if (description == null) {
@@ -556,5 +560,11 @@ public class MusicPlayerFragment extends BaseFragment<MusicPlayerContract.IView>
 
         }
 
+    }
+
+
+    @Override
+    public FragmentAnimator onCreateFragmentAnimator() {
+        return new AFVerticalAnimator(); //super.onCreateFragmentAnimator();
     }
 }
