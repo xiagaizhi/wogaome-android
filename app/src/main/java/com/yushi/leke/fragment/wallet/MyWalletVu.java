@@ -12,7 +12,6 @@ import android.widget.TextView;
 
 import com.yufan.library.Global;
 import com.yufan.library.base.BasePopupWindow;
-import com.yufan.library.browser.BrowserBaseFragment;
 import com.yufan.library.inject.AnnotateUtils;
 import com.yufan.library.inject.FindView;
 import com.yufan.library.manager.SPManager;

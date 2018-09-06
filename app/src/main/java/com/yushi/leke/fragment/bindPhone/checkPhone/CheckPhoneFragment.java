@@ -48,7 +48,7 @@ public class CheckPhoneFragment extends BaseFragment<CheckPhoneContract.IView> i
     public void checkPhone(String code) {
         // TODO: 2018/9/5 返回验证码
         Bundle bundle = new Bundle();
-        bundle.putString("verificationCode", "verificationCode");
+        bundle.putString("token", "token");
         setFragmentResult(RESULT_OK, bundle);
     }
 }

@@ -17,11 +17,15 @@ import com.yufan.library.inject.VuClass;
  */
 @VuClass(UpdatePhoneVu.class)
 public class UpdatePhoneFragment extends BaseFragment<UpdatePhoneContract.IView> implements UpdatePhoneContract.Presenter {
+    private String token;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        Bundle bundle = getArguments();
+        if (bundle != null) {
+            token = bundle.getString("token");
+        }
     }
 
 

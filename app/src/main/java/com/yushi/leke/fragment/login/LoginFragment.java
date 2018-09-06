@@ -23,7 +23,6 @@ import android.support.annotation.Nullable;
 import android.view.View;
 import android.view.WindowManager;
 
-import com.yufan.library.browser.BrowserBaseFragment;
 import com.yufan.library.inject.VuClass;
 import com.yufan.library.inter.ICallBack;
 import com.yufan.library.manager.DialogManager;
@@ -37,6 +36,7 @@ import com.yushi.leke.BuildConfig;
 import com.yushi.leke.UIHelper;
 import com.yushi.leke.YFApi;
 import com.yushi.leke.activity.MainActivity;
+import com.yushi.leke.fragment.browser.BrowserBaseFragment;
 import com.yushi.leke.fragment.login.loginPhone.LoginPhoneFragment;
 import com.yushi.leke.fragment.main.MainFragment;
 import com.yushi.leke.fragment.musicplayer.MusicPlayerFragment;

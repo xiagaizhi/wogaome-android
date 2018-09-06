@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.yufan.library.browser;
+package com.yushi.leke.fragment.browser;
 
 
 import com.tencent.smtt.export.external.interfaces.IX5WebChromeClient;

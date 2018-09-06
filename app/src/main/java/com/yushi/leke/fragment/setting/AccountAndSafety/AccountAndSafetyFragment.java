@@ -2,9 +2,7 @@ package com.yushi.leke.fragment.setting.AccountAndSafety;
 
 import android.os.Bundle;
 
-import com.yufan.library.Global;
 import com.yufan.library.manager.DialogManager;
-import com.yushi.leke.R;
 import com.yufan.library.base.BaseFragment;
 
 import android.support.annotation.NonNull;
@@ -12,15 +10,12 @@ import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.View;
 
-import com.yufan.library.base.BaseFragment;
 import com.yufan.library.inject.VuClass;
 import com.yushi.leke.UIHelper;
-import com.yushi.leke.dialog.recharge.SetRechargePwdDialog;
 import com.yushi.leke.fragment.bindPhone.BindPhoneFragment;
 import com.yushi.leke.fragment.bindPhone.checkPhone.CheckPhoneFragment;
 import com.yushi.leke.fragment.bindPhone.updatePhone.UpdatePhoneFragment;
 import com.yushi.leke.fragment.setting.modifyLoginPwd.ModifyLoginPwdFragment;
-import com.yushi.leke.util.RechargeUtil;
 
 /**
  * Created by zhanyangyang on 18/8/25.
@@ -67,7 +62,8 @@ public class AccountAndSafetyFragment extends BaseFragment<AccountAndSafetyContr
             phoneNumber = data.getString("phoneNumber");
             getVu().updatePage(phoneNumber);
         } else if (requestCode == 200 && resultCode == RESULT_OK && data != null) {//手机验证码校验过通过，换绑
-            startForResult(UIHelper.creat(UpdatePhoneFragment.class).build(), 100);
+            String token = data.getString("token");
+            startForResult(UIHelper.creat(UpdatePhoneFragment.class).put("token",token).build(), 100);
         }
     }
 }
