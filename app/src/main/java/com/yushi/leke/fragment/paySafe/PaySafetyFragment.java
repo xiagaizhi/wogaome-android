@@ -80,7 +80,7 @@ public class PaySafetyFragment extends BaseFragment<PaySafetyContract.IView> imp
     @Override
     public void setRechargePwd() {
         if (TextUtils.isEmpty(phoneNumber)) {//未绑定手机，先绑定手机
-            startForResult(UIHelper.creat(BindPhoneFragment.class).build(), 100);
+            startForResult(UIHelper.creat(BindPhoneFragment.class).put("type",BindPhoneFragment.BINDPHOE_NEED_TOKEN).build(), 100);
         } else {
             if (isHave == 1) {//修改，先校验
                 RechargeUtil.getInstance().checkRechargePwd(_mActivity, "修改交易密码", this);

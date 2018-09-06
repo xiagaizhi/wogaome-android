@@ -42,7 +42,7 @@ public class CheckPhoneVu extends BaseVu<CheckPhoneContract.Presenter> implement
         verificationCodeTextView.setOnGetCodeClickListener(new VerificationCodeTextView.OnGetCodeClickListener() {
             @Override
             public void getCode(String sessionId) {
-                mPersenter.getVerifcationCode();
+                mPersenter.getVerifcationCode(sessionId);
             }
             @Override
             public boolean canShow() {

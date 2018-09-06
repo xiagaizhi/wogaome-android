@@ -47,7 +47,7 @@ public class UpdatePhoneVu extends BaseVu<UpdatePhoneContract.Presenter> impleme
         verificationCodeTextView.setOnGetCodeClickListener(new VerificationCodeTextView.OnGetCodeClickListener() {
             @Override
             public void getCode(String sessionId) {
-                mPersenter.getVerifcationCode(et_phone.getText().toString());
+                mPersenter.getVerifcationCode(sessionId,et_phone.getText().toString());
 
             }
 
