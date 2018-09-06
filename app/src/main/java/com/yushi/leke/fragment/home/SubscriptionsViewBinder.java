@@ -64,6 +64,7 @@ public class SubscriptionsViewBinder extends ItemViewBinder<SubscriptionInfo, Su
             super(itemView);
             sdv=itemView.findViewById(R.id.sdv);
             view_bottom_line=itemView.findViewById(R.id.view_bottom_line);
+
         }
     }
 

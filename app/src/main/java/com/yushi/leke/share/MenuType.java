@@ -14,7 +14,8 @@ public enum MenuType {
     QQ(2, R.drawable.share_qq, "QQ"),
     WEIXIN_MOMENTS(3, R.drawable.share_pengyouquan, "朋友圈"),
     WEIBO(4, R.drawable.share_weibo, "微博"),
-    QQ_SPACE(5, R.drawable.share_qqspace, "QQ空间");
+    QQ_SPACE(5, R.drawable.share_qqspace, "QQ空间"),
+    COPY(6, R.drawable.share_copy, "复制链接");
     private int type;
     private int icon;
     private String name;
