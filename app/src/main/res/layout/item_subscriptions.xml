@@ -35,6 +35,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:text="永不放弃"
+            android:singleLine="true"
             android:textColor="@color/color_gray_level3"
             android:textSize="@dimen/px32"
             android:layout_height="wrap_content" />
@@ -79,6 +80,7 @@
               android:layout_width="wrap_content"
               android:text="马云"
               android:textSize="@dimen/px24"
+              android:singleLine="true"
               android:textColor="@color/color_gray_level6"
               android:layout_height="wrap_content" />
           <View
@@ -92,6 +94,7 @@
           <TextView
               android:layout_width="wrap_content"
               android:text="阿里巴巴创始人"
+              android:singleLine="true"
               android:textSize="@dimen/px24"
               android:textColor="@color/color_gray_level6"
               android:layout_height="wrap_content" />
@@ -100,8 +103,9 @@
             android:layout_width="wrap_content"
             android:textColor="@color/color_gray_level6"
             android:textSize="@dimen/px24"
-            android:text="这里显示副标题，简历奖励简历简历..."
+            android:text="这里显示副标题，简历奖励简历简历这里显示副标题，简历奖励简历简历..."
             android:layout_weight="1"
+            android:singleLine="true"
             android:gravity="bottom"
             android:layout_height="0dp" />
         <View
