@@ -4,7 +4,7 @@
 
     <!-- 圆角 -->
     <corners
-        android:radius="@dimen/px27"
+        android:radius="@dimen/y27"
         /><!-- 设置圆角半径 -->
     <solid
 
