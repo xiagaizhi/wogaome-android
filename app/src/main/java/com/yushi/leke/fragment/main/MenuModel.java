@@ -8,7 +8,6 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.yushi.leke.R;
-import com.yushi.leke.fragment.main.MainMenu;
 
 /**
  * Created by mengfantao on 17/12/25.
@@ -32,5 +31,6 @@ public class MenuModel {
         rbView.setCompoundDrawablesWithIntrinsicBounds(null, top, null, null);
         mRootView.setId(View.generateViewId());
         mBadge = (TextView) mRootView.findViewById(R.id.tv_badge);
+        mBadge.setId(View.generateViewId());
     }
 }
