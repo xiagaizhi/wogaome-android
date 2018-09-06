@@ -64,7 +64,7 @@ public class BindPhoneVu extends BaseVu<BindPhoneContract.Presenter> implements 
         verificationCodeTextView.setOnGetCodeClickListener(new VerificationCodeTextView.OnGetCodeClickListener() {
             @Override
             public void getCode(String sessionId) {
-                mPersenter.getVerifcationCode(et_phone.getText().toString());
+                mPersenter.getVerifcationCode(sessionId,et_phone.getText().toString());
             }
             @Override
             public boolean canShow() {

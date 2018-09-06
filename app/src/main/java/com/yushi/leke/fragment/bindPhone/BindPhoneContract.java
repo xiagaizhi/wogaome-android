@@ -13,7 +13,7 @@ public interface BindPhoneContract {
     }
 
     interface Presenter extends Pr {
-        void getVerifcationCode(String phone);
+        void getVerifcationCode(String sessionId,String phone);
 
         void bindPhone(String phone, String code, String pwd);
     }

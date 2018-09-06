@@ -2,6 +2,9 @@ package com.yushi.leke.fragment.setting.AccountAndSafety;
 
 import android.os.Bundle;
 
+import com.yufan.library.api.ApiBean;
+import com.yufan.library.api.ApiManager;
+import com.yufan.library.api.BaseHttpCallBack;
 import com.yufan.library.manager.DialogManager;
 import com.yufan.library.base.BaseFragment;
 
@@ -12,10 +15,14 @@ import android.view.View;
 
 import com.yufan.library.inject.VuClass;
 import com.yushi.leke.UIHelper;
+import com.yushi.leke.YFApi;
 import com.yushi.leke.fragment.bindPhone.BindPhoneFragment;
 import com.yushi.leke.fragment.bindPhone.checkPhone.CheckPhoneFragment;
 import com.yushi.leke.fragment.bindPhone.updatePhone.UpdatePhoneFragment;
 import com.yushi.leke.fragment.setting.modifyLoginPwd.ModifyLoginPwdFragment;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * Created by zhanyangyang on 18/8/25.
@@ -27,7 +34,30 @@ public class AccountAndSafetyFragment extends BaseFragment<AccountAndSafetyContr
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).getMobile())
+                .useCache(false)
+                .enqueue(new BaseHttpCallBack() {
+                    @Override
+                    public void onSuccess(ApiBean mApiBean) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(mApiBean.getData());
+                            phoneNumber = jsonObject.getString("mobile");
+                            getVu().updatePage(phoneNumber);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
 
+                    @Override
+                    public void onError(int id, Exception e) {
+
+                    }
+
+                    @Override
+                    public void onFinish() {
+
+                    }
+                });
     }
 
 
@@ -39,7 +69,7 @@ public class AccountAndSafetyFragment extends BaseFragment<AccountAndSafetyContr
     @Override
     public void openBindPhone() {
         if (TextUtils.isEmpty(phoneNumber)) {//未绑定手机
-            startForResult(UIHelper.creat(BindPhoneFragment.class).build(), 100);
+            startForResult(UIHelper.creat(BindPhoneFragment.class).put("type",BindPhoneFragment.BINDPHONE_NORMAL).build(), 100);
         } else {//绑定过手机，换绑手机，先校验之前手机
             startForResult(UIHelper.creat(CheckPhoneFragment.class).put("phoneNumber", phoneNumber).build(), 200);
         }
@@ -63,7 +93,7 @@ public class AccountAndSafetyFragment extends BaseFragment<AccountAndSafetyContr
             getVu().updatePage(phoneNumber);
         } else if (requestCode == 200 && resultCode == RESULT_OK && data != null) {//手机验证码校验过通过，换绑
             String token = data.getString("token");
-            startForResult(UIHelper.creat(UpdatePhoneFragment.class).put("token",token).build(), 100);
+            startForResult(UIHelper.creat(UpdatePhoneFragment.class).put("token", token).build(), 100);
         }
     }
 }

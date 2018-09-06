@@ -14,7 +14,7 @@ public interface UpdatePhoneContract {
 
     interface Presenter extends Pr {
 
-        void getVerifcationCode(String phone);
+        void getVerifcationCode(String sessionId,String phone);
 
         void updatePhone(String phone, String code);
 

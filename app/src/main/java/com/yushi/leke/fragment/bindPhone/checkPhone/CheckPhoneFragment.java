@@ -2,6 +2,9 @@ package com.yushi.leke.fragment.bindPhone.checkPhone;
 
 import android.os.Bundle;
 
+import com.yufan.library.api.ApiBean;
+import com.yufan.library.api.ApiManager;
+import com.yufan.library.api.BaseHttpCallBack;
 import com.yufan.library.base.BaseFragment;
 
 import android.support.annotation.NonNull;
@@ -10,6 +13,7 @@ import android.text.TextUtils;
 import android.view.View;
 
 import com.yufan.library.inject.VuClass;
+import com.yushi.leke.YFApi;
 
 /**
  * Created by zhanyangyang on 18/8/25.
@@ -35,20 +39,54 @@ public class CheckPhoneFragment extends BaseFragment<CheckPhoneContract.IView> i
     }
 
     @Override
-    public boolean getVerifcationCode() {
+    public boolean getVerifcationCode(String sessionId) {
         if (TextUtils.isEmpty(phoneNumber)) {
-
             return false;
         } else {
+            ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).sendChangeMobileVcode(sessionId))
+                    .useCache(false)
+                    .enqueue(new BaseHttpCallBack() {
+                        @Override
+                        public void onSuccess(ApiBean mApiBean) {
+
+                        }
+
+                        @Override
+                        public void onError(int id, Exception e) {
+
+                        }
+
+                        @Override
+                        public void onFinish() {
+
+                        }
+                    });
             return true;
         }
     }
 
     @Override
     public void checkPhone(String code) {
-        // TODO: 2018/9/5 返回验证码
-        Bundle bundle = new Bundle();
-        bundle.putString("token", "token");
-        setFragmentResult(RESULT_OK, bundle);
+        ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).validateChangeMobileVcode(code))
+                .useCache(false)
+                .enqueue(new BaseHttpCallBack() {
+                    @Override
+                    public void onSuccess(ApiBean mApiBean) {
+                        Bundle bundle = new Bundle();
+                        bundle.putString("token", "token");
+                        setFragmentResult(RESULT_OK, bundle);
+                    }
+
+                    @Override
+                    public void onError(int id, Exception e) {
+
+                    }
+
+                    @Override
+                    public void onFinish() {
+
+                    }
+                });
+
     }
 }

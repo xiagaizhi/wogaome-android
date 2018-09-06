@@ -169,14 +169,6 @@ public interface YFApi {
                @Field("pwd") String pwd
     );
 
-    @FormUrlEncoded
-    @POST("app/v1/security/sendBindMobileVcode")
-    Call<ResponseBody>
-    sendBindMobileVcode(//绑定手机发验证码
-                        @Field("mobile") String mobile
-    );
-
-
     @POST("app/v1/msg/hasUnreadMsg")
     Call<ResponseBody>
     hasUnreadMsg(//用户是否有未读消息
@@ -215,18 +207,59 @@ public interface YFApi {
     );
 
     @FormUrlEncoded
-    @POST("app/v1/trade/setTradePwdwithVCode")
-    Call<ResponseBody>
-    setTradePwdwithVCode(//通过绑定手机返回token(初次绑定手机)
-                         @Field("vCode") String vCode,
-                         @Field("TradePwd") String TradePwd
-    );
-
-    @FormUrlEncoded
     @POST("app/v1/modifyTradePwd")
     Call<ResponseBody>
     modifyTradePwd(//通过绑定手机返回token(初次绑定手机)
                    @Field("oldPwd") String vCode,
                    @Field("TradePwd") String TradePwd
+    );
+
+    @POST("app/v1/uc/getMobile")
+    Call<ResponseBody>
+    getMobile(//是否绑定手机
+    );
+
+    @FormUrlEncoded
+    @POST("app/v1/security/sendBindMobileVcode")
+    Call<ResponseBody>
+    sendBindMobileVcode(
+            @Field("mobile") String mobile,
+            @Field("sessionId") String sessionId
+
+    );
+
+    @FormUrlEncoded
+    @POST("app/v1/security/sendChangeMobileVcode")
+    Call<ResponseBody>
+    sendChangeMobileVcode(
+            @Field("sessionId") String sessionId
+
+    );
+
+    @FormUrlEncoded
+    @POST("app/v1/security/validateChangeMobileVcode")
+    Call<ResponseBody>
+    validateChangeMobileVcode(
+            @Field("vcode") String vcode
+
+    );
+
+    @FormUrlEncoded
+    @POST("app/v1/security/sendBindNewMobileVcode")
+    Call<ResponseBody>
+    sendBindNewMobileVcode(
+            @Field("sessionId") String sessionId,
+            @Field("mobile") String mobile
+    );
+
+
+    @FormUrlEncoded
+    @POST("app/v1/security/changeMobile")
+    Call<ResponseBody>
+    changeMobile(
+            @Field("mobile") String mobile,
+            @Field("vcode") String vcode,
+            @Field("securityTicket") String securityTicket
+
     );
 }
