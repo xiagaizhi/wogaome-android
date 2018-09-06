@@ -16,7 +16,7 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/px110"
+            android:layout_height="@dimen/px98"
             android:layout_marginLeft="@dimen/px36"
             android:layout_marginRight="@dimen/px36">
 
@@ -25,7 +25,6 @@
                 android:layout_height="wrap_content"
                 android:text="订阅专栏"
                 android:textColor="@color/color_black"
-                android:layout_centerVertical="true"
                 android:textSize="@dimen/px64"
                 android:id="@+id/tv_anim_title"
                 android:textStyle="bold" />
@@ -35,10 +34,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:paddingBottom="@dimen/px5"
-                android:paddingTop="@dimen/px5"
+                android:paddingTop="@dimen/px15"
                 android:src="@drawable/anim_player_blue"
-                android:layout_centerVertical="true" />
+           />
         </RelativeLayout>
 
         <RelativeLayout
