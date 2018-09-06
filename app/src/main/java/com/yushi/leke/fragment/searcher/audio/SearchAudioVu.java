@@ -1,4 +1,4 @@
-package com.yushi.leke.fragment.searcher;
+package com.yushi.leke.fragment.searcher.audio;
 
 import com.yushi.leke.R;
 
@@ -22,8 +22,8 @@ import com.yufan.library.view.recycler.YFRecyclerView;
  * Created by mengfantao on 18/8/2.
  */
 @FindLayout(layout = R.layout.fragment_layout_search)
-@Title("搜索")
-public class SearchVu extends BaseListVu<SearchContract.Presenter> implements SearchContract.IView {
+@Title("搜索音频")
+public class SearchAudioVu extends BaseListVu<SearchAudioContract.Presenter> implements SearchAudioContract.IView {
     @FindView(R.id.recyclerview)
     private YFRecyclerView mYFRecyclerView;
     @FindView(R.id.tv_search)
@@ -32,6 +32,8 @@ public class SearchVu extends BaseListVu<SearchContract.Presenter> implements Se
     private ImageView iv_clear_search;
     @FindView(R.id.et_search)
     private EditText et_search;
+
+
 
     @Override
     public void initView(View view) {
@@ -92,10 +94,7 @@ public class SearchVu extends BaseListVu<SearchContract.Presenter> implements Se
     }
 
     @Override
-    public String getSearchKey() {
-        if(et_search!=null){
-           return et_search.getText().toString();
-        }
-        return null;
+    public void setTextKey(String textKey) {
+        et_search.setText(textKey);
     }
 }

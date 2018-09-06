@@ -88,13 +88,13 @@ public class SetRechargePwdDialog extends Dialog implements KeyboardAdapter.OnKe
         setCanceledOnTouchOutside(false);
         if (type == SET_RECHARGE_PWD_BYTOKEN || type == SET_RECHARGE_PWD_BYCODE) {
             mSetRechargeType.setText("设置交易密码");
-            mTitle.setText("请设置您的乐链APP的交易密码");
+            mTitle.setText("请设置您的乐客APP的交易密码");
         } else if (type == SET_RECHARGE_PWD_BYOLDPWD) {
             mSetRechargeType.setText("修改交易密码");
             mTitle.setText("请设置您的新交易密码");
         } else if (type == FORGET_RECHARGE_PWD_BYCODE) {
             mSetRechargeType.setText("忘记交易密码");
-            mTitle.setText("请设置您的乐链APP的交易密码");
+            mTitle.setText("请设置您的乐客APP的交易密码");
         }
         //设置不调用系统键盘
         if (Build.VERSION.SDK_INT <= 10) {
@@ -126,11 +126,11 @@ public class SetRechargePwdDialog extends Dialog implements KeyboardAdapter.OnKe
                 tv_password.setComparePassword("");
                 tv_password.cleanPsd();
                 if (type == SET_RECHARGE_PWD_BYTOKEN || type == SET_RECHARGE_PWD_BYCODE) {
-                    mTitle.setText("请设置您的乐链APP的交易密码");
+                    mTitle.setText("请设置您的乐客APP的交易密码");
                 } else if (type == SET_RECHARGE_PWD_BYOLDPWD) {
                     mTitle.setText("请设置您的新交易密码");
                 } else if (type == FORGET_RECHARGE_PWD_BYCODE) {
-                    mTitle.setText("请设置您的乐链APP的交易密码");
+                    mTitle.setText("请设置您的乐客APP的交易密码");
                 }
                 new CommonDialog(mContext).setTitle("两次交易密码不一致，请重新输入")
                         .setPositiveName("确定")

@@ -1,4 +1,4 @@
-package com.yushi.leke.fragment.searcher;
+package com.yushi.leke.fragment.searcher.audio;
 
 import com.yufan.library.base.Pr;
 import com.yufan.library.base.VuList;
@@ -7,16 +7,13 @@ import com.yufan.library.base.VuList;
  * Created by mengfantao on 18/8/2.
  */
 
-public interface SearchContract {
+public interface SearchAudioContract {
     interface IView extends VuList {
-
-        String getSearchKey();
-
+        void setTextKey(String textKey);
     }
 
     interface Presenter extends Pr {
-
-    void search(String searchKey);
+        void search(String searchKey);
 
     }
 }

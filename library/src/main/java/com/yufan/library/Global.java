@@ -25,4 +25,6 @@ public class Global {
     public static final String INTENT_PAY_RESUIL_DATA = "INTENT_PAY_RESUIL_DATA";
 
     public static final String CITY_DATA = "china_city_data.json";
+
+    public static final String SEARCH_KEY="SEARCH_KEY";
 }

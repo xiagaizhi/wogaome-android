@@ -13,7 +13,8 @@
             android:text="查看更多项目"
             android:id="@+id/tv_title"
             android:textColor="@color/color_blue_level6"
-            android:drawableRight="@drawable/ic_searchbar"
+            android:drawablePadding="@dimen/px10"
+            android:drawableRight="@drawable/ic_search_arrows_right_blue"
             android:layout_centerInParent="true"
             android:layout_height="wrap_content" />
     </RelativeLayout>

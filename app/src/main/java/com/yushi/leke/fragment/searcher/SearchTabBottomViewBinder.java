@@ -24,8 +24,8 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.yufan.library.inter.ICallBack;
 import com.yushi.leke.R;
-import com.yushi.leke.fragment.test.DbTestContract;
 
 import me.drakeet.multitype.ItemViewBinder;
 
@@ -34,8 +34,11 @@ import me.drakeet.multitype.ItemViewBinder;
  */
 public class SearchTabBottomViewBinder extends ItemViewBinder<SearchBottomInfo, SearchTabBottomViewBinder.ViewHolder> {
 
-    public SearchTabBottomViewBinder() {
-
+    private ICallBack callBack;
+    public static final int SEARCH_MORE_AUDIO=0;
+    public static final int SEARCH_MORE_ACTIVITY=1;
+    public SearchTabBottomViewBinder(ICallBack callBack) {
+        this.callBack=callBack;
     }
 
     @Override
@@ -54,7 +57,9 @@ public class SearchTabBottomViewBinder extends ItemViewBinder<SearchBottomInfo, 
                 holder.rl_more.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
+                    if(callBack!=null){
+                        callBack.OnBackResult(SEARCH_MORE_AUDIO);
+                    }
                     }
                 });
             }else {
@@ -63,7 +68,9 @@ public class SearchTabBottomViewBinder extends ItemViewBinder<SearchBottomInfo, 
                 holder.rl_more.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
+                        if(callBack!=null){
+                            callBack.OnBackResult(SEARCH_MORE_ACTIVITY);
+                        }
                     }
                 });
             }
