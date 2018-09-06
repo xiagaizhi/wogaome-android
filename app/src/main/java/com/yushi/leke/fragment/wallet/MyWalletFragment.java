@@ -14,10 +14,10 @@ import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.View;
 
-import com.yufan.library.browser.BrowserBaseFragment;
 import com.yufan.library.inject.VuClass;
 import com.yushi.leke.UIHelper;
 import com.yushi.leke.YFApi;
+import com.yushi.leke.fragment.browser.BrowserBaseFragment;
 import com.yushi.leke.fragment.openTreasureBox.OpenTreasureBoxFragment;
 import com.yushi.leke.fragment.paySafe.PaySafetyFragment;
 

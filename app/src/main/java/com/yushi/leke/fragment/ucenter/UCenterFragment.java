@@ -17,10 +17,10 @@ import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.view.View;
 
-import com.yufan.library.browser.BrowserBaseFragment;
 import com.yufan.library.inject.VuClass;
 import com.yushi.leke.UIHelper;
 import com.yushi.leke.YFApi;
+import com.yushi.leke.fragment.browser.BrowserBaseFragment;
 import com.yushi.leke.fragment.main.MainFragment;
 import com.yushi.leke.fragment.setting.SettingFragment;
 import com.yushi.leke.fragment.ucenter.personalInfo.PersonalInfoFragment;

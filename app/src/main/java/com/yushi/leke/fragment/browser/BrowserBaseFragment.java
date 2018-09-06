@@ -1,4 +1,4 @@
-package com.yufan.library.browser;
+package com.yushi.leke.fragment.browser;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -33,6 +33,9 @@ import com.yufan.library.view.ptr.PtrDefaultHandler;
 import com.yufan.library.view.ptr.PtrFrameLayout;
 import com.yufan.library.view.ptr.PtrHandler;
 import com.yufan.library.webview.WVJBWebViewClient;
+import com.yushi.leke.dialog.recharge.PayDialog;
+
+import org.json.JSONObject;
 
 
 /**
@@ -43,7 +46,8 @@ public class BrowserBaseFragment extends BaseFragment<BrowserContract.View> impl
     private String TAG = "BrowserActivity";
     private ValueCallback<Uri> uploadFile;
     private String mIntentUrl;
-//    private int REQUEST_CODE_CHOOSE=8;
+
+    //    private int REQUEST_CODE_CHOOSE=8;
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -64,6 +68,7 @@ public class BrowserBaseFragment extends BaseFragment<BrowserContract.View> impl
     protected WebViewClient getWebViewClient() {
         return new BrowserWebViewClient(vu.getWebView());
     }
+
     private void initbrowser(final WebView webView) {
         webView.setWebViewClient(getWebViewClient());
         vu.getPtr().setPtrHandler(new PtrHandler() {
@@ -73,9 +78,10 @@ public class BrowserBaseFragment extends BaseFragment<BrowserContract.View> impl
                     vu.getWebView().reload();
                 }
             }
+
             @Override
             public boolean checkCanDoRefresh(PtrFrameLayout frame, View content, View header) {
-                return PtrDefaultHandler.checkContentCanBePulledDown(frame, webView.getView(), header)&& isPtrEnable();
+                return PtrDefaultHandler.checkContentCanBePulledDown(frame, webView.getView(), header) && isPtrEnable();
             }
         });
         webView.setWebChromeClient(new WebChromeClient() {
@@ -147,7 +153,6 @@ public class BrowserBaseFragment extends BaseFragment<BrowserContract.View> impl
             }
 
 
-
         });
 
         webView.setDownloadListener(new DownloadListener() {
@@ -206,21 +211,22 @@ public class BrowserBaseFragment extends BaseFragment<BrowserContract.View> impl
         if (mIntentUrl == null) {
             throw new IllegalArgumentException("intent data can not null");
         } else {
-            Log.d("browser","load:"+mIntentUrl);
+            Log.d("browser", "load:" + mIntentUrl);
             webView.loadUrl(mIntentUrl);
         }
         TbsLog.d("time-cost", "cost time: "
                 + (System.currentTimeMillis() - time));
-       loadCookie(CookieManager.getInstance());
+        loadCookie(CookieManager.getInstance());
     }
+
     protected void loadCookie(CookieManager cookie) {
         CookieSyncManager.createInstance(getActivity());
         cookie.setAcceptCookie(true);
-        cookie.setCookie(mIntentUrl, "token=" +  UserManager.getInstance().getToken());
+        cookie.setCookie(mIntentUrl, "token=" + UserManager.getInstance().getToken());
         cookie.setCookie(mIntentUrl, "channelId=" + "");
         cookie.setCookie(mIntentUrl, "type=2");
         cookie.setCookie(mIntentUrl, "sid=" + "");
-        cookie.setCookie(mIntentUrl, "uniqueId=" +"");
+        cookie.setCookie(mIntentUrl, "uniqueId=" + "");
         cookie.setCookie(mIntentUrl, "apiVersion=" + "");
         cookie.setCookie(mIntentUrl, "hardware=" + "");
         cookie.setCookie(mIntentUrl, "cpu=" + "");
@@ -228,7 +234,6 @@ public class BrowserBaseFragment extends BaseFragment<BrowserContract.View> impl
         cookie.setCookie(mIntentUrl, "product_cpu_abi=" + "");
         CookieSyncManager.getInstance().sync();
     }
-
 
 
     @Override
@@ -245,9 +250,9 @@ public class BrowserBaseFragment extends BaseFragment<BrowserContract.View> impl
     @Override
     public void onBackPressed() {
         SoftInputUtil.closeKeybordForActivity(getActivity());
-        if (vu.getWebView().canGoBack()){
+        if (vu.getWebView().canGoBack()) {
             vu.getWebView().goBack();
-        }else {
+        } else {
             super.onBackPressed();
         }
     }
@@ -342,6 +347,7 @@ public class BrowserBaseFragment extends BaseFragment<BrowserContract.View> impl
 
     class BrowserWebViewClient extends WVJBWebViewClient {
         private boolean isError = false;
+
         /**
          * @param webView
          */
@@ -365,26 +371,39 @@ public class BrowserBaseFragment extends BaseFragment<BrowserContract.View> impl
                 }
             });
 
+            registerHandler("web_zfGoods", new WVJBHandler() {
+                @Override
+                public void request(Object data, WVJBResponseCallback callback) {
+                    if (data != null) {
+                        JSONObject mJSONObject = (JSONObject) data;
+                        String goodsId = mJSONObject.optString("goodsId");
+                        PayDialog payDialog = new PayDialog(_mActivity, goodsId, true);
+                        payDialog.show();
+                    }
+                }
+            });
+
 
         }
 
         @Override
         public void onPageStarted(WebView webView, String s, Bitmap bitmap) {
             super.onPageStarted(webView, s, bitmap);
-            isError=false;
+            isError = false;
         }
 
         @Override
         public void onPageFinished(WebView view, String url) {
             super.onPageFinished(view, url);
-            Log.d("browser","onPageFinished");
-            if(isError){
+            Log.d("browser", "onPageFinished");
+            if (isError) {
                 vu.setStateError();
-            }else {
+            } else {
                 vu.setStateGone();
             }
             vu.onPageFinished(view, url);
         }
+
         public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
             handler.proceed();  // 接受所有网站的证书
         }
@@ -394,12 +413,13 @@ public class BrowserBaseFragment extends BaseFragment<BrowserContract.View> impl
 
             return super.shouldOverrideUrlLoading(view, url);
         }
+
         @Override
         public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
             super.onReceivedError(view, errorCode, description, failingUrl);
-            isError=true;
-            Log.d("browser","onReceivedError");
-          vu.onReceivedError(view,errorCode,description,failingUrl);
+            isError = true;
+            Log.d("browser", "onReceivedError");
+            vu.onReceivedError(view, errorCode, description, failingUrl);
         }
 
     }

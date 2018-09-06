@@ -1,4 +1,4 @@
-package com.yufan.library.browser;
+package com.yushi.leke.fragment.browser;
 
 import android.text.TextUtils;
 import android.view.View;
@@ -10,13 +10,12 @@ import android.widget.TextView;
 
 import com.tencent.smtt.export.external.interfaces.IX5WebChromeClient;
 import com.tencent.smtt.sdk.WebView;
-import com.yufan.library.R;
 import com.yufan.library.base.BaseVu;
 import com.yufan.library.inject.FindLayout;
 import com.yufan.library.view.ptr.PtrClassicFrameLayout;
-import com.yufan.library.view.recycler.YFRecyclerView;
 import com.yufan.library.widget.AppToolbar;
 import com.yufan.library.widget.StateLayout;
+import com.yushi.leke.R;
 
 /**
  * Created by mengfantao on 18/7/26.

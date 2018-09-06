@@ -19,13 +19,13 @@ import android.support.annotation.Nullable;
 import android.view.View;
 import android.view.WindowManager;
 
-import com.yufan.library.browser.BrowserBaseFragment;
 import com.yufan.library.inject.VuClass;
 import com.yufan.library.manager.DialogManager;
 import com.yufan.library.manager.UserManager;
 import com.yufan.library.util.SoftInputUtil;
 import com.yushi.leke.UIHelper;
 import com.yushi.leke.YFApi;
+import com.yushi.leke.fragment.browser.BrowserBaseFragment;
 import com.yushi.leke.fragment.login.LoginFragment;
 import com.yushi.leke.fragment.main.MainFragment;
 

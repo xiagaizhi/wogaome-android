@@ -23,7 +23,7 @@ public class UpdatePhoneFragment extends BaseFragment<UpdatePhoneContract.IView>
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         Bundle bundle = getArguments();
-        if (bundle!=null){
+        if (bundle != null) {
             token = bundle.getString("token");
         }
     }

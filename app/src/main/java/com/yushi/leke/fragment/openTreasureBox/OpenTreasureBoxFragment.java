@@ -20,12 +20,12 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 
-import com.yufan.library.browser.BrowserBaseFragment;
 import com.yufan.library.inject.VuClass;
 import com.yushi.leke.UIHelper;
 import com.yushi.leke.YFApi;
 import com.yushi.leke.dialog.CommonDialog;
 import com.yushi.leke.dialog.recharge.PayDialog;
+import com.yushi.leke.fragment.browser.BrowserBaseFragment;
 
 import java.util.ArrayList;
 import java.util.List;
