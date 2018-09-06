@@ -98,4 +98,9 @@ public class SearchVu extends BaseListVu<SearchContract.Presenter> implements Se
         }
         return null;
     }
+
+    @Override
+    public EditText getEditText() {
+        return et_search;
+    }
 }

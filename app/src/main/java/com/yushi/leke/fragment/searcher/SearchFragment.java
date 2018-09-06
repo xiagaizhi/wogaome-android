@@ -2,6 +2,7 @@ package com.yushi.leke.fragment.searcher;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.View;
@@ -25,12 +26,15 @@ import me.yokeyword.fragmentation.anim.DefaultHorizontalAnimator;
 import me.yokeyword.fragmentation.anim.DefaultVerticalAnimator;
 import me.yokeyword.fragmentation.anim.FragmentAnimator;
 
+import static android.view.WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE;
+
 /**
  * Created by mengfantao on 18/8/2.
  */
 @VuClass(SearchVu.class)
 public class SearchFragment extends BaseListFragment<SearchContract.IView> implements SearchContract.Presenter {
     private MultiTypeAdapter adapter;
+    private Handler handler=new Handler();
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -68,14 +72,8 @@ public class SearchFragment extends BaseListFragment<SearchContract.IView> imple
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING);
-        getView().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.showSoftInput(getView(), 0);
-            }
-        }, 500);
+       getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING);
+
     }
 
     @Override

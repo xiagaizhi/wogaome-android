@@ -1,5 +1,7 @@
 package com.yushi.leke.fragment.searcher;
 
+import android.widget.EditText;
+
 import com.yufan.library.base.Pr;
 import com.yufan.library.base.VuList;
 
@@ -11,7 +13,7 @@ public interface SearchContract {
     interface IView extends VuList {
 
         String getSearchKey();
-
+        EditText getEditText();
     }
 
     interface Presenter extends Pr {
