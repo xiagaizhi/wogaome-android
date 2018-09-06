@@ -25,6 +25,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.yufan.library.inter.ICallBack;
 import com.yushi.leke.R;
 import com.yushi.leke.activity.MusicPlayerActivity;
 
@@ -35,9 +36,10 @@ import me.drakeet.multitype.ItemViewBinder;
  *路演大厅 头部
  */
 public class ExhibitionTopViewBinder extends ItemViewBinder<ExhibitionTopInfo, ExhibitionTopViewBinder.ViewHolder> {
-
-    public ExhibitionTopViewBinder() {
-
+    private ICallBack callBack;
+    public static final int MUSIC_EVENT = 1;
+    public ExhibitionTopViewBinder(ICallBack callBack) {
+this.callBack=callBack;
     }
 
     @Override
@@ -53,8 +55,10 @@ public class ExhibitionTopViewBinder extends ItemViewBinder<ExhibitionTopInfo, E
         holder.rightMusic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), MusicPlayerActivity.class);
-                v.getContext().startActivity(intent);
+                if(callBack!=null){
+                    callBack.OnBackResult(MUSIC_EVENT);
+                }
+
             }
         });
         ((AnimationDrawable) holder.rightMusic.getDrawable()).start();

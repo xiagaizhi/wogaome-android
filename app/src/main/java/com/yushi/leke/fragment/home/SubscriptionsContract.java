@@ -13,7 +13,8 @@ public interface SubscriptionsContract {
     }
 
     interface Presenter extends Pr {
-
+    void onMusicMenuClick();
+    void onSearchBarClick();
 
     }
 }

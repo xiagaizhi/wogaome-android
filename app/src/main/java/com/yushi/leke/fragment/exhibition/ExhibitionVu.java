@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.yufan.library.manager.DialogManager;
 import com.yushi.leke.R;
 
 import com.yufan.library.base.BaseListVu;
@@ -67,6 +68,7 @@ public class ExhibitionVu extends BaseListVu<ExhibitionContract.Presenter> imple
                     } else {
                         mTitleView.setAlpha(0f);
                         musicAnim.setAlpha(0f);
+
                     }
                 }else {
                     mTitleView.setAlpha(1f);
@@ -91,6 +93,14 @@ public class ExhibitionVu extends BaseListVu<ExhibitionContract.Presenter> imple
         mTitleView.setText("路演厅");
         mTitleView.setAlpha(0);
         mTitleView .getPaint().setFakeBoldText(true);
+        musicAnim.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(v.getAlpha()>0){
+                    mPersenter.onMusicMenuClick();
+                }
+            }
+        });
         appToolbar.build();
         return true;
     }

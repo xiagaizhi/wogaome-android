@@ -32,11 +32,10 @@ public class SubscriptionsFragment extends BaseListFragment<SubscriptionsContrac
             public void OnBackResult(Object... s) {
                 switch ((int)s[0]){
                     case SubscriptionsBannerViewBinder.BANNER_BINDER_MUSIC:
-                        Intent intent = new Intent(getActivity(), MusicPlayerActivity.class);
-                        startActivity(intent);
+                        onMusicMenuClick();
                         break;
                     case SubscriptionsBannerViewBinder.BANNER_BINDER_SEARCH:
-                        getRootFragment().start(UIHelper.creat(SearchFragment.class).build());
+                        onSearchBarClick();
                         break;
                 }
             }
@@ -79,5 +78,16 @@ private Handler handler=new Handler();
                 getVu(). getRecyclerView().getPageManager().setPageState(PageInfo.PAGE_STATE_NONE);
             }
         },1000);
+    }
+
+    @Override
+    public void onMusicMenuClick() {
+        Intent intent = new Intent(getActivity(), MusicPlayerActivity.class);
+        startActivity(intent);
+    }
+
+    @Override
+    public void onSearchBarClick() {
+        getRootFragment().start(UIHelper.creat(SearchFragment.class).build());
     }
 }

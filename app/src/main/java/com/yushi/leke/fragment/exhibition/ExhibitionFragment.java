@@ -1,5 +1,6 @@
 package com.yushi.leke.fragment.exhibition;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -8,7 +9,9 @@ import android.view.View;
 
 import com.yufan.library.base.BaseListFragment;
 import com.yufan.library.inject.VuClass;
+import com.yufan.library.inter.ICallBack;
 import com.yufan.library.view.recycler.PageInfo;
+import com.yushi.leke.activity.MusicPlayerActivity;
 
 import me.drakeet.multitype.MultiTypeAdapter;
 
@@ -22,7 +25,14 @@ public class ExhibitionFragment extends BaseListFragment<ExhibitionContract.IVie
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         adapter=new MultiTypeAdapter();
-        adapter.register(ExhibitionTopInfo.class,new ExhibitionTopViewBinder());
+        adapter.register(ExhibitionTopInfo.class,new ExhibitionTopViewBinder(new ICallBack() {
+            @Override
+            public void OnBackResult(Object... s) {
+                if((int)s[0]==ExhibitionTopViewBinder.MUSIC_EVENT){
+                    onMusicMenuClick();
+                }
+            }
+        }));
         adapter.register(ExhibitionInfo.class,new ExhibitionViewBinder());
         vu.getRecyclerView().setAdapter(adapter);
         list.add(new ExhibitionTopInfo());
@@ -60,5 +70,11 @@ public class ExhibitionFragment extends BaseListFragment<ExhibitionContract.IVie
                 getVu(). getRecyclerView().getPageManager().setPageState(PageInfo.PAGE_STATE_NONE);
             }
         },1000);
+    }
+
+    @Override
+    public void onMusicMenuClick() {
+        Intent intent = new Intent(getContext(), MusicPlayerActivity.class);
+        startActivity(intent);
     }
 }

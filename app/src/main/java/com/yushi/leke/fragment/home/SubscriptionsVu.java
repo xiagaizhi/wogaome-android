@@ -1,5 +1,6 @@
 package com.yushi.leke.fragment.home;
 
+import com.yufan.library.manager.DialogManager;
 import com.yufan.library.util.PxUtil;
 import com.yushi.leke.R;
 
@@ -107,6 +108,22 @@ public class SubscriptionsVu extends BaseListVu<SubscriptionsContract.Presenter>
         mTitleView.setAlpha(0f);
         mTitleView .getPaint().setFakeBoldText(true);
         searchBar.setAlpha(0f);
+        musicAnim.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if( v.getAlpha()>0) {
+                    mPersenter.onMusicMenuClick();
+                }
+            }
+        });
+        searchBar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if( v.getAlpha()>0){
+                    mPersenter.onSearchBarClick();
+                }
+            }
+        });
         appToolbar.build();
         return true;
     }

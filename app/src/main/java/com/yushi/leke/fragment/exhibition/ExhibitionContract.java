@@ -13,7 +13,7 @@ public interface ExhibitionContract {
     }
 
     interface Presenter extends Pr {
-
+    void onMusicMenuClick();
 
     }
 }
