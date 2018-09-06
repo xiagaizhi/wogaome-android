@@ -73,19 +73,19 @@ public class PaySafetyFragment extends BaseFragment<PaySafetyContract.IView> imp
         if (isHave == 0 || TextUtils.isEmpty(phoneNumber)) {//未绑定手机或者未设置交易密码 提示请先设置交易密码
             DialogManager.getInstance().toast("请先设置交易密码！");
         } else {//绑定过手机验证手机 通过后忘记交易密码
-            startForResult(UIHelper.creat(CheckPhoneFragment.class).put("phoneNumber", phoneNumber).build(), 200);
+            startForResult(UIHelper.creat(CheckPhoneFragment.class).put("phoneNumber", phoneNumber).put("type", CheckPhoneFragment.CHECKPHONE_FROM_PAYSAFETY).build(), 200);
         }
     }
 
     @Override
     public void setRechargePwd() {
         if (TextUtils.isEmpty(phoneNumber)) {//未绑定手机，先绑定手机
-            startForResult(UIHelper.creat(BindPhoneFragment.class).put("type",BindPhoneFragment.BINDPHOE_NEED_TOKEN).build(), 100);
+            startForResult(UIHelper.creat(BindPhoneFragment.class).put("type", BindPhoneFragment.BINDPHOE_NEED_TOKEN).build(), 100);
         } else {
             if (isHave == 1) {//修改，先校验
                 RechargeUtil.getInstance().checkRechargePwd(_mActivity, "修改交易密码", this);
             } else {
-                startForResult(UIHelper.creat(CheckPhoneFragment.class).put("phoneNumber", phoneNumber).build(), 300);
+                startForResult(UIHelper.creat(CheckPhoneFragment.class).put("phoneNumber", phoneNumber).put("type", CheckPhoneFragment.CHECKPHONE_FROM_PAYSAFETY).build(), 300);
             }
         }
     }

@@ -25,6 +25,7 @@ public class BindPhoneFragment extends BaseFragment<BindPhoneContract.IView> imp
     private int type;
     public static final int BINDPHONE_NORMAL = 1;
     public static final int BINDPHOE_NEED_TOKEN = 2;
+    private String mPhone;
 
 
     @Override
@@ -64,66 +65,71 @@ public class BindPhoneFragment extends BaseFragment<BindPhoneContract.IView> imp
 
     }
 
+    private BaseHttpCallBack baseHttpCallBack = new BaseHttpCallBack() {
+        @Override
+        public void onResponse(ApiBean mApiBean) {
+            String code = mApiBean.getCode();
+            if (ApiBean.checkOK(code)) {
+                String token = "";
+                try {
+                    JSONObject jsonObject = new JSONObject(mApiBean.getData());
+                    token = jsonObject.getString("token");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                DialogManager.getInstance().toast("操作成功");
+                Bundle bundle = new Bundle();
+                bundle.putString("token", token);
+                bundle.putString("phoneNumber", mPhone);
+                setFragmentResult(RESULT_OK, bundle);
+                pop();
+            } else {
+                new CommonDialog(_mActivity).setTitle("" + mApiBean.getMessage())
+                        .setNegativeName("取消")
+                        .setPositiveName("确定")
+                        .setCommonClickListener(new CommonDialog.CommonDialogClick() {
+                            @Override
+                            public void onClick(CommonDialog commonDialog, int actionType) {
+                                commonDialog.dismiss();
+                                pop();
+                            }
+                        })
+                        .show();
+            }
+        }
+
+        @Override
+        public void onFailure(int id, Exception e) {
+            super.onFailure(id, e);
+        }
+
+        @Override
+        public void onSuccess(ApiBean mApiBean) {
+
+        }
+
+        @Override
+        public void onError(int id, Exception e) {
+
+        }
+
+        @Override
+        public void onFinish() {
+
+        }
+    };
+
     @Override
     public void bindPhone(final String phone, String code, String pwd) {
+        mPhone = phone;
         if (type == 1) {
             ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).bindMobile(phone, code, pwd))
                     .useCache(false)
-                    .enqueue(new BaseHttpCallBack() {
-                        @Override
-                        public void onResponse(ApiBean mApiBean) {
-                            String code = mApiBean.getCode();
-                            if (ApiBean.checkOK(code)) {
-                                String token = "";
-                                try {
-                                    JSONObject jsonObject = new JSONObject(mApiBean.getData());
-                                    token = jsonObject.getString("token");
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
-                                DialogManager.getInstance().toast("操作成功");
-                                Bundle bundle = new Bundle();
-                                bundle.putString("token", token);
-                                bundle.putString("phoneNumber", phone);
-                                setFragmentResult(RESULT_OK, bundle);
-                                pop();
-                            } else {
-                                new CommonDialog(_mActivity).setTitle("" + mApiBean.getMessage())
-                                        .setNegativeName("取消")
-                                        .setPositiveName("确定")
-                                        .setCommonClickListener(new CommonDialog.CommonDialogClick() {
-                                            @Override
-                                            public void onClick(CommonDialog commonDialog, int actionType) {
-                                                commonDialog.dismiss();
-                                                pop();
-                                            }
-                                        })
-                                        .show();
-                            }
-                        }
-
-                        @Override
-                        public void onFailure(int id, Exception e) {
-                            super.onFailure(id, e);
-                        }
-
-                        @Override
-                        public void onSuccess(ApiBean mApiBean) {
-
-                        }
-
-                        @Override
-                        public void onError(int id, Exception e) {
-
-                        }
-
-                        @Override
-                        public void onFinish() {
-
-                        }
-                    });
+                    .enqueue(baseHttpCallBack);
         } else if (type == 2) {
-
+            ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).bindMobileAndForward(phone, code, pwd))
+                    .useCache(false)
+                    .enqueue(baseHttpCallBack);
         }
     }
 }

@@ -262,4 +262,29 @@ public interface YFApi {
             @Field("securityTicket") String securityTicket
 
     );
+
+    @FormUrlEncoded
+    @POST("app/v1/security/bindMobileAndForward")
+    Call<ResponseBody>
+    bindMobileAndForward(//绑定手机
+                         @Field("mobile") String mobile,
+                         @Field("vcode") String vcode,
+                         @Field("pwd") String pwd
+    );
+
+    @FormUrlEncoded
+    @POST("app/v1/trade/sendmobileVcode")
+    Call<ResponseBody>
+    sendmobileVcode(
+            @Field("mobile") String mobile,
+            @Field("sessionId") String vcode
+    );
+
+    @FormUrlEncoded
+    @POST("app/v1/trade/mobileAndVCode")
+    Call<ResponseBody>
+    mobileAndVCode(
+            @Field("mobile") String mobile,
+            @Field("vCode") String vcode
+    );
 }
