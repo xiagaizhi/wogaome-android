@@ -37,7 +37,7 @@ public class ExhibitionVu extends BaseListVu<ExhibitionContract.Presenter> imple
     @Override
     public void initView(View view) {
         super.initView(view);
-        topHeightMin = getContext().getResources().getDimension(R.dimen.px88);
+        topHeightMin = getContext().getResources().getDimension(R.dimen.px68);
         topHeightMax=getContext().getResources().getDimension(R.dimen.px98);
         mYFRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override

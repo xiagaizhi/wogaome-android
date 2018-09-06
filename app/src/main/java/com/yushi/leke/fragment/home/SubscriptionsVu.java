@@ -45,7 +45,7 @@ public class SubscriptionsVu extends BaseListVu<SubscriptionsContract.Presenter>
     @Override
     public void initView(View view) {
         super.initView(view);
-        topHeightMin = getContext().getResources().getDimension(R.dimen.px88);
+        topHeightMin = getContext().getResources().getDimension(R.dimen.px68);
         topHeightMax = topHeightMin * 3 / 2;
         searchBarBottom=getContext().getResources().getDimension(R.dimen.px158);
         mYFRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
