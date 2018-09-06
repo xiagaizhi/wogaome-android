@@ -36,9 +36,10 @@ import java.lang.reflect.Method;
  */
 
 public class SetRechargePwdDialog extends Dialog implements KeyboardAdapter.OnKeyboardClickListener {
-    public static final int SET_RECHARGE_PWD = 1;//设置交易密码
-    public static final int SET_RECHARGE_PWD_NEW = 2;//修改交易密码-设置新的交易密码
-    public static final int SET_RECHARGE_PWD_FORGET = 3;//忘记交易密码
+    public static final int SET_RECHARGE_PWD_BYTOKEN = 1;
+    public static final int SET_RECHARGE_PWD_BYCODE = 2;
+    public static final int FORGET_RECHARGE_PWD_BYCODE = 3;
+    public static final int SET_RECHARGE_PWD_BYOLDPWD = 4;
     private PayPsdInputView tv_password;
     private KeyboardView id_keyboard_view;
     private TextView mTitle;
@@ -85,13 +86,13 @@ public class SetRechargePwdDialog extends Dialog implements KeyboardAdapter.OnKe
         tv_password = rootView.findViewById(R.id.tv_password);
         id_keyboard_view = rootView.findViewById(R.id.id_keyboard_view);
         setCanceledOnTouchOutside(false);
-        if (type == SET_RECHARGE_PWD) {
+        if (type == SET_RECHARGE_PWD_BYTOKEN || type == SET_RECHARGE_PWD_BYCODE) {
             mSetRechargeType.setText("设置交易密码");
             mTitle.setText("请设置您的乐链APP的交易密码");
-        } else if (type == SET_RECHARGE_PWD_NEW) {
+        } else if (type == SET_RECHARGE_PWD_BYOLDPWD) {
             mSetRechargeType.setText("修改交易密码");
             mTitle.setText("请设置您的新交易密码");
-        } else if (type == SET_RECHARGE_PWD_FORGET) {
+        } else if (type == FORGET_RECHARGE_PWD_BYCODE) {
             mSetRechargeType.setText("忘记交易密码");
             mTitle.setText("请设置您的乐链APP的交易密码");
         }
@@ -124,9 +125,11 @@ public class SetRechargePwdDialog extends Dialog implements KeyboardAdapter.OnKe
                 //和上次输入的密码不一致  做相应的业务逻辑处理
                 tv_password.setComparePassword("");
                 tv_password.cleanPsd();
-                if (type == SET_RECHARGE_PWD_NEW || type == SET_RECHARGE_PWD_FORGET) {
+                if (type == SET_RECHARGE_PWD_BYTOKEN || type == SET_RECHARGE_PWD_BYCODE) {
+                    mTitle.setText("请设置您的乐链APP的交易密码");
+                } else if (type == SET_RECHARGE_PWD_BYOLDPWD) {
                     mTitle.setText("请设置您的新交易密码");
-                } else {
+                } else if (type == FORGET_RECHARGE_PWD_BYCODE) {
                     mTitle.setText("请设置您的乐链APP的交易密码");
                 }
                 new CommonDialog(mContext).setTitle("两次交易密码不一致，请重新输入")
@@ -197,44 +200,69 @@ public class SetRechargePwdDialog extends Dialog implements KeyboardAdapter.OnKe
     private void setRechargePwd(String pwd) {
         DialogManager.getInstance().showLoadingDialog();
         isSuccess = false;
-        ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).setTradePwd(pwd))
-                .useCache(false)
-                .enqueue(new BaseHttpCallBack() {
-                    @Override
-                    public void onSuccess(ApiBean mApiBean) {
-                        isSuccess = true;
-                    }
+        if (type == SET_RECHARGE_PWD_BYTOKEN) {
+            setRechargePwdByToken(token, pwd);
+        } else if (type == SET_RECHARGE_PWD_BYCODE || type == FORGET_RECHARGE_PWD_BYCODE) {
+            setRechargePwdByVerificationCode(verificationCode, pwd);
+        } else if (type == SET_RECHARGE_PWD_BYOLDPWD) {
+            setRechargePwdByOriginalPwd(originalPwd, pwd);
+        }
+    }
 
-                    @Override
-                    public void onError(int id, Exception e) {
-                        isSuccess = false;
-                    }
+    private BaseHttpCallBack baseHttpCallBack = new BaseHttpCallBack() {
+        @Override
+        public void onSuccess(ApiBean mApiBean) {
+            isSuccess = true;
+        }
 
-                    @Override
-                    public void onFinish() {
-                        dismiss();
-                        if (mSetRechargeInterf != null) {
-                            mSetRechargeInterf.returnSetPwdResult(isSuccess, type);
-                        }
-                        if (isSuccess) {
-                            if (type == SET_RECHARGE_PWD_NEW) {
-                                DialogManager.getInstance().toast("交易密码修改成功");
-                            } else {
-                                DialogManager.getInstance().toast("交易密码设置成功");
-                            }
-                        } else {
-                            if (type == SET_RECHARGE_PWD_NEW) {
-                                DialogManager.getInstance().toast("交易密码修改失败");
-                            } else {
-                                DialogManager.getInstance().toast("交易密码设置失败");
-                            }
-//                            if (type == SET_RECHARGE_PWD_NEW || type == SET_RECHARGE_PWD_FORGET) {
-//                                mTitle.setText("请设置您的新交易密码");
-//                            } else {
-//                                mTitle.setText("请设置您的乐链APP的交易密码");
-//                            }
-                        }
-                    }
-                });
+        @Override
+        public void onError(int id, Exception e) {
+            isSuccess = false;
+        }
+
+        @Override
+        public void onFinish() {
+            dismiss();
+            DialogManager.getInstance().dismiss();
+            if (mSetRechargeInterf != null) {
+                mSetRechargeInterf.returnSetPwdResult(isSuccess);
+            }
+            if (isSuccess) {
+                if (type == SET_RECHARGE_PWD_BYOLDPWD) {
+                    DialogManager.getInstance().toast("交易密码修改成功");
+                } else {
+                    DialogManager.getInstance().toast("交易密码设置成功");
+                }
+            } else {
+                if (type == SET_RECHARGE_PWD_BYOLDPWD) {
+                    DialogManager.getInstance().toast("交易密码修改失败");
+                } else {
+                    DialogManager.getInstance().toast("交易密码设置失败");
+                }
+            }
+        }
+    };
+
+
+    /**
+     * 通过绑定手机返回token(初次绑定手机)
+     */
+    private void setRechargePwdByToken(String token, String pwd) {
+        ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).setTradePwdWithToken(token, pwd)).useCache(false).enqueue(baseHttpCallBack);
+    }
+
+    /**
+     * 通过验证受发送验证码(1、已经绑定过手机初次设置密码；2、设置过密码忘记交易密码《也即通过手机验证码进行密码找回功能》)
+     */
+    private void setRechargePwdByVerificationCode(String verificationCode, String pwd) {
+        ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).setTradePwdwithVCode(verificationCode, pwd)).useCache(false).enqueue(baseHttpCallBack);
+    }
+
+
+    /**
+     * 通过输入原有密码(修改密码)
+     */
+    private void setRechargePwdByOriginalPwd(String originalPwd, String pwd) {
+        ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).modifyTradePwd(originalPwd, pwd)).useCache(false).enqueue(baseHttpCallBack);
     }
 }

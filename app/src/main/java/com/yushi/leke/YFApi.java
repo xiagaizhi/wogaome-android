@@ -206,4 +206,27 @@ public interface YFApi {
                    @Field("adress") String adress,
                    @Field("gender") String gender);
 
+    @FormUrlEncoded
+    @POST("app/v1/trade/setTradePwdWithToken")
+    Call<ResponseBody>
+    setTradePwdWithToken(//通过绑定手机返回token(初次绑定手机)
+                         @Field("token") String token,
+                         @Field("TradePwd") String TradePwd
+    );
+
+    @FormUrlEncoded
+    @POST("app/v1/trade/setTradePwdwithVCode")
+    Call<ResponseBody>
+    setTradePwdwithVCode(//通过绑定手机返回token(初次绑定手机)
+                         @Field("vCode") String vCode,
+                         @Field("TradePwd") String TradePwd
+    );
+
+    @FormUrlEncoded
+    @POST("app/v1/modifyTradePwd")
+    Call<ResponseBody>
+    modifyTradePwd(//通过绑定手机返回token(初次绑定手机)
+                   @Field("oldPwd") String vCode,
+                   @Field("TradePwd") String TradePwd
+    );
 }
