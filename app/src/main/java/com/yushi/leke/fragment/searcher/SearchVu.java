@@ -5,7 +5,9 @@ import com.yushi.leke.R;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -39,12 +41,7 @@ public class SearchVu extends BaseListVu<SearchContract.Presenter> implements Se
         tv_search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if("搜索".equals(tv_search.getText().toString())){
-
-                    mPersenter.search(et_search.getText().toString());
-                }else if("取消".equals(tv_search.getText().toString())){
-                    mPersenter.onBackPressed();
-                }
+                mPersenter.onBackPressed();
             }
         });
         iv_clear_search.setOnClickListener(new View.OnClickListener() {
@@ -65,12 +62,17 @@ public class SearchVu extends BaseListVu<SearchContract.Presenter> implements Se
             @Override
             public void afterTextChanged(Editable s) {
                 if(TextUtils.isEmpty(s)){
-                    tv_search.setText("取消");
                     iv_clear_search.setVisibility(View.INVISIBLE);
                 }else {
-                    tv_search.setText("搜索");
                     iv_clear_search.setVisibility(View.VISIBLE);
                 }
+            }
+        });
+        et_search.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+
+                return mPersenter.onKey(v,keyCode,event);
             }
         });
     }

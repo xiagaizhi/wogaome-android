@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
@@ -26,6 +27,7 @@ import me.yokeyword.fragmentation.anim.DefaultHorizontalAnimator;
 import me.yokeyword.fragmentation.anim.DefaultVerticalAnimator;
 import me.yokeyword.fragmentation.anim.FragmentAnimator;
 
+import static android.content.Context.INPUT_METHOD_SERVICE;
 import static android.view.WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE;
 
 /**
@@ -108,4 +110,17 @@ public class SearchFragment extends BaseListFragment<SearchContract.IView> imple
         vu.getRecyclerView().getAdapter().notifyDataSetChanged();
         SoftInputUtil.hideSoftInput(getActivity(),getView());
     }
+
+    @Override
+    public boolean onKey(View v, int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_UP) {
+            //先隐藏键盘
+            ((InputMethodManager) getActivity().getSystemService(INPUT_METHOD_SERVICE))
+                    .hideSoftInputFromWindow(getActivity().getCurrentFocus()
+                            .getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+            search(vu.getSearchKey());
+        }
+        return false;
+    }
+
 }

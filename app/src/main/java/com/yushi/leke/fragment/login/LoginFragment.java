@@ -8,6 +8,8 @@ import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.tencent.smtt.sdk.CookieManager;
+import com.tencent.smtt.sdk.CookieSyncManager;
 import com.umeng.socialize.UMShareAPI;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.yufan.library.Global;
@@ -156,6 +158,11 @@ public class LoginFragment extends BaseFragment<LoginContract.IView> implements 
         dialog.dismiss();
         SPManager.getInstance().saveValue(Global.SP_KEY_SERVICE_TYPE, dialog.getSelectedIndex());
         DialogManager.getInstance().toast("修改成功");
+        CookieSyncManager.createInstance(getActivity());
+        CookieManager.getInstance().removeAllCookie();
+        CookieManager.getInstance().removeSessionCookie();
+        CookieSyncManager.getInstance().sync();
+        CookieSyncManager.getInstance().startSync();
         ApiManager.getInstance().init(SPManager.getInstance().getInt(Global.SP_KEY_SERVICE_TYPE,BuildConfig.API_TYPE));
     }
 

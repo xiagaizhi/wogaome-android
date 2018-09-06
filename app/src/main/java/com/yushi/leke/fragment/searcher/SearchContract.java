@@ -1,5 +1,7 @@
 package com.yushi.leke.fragment.searcher;
 
+import android.view.KeyEvent;
+import android.view.View;
 import android.widget.EditText;
 
 import com.yufan.library.base.Pr;
@@ -19,6 +21,7 @@ public interface SearchContract {
     interface Presenter extends Pr {
 
     void search(String searchKey);
+        boolean onKey(View v, int keyCode, KeyEvent event);
 
     }
 }

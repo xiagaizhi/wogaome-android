@@ -3,8 +3,10 @@ package com.yushi.leke.fragment.searcher.audio;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 
 import com.yufan.library.Global;
 import com.yufan.library.base.BaseListFragment;
@@ -22,6 +24,8 @@ import com.yushi.leke.fragment.searcher.SearchTabTitleViewBinder;
 
 import me.drakeet.multitype.MultiTypeAdapter;
 import me.yokeyword.fragmentation.anim.FragmentAnimator;
+
+import static android.content.Context.INPUT_METHOD_SERVICE;
 
 /**
  * Created by mengfantao on 18/8/2.
@@ -41,7 +45,7 @@ public class SearchAudioFragment extends BaseListFragment<SearchAudioContract.IV
         vu.getRecyclerView().getAdapter().notifyDataSetChanged();
         Bundle bundle = getArguments();
         if (bundle != null) {
-            vu.setTextKey(bundle.getString(Global.SEARCH_KEY));
+            vu.getEditText().setText(bundle.getString(Global.SEARCH_KEY));
             search(bundle.getString(Global.SEARCH_KEY));
         }
     }
@@ -94,4 +98,16 @@ public class SearchAudioFragment extends BaseListFragment<SearchAudioContract.IV
         vu.getRecyclerView().getAdapter().notifyDataSetChanged();
         SoftInputUtil.hideSoftInput(getActivity(), getView());
     }
+    @Override
+    public boolean onKey(View v, int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_UP) {
+            //先隐藏键盘
+            ((InputMethodManager) getActivity().getSystemService(INPUT_METHOD_SERVICE))
+                    .hideSoftInputFromWindow(getActivity().getCurrentFocus()
+                            .getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+            search(vu.getEditText().getText().toString());
+        }
+        return false;
+    }
+
 }

@@ -44,7 +44,10 @@
             android:layout_toRightOf="@+id/iv_searchbar"
             android:layout_toLeftOf="@+id/iv_clear_search"
             android:background="@null"
+            android:imeOptions="actionSearch"
+            android:singleLine="true"
             android:id="@+id/et_search"
+
             android:layout_height="match_parent" />
 
     </RelativeLayout>

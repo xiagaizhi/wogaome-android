@@ -40,12 +40,7 @@ public class SearchActivityVu extends BaseListVu<SearchActivityContract.Presente
         tv_search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if("搜索".equals(tv_search.getText().toString())){
-
-                    mPersenter.search(et_search.getText().toString());
-                }else if("取消".equals(tv_search.getText().toString())){
-                    mPersenter.onBackPressed();
-                }
+                mPersenter.onBackPressed();
             }
         });
         iv_clear_search.setOnClickListener(new View.OnClickListener() {
@@ -66,10 +61,10 @@ public class SearchActivityVu extends BaseListVu<SearchActivityContract.Presente
             @Override
             public void afterTextChanged(Editable s) {
                 if(TextUtils.isEmpty(s)){
-                    tv_search.setText("取消");
+
                     iv_clear_search.setVisibility(View.INVISIBLE);
                 }else {
-                    tv_search.setText("搜索");
+
                     iv_clear_search.setVisibility(View.VISIBLE);
                 }
             }
@@ -92,8 +87,9 @@ public class SearchActivityVu extends BaseListVu<SearchActivityContract.Presente
         return mYFRecyclerView;
     }
 
+
     @Override
-    public void setTextKey(String textKey) {
-        et_search.setText(textKey);
+    public EditText getEditText() {
+        return et_search;
     }
 }
