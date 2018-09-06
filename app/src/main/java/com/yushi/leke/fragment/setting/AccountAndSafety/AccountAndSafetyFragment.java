@@ -69,9 +69,9 @@ public class AccountAndSafetyFragment extends BaseFragment<AccountAndSafetyContr
     @Override
     public void openBindPhone() {
         if (TextUtils.isEmpty(phoneNumber)) {//未绑定手机
-            startForResult(UIHelper.creat(BindPhoneFragment.class).put("type",BindPhoneFragment.BINDPHONE_NORMAL).build(), 100);
+            startForResult(UIHelper.creat(BindPhoneFragment.class).put("type", BindPhoneFragment.BINDPHONE_NORMAL).build(), 100);
         } else {//绑定过手机，换绑手机，先校验之前手机
-            startForResult(UIHelper.creat(CheckPhoneFragment.class).put("phoneNumber", phoneNumber).build(), 200);
+            startForResult(UIHelper.creat(CheckPhoneFragment.class).put("phoneNumber", phoneNumber).put("type", CheckPhoneFragment.CHECKPHONE_FROM_ACCOUNTSAFETY).build(), 200);
         }
     }
 
