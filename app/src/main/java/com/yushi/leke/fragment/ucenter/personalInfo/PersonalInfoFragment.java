@@ -123,6 +123,7 @@ public class PersonalInfoFragment extends BaseListFragment<PersonalInfoContract.
             }
         }, _mActivity));
         getVu().getRecyclerView().setAdapter(adapter);
+        getVu().updateHead(avatar);
         list.add(new PersonalItem("用户ID:", "" + uid, "", true, false));
         list.add(new PersonalItem("名字:", "" + userName, "请输入名字", false, true));
         list.add(new PersonalItem("性别:", "" + gender, "", false, false));

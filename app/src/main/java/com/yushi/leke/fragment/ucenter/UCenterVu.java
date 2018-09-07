@@ -76,9 +76,6 @@ public class UCenterVu extends BaseVu<UCenterContract.Presenter> implements UCen
 
     @Override
     public void initView(View view) {
-        img_head.setImageURI("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1535611272761&di=edb2ad0ac1e9fae8c791398bffecffdd&imgtype=0&src=http%3A%2F%2Fp1.wmpic.me%2Farticle%2F2017%2F10%2F23%2F1508744874_AaXhrBZE.jpg");
-        img_mylevel.setVisibility(View.VISIBLE);
-        img_mylevel.setImageResource(R.drawable.ic_level_diamond);
         ll_personal_info.setOnClickListener(this);
         img_messgae.setOnClickListener(this);
         img_player.setOnClickListener(this);
