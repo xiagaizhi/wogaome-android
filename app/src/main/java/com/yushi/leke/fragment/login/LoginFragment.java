@@ -72,6 +72,7 @@ public class LoginFragment extends BaseFragment<LoginContract.IView> implements 
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING|WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         mShareUtils = new ShareUtils(getActivity());
         ((MainActivity) getActivity()).registerIActivityResult(mResult);
+        clearCookie();
     }
 
     @Override
@@ -158,12 +159,16 @@ public class LoginFragment extends BaseFragment<LoginContract.IView> implements 
         dialog.dismiss();
         SPManager.getInstance().saveValue(Global.SP_KEY_SERVICE_TYPE, dialog.getSelectedIndex());
         DialogManager.getInstance().toast("修改成功");
+        clearCookie();
+        ApiManager.getInstance().init(SPManager.getInstance().getInt(Global.SP_KEY_SERVICE_TYPE,BuildConfig.API_TYPE));
+    }
+
+    private void clearCookie(){
         CookieSyncManager.createInstance(getActivity());
         CookieManager.getInstance().removeAllCookie();
         CookieManager.getInstance().removeSessionCookie();
         CookieSyncManager.getInstance().sync();
         CookieSyncManager.getInstance().startSync();
-        ApiManager.getInstance().init(SPManager.getInstance().getInt(Global.SP_KEY_SERVICE_TYPE,BuildConfig.API_TYPE));
     }
 
     @Override
