@@ -112,7 +112,7 @@ public class LoginFragment extends BaseFragment<LoginContract.IView> implements 
                         public void onSuccess(ApiBean mApiBean) {
                             JSONObject jsonObject= JSON.parseObject(mApiBean.getData());
                             UserManager.getInstance().setToken(jsonObject.getString("token"));
-                            UserManager.getInstance().setToken(jsonObject.getString("uid"));
+                            UserManager.getInstance().setUid(jsonObject.getString("uid"));
                             startWithPopTo(UIHelper.creat(MainFragment.class).build(), LoginFragment.class,true);
                             mShareUtils.logout(SHARE_MEDIA.WEIXIN);
                         }
