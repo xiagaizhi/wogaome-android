@@ -39,13 +39,8 @@ public class AccountAndSafetyFragment extends BaseFragment<AccountAndSafetyContr
                 .enqueue(new BaseHttpCallBack() {
                     @Override
                     public void onSuccess(ApiBean mApiBean) {
-                        try {
-                            JSONObject jsonObject = new JSONObject(mApiBean.getData());
-                            phoneNumber = jsonObject.getString("mobile");
-                            getVu().updatePage(phoneNumber);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
+                        phoneNumber = mApiBean.getData();
+                        getVu().updatePage(phoneNumber);
                     }
 
                     @Override

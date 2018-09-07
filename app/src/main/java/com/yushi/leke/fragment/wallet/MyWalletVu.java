@@ -2,7 +2,6 @@ package com.yushi.leke.fragment.wallet;
 
 import android.os.Handler;
 import android.os.Message;
-import android.text.Html;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
@@ -24,7 +23,6 @@ import com.yufan.library.inject.FindLayout;
 import com.yufan.library.inject.Title;
 import com.yufan.library.widget.StateLayout;
 import com.yufan.library.widget.AppToolbar;
-import com.yushi.leke.UIHelper;
 import com.yushi.leke.util.StringUtil;
 
 /**

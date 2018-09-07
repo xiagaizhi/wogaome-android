@@ -22,9 +22,9 @@
                 android:id="@+id/id_wallet_top"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/px24"
-                android:layout_marginRight="@dimen/px12"
-                android:layout_marginTop="@dimen/px180"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="86dp"
                 android:background="@drawable/bg_mywallet">
 
                 <TextView
@@ -125,9 +125,9 @@
                             android:layout_toRightOf="@+id/id_yesterd_arith_num"
                             android:background="@drawable/message_widget_bg_shape"
                             android:text=""
-                            android:visibility="gone"
                             android:textColor="@color/white"
-                            android:textSize="@dimen/px18" />
+                            android:textSize="@dimen/px18"
+                            android:visibility="gone" />
                     </RelativeLayout>
                 </LinearLayout>
             </RelativeLayout>
@@ -148,6 +148,7 @@
                 android:layout_below="@+id/id_wallet_box"
                 android:layout_centerHorizontal="true"
                 android:background="@null"
+                android:layout_marginTop="@dimen/px14"
                 android:src="@drawable/btn_open_treasure_box" />
 
             <TextView
