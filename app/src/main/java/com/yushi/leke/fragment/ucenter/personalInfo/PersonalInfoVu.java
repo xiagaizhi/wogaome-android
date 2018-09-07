@@ -57,6 +57,8 @@ public class PersonalInfoVu extends BaseListVu<PersonalInfoContract.Presenter> i
     TextView tv_cancel;
     @FindView(R.id.view_personal_top_bg)
     View view_personal_top_bg;
+    @FindView(R.id.view_line)
+    View view_line;
     EditText mCurrentInputBox;
 
 
@@ -76,6 +78,7 @@ public class PersonalInfoVu extends BaseListVu<PersonalInfoContract.Presenter> i
         rl_edit_head.setOnClickListener(this);
         tv_cancel.setOnClickListener(this);
         tv_ok.setOnClickListener(this);
+        view_line.setOnClickListener(this);
         rsz_layout.setOnKeyboardShowListener(new ResizeLayout.OnKeyboardChangedListener() {
             private boolean isShowed;
 
@@ -204,6 +207,7 @@ public class PersonalInfoVu extends BaseListVu<PersonalInfoContract.Presenter> i
         leftView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mPersenter.tohideSoftInput();
                 mPersenter.onBackPressed();
             }
         });
@@ -239,6 +243,9 @@ public class PersonalInfoVu extends BaseListVu<PersonalInfoContract.Presenter> i
                 mPersenter.tohideSoftInput();
                 break;
             case R.id.view_personal_top_bg:
+                mPersenter.tohideSoftInput();
+                break;
+            case R.id.view_line:
                 mPersenter.tohideSoftInput();
                 break;
 

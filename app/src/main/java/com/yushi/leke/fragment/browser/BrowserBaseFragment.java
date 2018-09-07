@@ -379,7 +379,7 @@ public class BrowserBaseFragment extends BaseFragment<BrowserContract.View> impl
                         JSONObject mJSONObject = (JSONObject) data;
                         String goodsId = mJSONObject.optString("goodsId");
                         if (!TextUtils.isEmpty(goodsId)){
-                            PayDialog payDialog = new PayDialog(_mActivity, goodsId, true);
+                            PayDialog payDialog = new PayDialog(_mActivity, goodsId,3, true);
                             payDialog.show();
                         }
                     }

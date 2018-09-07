@@ -116,7 +116,7 @@ public class OpenTreasureBoxFragment extends BaseFragment<OpenTreasureBoxContrac
     @Override
     public void toPay() {
         if (mGoodsInfo == null) return;
-        PayDialog payDialog = new PayDialog(_mActivity, mGoodsInfo.getGoodsId(), true);
+        PayDialog payDialog = new PayDialog(_mActivity, mGoodsInfo.getGoodsId(),1, true);
         payDialog.show();
     }
 

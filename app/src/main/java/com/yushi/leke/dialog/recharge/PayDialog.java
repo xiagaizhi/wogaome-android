@@ -44,12 +44,14 @@ public class PayDialog extends Dialog implements PayWayAdapter.OnItemClickListen
     private TextView tv_money;
     private TextView tv_goods_info;
     private PayWayList mPayWayList;
+    private int mGoodsType;
 
-    public PayDialog(@NonNull Context context, String goodsId, boolean isnormalPay) {
+    public PayDialog(@NonNull Context context, String goodsId,int goodsType, boolean isnormalPay) {
         super(context, R.style.dialog_common);
         View rootView = LayoutInflater.from(context).inflate(R.layout.layout_pay, null);
         setContentView(rootView);
         this.mContext = context;
+        mGoodsType= goodsType;
         id_payway = rootView.findViewById(R.id.id_payway);
         tv_goods_info = (TextView) rootView.findViewById(R.id.tv_goods_info);
         tv_money = (TextView) rootView.findViewById(R.id.tv_order_money);
@@ -88,7 +90,7 @@ public class PayDialog extends Dialog implements PayWayAdapter.OnItemClickListen
 
 
     private void getPayWays(String goodsId) {
-        ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).tradeMethod(0, 1, goodsId))
+        ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).tradeMethod(0, mGoodsType, goodsId,""))
                 .useCache(false)
                 .enqueue(new BaseHttpCallBack() {
                     @Override
@@ -99,11 +101,11 @@ public class PayDialog extends Dialog implements PayWayAdapter.OnItemClickListen
                             if (mPayWayList != null) {
                                 tv_money.setText("¥" + mPayWayList.getGoodsPrice());
                                 tv_goods_info.setText("" + mPayWayList.getGoodsName());
-                                if (mPayWayList.getList() != null && mPayWayList.getList().size() > 0) {
-                                    selectPayWay = mPayWayList.getList().get(0);
+                                if (mPayWayList.getTradeApi() != null && mPayWayList.getTradeApi().size() > 0) {
+                                    selectPayWay = mPayWayList.getTradeApi().get(0);
                                     selectPayWay.setSelect(true);
                                     payways.clear();
-                                    payways.addAll(mPayWayList.getList());
+                                    payways.addAll(mPayWayList.getTradeApi());
                                     mAdapter.notifyDataSetChanged();
                                 }
                             }
