@@ -40,7 +40,8 @@ public interface YFApi {
     Call<ResponseBody>
     registerViaOAuth(
             @Field("accessToken") String accessToken,
-            @Field("oauthType") String oauthType
+            @Field("oauthType") String oauthType,
+            @Field("openId") String openId
 
     );
 
