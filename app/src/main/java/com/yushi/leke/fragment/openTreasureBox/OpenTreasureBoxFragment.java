@@ -51,9 +51,9 @@ public class OpenTreasureBoxFragment extends BaseFragment<OpenTreasureBoxContrac
                         String data = mApiBean.getData();
                         if (!TextUtils.isEmpty(data)) {
                             goodsInfoList = JSON.parseObject(data, GoodsInfoList.class);
-                            if (goodsInfoList != null && goodsInfoList.getList() != null && goodsInfoList.getList().size() > 0) {
+                            if (goodsInfoList != null && goodsInfoList.getGoodsInfo() != null && goodsInfoList.getGoodsInfo().size() > 0) {
                                 goodsInfos.clear();
-                                goodsInfos.addAll(goodsInfoList.getList());
+                                goodsInfos.addAll(goodsInfoList.getGoodsInfo());
                                 mGoodsInfo = goodsInfos.get(0);
                                 mGoodsInfo.setSelected(true);
                                 vu.getmRecyclerView().getAdapter().notifyDataSetChanged();

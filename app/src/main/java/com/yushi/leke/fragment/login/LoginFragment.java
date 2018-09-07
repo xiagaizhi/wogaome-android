@@ -107,7 +107,7 @@ public class LoginFragment extends BaseFragment<LoginContract.IView> implements 
             public void onSuccess(Map<String, String> map, SHARE_MEDIA share_media, Map<String, String> map1) {
                 DialogManager.getInstance().dismiss();
                 if(share_media==SHARE_MEDIA.WEIXIN){
-               EnhancedCall call= ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).registerViaOAuth(map.get("accessToken"),"1"));
+               EnhancedCall call= ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).registerViaOAuth(map.get("accessToken"),"1",map.get("openid")));
                     call.enqueue(new BaseHttpCallBack() {
                         @Override
                         public void onSuccess(ApiBean mApiBean) {

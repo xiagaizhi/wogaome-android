@@ -23,8 +23,9 @@
                 android:id="@+id/id_topup"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/id_treasure_box_top"
                 android:layout_marginLeft="@dimen/px36"
-                android:layout_marginTop="@dimen/px570"
+                android:layout_marginTop="@dimen/px60"
                 android:text="@string/top_up_level"
                 android:textColor="@color/color_gray_level3"
                 android:textSize="@dimen/px42" />

@@ -55,7 +55,10 @@ public class PersonalInfoVu extends BaseListVu<PersonalInfoContract.Presenter> i
     TextView tv_ok;
     @FindView(R.id.tv_cancel)
     TextView tv_cancel;
+    @FindView(R.id.view_personal_top_bg)
+    View view_personal_top_bg;
     EditText mCurrentInputBox;
+
 
     private Handler mHandler = new Handler() {
         @Override
@@ -69,6 +72,7 @@ public class PersonalInfoVu extends BaseListVu<PersonalInfoContract.Presenter> i
 
     @Override
     public void initView(View view) {
+        view_personal_top_bg.setOnClickListener(this);
         rl_edit_head.setOnClickListener(this);
         tv_cancel.setOnClickListener(this);
         tv_ok.setOnClickListener(this);
@@ -156,9 +160,9 @@ public class PersonalInfoVu extends BaseListVu<PersonalInfoContract.Presenter> i
 
     @Override
     public void updateHead(String url) {
-        if (TextUtils.isEmpty(url)) {
-            url = "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1535611272761&di=edb2ad0ac1e9fae8c791398bffecffdd&imgtype=0&src=http%3A%2F%2Fp1.wmpic.me%2Farticle%2F2017%2F10%2F23%2F1508744874_AaXhrBZE.jpg";
-        }
+//        if (TextUtils.isEmpty(url)) {
+//            url = "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1535611272761&di=edb2ad0ac1e9fae8c791398bffecffdd&imgtype=0&src=http%3A%2F%2Fp1.wmpic.me%2Farticle%2F2017%2F10%2F23%2F1508744874_AaXhrBZE.jpg";
+//        }
         Glide.with(getContext()).load(url).bitmapTransform(new BlurTransformation(getContext(), 15)).into(img_personal_top_bg);
         img_head.setImageURI(url);
     }
@@ -232,6 +236,9 @@ public class PersonalInfoVu extends BaseListVu<PersonalInfoContract.Presenter> i
                 mPersenter.tohideSoftInput();
                 break;
             case R.id.tv_cancel:
+                mPersenter.tohideSoftInput();
+                break;
+            case R.id.view_personal_top_bg:
                 mPersenter.tohideSoftInput();
                 break;
 

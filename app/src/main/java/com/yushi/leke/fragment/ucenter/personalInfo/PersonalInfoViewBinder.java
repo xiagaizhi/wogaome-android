@@ -62,7 +62,6 @@ public class PersonalInfoViewBinder extends ItemViewBinder<PersonalItem, Persona
                 @Override
                 public void onFocusChange(View v, boolean hasFocus) {
                     if (hasFocus) {
-
                         callBack.OnBackResult(category, holder.et_value,true);
                     }
                 }

@@ -21,6 +21,8 @@ import com.yufan.library.util.SoftInputUtil;
 
 
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
@@ -52,6 +54,19 @@ public class PersonalInfoFragment extends BaseListFragment<PersonalInfoContract.
     private static final int REQUEST_CODE_CHOOSE = 0x100;
     private EditText currentEdit;
     private String cachePath;
+    private Handler mHandler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what){
+                case 0x100:
+                    String url = (String) msg.obj;
+                    updateInfo(url, "", "", "", "", "", "", "", "");
+                    getVu().updateHead(url);
+                    break;
+            }
+        }
+    };
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -324,6 +339,10 @@ public class PersonalInfoFragment extends BaseListFragment<PersonalInfoContract.
                         Bundle bundle = new Bundle();
                         bundle.putBoolean("isAll", false);
                         setFragmentResult(RESULT_OK, bundle);
+                        Message message= mHandler.obtainMessage();
+                        message.obj = url;
+                        message.what = 0x100;
+                        mHandler.sendMessage(message);
                     }
 
                     @Override
