@@ -374,7 +374,6 @@
                     android:layout_centerVertical="true"
                     android:layout_marginRight="@dimen/px68"
                     android:singleLine="true"
-                    android:text="青铜"
                     android:textColor="@color/color_gray_level9"
                     android:textSize="@dimen/px24" />
             </RelativeLayout>

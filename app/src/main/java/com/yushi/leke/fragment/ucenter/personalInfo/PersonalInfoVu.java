@@ -156,9 +156,9 @@ public class PersonalInfoVu extends BaseListVu<PersonalInfoContract.Presenter> i
 
     @Override
     public void updateHead(String url) {
-        if (TextUtils.isEmpty(url)) {
-            url = "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1535611272761&di=edb2ad0ac1e9fae8c791398bffecffdd&imgtype=0&src=http%3A%2F%2Fp1.wmpic.me%2Farticle%2F2017%2F10%2F23%2F1508744874_AaXhrBZE.jpg";
-        }
+//        if (TextUtils.isEmpty(url)) {
+//            url = "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1535611272761&di=edb2ad0ac1e9fae8c791398bffecffdd&imgtype=0&src=http%3A%2F%2Fp1.wmpic.me%2Farticle%2F2017%2F10%2F23%2F1508744874_AaXhrBZE.jpg";
+//        }
         Glide.with(getContext()).load(url).bitmapTransform(new BlurTransformation(getContext(), 15)).into(img_personal_top_bg);
         img_head.setImageURI(url);
     }

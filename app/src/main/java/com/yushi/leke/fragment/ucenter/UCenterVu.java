@@ -167,40 +167,50 @@ public class UCenterVu extends BaseVu<UCenterContract.Presenter> implements UCen
             tv_roadshow_num.setText("" + myProfileInfo.getRoadShow());
             tv_subscribe_num.setText("" + myProfileInfo.getSubscription());
             tv_vote_num.setText("" + myProfileInfo.getVote());
-            tv_mylkc.setText("" + myProfileInfo.getToken());
-            tv_mylevel.setText("" + myProfileInfo.getLevel()+"LKC");
+            tv_mylkc.setText("" + myProfileInfo.getToken() + "LKC");
             tv_share_num.setText("已邀请：" + myProfileInfo.getInvitation() + "名好友");
-            if (TextUtils.equals("青铜", myProfileInfo.getLevel())) {
+            if (TextUtils.equals("1", myProfileInfo.getLevel())) {
                 img_mylevel.setVisibility(View.VISIBLE);
                 img_mylevel.setImageResource(R.drawable.ic_level_bronze);
-            } else if (TextUtils.equals("白银", myProfileInfo.getLevel())) {
+                tv_mylevel.setText("青铜");
+            } else if (TextUtils.equals("2", myProfileInfo.getLevel())) {
                 img_mylevel.setVisibility(View.VISIBLE);
                 img_mylevel.setImageResource(R.drawable.ic_level_silver);
-            } else if (TextUtils.equals("黄金", myProfileInfo.getLevel())) {
+                tv_mylevel.setText("白银");
+            } else if (TextUtils.equals("3", myProfileInfo.getLevel())) {
                 img_mylevel.setVisibility(View.VISIBLE);
                 img_mylevel.setImageResource(R.drawable.ic_level_gold);
-            } else if (TextUtils.equals("铂金", myProfileInfo.getLevel())) {
+                tv_mylevel.setText("黄金");
+            } else if (TextUtils.equals("4", myProfileInfo.getLevel())) {
                 img_mylevel.setVisibility(View.VISIBLE);
                 img_mylevel.setImageResource(R.drawable.ic_level_platinum);
-            } else if (TextUtils.equals("钻石", myProfileInfo.getLevel())) {
+                tv_mylevel.setText("铂金");
+            } else if (TextUtils.equals("5", myProfileInfo.getLevel())) {
                 img_mylevel.setVisibility(View.VISIBLE);
                 img_mylevel.setImageResource(R.drawable.ic_level_diamond);
-            } else if (TextUtils.equals("至尊", myProfileInfo.getLevel())) {
+                tv_mylevel.setText("钻石");
+            } else if (TextUtils.equals("6", myProfileInfo.getLevel())) {
                 img_mylevel.setVisibility(View.VISIBLE);
                 img_mylevel.setImageResource(R.drawable.ic_level_supreme);
+                tv_mylevel.setText("至尊");
             } else {
                 img_mylevel.setVisibility(View.GONE);
             }
             if (myProfileInfo.isVip()) {
                 img_vip.setVisibility(View.VISIBLE);
-            }else {
+            } else {
                 img_vip.setVisibility(View.GONE);
             }
         }
         if (myBaseInfo != null) {
             img_head.setImageURI(myBaseInfo.getAvatar());
             tv_name.setText(myBaseInfo.getUserName());
-            tv_personal_introduce.setText(myBaseInfo.getMotto());
+            if (TextUtils.isEmpty(myBaseInfo.getMotto())) {
+                tv_personal_introduce.setText("这家伙太懒了，什么都没留下。");
+            } else {
+                tv_personal_introduce.setText(myBaseInfo.getMotto());
+            }
+
         }
     }
 
