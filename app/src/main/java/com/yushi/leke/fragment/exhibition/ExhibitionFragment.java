@@ -40,7 +40,7 @@ public class ExhibitionFragment extends BaseListFragment<ExhibitionContract.IVie
             @Override
             public void OnBackResult(Object... s) {
                 ExhibitionInfo info= (ExhibitionInfo) s[0];
-                getRootFragment().start(UIHelper.creat(VodPlayerFragment.class).build());
+                getRootFragment().start(UIHelper.creat(ExhibitionDetailFragment.class).build());
             }
         }));
         vu.getRecyclerView().setAdapter(adapter);

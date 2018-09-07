@@ -140,4 +140,9 @@ public class ExhibitionDetailVu extends BaseVu<ExhibitionDetailContract.Presente
             }
         }
     }
+
+    @Override
+    public boolean initTitle(AppToolbar appToolbar) {
+        return true;
+    }
 }
