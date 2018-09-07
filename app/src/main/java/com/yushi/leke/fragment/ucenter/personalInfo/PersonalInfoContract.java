@@ -20,6 +20,8 @@ public interface PersonalInfoContract {
 
         void setCurrentInputBox(EditText editText);
 
+        void updateHead(String url);
+
     }
 
     interface Presenter extends Pr {

@@ -141,7 +141,7 @@ public interface YFApi {
     );
 
     @FormUrlEncoded
-    @POST("app/trade/v1/verifyTradePwd")
+    @POST("app/v1/trade/verifyTradePwd")
     Call<ResponseBody>
     verifyTradePwd(//验证交易密码
                    @Field("tradePwd") String tradePwd
@@ -203,15 +203,15 @@ public interface YFApi {
     Call<ResponseBody>
     setTradePwdWithToken(//通过绑定手机返回token(初次绑定手机)
                          @Field("token") String token,
-                         @Field("TradePwd") String TradePwd
+                         @Field("tradePwd") String tradePwd
     );
 
     @FormUrlEncoded
-    @POST("app/v1/modifyTradePwd")
+    @POST("app/v1/trade/modifyTradePwd")
     Call<ResponseBody>
-    modifyTradePwd(//通过绑定手机返回token(初次绑定手机)
-                   @Field("oldPwd") String vCode,
-                   @Field("TradePwd") String TradePwd
+    modifyTradePwd(//修改密码
+                   @Field("oldPwd") String oldPwd,
+                   @Field("newPwd") String newPwd
     );
 
     @POST("app/v1/uc/getMobile")

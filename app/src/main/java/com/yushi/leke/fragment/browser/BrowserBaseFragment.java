@@ -7,6 +7,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 
@@ -377,8 +378,10 @@ public class BrowserBaseFragment extends BaseFragment<BrowserContract.View> impl
                     if (data != null) {
                         JSONObject mJSONObject = (JSONObject) data;
                         String goodsId = mJSONObject.optString("goodsId");
-                        PayDialog payDialog = new PayDialog(_mActivity, goodsId, true);
-                        payDialog.show();
+                        if (!TextUtils.isEmpty(goodsId)){
+                            PayDialog payDialog = new PayDialog(_mActivity, goodsId, true);
+                            payDialog.show();
+                        }
                     }
                 }
             });
