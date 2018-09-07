@@ -55,7 +55,10 @@ public class PersonalInfoVu extends BaseListVu<PersonalInfoContract.Presenter> i
     TextView tv_ok;
     @FindView(R.id.tv_cancel)
     TextView tv_cancel;
+    @FindView(R.id.view_personal_top_bg)
+    View view_personal_top_bg;
     EditText mCurrentInputBox;
+
 
     private Handler mHandler = new Handler() {
         @Override
@@ -69,6 +72,7 @@ public class PersonalInfoVu extends BaseListVu<PersonalInfoContract.Presenter> i
 
     @Override
     public void initView(View view) {
+        view_personal_top_bg.setOnClickListener(this);
         rl_edit_head.setOnClickListener(this);
         tv_cancel.setOnClickListener(this);
         tv_ok.setOnClickListener(this);
@@ -232,6 +236,9 @@ public class PersonalInfoVu extends BaseListVu<PersonalInfoContract.Presenter> i
                 mPersenter.tohideSoftInput();
                 break;
             case R.id.tv_cancel:
+                mPersenter.tohideSoftInput();
+                break;
+            case R.id.view_personal_top_bg:
                 mPersenter.tohideSoftInput();
                 break;
 
