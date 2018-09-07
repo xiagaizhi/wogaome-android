@@ -15,7 +15,7 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         buildConfigField "int", "API_TYPE", "${gradle.apiType}"
         ndk {
-            abiFilters "armeabi"   //  , "armeabi-v7a", "x86"
+            abiFilters  'armeabi', "armeabi-v7a"
         }
         manifestPlaceholders = [
                 XG_ACCESS_ID:"f01636373e16a",
@@ -119,7 +119,7 @@ dependencies {
     //mid包
     compile 'com.tencent.mid:mid:4.0.6-release'
 
-    implementation project(':aliplayer')
+    compile project(':aliplayer')
     implementation project(':library')
     implementation project(':musicplayer')
 }

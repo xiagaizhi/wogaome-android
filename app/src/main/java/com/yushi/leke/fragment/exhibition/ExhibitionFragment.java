@@ -11,7 +11,10 @@ import com.yufan.library.base.BaseListFragment;
 import com.yufan.library.inject.VuClass;
 import com.yufan.library.inter.ICallBack;
 import com.yufan.library.view.recycler.PageInfo;
+import com.yushi.leke.UIHelper;
 import com.yushi.leke.activity.MusicPlayerActivity;
+import com.yushi.leke.fragment.exhibition.detail.ExhibitionDetailFragment;
+import com.yushi.leke.fragment.vodplayer.VodPlayerFragment;
 
 import me.drakeet.multitype.MultiTypeAdapter;
 
@@ -33,7 +36,13 @@ public class ExhibitionFragment extends BaseListFragment<ExhibitionContract.IVie
                 }
             }
         }));
-        adapter.register(ExhibitionInfo.class,new ExhibitionViewBinder());
+        adapter.register(ExhibitionInfo.class,new ExhibitionViewBinder(new ICallBack() {
+            @Override
+            public void OnBackResult(Object... s) {
+                ExhibitionInfo info= (ExhibitionInfo) s[0];
+                getRootFragment().start(UIHelper.creat(VodPlayerFragment.class).build());
+            }
+        }));
         vu.getRecyclerView().setAdapter(adapter);
         list.add(new ExhibitionTopInfo());
         list.add(new ExhibitionInfo("http://oss.cyzone.cn/2018/0724/20180724094636938.png"));

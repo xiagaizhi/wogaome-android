@@ -24,6 +24,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.yufan.library.inter.ICallBack;
 import com.yushi.leke.R;
 
 import me.drakeet.multitype.ItemViewBinder;
@@ -33,9 +34,9 @@ import me.drakeet.multitype.ItemViewBinder;
  * 路演大厅 路演item
  */
 public class ExhibitionViewBinder extends ItemViewBinder<ExhibitionInfo, ExhibitionViewBinder.ViewHolder> {
-
-    public ExhibitionViewBinder() {
-
+    private ICallBack callBack;
+    public ExhibitionViewBinder(ICallBack callBack) {
+this.callBack=callBack;
     }
 
     @Override
@@ -49,7 +50,14 @@ public class ExhibitionViewBinder extends ItemViewBinder<ExhibitionInfo, Exhibit
     @Override
     protected void onBindViewHolder(@NonNull ViewHolder holder, @NonNull final ExhibitionInfo category) {
         holder.sdv.setImageURI(Uri.parse(category.url));
-
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(callBack!=null){
+                    callBack.OnBackResult(category);
+                }
+            }
+        });
     }
 
 
