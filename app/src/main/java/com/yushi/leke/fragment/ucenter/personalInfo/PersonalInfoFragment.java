@@ -57,7 +57,6 @@ public class PersonalInfoFragment extends BaseListFragment<PersonalInfoContract.
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE | WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
-
 //                cachePath = getFilesDir().getAbsolutePath() + "/mypics/photos/";
         cachePath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/mypics/photos/";
 //        cachePath = _mActivity.getCacheDir().getAbsolutePath() + "/mypics/photos/";
@@ -81,13 +80,13 @@ public class PersonalInfoFragment extends BaseListFragment<PersonalInfoContract.
         Bundle bundle = getArguments();
         if (bundle != null) {
             avatar = bundle.getString("avatar");
-            userName = bundle.getString("avatar");
+            userName = bundle.getString("userName");
             gender = bundle.getString("gender");
             company = bundle.getString("company");
             position = bundle.getString("position");
             motto = bundle.getString("motto");
             email = bundle.getString("email");
-            city = bundle.getString("email");
+            city = bundle.getString("city");
             address = bundle.getString("address");
             uid = bundle.getString("uid");
         }
@@ -207,7 +206,12 @@ public class PersonalInfoFragment extends BaseListFragment<PersonalInfoContract.
     public void selectGender(String gender) {
         PersonalItem personalItem = (PersonalItem) list.get(2);
         personalItem.tabValue = gender;
-        updateInfo("", "", "", "", "", "", "", "", gender);
+        if (TextUtils.equals("女", gender)) {
+            updateInfo("", "", "", "", "", "", "", "", "2");
+        } else {
+            updateInfo("", "", "", "", "", "", "", "", "1");
+        }
+
     }
 
     @Override
@@ -227,6 +231,7 @@ public class PersonalInfoFragment extends BaseListFragment<PersonalInfoContract.
             /**
              * 提交数据
              */
+            if (TextUtils.isEmpty(content)) return;
             if (TextUtils.equals("名字:", currentTabName)) {
                 updateInfo("", content, "", "", "", "", "", "", "");
             } else if (TextUtils.equals("公司:", currentTabName)) {
@@ -264,6 +269,8 @@ public class PersonalInfoFragment extends BaseListFragment<PersonalInfoContract.
                     @Override
                     public void onFinish() {
                         DialogManager.getInstance().dismiss();
+                        Bundle bundle = new Bundle();
+                        setFragmentResult(RESULT_OK, bundle);
                     }
                 });
     }
@@ -311,7 +318,8 @@ public class PersonalInfoFragment extends BaseListFragment<PersonalInfoContract.
                 OSSClientUtil.getInstance().uploadImgToOss(_mActivity, imageName, imagePath, new OSSClientUtil.UploadImageInterf() {
                     @Override
                     public void onSuccess(String url) {
-
+                        Bundle bundle = new Bundle();
+                        setFragmentResult(RESULT_OK, bundle);
                     }
 
                     @Override

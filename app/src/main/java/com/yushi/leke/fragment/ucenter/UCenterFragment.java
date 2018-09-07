@@ -204,7 +204,15 @@ public class UCenterFragment extends BaseFragment<UCenterContract.IView> impleme
 
     @Override
     public void openSettingPage() {
-        getRootFragment().start(UIHelper.creat(SettingFragment.class).build());
+        getRootFragment().startForResult(UIHelper.creat(SettingFragment.class).build(), 100);
+    }
+
+    @Override
+    public void onFragmentResult(int requestCode, int resultCode, Bundle data) {
+        super.onFragmentResult(requestCode, resultCode, data);
+        if (requestCode == 100 && resultCode == RESULT_OK && data != null) {
+
+        }
     }
 
     @Override

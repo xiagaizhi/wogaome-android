@@ -168,7 +168,7 @@ public class UCenterVu extends BaseVu<UCenterContract.Presenter> implements UCen
             tv_subscribe_num.setText("" + myProfileInfo.getSubscription());
             tv_vote_num.setText("" + myProfileInfo.getVote());
             tv_mylkc.setText("" + myProfileInfo.getToken());
-            tv_mylevel.setText("" + myProfileInfo.getLevel());
+            tv_mylevel.setText("" + myProfileInfo.getLevel()+"LKC");
             tv_share_num.setText("已邀请：" + myProfileInfo.getInvitation() + "名好友");
             if (TextUtils.equals("青铜", myProfileInfo.getLevel())) {
                 img_mylevel.setVisibility(View.VISIBLE);
@@ -192,7 +192,9 @@ public class UCenterVu extends BaseVu<UCenterContract.Presenter> implements UCen
                 img_mylevel.setVisibility(View.GONE);
             }
             if (myProfileInfo.isVip()) {
-
+                img_vip.setVisibility(View.VISIBLE);
+            }else {
+                img_vip.setVisibility(View.GONE);
             }
         }
         if (myBaseInfo != null) {

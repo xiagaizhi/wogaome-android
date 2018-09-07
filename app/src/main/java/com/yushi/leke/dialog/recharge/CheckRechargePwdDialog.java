@@ -166,19 +166,21 @@ public class CheckRechargePwdDialog extends Dialog implements KeyboardAdapter.On
                     public void onResponse(ApiBean mApiBean) {
                         if (TextUtils.equals(ApiBean.SUCCESS, mApiBean.getCode())) {
                             if (mCheckRechargePwd != null) {
-                                mCheckRechargePwd.returnCheckResult(true,pwd);
+                                mCheckRechargePwd.returnCheckResult(true, pwd);
                             }
                             dismiss();
                         } else {
-                            DialogManager.getInstance().toast("密码有误，请重新输入");
-                            mCheckRechargePwd.returnCheckResult(false,pwd);
+//                            DialogManager.getInstance().toast("密码有误，请重新输入");
+                            DialogManager.getInstance().toast("" + mApiBean.getMessage());
+                            mCheckRechargePwd.returnCheckResult(false, pwd);
                         }
                     }
 
                     @Override
                     public void onFailure(int id, Exception e) {
                         super.onFailure(id, e);
-                        mCheckRechargePwd.returnCheckResult(false,pwd);
+                        DialogManager.getInstance().toast("原密码校验失败请重新输入！");
+                        mCheckRechargePwd.returnCheckResult(false, pwd);
                     }
 
                     @Override
