@@ -93,7 +93,9 @@ public class PersonalInfoFragment extends BaseListFragment<PersonalInfoContract.
         if (TextUtils.isEmpty(city)) {
             city = "请选择城市";
         }
-        if (TextUtils.isEmpty(gender)) {
+        if (TextUtils.equals("2", gender)) {
+            gender = "女";
+        } else {
             gender = "男";
         }
         adapter = new MultiTypeAdapter();
@@ -250,10 +252,10 @@ public class PersonalInfoFragment extends BaseListFragment<PersonalInfoContract.
 
     private void updateInfo(String avatar, String userName, String company,
                             String position, String motto, String email,
-                            String city, String adress, String gender) {
+                            String city, String address, String gender) {
         DialogManager.getInstance().showLoadingDialog();
         ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).editMyBaseInfo(avatar, userName, company,
-                position, motto, email, city, adress, gender))
+                position, motto, email, city, address, gender))
                 .useCache(false)
                 .enqueue(new BaseHttpCallBack() {
                     @Override
@@ -270,6 +272,7 @@ public class PersonalInfoFragment extends BaseListFragment<PersonalInfoContract.
                     public void onFinish() {
                         DialogManager.getInstance().dismiss();
                         Bundle bundle = new Bundle();
+                        bundle.putBoolean("isAll", false);
                         setFragmentResult(RESULT_OK, bundle);
                     }
                 });
@@ -319,6 +322,7 @@ public class PersonalInfoFragment extends BaseListFragment<PersonalInfoContract.
                     @Override
                     public void onSuccess(String url) {
                         Bundle bundle = new Bundle();
+                        bundle.putBoolean("isAll", false);
                         setFragmentResult(RESULT_OK, bundle);
                     }
 

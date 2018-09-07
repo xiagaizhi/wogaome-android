@@ -195,7 +195,7 @@ public interface YFApi {
                    @Field("motto") String motto,
                    @Field("email") String email,
                    @Field("city") String city,
-                   @Field("adress") String adress,
+                   @Field("address") String address,
                    @Field("gender") String gender);
 
     @FormUrlEncoded

@@ -57,6 +57,21 @@ public class MainFragment extends BaseFragment<MainContract.IView> implements Ma
         getVu().hasUnreadMsg(hasUnreadMsg);
     }
 
+    @Override
+    public void onFragmentResult(int requestCode, int resultCode, Bundle data) {
+        super.onFragmentResult(requestCode, resultCode, data);
+        if (requestCode == 1000 && resultCode == RESULT_OK && data != null) {
+            boolean isAll = data.getBoolean("isAll");
+            updatePersonInfo(isAll);
+        }
+    }
+
+    public void updatePersonInfo(boolean isAll){
+        if (mFragments[2]!=null && mFragments[2] instanceof UCenterFragment){
+            ((UCenterFragment)mFragments[2]).updatePersonInfo(isAll);
+        }
+    }
+
 
     @Override
     public void onRefresh() {

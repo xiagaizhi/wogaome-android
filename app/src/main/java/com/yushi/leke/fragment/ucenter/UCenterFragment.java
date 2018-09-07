@@ -184,7 +184,7 @@ public class UCenterFragment extends BaseFragment<UCenterContract.IView> impleme
             city = myBaseInfo.getCity();
             address = myBaseInfo.getAddress();
         }
-        getRootFragment().start(UIHelper.creat(PersonalInfoFragment.class)
+        getRootFragment().startForResult(UIHelper.creat(PersonalInfoFragment.class)
                 .put("avatar", avatar)
                 .put("uid", uid)
                 .put("userName", userName)
@@ -195,7 +195,7 @@ public class UCenterFragment extends BaseFragment<UCenterContract.IView> impleme
                 .put("email", email)
                 .put("city", city)
                 .put("address", address)
-                .build());
+                .build(), 1000);
     }
 
     @Override
@@ -204,15 +204,7 @@ public class UCenterFragment extends BaseFragment<UCenterContract.IView> impleme
 
     @Override
     public void openSettingPage() {
-        getRootFragment().startForResult(UIHelper.creat(SettingFragment.class).build(), 100);
-    }
-
-    @Override
-    public void onFragmentResult(int requestCode, int resultCode, Bundle data) {
-        super.onFragmentResult(requestCode, resultCode, data);
-        if (requestCode == 100 && resultCode == RESULT_OK && data != null) {
-
-        }
+        getRootFragment().start(UIHelper.creat(SettingFragment.class).build());
     }
 
     @Override
@@ -237,5 +229,15 @@ public class UCenterFragment extends BaseFragment<UCenterContract.IView> impleme
         hasUnreadmsg();
         getMyProfile();
         getMyBaseInfo();
+    }
+
+    public void updatePersonInfo(boolean isAll) {
+        if (isAll) {
+            hasUnreadmsg();
+            getMyProfile();
+            getMyBaseInfo();
+        } else {
+            getMyBaseInfo();
+        }
     }
 }
