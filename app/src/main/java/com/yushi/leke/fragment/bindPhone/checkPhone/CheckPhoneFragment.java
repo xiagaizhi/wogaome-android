@@ -15,6 +15,9 @@ import android.view.View;
 import com.yufan.library.inject.VuClass;
 import com.yushi.leke.YFApi;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 /**
  * Created by zhanyangyang on 18/8/25.
  */
@@ -82,8 +85,15 @@ public class CheckPhoneFragment extends BaseFragment<CheckPhoneContract.IView> i
         @Override
         public void onSuccess(ApiBean mApiBean) {
             Bundle bundle = new Bundle();
-            bundle.putString("token", "token");
-            setFragmentResult(RESULT_OK, bundle);
+            try {
+                JSONObject jsonObject = new JSONObject(mApiBean.getData());
+                bundle.putString("token", jsonObject.getString("token"));
+                setFragmentResult(RESULT_OK, bundle);
+            } catch (JSONException e) {
+                e.printStackTrace();
+                pop();
+            }
+
         }
 
         @Override
@@ -93,7 +103,7 @@ public class CheckPhoneFragment extends BaseFragment<CheckPhoneContract.IView> i
 
         @Override
         public void onFinish() {
-
+            pop();
         }
     };
 

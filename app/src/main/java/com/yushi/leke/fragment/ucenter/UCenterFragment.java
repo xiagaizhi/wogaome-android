@@ -9,8 +9,6 @@ import com.yufan.library.api.ApiManager;
 import com.yufan.library.api.BaseHttpCallBack;
 import com.yufan.library.base.BaseFragment;
 
-import android.os.Handler;
-import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -34,15 +32,15 @@ import org.json.JSONObject;
  */
 @VuClass(UCenterVu.class)
 public class UCenterFragment extends BaseFragment<UCenterContract.IView> implements UCenterContract.Presenter {
-    private MyProfileInfo myProfileInfo;
-    private MyBaseInfo myBaseInfo;
+    private MyProfileInfo myProfileInfo;//不可编辑
+    private MyBaseInfo myBaseInfo;//可编辑
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-//        hasUnreadmsg();
-//        getMyProfile();
-//        getMyBaseInfo();
+        hasUnreadmsg();
+        getMyProfile();
+        getMyBaseInfo();
     }
 
     /**
@@ -163,7 +161,41 @@ public class UCenterFragment extends BaseFragment<UCenterContract.IView> impleme
 
     @Override
     public void openPersonalpage() {
-        getRootFragment().start(UIHelper.creat(PersonalInfoFragment.class).build());
+        String avatar = "";
+        String userName = "";
+        String gender = "";
+        String company = "";
+        String position = "";
+        String motto = "";
+        String email = "";
+        String city = "";
+        String address = "";
+        String uid = "";
+
+        if (myBaseInfo != null) {
+            avatar = myBaseInfo.getAvatar();
+            uid = myBaseInfo.getUid();
+            userName = myBaseInfo.getUserName();
+            gender = myBaseInfo.getGender();
+            company = myBaseInfo.getCompany();
+            position = myBaseInfo.getPosition();
+            motto = myBaseInfo.getMotto();
+            email = myBaseInfo.getEmail();
+            city = myBaseInfo.getCity();
+            address = myBaseInfo.getAddress();
+        }
+        getRootFragment().start(UIHelper.creat(PersonalInfoFragment.class)
+                .put("avatar", avatar)
+                .put("uid", uid)
+                .put("userName", userName)
+                .put("gender", gender)
+                .put("company", company)
+                .put("position", position)
+                .put("motto", motto)
+                .put("email", email)
+                .put("city", city)
+                .put("address", address)
+                .build());
     }
 
     @Override
@@ -194,9 +226,8 @@ public class UCenterFragment extends BaseFragment<UCenterContract.IView> impleme
 
     @Override
     public void toRefresh() {
-//        hasUnreadmsg();
-//        getMyProfile();
-//        getMyBaseInfo();
-        getVu().refreshComplete();
+        hasUnreadmsg();
+        getMyProfile();
+        getMyBaseInfo();
     }
 }

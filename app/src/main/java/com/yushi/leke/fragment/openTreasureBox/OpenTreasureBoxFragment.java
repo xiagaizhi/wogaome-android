@@ -82,7 +82,7 @@ public class OpenTreasureBoxFragment extends BaseFragment<OpenTreasureBoxContrac
             String action = intent.getAction();
             switch (action) {
                 case Global.BROADCAST_PAY_RESUIL_ACTION:
-                    Log.e("OpenTreasureBoxFragment", "1=="+System.currentTimeMillis());
+                    Log.e("OpenTreasureBoxFragment", "1==" + System.currentTimeMillis());
                     showDialog(intent.getBooleanExtra(Global.INTENT_PAY_RESUIL_DATA, false));
                     break;
             }
@@ -130,6 +130,7 @@ public class OpenTreasureBoxFragment extends BaseFragment<OpenTreasureBoxContrac
         if (isSuccess) {
             Bundle bundle = new Bundle();
             setFragmentResult(RESULT_OK, bundle);
+            if (_mActivity == null || _mActivity.isFinishing()) return;
             new CommonDialog(_mActivity).setTitle("恭喜您，充值成功！")
                     .setPositiveName("确定")
                     .setHaveNegative(false)
@@ -143,6 +144,7 @@ public class OpenTreasureBoxFragment extends BaseFragment<OpenTreasureBoxContrac
                         }
                     }).show();
         } else {
+            if (_mActivity == null || _mActivity.isFinishing()) return;
             new CommonDialog(_mActivity).setTitle("本次充值失败，请重新充值！")
                     .setPositiveName("确定")
                     .setHaveNegative(false)

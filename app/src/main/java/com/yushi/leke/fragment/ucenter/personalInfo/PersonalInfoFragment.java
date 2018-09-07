@@ -12,6 +12,7 @@ import com.yufan.library.api.ApiManager;
 import com.yufan.library.api.BaseHttpCallBack;
 import com.yufan.library.base.BaseListFragment;
 import com.yufan.library.bean.LocationBean;
+import com.yufan.library.manager.DialogManager;
 import com.yufan.library.util.CustomDisplayer;
 import com.yufan.library.util.ImageUtil;
 import com.yufan.library.inter.ICallBack;
@@ -67,6 +68,35 @@ public class PersonalInfoFragment extends BaseListFragment<PersonalInfoContract.
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        String avatar = "";
+        String userName = "";
+        String gender = "";
+        String company = "";
+        String position = "";
+        String motto = "";
+        String email = "";
+        String city = "";
+        String address = "";
+        String uid = "";
+        Bundle bundle = getArguments();
+        if (bundle != null) {
+            avatar = bundle.getString("avatar");
+            userName = bundle.getString("avatar");
+            gender = bundle.getString("gender");
+            company = bundle.getString("company");
+            position = bundle.getString("position");
+            motto = bundle.getString("motto");
+            email = bundle.getString("email");
+            city = bundle.getString("email");
+            address = bundle.getString("address");
+            uid = bundle.getString("uid");
+        }
+        if (TextUtils.isEmpty(city)) {
+            city = "请选择城市";
+        }
+        if (TextUtils.isEmpty(gender)) {
+            gender = "男";
+        }
         adapter = new MultiTypeAdapter();
         adapter.register(PersonalItem.class, new PersonalInfoViewBinder(new ICallBack() {
             @Override
@@ -93,15 +123,15 @@ public class PersonalInfoFragment extends BaseListFragment<PersonalInfoContract.
             }
         }, _mActivity));
         getVu().getRecyclerView().setAdapter(adapter);
-        list.add(new PersonalItem("用户ID:", "123456", "", true, false));
-        list.add(new PersonalItem("名字:", "", "请输入名字", false, true));
-        list.add(new PersonalItem("性别:", "男", "", false, false));
-        list.add(new PersonalItem("公司:", "", "请填写您的公司名称", false, true));
-        list.add(new PersonalItem("职务:", "", "您在公司的职务", false, true));
-        list.add(new PersonalItem("一句话介绍:", "", "请输入简介", false, true));
-        list.add(new PersonalItem("邮箱:", "", "请填写邮箱", false, true));
-        list.add(new PersonalItem("城市:", "请选择城市", "请选择城市", false, false));
-        list.add(new PersonalItem("详情地址:", "", "请填写您的详细地址", false, true));
+        list.add(new PersonalItem("用户ID:", "" + uid, "", true, false));
+        list.add(new PersonalItem("名字:", "" + userName, "请输入名字", false, true));
+        list.add(new PersonalItem("性别:", "" + gender, "", false, false));
+        list.add(new PersonalItem("公司:", "" + company, "请填写您的公司名称", false, true));
+        list.add(new PersonalItem("职务:", "" + position, "您在公司的职务", false, true));
+        list.add(new PersonalItem("一句话介绍:", "" + motto, "请输入简介", false, true));
+        list.add(new PersonalItem("邮箱:", "" + email, "请填写邮箱", false, true));
+        list.add(new PersonalItem("城市:", city, "请选择城市", false, false));
+        list.add(new PersonalItem("详情地址:", "" + address, "请填写您的详细地址", false, true));
         adapter.setItems(list);
         vu.getRecyclerView().getAdapter().notifyDataSetChanged();
         new AsyncTask<Void, Void, Void>() {
@@ -215,6 +245,7 @@ public class PersonalInfoFragment extends BaseListFragment<PersonalInfoContract.
     private void updateInfo(String avatar, String userName, String company,
                             String position, String motto, String email,
                             String city, String adress, String gender) {
+        DialogManager.getInstance().showLoadingDialog();
         ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).editMyBaseInfo(avatar, userName, company,
                 position, motto, email, city, adress, gender))
                 .useCache(false)
@@ -231,7 +262,7 @@ public class PersonalInfoFragment extends BaseListFragment<PersonalInfoContract.
 
                     @Override
                     public void onFinish() {
-
+                        DialogManager.getInstance().dismiss();
                     }
                 });
     }
