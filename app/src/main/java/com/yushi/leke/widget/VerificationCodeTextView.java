@@ -92,7 +92,7 @@ public class VerificationCodeTextView extends TextView {
                     throw new RuntimeException("需要调用 setOnGetCodeClickListener");
                 }
             String phone=    onGetCodeClickListener.getPhone();
-                if(CheckUtil.checkPhone(phone)){
+                if(!CheckUtil.checkPhone(phone)){
                     DialogManager.getInstance().toast("手机号不能为空");
                     return;
                 }

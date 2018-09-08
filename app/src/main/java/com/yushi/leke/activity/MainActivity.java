@@ -80,9 +80,9 @@ private String     TAG="MainActivity";
         mMediaBrowser = new MediaBrowserCompat(this,
                 new ComponentName(this, MusicService.class), mConnectionCallback, null);
         if(!TextUtils.isEmpty(UserManager.getInstance().getToken())){
-            loadRootFragment(R.id.content_level0, UIHelper.creat(MainFragment.class).build());//.put(Global.BUNDLE_KEY_BROWSER_URL,"http://www.baidu.com")
+            loadRootFragment(R.id.activity_content_level0, UIHelper.creat(MainFragment.class).build());//.put(Global.BUNDLE_KEY_BROWSER_URL,"http://www.baidu.com")
         }else {
-            loadRootFragment(R.id.content_level0, UIHelper.creat(LoginFragment.class).build());
+            loadRootFragment(R.id.activity_content_level0, UIHelper.creat(LoginFragment.class).build());
         }
 
     }

@@ -14,7 +14,6 @@ import com.yufan.library.view.recycler.PageInfo;
 import com.yushi.leke.UIHelper;
 import com.yushi.leke.activity.MusicPlayerActivity;
 import com.yushi.leke.fragment.exhibition.detail.ExhibitionDetailFragment;
-import com.yushi.leke.fragment.vodplayer.VodPlayerFragment;
 
 import me.drakeet.multitype.MultiTypeAdapter;
 

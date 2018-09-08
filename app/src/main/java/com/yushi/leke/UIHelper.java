@@ -31,7 +31,7 @@ public class UIHelper {
      * @param fragment
      */
     public static void  openFragment(FragmentActivity activity, Fragment fragment, boolean backStack){
-        openFragment(activity,fragment,R.id.content_level1,backStack);
+        openFragment(activity,fragment,R.id.activity_content_level1,backStack);
     }
     /**
      * 打开二级页面

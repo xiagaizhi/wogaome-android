@@ -8,11 +8,11 @@
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:id="@+id/content_level0"
+        android:id="@+id/activity_content_level0"
         android:layout_height="match_parent"></FrameLayout>
     <FrameLayout
         android:layout_width="match_parent"
-        android:id="@+id/content_level1"
+        android:id="@+id/activity_content_level1"
         android:layout_height="match_parent"></FrameLayout>
 
 </RelativeLayout>
