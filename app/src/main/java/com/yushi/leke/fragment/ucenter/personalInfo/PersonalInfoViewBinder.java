@@ -19,6 +19,7 @@ package com.yushi.leke.fragment.ucenter.personalInfo;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.text.InputFilter;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -62,7 +63,19 @@ public class PersonalInfoViewBinder extends ItemViewBinder<PersonalItem, Persona
                 @Override
                 public void onFocusChange(View v, boolean hasFocus) {
                     if (hasFocus) {
-                        callBack.OnBackResult(category, holder.et_value,true);
+                        if (TextUtils.equals("名字:", category.tabName)) {
+                            holder.et_value.setFilters(new InputFilter[]{new InputFilter.LengthFilter(9)});
+                        } else if (TextUtils.equals("公司:", category.tabName) || TextUtils.equals("职务", category.tabName)) {
+                            holder.et_value.setFilters(new InputFilter[]{new InputFilter.LengthFilter(15)});
+                        } else if (TextUtils.equals("一句话介绍:", category.tabName)) {
+                            holder.et_value.setFilters(new InputFilter[]{new InputFilter.LengthFilter(30)});
+                        } else if (TextUtils.equals("邮箱:", category.tabName)) {
+                            holder.et_value.setFilters(new InputFilter[]{new InputFilter.LengthFilter(30)});
+                        } else if (TextUtils.equals("详细地址:", category.tabName)) {
+                            holder.et_value.setFilters(new InputFilter[]{new InputFilter.LengthFilter(50)});
+                        }
+                        holder.et_value.setSelection(holder.et_value.getText().length());
+                        callBack.OnBackResult(category, holder.et_value, true);
                     }
                 }
             });
@@ -81,7 +94,7 @@ public class PersonalInfoViewBinder extends ItemViewBinder<PersonalItem, Persona
             public void onClick(View v) {
                 if (TextUtils.equals("性别:", category.tabName) ||
                         TextUtils.equals("城市:", category.tabName)) {
-                    callBack.OnBackResult(category, holder.et_value,false);
+                    callBack.OnBackResult(category, holder.et_value, false);
                 }
             }
         });
@@ -92,7 +105,7 @@ public class PersonalInfoViewBinder extends ItemViewBinder<PersonalItem, Persona
                 @Override
                 public void onClick(View v) {
                     if (TextUtils.equals("用户ID:", category.tabName)) {
-                        callBack.OnBackResult(category, holder.et_value,false);
+                        callBack.OnBackResult(category, holder.et_value, false);
                     }
                 }
             });
@@ -100,7 +113,7 @@ public class PersonalInfoViewBinder extends ItemViewBinder<PersonalItem, Persona
                 @Override
                 public void onClick(View v) {
                     if (TextUtils.equals("用户ID:", category.tabName)) {
-                        callBack.OnBackResult(category, holder.et_value,false);
+                        callBack.OnBackResult(category, holder.et_value, false);
                     }
                 }
             });

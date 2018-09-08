@@ -54,14 +54,17 @@ public class PersonalInfoFragment extends BaseListFragment<PersonalInfoContract.
     private static final int REQUEST_CODE_CHOOSE = 0x100;
     private EditText currentEdit;
     private String cachePath;
-    private Handler mHandler = new Handler(){
+    private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            switch (msg.what){
+            switch (msg.what) {
                 case 0x100:
                     String url = (String) msg.obj;
-                    updateInfo(url, "", "", "", "", "", "", "", "");
+                    DialogManager.getInstance().showLoadingDialog();
+                    ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).editavatar(url))
+                            .useCache(false)
+                            .enqueue(editBaseHttpCallBack);
                     getVu().updateHead(url);
                     break;
             }
@@ -216,7 +219,10 @@ public class PersonalInfoFragment extends BaseListFragment<PersonalInfoContract.
         LocationBean county = AreaUtil.getInstance().getOptions3Items().get(options1).get(options2).get(options3);
         PersonalItem personalItem = (PersonalItem) list.get(7);
         personalItem.tabValue = province.getName() + city.getName() + county.getName();
-        updateInfo("", "", "", "", "", "", personalItem.tabValue, "", "");
+        DialogManager.getInstance().showLoadingDialog();
+        ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).editcity(personalItem.tabValue))
+                .useCache(false)
+                .enqueue(editBaseHttpCallBack);
     }
 
     @Override
@@ -224,9 +230,15 @@ public class PersonalInfoFragment extends BaseListFragment<PersonalInfoContract.
         PersonalItem personalItem = (PersonalItem) list.get(2);
         personalItem.tabValue = gender;
         if (TextUtils.equals("女", gender)) {
-            updateInfo("", "", "", "", "", "", "", "", "2");
+            DialogManager.getInstance().showLoadingDialog();
+            ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).editgender("2"))
+                    .useCache(false)
+                    .enqueue(editBaseHttpCallBack);
         } else {
-            updateInfo("", "", "", "", "", "", "", "", "1");
+            DialogManager.getInstance().showLoadingDialog();
+            ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).editgender("1"))
+                    .useCache(false)
+                    .enqueue(editBaseHttpCallBack);
         }
 
     }
@@ -248,69 +260,60 @@ public class PersonalInfoFragment extends BaseListFragment<PersonalInfoContract.
             /**
              * 提交数据
              */
-            if (TextUtils.isEmpty(content)) return;
             if (TextUtils.equals("名字:", currentTabName)) {
-                updateInfo("", content, "", "", "", "", "", "", "");
+                DialogManager.getInstance().showLoadingDialog();
+                ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).edituserName(content))
+                        .useCache(false)
+                        .enqueue(editBaseHttpCallBack);
             } else if (TextUtils.equals("公司:", currentTabName)) {
-                updateInfo("", "", content, "", "", "", "", "", "");
+                DialogManager.getInstance().showLoadingDialog();
+                ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).editcompany(content))
+                        .useCache(false)
+                        .enqueue(editBaseHttpCallBack);
             } else if (TextUtils.equals("职务:", currentTabName)) {
-                updateInfo("", "", "", content, "", "", "", "", "");
+                DialogManager.getInstance().showLoadingDialog();
+                ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).editposition(content))
+                        .useCache(false)
+                        .enqueue(editBaseHttpCallBack);
             } else if (TextUtils.equals("一句话介绍:", currentTabName)) {
-                updateInfo("", "", "", "", content, "", "", "", "");
+                DialogManager.getInstance().showLoadingDialog();
+                ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).editmotto(content))
+                        .useCache(false)
+                        .enqueue(editBaseHttpCallBack);
             } else if (TextUtils.equals("邮箱:", currentTabName)) {
-                updateInfo("", "", "", "", "", content, "", "", "");
+                DialogManager.getInstance().showLoadingDialog();
+                ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).editemail(content))
+                        .useCache(false)
+                        .enqueue(editBaseHttpCallBack);
             } else if (TextUtils.equals("详情地址:", currentTabName)) {
-                updateInfo("", "", "", "", "", "", "", content, "");
+                DialogManager.getInstance().showLoadingDialog();
+                ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).editaddress(content))
+                        .useCache(false)
+                        .enqueue(editBaseHttpCallBack);
             }
         }
     }
 
-    private void updateInfo(String avatar, String userName, String company,
-                            String position, String motto, String email,
-                            String city, String address, String gender) {
-        DialogManager.getInstance().showLoadingDialog();
-        ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).editMyBaseInfo(avatar, userName, company,
-                position, motto, email, city, address, gender))
-                .useCache(false)
-                .enqueue(new BaseHttpCallBack() {
-                    @Override
-                    public void onSuccess(ApiBean mApiBean) {
+    private BaseHttpCallBack editBaseHttpCallBack = new BaseHttpCallBack() {
+        @Override
+        public void onSuccess(ApiBean mApiBean) {
 
-                    }
+        }
 
-                    @Override
-                    public void onError(int id, Exception e) {
+        @Override
+        public void onError(int id, Exception e) {
 
-                    }
+        }
 
-                    @Override
-                    public void onFinish() {
-                        DialogManager.getInstance().dismiss();
-                        Bundle bundle = new Bundle();
-                        bundle.putBoolean("isAll", false);
-                        setFragmentResult(RESULT_OK, bundle);
-                    }
-                });
-    }
+        @Override
+        public void onFinish() {
+            DialogManager.getInstance().dismiss();
+        }
+    };
 
 
     @Override
     public void choosePhotos() {
-//        Matisse.from(this)
-//                .choose(MimeType.allOf())
-//                .theme(R.style.Matisse_Zhihu)//主题，夜间模式R.style.Matisse_Dracula
-//                .countable(true)//是否显示选中数字
-//                .capture(true)//是否提供拍照功能
-//                .captureStrategy(new CaptureStrategy(false, "com.yushi.leke.fileprovider"))//存储地址
-//                .maxSelectable(1)//最大选择数
-//                //.addFilter(new GifSizeFilter(320, 320, 5 * Filter.K * Filter.K))//筛选条件
-//                .gridExpectedSize(getResources().getDimensionPixelSize(R.dimen.px300))//图片大小
-//                .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)//屏幕方向
-//                .thumbnailScale(0.85f)//缩放比例
-//                .imageEngine(new CustomGlideEngine())//图片加载方式
-//                .spanCount(50)
-//                .forResult(REQUEST_CODE_CHOOSE);//请求码
-
         new ImagePicker()
                 .pickType(ImagePickType.SINGLE)//设置选取类型(拍照、单选、多选)
                 .maxNum(1)//设置最大选择数量(拍照和单选都是1，修改后也无效)
@@ -339,7 +342,7 @@ public class PersonalInfoFragment extends BaseListFragment<PersonalInfoContract.
                         Bundle bundle = new Bundle();
                         bundle.putBoolean("isAll", false);
                         setFragmentResult(RESULT_OK, bundle);
-                        Message message= mHandler.obtainMessage();
+                        Message message = mHandler.obtainMessage();
                         message.obj = url;
                         message.what = 0x100;
                         mHandler.sendMessage(message);
