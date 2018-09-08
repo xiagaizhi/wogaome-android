@@ -14,6 +14,7 @@ import com.yufan.library.base.BaseListFragment;
 import com.yufan.library.bean.LocationBean;
 import com.yufan.library.manager.DialogManager;
 import com.yufan.library.util.CustomDisplayer;
+import com.yufan.library.util.FileUtil;
 import com.yufan.library.util.ImageUtil;
 import com.yufan.library.inter.ICallBack;
 import com.yufan.library.util.AreaUtil;
@@ -36,10 +37,12 @@ import com.yushi.leke.YFApi;
 import com.yushi.leke.util.OSSClientUtil;
 import com.yushi.leke.util.StringUtil;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 import me.drakeet.multitype.MultiTypeAdapter;
+import top.zibin.luban.OnCompressListener;
 
 /**
  * Created by zhanyangyang on 18/8/25.
@@ -53,7 +56,8 @@ public class PersonalInfoFragment extends BaseListFragment<PersonalInfoContract.
     private String currentTabName;
     private static final int REQUEST_CODE_CHOOSE = 0x100;
     private EditText currentEdit;
-    private String cachePath;
+    private String ctailoringPath;//裁剪过后
+    private String compressionImagePath;//压缩过后
     private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -61,7 +65,6 @@ public class PersonalInfoFragment extends BaseListFragment<PersonalInfoContract.
             switch (msg.what) {
                 case 0x100:
                     String url = (String) msg.obj;
-                    DialogManager.getInstance().showLoadingDialog();
                     ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).editavatar(url))
                             .useCache(false)
                             .enqueue(editBaseHttpCallBack);
@@ -76,7 +79,8 @@ public class PersonalInfoFragment extends BaseListFragment<PersonalInfoContract.
         super.onCreate(savedInstanceState);
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE | WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 //                cachePath = getFilesDir().getAbsolutePath() + "/mypics/photos/";
-        cachePath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/mypics/photos/";
+        ctailoringPath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/.lekepics/ctailoringPhotos/";
+        compressionImagePath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/.lekepics/compressionPhotos/";
 //        cachePath = _mActivity.getCacheDir().getAbsolutePath() + "/mypics/photos/";
         //        cachePath = getExternalCacheDir().getAbsolutePath() + "/mypics/photos/";
     }
@@ -318,7 +322,7 @@ public class PersonalInfoFragment extends BaseListFragment<PersonalInfoContract.
                 .pickType(ImagePickType.SINGLE)//设置选取类型(拍照、单选、多选)
                 .maxNum(1)//设置最大选择数量(拍照和单选都是1，修改后也无效)
                 .needCamera(true)//是否需要在界面中显示相机入口(类似微信)
-                .cachePath(cachePath)//自定义缓存路径
+                .cachePath(ctailoringPath)//自定义缓存路径
                 .doCrop(1, 1, 300, 300)//裁剪功能需要调用这个方法，多选模式下无效
                 .displayer(new CustomDisplayer())//自定义图片加载器，默认是Glide实现的,可自定义图片加载器
                 .start(this, REQUEST_CODE_CHOOSE);
@@ -333,27 +337,58 @@ public class PersonalInfoFragment extends BaseListFragment<PersonalInfoContract.
             if (resultList != null && resultList.size() > 0) {
                 ImageBean imageBean = resultList.get(0);
                 String imagePath = imageBean.getImagePath();
-                String imageName = ImageUtil.getPicNameFromPath(imagePath);
-                Log.e("PersonalInfoFragment", imagePath);
-                Log.e("PersonalInfoFragment", imageName);
-                OSSClientUtil.getInstance().uploadImgToOss(_mActivity, imageName, imagePath, new OSSClientUtil.UploadImageInterf() {
-                    @Override
-                    public void onSuccess(String url) {
-                        Bundle bundle = new Bundle();
-                        bundle.putBoolean("isAll", false);
-                        setFragmentResult(RESULT_OK, bundle);
-                        Message message = mHandler.obtainMessage();
-                        message.obj = url;
-                        message.what = 0x100;
-                        mHandler.sendMessage(message);
+                DialogManager.getInstance().showLoadingDialog();
+                if (FileUtil.getFileSize(imagePath) > 300) {
+                    File imageDir = new File(compressionImagePath);
+                    if (!imageDir.exists()) {
+                        imageDir.mkdirs();
                     }
+                    ImageUtil.compressionImage(_mActivity, new File(imagePath), compressionImagePath, new OnCompressListener() { //设置回调
+                        @Override
+                        public void onStart() {
+                            //压缩开始前调用，可以在方法内启动 loading UI
+                        }
 
-                    @Override
-                    public void onFail() {
+                        @Override
+                        public void onSuccess(File file) {
+                            // 压缩成功后调用，返回压缩后的图片文件
+                            String newImagepath = file.getAbsolutePath();
+                            String imageName = ImageUtil.getPicNameFromPath(newImagepath);
+                            uploadImage(imageName, newImagepath);
+                        }
 
-                    }
-                });
+                        @Override
+                        public void onError(Throwable e) {
+                            //当压缩过程出现问题时调用
+                            DialogManager.getInstance().dismiss();
+                        }
+                    });
+                } else {
+                    uploadImage(ImageUtil.getPicNameFromPath(imagePath), imagePath);
+                }
+
             }
         }
+    }
+
+
+    private void uploadImage(String imageName, String imagePath) {
+        OSSClientUtil.getInstance().uploadImgToOss(_mActivity, imageName, imagePath, new OSSClientUtil.UploadImageInterf() {
+            @Override
+            public void onSuccess(String url) {
+                Bundle bundle = new Bundle();
+                bundle.putBoolean("isAll", false);
+                setFragmentResult(RESULT_OK, bundle);
+                Message message = mHandler.obtainMessage();
+                message.obj = url;
+                message.what = 0x100;
+                mHandler.sendMessage(message);
+            }
+
+            @Override
+            public void onFail() {
+                DialogManager.getInstance().dismiss();
+            }
+        });
     }
 }

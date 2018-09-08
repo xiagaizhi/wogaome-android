@@ -9,6 +9,11 @@ import android.os.Build;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 
+import java.io.File;
+
+import top.zibin.luban.Luban;
+import top.zibin.luban.OnCompressListener;
+
 /**
  * 作者：Created by zhanyangyang on 2018/9/3 10:34
  * 邮箱：zhanyangyang@hzyushi.cn
@@ -126,5 +131,13 @@ public class ImageUtil {
         }
         return fileName;
 
+    }
+
+    public static void compressionImage(Context context, File oldImageFile, String targetDir, OnCompressListener compressListener) {
+        Luban.with(context)
+                .load(oldImageFile)                                   // 传人要压缩的图片
+                .ignoreBy(300)                                  // 忽略不压缩图片的大小
+                .setTargetDir(targetDir)                        // 设置压缩后文件存储位置
+                .setCompressListener(compressListener).launch();    //启动压缩
     }
 }
