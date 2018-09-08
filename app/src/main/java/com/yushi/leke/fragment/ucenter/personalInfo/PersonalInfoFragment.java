@@ -265,10 +265,14 @@ public class PersonalInfoFragment extends BaseListFragment<PersonalInfoContract.
              * 提交数据
              */
             if (TextUtils.equals("名字:", currentTabName)) {
-                DialogManager.getInstance().showLoadingDialog();
-                ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).edituserName(content))
-                        .useCache(false)
-                        .enqueue(editBaseHttpCallBack);
+                if (TextUtils.isEmpty(content)) {//名字为空不再上传服务器
+//                    DialogManager.getInstance().toast("昵称不能为空！");
+                } else {
+                    DialogManager.getInstance().showLoadingDialog();
+                    ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).edituserName(content))
+                            .useCache(false)
+                            .enqueue(editBaseHttpCallBack);
+                }
             } else if (TextUtils.equals("公司:", currentTabName)) {
                 DialogManager.getInstance().showLoadingDialog();
                 ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).editcompany(content))
