@@ -16,5 +16,6 @@ public interface CheckPhoneContract {
     interface Presenter extends Pr {
        boolean getVerifcationCode(String sessionId);
        void checkPhone(String code);
+       String getPhone();
     }
 }

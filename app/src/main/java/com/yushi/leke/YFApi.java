@@ -189,16 +189,56 @@ public interface YFApi {
     @FormUrlEncoded
     @POST("app/v1/uc/editMyBaseInfo")
     Call<ResponseBody>
-    editMyBaseInfo(//绑定手机发验证码
-                   @Field("avatar") String avatar,
-                   @Field("userName") String userName,
-                   @Field("company") String company,
-                   @Field("position") String position,
-                   @Field("motto") String motto,
-                   @Field("email") String email,
-                   @Field("city") String city,
-                   @Field("address") String address,
-                   @Field("gender") String gender);
+    editavatar(
+            @Field("avatar") String avatar);
+
+    @FormUrlEncoded
+    @POST("app/v1/uc/editMyBaseInfo")
+    Call<ResponseBody>
+    edituserName(
+            @Field("userName") String userName);
+
+    @FormUrlEncoded
+    @POST("app/v1/uc/editMyBaseInfo")
+    Call<ResponseBody>
+    editcompany(
+            @Field("company") String company);
+
+    @FormUrlEncoded
+    @POST("app/v1/uc/editMyBaseInfo")
+    Call<ResponseBody>
+    editposition(
+            @Field("position") String position);
+
+    @FormUrlEncoded
+    @POST("app/v1/uc/editMyBaseInfo")
+    Call<ResponseBody>
+    editmotto(
+            @Field("motto") String motto);
+
+    @FormUrlEncoded
+    @POST("app/v1/uc/editMyBaseInfo")
+    Call<ResponseBody>
+    editemail(
+            @Field("email") String email);
+
+    @FormUrlEncoded
+    @POST("app/v1/uc/editMyBaseInfo")
+    Call<ResponseBody>
+    editcity(
+            @Field("city") String city);
+
+    @FormUrlEncoded
+    @POST("app/v1/uc/editMyBaseInfo")
+    Call<ResponseBody>
+    editaddress(
+            @Field("address") String address);
+
+    @FormUrlEncoded
+    @POST("app/v1/uc/editMyBaseInfo")
+    Call<ResponseBody>
+    editgender(
+            @Field("gender") String gender);
 
     @FormUrlEncoded
     @POST("app/v1/trade/setTradePwdWithToken")

@@ -6,4 +6,4 @@ gradle.ext.versionName = "1.0.0"
 gradle.ext.compileSdkVersion = 27
 gradle.ext.minSdkVersion = 17
 gradle.ext.targetSdkVersion = 27
-gradle.ext.apiType=2//环境配置 0正式；1预发；2测试；3开发,4mock
+gradle.ext.apiType=3//环境配置 0正式；1预发；2测试；3开发,4mock

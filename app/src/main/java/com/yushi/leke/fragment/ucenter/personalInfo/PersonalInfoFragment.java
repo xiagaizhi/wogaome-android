@@ -14,6 +14,7 @@ import com.yufan.library.base.BaseListFragment;
 import com.yufan.library.bean.LocationBean;
 import com.yufan.library.manager.DialogManager;
 import com.yufan.library.util.CustomDisplayer;
+import com.yufan.library.util.FileUtil;
 import com.yufan.library.util.ImageUtil;
 import com.yufan.library.inter.ICallBack;
 import com.yufan.library.util.AreaUtil;
@@ -36,10 +37,12 @@ import com.yushi.leke.YFApi;
 import com.yushi.leke.util.OSSClientUtil;
 import com.yushi.leke.util.StringUtil;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 import me.drakeet.multitype.MultiTypeAdapter;
+import top.zibin.luban.OnCompressListener;
 
 /**
  * Created by zhanyangyang on 18/8/25.
@@ -53,15 +56,18 @@ public class PersonalInfoFragment extends BaseListFragment<PersonalInfoContract.
     private String currentTabName;
     private static final int REQUEST_CODE_CHOOSE = 0x100;
     private EditText currentEdit;
-    private String cachePath;
-    private Handler mHandler = new Handler(){
+    private String ctailoringPath;//裁剪过后
+    private String compressionImagePath;//压缩过后
+    private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            switch (msg.what){
+            switch (msg.what) {
                 case 0x100:
                     String url = (String) msg.obj;
-                    updateInfo(url, "", "", "", "", "", "", "", "");
+                    ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).editavatar(url))
+                            .useCache(false)
+                            .enqueue(editBaseHttpCallBack);
                     getVu().updateHead(url);
                     break;
             }
@@ -73,7 +79,8 @@ public class PersonalInfoFragment extends BaseListFragment<PersonalInfoContract.
         super.onCreate(savedInstanceState);
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE | WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 //                cachePath = getFilesDir().getAbsolutePath() + "/mypics/photos/";
-        cachePath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/mypics/photos/";
+        ctailoringPath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/.lekepics/ctailoringPhotos/";
+        compressionImagePath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/.lekepics/compressionPhotos/";
 //        cachePath = _mActivity.getCacheDir().getAbsolutePath() + "/mypics/photos/";
         //        cachePath = getExternalCacheDir().getAbsolutePath() + "/mypics/photos/";
     }
@@ -216,7 +223,10 @@ public class PersonalInfoFragment extends BaseListFragment<PersonalInfoContract.
         LocationBean county = AreaUtil.getInstance().getOptions3Items().get(options1).get(options2).get(options3);
         PersonalItem personalItem = (PersonalItem) list.get(7);
         personalItem.tabValue = province.getName() + city.getName() + county.getName();
-        updateInfo("", "", "", "", "", "", personalItem.tabValue, "", "");
+        DialogManager.getInstance().showLoadingDialog();
+        ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).editcity(personalItem.tabValue))
+                .useCache(false)
+                .enqueue(editBaseHttpCallBack);
     }
 
     @Override
@@ -224,9 +234,15 @@ public class PersonalInfoFragment extends BaseListFragment<PersonalInfoContract.
         PersonalItem personalItem = (PersonalItem) list.get(2);
         personalItem.tabValue = gender;
         if (TextUtils.equals("女", gender)) {
-            updateInfo("", "", "", "", "", "", "", "", "2");
+            DialogManager.getInstance().showLoadingDialog();
+            ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).editgender("2"))
+                    .useCache(false)
+                    .enqueue(editBaseHttpCallBack);
         } else {
-            updateInfo("", "", "", "", "", "", "", "", "1");
+            DialogManager.getInstance().showLoadingDialog();
+            ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).editgender("1"))
+                    .useCache(false)
+                    .enqueue(editBaseHttpCallBack);
         }
 
     }
@@ -248,74 +264,69 @@ public class PersonalInfoFragment extends BaseListFragment<PersonalInfoContract.
             /**
              * 提交数据
              */
-            if (TextUtils.isEmpty(content)) return;
             if (TextUtils.equals("名字:", currentTabName)) {
-                updateInfo("", content, "", "", "", "", "", "", "");
+                if (TextUtils.isEmpty(content)) {//名字为空不再上传服务器
+//                    DialogManager.getInstance().toast("昵称不能为空！");
+                } else {
+                    DialogManager.getInstance().showLoadingDialog();
+                    ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).edituserName(content))
+                            .useCache(false)
+                            .enqueue(editBaseHttpCallBack);
+                }
             } else if (TextUtils.equals("公司:", currentTabName)) {
-                updateInfo("", "", content, "", "", "", "", "", "");
+                DialogManager.getInstance().showLoadingDialog();
+                ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).editcompany(content))
+                        .useCache(false)
+                        .enqueue(editBaseHttpCallBack);
             } else if (TextUtils.equals("职务:", currentTabName)) {
-                updateInfo("", "", "", content, "", "", "", "", "");
+                DialogManager.getInstance().showLoadingDialog();
+                ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).editposition(content))
+                        .useCache(false)
+                        .enqueue(editBaseHttpCallBack);
             } else if (TextUtils.equals("一句话介绍:", currentTabName)) {
-                updateInfo("", "", "", "", content, "", "", "", "");
+                DialogManager.getInstance().showLoadingDialog();
+                ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).editmotto(content))
+                        .useCache(false)
+                        .enqueue(editBaseHttpCallBack);
             } else if (TextUtils.equals("邮箱:", currentTabName)) {
-                updateInfo("", "", "", "", "", content, "", "", "");
+                DialogManager.getInstance().showLoadingDialog();
+                ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).editemail(content))
+                        .useCache(false)
+                        .enqueue(editBaseHttpCallBack);
             } else if (TextUtils.equals("详情地址:", currentTabName)) {
-                updateInfo("", "", "", "", "", "", "", content, "");
+                DialogManager.getInstance().showLoadingDialog();
+                ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).editaddress(content))
+                        .useCache(false)
+                        .enqueue(editBaseHttpCallBack);
             }
         }
     }
 
-    private void updateInfo(String avatar, String userName, String company,
-                            String position, String motto, String email,
-                            String city, String address, String gender) {
-        DialogManager.getInstance().showLoadingDialog();
-        ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).editMyBaseInfo(avatar, userName, company,
-                position, motto, email, city, address, gender))
-                .useCache(false)
-                .enqueue(new BaseHttpCallBack() {
-                    @Override
-                    public void onSuccess(ApiBean mApiBean) {
+    private BaseHttpCallBack editBaseHttpCallBack = new BaseHttpCallBack() {
+        @Override
+        public void onSuccess(ApiBean mApiBean) {
 
-                    }
+        }
 
-                    @Override
-                    public void onError(int id, Exception e) {
+        @Override
+        public void onError(int id, Exception e) {
 
-                    }
+        }
 
-                    @Override
-                    public void onFinish() {
-                        DialogManager.getInstance().dismiss();
-                        Bundle bundle = new Bundle();
-                        bundle.putBoolean("isAll", false);
-                        setFragmentResult(RESULT_OK, bundle);
-                    }
-                });
-    }
+        @Override
+        public void onFinish() {
+            DialogManager.getInstance().dismiss();
+        }
+    };
 
 
     @Override
     public void choosePhotos() {
-//        Matisse.from(this)
-//                .choose(MimeType.allOf())
-//                .theme(R.style.Matisse_Zhihu)//主题，夜间模式R.style.Matisse_Dracula
-//                .countable(true)//是否显示选中数字
-//                .capture(true)//是否提供拍照功能
-//                .captureStrategy(new CaptureStrategy(false, "com.yushi.leke.fileprovider"))//存储地址
-//                .maxSelectable(1)//最大选择数
-//                //.addFilter(new GifSizeFilter(320, 320, 5 * Filter.K * Filter.K))//筛选条件
-//                .gridExpectedSize(getResources().getDimensionPixelSize(R.dimen.px300))//图片大小
-//                .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)//屏幕方向
-//                .thumbnailScale(0.85f)//缩放比例
-//                .imageEngine(new CustomGlideEngine())//图片加载方式
-//                .spanCount(50)
-//                .forResult(REQUEST_CODE_CHOOSE);//请求码
-
         new ImagePicker()
                 .pickType(ImagePickType.SINGLE)//设置选取类型(拍照、单选、多选)
                 .maxNum(1)//设置最大选择数量(拍照和单选都是1，修改后也无效)
                 .needCamera(true)//是否需要在界面中显示相机入口(类似微信)
-                .cachePath(cachePath)//自定义缓存路径
+                .cachePath(ctailoringPath)//自定义缓存路径
                 .doCrop(1, 1, 300, 300)//裁剪功能需要调用这个方法，多选模式下无效
                 .displayer(new CustomDisplayer())//自定义图片加载器，默认是Glide实现的,可自定义图片加载器
                 .start(this, REQUEST_CODE_CHOOSE);
@@ -330,27 +341,58 @@ public class PersonalInfoFragment extends BaseListFragment<PersonalInfoContract.
             if (resultList != null && resultList.size() > 0) {
                 ImageBean imageBean = resultList.get(0);
                 String imagePath = imageBean.getImagePath();
-                String imageName = ImageUtil.getPicNameFromPath(imagePath);
-                Log.e("PersonalInfoFragment", imagePath);
-                Log.e("PersonalInfoFragment", imageName);
-                OSSClientUtil.getInstance().uploadImgToOss(_mActivity, imageName, imagePath, new OSSClientUtil.UploadImageInterf() {
-                    @Override
-                    public void onSuccess(String url) {
-                        Bundle bundle = new Bundle();
-                        bundle.putBoolean("isAll", false);
-                        setFragmentResult(RESULT_OK, bundle);
-                        Message message= mHandler.obtainMessage();
-                        message.obj = url;
-                        message.what = 0x100;
-                        mHandler.sendMessage(message);
+                DialogManager.getInstance().showLoadingDialog();
+                if (FileUtil.getFileSize(imagePath) > 300) {
+                    File imageDir = new File(compressionImagePath);
+                    if (!imageDir.exists()) {
+                        imageDir.mkdirs();
                     }
+                    ImageUtil.compressionImage(_mActivity, new File(imagePath), compressionImagePath, new OnCompressListener() { //设置回调
+                        @Override
+                        public void onStart() {
+                            //压缩开始前调用，可以在方法内启动 loading UI
+                        }
 
-                    @Override
-                    public void onFail() {
+                        @Override
+                        public void onSuccess(File file) {
+                            // 压缩成功后调用，返回压缩后的图片文件
+                            String newImagepath = file.getAbsolutePath();
+                            String imageName = ImageUtil.getPicNameFromPath(newImagepath);
+                            uploadImage(imageName, newImagepath);
+                        }
 
-                    }
-                });
+                        @Override
+                        public void onError(Throwable e) {
+                            //当压缩过程出现问题时调用
+                            DialogManager.getInstance().dismiss();
+                        }
+                    });
+                } else {
+                    uploadImage(ImageUtil.getPicNameFromPath(imagePath), imagePath);
+                }
+
             }
         }
+    }
+
+
+    private void uploadImage(String imageName, String imagePath) {
+        OSSClientUtil.getInstance().uploadImgToOss(_mActivity, imageName, imagePath, new OSSClientUtil.UploadImageInterf() {
+            @Override
+            public void onSuccess(String url) {
+                Bundle bundle = new Bundle();
+                bundle.putBoolean("isAll", false);
+                setFragmentResult(RESULT_OK, bundle);
+                Message message = mHandler.obtainMessage();
+                message.obj = url;
+                message.what = 0x100;
+                mHandler.sendMessage(message);
+            }
+
+            @Override
+            public void onFail() {
+                DialogManager.getInstance().dismiss();
+            }
+        });
     }
 }

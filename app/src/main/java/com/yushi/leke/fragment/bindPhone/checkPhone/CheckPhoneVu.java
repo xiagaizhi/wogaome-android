@@ -47,7 +47,7 @@ public class CheckPhoneVu extends BaseVu<CheckPhoneContract.Presenter> implement
 
             @Override
             public String getPhone() {
-                return tv_phone.getText().toString();
+                return mPersenter.getPhone();
             }
 
 

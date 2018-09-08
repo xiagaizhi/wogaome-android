@@ -121,4 +121,9 @@ public class CheckPhoneFragment extends BaseFragment<CheckPhoneContract.IView> i
                     .enqueue(baseHttpCallBack2);
         }
     }
+
+    @Override
+    public String getPhone() {
+        return phoneNumber;
+    }
 }
