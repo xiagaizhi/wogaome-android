@@ -101,6 +101,11 @@ public class LoginFragment extends BaseFragment<LoginContract.IView> implements 
     @Override
     public void onWeixinLoginClick() {
 
+        if(!mShareUtils.isInstall(getActivity(),SHARE_MEDIA.WEIXIN)){
+            DialogManager.getInstance().toast("未安装微信");
+            return;
+        }
+
         DialogManager.getInstance().showLoadingDialog();
         mShareUtils.login(SHARE_MEDIA.WEIXIN, new ILoginCallback() {
             @Override
@@ -137,7 +142,7 @@ public class LoginFragment extends BaseFragment<LoginContract.IView> implements 
             @Override
             public void onFaild(String s) {
                 DialogManager.getInstance().dismiss();
-                DialogManager.getInstance().toast("取消失败");
+                DialogManager.getInstance().toast(s);
             }
 
             @Override
