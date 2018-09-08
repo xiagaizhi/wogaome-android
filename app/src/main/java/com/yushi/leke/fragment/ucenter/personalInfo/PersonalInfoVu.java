@@ -1,5 +1,6 @@
 package com.yushi.leke.fragment.ucenter.personalInfo;
 
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Handler;
@@ -19,6 +20,7 @@ import com.bumptech.glide.Glide;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.yufan.library.base.BaseListVu;
 import com.yufan.library.inject.AnnotateUtils;
+import com.yufan.library.inter.ICallBack;
 import com.yufan.library.util.AreaUtil;
 import com.yufan.library.view.ResizeLayout;
 import com.yufan.library.view.recycler.YFRecyclerView;
@@ -28,6 +30,7 @@ import com.yufan.library.inject.FindView;
 import com.yufan.library.inject.Title;
 import com.yufan.library.widget.StateLayout;
 import com.yufan.library.widget.AppToolbar;
+import com.yushi.leke.dialog.CommonListDialog;
 
 import java.util.List;
 
@@ -132,27 +135,31 @@ public class PersonalInfoVu extends BaseListVu<PersonalInfoContract.Presenter> i
 
     @Override
     public void showGenderPickerView(final List<String> genderList) {
-        OptionsPickerView pvOptions = new OptionsPickerBuilder(getContext(), new OnOptionsSelectListener() {
+        final CommonListDialog commonListDialog = new CommonListDialog(getContext())
+                .setNegativeName("取消")
+                .setTitle("选择性别");
+        commonListDialog.bindData(genderList, new ICallBack() {
             @Override
-            public void onOptionsSelect(int options1, int options2, int options3, View v) {
+            public void OnBackResult(Object... s) {
+                commonListDialog.dismiss();
                 mPersenter.resetTab();
-                mPersenter.selectGender(genderList.get(options1));
+                mPersenter.selectGender((String) s[0]);
             }
-        })
-                .setTitleText("性别选择")
-                .setDividerColor(Color.BLACK)
-                .setTextColorCenter(Color.BLACK)
-                .setContentTextSize(20)
-                .build();
-        pvOptions.setOnDismissListener(new OnDismissListener() {
+        });
+        commonListDialog.setCommonClickListener(new CommonListDialog.CommonDialogClick() {
             @Override
-            public void onDismiss(Object o) {
+            public void onClick(CommonListDialog commonListDialog) {
+                commonListDialog.dismiss();
                 mPersenter.resetTab();
             }
         });
-
-        pvOptions.setPicker(genderList);
-        pvOptions.show();
+        commonListDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                mPersenter.resetTab();
+            }
+        });
+        commonListDialog.show();
         mPersenter.resetVu();
     }
 
