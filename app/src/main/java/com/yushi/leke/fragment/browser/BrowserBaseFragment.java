@@ -224,15 +224,6 @@ public class BrowserBaseFragment extends BaseFragment<BrowserContract.View> impl
         CookieSyncManager.createInstance(getActivity());
         cookie.setAcceptCookie(true);
         cookie.setCookie(mIntentUrl, "token=" + UserManager.getInstance().getToken());
-        cookie.setCookie(mIntentUrl, "channelId=" + "");
-        cookie.setCookie(mIntentUrl, "type=2");
-        cookie.setCookie(mIntentUrl, "sid=" + "");
-        cookie.setCookie(mIntentUrl, "uniqueId=" + "");
-        cookie.setCookie(mIntentUrl, "apiVersion=" + "");
-        cookie.setCookie(mIntentUrl, "hardware=" + "");
-        cookie.setCookie(mIntentUrl, "cpu=" + "");
-        cookie.setCookie(mIntentUrl, "cpu_abi=" + Build.CPU_ABI);
-        cookie.setCookie(mIntentUrl, "product_cpu_abi=" + "");
         CookieSyncManager.getInstance().sync();
     }
 
