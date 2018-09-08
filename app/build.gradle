@@ -1,18 +1,22 @@
 apply plugin: 'com.android.application'
+
 android {
 
     compileSdkVersion gradle.compileSdkVersion
    // buildToolsVersion gradle.buildToolsVersion
     defaultConfig {
         applicationId "com.yushi.leke"
+        versionCode project.hasProperty('VERSION_CODE') ? Integer.parseInt(project.getProperty("VERSION_CODE")) : gradle.versionCode
+        versionName project.hasProperty('VERSION_NAME') ? project.getProperty("VERSION_NAME") : gradle.versionName
         minSdkVersion gradle.minSdkVersion
         targetSdkVersion gradle.targetSdkVersion
-        versionCode gradle.versionCode
-        versionName gradle.versionName
         aaptOptions.cruncherEnabled = false
         aaptOptions.useNewCruncher = false
         multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        if(project.hasProperty('API_HOST')){
+            gradle.apiType=  project.getProperty("API_HOST")
+        }
         buildConfigField "int", "API_TYPE", "${gradle.apiType}"
         ndk {
             abiFilters  'armeabi', "armeabi-v7a"

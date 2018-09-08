@@ -330,6 +330,11 @@ public interface YFApi {
             @Field("vCode") String vcode
     );
 
+    /**
+     * 判断手机号是否存在
+     * @param mobile
+     * @return
+     */
     @FormUrlEncoded
     @POST("/app/v1/uc/mobileExist")
     Call<ResponseBody>
