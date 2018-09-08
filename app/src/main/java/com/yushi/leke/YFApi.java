@@ -289,4 +289,12 @@ public interface YFApi {
             @Field("mobile") String mobile,
             @Field("vCode") String vcode
     );
+
+    @FormUrlEncoded
+    @POST("/app/v1/uc/mobileExist")
+    Call<ResponseBody>
+    mobileExist(
+            @Field("mobile") String mobile
+
+    );
 }

@@ -52,9 +52,11 @@ public class UpdatePhoneVu extends BaseVu<UpdatePhoneContract.Presenter> impleme
             }
 
             @Override
-            public boolean canShow() {
-                return !TextUtils.isEmpty(et_phone.getText());
+            public String getPhone() {
+                return et_phone.getText().toString();
             }
+
+
         });
 
         et_phone.addTextChangedListener(new TextWatcher() {

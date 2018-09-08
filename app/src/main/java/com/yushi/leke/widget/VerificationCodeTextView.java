@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.TextView;
@@ -13,7 +14,12 @@ import com.alibaba.verificationsdk.ui.IActivityCallback;
 import com.alibaba.verificationsdk.ui.VerifyActivity;
 import com.alibaba.verificationsdk.ui.VerifyType;
 import com.yufan.library.R;
+import com.yufan.library.api.ApiBean;
+import com.yufan.library.api.ApiManager;
+import com.yufan.library.api.BaseHttpCallBack;
 import com.yufan.library.manager.DialogManager;
+import com.yufan.library.util.CheckUtil;
+import com.yushi.leke.YFApi;
 
 import java.util.Map;
 
@@ -85,39 +91,54 @@ public class VerificationCodeTextView extends TextView {
                 if (onGetCodeClickListener == null) {
                     throw new RuntimeException("需要调用 setOnGetCodeClickListener");
                 }
-                if (!onGetCodeClickListener.canShow()) {
-                    DialogManager.getInstance().toast("请输入手机号");
+            String phone=    onGetCodeClickListener.getPhone();
+                if(CheckUtil.checkPhone(phone)){
+                    DialogManager.getInstance().toast("手机号不能为空");
                     return;
                 }
-
-                VerifyActivity.startSimpleVerifyUI(getContext(), VerifyType.NOCAPTCHA, "0335", null, new IActivityCallback() {
+                ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).mobileExist(phone)).enqueue(new BaseHttpCallBack() {
                     @Override
-                    public void onNotifyBackPressed() {
+                    public void onSuccess(ApiBean mApiBean) {
+                        verifyUI();
+                    }
+
+                    @Override
+                    public void onError(int id, Exception e) {
 
                     }
 
                     @Override
-                    public void onResult(int i, Map<String, String> map) {
-                        if (i == 1) {
+                    public void onFinish() {
 
-                            onGetCodeClickListener.getCode(map.get("sessionID"));
-                            setOnClickListener(null);
-                            Message msg = Message.obtain();
-                            msg.what = 0;
-                            msg.arg1 = 60;
-                            handler.sendMessage(msg);
-
-                        }
                     }
                 });
+            }
+        });
+    }
 
+    //滑动验证
+    public void verifyUI(){
+        VerifyActivity.startSimpleVerifyUI(getContext(), VerifyType.NOCAPTCHA, "0335", null, new IActivityCallback() {
+            @Override
+            public void onNotifyBackPressed() {
+
+            }
+            @Override
+            public void onResult(int i, Map<String, String> map) {
+                if (i == 1) {
+                    onGetCodeClickListener.getCode(map.get("sessionID"));
+                    setOnClickListener(null);
+                    Message msg = Message.obtain();
+                    msg.what = 0;
+                    msg.arg1 = 60;
+                    handler.sendMessage(msg);
+                }
             }
         });
     }
 
     public interface OnGetCodeClickListener {
         void getCode(String sessionID);
-
-        boolean canShow();
+        String  getPhone();
     }
 }

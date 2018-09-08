@@ -70,9 +70,11 @@ public class ResetPasswordVu extends BaseVu<ResetPasswordContract.Presenter> imp
             }
 
             @Override
-            public boolean canShow() {
-                return !TextUtils.isEmpty(et_phone.getText());
+            public String getPhone() {
+                return et_phone.getText().toString();
             }
+
+
         });
         cb_showeye.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override

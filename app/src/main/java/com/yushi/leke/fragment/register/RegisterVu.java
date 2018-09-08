@@ -72,12 +72,11 @@ public class RegisterVu extends BaseVu<RegisterContract.Presenter> implements Re
             @Override
             public void getCode(String  sessionId) {
                 mPersenter.getVerifcationCode(et_phone.getText().toString(),sessionId);
-
             }
 
             @Override
-            public boolean canShow() {
-                return !TextUtils.isEmpty(et_phone.getText());
+            public String getPhone() {
+                return et_phone.getText().toString();
             }
         });
         cb_showeye.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {

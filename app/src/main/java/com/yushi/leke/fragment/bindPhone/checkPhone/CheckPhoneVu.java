@@ -44,10 +44,13 @@ public class CheckPhoneVu extends BaseVu<CheckPhoneContract.Presenter> implement
             public void getCode(String sessionId) {
                 mPersenter.getVerifcationCode(sessionId);
             }
+
             @Override
-            public boolean canShow() {
-                return !TextUtils.isEmpty(tv_phone.getText());
+            public String getPhone() {
+                return tv_phone.getText().toString();
             }
+
+
         });
 
         et_verification_code.setOnFocusChangeListener(new View.OnFocusChangeListener() {

@@ -84,4 +84,16 @@ public class CheckUtil {
         return true;
 
     }
+
+    public static boolean checkPhone(String phone){
+        if(TextUtils.isEmpty(phone)){
+            DialogManager.getInstance().toast("手机号不能为空");
+            return false;
+        }
+        if(phone.length()!=11){
+            DialogManager.getInstance().toast("手机号格式不正确");
+            return false;
+        }
+        return true;
+    }
 }

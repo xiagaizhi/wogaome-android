@@ -116,9 +116,11 @@ public class ModifyLoginPwdVu extends BaseVu<ModifyLoginPwdContract.Presenter> i
             }
 
             @Override
-            public boolean canShow() {
-                return true;
+            public String getPhone() {
+                return tv_phone.getText().toString();
             }
+
+
         });
         et_verification_code.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override

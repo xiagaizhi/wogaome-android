@@ -66,10 +66,13 @@ public class BindPhoneVu extends BaseVu<BindPhoneContract.Presenter> implements 
             public void getCode(String sessionId) {
                 mPersenter.getVerifcationCode(sessionId,et_phone.getText().toString());
             }
+
             @Override
-            public boolean canShow() {
-                return !TextUtils.isEmpty(et_phone.getText());
+            public String getPhone() {
+                return et_phone.getText().toString();
             }
+
+
         });
 
         cb_showeye.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
