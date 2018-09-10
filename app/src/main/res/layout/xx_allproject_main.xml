@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:background="@color/white"
+    android:layout_height="wrap_content"
+    app:ignore="NamespaceTypo">
+
+    <LinearLayout
+        android:id="@+id/li"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Spinner
+            android:id="@+id/spinner_city"
+            android:layout_width="@dimen/px321"
+            android:layout_height="@dimen/px80"
+            android:layout_marginLeft="@dimen/px36"
+            android:layout_marginTop="@dimen/px50"
+            android:layout_weight="1"
+            android:background="@drawable/shape_bg_eee_27"
+            android:entries="@array/city_array" />
+        <Spinner
+            android:id="@+id/spinner_industy"
+            android:layout_weight="1"
+            android:entries="@array/city_array"
+            android:layout_marginLeft="@dimen/px36"
+            android:layout_marginTop="@dimen/px50"
+            android:layout_marginRight="@dimen/px36"
+            android:layout_marginBottom="@dimen/px40"
+            android:background="@drawable/shape_bg_eee_27"
+            android:layout_width="@dimen/px321"
+            android:layout_height="@dimen/px80"/>
+    </LinearLayout>
+
+    <com.yufan.library.view.recycler.YFRecyclerView
+        android:layout_below="@+id/li"
+        android:layout_marginBottom="@dimen/px15"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/recyclerview"
+        app:needLoadMore="true"
+        android:background="#fff2f4f7"
+        />
+
+
+</RelativeLayout>

@@ -30,7 +30,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:drawablePadding="2dp"
-            android:drawableRight="@drawable/red_point_widget_bg_shape"
+            android:drawableRight="@drawable/ic_arrows_right"
             android:padding="@dimen/px11"
             android:text="查看所有项目"
             android:textColor="@color/color_gray_level6"

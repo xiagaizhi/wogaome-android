@@ -1,4 +1,4 @@
-package com.yushi.leke.fragment.exhibition.mytestmvp;
+package com.yushi.leke.fragment.exhibition.fourpage.allproject;
 
 import com.yufan.library.base.Pr;
 import com.yufan.library.base.VuList;
@@ -7,11 +7,13 @@ import com.yufan.library.base.VuList;
  * Created by mengfantao on 18/8/2.
  */
 
-public interface MytestpageContract {
+public interface allprojectsContract {
     interface IView extends VuList {
 
     }
+
     interface Presenter extends Pr {
+
 
     }
 }

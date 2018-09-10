@@ -1,4 +1,4 @@
-package com.yushi.leke.fragment.exhibition.mytestmvp;
+package com.yushi.leke.fragment.exhibition.fourpage;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -9,19 +9,19 @@ import com.yushi.leke.R;
 
 import me.drakeet.multitype.ItemViewBinder;
 
-public class unstartviewbinder2 extends ItemViewBinder<unstartinfo2,unstartviewbinder2.ViewHolder> {
-    public unstartviewbinder2(){
+public class onunstartBinder2 extends ItemViewBinder<onunstartinfo2,onunstartBinder2.ViewHolder> {
+    public onunstartBinder2(){
 
     }
 
     @NonNull
     @Override
     protected ViewHolder onCreateViewHolder(@NonNull LayoutInflater layoutInflater, @NonNull ViewGroup viewGroup) {
-        return new ViewHolder(layoutInflater.inflate(R.layout.xx_unstart_item,viewGroup,false));
+        return new ViewHolder(layoutInflater.inflate(R.layout.xx_onunstart_item,viewGroup,false));
     }
 
     @Override
-    protected void onBindViewHolder(@NonNull ViewHolder viewHolder, @NonNull unstartinfo2 unstartinfo2) {
+    protected void onBindViewHolder(@NonNull ViewHolder viewHolder, @NonNull onunstartinfo2 onunstartinfo2) {
 
     }
 
