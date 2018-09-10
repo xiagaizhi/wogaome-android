@@ -6,7 +6,7 @@ package com.yufan.library.api.config;
 
 public class ApiConfig {
     private String[] domains = new String[]{"http://app.leke-dev.com/", "http://app.leke-dev.com/", "http://app.leke.com/", "http://app.leke-dev.com/", "http://yapi.youximao.cn/mock/29/"};//域名
-    private String[] webDomains = new String[]{"http://web.leke-dev.com/", "http://web.leke-dev.com/", "http://web.leke.com/", "http://web.leke-dev.com/", "http://web.leke-dev.com/"};//h5主域名
+    private String[] webDomains = new String[]{"http://web.leke.com/", "http://web.leke.com/", "http://web.leke.com/", "http://web.leke-dev.com/", "http://web.leke.com/"};//h5主域名
     private int apiType;//环境
     private final String  protocol="http://alifile.leke.com/public/protocol.html";
 

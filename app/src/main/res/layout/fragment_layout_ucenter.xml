@@ -134,6 +134,8 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/tv_name"
                         android:layout_marginTop="@dimen/px20"
+                        android:singleLine="true"
+                        android:ellipsize="end"
                         android:text="这家伙太懒了，什么都没留下。"
                         android:textColor="@color/color_gray_level9"
                         android:textSize="@dimen/px24" />
