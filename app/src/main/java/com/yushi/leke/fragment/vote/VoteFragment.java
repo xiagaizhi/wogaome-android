@@ -1,6 +1,7 @@
 package com.yushi.leke.fragment.vote;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.DialogFragment;
 import android.text.Editable;
 import android.text.Html;
@@ -14,6 +15,8 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -35,6 +38,8 @@ public class VoteFragment extends DialogFragment implements View.OnClickListener
     private TextView tv_vote_num;
     private TextView tv_lkc_num;
     private EditText et_lkc;
+    private LinearLayout ll_edit_lkc;
+    private ImageView img_vote_success;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -50,11 +55,20 @@ public class VoteFragment extends DialogFragment implements View.OnClickListener
         //设置从底部弹出
         WindowManager.LayoutParams params = getDialog().getWindow().getAttributes();
         params.gravity = Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL;
+        getDialog().getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
         getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
         getDialog().getWindow().setAttributes(params);
         View view = inflater.inflate(R.layout.dialog_fragment_vote, container);
         initView(view);
         return view;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        getDialog().getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
+        getDialog().setCanceledOnTouchOutside(true);
+
     }
 
     private void initView(View view) {
@@ -70,6 +84,8 @@ public class VoteFragment extends DialogFragment implements View.OnClickListener
         tv_lkc_num = view.findViewById(R.id.tv_lkc_num);
         view.findViewById(R.id.img_vote_subtract).setOnClickListener(this);
         et_lkc = view.findViewById(R.id.et_lkc);
+        ll_edit_lkc = view.findViewById(R.id.ll_edit_lkc);
+        img_vote_success = view.findViewById(R.id.img_vote_success);
         et_lkc.setTextSize(17);
         view.findViewById(R.id.img_vote_add).setOnClickListener(this);
         tv_lkc_num.setText(Html.fromHtml("我的LKC余额:<<font color='#FA5A5A'>" + "12344" + "</font>(1LKC等于1票)"));
@@ -108,7 +124,18 @@ public class VoteFragment extends DialogFragment implements View.OnClickListener
                 dismiss();
                 break;
             case R.id.btn_vote:
-                DialogManager.getInstance().toast("提交数据");
+                if (TextUtils.equals("立即投票", btn_vote.getText().toString())) {
+                    DialogManager.getInstance().showLoadingDialog();
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            voteSuccessToUpdateView();
+                            DialogManager.getInstance().dismiss();
+                        }
+                    }, 500);
+                } else {
+                    resetView();
+                }
                 break;
             case R.id.img_vote_subtract:
                 if (getCurrentChoiceVoteNum() > 1) {
@@ -131,5 +158,20 @@ public class VoteFragment extends DialogFragment implements View.OnClickListener
             num = Long.parseLong(et_lkc.getText().toString());
         }
         return num;
+    }
+
+
+    private void voteSuccessToUpdateView() {
+        ll_edit_lkc.setVisibility(View.GONE);
+        img_vote_success.setVisibility(View.VISIBLE);
+        btn_vote.setText("继续投票");
+        btn_vote.setEnabled(true);
+    }
+
+    private void resetView() {
+        ll_edit_lkc.setVisibility(View.VISIBLE);
+        img_vote_success.setVisibility(View.GONE);
+        btn_vote.setText("立即投票");
+        et_lkc.setText("");
     }
 }
