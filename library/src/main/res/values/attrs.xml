@@ -62,4 +62,9 @@
             <enum name="bottomLine" value="1" />
         </attr>
     </declare-styleable>
+
+    <declare-styleable name="Verification">
+        <attr name="needMobileExist" format="boolean"/>
+
+    </declare-styleable>
 </resources>

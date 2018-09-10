@@ -2,6 +2,7 @@ package com.yushi.leke.widget;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
@@ -30,6 +31,7 @@ import java.util.Map;
 
 @SuppressLint("AppCompatCustomView")
 public class VerificationCodeTextView extends TextView {
+    private  boolean needMobileExist;
     private OnGetCodeClickListener onGetCodeClickListener;
 
     public void setOnGetCodeClickListener(OnGetCodeClickListener onGetCodeClickListener) {
@@ -64,15 +66,20 @@ public class VerificationCodeTextView extends TextView {
     }
 
     public VerificationCodeTextView(Context context) {
-        super(context);
+        super(context,null);
     }
 
     public VerificationCodeTextView(Context context, @Nullable AttributeSet attrs) {
-        super(context, attrs);
+        super(context, attrs,0);
     }
 
     public VerificationCodeTextView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        TypedArray arr = context.obtainStyledAttributes(attrs, R.styleable.Verification, 0, 0);
+        if (arr != null) {
+            needMobileExist = arr.getBoolean(R.styleable.Verification_needMobileExist, true);
+            arr.recycle();
+        }
     }
 
     @Override
@@ -99,7 +106,9 @@ public class VerificationCodeTextView extends TextView {
                 ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).mobileExist(phone)).enqueue(new BaseHttpCallBack() {
                     @Override
                     public void onSuccess(ApiBean mApiBean) {
-                        verifyUI();
+                        if(needMobileExist=="true".equals(mApiBean.data)){
+                            verifyUI();
+                        }
                     }
 
                     @Override
