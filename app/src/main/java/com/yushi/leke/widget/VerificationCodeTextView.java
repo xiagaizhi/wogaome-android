@@ -113,12 +113,12 @@ public class VerificationCodeTextView extends TextView {
                     @Override
                     public void onSuccess(ApiBean mApiBean) {
                         if(needMobileExist==1){
-                            if("true".equals(mApiBean.data)){
+                            if(Boolean.valueOf(mApiBean.data)){
                                 verifyUI();
                             }
                         }
                         if(needMobileExist==2){
-                            if("false".equals(mApiBean.data)){
+                            if(!Boolean.valueOf(mApiBean.data)){
                                 verifyUI();
                             }
                         }
