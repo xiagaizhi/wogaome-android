@@ -19,12 +19,7 @@ public class CheckUtil {
                 }
                 return false;
             }
-            if(phone.getText().length()!=11){
-                if(toast){
-                    DialogManager.getInstance().toast("手机号格式不正确");
-                }
-                return false;
-            }
+
         }
         if(password!=null){
             if(TextUtils.isEmpty(password.getText())){
@@ -33,9 +28,9 @@ public class CheckUtil {
                 }
                 return false;
             }
-            if(password.getText().length()<6||password.getText().length()>18){
+            if(password.getText().length()>18){
                 if(toast) {
-                    DialogManager.getInstance().toast("密码长度需大于6位，小于18位");
+                    DialogManager.getInstance().toast("密码长度需小于18位");
                 }
                 return false;
             }
@@ -90,7 +85,7 @@ public class CheckUtil {
             DialogManager.getInstance().toast("手机号不能为空");
             return false;
         }
-        if(phone.length()!=11){
+        if(phone.length()>11){
             DialogManager.getInstance().toast("手机号格式不正确");
             return false;
         }

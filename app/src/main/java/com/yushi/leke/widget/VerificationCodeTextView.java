@@ -114,11 +114,15 @@ public class VerificationCodeTextView extends TextView {
                         if(needMobileExist==1){
                             if(Boolean.valueOf(mApiBean.data)){
                                 verifyUI();
+                            }else {
+                                DialogManager.getInstance().toast("手机号未注册");
                             }
                         }
                         if(needMobileExist==2){
                             if(!Boolean.valueOf(mApiBean.data)){
                                 verifyUI();
+                            }else {
+                                DialogManager.getInstance().toast("手机号已注册");
                             }
                         }
                         DialogManager.getInstance().dismiss();
