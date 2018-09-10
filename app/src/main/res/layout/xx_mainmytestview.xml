@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:background="@color/white"
+    android:layout_height="wrap_content"
+    app:ignore="NamespaceTypo">
+
+    <RelativeLayout
+        android:id="@+id/re"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/px36"
+        android:paddingRight="@dimen/px24"
+        android:paddingTop="@dimen/px50"
+        android:paddingBottom="@dimen/px50">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="投票项目"
+            android:textColor="@color/color_black"
+            android:textSize="@dimen/px42" />
+
+        <TextView
+            android:id="@+id/tv_vote_checkall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:drawablePadding="2dp"
+            android:drawableRight="@drawable/red_point_widget_bg_shape"
+            android:padding="@dimen/px11"
+            android:text="查看所有项目"
+            android:textColor="@color/color_gray_level6"
+            android:textSize="@dimen/px28" />
+
+    </RelativeLayout>
+        <com.yufan.library.view.recycler.YFRecyclerView
+            android:layout_below="@+id/re"
+            android:layout_marginBottom="@dimen/px15"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/recyclerview"
+            app:needLoadMore="true"
+            android:background="#fff2f4f7"
+            />
+
+
+</RelativeLayout>

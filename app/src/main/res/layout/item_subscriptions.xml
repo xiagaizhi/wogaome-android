@@ -28,8 +28,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:orientation="vertical"
-      android:layout_toRightOf="@+id/sdv"
-
+        android:layout_toRightOf="@+id/sdv"
         android:layout_marginLeft="@dimen/px20"
         android:layout_height="wrap_content">
         <TextView

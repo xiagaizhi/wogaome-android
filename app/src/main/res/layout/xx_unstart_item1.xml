@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:background="@color/white"
+    android:layout_height="wrap_content"
+    app:ignore="NamespaceTypo">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/px36"
+        android:id="@+id/re">
+        <TextView
+            android:id="@+id/tv_pro_name"
+            android:layout_marginTop="@dimen/px50"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="永不放弃01期"
+            android:textColor="@color/color_black"
+            android:textSize="@dimen/px58"/>
+        <RelativeLayout
+            android:layout_below="@+id/tv_pro_name"
+            android:id="@+id/test"
+            android:layout_width="@dimen/px714"
+            android:layout_height="@dimen/px180">
+            <com.facebook.drawee.view.SimpleDraweeView
+                android:id="@+id/sdv1"
+                android:layout_marginTop="@dimen/px40"
+                fresco:roundAsCircle="true"
+                android:layout_height="@dimen/px100"
+                android:layout_width="@dimen/px100"
+                />
+            <com.facebook.drawee.view.SimpleDraweeView
+                android:id="@+id/sdv_white1"
+                android:layout_marginLeft="@dimen/px70"
+                android:layout_marginTop="@dimen/px35"
+                fresco:roundAsCircle="true"
+                android:layout_height="@dimen/px110"
+                fresco:overlayImage="@color/white"
+                android:layout_width="@dimen/px110"
+                />
+            <com.facebook.drawee.view.SimpleDraweeView
+                android:id="@+id/sdv2"
+                android:layout_marginTop="@dimen/px40"
+                android:layout_marginLeft="@dimen/px75"
+                fresco:roundAsCircle="true"
+                android:layout_height="@dimen/px100"
+                android:layout_width="@dimen/px100"/>
+            <com.facebook.drawee.view.SimpleDraweeView
+                android:id="@+id/sdv_white2"
+                android:layout_marginLeft="@dimen/px150"
+                android:layout_marginTop="@dimen/px35"
+                fresco:roundAsCircle="true"
+                android:layout_height="@dimen/px110"
+                fresco:overlayImage="@color/white"
+                android:layout_width="@dimen/px110"/>
+            <com.facebook.drawee.view.SimpleDraweeView
+                android:id="@+id/sdv3"
+                android:layout_marginTop="@dimen/px40"
+                android:layout_marginLeft="@dimen/px155"
+                fresco:roundAsCircle="true"
+                android:layout_height="@dimen/px100"
+                android:layout_width="@dimen/px100"/>
+                />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/test">
+
+            <TextView
+                android:id="@+id/tv_unstart_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="活动时间: 2018-09-11／2018-09-23"
+                android:textColor="@color/color_gray_level6"
+                android:textSize="@dimen/px28" />
+
+            <TextView
+                android:id="@+id/tv_unstart_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_unstart_time"
+                android:layout_marginTop="@dimen/px30"
+                android:text="主办方: 浙江宇石网络科技有限公司"
+                android:textColor="@color/color_gray_level6"
+                android:textSize="@dimen/px28" />
+
+            <TextView
+                android:id="@+id/tv_unstart_table1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_unstart_name"
+                android:layout_marginTop="@dimen/px30"
+                android:background="@drawable/shape_bg_tab_dash_blue6"
+                android:paddingBottom="@dimen/px2"
+                android:paddingLeft="@dimen/px12"
+                android:paddingRight="@dimen/px12"
+                android:paddingTop="@dimen/px2"
+                android:text="大赛"
+                android:textColor="@color/color_blue_level6"
+                android:textSize="@dimen/px22" />
+
+            <TextView
+                android:id="@+id/tv_unstart_table2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/tv_unstart_table1"
+                android:layout_marginLeft="@dimen/px20"
+                android:layout_alignBottom="@id/tv_unstart_table1"
+                android:background="@drawable/shape_bg_tab_dash_blue6"
+                android:paddingBottom="@dimen/px2"
+                android:paddingLeft="@dimen/px12"
+                android:paddingRight="@dimen/px12"
+                android:paddingTop="@dimen/px2"
+                android:text="天使基金"
+                android:textColor="@color/color_blue_level6"
+                android:textSize="@dimen/px22" />
+            <TextView
+                android:id="@+id/tv_unstart_table3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/tv_unstart_table2"
+                android:layout_marginLeft="@dimen/px20"
+                android:layout_alignBottom="@id/tv_unstart_table1"
+                android:background="@drawable/shape_bg_tab_dash_blue6"
+                android:paddingBottom="@dimen/px2"
+                android:paddingLeft="@dimen/px12"
+                android:paddingRight="@dimen/px12"
+                android:paddingTop="@dimen/px2"
+                android:text="路演"
+                android:textColor="@color/color_blue_level6"
+                android:textSize="@dimen/px22" />
+            <TextView
+                android:id="@+id/tv_unstart_table4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/tv_unstart_table3"
+                android:layout_marginLeft="@dimen/px20"
+                android:layout_alignBottom="@id/tv_unstart_table1"
+                android:background="@drawable/shape_bg_tab_dash_blue6"
+                android:paddingBottom="@dimen/px2"
+                android:paddingLeft="@dimen/px12"
+                android:paddingRight="@dimen/px12"
+                android:paddingTop="@dimen/px2"
+                android:text="创业"
+                android:textColor="@color/color_blue_level6"
+                android:textSize="@dimen/px22" />
+
+        </RelativeLayout>
+    </RelativeLayout>
+</RelativeLayout>

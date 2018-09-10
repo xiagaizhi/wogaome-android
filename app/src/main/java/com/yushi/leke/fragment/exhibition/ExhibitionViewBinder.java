@@ -63,12 +63,9 @@ this.callBack=callBack;
 
     static class ViewHolder extends RecyclerView.ViewHolder {
         public SimpleDraweeView sdv;
-
-
         ViewHolder(@NonNull View itemView) {
             super(itemView);
-
-      sdv=  itemView.findViewById(R.id.sdv);
+        sdv=  itemView.findViewById(R.id.sdv);
         }
     }
 
