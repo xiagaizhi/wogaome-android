@@ -252,7 +252,7 @@ public interface YFApi {
     @POST("app/v1/trade/modifyTradePwd")
     Call<ResponseBody>
     modifyTradePwd(//修改密码
-                   @Field("oldPwd") String oldPwd,
+                   @Field("token") String token,
                    @Field("newPwd") String newPwd
     );
 

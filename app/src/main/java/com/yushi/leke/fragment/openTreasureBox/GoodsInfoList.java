@@ -8,15 +8,15 @@ import java.util.List;
  */
 
 public class GoodsInfoList {
-    private String goodsType;
+    private int goodsType;
     private String treatureBoxDetailUrl;
     private List<GoodsInfo> goodsInfo;
 
-    public String getGoodsType() {
+    public int getGoodsType() {
         return goodsType;
     }
 
-    public void setGoodsType(String goodsType) {
+    public void setGoodsType(int goodsType) {
         this.goodsType = goodsType;
     }
 

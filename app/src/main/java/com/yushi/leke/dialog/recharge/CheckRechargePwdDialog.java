@@ -172,7 +172,7 @@ public class CheckRechargePwdDialog extends Dialog implements KeyboardAdapter.On
                         } else {
 //                            DialogManager.getInstance().toast("密码有误，请重新输入");
                             DialogManager.getInstance().toast("" + mApiBean.getMessage());
-                            mCheckRechargePwd.returnCheckResult(false, pwd);
+                            mCheckRechargePwd.returnCheckResult(false, "");
                         }
                     }
 
@@ -180,7 +180,7 @@ public class CheckRechargePwdDialog extends Dialog implements KeyboardAdapter.On
                     public void onFailure(int id, Exception e) {
                         super.onFailure(id, e);
                         DialogManager.getInstance().toast("原密码校验失败请重新输入！");
-                        mCheckRechargePwd.returnCheckResult(false, pwd);
+                        mCheckRechargePwd.returnCheckResult(false, "");
                     }
 
                     @Override
