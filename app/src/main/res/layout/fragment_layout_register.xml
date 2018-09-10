@@ -81,6 +81,7 @@
                     android:inputType="textPassword"
                     android:textSize="17sp"
                     android:background="@null"
+                    android:maxLength="18"
                     android:id="@+id/et_password"
                     android:layout_height="match_parent" />
                 <ImageView

@@ -149,7 +149,6 @@ public class MusicPlayerFragment extends BaseFragment<MusicPlayerContract.IView>
             controllerCompat.unregisterCallback(mCallback);
         }
     }
-
     @Override
     public void onDestroy() {
         super.onDestroy();
@@ -157,7 +156,6 @@ public class MusicPlayerFragment extends BaseFragment<MusicPlayerContract.IView>
         mHandler.removeCallbacksAndMessages(null);
         mExecutorService.shutdown();
     }
-
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -165,7 +163,6 @@ public class MusicPlayerFragment extends BaseFragment<MusicPlayerContract.IView>
         if (savedInstanceState == null) {
             updateFromParams(getArguments());
         }
-
         mMediaBrowser = new MediaBrowserCompat(getContext(),
                 new ComponentName(getContext(), MusicService.class), mConnectionCallback, null);
         getVu().getViewPager().setOffscreenPageLimit(2);

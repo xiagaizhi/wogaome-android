@@ -100,7 +100,6 @@ public class VerificationCodeTextView extends TextView {
                 }
             String phone=    onGetCodeClickListener.getPhone();
                 if(!CheckUtil.checkPhone(phone)){
-                    DialogManager.getInstance().toast("手机号不能为空");
                     return;
                 }
                 if(needMobileExist==0){
@@ -113,16 +112,20 @@ public class VerificationCodeTextView extends TextView {
                     @Override
                     public void onSuccess(ApiBean mApiBean) {
                         if(needMobileExist==1){
-                            if("true".equals(mApiBean.data)){
+                            if(Boolean.valueOf(mApiBean.data)){
                                 verifyUI();
+                            }else {
+                                DialogManager.getInstance().toast("手机号未注册");
                             }
                         }
                         if(needMobileExist==2){
-                            if("false".equals(mApiBean.data)){
+                            if(!Boolean.valueOf(mApiBean.data)){
                                 verifyUI();
+                            }else {
+                                DialogManager.getInstance().toast("手机号已注册");
                             }
                         }
-                        DialogManager.getInstance().dismiss();
+
 
                     }
 
@@ -133,7 +136,7 @@ public class VerificationCodeTextView extends TextView {
 
                     @Override
                     public void onFinish() {
-
+                        DialogManager.getInstance().dismiss();
                     }
                 });
             }

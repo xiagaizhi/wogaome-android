@@ -129,8 +129,8 @@ public class RechargeUtil {
      * @param type
      * @param setRechargeInterf
      */
-    public void setRechargePwd(Context context, String token, String originalPwd, int type, SetRechargeInterf setRechargeInterf) {
-        SetRechargePwdDialog setRechargePwdDialog = new SetRechargePwdDialog(context, type, token, originalPwd);
+    public void setRechargePwd(Context context, String token, int type, SetRechargeInterf setRechargeInterf) {
+        SetRechargePwdDialog setRechargePwdDialog = new SetRechargePwdDialog(context, type, token);
         setRechargePwdDialog.setmSetRechargeInterf(setRechargeInterf);
         setRechargePwdDialog.show();
     }
@@ -180,7 +180,7 @@ public class RechargeUtil {
 
 
     public interface CheckRechargePwdInterf {
-        void returnCheckResult(boolean isSuccess, String originalPwd);
+        void returnCheckResult(boolean isSuccess, String token);
     }
 
     public interface HaveRechargePwdInterf {

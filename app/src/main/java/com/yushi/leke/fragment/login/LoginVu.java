@@ -70,6 +70,7 @@ public class LoginVu extends BaseVu<LoginContract.Presenter> implements LoginCon
 
     @Override
     public void initStatusLayout(StateLayout stateLayout) {
+
         super.initStatusLayout(stateLayout);
     }
 

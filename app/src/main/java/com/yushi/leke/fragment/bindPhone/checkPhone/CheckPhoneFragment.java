@@ -88,10 +88,10 @@ public class CheckPhoneFragment extends BaseFragment<CheckPhoneContract.IView> i
             try {
                 JSONObject jsonObject = new JSONObject(mApiBean.getData());
                 bundle.putString("token", jsonObject.getString("token"));
-                setFragmentResult(RESULT_OK, bundle);
             } catch (JSONException e) {
                 e.printStackTrace();
-                pop();
+            } finally {
+                setFragmentResult(RESULT_OK, bundle);
             }
 
         }

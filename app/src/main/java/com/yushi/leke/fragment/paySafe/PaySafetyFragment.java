@@ -97,13 +97,13 @@ public class PaySafetyFragment extends BaseFragment<PaySafetyContract.IView> imp
             phoneNumber = data.getString("phoneNumber");
             String token = data.getString("token");
             getVu().updatePage(isHave, phoneNumber);
-            RechargeUtil.getInstance().setRechargePwd(_mActivity, token, null, SetRechargePwdDialog.SET_RECHARGE_PWD_BYTOKEN, this);
+            RechargeUtil.getInstance().setRechargePwd(_mActivity, token, SetRechargePwdDialog.SET_RECHARGE_PWD_BYTOKEN, this);
         } else if (requestCode == 200 && resultCode == RESULT_OK && data != null) {//手机验证码校验过返回,忘记密码
             String token = data.getString("token");
-            RechargeUtil.getInstance().setRechargePwd(_mActivity, token, null, SetRechargePwdDialog.SET_RECHARGE_PWD_BYTOKEN, this);
+            RechargeUtil.getInstance().setRechargePwd(_mActivity, token, SetRechargePwdDialog.SET_RECHARGE_PWD_BYTOKEN, this);
         } else if (requestCode == 300 && resultCode == RESULT_OK && data != null) {//初次设置交易密码手机验证通过，设置密码
             String token = data.getString("token");
-            RechargeUtil.getInstance().setRechargePwd(_mActivity, token, null, SetRechargePwdDialog.SET_RECHARGE_PWD_BYTOKEN, this);
+            RechargeUtil.getInstance().setRechargePwd(_mActivity, token, SetRechargePwdDialog.SET_RECHARGE_PWD_BYTOKEN, this);
         }
     }
 
@@ -117,9 +117,9 @@ public class PaySafetyFragment extends BaseFragment<PaySafetyContract.IView> imp
     }
 
     @Override
-    public void returnCheckResult(boolean isSuccess, String originalPwd) {
+    public void returnCheckResult(boolean isSuccess, String token) {
         if (isSuccess) {
-            RechargeUtil.getInstance().setRechargePwd(_mActivity, null, originalPwd, SetRechargePwdDialog.SET_RECHARGE_PWD_BYOLDPWD, this);
+            RechargeUtil.getInstance().setRechargePwd(_mActivity, token, SetRechargePwdDialog.SET_RECHARGE_PWD_BYOLDPWD, this);
         }
     }
 }
