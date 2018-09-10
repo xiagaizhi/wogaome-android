@@ -125,7 +125,7 @@ public class VerificationCodeTextView extends TextView {
                                 DialogManager.getInstance().toast("手机号已注册");
                             }
                         }
-                        DialogManager.getInstance().dismiss();
+
 
                     }
 
@@ -136,7 +136,7 @@ public class VerificationCodeTextView extends TextView {
 
                     @Override
                     public void onFinish() {
-
+                        DialogManager.getInstance().dismiss();
                     }
                 });
             }
