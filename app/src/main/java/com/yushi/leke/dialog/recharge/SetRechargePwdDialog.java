@@ -47,21 +47,19 @@ public class SetRechargePwdDialog extends Dialog implements KeyboardAdapter.OnKe
     private TextView mSetRechargeType;
     private RechargeUtil.SetRechargeInterf mSetRechargeInterf;
     private String token;
-    private String originalPwd;
 
 
     public void setmSetRechargeInterf(RechargeUtil.SetRechargeInterf setRechargeInterf) {
         this.mSetRechargeInterf = setRechargeInterf;
     }
 
-    public SetRechargePwdDialog(@NonNull Context context, final int type, String token, String originalPwd) {
+    public SetRechargePwdDialog(@NonNull Context context, final int type, String token) {
         super(context);
         View rootView = LayoutInflater.from(context).inflate(R.layout.layout_setrechargepassword, null);
         setContentView(rootView);
         this.mContext = context;
         this.type = type;
         this.token = token;
-        this.originalPwd = originalPwd;
         initView(rootView);
     }
 
@@ -200,7 +198,7 @@ public class SetRechargePwdDialog extends Dialog implements KeyboardAdapter.OnKe
         if (type == SET_RECHARGE_PWD_BYTOKEN || type == FORGET_RECHARGE_PWD_BYTOKEN) {
             setRechargePwdByToken(token, pwd);
         } else if (type == SET_RECHARGE_PWD_BYOLDPWD) {
-            setRechargePwdByOriginalPwd(originalPwd, pwd);
+            setRechargePwdByOriginalPwd(token, pwd);
         }
     }
 
@@ -250,7 +248,7 @@ public class SetRechargePwdDialog extends Dialog implements KeyboardAdapter.OnKe
     /**
      * 通过输入原有密码(修改密码)
      */
-    private void setRechargePwdByOriginalPwd(String originalPwd, String pwd) {
-        ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).modifyTradePwd(originalPwd, pwd)).useCache(false).enqueue(baseHttpCallBack);
+    private void setRechargePwdByOriginalPwd(String token, String pwd) {
+        ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).modifyTradePwd(token, pwd)).useCache(false).enqueue(baseHttpCallBack);
     }
 }
