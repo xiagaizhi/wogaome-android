@@ -31,7 +31,7 @@ import java.util.Map;
 
 @SuppressLint("AppCompatCustomView")
 public class VerificationCodeTextView extends TextView {
-    private  boolean needMobileExist;
+    private  int needMobileExist;
     private OnGetCodeClickListener onGetCodeClickListener;
 
     public void setOnGetCodeClickListener(OnGetCodeClickListener onGetCodeClickListener) {
@@ -66,18 +66,18 @@ public class VerificationCodeTextView extends TextView {
     }
 
     public VerificationCodeTextView(Context context) {
-        super(context,null);
+        this(context,null);
     }
 
     public VerificationCodeTextView(Context context, @Nullable AttributeSet attrs) {
-        super(context, attrs,0);
+        this(context, attrs,0);
     }
 
     public VerificationCodeTextView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         TypedArray arr = context.obtainStyledAttributes(attrs, R.styleable.Verification, 0, 0);
         if (arr != null) {
-            needMobileExist = arr.getBoolean(R.styleable.Verification_needMobileExist, true);
+            needMobileExist = arr.getInt(R.styleable.Verification_checkMobileExist,0 );
             arr.recycle();
         }
     }
@@ -103,12 +103,27 @@ public class VerificationCodeTextView extends TextView {
                     DialogManager.getInstance().toast("手机号不能为空");
                     return;
                 }
+                if(needMobileExist==0){
+                    //不需要校验手机号是否存在
+                    verifyUI();
+                    return;
+                }
+                DialogManager.getInstance().showLoadingDialog();
                 ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).mobileExist(phone)).enqueue(new BaseHttpCallBack() {
                     @Override
                     public void onSuccess(ApiBean mApiBean) {
-                        if(needMobileExist=="true".equals(mApiBean.data)){
-                            verifyUI();
+                        if(needMobileExist==1){
+                            if("true".equals(mApiBean.data)){
+                                verifyUI();
+                            }
                         }
+                        if(needMobileExist==2){
+                            if("false".equals(mApiBean.data)){
+                                verifyUI();
+                            }
+                        }
+                        DialogManager.getInstance().dismiss();
+
                     }
 
                     @Override

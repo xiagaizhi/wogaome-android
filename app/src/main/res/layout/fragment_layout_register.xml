@@ -141,7 +141,7 @@
                     android:textColor="@color/color_blue_level6"
                     android:textSize="15sp"
                     android:id="@+id/tv_vcode"
-                    app:needMobileExist="false"
+                    app:checkMobileExist="needMobileInexistence"
                     android:layout_height="wrap_content" />
 
 

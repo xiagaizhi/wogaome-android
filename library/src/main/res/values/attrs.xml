@@ -64,7 +64,12 @@
     </declare-styleable>
 
     <declare-styleable name="Verification">
-        <attr name="needMobileExist" format="boolean"/>
+        <attr name="checkMobileExist" format="enum">
+            <enum name="non" value="0" />
+            <enum name="needMobileExist" value="1" />
+            <enum name="needMobileInexistence" value="2" />
+        </attr>
+
 
     </declare-styleable>
 </resources>
