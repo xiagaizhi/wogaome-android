@@ -100,7 +100,6 @@ public class VerificationCodeTextView extends TextView {
                 }
             String phone=    onGetCodeClickListener.getPhone();
                 if(!CheckUtil.checkPhone(phone)){
-                    DialogManager.getInstance().toast("手机号不能为空");
                     return;
                 }
                 if(needMobileExist==0){
