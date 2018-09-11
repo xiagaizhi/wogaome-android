@@ -105,7 +105,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_below="@+id/tv_area_industry"
                 android:layout_marginTop="@dimen/px20"
-                android:drawableLeft="@drawable/ic_vote"
+                android:drawableLeft="@drawable/ic_vote_red"
                 android:text="10000票"
                 android:textColor="@color/message_widget_bg"
                 android:textSize="@dimen/px24" />

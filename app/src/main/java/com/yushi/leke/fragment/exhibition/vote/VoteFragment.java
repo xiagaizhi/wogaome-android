@@ -1,4 +1,4 @@
-package com.yushi.leke.fragment.vote;
+package com.yushi.leke.fragment.exhibition.vote;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -21,7 +21,6 @@ import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.yufan.library.manager.DialogManager;
-import com.yufan.library.util.PxUtil;
 import com.yushi.leke.R;
 
 /**

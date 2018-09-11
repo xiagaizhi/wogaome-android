@@ -66,17 +66,16 @@
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/ThemeActivity"></activity>
+
         <activity
             android:name="com.yushi.leke.wxapi.WXEntryActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-
         <activity
             android:name="com.yushi.leke.wxapi.WXPayEntryActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
-            android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <!-- Main activity for music browsing on phone -->
         <activity
@@ -101,10 +100,15 @@
             android:windowSoftInputMode="adjustResize|stateHidden"></activity>
 
         <activity
+            android:name="com.alipay.sdk.app.H5PayActivity"
+            android:configChanges="orientation|keyboardHidden|navigation"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
             android:name="com.alipay.sdk.auth.AuthActivity"
             android:configChanges="orientation|keyboardHidden|navigation"
             android:exported="false"
-            android:screenOrientation="behind"></activity>
+            android:screenOrientation="portrait" />
 
         <service
             android:name=".uamp.MusicService"
