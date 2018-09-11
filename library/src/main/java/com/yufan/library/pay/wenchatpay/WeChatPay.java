@@ -3,15 +3,16 @@ package com.yufan.library.pay.wenchatpay;
 import android.content.Context;
 import android.widget.Toast;
 
-import com.tencent.mm.sdk.modelpay.PayReq;
-import com.tencent.mm.sdk.openapi.IWXAPI;
-import com.tencent.mm.sdk.openapi.WXAPIFactory;
+import com.tencent.mm.opensdk.modelpay.PayReq;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import com.yufan.library.pay.PayMetadata;
 import com.yufan.library.util.ToastUtil;
 
 
 public class WeChatPay {
     private static WeChatPay weChatPay;
+
     public static WeChatPay getInstance() {
         if (weChatPay == null) {
             weChatPay = new WeChatPay();
