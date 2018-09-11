@@ -316,6 +316,10 @@ public class PersonalInfoFragment extends BaseListFragment<PersonalInfoContract.
         @Override
         public void onFinish() {
             DialogManager.getInstance().dismiss();
+            Bundle bundle = new Bundle();
+            bundle.putBoolean("isAll", false);
+            setFragmentResult(RESULT_OK, bundle);
+            DialogManager.getInstance().dismiss();
         }
     };
 
