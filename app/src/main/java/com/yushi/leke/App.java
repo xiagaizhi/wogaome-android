@@ -4,6 +4,9 @@ import android.content.Context;
 import android.net.Uri;
 import android.util.Log;
 
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.cache.CacheEntity;
+import com.lzy.okgo.cache.CacheMode;
 import com.tencent.android.tpush.XGCustomPushNotificationBuilder;
 import com.tencent.android.tpush.XGIOperateCallback;
 import com.tencent.android.tpush.XGPushConfig;
@@ -68,7 +71,7 @@ public class App extends BaseApplication {
                     }
                 });
         initCustomPushNotificationBuilder(getApplicationContext());
-
+        OkGo.getInstance().init(this);
     }
 
     /**

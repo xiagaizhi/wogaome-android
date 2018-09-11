@@ -43,10 +43,9 @@ public class RechargeUtil {
 
     /**
      * @param context
-     * @param extMsg
      * @param haveRechargePwdInterf
      */
-    public void haveRechargePwd(final Context context, final String extMsg, final HaveRechargePwdInterf haveRechargePwdInterf) {
+    public void haveRechargePwd(final Context context, final HaveRechargePwdInterf haveRechargePwdInterf) {
         ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).haveTradePwd())
                 .useCache(false)
                 .enqueue(new BaseHttpCallBack() {
@@ -61,7 +60,7 @@ public class RechargeUtil {
                                 if (!TextUtils.isEmpty(phoneNumber)) {//绑定手机
                                     if (isHave == 1) {//拥有交易密码,验证交易密码
                                         if (haveRechargePwdInterf != null) {
-                                            haveRechargePwdInterf.haveRechargePwd(true);
+                                            haveRechargePwdInterf.haveRechargePwd();
                                         }
                                     } else {//没有交易密码
 //                                            setRechargePwd(context, SetRechargePwdDialog.SET_RECHARGE_PWD, null);
@@ -184,7 +183,7 @@ public class RechargeUtil {
     }
 
     public interface HaveRechargePwdInterf {
-        void haveRechargePwd(boolean haveRechargePwe);
+        void haveRechargePwd();
 
         void bindPhone();
 
