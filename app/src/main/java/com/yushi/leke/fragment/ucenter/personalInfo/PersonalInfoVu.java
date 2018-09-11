@@ -110,9 +110,9 @@ public class PersonalInfoVu extends BaseListVu<PersonalInfoContract.Presenter> i
 
     @Override
     public void showCityPickerView() {
-        if (AreaUtil.getInstance().getOptions1Items() == null ||
-                AreaUtil.getInstance().getOptions2Items() == null ||
-                AreaUtil.getInstance().getOptions3Items() == null) {
+        if (AreaUtil.getInstance().getOptions1Items().size() == 0 ||
+                AreaUtil.getInstance().getOptions2Items().size() == 0 ||
+                AreaUtil.getInstance().getOptions3Items().size() == 0) {
             new AsyncTask<Void, Void, Void>() {
                 @Override
                 protected Void doInBackground(Void... voids) {
@@ -178,6 +178,11 @@ public class PersonalInfoVu extends BaseListVu<PersonalInfoContract.Presenter> i
     }
 
     private void toShowCityPickView() {
+        if (AreaUtil.getInstance().getOptions1Items().size() == 0 ||
+                AreaUtil.getInstance().getOptions2Items().size() == 0 ||
+                AreaUtil.getInstance().getOptions3Items().size() == 0) {
+            return;
+        }
         OptionsPickerView pvOptions = new OptionsPickerBuilder(getContext(), new OnOptionsSelectListener() {
             @Override
             public void onOptionsSelect(int options1, int options2, int options3, View v) {

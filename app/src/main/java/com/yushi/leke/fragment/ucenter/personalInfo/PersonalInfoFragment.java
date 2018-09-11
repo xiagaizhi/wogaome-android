@@ -158,13 +158,17 @@ public class PersonalInfoFragment extends BaseListFragment<PersonalInfoContract.
         list.add(new PersonalItem("详情地址:", "" + address, "请填写您的详细地址", false, true));
         adapter.setItems(list);
         vu.getRecyclerView().getAdapter().notifyDataSetChanged();
-        new AsyncTask<Void, Void, Void>() {
-            @Override
-            protected Void doInBackground(Void... voids) {
-                AreaUtil.getInstance().init(getContext());
-                return null;
-            }
-        }.execute();
+        if (AreaUtil.getInstance().getOptions1Items().size() == 0 ||
+                AreaUtil.getInstance().getOptions2Items().size() == 0 ||
+                AreaUtil.getInstance().getOptions3Items().size() == 0) {
+            new AsyncTask<Void, Void, Void>() {
+                @Override
+                protected Void doInBackground(Void... voids) {
+                    AreaUtil.getInstance().init(getContext());
+                    return null;
+                }
+            }.execute();
+        }
         genderList.add("男");
         genderList.add("女");
     }

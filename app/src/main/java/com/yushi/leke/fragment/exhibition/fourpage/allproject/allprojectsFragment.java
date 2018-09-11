@@ -5,9 +5,18 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.View;
 
+import com.yufan.library.api.ApiManager;
 import com.yufan.library.base.BaseListFragment;
+import com.yufan.library.bean.LocationBean;
 import com.yufan.library.inject.VuClass;
 import com.yufan.library.inter.ICallBack;
+import com.yufan.library.manager.DialogManager;
+import com.yufan.library.util.AreaUtil;
+import com.yushi.leke.YFApi;
+import com.yushi.leke.fragment.ucenter.personalInfo.PersonalItem;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import me.drakeet.multitype.MultiTypeAdapter;
 
@@ -17,12 +26,19 @@ import me.drakeet.multitype.MultiTypeAdapter;
 @VuClass(allprojectsVu.class)
 public class allprojectsFragment extends BaseListFragment<allprojectsContract.IView> implements allprojectsContract.Presenter {
     MultiTypeAdapter adapter;
+    private List<PersonalItem> tempList = new ArrayList<>();
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         init();
     }
 
+    @Override
+    public String selectedCityInfo(int options1, int options2) {
+        LocationBean province = AreaUtil.getInstance().getOptions1Items().get(options1);
+        LocationBean city = AreaUtil.getInstance().getOptions2Items().get(options1).get(options2);
+        return city.getName();
+    }
     @Override
     public void onLoadMore(int index) {
 
@@ -44,4 +60,5 @@ public class allprojectsFragment extends BaseListFragment<allprojectsContract.IV
         adapter.setItems(list);
         vu.getRecyclerView().getAdapter().notifyDataSetChanged();
     }
+
 }
