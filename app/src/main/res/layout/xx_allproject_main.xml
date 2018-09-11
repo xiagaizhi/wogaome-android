@@ -11,27 +11,47 @@
     <LinearLayout
         android:id="@+id/li"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <Spinner
-            android:id="@+id/spinner_city"
-            android:layout_width="@dimen/px321"
-            android:layout_height="@dimen/px80"
-            android:layout_marginLeft="@dimen/px36"
-            android:layout_marginTop="@dimen/px50"
+        android:layout_height="wrap_content"
+        android:paddingRight="@dimen/px36"
+        android:paddingTop="@dimen/px50"
+        android:paddingLeft="@dimen/px36"
+        android:paddingBottom="@dimen/px40">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/px18"
+            android:layout_weight="1">
+            <TextView
+                android:id="@+id/tv_choose_city"
+                android:background="@drawable/shape_bg_smallr"
+                android:layout_width="match_parent"
+                android:singleLine="true"
+                android:layout_height="@dimen/px80"
+                android:drawablePadding="-15dp"
+                android:gravity="center"
+                android:drawableRight="@drawable/ic_arr_godownbig"
+                android:text="请选择城市"
+                android:textSize="30px" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@drawable/shape_bg_eee_27"
-            android:entries="@array/city_array" />
-        <Spinner
-            android:id="@+id/spinner_industy"
-            android:layout_weight="1"
-            android:entries="@array/city_array"
-            android:layout_marginLeft="@dimen/px36"
-            android:layout_marginTop="@dimen/px50"
-            android:layout_marginRight="@dimen/px36"
-            android:layout_marginBottom="@dimen/px40"
-            android:background="@drawable/shape_bg_eee_27"
-            android:layout_width="@dimen/px321"
-            android:layout_height="@dimen/px80"/>
+            android:layout_marginLeft="@dimen/px18"
+           >
+            <TextView
+                android:id="@+id/tv_choose_work"
+                android:singleLine="true"
+                android:background="@drawable/shape_bg_smallr"
+                android:drawableRight="@drawable/ic_arr_godownbig"
+                android:drawablePadding="-15dp"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/px80"
+                android:gravity="center"
+                android:text="请选择行业"
+                android:textSize="30px"
+                />
+        </LinearLayout>
     </LinearLayout>
 
     <com.yufan.library.view.recycler.YFRecyclerView

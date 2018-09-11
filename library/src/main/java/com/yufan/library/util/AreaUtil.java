@@ -1,6 +1,7 @@
 package com.yufan.library.util;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
 import com.yufan.library.bean.LocationBean;
@@ -9,6 +10,7 @@ import org.json.JSONArray;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by mengfantao on 18/4/12.
@@ -20,35 +22,31 @@ public class AreaUtil {
     private ArrayList<ArrayList<LocationBean>> options2Items = new ArrayList<>();
     private ArrayList<ArrayList<ArrayList<LocationBean>>> options3Items = new ArrayList<>();
     private static AreaUtil areaUtil = new AreaUtil();
-
     public ArrayList<LocationBean> getOptions1Items() {
         return options1Items;
     }
-
     public ArrayList<ArrayList<LocationBean>> getOptions2Items() {
         return options2Items;
     }
-
     public ArrayList<ArrayList<ArrayList<LocationBean>>> getOptions3Items() {
         return options3Items;
     }
-
     public static AreaUtil getInstance() {
         return areaUtil;
     }
-
-    private AreaUtil() {
-
-
-    }
-
+    private AreaUtil() { }
     public void init(Context context) {
         options1Items.clear();
         options2Items.clear();
         options3Items.clear();
         initJsonData(context);
     }
-
+    public boolean init(Context context,int a) {
+        options1Items.clear();
+        options2Items.clear();
+        options3Items.clear();
+        return initJsonData(context,a);
+    }
     private ArrayList<LocationBean> getSuperList(String jsonData) {
         ArrayList<LocationBean> items = new ArrayList<>();
         try {
@@ -105,6 +103,29 @@ public class AreaUtil {
              */
             options3Items.add(areaList);
         }
+
+    }
+    private boolean initJsonData(Context context, int a) {//解析数据
+
+        /**
+         * 注意：assets 目录下的Json文件仅供参考，实际使用可自行替换文件
+         * 关键逻辑在于循环体
+         *
+         * */
+        String provinceData = new GetJsonDataUtil().getJson(context, "china_city_data.json");//获取assets目录下的json文件数据
+        /**
+         * 添加省份数据
+         */
+        options1Items = getSuperList(provinceData);
+        for (int i = 0; i < options1Items.size(); i++) {
+            /**
+             * 添加城市数据
+             */
+            String cityData = options1Items.get(i).getCity();//城市json
+            ArrayList<LocationBean> cityList = getSuperList(cityData);
+            options2Items.add(cityList);
+        }
+        return true;
 
     }
 
