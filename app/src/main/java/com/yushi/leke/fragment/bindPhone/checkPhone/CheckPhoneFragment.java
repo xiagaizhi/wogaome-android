@@ -85,15 +85,10 @@ public class CheckPhoneFragment extends BaseFragment<CheckPhoneContract.IView> i
         @Override
         public void onSuccess(ApiBean mApiBean) {
             Bundle bundle = new Bundle();
-            try {
-                JSONObject jsonObject = new JSONObject(mApiBean.getData());
-                bundle.putString("token", jsonObject.getString("token"));
-            } catch (JSONException e) {
-                e.printStackTrace();
-            } finally {
-                setFragmentResult(RESULT_OK, bundle);
+            if (mApiBean != null && !TextUtils.isEmpty(mApiBean.getData())) {
+                bundle.putString("token", mApiBean.getData());
             }
-
+            setFragmentResult(RESULT_OK, bundle);
         }
 
         @Override
