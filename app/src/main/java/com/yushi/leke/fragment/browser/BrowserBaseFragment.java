@@ -11,6 +11,8 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 
+import com.alibaba.fastjson.JSON;
+import com.aliyun.vodplayer.utils.JsonUtil;
 import com.tencent.smtt.export.external.interfaces.IX5WebChromeClient.CustomViewCallback;
 import com.tencent.smtt.export.external.interfaces.JsResult;
 import com.tencent.smtt.export.external.interfaces.SslError;
@@ -26,6 +28,7 @@ import com.tencent.smtt.sdk.WebView;
 import com.tencent.smtt.sdk.WebViewClient;
 import com.tencent.smtt.utils.TbsLog;
 import com.yufan.library.Global;
+import com.yufan.library.api.ApiManager;
 import com.yufan.library.base.BaseFragment;
 import com.yufan.library.inject.VuClass;
 import com.yufan.library.manager.UserManager;
@@ -36,7 +39,9 @@ import com.yufan.library.view.ptr.PtrHandler;
 import com.yufan.library.webview.WVJBWebViewClient;
 import com.yushi.leke.dialog.recharge.PayDialog;
 
+import org.json.JSONException;
 import org.json.JSONObject;
+import org.json.JSONStringer;
 
 
 /**
@@ -47,6 +52,7 @@ public class BrowserBaseFragment extends BaseFragment<BrowserContract.View> impl
     private String TAG = "BrowserActivity";
     private ValueCallback<Uri> uploadFile;
     private String mIntentUrl;
+    private WVJBWebViewClient wVJBWebViewClient;
 
     //    private int REQUEST_CODE_CHOOSE=8;
     @Override
@@ -66,12 +72,13 @@ public class BrowserBaseFragment extends BaseFragment<BrowserContract.View> impl
     }
 
 
-    protected WebViewClient getWebViewClient() {
+    protected WVJBWebViewClient getWebViewClient() {
         return new BrowserWebViewClient(vu.getWebView());
     }
 
     private void initbrowser(final WebView webView) {
-        webView.setWebViewClient(getWebViewClient());
+        wVJBWebViewClient=   getWebViewClient();
+        webView.setWebViewClient(wVJBWebViewClient);
         vu.getPtr().setPtrHandler(new PtrHandler() {
             @Override
             public void onRefreshBegin(PtrFrameLayout frame) {
@@ -218,6 +225,16 @@ public class BrowserBaseFragment extends BaseFragment<BrowserContract.View> impl
         TbsLog.d("time-cost", "cost time: "
                 + (System.currentTimeMillis() - time));
         loadCookie(CookieManager.getInstance());
+        JSONObject browserData =new JSONObject(ApiManager.getInstance().getApiHeader(getContext()));
+        JSONObject jsonStringer=new JSONObject();
+        try {
+            jsonStringer.put("code",2000);
+            jsonStringer.put("message","");
+            jsonStringer.put("data",browserData);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        wVJBWebViewClient.callHandler("web_nativeParams",jsonStringer);
     }
 
     protected void loadCookie(CookieManager cookie) {

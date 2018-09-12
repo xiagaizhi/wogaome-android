@@ -72,6 +72,7 @@ public class ModifyLoginPwdFragment extends BaseFragment<ModifyLoginPwdContract.
             @Override
             public void onSuccess(ApiBean mApiBean) {
                 DialogManager.getInstance().toast("修改成功");
+                pop();
             }
 
             @Override
