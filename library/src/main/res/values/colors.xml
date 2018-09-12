@@ -11,6 +11,7 @@
     <color name="color_gray_level3">#333333</color>
     <color name="color_blue_level3">#00B2FF</color>
     <color name="color_blue_level6">#007AFF</color>
+    <color name="color_yellow_level0">#FFCC00</color>
     <color name="clolor_transparent">#00000000</color>
 
     <color name="color_E5E5E5">#e5e5e5</color>
@@ -33,6 +34,7 @@
     <color name="color_999999">#999999</color>
     <color name="color_151515">#151515</color>
     <color name="color_73000000">#73000000</color>
+
     <color name="color_EFBA45">#EFBA45</color>
     <color name="color_BA9542">#BA9542</color>
     <color name="color_f7f7f7">#f7f7f7</color>

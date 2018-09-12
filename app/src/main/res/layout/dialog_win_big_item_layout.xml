@@ -2,7 +2,12 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:fresco="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
+    android:orientation="vertical"
     android:layout_height="wrap_content">
+    <View
+        android:id="@+id/view_line_top"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px48"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -26,8 +31,7 @@
             android:id="@+id/ll_head"
             android:layout_width="@dimen/px160"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/px50"
-            android:layout_toRightOf="@+id/tv_rank"
+            android:layout_marginLeft="@dimen/px86"
             android:gravity="center_horizontal"
             android:orientation="vertical">
 
@@ -49,7 +53,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/px20"
-            android:layout_marginTop="@dimen/px52"
+            android:layout_marginTop="@dimen/px45"
             android:layout_toRightOf="@+id/ll_head"
             android:text="标题"
             android:textColor="@color/color_gray_level3"
@@ -61,7 +65,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/tv_title"
             android:layout_marginLeft="@dimen/px20"
-            android:layout_marginTop="@dimen/px30"
+            android:layout_marginTop="@dimen/px24"
             android:layout_toRightOf="@+id/ll_head"
             android:text="地区／行业"
             android:textColor="@color/color_gray_level6"
@@ -73,7 +77,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/tv_area_industry"
             android:layout_marginLeft="@dimen/px20"
-            android:layout_marginTop="@dimen/px20"
+            android:layout_marginTop="@dimen/px16"
             android:layout_toRightOf="@+id/ll_head"
             android:text="创业者"
             android:textColor="@color/color_gray_level6"
@@ -86,13 +90,14 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_below="@+id/tv_area_industry"
-            android:layout_marginTop="@dimen/px20"
-            android:drawableLeft="@drawable/ic_vote_red"
-            android:gravity="center"
+            android:layout_marginTop="@dimen/px16"
             android:text="1232票"
             android:textColor="@color/color_FA5A5A"
             android:textSize="@dimen/px24" />
-
     </RelativeLayout>
+    <View
+        android:id="@+id/view_line_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px43"/>
 
 </LinearLayout>

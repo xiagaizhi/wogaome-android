@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:fresco="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
+    android:orientation="vertical"
     android:layout_height="wrap_content">
 
     <RelativeLayout
@@ -26,7 +27,7 @@
             android:id="@+id/img_logo"
             android:layout_width="@dimen/px120"
             android:layout_height="@dimen/px120"
-            android:layout_toRightOf="@+id/tv_rank"
+            android:layout_marginLeft="@dimen/px87"
             fresco:roundedCornerRadius="@dimen/px12" />
 
         <TextView
@@ -43,9 +44,8 @@
             android:id="@+id/tv_area_industry"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tv_title"
+            android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/px20"
-            android:layout_marginTop="@dimen/px20"
             android:layout_toRightOf="@+id/img_logo"
             android:text="地区／行业"
             android:textColor="@color/color_gray_level6"
@@ -55,11 +55,10 @@
             android:id="@+id/tv_username"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tv_area_industry"
             android:layout_marginLeft="@dimen/px20"
-            android:layout_marginTop="@dimen/px20"
             android:layout_toRightOf="@+id/img_logo"
             android:text="创业者"
+            android:layout_alignParentBottom="true"
             android:textColor="@color/color_gray_level6"
             android:textSize="@dimen/px24" />
 
@@ -69,14 +68,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_below="@+id/tv_area_industry"
-            android:layout_marginTop="@dimen/px20"
-            android:drawableLeft="@drawable/ic_vote_red"
+            android:layout_alignParentBottom="true"
+            android:drawableLeft="@drawable/ic_vote_gray"
+            android:drawablePadding="@dimen/px9"
             android:gravity="center"
             android:text="1232票"
             android:textColor="@color/color_gray_level6"
             android:textSize="@dimen/px24" />
 
     </RelativeLayout>
+    <View
+        android:id="@+id/view_line"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px50"/>
 
 </LinearLayout>

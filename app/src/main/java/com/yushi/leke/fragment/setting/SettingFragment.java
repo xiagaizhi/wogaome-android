@@ -16,6 +16,7 @@ import android.view.View;
 import com.yufan.library.inject.VuClass;
 import com.yushi.leke.UIHelper;
 import com.yushi.leke.dialog.CommonDialog;
+import com.yushi.leke.fragment.exhibition.vote.WinlistDialogFragment;
 import com.yushi.leke.fragment.login.LoginFragment;
 import com.yushi.leke.fragment.main.MainFragment;
 import com.yushi.leke.fragment.setting.AccountAndSafety.AccountAndSafetyFragment;
@@ -97,9 +98,11 @@ public class SettingFragment extends BaseFragment<SettingContract.IView> impleme
 
     @Override
     public void logout() {
-        UserManager.getInstance().setToken("");
-        UserManager.getInstance().setUid("");
-        getRootFragment().startWithPopTo(UIHelper.creat(LoginFragment.class).build(), MainFragment.class, true);
+//        UserManager.getInstance().setToken("");
+//        UserManager.getInstance().setUid("");
+//        getRootFragment().startWithPopTo(UIHelper.creat(LoginFragment.class).build(), MainFragment.class, true);
+        WinlistDialogFragment winlistDialogFragment = new WinlistDialogFragment();
+        winlistDialogFragment.show(getFragmentManager(),"WinlistDialogFragment");
     }
 
     @Override

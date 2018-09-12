@@ -23,7 +23,7 @@ import java.util.List;
 
 public class WinlistDialogFragment extends DialogFragment implements View.OnClickListener {
     private RecyclerView recycler_win_list;
-    private List<WinListInfo> winListInfoList = new ArrayList<>();
+    private List<WinProjectInfo> winListInfoList = new ArrayList<>();
     private WinListAdapter mWinListAdapter;
 
     @Override
@@ -63,8 +63,12 @@ public class WinlistDialogFragment extends DialogFragment implements View.OnClic
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         recycler_win_list.setLayoutManager(layoutManager);
         recycler_win_list.setHasFixedSize(true);
-        mWinListAdapter = new WinListAdapter(winListInfoList);
+        mWinListAdapter = new WinListAdapter(getContext(),winListInfoList);
         recycler_win_list.setAdapter(mWinListAdapter);
+        for (int i = 0;i<10;i++){
+            winListInfoList.add(new WinProjectInfo());
+        }
+        mWinListAdapter.notifyDataSetChanged();
     }
 
     @Override
