@@ -7,6 +7,7 @@ import android.os.Bundle;
 import com.lwkandroid.imagepicker.ImagePicker;
 import com.lwkandroid.imagepicker.data.ImageBean;
 import com.lwkandroid.imagepicker.data.ImagePickType;
+import com.yufan.library.Global;
 import com.yufan.library.api.ApiBean;
 import com.yufan.library.api.ApiManager;
 import com.yufan.library.api.BaseHttpCallBack;
@@ -33,9 +34,9 @@ import android.view.WindowManager;
 import android.widget.EditText;
 
 import com.yufan.library.inject.VuClass;
+import com.yufan.library.util.StringUtil;
 import com.yushi.leke.YFApi;
 import com.yushi.leke.util.OSSClientUtil;
-import com.yushi.leke.util.StringUtil;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -56,8 +57,6 @@ public class PersonalInfoFragment extends BaseListFragment<PersonalInfoContract.
     private String currentTabName;
     private static final int REQUEST_CODE_CHOOSE = 0x100;
     private EditText currentEdit;
-    private String ctailoringPath;//裁剪过后
-    private String compressionImagePath;//压缩过后
     private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -78,11 +77,6 @@ public class PersonalInfoFragment extends BaseListFragment<PersonalInfoContract.
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE | WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
-//                cachePath = getFilesDir().getAbsolutePath() + "/mypics/photos/";
-        ctailoringPath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/.lekepics/ctailoringPhotos/";
-        compressionImagePath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/.lekepics/compressionPhotos/";
-//        cachePath = _mActivity.getCacheDir().getAbsolutePath() + "/mypics/photos/";
-        //        cachePath = getExternalCacheDir().getAbsolutePath() + "/mypics/photos/";
     }
 
 
@@ -334,7 +328,7 @@ public class PersonalInfoFragment extends BaseListFragment<PersonalInfoContract.
                 .pickType(ImagePickType.SINGLE)//设置选取类型(拍照、单选、多选)
                 .maxNum(1)//设置最大选择数量(拍照和单选都是1，修改后也无效)
                 .needCamera(true)//是否需要在界面中显示相机入口(类似微信)
-                .cachePath(ctailoringPath)//自定义缓存路径
+                .cachePath(Global.SAVE_TAILORING_IMAGE_PATH)//自定义缓存路径
                 .doCrop(1, 1, 300, 300)//裁剪功能需要调用这个方法，多选模式下无效
                 .displayer(new CustomDisplayer())//自定义图片加载器，默认是Glide实现的,可自定义图片加载器
                 .start(this, REQUEST_CODE_CHOOSE);
@@ -351,11 +345,7 @@ public class PersonalInfoFragment extends BaseListFragment<PersonalInfoContract.
                 String imagePath = imageBean.getImagePath();
                 DialogManager.getInstance().showLoadingDialog();
                 if (FileUtil.getFileSize(imagePath) > 300) {
-                    File imageDir = new File(compressionImagePath);
-                    if (!imageDir.exists()) {
-                        imageDir.mkdirs();
-                    }
-                    ImageUtil.compressionImage(_mActivity, new File(imagePath), compressionImagePath, new OnCompressListener() { //设置回调
+                    ImageUtil.compressionImage(_mActivity, new File(imagePath), Global.SAVE_COMPRESSION_IMAGE_PATH, new OnCompressListener() { //设置回调
                         @Override
                         public void onStart() {
                             //压缩开始前调用，可以在方法内启动 loading UI
@@ -378,11 +368,9 @@ public class PersonalInfoFragment extends BaseListFragment<PersonalInfoContract.
                 } else {
                     uploadImage(ImageUtil.getPicNameFromPath(imagePath), imagePath);
                 }
-
             }
         }
     }
-
 
     private void uploadImage(String imageName, String imagePath) {
         OSSClientUtil.getInstance().uploadImgToOss(_mActivity, imageName, imagePath, new OSSClientUtil.UploadImageInterf() {

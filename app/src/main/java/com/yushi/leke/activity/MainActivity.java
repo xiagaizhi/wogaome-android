@@ -20,6 +20,7 @@ import com.umeng.socialize.UMShareAPI;
 import com.yufan.library.base.BaseActivity;
 import com.yufan.library.inter.ICallBack;
 import com.yufan.library.manager.UserManager;
+import com.yufan.library.util.FileUtil;
 import com.yushi.leke.R;
 import com.yushi.leke.UIHelper;
 import com.yushi.leke.fragment.login.LoginFragment;
@@ -77,8 +78,8 @@ private String     TAG="MainActivity";
         // Connect a media browser just to get the media session token. There are other ways
         // this can be done, for example by sharing the session token directly.
         //创建媒体浏览客户端（MediaBrowserCompat）
-        mMediaBrowser = new MediaBrowserCompat(this,
-                new ComponentName(this, MusicService.class), mConnectionCallback, null);
+        mMediaBrowser = new MediaBrowserCompat(this, new ComponentName(this, MusicService.class), mConnectionCallback, null);
+        FileUtil.initFileAccess();
         if(!TextUtils.isEmpty(UserManager.getInstance().getToken())){
             loadRootFragment(R.id.activity_content_level0, UIHelper.creat(MainFragment.class).build());//.put(Global.BUNDLE_KEY_BROWSER_URL,"http://www.baidu.com")
         }else {

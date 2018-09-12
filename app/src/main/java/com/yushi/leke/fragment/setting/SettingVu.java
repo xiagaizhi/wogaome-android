@@ -5,6 +5,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.yufan.library.util.YFUtil;
 import com.yushi.leke.R;
 import com.yufan.library.base.BaseVu;
 import com.yufan.library.inject.FindLayout;
@@ -42,6 +43,7 @@ public class SettingVu extends BaseVu<SettingContract.Presenter> implements Sett
         rl_clear_cache.setOnClickListener(this);
         rl_current_version.setOnClickListener(this);
         rl_logout.setOnClickListener(this);
+        tv_current_version.setText(YFUtil.getVersionName());
     }
 
     @Override
