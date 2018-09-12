@@ -24,6 +24,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.yufan.library.inter.ICallBack;
 import com.yushi.leke.R;
 
 import me.drakeet.multitype.ItemViewBinder;
@@ -32,9 +33,9 @@ import me.drakeet.multitype.ItemViewBinder;
  * 订阅专栏 订阅 专辑
  */
 public class SubscriptionsViewBinder extends ItemViewBinder<SubscriptionInfo, SubscriptionsViewBinder.ViewHolder> {
-
-    public SubscriptionsViewBinder() {
-
+    private  ICallBack callBack;
+    public SubscriptionsViewBinder(ICallBack callBack) {
+this.callBack=callBack;
     }
 
     @Override
@@ -54,6 +55,14 @@ public class SubscriptionsViewBinder extends ItemViewBinder<SubscriptionInfo, Su
         } else {
             holder.view_bottom_line.setVisibility(View.VISIBLE);
         }
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(callBack!=null){
+                    callBack.OnBackResult(category);
+                }
+            }
+        });
     }
 
 

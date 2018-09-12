@@ -13,8 +13,8 @@ public interface ModifyLoginPwdContract {
     }
 
     interface Presenter extends Pr {
-        boolean getVerifcationCode();
+        void getVerifcationCode();
 
-        void modifyLoginPwd(String code);
+        void modifyLoginPwd(String code,String password);
     }
 }

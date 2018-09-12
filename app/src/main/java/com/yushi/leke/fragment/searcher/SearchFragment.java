@@ -17,6 +17,7 @@ import com.yufan.library.inter.ICallBack;
 import com.yufan.library.util.SoftInputUtil;
 import com.yufan.library.widget.anim.AFVerticalAnimator;
 import com.yushi.leke.UIHelper;
+import com.yushi.leke.fragment.album.MediaBrowserFragment;
 import com.yushi.leke.fragment.home.SubscriptionInfo;
 import com.yushi.leke.fragment.home.SubscriptionsViewBinder;
 import com.yushi.leke.fragment.searcher.activity.SearchActivityFragment;
@@ -42,7 +43,12 @@ public class SearchFragment extends BaseListFragment<SearchContract.IView> imple
         super.onViewCreated(view, savedInstanceState);
         adapter=new MultiTypeAdapter();
         adapter.register(SearchActionInfo.class,new SearchActionViewBinder());
-        adapter.register(SubscriptionInfo.class,new SubscriptionsViewBinder());
+        adapter.register(SubscriptionInfo.class,new SubscriptionsViewBinder(new ICallBack() {
+            @Override
+            public void OnBackResult(Object... s) {
+                getRootFragment().start(UIHelper.creat(MediaBrowserFragment.class).build());
+            }
+        }));
         adapter.register(String.class,new SearchTabTitleViewBinder());
         adapter.register(SearchBottomInfo.class,new SearchTabBottomViewBinder(new ICallBack() {
             @Override

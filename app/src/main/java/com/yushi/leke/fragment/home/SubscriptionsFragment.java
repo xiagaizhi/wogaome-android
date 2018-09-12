@@ -13,7 +13,9 @@ import com.yufan.library.inter.ICallBack;
 import com.yufan.library.view.recycler.PageInfo;
 import com.yushi.leke.UIHelper;
 import com.yushi.leke.activity.MusicPlayerActivity;
+import com.yushi.leke.fragment.album.MediaBrowserFragment;
 import com.yushi.leke.fragment.searcher.SearchFragment;
+
 import me.drakeet.multitype.MultiTypeAdapter;
 
 /**
@@ -37,10 +39,19 @@ public class SubscriptionsFragment extends BaseListFragment<SubscriptionsContrac
                     case SubscriptionsBannerViewBinder.BANNER_BINDER_SEARCH:
                         onSearchBarClick();
                         break;
+                        case SubscriptionsBannerViewBinder.BANNER_BINDER_ITEM:
+                            getRootFragment().start(UIHelper.creat(MediaBrowserFragment.class).build());
+
+                            break;
                 }
             }
         }));
-        adapter.register(SubscriptionInfo.class,new SubscriptionsViewBinder());
+        adapter.register(SubscriptionInfo.class,new SubscriptionsViewBinder(new ICallBack() {
+            @Override
+            public void OnBackResult(Object... s) {
+                getRootFragment().start(UIHelper.creat(MediaBrowserFragment.class).build());
+            }
+        }));
         vu.getRecyclerView().setAdapter(adapter);
         list.add(new SubscriptionBanner());
         list.add(new SubscriptionInfo(false,"http://oss.cyzone.cn/2018/0830/20180830040720965.jpg"));

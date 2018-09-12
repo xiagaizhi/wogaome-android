@@ -15,7 +15,6 @@ import com.yushi.leke.bean.Person;
 import com.yushi.leke.fragment.main.MainFragment;
 import com.yushi.leke.fragment.vodplayer.VodPlayerFragment;
 import com.yushi.leke.fragment.wallet.MyWalletFragment;
-import com.yushi.leke.uamp.ui.MediaBrowserFragment;
 import com.yushi.leke.share.ShareMenuActivity;
 
 import java.util.List;

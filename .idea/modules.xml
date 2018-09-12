@@ -9,6 +9,7 @@
       <module fileurl="file://$PROJECT_DIR$/multi-type/multi-type.iml" filepath="$PROJECT_DIR$/multi-type/multi-type.iml" />
       <module fileurl="file://$PROJECT_DIR$/musicplayer/musicplayer.iml" filepath="$PROJECT_DIR$/musicplayer/musicplayer.iml" />
       <module fileurl="file://$PROJECT_DIR$/okhttpdownload/okhttpdownload.iml" filepath="$PROJECT_DIR$/okhttpdownload/okhttpdownload.iml" />
+      <module fileurl="file://$PROJECT_DIR$/okhttpdownload/okhttpdownload.iml" filepath="$PROJECT_DIR$/okhttpdownload/okhttpdownload.iml" />
       <module fileurl="file://$PROJECT_DIR$/share/share.iml" filepath="$PROJECT_DIR$/share/share.iml" />
     </modules>
   </component>

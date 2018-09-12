@@ -14,6 +14,8 @@ import com.yufan.library.inject.VuClass;
 import com.yufan.library.inter.ICallBack;
 import com.yufan.library.util.SoftInputUtil;
 import com.yufan.library.widget.anim.AFVerticalAnimator;
+import com.yushi.leke.UIHelper;
+import com.yushi.leke.fragment.album.MediaBrowserFragment;
 import com.yushi.leke.fragment.home.SubscriptionInfo;
 import com.yushi.leke.fragment.home.SubscriptionsViewBinder;
 import com.yushi.leke.fragment.searcher.SearchActionInfo;
@@ -38,7 +40,12 @@ public class SearchAudioFragment extends BaseListFragment<SearchAudioContract.IV
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         adapter = new MultiTypeAdapter();
-        adapter.register(SubscriptionInfo.class, new SubscriptionsViewBinder());
+        adapter.register(SubscriptionInfo.class, new SubscriptionsViewBinder(new ICallBack() {
+            @Override
+            public void OnBackResult(Object... s) {
+                getRootFragment().start(UIHelper.creat(MediaBrowserFragment.class).build());
+            }
+        }));
         adapter.register(String.class, new SearchTabTitleViewBinder());
         vu.getRecyclerView().setAdapter(adapter);
         adapter.setItems(list);

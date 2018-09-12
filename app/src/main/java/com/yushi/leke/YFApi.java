@@ -342,4 +342,30 @@ public interface YFApi {
             @Field("mobile") String mobile
 
     );
+    /**
+     * 发送修改手机密码验证码
+     * @param
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("/app/v1/security/sendChangePwdVcode")
+    Call<ResponseBody>
+    sendChangePwdVcode(
+
+
+    );
+    /**
+     * 修改密码
+     * @param
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("/app/v1/security/changePwdViaVcode")
+    Call<ResponseBody>
+    changePwdViaVcode(
+            @Field("vcode") String vcode,
+            @Field("pwd") String pwd
+
+    );
+
 }

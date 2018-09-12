@@ -1,4 +1,4 @@
-package com.yushi.leke.uamp.ui;
+package com.yushi.leke.fragment.album;
 
 import android.content.Intent;
 import android.support.v4.media.MediaBrowserCompat;

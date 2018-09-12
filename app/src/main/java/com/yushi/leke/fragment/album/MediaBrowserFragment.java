@@ -1,7 +1,8 @@
-package com.yushi.leke.uamp.ui;
+package com.yushi.leke.fragment.album;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.media.MediaBrowserCompat;
@@ -13,7 +14,9 @@ import android.widget.Toast;
 
 import com.yufan.library.base.BaseListFragment;
 import com.yufan.library.inject.VuClass;
+import com.yufan.library.view.recycler.PageInfo;
 import com.yushi.leke.fragment.test.CategoryItemViewBinder;
+import com.yushi.leke.uamp.ui.MediaBrowserProvider;
 import com.yushi.leke.uamp.utils.LogHelper;
 
 import java.util.List;
@@ -196,9 +199,16 @@ public class MediaBrowserFragment extends BaseListFragment<MediaBrowserContract.
 
     }
 
-
+    private Handler handler=new Handler();
     @Override
     public void onRefresh() {
-
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                getVu().getRecyclerView().getPTR().refreshComplete();
+                getVu(). getRecyclerView().getPageManager().setPageState(PageInfo.PAGE_STATE_NONE);
+            }
+        },1000);
     }
+
 }

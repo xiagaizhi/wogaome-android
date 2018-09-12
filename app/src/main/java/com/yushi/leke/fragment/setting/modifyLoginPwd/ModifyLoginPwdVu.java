@@ -182,7 +182,7 @@ public class ModifyLoginPwdVu extends BaseVu<ModifyLoginPwdContract.Presenter> i
         switch (v.getId()) {
             case R.id.bt_submit:
                 if (CheckUtil.checkInputState(null, null, et_verification_code, true)) {
-                    mPersenter.modifyLoginPwd(et_verification_code.getText().toString());
+                    mPersenter.modifyLoginPwd(et_verification_code.getText().toString(),et_password.getText().toString());
                 }
                 break;
         }

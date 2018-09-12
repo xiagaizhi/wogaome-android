@@ -58,7 +58,7 @@ public class SubscriptionsBannerViewBinder extends ItemViewBinder<SubscriptionBa
     private ICallBack callBack;
     public static final int BANNER_BINDER_MUSIC = 1;
     public static final int BANNER_BINDER_SEARCH = 2;
-
+    public static final int BANNER_BINDER_ITEM = 3;
     public SubscriptionsBannerViewBinder(ICallBack callBack) {
         this.callBack = callBack;
     }
@@ -135,7 +135,9 @@ public class SubscriptionsBannerViewBinder extends ItemViewBinder<SubscriptionBa
 
             @Override
             public void OnBannerClick(int position) {
-
+                if(callBack!=null){
+                    callBack.OnBackResult(BANNER_BINDER_ITEM);
+                }
             }
         });
         holder.mConvenientBanner.setIndicatorGravity(BannerConfig.CENTER);
