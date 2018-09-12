@@ -1,10 +1,12 @@
 package com.yufan.library.util;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Application;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
+import android.support.v4.app.ActivityCompat;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 
@@ -20,8 +22,6 @@ import java.net.URLEncoder;
  */
 
 public class YFUtil {
-
-
     public static int getVersionCode(String packageName) {
         int versionCode = 0;
         try {
@@ -31,6 +31,10 @@ public class YFUtil {
             versionCode = 0;
         }
         return versionCode;
+    }
+
+    public static int getVersionCode() {
+        return getVersionCode(BaseApplication.getInstance().getPackageName());
     }
 
     public static String getVersionName() {
@@ -49,18 +53,18 @@ public class YFUtil {
 
 
     //获取ｃｐｕ信息
-    public static String getCpuName(){
+    public static String getCpuName() {
 
-        try{
-            FileReader fr= new FileReader("/proc/cpuinfo");
+        try {
+            FileReader fr = new FileReader("/proc/cpuinfo");
             BufferedReader br = new BufferedReader(fr);
             String text = br.readLine();
-            String[] array = text.split(":\\s+",2);
-            for(int i = 0; i < array.length; i++){
+            String[] array = text.split(":\\s+", 2);
+            for (int i = 0; i < array.length; i++) {
             }
             fr.close();
             return array[1];
-        }catch (Exception e){
+        } catch (Exception e) {
 
             e.printStackTrace();
         }
@@ -68,9 +72,10 @@ public class YFUtil {
     }
 
 
-    public static  String getCpuProduct(){
-        return   getprop("ro.product.cpu.abi", "");
+    public static String getCpuProduct() {
+        return getprop("ro.product.cpu.abi", "");
     }
+
     @SuppressLint("WrongConstant")
     public static boolean hasInternet() {
         boolean flag;
@@ -78,8 +83,11 @@ public class YFUtil {
                 "connectivity")).getActiveNetworkInfo() != null;
         return flag;
     }
+
+
     /**
      * 获取系统指定属性值
+     *
      * @param key
      * @param defaultValue
      * @return 调用方法 getprop("ro.hardware","")
@@ -97,22 +105,20 @@ public class YFUtil {
         return value;
     }
 
-    public static String getIMEI() {
-        String reslut="";
+    public static String getIMEI(Context context) {
+        String reslut = "";
         try {
-            TelephonyManager tel = (TelephonyManager) BaseApplication.getInstance()
-                    .getSystemService(Context.TELEPHONY_SERVICE);
-            if(tel!=null){
+            TelephonyManager tel = (TelephonyManager) BaseApplication.getInstance().getSystemService(Context.TELEPHONY_SERVICE);
+            if (tel != null) {
+                if (ActivityCompat.checkSelfPermission(context, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+                    return reslut;
+                }
                 String deviceId = tel.getDeviceId();
-                if(!TextUtils.isEmpty(deviceId)){
-                    reslut= URLEncoder.encode(deviceId,"utf-8");
+                if (!TextUtils.isEmpty(deviceId)) {
+                    reslut = URLEncoder.encode(deviceId, "utf-8");
                 }
             }
-
-
-
         } catch (Exception e) {
-
             e.printStackTrace();
         }
         return reslut;

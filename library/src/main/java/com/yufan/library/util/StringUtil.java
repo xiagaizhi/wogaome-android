@@ -1,15 +1,13 @@
-package com.yushi.leke.util;
+package com.yufan.library.util;
 
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.text.Html;
-import android.text.Spannable;
 import android.text.Spanned;
 import android.text.TextUtils;
 
+import com.yufan.library.base.BaseApplication;
 import com.yufan.library.manager.DialogManager;
-import com.yushi.leke.App;
-import com.yushi.leke.fragment.wallet.SizeLabel;
 
 /**
  * 作者：Created by zhanyangyang on 2018/9/1 11:24
@@ -20,7 +18,7 @@ public class StringUtil {
     public static void copyTextToBoard(String string) {
         if (TextUtils.isEmpty(string))
             return;
-        ClipboardManager clip = (ClipboardManager) App.getInstance().getSystemService(Context.CLIPBOARD_SERVICE);
+        ClipboardManager clip = (ClipboardManager) BaseApplication.getInstance().getSystemService(Context.CLIPBOARD_SERVICE);
         clip.setText(string);
         DialogManager.getInstance().toast("复制成功");
     }

@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.yufan.library.util.CheckUtil;
+import com.yufan.library.util.StringUtil;
 import com.yufan.library.widget.LoginLineView;
 import com.yushi.leke.R;
 import com.yufan.library.base.BaseVu;
@@ -21,7 +22,6 @@ import com.yufan.library.inject.FindView;
 import com.yufan.library.inject.Title;
 import com.yufan.library.widget.StateLayout;
 import com.yufan.library.widget.AppToolbar;
-import com.yushi.leke.util.StringUtil;
 import com.yushi.leke.widget.VerificationCodeTextView;
 
 /**

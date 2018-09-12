@@ -6,6 +6,8 @@ import android.os.Environment;
 import android.os.StatFs;
 import android.text.TextUtils;
 
+import com.yufan.library.Global;
+
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -28,41 +30,25 @@ import java.util.Map;
  * @created 2012-3-21
  */
 public class FileUtil {
-
     /**
      * 初始化应用文件夹目录
      */
-//    public static void initFileAccess() {
-//        File rootDir = new File(AppConfig.AD_PATH);
-//        if (!rootDir.exists()) {
-//            rootDir.mkdirs();
-//        }
-//
-//        File imessageDir = new File(AppConfig.LOG_PATH);
-//        if (!imessageDir.exists()) {
-//            imessageDir.mkdirs();
-//        }
-//
-//        File imageDir = new File(AppConfig.CONFIG_PATH);
-//        if (!imageDir.exists()) {
-//            imageDir.mkdirs();
-//        }
-//
-//        File fileDir = new File(AppConfig.DEFAULT_SAVE_IMAGE_PATH);
-//        if (!fileDir.exists()) {
-//            fileDir.mkdirs();
-//        }
-//        File avatarDir = new File(AppConfig.INFO_PATH);
-//        if (!avatarDir.exists()) {
-//            avatarDir.mkdirs();
-//        }
-//
-//        try {
-//            createFile(Environment.getExternalStorageDirectory() + File.separator + "GameCat" + File.separator, ".nomedia").createNewFile();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
+    public static void initFileAccess() {
+        File rootDir = new File(Global.DEFAULT_SAVE_IMAGE_PATH);
+        if (!rootDir.exists()) {
+            rootDir.mkdirs();
+        }
+
+        File imessageDir = new File(Global.SAVE_COMPRESSION_IMAGE_PATH);
+        if (!imessageDir.exists()) {
+            imessageDir.mkdirs();
+        }
+
+        File imageDir = new File(Global.SAVE_TAILORING_IMAGE_PATH);
+        if (!imageDir.exists()) {
+            imageDir.mkdirs();
+        }
+    }
 
     /**
      * 写文本文件 在Android系统中，文件保存在 /data/data/PACKAGE_NAME/files 目录下
