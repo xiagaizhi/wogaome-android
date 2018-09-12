@@ -1,19 +1,22 @@
 package com.yushi.leke.fragment.exhibition.vote;
 
+
 import java.math.BigDecimal;
 
 /**
- * 作者：Created by zhanyangyang on 2018/9/12 09:30
+ * 作者：Created by zhanyangyang on 2018/9/12 13:18
  * 邮箱：zhanyangyang@hzyushi.cn
  */
 
-public class WinProjectInfo {
+public class VoteInitInfo {
     private String logo;
     private String title;
     private String address;
     private String industry;
+    private BigDecimal voteCount;
     private String entrepreneur;
-    private BigDecimal haveVote;
+    private BigDecimal lkc;
+    private boolean isHaveTradePwd;
 
     public String getLogo() {
         return logo;
@@ -47,6 +50,14 @@ public class WinProjectInfo {
         this.industry = industry;
     }
 
+    public BigDecimal getVoteCount() {
+        return voteCount;
+    }
+
+    public void setVoteCount(BigDecimal voteCount) {
+        this.voteCount = voteCount;
+    }
+
     public String getEntrepreneur() {
         return entrepreneur;
     }
@@ -55,11 +66,19 @@ public class WinProjectInfo {
         this.entrepreneur = entrepreneur;
     }
 
-    public BigDecimal getHaveVote() {
-        return haveVote;
+    public BigDecimal getLkc() {
+        return lkc;
     }
 
-    public void setHaveVote(BigDecimal haveVote) {
-        this.haveVote = haveVote;
+    public void setLkc(BigDecimal lkc) {
+        this.lkc = lkc;
+    }
+
+    public boolean isHaveTradePwd() {
+        return isHaveTradePwd;
+    }
+
+    public void setIsHaveTradePwd(boolean haveTradePwd) {
+        isHaveTradePwd = haveTradePwd;
     }
 }
