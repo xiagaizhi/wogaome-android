@@ -53,6 +53,7 @@ public class ModifyLoginPwdVu extends BaseVu<ModifyLoginPwdContract.Presenter> i
 
     @Override
     public void initView(View view) {
+        iv_clear_password.setOnClickListener(this);
         bt_submit.setOnClickListener(this);
         cb_showeye.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -184,6 +185,9 @@ public class ModifyLoginPwdVu extends BaseVu<ModifyLoginPwdContract.Presenter> i
                 if (CheckUtil.checkInputState(null, null, et_verification_code, true)) {
                     mPersenter.modifyLoginPwd(et_verification_code.getText().toString(),et_password.getText().toString());
                 }
+                break;
+            case R.id.iv_clear_password:
+                et_password.setText("");
                 break;
         }
     }

@@ -59,6 +59,8 @@ public class BindPhoneVu extends BaseVu<BindPhoneContract.Presenter> implements 
     TextView titleName;
 
     public void initView(View view) {
+        iv_clear_password.setOnClickListener(this);
+        iv_clear_phone.setOnClickListener(this);
         iv_clear_phone.setOnClickListener(this);
         bt_submit.setOnClickListener(this);
         verificationCodeTextView.setOnGetCodeClickListener(new VerificationCodeTextView.OnGetCodeClickListener() {
@@ -218,6 +220,9 @@ public class BindPhoneVu extends BaseVu<BindPhoneContract.Presenter> implements 
                 break;
             case R.id.iv_clear_phone:
                 et_phone.setText("");
+                break;
+            case R.id.iv_clear_password:
+                et_password.setText("");
                 break;
         }
     }

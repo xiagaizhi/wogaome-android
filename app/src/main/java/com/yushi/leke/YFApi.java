@@ -21,11 +21,11 @@ public interface YFApi {
      * @param
      * @return
      */
-    @FormUrlEncoded
+
     @POST("app/v1/common/init")
     Call<ResponseBody>
     init(
-            @Field("s") String s
+
     );
 
     /**

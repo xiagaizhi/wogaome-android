@@ -4,4 +4,65 @@
     android:layout_height="match_parent">
 
 
+    <RelativeLayout
+        android:id="@+id/rl_upgrade_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginLeft="@dimen/px98"
+        android:layout_marginRight="@dimen/px98"
+        android:background="@drawable/shape_bg_update">
+
+        <ImageView
+            android:id="@+id/img_top"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_update_top" />
+
+        <TextView
+            android:id="@+id/tv_version"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/px32"
+            android:layout_marginTop="@dimen/px28"
+            android:background="@drawable/message_widget_bg_shape"
+            android:text="v1.1.0"
+            android:textColor="@color/white"
+            android:textSize="@dimen/px20" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rey_upgrade_info"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/px172"
+            android:layout_below="@+id/img_top"
+            android:layout_marginTop="@dimen/px32" />
+
+        <Button
+            android:id="@+id/btn_upgrade"
+            android:layout_width="@dimen/px470"
+            android:layout_height="@dimen/px138"
+            android:layout_below="@+id/rey_upgrade_info"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="@dimen/px40"
+            android:layout_marginTop="@dimen/px20"
+            android:background="@drawable/selector_big_btn_blue"
+            android:gravity="center"
+            android:text="立即升级"
+            android:textColor="@color/white"
+            android:textSize="@dimen/px34" />
+
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/img_upgrade_close"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/rl_upgrade_container"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="@dimen/px52"
+        android:layout_marginRight="@dimen/px98"
+        android:src="@drawable/ic_btn_update_close" />
+
+
 </RelativeLayout>

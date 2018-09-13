@@ -30,6 +30,7 @@ import com.yufan.library.inter.ICallBack;
 import com.yufan.library.manager.DialogManager;
 import com.yufan.library.manager.SPManager;
 import com.yufan.library.manager.UserManager;
+import com.yufan.library.util.SIDUtil;
 import com.yufan.library.util.SoftInputUtil;
 import com.yufan.library.widget.anim.AFVerticalAnimator;
 import com.yufan.share.ILoginCallback;

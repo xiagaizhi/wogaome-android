@@ -3,7 +3,12 @@ package com.yushi.leke.fragment.setting;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
+import com.alibaba.fastjson.JSON;
+import com.yufan.library.api.ApiBean;
+import com.yufan.library.api.ApiManager;
+import com.yufan.library.api.BaseHttpCallBack;
 import com.yufan.library.cache.DataCleanManager;
+import com.yufan.library.inter.ICallBack;
 import com.yufan.library.manager.UserManager;
 import com.yufan.library.util.FileUtil;
 import com.yufan.library.util.MethodsCompat;
@@ -11,11 +16,16 @@ import com.yufan.library.base.BaseFragment;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.View;
 
 import com.yufan.library.inject.VuClass;
 import com.yushi.leke.UIHelper;
+import com.yushi.leke.YFApi;
 import com.yushi.leke.dialog.CommonDialog;
+import com.yushi.leke.dialog.update.UpdateDialog;
+import com.yushi.leke.dialog.update.UpdateInfo;
+import com.yushi.leke.dialog.update.UpgradeUtil;
 import com.yushi.leke.fragment.exhibition.vote.WinlistDialogFragment;
 import com.yushi.leke.fragment.login.LoginFragment;
 import com.yushi.leke.fragment.main.MainFragment;
@@ -29,18 +39,47 @@ import java.io.File;
  */
 @VuClass(SettingVu.class)
 public class SettingFragment extends BaseFragment<SettingContract.IView> implements SettingContract.Presenter {
+    private UpdateInfo updateInfo;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         caculateCacheSize();
-
+        checkAppUpdate();
     }
 
 
     @Override
     public void onRefresh() {
 
+    }
+
+
+    /**
+     * 检查更新
+     */
+    private void checkAppUpdate() {
+        ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).checkAppUpdate()).useCache(false).enqueue(new BaseHttpCallBack() {
+            @Override
+            public void onSuccess(ApiBean mApiBean) {
+                if (!TextUtils.isEmpty(mApiBean.getData())) {
+                    updateInfo = JSON.parseObject(mApiBean.getData(), UpdateInfo.class);
+                    if (updateInfo != null) {
+                        getVu().upDateVersion(updateInfo);
+                    }
+                }
+            }
+
+            @Override
+            public void onError(int id, Exception e) {
+
+            }
+
+            @Override
+            public void onFinish() {
+
+            }
+        });
     }
 
 
@@ -105,13 +144,14 @@ public class SettingFragment extends BaseFragment<SettingContract.IView> impleme
 
     @Override
     public void upgrade() {
-
+        if (updateInfo != null && updateInfo.isNeedUpdate()) {
+            UpgradeUtil.upgrade(updateInfo.getPkgPath());
+        }
     }
 
     @Override
     public void lekeAbout() {
         start(UIHelper.creat(AboutLekeFragment.class).build());
-
     }
 
     @Override
