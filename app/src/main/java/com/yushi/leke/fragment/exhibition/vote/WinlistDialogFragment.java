@@ -1,9 +1,12 @@
 package com.yushi.leke.fragment.exhibition.vote;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +14,12 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 
+import com.alibaba.fastjson.JSON;
+import com.yufan.library.api.ApiBean;
+import com.yufan.library.api.ApiManager;
+import com.yufan.library.api.BaseHttpCallBack;
 import com.yushi.leke.R;
+import com.yushi.leke.YFApi;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +33,7 @@ public class WinlistDialogFragment extends DialogFragment implements View.OnClic
     private RecyclerView recycler_win_list;
     private List<WinProjectInfo> winListInfoList = new ArrayList<>();
     private WinListAdapter mWinListAdapter;
+    private WinProjectInfoList winProjectInfoList;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -57,17 +66,44 @@ public class WinlistDialogFragment extends DialogFragment implements View.OnClic
         return view;
     }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).winlist())
+                .useCache(true)
+                .enqueue(new BaseHttpCallBack() {
+                    @Override
+                    public void onSuccess(ApiBean mApiBean) {
+                        if (TextUtils.isEmpty(mApiBean.getData())) {
+                            winProjectInfoList = JSON.parseObject(mApiBean.getData(), WinProjectInfoList.class);
+                           if (winProjectInfoList!=null&&winProjectInfoList.getWinList() != null && winProjectInfoList.getWinList().size()>0){
+                               winListInfoList.clear();
+                               winListInfoList.addAll(winProjectInfoList.getWinList());
+                               mWinListAdapter.notifyDataSetChanged();
+                           }
+                        }
+                    }
+
+                    @Override
+                    public void onError(int id, Exception e) {
+
+                    }
+
+                    @Override
+                    public void onFinish() {
+
+                    }
+                });
+    }
+
     private void initView(View view) {
         view.findViewById(R.id.img_close).setOnClickListener(this);
         recycler_win_list = view.findViewById(R.id.recycler_win_list);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         recycler_win_list.setLayoutManager(layoutManager);
         recycler_win_list.setHasFixedSize(true);
-        mWinListAdapter = new WinListAdapter(getContext(),winListInfoList);
+        mWinListAdapter = new WinListAdapter(getContext(), winListInfoList);
         recycler_win_list.setAdapter(mWinListAdapter);
-        for (int i = 0;i<10;i++){
-            winListInfoList.add(new WinProjectInfo());
-        }
         mWinListAdapter.notifyDataSetChanged();
     }
 

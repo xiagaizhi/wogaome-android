@@ -246,7 +246,7 @@ public class SetRechargePwdDialog extends Dialog implements KeyboardAdapter.OnKe
 
 
     /**
-     * 通过输入原有密码(修改密码)
+     * 通过输入原有密码(修改密码) 后面改为通过token修改
      */
     private void setRechargePwdByOriginalPwd(String token, String pwd) {
         ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).modifyTradePwd(token, pwd)).useCache(false).enqueue(baseHttpCallBack);

@@ -136,13 +136,6 @@ public interface YFApi {
     );
 
     @FormUrlEncoded
-    @POST("app/v1/trade/setTradePwd")
-    Call<ResponseBody>
-    setTradePwd(//设置/修改交易密码
-                @Field("TradePwd") String TradePwd
-    );
-
-    @FormUrlEncoded
     @POST("app/v1/trade/verifyTradePwd")
     Call<ResponseBody>
     verifyTradePwd(//验证交易密码
@@ -252,7 +245,7 @@ public interface YFApi {
     @POST("app/v1/trade/modifyTradePwd")
     Call<ResponseBody>
     modifyTradePwd(//修改密码
-                   @Field("token") String token,
+                   @Field("tradeticket") String tradeticket,
                    @Field("newPwd") String newPwd
     );
 
@@ -332,6 +325,7 @@ public interface YFApi {
 
     /**
      * 判断手机号是否存在
+     *
      * @param mobile
      * @return
      */
@@ -341,6 +335,18 @@ public interface YFApi {
     mobileExist(
             @Field("mobile") String mobile
 
+    );
+
+    @POST("/app/v1/activity/winlist")
+    Call<ResponseBody>
+    winlist(//获胜名单
+    );
+
+    @FormUrlEncoded
+    @POST("/app/v1/activity/vote")
+    Call<ResponseBody>
+    vote(//投票页面初始化
+         @Field("activityId") String activityId
     );
     /**
      * 发送修改手机密码验证码
@@ -366,6 +372,11 @@ public interface YFApi {
             @Field("vcode") String vcode,
             @Field("pwd") String pwd
 
+    );
+
+    @POST("/app/v1/common/checkAppUpdate")
+    Call<ResponseBody>
+    checkAppUpdate(
     );
 
 }

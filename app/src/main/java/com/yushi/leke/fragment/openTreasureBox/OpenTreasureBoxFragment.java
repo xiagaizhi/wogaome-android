@@ -98,6 +98,12 @@ public class OpenTreasureBoxFragment extends BaseFragment<OpenTreasureBoxContrac
     }
 
     @Override
+    public void onDestroy() {
+        super.onDestroy();
+        LocalBroadcastManager.getInstance(_mActivity).unregisterReceiver(broadcastReceiver);
+    }
+
+    @Override
     public void onRefresh() {
 
     }

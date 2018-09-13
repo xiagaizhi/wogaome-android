@@ -1,9 +1,13 @@
 package com.yufan.library.api;
 
+import android.content.Intent;
+import android.support.v4.content.LocalBroadcastManager;
 import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.yufan.library.Global;
+import com.yufan.library.base.BaseApplication;
 import com.yufan.library.base.BaseVu;
 import com.yufan.library.manager.DialogManager;
 import com.yufan.library.view.recycler.PageInfo;
@@ -39,10 +43,12 @@ public abstract class BaseHttpCallBack implements IHttpCallBack {
             }
 
             onSuccess(mApiBean);
-        } else if(TextUtils.equals(ApiBean.TOKEN_LOSE, mApiBean.getCode())){
+        } else if (TextUtils.equals(ApiBean.TOKEN_LOSE, mApiBean.getCode())) {
             //登录
-
-        }else {
+            Intent filter = new Intent();
+            filter.setAction(Global.BROADCAST_TOKEN_LOSE);
+            LocalBroadcastManager.getInstance(BaseApplication.getInstance()).sendBroadcast(filter);
+        } else {
             DialogManager.getInstance().toast(mApiBean.message);
         }
         onFinish();

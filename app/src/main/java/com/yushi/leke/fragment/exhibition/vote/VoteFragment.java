@@ -2,6 +2,8 @@ package com.yushi.leke.fragment.exhibition.vote;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.text.Editable;
 import android.text.Html;
@@ -19,9 +21,14 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.yufan.library.api.ApiBean;
+import com.yufan.library.api.ApiManager;
+import com.yufan.library.api.BaseHttpCallBack;
 import com.yufan.library.manager.DialogManager;
 import com.yushi.leke.R;
+import com.yushi.leke.YFApi;
 
 /**
  * 作者：Created by zhanyangyang on 2018/9/10 10:26
@@ -39,6 +46,7 @@ public class VoteFragment extends DialogFragment implements View.OnClickListener
     private EditText et_lkc;
     private LinearLayout ll_edit_lkc;
     private ImageView img_vote_success;
+    private VoteInitInfo voteInitInfo;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -60,6 +68,47 @@ public class VoteFragment extends DialogFragment implements View.OnClickListener
         View view = inflater.inflate(R.layout.dialog_fragment_vote, container);
         initView(view);
         return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        Bundle bundle = getArguments();
+        if (bundle != null) {
+            String activityId = bundle.getString("activityId");
+            ApiManager.getCall(ApiManager.getInstance().create(YFApi.class)
+                    .vote(activityId))
+                    .useCache(false).enqueue(new BaseHttpCallBack() {
+                @Override
+                public void onSuccess(ApiBean mApiBean) {
+                    if (TextUtils.isEmpty(mApiBean.getData())) {
+                        voteInitInfo = JSON.parseObject(mApiBean.getData(), VoteInitInfo.class);
+                        if (voteInitInfo != null) {
+                            bindData(voteInitInfo);
+                        }
+                    }
+                }
+
+                @Override
+                public void onError(int id, Exception e) {
+
+                }
+
+                @Override
+                public void onFinish() {
+
+                }
+            });
+        }
+    }
+
+    private void bindData(VoteInitInfo voteInitInfo) {
+        img_logo.setImageURI(voteInitInfo.getLogo());
+        tv_title.setText(voteInitInfo.getTitle());
+        tv_area_industry.setText(voteInitInfo.getAddress() + "/" + voteInitInfo.getIndustry());
+        tv_username.setText("创业者：" + voteInitInfo.getEntrepreneur());
+        tv_vote_num.setText(String.valueOf(voteInitInfo.getVoteCount()));
+        tv_lkc_num.setText(Html.fromHtml("我的LKC余额:<<font color='#FA5A5A'>" + voteInitInfo.getLkc() + "</font>(1LKC等于1票)"));
     }
 
     @Override
@@ -87,7 +136,7 @@ public class VoteFragment extends DialogFragment implements View.OnClickListener
         img_vote_success = view.findViewById(R.id.img_vote_success);
         et_lkc.setTextSize(17);
         view.findViewById(R.id.img_vote_add).setOnClickListener(this);
-        tv_lkc_num.setText(Html.fromHtml("我的LKC余额:<<font color='#FA5A5A'>" + "12344" + "</font>(1LKC等于1票)"));
+//        tv_lkc_num.setText(Html.fromHtml("我的LKC余额:<<font color='#FA5A5A'>" + "12344" + "</font>(1LKC等于1票)"));
         et_lkc.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -123,6 +172,11 @@ public class VoteFragment extends DialogFragment implements View.OnClickListener
                 dismiss();
                 break;
             case R.id.btn_vote:
+                if (voteInitInfo != null && voteInitInfo.isHaveTradePwd()) {//投投票
+
+                }else {
+
+                }
                 if (TextUtils.equals("立即投票", btn_vote.getText().toString())) {
                     DialogManager.getInstance().showLoadingDialog();
                     new Handler().postDelayed(new Runnable() {

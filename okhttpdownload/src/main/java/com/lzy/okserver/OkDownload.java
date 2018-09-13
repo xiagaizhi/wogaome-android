@@ -57,7 +57,7 @@ public class OkDownload {
     }
 
     private OkDownload() {
-        folder = Environment.getExternalStorageDirectory() + File.separator + "download" + File.separator;
+        folder = Environment.getExternalStorageDirectory() + File.separator + "LEKE" + File.separator + "updatePackage" + File.separator;
         IOUtils.createFolder(folder);
         threadPool = new DownloadThreadPool();
         taskMap = new ConcurrentHashMap<>();
@@ -82,7 +82,9 @@ public class OkDownload {
         return task;
     }
 
-    /** 从数据库中恢复任务 */
+    /**
+     * 从数据库中恢复任务
+     */
     public static DownloadTask restore(Progress progress) {
         Map<String, DownloadTask> taskMap = OkDownload.getInstance().getTaskMap();
         DownloadTask task = taskMap.get(progress.tag);
@@ -93,7 +95,9 @@ public class OkDownload {
         return task;
     }
 
-    /** 从数据库中恢复任务 */
+    /**
+     * 从数据库中恢复任务
+     */
     public static List<DownloadTask> restore(List<Progress> progressList) {
         Map<String, DownloadTask> taskMap = OkDownload.getInstance().getTaskMap();
         List<DownloadTask> tasks = new ArrayList<>();
@@ -108,7 +112,9 @@ public class OkDownload {
         return tasks;
     }
 
-    /** 开始所有任务 */
+    /**
+     * 开始所有任务
+     */
     public void startAll() {
         for (Map.Entry<String, DownloadTask> entry : taskMap.entrySet()) {
             DownloadTask task = entry.getValue();
@@ -120,7 +126,9 @@ public class OkDownload {
         }
     }
 
-    /** 暂停全部任务 */
+    /**
+     * 暂停全部任务
+     */
     public void pauseAll() {
         //先停止未开始的任务
         for (Map.Entry<String, DownloadTask> entry : taskMap.entrySet()) {
@@ -146,7 +154,9 @@ public class OkDownload {
         }
     }
 
-    /** 删除所有任务 */
+    /**
+     * 删除所有任务
+     */
     public void removeAll() {
         removeAll(false);
     }
@@ -182,7 +192,9 @@ public class OkDownload {
         }
     }
 
-    /** 设置下载目录 */
+    /**
+     * 设置下载目录
+     */
     public String getFolder() {
         return folder;
     }
