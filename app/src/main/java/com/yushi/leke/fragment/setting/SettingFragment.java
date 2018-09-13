@@ -98,11 +98,9 @@ public class SettingFragment extends BaseFragment<SettingContract.IView> impleme
 
     @Override
     public void logout() {
-//        UserManager.getInstance().setToken("");
-//        UserManager.getInstance().setUid("");
-//        getRootFragment().startWithPopTo(UIHelper.creat(LoginFragment.class).build(), MainFragment.class, true);
-        WinlistDialogFragment winlistDialogFragment = new WinlistDialogFragment();
-        winlistDialogFragment.show(getFragmentManager(),"WinlistDialogFragment");
+        UserManager.getInstance().setToken("");
+        UserManager.getInstance().setUid("");
+        getRootFragment().startWithPopTo(UIHelper.creat(LoginFragment.class).build(), MainFragment.class, true);
     }
 
     @Override
