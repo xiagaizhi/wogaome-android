@@ -19,6 +19,7 @@ import android.view.animation.Animation;
 import android.widget.Toast;
 
 import com.yufan.library.inject.VuClass;
+import com.yufan.library.inter.ICallBack;
 import com.yufan.library.manager.UserManager;
 import com.yufan.library.widget.anim.AFHorizontalAnimator;
 import com.yufan.library.widget.anim.AFVerticalAnimator;
@@ -89,7 +90,12 @@ public class MainFragment extends BaseFragment<MainContract.IView> implements Ma
             mFragments[1] = findChildFragment(ExhibitionFragment.class);
             mFragments[2] = findChildFragment(UCenterFragment.class);
         }
-        UpdataManager.checkAppUpdate(_mActivity);
+        UpdataManager.checkAppUpdate(_mActivity, new ICallBack() {
+            @Override
+            public void OnBackResult(Object... s) {
+
+            }
+        });
     }
 
     public void hasUnreadMsg(boolean hasUnreadMsg){

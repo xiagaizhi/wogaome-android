@@ -136,13 +136,6 @@ public interface YFApi {
     );
 
     @FormUrlEncoded
-    @POST("app/v1/trade/setTradePwd")
-    Call<ResponseBody>
-    setTradePwd(//设置/修改交易密码
-                @Field("TradePwd") String TradePwd
-    );
-
-    @FormUrlEncoded
     @POST("app/v1/trade/verifyTradePwd")
     Call<ResponseBody>
     verifyTradePwd(//验证交易密码
@@ -379,6 +372,11 @@ public interface YFApi {
             @Field("vcode") String vcode,
             @Field("pwd") String pwd
 
+    );
+
+    @POST("/app/v1/common/checkAppUpdate")
+    Call<ResponseBody>
+    checkAppUpdate(
     );
 
 }
