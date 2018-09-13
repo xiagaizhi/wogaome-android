@@ -16,7 +16,7 @@
             android:background="@color/white"
             android:fitsSystemWindows="true"
             app:elevation="0dp"
-            app:layout_behavior="com.yufan.library.widget.behavior.FlingBehavior">
+            >
 
 
             <RelativeLayout
@@ -108,7 +108,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:layout_marginLeft="10dp"
-
                         android:layout_marginRight="10dp"
                         android:fontFamily="sans-serif-light"
                         android:textSize="16sp"
