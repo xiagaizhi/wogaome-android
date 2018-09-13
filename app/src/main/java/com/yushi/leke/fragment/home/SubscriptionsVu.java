@@ -58,9 +58,9 @@ public class SubscriptionsVu extends BaseListVu<SubscriptionsContract.Presenter>
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
                 LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
-                int lastVisibleItemPosition = layoutManager.findFirstVisibleItemPosition();
+                int lastVisibleItemPosition = layoutManager.findFirstVisibleItemPosition();//获取最后一个可见view的位置
                 if (lastVisibleItemPosition == 0) {
-                    View topChild = layoutManager.getChildAt(0);
+                    View topChild = layoutManager.getChildAt(0);//返回制定位置的view
                     float top_offset = -topChild.getTop();
                     if (top_offset > topHeightMin) {
                         if (top_offset < topHeightMax) {

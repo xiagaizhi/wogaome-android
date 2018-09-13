@@ -330,20 +330,20 @@ public interface YFApi {
      * @return
      */
     @FormUrlEncoded
-    @POST("/app/v1/uc/mobileExist")
+    @POST("app/v1/uc/mobileExist")
     Call<ResponseBody>
     mobileExist(
             @Field("mobile") String mobile
 
     );
 
-    @POST("/app/v1/activity/winlist")
+    @POST("app/v1/activity/winlist")
     Call<ResponseBody>
     winlist(//获胜名单
     );
 
     @FormUrlEncoded
-    @POST("/app/v1/activity/vote")
+    @POST("app/v1/activity/vote")
     Call<ResponseBody>
     vote(//投票页面初始化
          @Field("activityId") String activityId
@@ -354,7 +354,7 @@ public interface YFApi {
      * @return
      */
     @FormUrlEncoded
-    @POST("/app/v1/security/sendChangePwdVcode")
+    @POST("app/v1/security/sendChangePwdVcode")
     Call<ResponseBody>
     sendChangePwdVcode(
 
@@ -366,7 +366,7 @@ public interface YFApi {
      * @return
      */
     @FormUrlEncoded
-    @POST("/app/v1/security/changePwdViaVcode")
+    @POST("app/v1/security/changePwdViaVcode")
     Call<ResponseBody>
     changePwdViaVcode(
             @Field("vcode") String vcode,
@@ -374,9 +374,20 @@ public interface YFApi {
 
     );
 
-    @POST("/app/v1/common/checkAppUpdate")
+    @POST("app/v1/common/checkAppUpdate")
     Call<ResponseBody>
     checkAppUpdate(
     );
-
+    /**
+     * 获取投票中信息
+     * @param
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("app/v1/activity/detailForVote")
+    Call<ResponseBody>
+    getvotedata(
+            @Field("currentPage") int currentPage,
+            @Field("activityId") String activityId
+    );
 }

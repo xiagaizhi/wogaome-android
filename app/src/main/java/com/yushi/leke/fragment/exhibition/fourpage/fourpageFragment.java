@@ -1,19 +1,24 @@
 package com.yushi.leke.fragment.exhibition.fourpage;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 
+import com.alibaba.fastjson.JSON;
+import com.yufan.library.api.ApiBean;
+import com.yufan.library.api.ApiManager;
+import com.yufan.library.api.BaseHttpCallBack;
 import com.yufan.library.base.BaseListFragment;
 import com.yufan.library.inject.VuClass;
 import com.yufan.library.inter.ICallBack;
 import com.yushi.leke.UIHelper;
-import com.yushi.leke.fragment.exhibition.detail.ExhibitionDetailFragment;
-import com.yushi.leke.fragment.exhibition.fourpage.allproject.allprojectBinder;
+import com.yushi.leke.YFApi;
 import com.yushi.leke.fragment.exhibition.fourpage.allproject.allprojectsFragment;
-import com.yushi.leke.fragment.exhibition.fourpage.allproject.allprojectsinfo;
-import com.yushi.leke.fragment.home.SubscriptionsFragment;
+import com.yushi.leke.fragment.ucenter.MyBaseInfo;
 
 import me.drakeet.multitype.MultiTypeAdapter;
 
@@ -23,38 +28,44 @@ import me.drakeet.multitype.MultiTypeAdapter;
 @VuClass(fourpageVu.class)
 public class fourpageFragment extends BaseListFragment<fourpageContract.IView> implements fourpageContract.Presenter {
     private MultiTypeAdapter adapter;
+    private    DoendinfoList doendinfo;
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         adapter=new MultiTypeAdapter();
-        adapter.register(onunstartinfo1.class,new onunstartBinder1());
-        adapter.register(onunstartinfo2.class,new onunstartBinder2());
-        adapter.register(doendinfo.class,new doendBinder(new ICallBack() {
+        Log.d("LOG","oncreat");
+        adapter.register(Doendinfo.class,new doendBinder(new ICallBack() {
             @Override
             public void OnBackResult(Object... s) {
 
             }
         }));
-        adapter.register(allprojectsinfo.class,new allprojectBinder());
+        //adapter.register(allprojectsinfo.class,new allprojectBinder());
         vu.getRecyclerView().setAdapter(adapter);
         initinfo();
-        list.add(new onunstartinfo1());
-        initinfo1();
-        list.add(new allprojectsinfo("http://oss.cyzone.cn/2018/0903/8a46c3cdd06dd931d05eebcdcb5ad8a9.png"));
         adapter.setItems(list);
         vu.getRecyclerView().getAdapter().notifyDataSetChanged();
     }
-    private void initinfo1(){
-        for (int i=0;i<10;i++){
-            onunstartinfo2 info=new onunstartinfo2();
-            list.add(info);
-        }
-    }
+
     private void initinfo(){
-        for (int i=0;i<10;i++){
-            doendinfo info=new doendinfo("这个来介绍项目的内容，并且字体不能超过24个字测试测试测试","http://oss.cyzone.cn/2018/0830/20180830040720965.jpg");
-            list.add(info);
-        }
+        ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).getvotedata(1,"1")).useCache(false).enqueue(new BaseHttpCallBack() {
+            @Override
+            public void onSuccess(ApiBean mApiBean) {
+                if (!TextUtils.isEmpty(mApiBean.getData())) {
+                    doendinfo= JSON.parseObject(mApiBean.getData(), DoendinfoList.class);
+                    list.addAll(doendinfo.getProjectList());
+                    getVu().getRecyclerView().getAdapter().notifyDataSetChanged();
+                }
+            }
+            @Override
+            public void onError(int id, Exception e) {
+                //Log.d("LOG","error");
+            }
+            @Override
+            public void onFinish() {
+
+            }
+        });
     }
     @Override
     public void onLoadMore(int index) {

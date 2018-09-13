@@ -17,7 +17,6 @@ public class MyProfileInfo implements Serializable {
     private int subscription;
     private int invitation;
     private boolean vip;
-
     public boolean isVip() {
         return vip;
     }

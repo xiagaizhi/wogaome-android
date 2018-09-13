@@ -13,7 +13,7 @@ import com.yufan.library.inter.ICallBack;
 import com.yushi.leke.R;
 import me.drakeet.multitype.ItemViewBinder;
 
-public class doendBinder extends ItemViewBinder<doendinfo,doendBinder.ViewHolder> {
+public class doendBinder extends ItemViewBinder<Doendinfo,doendBinder.ViewHolder> {
     ICallBack callBack;
     public doendBinder(ICallBack callBack) {
         this.callBack=callBack;
@@ -26,14 +26,12 @@ public class doendBinder extends ItemViewBinder<doendinfo,doendBinder.ViewHolder
     }
 
     @Override
-    protected void onBindViewHolder(@NonNull ViewHolder viewHolder, @NonNull final doendinfo doendinfo) {
-        viewHolder.tv_vote_describe.setText(doendinfo.title);
-        viewHolder.sdv.setImageURI(doendinfo.uri);
+    protected void onBindViewHolder(@NonNull ViewHolder viewHolder, @NonNull final Doendinfo Doendinfo) {
         viewHolder.tv_vote_describe.setClickable(true);
         viewHolder.tv_vote_describe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                callBack.OnBackResult(doendinfo);
+                callBack.OnBackResult(Doendinfo);
             }
         });
 
@@ -41,11 +39,18 @@ public class doendBinder extends ItemViewBinder<doendinfo,doendBinder.ViewHolder
 
     static class ViewHolder extends RecyclerView.ViewHolder {
         public SimpleDraweeView sdv;
-        public TextView tv_vote_checkall,tv_vote_title,tv_vote_sum,tv_vote_province,tv_vote_work,tv_vote_identity,tv_vote_name,tv_vote_describe;
+        public TextView tv_vote_playsum,tv_vote_title,tv_vote_sum
+                ,tv_vote_province,tv_vote_name,tv_vote_describe;
         public Button btn_vote_support;
         ViewHolder(@NonNull View itemView) {
             super(itemView);
             sdv=  itemView.findViewById(R.id.sdv);
+            tv_vote_playsum=itemView.findViewById(R.id.tv_vote_playsum);
+            tv_vote_title=itemView.findViewById(R.id.tv_vote_title);
+            tv_vote_sum=itemView.findViewById(R.id.tv_vote_sum);
+            tv_vote_province=itemView.findViewById(R.id.tv_vote_province);
+            tv_vote_name=itemView.findViewById(R.id.tv_vote_name);
+            btn_vote_support=itemView.findViewById(R.id.btn_vote_support);
             tv_vote_describe=itemView.findViewById(R.id.tv_vote_describe);
         }
     }

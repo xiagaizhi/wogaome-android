@@ -31,7 +31,7 @@ public class CheckPhoneFragment extends BaseFragment<CheckPhoneContract.IView> i
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Bundle bundle = getArguments();
+        Bundle bundle = getArguments();//获取fragment传值
         if (bundle != null) {
             phoneNumber = bundle.getString("phoneNumber");
             type = bundle.getInt("type", 0);

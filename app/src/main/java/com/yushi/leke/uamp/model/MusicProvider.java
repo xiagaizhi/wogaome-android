@@ -80,7 +80,7 @@ public class MusicProvider {
         mSource = source;
         mMusicList = new ArrayList<>();
         mMusicListById = new ConcurrentHashMap<>();
-        mFavoriteTracks = Collections.newSetFromMap(new ConcurrentHashMap<String, Boolean>());
+        mFavoriteTracks = Collections.newSetFromMap(new ConcurrentHashMap<String, Boolean>());//map change to set
     }
 
 
