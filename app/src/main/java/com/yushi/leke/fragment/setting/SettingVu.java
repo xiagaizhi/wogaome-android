@@ -13,6 +13,7 @@ import com.yufan.library.inject.FindView;
 import com.yufan.library.inject.Title;
 import com.yufan.library.widget.StateLayout;
 import com.yufan.library.widget.AppToolbar;
+import com.yushi.leke.dialog.update.UpdateInfo;
 
 /**
  * Created by zhanyangyang on 18/8/25.
@@ -72,6 +73,15 @@ public class SettingVu extends BaseVu<SettingContract.Presenter> implements Sett
     }
 
     @Override
+    public void upDateVersion(UpdateInfo updateInfo) {
+        if (updateInfo != null && updateInfo.isNeedUpdate()) {
+            tv_current_version.setText(YFUtil.getVersionName() + "(发现新版本)");
+        } else {
+            tv_current_version.setText(YFUtil.getVersionName() + "(最新版本)");
+        }
+    }
+
+    @Override
     public void onClick(View v) {
         super.onClick(v);
         switch (v.getId()) {
@@ -85,6 +95,7 @@ public class SettingVu extends BaseVu<SettingContract.Presenter> implements Sett
                 mPersenter.cleanMemoryCache();
                 break;
             case R.id.rl_current_version:
+                mPersenter.upgrade();
                 break;
             case R.id.rl_logout:
                 mPersenter.logout();
