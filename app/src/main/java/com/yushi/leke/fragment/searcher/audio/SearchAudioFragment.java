@@ -15,13 +15,9 @@ import com.yufan.library.inter.ICallBack;
 import com.yufan.library.util.SoftInputUtil;
 import com.yufan.library.widget.anim.AFVerticalAnimator;
 import com.yushi.leke.UIHelper;
-import com.yushi.leke.fragment.album.MediaBrowserFragment;
+import com.yushi.leke.fragment.album.audioList.MediaBrowserFragment;
 import com.yushi.leke.fragment.home.SubscriptionInfo;
 import com.yushi.leke.fragment.home.SubscriptionsViewBinder;
-import com.yushi.leke.fragment.searcher.SearchActionInfo;
-import com.yushi.leke.fragment.searcher.SearchActionViewBinder;
-import com.yushi.leke.fragment.searcher.SearchBottomInfo;
-import com.yushi.leke.fragment.searcher.SearchTabBottomViewBinder;
 import com.yushi.leke.fragment.searcher.SearchTabTitleViewBinder;
 
 import me.drakeet.multitype.MultiTypeAdapter;

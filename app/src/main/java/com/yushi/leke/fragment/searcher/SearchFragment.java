@@ -1,6 +1,5 @@
 package com.yushi.leke.fragment.searcher;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -17,19 +16,16 @@ import com.yufan.library.inter.ICallBack;
 import com.yufan.library.util.SoftInputUtil;
 import com.yufan.library.widget.anim.AFVerticalAnimator;
 import com.yushi.leke.UIHelper;
-import com.yushi.leke.fragment.album.MediaBrowserFragment;
+import com.yushi.leke.fragment.album.audioList.MediaBrowserFragment;
 import com.yushi.leke.fragment.home.SubscriptionInfo;
 import com.yushi.leke.fragment.home.SubscriptionsViewBinder;
 import com.yushi.leke.fragment.searcher.activity.SearchActivityFragment;
 import com.yushi.leke.fragment.searcher.audio.SearchAudioFragment;
 
 import me.drakeet.multitype.MultiTypeAdapter;
-import me.yokeyword.fragmentation.anim.DefaultHorizontalAnimator;
-import me.yokeyword.fragmentation.anim.DefaultVerticalAnimator;
 import me.yokeyword.fragmentation.anim.FragmentAnimator;
 
 import static android.content.Context.INPUT_METHOD_SERVICE;
-import static android.view.WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE;
 
 /**
  * Created by mengfantao on 18/8/2.

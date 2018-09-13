@@ -13,7 +13,8 @@ import com.yufan.library.inter.ICallBack;
 import com.yufan.library.view.recycler.PageInfo;
 import com.yushi.leke.UIHelper;
 import com.yushi.leke.activity.MusicPlayerActivity;
-import com.yushi.leke.fragment.album.MediaBrowserFragment;
+import com.yushi.leke.fragment.album.AlbumDetailFragment;
+import com.yushi.leke.fragment.album.audioList.MediaBrowserFragment;
 import com.yushi.leke.fragment.searcher.SearchFragment;
 
 import me.drakeet.multitype.MultiTypeAdapter;
@@ -40,7 +41,7 @@ public class SubscriptionsFragment extends BaseListFragment<SubscriptionsContrac
                         onSearchBarClick();
                         break;
                         case SubscriptionsBannerViewBinder.BANNER_BINDER_ITEM:
-                            getRootFragment().start(UIHelper.creat(MediaBrowserFragment.class).build());
+                            getRootFragment().start(UIHelper.creat(AlbumDetailFragment.class).build());
 
                             break;
                 }
@@ -49,7 +50,7 @@ public class SubscriptionsFragment extends BaseListFragment<SubscriptionsContrac
         adapter.register(SubscriptionInfo.class,new SubscriptionsViewBinder(new ICallBack() {
             @Override
             public void OnBackResult(Object... s) {
-                getRootFragment().start(UIHelper.creat(MediaBrowserFragment.class).build());
+                getRootFragment().start(UIHelper.creat(AlbumDetailFragment.class).build());
             }
         }));
         vu.getRecyclerView().setAdapter(adapter);

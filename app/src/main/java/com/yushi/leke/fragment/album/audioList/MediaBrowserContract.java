@@ -1,4 +1,4 @@
-package com.yushi.leke.fragment.album;
+package com.yushi.leke.fragment.album.audioList;
 
 import android.support.v4.media.MediaBrowserCompat;
 

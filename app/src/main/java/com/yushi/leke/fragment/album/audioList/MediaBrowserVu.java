@@ -1,4 +1,4 @@
-package com.yushi.leke.fragment.album;
+package com.yushi.leke.fragment.album.audioList;
 
 import android.content.Intent;
 import android.support.v4.media.MediaBrowserCompat;
@@ -20,7 +20,7 @@ import java.util.List;
 /**
  * Created by mengfantao on 18/8/2.
  */
-@FindLayout(layout = R.layout.layout_fragment_list)
+@FindLayout(layout = R.layout.layout_fragment_list_no_ptr)
 @Title("音频播放列表")
 public class MediaBrowserVu extends BaseListVu<MediaBrowserContract.Presenter> implements MediaBrowserContract.IView {
     @FindView(R.id.recyclerview)
@@ -34,17 +34,8 @@ public class MediaBrowserVu extends BaseListVu<MediaBrowserContract.Presenter> i
 
     @Override
     public boolean initTitle(AppToolbar appToolbar) {
-      TextView textView=  appToolbar.creatRightView(TextView.class);
-      textView.setText("播放器");
-      textView.setOnClickListener(new View.OnClickListener() {
-          @Override
-          public void onClick(View v) {
-              Intent openUI = new Intent(getContext(), MusicPlayerActivity.class);
-              openUI.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-              getContext().startActivity(openUI);
-          }
-      });
-        return super.initTitle(appToolbar);
+
+        return false;
     }
 
     @Override

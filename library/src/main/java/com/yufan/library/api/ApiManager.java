@@ -14,6 +14,7 @@ import com.yufan.library.manager.SPManager;
 import com.yufan.library.manager.UserManager;
 import com.yufan.library.util.DeviceUtil;
 import com.yufan.library.util.Netutil;
+import com.yufan.library.util.SIDUtil;
 
 import java.io.IOException;
 import java.net.URLEncoder;
@@ -50,6 +51,7 @@ public class ApiManager {
     private static final int DEFAULT_READ_TIME_OUT = 10;
     private Retrofit mRetrofit;
     private ApiConfig mApiConfig;
+
 
     public ApiConfig getApiConfig() {
         return mApiConfig;
@@ -147,7 +149,7 @@ public class ApiManager {
         apiHeaders.put("LK-OS-Version", Build.VERSION.SDK_INT + "");//系统版本
         apiHeaders.put("LK-Device-Model", Build.DEVICE);//设备型号
         apiHeaders.put("LK-CPU", Build.CPU_ABI);//CPU 架构
-        apiHeaders.put("LK-Sid", "");//sid
+        apiHeaders.put("LK-Sid", SIDUtil.getSID(context));//sid
         apiHeaders.put("LK-App-Id", "com.yushi.leke");//包名
         return apiHeaders;
     }

@@ -3,6 +3,12 @@ package com.yushi.leke.fragment.splash;
 import android.Manifest;
 import android.os.Bundle;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.lzy.okgo.adapter.Call;
+import com.yufan.library.api.ApiBean;
+import com.yufan.library.api.ApiManager;
+import com.yufan.library.api.BaseHttpCallBack;
 import com.yufan.library.base.BaseFragment;
 
 import android.os.Handler;
@@ -13,6 +19,8 @@ import android.view.View;
 import android.view.WindowManager;
 
 import com.yufan.library.inject.VuClass;
+import com.yufan.library.util.SIDUtil;
+import com.yushi.leke.YFApi;
 
 import java.util.List;
 
@@ -48,6 +56,26 @@ public class SplashFragment extends BaseFragment<SplashContract.IView> implement
 
     @Override
     public void onRefresh() {
+
+// 初始化接口
+      ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).init()).enqueue(new BaseHttpCallBack() {
+          @Override
+          public void onSuccess(ApiBean mApiBean) {
+          JSONObject jsonObject= JSON.parseObject(mApiBean.data);
+          String sid= jsonObject.getString("sid");
+          SIDUtil.setSID(getContext(),sid);
+          }
+
+          @Override
+          public void onError(int id, Exception e) {
+
+          }
+
+          @Override
+          public void onFinish() {
+
+          }
+      });
 
     }
 

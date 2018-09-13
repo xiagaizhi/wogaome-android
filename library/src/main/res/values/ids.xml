@@ -8,4 +8,6 @@
     <!--high light view unique id -->
     <item name="high_light_view" type="id"/>
     <item name="high_item_view" type="id"/>
+    <item type="id" name="expandable_text"/>
+    <item type="id" name="expand_collapse"/>
 </resources>

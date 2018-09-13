@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <android.support.design.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/app_bar_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:fitsSystemWindows="true"
+            app:elevation="0dp"
+            app:layout_behavior="com.yufan.library.widget.behavior.FlingBehavior">
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="@dimen/px88"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
+                <com.facebook.drawee.view.SimpleDraweeView
+                    android:layout_width="match_parent"
+                    android:id="@+id/sdv"
+                    android:layout_height="@dimen/px562" />
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:background="@drawable/bg_alubm_top"
+                    android:layout_alignBottom="@+id/sdv"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:text="永不放弃02期"
+                    android:textSize="@dimen/px40"
+                    android:id="@+id/tv_sub_title"
+                    android:layout_alignBottom="@+id/sdv"
+                    android:layout_marginBottom="@dimen/px40"
+                    android:textColor="@color/white"
+                    android:layout_marginLeft="@dimen/px36"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:text="宋里·创业之路"
+                    android:textSize="@dimen/px58"
+                    android:layout_above="@+id/tv_sub_title"
+                    android:id="@+id/tv_subject_title"
+                    android:layout_marginLeft="@dimen/px36"
+                    android:textColor="@color/white"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:id="@+id/tv_subscription"
+                    android:layout_height="wrap_content" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="bottom"
+                    android:layout_below="@+id/sdv"
+                    android:layout_marginTop="@dimen/px50"
+                    android:id="@+id/ll_tab1"
+                    android:layout_marginLeft="@dimen/px36"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:text="宋里·简介"
+                        android:textColor="@color/color_gray_level3"
+                        android:textSize="@dimen/px42"
+                        android:id="@+id/tv_name"
+                        android:layout_height="wrap_content" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:text="343次"
+                        android:textColor="@color/color_gray_level6"
+                        android:drawableLeft="@drawable/ic_subscription_headset"
+                        android:layout_height="wrap_content" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:text=" · "
+                        android:layout_height="wrap_content" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:text="更新至05集/全06集"
+                        android:id="@+id/tv_"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+
+                <com.yufan.library.widget.ExpandableTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/ll_tab1"
+                    android:id="@+id/tv_album_detail"
+                    android:layout_marginBottom="@dimen/px60"
+                    android:layout_marginRight="@dimen/px36"
+                    android:layout_marginLeft="@dimen/px36"
+                    app:maxCollapsedLines="5"
+                    >
+                    <TextView
+                        android:id="@id/expandable_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginLeft="10dp"
+
+                        android:layout_marginRight="10dp"
+                        android:fontFamily="sans-serif-light"
+                        android:textSize="16sp"
+                        android:textColor="#666666" />
+
+                    <ImageButton
+                        android:id="@id/expand_collapse"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="16dp"
+                        android:layout_gravity="center_horizontal|bottom"
+                        android:background="@android:color/transparent"/>
+
+                </com.yufan.library.widget.ExpandableTextView>
+
+            </RelativeLayout>
+            <android.support.design.widget.TabLayout
+                android:id="@+id/tab_bar"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/px98"
+                android:background="@color/white"
+                app:layout_scrollFlags="scroll|enterAlways"
+                app:tabIndicatorHeight="@dimen/px6"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                app:tabIndicatorColor="@color/color_blue_level6"
+                android:layout_marginRight="@dimen/px93"
+                android:layout_marginLeft="@dimen/px93"
+                app:tabSelectedTextColor="@color/color_blue_level6"
+                app:tabTextColor="@color/color_gray_level9" />
+        </android.support.design.widget.AppBarLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/px1"
+                android:background="@color/color_E5E5E5"
+                />
+
+            <com.yufan.library.widget.NoScrollViewPager
+                android:id="@+id/viewpager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"></com.yufan.library.widget.NoScrollViewPager>
+        </LinearLayout>
+    </android.support.design.widget.CoordinatorLayout>
+</LinearLayout>
