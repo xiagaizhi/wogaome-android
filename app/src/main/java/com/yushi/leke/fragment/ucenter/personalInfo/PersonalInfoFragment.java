@@ -124,6 +124,8 @@ public class PersonalInfoFragment extends BaseListFragment<PersonalInfoContract.
                 boolean showSoftInput = (boolean) s[2];
                 if (showSoftInput) {
                     SoftInputUtil.showOpenKeybord(currentEdit, _mActivity);
+                }else {
+                    hideSoftInput();
                 }
                 currentTabName = item.tabName;
                 if (personalItem == null || !personalItem.tabName.equals(item.tabName)) {
