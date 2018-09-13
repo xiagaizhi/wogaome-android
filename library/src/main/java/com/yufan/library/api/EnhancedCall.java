@@ -83,11 +83,11 @@ public class EnhancedCall {
                         String mjson = response.body().string();
                         ApiBean mApiBean = JSON.parseObject(mjson, ApiBean.class);
                         mApiBean.json = mjson;
-                        if (TextUtils.equals(ApiBean.TOKEN_LOSE, mApiBean.code)) {
-                            //token失效
-                            return;
-                        }
-
+//                        if (TextUtils.equals(ApiBean.TOKEN_LOSE, mApiBean.code)) {
+//                            //token失效
+//                            return;
+//                        }
+                        //BaseHttpCallBack 中处理token失效
                         handler.onResponse(mApiBean);
                     } else {
                         handler.onFailure(code, new Exception(response.errorBody().string()));

@@ -23,6 +23,11 @@ public class Global {
      * 支付结果通知广播action
      */
     public static final String BROADCAST_PAY_RESUIL_ACTION = "BROADCAST_PAY_RESUIL_ACTION";
+
+    /**
+     * token失效通知广播action
+     */
+    public static final String BROADCAST_TOKEN_LOSE = "BROADCAST_TOKEN_LOSE";
     /**
      * 支付结果返回data true:成功 false:失败
      */

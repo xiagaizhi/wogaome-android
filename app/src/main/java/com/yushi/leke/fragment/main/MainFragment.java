@@ -1,23 +1,33 @@
 package com.yushi.leke.fragment.main;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 
+import com.yufan.library.Global;
 import com.yufan.library.base.BaseFragment;
 
 import android.os.SystemClock;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.widget.Toast;
 
 import com.yufan.library.inject.VuClass;
+import com.yufan.library.manager.UserManager;
 import com.yufan.library.widget.anim.AFHorizontalAnimator;
 import com.yufan.library.widget.anim.AFVerticalAnimator;
 import com.yushi.leke.R;
 import com.yushi.leke.UIHelper;
+import com.yushi.leke.dialog.update.UpdataManager;
 import com.yushi.leke.fragment.home.SubscriptionsFragment;
 import com.yushi.leke.fragment.exhibition.ExhibitionFragment;
+import com.yushi.leke.fragment.login.LoginFragment;
 import com.yushi.leke.fragment.test.TestListFragment;
 import com.yushi.leke.fragment.ucenter.UCenterFragment;
 
@@ -31,6 +41,34 @@ import me.yokeyword.fragmentation.anim.FragmentAnimator;
 public class MainFragment extends BaseFragment<MainContract.IView> implements MainContract.Presenter {
     private SupportFragment[] mFragments = new SupportFragment[3];
     private long[] mHits = new long[2];
+
+
+    private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            switch (action) {
+                case Global.BROADCAST_TOKEN_LOSE:
+                    UserManager.getInstance().setToken("");
+                    UserManager.getInstance().setUid("");
+                    getRootFragment().startWithPopTo(UIHelper.creat(LoginFragment.class).build(), MainFragment.class, true);
+                    break;
+            }
+        }
+    };
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(Global.BROADCAST_TOKEN_LOSE);
+        LocalBroadcastManager.getInstance(_mActivity).registerReceiver(broadcastReceiver, intentFilter);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        LocalBroadcastManager.getInstance(_mActivity).unregisterReceiver(broadcastReceiver);
+    }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -51,6 +89,7 @@ public class MainFragment extends BaseFragment<MainContract.IView> implements Ma
             mFragments[1] = findChildFragment(ExhibitionFragment.class);
             mFragments[2] = findChildFragment(UCenterFragment.class);
         }
+        UpdataManager.checkAppUpdate(_mActivity);
     }
 
     public void hasUnreadMsg(boolean hasUnreadMsg){
