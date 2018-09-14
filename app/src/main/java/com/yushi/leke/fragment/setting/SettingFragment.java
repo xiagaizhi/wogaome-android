@@ -59,27 +59,29 @@ public class SettingFragment extends BaseFragment<SettingContract.IView> impleme
      * 检查更新
      */
     private void checkAppUpdate() {
-        ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).checkAppUpdate()).useCache(false).enqueue(new BaseHttpCallBack() {
-            @Override
-            public void onSuccess(ApiBean mApiBean) {
-                if (!TextUtils.isEmpty(mApiBean.getData())) {
-                    updateInfo = JSON.parseObject(mApiBean.getData(), UpdateInfo.class);
-                    if (updateInfo != null) {
-                        getVu().upDateVersion(updateInfo);
+        ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).checkAppUpdate())
+                .useCache(false)
+                .enqueue(new BaseHttpCallBack() {
+                    @Override
+                    public void onSuccess(ApiBean mApiBean) {
+                        if (!TextUtils.isEmpty(mApiBean.getData())) {
+                            updateInfo = JSON.parseObject(mApiBean.getData(), UpdateInfo.class);
+                            if (updateInfo != null) {
+                                getVu().upDateVersion(updateInfo);
+                            }
+                        }
                     }
-                }
-            }
 
-            @Override
-            public void onError(int id, Exception e) {
+                    @Override
+                    public void onError(int id, Exception e) {
 
-            }
+                    }
 
-            @Override
-            public void onFinish() {
+                    @Override
+                    public void onFinish() {
 
-            }
-        });
+                    }
+                });
     }
 
 
@@ -137,6 +139,33 @@ public class SettingFragment extends BaseFragment<SettingContract.IView> impleme
 
     @Override
     public void logout() {
+        ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).logout()).useCache(false).enqueue(new BaseHttpCallBack() {
+            @Override
+            public void onResponse(ApiBean mApiBean) {
+//                super.onResponse(mApiBean);
+            }
+
+            @Override
+            public void onFailure(int id, Exception e) {
+//                super.onFailure(id, e);
+            }
+
+            @Override
+            public void onSuccess(ApiBean mApiBean) {
+
+            }
+
+            @Override
+            public void onError(int id, Exception e) {
+
+            }
+
+            @Override
+            public void onFinish() {
+
+            }
+        });
+
         UserManager.getInstance().setToken("");
         UserManager.getInstance().setUid("");
         getRootFragment().startWithPopTo(UIHelper.creat(LoginFragment.class).build(), MainFragment.class, true);

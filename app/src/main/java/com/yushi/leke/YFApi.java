@@ -390,4 +390,9 @@ public interface YFApi {
             @Field("currentPage") int currentPage,
             @Field("activityId") String activityId
     );
+
+    @POST("app/v1/uc/logout")
+    Call<ResponseBody>
+    logout(
+    );
 }

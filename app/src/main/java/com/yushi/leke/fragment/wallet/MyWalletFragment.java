@@ -94,7 +94,7 @@ public class MyWalletFragment extends BaseFragment<MyWalletContract.IView> imple
     public void onFragmentResult(int requestCode, int resultCode, Bundle data) {
         super.onFragmentResult(requestCode, resultCode, data);
         if (requestCode == 100 && resultCode == RESULT_OK && data != null) {
-            // TODO: 2018/8/28 刷新界面 
+            getWalletInfo();
         }
     }
 }

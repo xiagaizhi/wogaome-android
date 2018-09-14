@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
@@ -225,17 +226,8 @@ public class BrowserBaseFragment extends BaseFragment<BrowserContract.View> impl
         TbsLog.d("time-cost", "cost time: "
                 + (System.currentTimeMillis() - time));
         loadCookie(CookieManager.getInstance());
-        JSONObject browserData =new JSONObject(ApiManager.getInstance().getApiHeader(getContext()));
-        JSONObject jsonStringer=new JSONObject();
-        try {
-            jsonStringer.put("code",2000);
-            jsonStringer.put("message","");
-            jsonStringer.put("data",browserData);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        wVJBWebViewClient.callHandler("web_nativeParams",jsonStringer);
     }
+
 
     protected void loadCookie(CookieManager cookie) {
         CookieSyncManager.createInstance(getActivity());
@@ -377,6 +369,25 @@ public class BrowserBaseFragment extends BaseFragment<BrowserContract.View> impl
                     if (getActivity() != null) {
                         onBackPressed();
                     }
+                }
+            });
+
+            registerHandler("web_nativeParams", new WVJBHandler() {
+                @Override
+                public void request(Object data, WVJBResponseCallback callback) {
+                    JSONObject browserData =new JSONObject(ApiManager.getInstance().getApiHeader(getContext()));
+                    final JSONObject jsonStringer=new JSONObject();
+                    try {
+                        jsonStringer.put("code",2000);
+                        jsonStringer.put("message","");
+                        jsonStringer.put("data",browserData);
+                        if (callback!=null){
+                            callback.callback(jsonStringer);
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
                 }
             });
 
