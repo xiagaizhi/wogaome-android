@@ -25,6 +25,7 @@ import com.yufan.library.inject.VuClass;
 import com.yufan.library.inter.ICallBack;
 import com.yufan.library.manager.UserManager;
 import com.yufan.library.widget.anim.AFVerticalAnimator;
+import com.yushi.leke.App;
 import com.yushi.leke.R;
 import com.yushi.leke.UIHelper;
 import com.yushi.leke.YFApi;
@@ -57,6 +58,7 @@ public class MainFragment extends BaseFragment<MainContract.IView> implements Ma
                 case Global.BROADCAST_TOKEN_LOSE://token失效
                     UserManager.getInstance().setToken("");
                     UserManager.getInstance().setUid("");
+                    App.getApp().registerXGPush("*");
                     getRootFragment().startWithPopTo(UIHelper.creat(LoginFragment.class).build(), MainFragment.class, true);
                     break;
                 case Global.BROADCAST_ACTION_ADJUMP://广告具体跳转
