@@ -79,10 +79,21 @@ public class SplashFragment extends BaseFragment<SplashContract.IView> implement
     private void init() {
         ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).init()).enqueue(new BaseHttpCallBack() {
             @Override
+            public void onResponse(ApiBean mApiBean) {
+                if (ApiBean.checkOK(mApiBean.getCode())) {
+                    JSONObject jsonObject = JSON.parseObject(mApiBean.data);
+                    String sid = jsonObject.getString("sid");
+                    SIDUtil.setSID(getContext(), sid);
+                }
+            }
+
+            @Override
+            public void onFailure(int id, Exception e) {
+            }
+
+            @Override
             public void onSuccess(ApiBean mApiBean) {
-                JSONObject jsonObject = JSON.parseObject(mApiBean.data);
-                String sid = jsonObject.getString("sid");
-                SIDUtil.setSID(getContext(), sid);
+
             }
 
             @Override
@@ -110,25 +121,35 @@ public class SplashFragment extends BaseFragment<SplashContract.IView> implement
         //有没有广告缓存，都发起网络请求，请求最新广告信息并且缓存，供下次启动备用
         ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).initAd()).useCache(false).enqueue(new BaseHttpCallBack() {
             @Override
-            public void onSuccess(ApiBean mApiBean) {
-                if (TextUtils.isEmpty(mApiBean.getData())) {
-                    final AdInfo mAdInfo = JSON.parseObject(mApiBean.getData(), AdInfo.class);
-                    if (mAdInfo != null) {
-                        if (!CacheManager.isExistDataCache(_mActivity, mAdInfo.getAdKey())) {
-                            Glide.with(_mActivity).load(mAdInfo.getAdImgurl()).asBitmap().into(new SimpleTarget<Bitmap>() {
-                                @Override
-                                public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
-                                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                                    resource.compress(Bitmap.CompressFormat.JPEG, 80, baos);
-                                    mAdInfo.setBitmap(baos.toByteArray());
-                                    CacheManager.saveObject(_mActivity, mAdInfo, mAdInfo.getAdKey());
-                                    SPManager.getInstance().saveValue(Global.SP_AD_KEY, mAdInfo.getAdKey());
-                                }
-                            });
+            public void onResponse(ApiBean mApiBean) {
+                super.onResponse(mApiBean);
+                if (ApiBean.checkOK(mApiBean.getCode())) {
+                    if (TextUtils.isEmpty(mApiBean.getData())) {
+                        final AdInfo mAdInfo = JSON.parseObject(mApiBean.getData(), AdInfo.class);
+                        if (mAdInfo != null) {
+                            if (!CacheManager.isExistDataCache(_mActivity, mAdInfo.getAdKey())) {
+                                Glide.with(_mActivity).load(mAdInfo.getAdImgurl()).asBitmap().into(new SimpleTarget<Bitmap>() {
+                                    @Override
+                                    public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
+                                        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                                        resource.compress(Bitmap.CompressFormat.JPEG, 80, baos);
+                                        mAdInfo.setBitmap(baos.toByteArray());
+                                        CacheManager.saveObject(_mActivity, mAdInfo, mAdInfo.getAdKey());
+                                        SPManager.getInstance().saveValue(Global.SP_AD_KEY, mAdInfo.getAdKey());
+                                    }
+                                });
+                            }
                         }
                     }
                 }
+            }
 
+            @Override
+            public void onFailure(int id, Exception e) {
+            }
+
+            @Override
+            public void onSuccess(ApiBean mApiBean) {
             }
 
             @Override
