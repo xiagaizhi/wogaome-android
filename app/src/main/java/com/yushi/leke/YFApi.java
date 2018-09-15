@@ -395,4 +395,9 @@ public interface YFApi {
     Call<ResponseBody>
     logout(
     );
+
+    @POST("app/v1/common/initAd")
+    Call<ResponseBody>
+    initAd(
+    );
 }

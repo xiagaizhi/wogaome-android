@@ -18,6 +18,10 @@ public class Global {
      * 新手指引
      */
     public static final String SP_KEY_NEW_GUIDE = "SP_KEY_NEW_GUIDE";
+    /**
+     * 广告key
+     */
+    public static final String SP_AD_KEY = "SP_AD_KEY";
     public static final String ARG_MEDIA_ID = "media_id";
     /**
      * 支付结果通知广播action
@@ -28,6 +32,11 @@ public class Global {
      * token失效通知广播action
      */
     public static final String BROADCAST_TOKEN_LOSE = "BROADCAST_TOKEN_LOSE";
+
+    /**
+     * 广告跳转
+     */
+    public static final String BROADCAST_ACTION_ADJUMP = "BROADCAST_ACTION_ADJUMP";
     /**
      * 支付结果返回data true:成功 false:失败
      */

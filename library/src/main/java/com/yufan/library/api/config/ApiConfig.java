@@ -102,8 +102,9 @@ public class ApiConfig {
         return webDomains[apiType] + "#/";
     }
 
+
     public String getTestH5(){
-        return webDomains[apiType] + "#/nickName";
+        return "http://web.leke.com/#/nickName";
     }
 
 
