@@ -396,14 +396,14 @@ public interface YFApi {
     logout(
     );
     /**
-     * 城市 行业 选择
+     * 行业选择项目
      * @param
      * @return
      */
     @FormUrlEncoded
     @POST("app/v1/activity/listIndustryFromProject")
     Call<ResponseBody>
-    allprojects(
+    getindustrylist(
             @Field("activityId") String  activityId
     );
     /**

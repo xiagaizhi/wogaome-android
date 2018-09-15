@@ -1,18 +1,21 @@
 package com.yushi.leke.fragment.exhibition.voteing.allproject;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
-import android.os.AsyncTask;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.alibaba.fastjson.JSON;
 import com.bigkoo.pickerview.builder.OptionsPickerBuilder;
 import com.bigkoo.pickerview.listener.OnDismissListener;
 import com.bigkoo.pickerview.listener.OnOptionsSelectChangeListener;
 import com.bigkoo.pickerview.listener.OnOptionsSelectListener;
 import com.bigkoo.pickerview.view.OptionsPickerView;
-import com.yufan.library.util.AreaUtil;
+import com.yufan.library.api.ApiBean;
+import com.yufan.library.api.ApiManager;
+import com.yufan.library.api.BaseHttpCallBack;
 import com.yushi.leke.R;
 import com.yufan.library.base.BaseListVu;
 import com.yufan.library.inject.FindLayout;
@@ -21,14 +24,14 @@ import com.yufan.library.inject.Title;
 import com.yufan.library.widget.StateLayout;
 import com.yufan.library.widget.AppToolbar;
 import com.yufan.library.view.recycler.YFRecyclerView;
+import com.yushi.leke.YFApi;
 import com.yushi.leke.fragment.exhibition.voteing.spinner.SpinerPopWindow;
-
 import java.util.ArrayList;
 import java.util.List;
 
 @FindLayout(layout = R.layout.xx_allproject_main)
 @Title("参赛项目活动")
-public class allprojectsVu extends BaseListVu<allprojectsContract.Presenter> implements allprojectsContract.IView {
+public class AllprojectsVu extends BaseListVu<AllprojectsContract.Presenter> implements AllprojectsContract.IView {
     @FindView(R.id.recyclerview)
     private YFRecyclerView mYFRecyclerView;
     private SpinerPopWindow<String> cityspinner;
@@ -36,9 +39,8 @@ public class allprojectsVu extends BaseListVu<allprojectsContract.Presenter> imp
     private List<String> list;
     private List<String> listwork;
     private TextView tv_choose_city, tv_choose_work;
-    private List<String> firstlist = new ArrayList<>();
-    private List<String> secendlist = new ArrayList<>();
-    int index2=0,index1=0;
+    Industryinfolist industryinfolist;
+    List<String>worklist=new ArrayList<>();
     @Override
     public void initView(View view) {
         super.initView(view);
@@ -47,60 +49,50 @@ public class allprojectsVu extends BaseListVu<allprojectsContract.Presenter> imp
 
     @Override
     public void showCityPickerView() {
-        if (AreaUtil.getInstance().getOptions1Items().size() == 0 ||
-                AreaUtil.getInstance().getOptions2Items().size() == 0
-                || AreaUtil.getInstance().getOptions3Items().size() == 0) {
-            new AsyncTask<Void, Void, Void>() {
-                @Override
-                protected Void doInBackground(Void... voids) {
-                    AreaUtil.getInstance().init(getContext());
-                    return null;
-                }
-
-                @Override
-                protected void onPostExecute(Void aVoid) {
-                    super.onPostExecute(aVoid);
-                    toShowCityPickView();
-                }
-            }.execute();
-
-        } else {
-            toShowCityPickView();
-        }
-
-    }
-
-    private void toShowCityPickView() {
-        if (AreaUtil.getInstance().getOptions1Items().size() == 0 ||
-                AreaUtil.getInstance().getOptions2Items().size() == 0
-                || AreaUtil.getInstance().getOptions3Items().size() == 0) {return;}
-        OptionsPickerView pvOptions = new OptionsPickerBuilder(getContext(), new OnOptionsSelectListener() {
+        ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).getindustrylist("1")).useCache(false).enqueue(new BaseHttpCallBack() {
             @Override
-            public void onOptionsSelect(int options1, int options2, int options3, View v) {
-                tv_choose_city.setText( mPersenter.selectedCityInfo(options1, options2));
-            }
-        }).setTitleText("城市选择")
-                .setDividerColor(Color.BLACK)
-                .setTextColorCenter(Color.BLACK)
-                .setContentTextSize(20)
-                .setOptionsSelectChangeListener(new OnOptionsSelectChangeListener() {
-                    @Override
-                    public void onOptionsSelectChanged(int options1, int options2, int options3) {
-                        String str = "options1: " + options1 + "\noptions2: " + options2 + "\noptions3: " + options3;
-                        Toast.makeText(getContext(), str, Toast.LENGTH_SHORT).show();
-                        index2=options2;
-                        index1=options1;
+            public void onSuccess(ApiBean mApiBean) {
+                if (!TextUtils.isEmpty(mApiBean.getData())) {
+                    industryinfolist = JSON.parseObject(mApiBean.getData(), Industryinfolist.class);
+                    for (int i = 0; i< industryinfolist.getIndustryList().size(); i++){
+                        worklist.add(industryinfolist.getIndustryList().get(i).getIndustryName());
                     }
-                })
-                .build();
-        pvOptions.setOnDismissListener(new OnDismissListener() {
+                    OptionsPickerView pvOptions = new OptionsPickerBuilder(getContext(), new OnOptionsSelectListener() {
+                        @Override
+                        public void onOptionsSelect(int options1, int options2, int options3, View v) {
+                            tv_choose_work.setText( worklist.get(options1));
+                        }
+                    }).setTitleText("城市选择")
+                            .setDividerColor(Color.BLACK)
+                            .setTextColorCenter(Color.BLACK)
+                            .setContentTextSize(20)
+                            .setOptionsSelectChangeListener(new OnOptionsSelectChangeListener() {
+                                @Override
+                                public void onOptionsSelectChanged(int options1, int options2, int options3) {
+                                    String str = "options1: " + options1 + "\noptions2: " + options2 + "\noptions3: " + options3;
+                                    Toast.makeText(getContext(), str, Toast.LENGTH_SHORT).show();
+                                }
+                            })
+                            .build();
+                    pvOptions.setOnDismissListener(new OnDismissListener() {
+                        @Override
+                        public void onDismiss(Object o) {
+
+                        }
+                    });
+                    pvOptions.setPicker(worklist);//一级选择器
+                    pvOptions.show();
+                }
+            }
             @Override
-            public void onDismiss(Object o) {
+            public void onError(int id, Exception e) {
+
+            }
+            @Override
+            public void onFinish() {
 
             }
         });
-        pvOptions.setPicker(AreaUtil.getInstance().getOptions1Items(), AreaUtil.getInstance().getOptions2Items());//三级选择器
-        pvOptions.show();
     }
 
     @Override
@@ -166,12 +158,12 @@ public class allprojectsVu extends BaseListVu<allprojectsContract.Presenter> imp
                     //cityspinner.setWidth(tv_choose_city.getWidth());
                     //cityspinner.showAsDropDown(tv_choose_city);
                     // setTextImage(R.drawable.icon_up);
-                    showCityPickerView();
                     break;
                 case R.id.tv_choose_work:
                     //workspinner.setWidth(tv_choose_work.getWidth());
                     //workspinner.showAsDropDown(tv_choose_work);
                     showCityPickerView();
+                    worklist.removeAll(worklist);
                     // setTextImage(R.drawable.icon_up);
                     break;
             }

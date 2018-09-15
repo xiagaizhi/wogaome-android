@@ -16,7 +16,7 @@ import com.yufan.library.inject.VuClass;
 import com.yufan.library.inter.ICallBack;
 import com.yushi.leke.UIHelper;
 import com.yushi.leke.YFApi;
-import com.yushi.leke.fragment.exhibition.voteing.allproject.allprojectsFragment;
+import com.yushi.leke.fragment.exhibition.voteing.allproject.AllprojectsFragment;
 
 import me.drakeet.multitype.MultiTypeAdapter;
 
@@ -56,7 +56,7 @@ public class VoteingFragment extends BaseListFragment<VoteingContract.IView> imp
 
     @Override
     public void MyCallback() {
-        getRootFragment().start(UIHelper.creat(allprojectsFragment.class).build());
+        getRootFragment().start(UIHelper.creat(AllprojectsFragment.class).build());
     }
 
     @Override

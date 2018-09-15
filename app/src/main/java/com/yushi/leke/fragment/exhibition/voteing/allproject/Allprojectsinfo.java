@@ -1,8 +1,8 @@
 package com.yushi.leke.fragment.exhibition.voteing.allproject;
 
-public class allprojectsinfo {
+public class Allprojectsinfo {
     public  String uri;
-    public allprojectsinfo( String uri) {
+    public Allprojectsinfo(String uri) {
         this.uri=uri;
     }
 }

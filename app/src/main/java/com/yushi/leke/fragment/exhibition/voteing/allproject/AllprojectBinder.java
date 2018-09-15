@@ -11,8 +11,8 @@ import com.yushi.leke.R;
 
 import me.drakeet.multitype.ItemViewBinder;
 
-public class allprojectBinder extends ItemViewBinder<allprojectsinfo,allprojectBinder.ViewHolder>{
-    public allprojectBinder(){
+public class AllprojectBinder extends ItemViewBinder<Allprojectsinfo,AllprojectBinder.ViewHolder>{
+    public AllprojectBinder(){
 
     }
     @NonNull
@@ -22,8 +22,8 @@ public class allprojectBinder extends ItemViewBinder<allprojectsinfo,allprojectB
     }
 
     @Override
-    protected void onBindViewHolder(@NonNull ViewHolder viewHolder, @NonNull final allprojectsinfo allprojectsinfo) {
-        viewHolder.sdv.setImageURI(allprojectsinfo.uri);
+    protected void onBindViewHolder(@NonNull ViewHolder viewHolder, @NonNull final Allprojectsinfo Allprojectsinfo) {
+        viewHolder.sdv.setImageURI(Allprojectsinfo.uri);
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
