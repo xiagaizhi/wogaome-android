@@ -3,12 +3,20 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/aliplayer/aliplayer.iml" filepath="$PROJECT_DIR$/aliplayer/aliplayer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/aliplayer/aliplayer.iml" filepath="$PROJECT_DIR$/aliplayer/aliplayer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/android-leke.iml" filepath="$PROJECT_DIR$/android-leke.iml" />
       <module fileurl="file://$PROJECT_DIR$/android-leke.iml" filepath="$PROJECT_DIR$/android-leke.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/library/library.iml" filepath="$PROJECT_DIR$/library/library.iml" />
       <module fileurl="file://$PROJECT_DIR$/library/library.iml" filepath="$PROJECT_DIR$/library/library.iml" />
       <module fileurl="file://$PROJECT_DIR$/multi-type/multi-type.iml" filepath="$PROJECT_DIR$/multi-type/multi-type.iml" />
+      <module fileurl="file://$PROJECT_DIR$/multi-type/multi-type.iml" filepath="$PROJECT_DIR$/multi-type/multi-type.iml" />
+      <module fileurl="file://$PROJECT_DIR$/musicplayer/musicplayer.iml" filepath="$PROJECT_DIR$/musicplayer/musicplayer.iml" />
       <module fileurl="file://$PROJECT_DIR$/musicplayer/musicplayer.iml" filepath="$PROJECT_DIR$/musicplayer/musicplayer.iml" />
       <module fileurl="file://$PROJECT_DIR$/okhttpdownload/okhttpdownload.iml" filepath="$PROJECT_DIR$/okhttpdownload/okhttpdownload.iml" />
+      <module fileurl="file://$PROJECT_DIR$/okhttpdownload/okhttpdownload.iml" filepath="$PROJECT_DIR$/okhttpdownload/okhttpdownload.iml" />
+      <module fileurl="file://$PROJECT_DIR$/share/share.iml" filepath="$PROJECT_DIR$/share/share.iml" />
       <module fileurl="file://$PROJECT_DIR$/share/share.iml" filepath="$PROJECT_DIR$/share/share.iml" />
     </modules>
   </component>

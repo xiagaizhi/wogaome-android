@@ -1,18 +1,14 @@
-package com.yushi.leke.fragment.exhibition.fourpage.allproject;
+package com.yushi.leke.fragment.exhibition.Voteing.allproject;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.View;
 
-import com.yufan.library.api.ApiManager;
 import com.yufan.library.base.BaseListFragment;
 import com.yufan.library.bean.LocationBean;
 import com.yufan.library.inject.VuClass;
-import com.yufan.library.inter.ICallBack;
-import com.yufan.library.manager.DialogManager;
 import com.yufan.library.util.AreaUtil;
-import com.yushi.leke.YFApi;
 import com.yushi.leke.fragment.ucenter.personalInfo.PersonalItem;
 
 import java.util.ArrayList;

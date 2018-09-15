@@ -1,4 +1,4 @@
-package com.yushi.leke.fragment.exhibition.fourpage;
+package com.yushi.leke.fragment.exhibition.Voteing;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -13,9 +13,9 @@ import com.yufan.library.inter.ICallBack;
 import com.yushi.leke.R;
 import me.drakeet.multitype.ItemViewBinder;
 
-public class doendBinder extends ItemViewBinder<Doendinfo,doendBinder.ViewHolder> {
+public class VoteingBinder extends ItemViewBinder<Voteinginfo,VoteingBinder.ViewHolder> {
     ICallBack callBack;
-    public doendBinder(ICallBack callBack) {
+    public VoteingBinder(ICallBack callBack) {
         this.callBack=callBack;
     }
 
@@ -26,12 +26,19 @@ public class doendBinder extends ItemViewBinder<Doendinfo,doendBinder.ViewHolder
     }
 
     @Override
-    protected void onBindViewHolder(@NonNull ViewHolder viewHolder, @NonNull final Doendinfo Doendinfo) {
+    protected void onBindViewHolder(@NonNull ViewHolder viewHolder, @NonNull final Voteinginfo Voteinginfo) {
+        viewHolder.tv_vote_playsum.setText(String.valueOf(Voteinginfo.getPlayCount()));
+        viewHolder.sdv.setImageURI(Voteinginfo.getVideo100Pic());
+        viewHolder.tv_vote_title.setText(Voteinginfo.getTitle());
+        viewHolder.tv_vote_sum.setText(String.valueOf(Voteinginfo.getVotes()));
+        viewHolder.tv_vote_province.setText(Voteinginfo.getAddress()+" / "+Voteinginfo.getIndustry());
+        viewHolder.tv_vote_name.setText("创业者："+Voteinginfo.getEntrepreneur());
+        viewHolder.tv_vote_describe.setText(Voteinginfo.getDesc());
         viewHolder.tv_vote_describe.setClickable(true);
         viewHolder.tv_vote_describe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                callBack.OnBackResult(Doendinfo);
+                callBack.OnBackResult(Voteinginfo);
             }
         });
 

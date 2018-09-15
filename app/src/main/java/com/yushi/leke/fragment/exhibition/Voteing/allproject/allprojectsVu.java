@@ -1,4 +1,4 @@
-package com.yushi.leke.fragment.exhibition.fourpage.allproject;
+package com.yushi.leke.fragment.exhibition.Voteing.allproject;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
@@ -21,7 +21,7 @@ import com.yufan.library.inject.Title;
 import com.yufan.library.widget.StateLayout;
 import com.yufan.library.widget.AppToolbar;
 import com.yufan.library.view.recycler.YFRecyclerView;
-import com.yushi.leke.fragment.exhibition.fourpage.spinner.SpinerPopWindow;
+import com.yushi.leke.fragment.exhibition.Voteing.spinner.SpinerPopWindow;
 
 import java.util.ArrayList;
 import java.util.List;

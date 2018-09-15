@@ -1,6 +1,6 @@
-package com.yushi.leke.fragment.exhibition.fourpage;
+package com.yushi.leke.fragment.exhibition.Voteing;
 
-public class Doendinfo {
+public class Voteinginfo {
     private String title;
     private String video100Pic;
     private String address;
@@ -10,10 +10,10 @@ public class Doendinfo {
     private int playCount;
     private String desc;
     private String id;
-    public Doendinfo(){
+    public Voteinginfo(){
 
     }
-    public Doendinfo(String title, String video100Pic,String address,String industry,String entrepreneur,int votes,int playCount,String desc,String id){
+    public Voteinginfo(String title, String video100Pic, String address, String industry, String entrepreneur, int votes, int playCount, String desc, String id){
         this.title = title;
         this.video100Pic=video100Pic;
         this.address=address;

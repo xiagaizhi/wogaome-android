@@ -1,4 +1,4 @@
-package com.yushi.leke.fragment.exhibition.fourpage;
+package com.yushi.leke.fragment.exhibition.Voteing;
 
 import com.yushi.leke.R;
 
@@ -11,13 +11,12 @@ import com.yufan.library.inject.FindView;
 import com.yufan.library.widget.StateLayout;
 import com.yufan.library.widget.AppToolbar;
 import com.yufan.library.view.recycler.YFRecyclerView;
-import com.yushi.leke.uamp.playback.Playback;
 
 /**
  * Created by mengfantao on 18/8/2.
  */
 @FindLayout(layout = R.layout.xx_doend_main)
-public class fourpageVu extends BaseListVu<fourpageContract.Presenter> implements fourpageContract.IView {
+public class VoteingVu extends BaseListVu<VoteingContract.Presenter> implements VoteingContract.IView {
     @FindView(R.id.recyclerview)
     private YFRecyclerView mYFRecyclerView;
     TextView tv;
@@ -32,6 +31,7 @@ public class fourpageVu extends BaseListVu<fourpageContract.Presenter> implement
                 mPersenter.MyCallback();
             }
         });
+        mYFRecyclerView.setOnPagerListener(pagerListener);
     }
 
     @Override
@@ -45,4 +45,17 @@ public class fourpageVu extends BaseListVu<fourpageContract.Presenter> implement
     public YFRecyclerView getRecyclerView() {
         return mYFRecyclerView;
     }
+    private YFRecyclerView.OnPagerListener pagerListener=new YFRecyclerView.OnPagerListener() {
+        @Override
+        public void onLoadMore(int index) {
+            mYFRecyclerView.getPageManager().next();
+            mPersenter.Loadmore();
+            tv.setText("第"+mYFRecyclerView.getPageManager().getCurrentIndex()+"次刷新页面");
+        }
+
+        @Override
+        public void onRefresh() {
+
+        }
+    };
 }

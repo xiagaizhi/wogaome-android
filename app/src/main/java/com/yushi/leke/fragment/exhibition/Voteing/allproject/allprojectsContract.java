@@ -1,18 +1,20 @@
-package com.yushi.leke.fragment.exhibition.fourpage;
+package com.yushi.leke.fragment.exhibition.Voteing.allproject;
 
 import com.yufan.library.base.Pr;
 import com.yufan.library.base.VuList;
-import com.yushi.leke.uamp.playback.Playback;
 
 /**
  * Created by mengfantao on 18/8/2.
  */
 
-public interface fourpageContract {
+public interface allprojectsContract {
     interface IView extends VuList {
-
+        void showCityPickerView();
     }
+
     interface Presenter extends Pr {
-        void MyCallback();
+
+
+        String selectedCityInfo(int options1, int options2);
     }
 }
