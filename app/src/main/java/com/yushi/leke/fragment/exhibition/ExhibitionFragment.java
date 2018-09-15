@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.View;
 
+import com.yufan.library.Global;
 import com.yufan.library.base.BaseListFragment;
 import com.yufan.library.inject.VuClass;
 import com.yufan.library.inter.ICallBack;
@@ -39,7 +40,8 @@ public class ExhibitionFragment extends BaseListFragment<ExhibitionContract.IVie
             @Override
             public void OnBackResult(Object... s) {
                 ExhibitionInfo info= (ExhibitionInfo) s[0];
-                getRootFragment().start(UIHelper.creat(ExhibitionDetailFragment.class).build());
+                // TODO: 2018/9/15 根据不同类型进入不同详情页面
+                getRootFragment().start(UIHelper.creat(ExhibitionDetailFragment.class).put(Global.BUNDLE_KEY_EXHIBITION_TYE,Global.EXHIBITION_TYE_VOTING).build());
             }
         }));
         vu.getRecyclerView().setAdapter(adapter);
