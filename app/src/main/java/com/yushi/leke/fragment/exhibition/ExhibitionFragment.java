@@ -46,9 +46,8 @@ public class ExhibitionFragment extends BaseListFragment<ExhibitionContract.IVie
         adapter.register(ExhibitionInfo.class, new ExhibitionViewBinder(new ICallBack() {
             @Override
             public void OnBackResult(Object... s) {
-                ExhibitionInfo info = (ExhibitionInfo) s[0];
-                // TODO: 2018/9/15 根据不同类型进入不同详情页面
-                getRootFragment().start(UIHelper.creat(ExhibitionDetailFragment.class).put(Global.BUNDLE_KEY_EXHIBITION_TYE, Global.EXHIBITION_TYE_VOTING).build());
+                ExhibitionInfo info = (ExhibitionInfo) s[0];//活动进度（0--未开始，1--报名中，2--投票中，3--已结束）
+                getRootFragment().start(UIHelper.creat(ExhibitionDetailFragment.class).put(Global.BUNDLE_KEY_EXHIBITION_TYE, info.getActivityProgress()).build());
             }
         }));
         list.add(new ExhibitionTopInfo());
@@ -71,6 +70,9 @@ public class ExhibitionFragment extends BaseListFragment<ExhibitionContract.IVie
                                 if (currentPage == 0) {
                                     list.clear();
                                     list.add(new ExhibitionTopInfo());
+                                    if (exhibitionInfoList.getList().size() == 1) {
+                                        exhibitionInfoList.getList().get(0).setJustOne(true);
+                                    }
                                 }
                                 list.addAll(exhibitionInfoList.getList());
                                 vu.getRecyclerView().getAdapter().notifyDataSetChanged();

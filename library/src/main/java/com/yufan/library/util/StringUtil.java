@@ -9,6 +9,10 @@ import android.text.TextUtils;
 import com.yufan.library.base.BaseApplication;
 import com.yufan.library.manager.DialogManager;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  * 作者：Created by zhanyangyang on 2018/9/1 11:24
  * 邮箱：zhanyangyang@hzyushi.cn
@@ -69,5 +73,22 @@ public class StringUtil {
     public static Spanned getMoneySpannble(String money, Context context) {
         String[] datas = formatMoney(money);
         return Html.fromHtml("<b><<font color='#151515'><size>" + datas[0] + "</size></font></b><font color='#333333'><size2>" + datas[1] + "</size2></font>", null, new SizeLabel(context));
+    }
+
+    public static String formatTime(String startDate, String endDate) {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            Date date1 = format.parse(startDate);
+            Date date2 = format.parse(endDate);
+            if (date2.getYear() > date1.getYear()) {
+                return startDate + "／" + endDate;
+            } else {
+                return startDate + "／" + endDate.substring(5, endDate.length());
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return startDate + "／" + endDate;
+        }
+
     }
 }

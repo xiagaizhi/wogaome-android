@@ -15,10 +15,6 @@ public class Global {
     public static final String BUNDLE_KEY_BROWSER_URL = "BUNDLE_KEY_BROWSER_URL";
 
     public static final String BUNDLE_KEY_EXHIBITION_TYE = "BUNDLE_KEY_EXHIBITION_TYE";
-    public static final int EXHIBITION_TYE_NO_START = 1;//未开始
-    public static final int EXHIBITION_TYE_SINGUP = 2;//报名中
-    public static final int EXHIBITION_TYE_VOTING = 3;//投票中
-    public static final int EXHIBITION_TYE_END = 4;//已结束
 
     public static final String SP_KEY_SERVICE_TYPE = "SP_KEY_SERVICE_TYPE";
     /**

@@ -22,11 +22,15 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.yufan.library.inter.ICallBack;
+import com.yufan.library.util.StringUtil;
 import com.yushi.leke.R;
+
+import java.text.SimpleDateFormat;
 
 import me.drakeet.multitype.ItemViewBinder;
 
@@ -51,8 +55,25 @@ public class ExhibitionViewBinder extends ItemViewBinder<ExhibitionInfo, Exhibit
 
     @Override
     protected void onBindViewHolder(@NonNull ViewHolder holder, @NonNull final ExhibitionInfo category) {
+        if (category.isJustOne()) {//仅有一个活动
+            holder.btn_apply.setVisibility(View.VISIBLE);
+        } else {
+            holder.btn_apply.setVisibility(View.GONE);
+        }
+        switch (category.getActivityProgress()) {//活动进度（0--未开始，1--报名中，2--投票中，3--已结束）
+            case 0:
+                break;
+            case 1:
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
+        }
         holder.sdv.setImageURI(Uri.parse(category.getBgPicture()));
         holder.tv_title.setText(category.getTitle());
+        holder.tv_action_company.setText("主办方：" + category.getOrganizer());
+        holder.tv_action_time.setText("活动时间："+ StringUtil.formatTime(category.getStartDate(),category.getEndDate()));
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -67,11 +88,21 @@ public class ExhibitionViewBinder extends ItemViewBinder<ExhibitionInfo, Exhibit
     static class ViewHolder extends RecyclerView.ViewHolder {
         public SimpleDraweeView sdv;
         public TextView tv_title;
+        public TextView tv_active_state;
+        public TextView tv_action_company;
+        public TextView tv_action_time;
+
+
+        public Button btn_apply;
 
         ViewHolder(@NonNull View itemView) {
             super(itemView);
             sdv = itemView.findViewById(R.id.sdv);
             tv_title = itemView.findViewById(R.id.tv_title);
+            tv_active_state = itemView.findViewById(R.id.tv_active_state);
+            tv_action_company = itemView.findViewById(R.id.tv_action_company);
+            tv_action_time = itemView.findViewById(R.id.tv_action_time);
+            btn_apply = itemView.findViewById(R.id.btn_apply);
         }
     }
 
