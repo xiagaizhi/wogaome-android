@@ -1,4 +1,4 @@
-package com.yushi.leke.fragment.exhibition.Voteing.allproject;
+package com.yushi.leke.fragment.exhibition.voteing.allproject;
 
 public class allprojectsinfo {
     public  String uri;

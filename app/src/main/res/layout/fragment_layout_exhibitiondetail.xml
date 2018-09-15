@@ -10,7 +10,7 @@
     <fragment
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:name="com.yushi.leke.fragment.exhibition.Voteing.VoteingFragment"
+        android:name="com.yushi.leke.fragment.exhibition.voteend.VoteendFragment"
         android:tag="com.yushi.leke.fragment.exhibition.Mytestmvp.MytestpageFragment">
 
 

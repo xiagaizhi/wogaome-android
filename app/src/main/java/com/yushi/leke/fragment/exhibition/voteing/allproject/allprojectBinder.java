@@ -1,4 +1,4 @@
-package com.yushi.leke.fragment.exhibition.Voteing.allproject;
+package com.yushi.leke.fragment.exhibition.voteing.allproject;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;

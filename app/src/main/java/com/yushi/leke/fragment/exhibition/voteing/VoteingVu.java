@@ -1,4 +1,4 @@
-package com.yushi.leke.fragment.exhibition.Voteing;
+package com.yushi.leke.fragment.exhibition.voteing;
 
 import com.yushi.leke.R;
 

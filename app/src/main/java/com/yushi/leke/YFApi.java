@@ -395,4 +395,27 @@ public interface YFApi {
     Call<ResponseBody>
     logout(
     );
+    /**
+     * 城市 行业 选择
+     * @param
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("app/v1/activity/listIndustryFromProject")
+    Call<ResponseBody>
+    allprojects(
+            @Field("activityId") String  activityId
+    );
+    /**
+     * 获取投票已结束信息
+     * @param
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("app/v1/activity/detailForVoteOver")
+    Call<ResponseBody>
+    getvoteenddata(
+            @Field("currentPage") int currentPage,
+            @Field("activityId") String activityId
+    );
 }

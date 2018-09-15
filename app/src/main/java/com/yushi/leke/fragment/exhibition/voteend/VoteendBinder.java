@@ -1,5 +1,6 @@
-package com.yushi.leke.fragment.exhibition.Voteing;
+package com.yushi.leke.fragment.exhibition.voteend;
 
+import android.annotation.SuppressLint;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,11 +12,12 @@ import android.widget.TextView;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.yufan.library.inter.ICallBack;
 import com.yushi.leke.R;
+
 import me.drakeet.multitype.ItemViewBinder;
 
-public class VoteingBinder extends ItemViewBinder<Voteinginfo,VoteingBinder.ViewHolder> {
+public class VoteendBinder extends ItemViewBinder<Voteendinfo, VoteendBinder.ViewHolder> {
     ICallBack callBack;
-    public VoteingBinder(ICallBack callBack) {
+    public VoteendBinder(ICallBack callBack) {
         this.callBack=callBack;
     }
 
@@ -25,20 +27,23 @@ public class VoteingBinder extends ItemViewBinder<Voteinginfo,VoteingBinder.View
         return new ViewHolder(layoutInflater.inflate(R.layout.xx_doend_item,viewGroup,false));
     }
 
+    @SuppressLint("ResourceAsColor")
     @Override
-    protected void onBindViewHolder(@NonNull ViewHolder viewHolder, @NonNull final Voteinginfo Voteinginfo) {
-        viewHolder.tv_vote_playsum.setText(String.valueOf(Voteinginfo.getPlayCount()));
-        viewHolder.sdv.setImageURI(Voteinginfo.getVideo100Pic());
-        viewHolder.tv_vote_title.setText(Voteinginfo.getTitle());
-        viewHolder.tv_vote_sum.setText(String.valueOf(Voteinginfo.getVotes()));
-        viewHolder.tv_vote_province.setText(Voteinginfo.getAddress()+" / "+Voteinginfo.getIndustry());
-        viewHolder.tv_vote_name.setText("创业者："+Voteinginfo.getEntrepreneur());
-        viewHolder.tv_vote_describe.setText(Voteinginfo.getDesc());
+    protected void onBindViewHolder(@NonNull ViewHolder viewHolder, @NonNull final Voteendinfo Voteendinfo) {
+        viewHolder.tv_vote_playsum.setText(String.valueOf(Voteendinfo.getPlayCount()));
+        viewHolder.sdv.setImageURI(Voteendinfo.getLogo());
+        viewHolder.tv_vote_title.setText(Voteendinfo.getTitle());
+        viewHolder.tv_vote_sum.setText(String.valueOf(Voteendinfo.getVotes()));
+        viewHolder.tv_vote_province.setText(Voteendinfo.getAddress()+" / "+ Voteendinfo.getIndustry());
+        viewHolder.tv_vote_name.setText("创业者："+ Voteendinfo.getEntrepreneur());
+        viewHolder.tv_vote_describe.setText(Voteendinfo.getIntroduction());
+        viewHolder.btn_vote_support.setText("已结束");
+        viewHolder.btn_vote_support.setTextColor(R.color.color_gray_level3);
         viewHolder.tv_vote_describe.setClickable(true);
         viewHolder.tv_vote_describe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                callBack.OnBackResult(Voteinginfo);
+                callBack.OnBackResult(Voteendinfo);
             }
         });
 

@@ -1,4 +1,4 @@
-package com.yushi.leke.fragment.exhibition.Voteing.spinner;
+package com.yushi.leke.fragment.exhibition.voteing.spinner;
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
