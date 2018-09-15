@@ -398,6 +398,13 @@ public interface YFApi {
 
     @POST("app/v1/common/initAd")
     Call<ResponseBody>
-    initAd(
+    initAd(//广告初始化
+    );
+
+    @FormUrlEncoded
+    @POST("app/v1/activity/listActivity")
+    Call<ResponseBody>
+    listActivity(
+            @Field("currentPage") int currentPage
     );
 }

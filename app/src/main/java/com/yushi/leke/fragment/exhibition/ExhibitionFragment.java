@@ -5,14 +5,20 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.View;
 
+import com.alibaba.fastjson.JSON;
 import com.yufan.library.Global;
+import com.yufan.library.api.ApiBean;
+import com.yufan.library.api.ApiManager;
+import com.yufan.library.api.YFListHttpCallBack;
 import com.yufan.library.base.BaseListFragment;
 import com.yufan.library.inject.VuClass;
 import com.yufan.library.inter.ICallBack;
 import com.yufan.library.view.recycler.PageInfo;
 import com.yushi.leke.UIHelper;
+import com.yushi.leke.YFApi;
 import com.yushi.leke.activity.MusicPlayerActivity;
 import com.yushi.leke.fragment.exhibition.detail.ExhibitionDetailFragment;
 
@@ -24,62 +30,66 @@ import me.drakeet.multitype.MultiTypeAdapter;
 @VuClass(ExhibitionVu.class)
 public class ExhibitionFragment extends BaseListFragment<ExhibitionContract.IView> implements ExhibitionContract.Presenter {
     private MultiTypeAdapter adapter;
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        adapter=new MultiTypeAdapter();
-        adapter.register(ExhibitionTopInfo.class,new ExhibitionTopViewBinder(new ICallBack() {
+        adapter = new MultiTypeAdapter();
+        adapter.register(ExhibitionTopInfo.class, new ExhibitionTopViewBinder(new ICallBack() {
             @Override
             public void OnBackResult(Object... s) {
-                if((int)s[0]==ExhibitionTopViewBinder.MUSIC_EVENT){
+                if ((int) s[0] == ExhibitionTopViewBinder.MUSIC_EVENT) {
                     onMusicMenuClick();
                 }
             }
         }));
-        adapter.register(ExhibitionInfo.class,new ExhibitionViewBinder(new ICallBack() {
+        adapter.register(ExhibitionInfo.class, new ExhibitionViewBinder(new ICallBack() {
             @Override
             public void OnBackResult(Object... s) {
-                ExhibitionInfo info= (ExhibitionInfo) s[0];
+                ExhibitionInfo info = (ExhibitionInfo) s[0];
                 // TODO: 2018/9/15 根据不同类型进入不同详情页面
-                getRootFragment().start(UIHelper.creat(ExhibitionDetailFragment.class).put(Global.BUNDLE_KEY_EXHIBITION_TYE,Global.EXHIBITION_TYE_VOTING).build());
+                getRootFragment().start(UIHelper.creat(ExhibitionDetailFragment.class).put(Global.BUNDLE_KEY_EXHIBITION_TYE, Global.EXHIBITION_TYE_VOTING).build());
             }
         }));
-        vu.getRecyclerView().setAdapter(adapter);
         list.add(new ExhibitionTopInfo());
-        list.add(new ExhibitionInfo("http://oss.cyzone.cn/2018/0724/20180724094636938.png"));
-        list.add(new ExhibitionInfo("http://oss.cyzone.cn/2018/0614/20180614093809181.jpg"));
-        list.add(new ExhibitionInfo("http://oss.cyzone.cn/2018/0724/20180724094636938.png"));
-        list.add(new ExhibitionInfo("http://oss.cyzone.cn/2018/0609/20180609064513960.png"));
-        list.add(new ExhibitionInfo("http://oss.cyzone.cn/2018/0609/20180609064513960.png"));
-        list.add(new ExhibitionInfo("http://oss.cyzone.cn/2018/0724/20180724094636938.png"));
-        list.add(new ExhibitionInfo("http://oss.cyzone.cn/2018/0609/20180609064513960.png"));
-        list.add(new ExhibitionInfo("http://oss.cyzone.cn/2018/0903/8a46c3cdd06dd931d05eebcdcb5ad8a9.png"));
-        list.add(new ExhibitionInfo("http://oss.cyzone.cn/2018/0609/20180609064513960.png"));
         adapter.setItems(list);
-        vu.getRecyclerView().getAdapter().notifyDataSetChanged();
+        vu.getRecyclerView().setAdapter(adapter);
+        getActivityList(getVu().getRecyclerView().getPageManager().getCurrentIndex());
+    }
+
+
+    private void getActivityList(final int currentPage) {
+        ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).listActivity(currentPage))
+                .useCache(false)
+                .enqueue(new YFListHttpCallBack(getVu()) {
+                    @Override
+                    public void onSuccess(ApiBean mApiBean) {
+                        super.onSuccess(mApiBean);
+                        if (!TextUtils.isEmpty(mApiBean.getData())) {
+                            ExhibitionInfoList exhibitionInfoList = JSON.parseObject(mApiBean.getData(), ExhibitionInfoList.class);
+                            if (exhibitionInfoList != null && exhibitionInfoList.getList().size() > 0) {
+                                if (currentPage == 0) {
+                                    list.clear();
+                                    list.add(new ExhibitionTopInfo());
+                                }
+                                list.addAll(exhibitionInfoList.getList());
+                                vu.getRecyclerView().getAdapter().notifyDataSetChanged();
+                            } else {
+                                vu.getRecyclerView().getPageManager().setPageState(PageInfo.PAGE_STATE_NO_MORE);
+                            }
+                        }
+                    }
+                });
     }
 
     @Override
     public void onLoadMore(int index) {
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                getVu().getRecyclerView().getPTR().refreshComplete();
-                getVu(). getRecyclerView().getPageManager().setPageState(PageInfo.PAGE_STATE_NONE);
-            }
-        },1000);
+        getActivityList(index);
     }
 
-    private Handler handler=new Handler();
     @Override
     public void onRefresh() {
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                getVu().getRecyclerView().getPTR().refreshComplete();
-                getVu(). getRecyclerView().getPageManager().setPageState(PageInfo.PAGE_STATE_NONE);
-            }
-        },1000);
+        getActivityList(getVu().getRecyclerView().getPageManager().getCurrentIndex());
     }
 
     @Override
