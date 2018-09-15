@@ -176,7 +176,7 @@ public class SettingFragment extends BaseFragment<SettingContract.IView> impleme
     @Override
     public void upgrade() {
         if (updateInfo != null && updateInfo.isNeedUpdate()) {
-            UpgradeUtil.upgrade(updateInfo.getPkgPath());
+            UpgradeUtil.upgrade(_mActivity,updateInfo.getPkgPath());
         }
     }
 

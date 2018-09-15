@@ -75,7 +75,7 @@ public class AboutLekeFragment extends BaseFragment<AboutLekeContract.IView> imp
     @Override
     public void toUpgrade() {
         if (updateInfo != null && updateInfo.isNeedUpdate()) {
-            UpgradeUtil.upgrade(updateInfo.getPkgPath());
+            UpgradeUtil.upgrade(_mActivity,updateInfo.getPkgPath());
         }
     }
 }
