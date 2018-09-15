@@ -27,11 +27,13 @@ import com.yufan.library.cache.CacheManager;
 import com.yufan.library.inject.VuClass;
 import com.yufan.library.manager.SPManager;
 import com.yufan.library.util.SIDUtil;
+import com.yufan.library.util.YFUtil;
 import com.yushi.leke.R;
 import com.yushi.leke.UIHelper;
 import com.yushi.leke.YFApi;
 import com.yushi.leke.fragment.splash.advert.AdFragmentFragment;
 import com.yushi.leke.fragment.splash.advert.AdInfo;
+import com.yushi.leke.fragment.splash.guide.GuideFragmentFragment;
 
 import java.io.ByteArrayOutputStream;
 import java.io.Serializable;
@@ -140,7 +142,7 @@ public class SplashFragment extends BaseFragment<SplashContract.IView> implement
     }
 
 
-    private void testInfo(){
+    private void testInfo() {
         final AdInfo temp = new AdInfo();
         temp.setAdImgurl("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1536992413846&di=4def7b1e989446a27151adee9afd158e&imgtype=0&src=http%3A%2F%2Fimg5.duitang.com%2Fuploads%2Fitem%2F201409%2F13%2F20140913140805_EZYKn.jpeg");
         temp.setActionUrl("https://www.baidu.com");
@@ -166,18 +168,23 @@ public class SplashFragment extends BaseFragment<SplashContract.IView> implement
             public void run() {
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 fragmentManager.beginTransaction().remove(SplashFragment.this).commit();
-                if (adInfo != null && !TextUtils.isEmpty(adInfo.getAdKey())) {
-                    UIHelper.openFragment(_mActivity, UIHelper.creat(AdFragmentFragment.class).put("adKey", adInfo.getAdKey()).build(), false);
+                if (!SPManager.getInstance().getBoolean(Global.SP_GUIDE_KEY + YFUtil.getVersionName(), false)) {
+                    UIHelper.openFragment(_mActivity, UIHelper.creat(GuideFragmentFragment.class).build(), false);
+                    SPManager.getInstance().saveValue(Global.SP_GUIDE_KEY + YFUtil.getVersionName(), true);
                 } else {
-                    if (_mActivity != null && !_mActivity.isFinishing()) {
-                        WindowManager.LayoutParams lp = _mActivity.getWindow().getAttributes();
-                        lp.flags &= (~WindowManager.LayoutParams.FLAG_FULLSCREEN);
-                        _mActivity.getWindow().setAttributes(lp);
-                        _mActivity.getWindow().setBackgroundDrawableResource(R.color.white);
+                    if (adInfo != null && !TextUtils.isEmpty(adInfo.getAdKey())) {
+                        UIHelper.openFragment(_mActivity, UIHelper.creat(AdFragmentFragment.class).put("adKey", adInfo.getAdKey()).build(), false);
+                    } else {
+                        if (_mActivity != null && !_mActivity.isFinishing()) {
+                            WindowManager.LayoutParams lp = _mActivity.getWindow().getAttributes();
+                            lp.flags &= (~WindowManager.LayoutParams.FLAG_FULLSCREEN);
+                            _mActivity.getWindow().setAttributes(lp);
+                            _mActivity.getWindow().setBackgroundDrawableResource(R.color.white);
+                        }
                     }
                 }
             }
-        }, 2000);
+        }, 1000);
     }
 
 
