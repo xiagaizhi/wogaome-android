@@ -418,4 +418,42 @@ public interface YFApi {
             @Field("currentPage") int currentPage,
             @Field("activityId") String activityId
     );
+
+    @POST("app/v1/common/initAd")
+    Call<ResponseBody>
+    initAd(//广告初始化
+    );
+
+    @FormUrlEncoded
+    @POST("app/v1/activity/listActivity")
+    Call<ResponseBody>
+    listActivity(
+            @Field("currentPage") int currentPage
+    );
+    /**
+     * 行业城市选择项目信息
+     * @param
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("app/v1/activity/allProjectForVote")
+    Call<ResponseBody>
+    getvoteallpro(
+            @Field("currentPage") int currentPage,
+            @Field("activityId") String activityId
+    );
+    /**
+     * 行业选择项目信息
+     * @param
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("app/v1/activity/allProjectForVote")
+    Call<ResponseBody>
+    getvoteworkpro(
+            @Field("currentPage") int currentPage,
+            @Field("activityId") String activityId,
+            @Field("industry")String industry
+    );
+
 }

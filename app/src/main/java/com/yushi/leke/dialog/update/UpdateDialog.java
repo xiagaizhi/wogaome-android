@@ -105,7 +105,7 @@ public class UpdateDialog extends Dialog implements View.OnClickListener {
         switch (v.getId()) {
             case R.id.btn_upgrade:
                 btn_upgrade.setEnabled(false);
-                UpgradeUtil.upgrade(mUpdateInfo.getPkgPath());
+                UpgradeUtil.upgrade(mContext,mUpdateInfo.getPkgPath());
                 if (!mUpdateInfo.isForceUpdate()) {
                     dismiss();
                 }

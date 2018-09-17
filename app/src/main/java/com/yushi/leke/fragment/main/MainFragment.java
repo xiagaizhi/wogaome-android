@@ -25,11 +25,13 @@ import com.yufan.library.inject.VuClass;
 import com.yufan.library.inter.ICallBack;
 import com.yufan.library.manager.UserManager;
 import com.yufan.library.widget.anim.AFVerticalAnimator;
+import com.yushi.leke.App;
 import com.yushi.leke.R;
 import com.yushi.leke.UIHelper;
 import com.yushi.leke.YFApi;
 import com.yushi.leke.dialog.update.UpdateDialog;
 import com.yushi.leke.dialog.update.UpdateInfo;
+import com.yushi.leke.fragment.browser.BrowserBaseFragment;
 import com.yushi.leke.fragment.home.SubscriptionsFragment;
 import com.yushi.leke.fragment.exhibition.ExhibitionFragment;
 import com.yushi.leke.fragment.login.LoginFragment;
@@ -53,10 +55,15 @@ public class MainFragment extends BaseFragment<MainContract.IView> implements Ma
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
             switch (action) {
-                case Global.BROADCAST_TOKEN_LOSE:
+                case Global.BROADCAST_TOKEN_LOSE://token失效
                     UserManager.getInstance().setToken("");
                     UserManager.getInstance().setUid("");
+                    App.getApp().registerXGPush("*");
                     getRootFragment().startWithPopTo(UIHelper.creat(LoginFragment.class).build(), MainFragment.class, true);
+                    break;
+                case Global.BROADCAST_ACTION_ADJUMP://广告具体跳转
+                    String actionUrl = intent.getStringExtra("actionUrl");
+                    start(UIHelper.creat(BrowserBaseFragment.class).put(Global.BUNDLE_KEY_BROWSER_URL, actionUrl).build());
                     break;
             }
         }
@@ -67,6 +74,7 @@ public class MainFragment extends BaseFragment<MainContract.IView> implements Ma
         super.onCreate(savedInstanceState);
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(Global.BROADCAST_TOKEN_LOSE);
+        intentFilter.addAction(Global.BROADCAST_ACTION_ADJUMP);
         LocalBroadcastManager.getInstance(_mActivity).registerReceiver(broadcastReceiver, intentFilter);
     }
 

@@ -20,6 +20,7 @@ import android.text.TextUtils;
 import android.view.View;
 
 import com.yufan.library.inject.VuClass;
+import com.yushi.leke.App;
 import com.yushi.leke.UIHelper;
 import com.yushi.leke.YFApi;
 import com.yushi.leke.dialog.CommonDialog;
@@ -168,13 +169,14 @@ public class SettingFragment extends BaseFragment<SettingContract.IView> impleme
 
         UserManager.getInstance().setToken("");
         UserManager.getInstance().setUid("");
+        App.getApp().registerXGPush("*");
         getRootFragment().startWithPopTo(UIHelper.creat(LoginFragment.class).build(), MainFragment.class, true);
     }
 
     @Override
     public void upgrade() {
         if (updateInfo != null && updateInfo.isNeedUpdate()) {
-            UpgradeUtil.upgrade(updateInfo.getPkgPath());
+            UpgradeUtil.upgrade(_mActivity,updateInfo.getPkgPath());
         }
     }
 

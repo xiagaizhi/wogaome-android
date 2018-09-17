@@ -29,8 +29,6 @@ import com.yufan.library.widget.AppToolbar;
 public class ExhibitionDetailVu extends BaseVu<ExhibitionDetailContract.Presenter> implements ExhibitionDetailContract.IView {
     @FindView(R.id.video_view)
     private AliyunVodPlayerView mAliyunVodPlayerView;
-    @FindView(R.id.fl_content)
-    private FrameLayout fl_content;
     private AlivcShowMoreDialog showMoreDialog;
 
     @Override

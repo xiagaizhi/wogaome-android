@@ -22,6 +22,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.yufan.library.inter.ICallBack;
@@ -35,8 +36,9 @@ import me.drakeet.multitype.ItemViewBinder;
  */
 public class ExhibitionViewBinder extends ItemViewBinder<ExhibitionInfo, ExhibitionViewBinder.ViewHolder> {
     private ICallBack callBack;
+
     public ExhibitionViewBinder(ICallBack callBack) {
-this.callBack=callBack;
+        this.callBack = callBack;
     }
 
     @Override
@@ -49,11 +51,12 @@ this.callBack=callBack;
 
     @Override
     protected void onBindViewHolder(@NonNull ViewHolder holder, @NonNull final ExhibitionInfo category) {
-        holder.sdv.setImageURI(Uri.parse(category.url));
+        holder.sdv.setImageURI(Uri.parse(category.getBgPicture()));
+        holder.tv_title.setText(category.getTitle());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(callBack!=null){
+                if (callBack != null) {
                     callBack.OnBackResult(category);
                 }
             }
@@ -63,9 +66,12 @@ this.callBack=callBack;
 
     static class ViewHolder extends RecyclerView.ViewHolder {
         public SimpleDraweeView sdv;
+        public TextView tv_title;
+
         ViewHolder(@NonNull View itemView) {
             super(itemView);
-        sdv=  itemView.findViewById(R.id.sdv);
+            sdv = itemView.findViewById(R.id.sdv);
+            tv_title = itemView.findViewById(R.id.tv_title);
         }
     }
 

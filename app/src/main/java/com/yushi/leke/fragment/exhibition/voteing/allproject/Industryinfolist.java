@@ -4,7 +4,6 @@ import java.util.List;
 
 public class Industryinfolist {
     List<Industryinfo>industryList;
-
     public List<Industryinfo> getIndustryList() {
         return industryList;
     }

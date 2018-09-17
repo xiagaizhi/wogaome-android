@@ -1,5 +1,6 @@
 package com.yushi.leke.dialog.update;
 
+import android.content.Context;
 import android.util.Log;
 
 import com.lzy.okgo.model.Progress;
@@ -11,15 +12,13 @@ import com.yufan.library.util.ApkUtils;
 
 import java.io.File;
 
-import static com.umeng.socialize.utils.DeviceConfig.context;
-
 /**
  * 作者：Created by zhanyangyang on 2018/9/13 16:21
  * 邮箱：zhanyangyang@hzyushi.cn
  */
 
 public class UpgradeUtil {
-    public static void upgrade(String updataurl) {
+    public static void upgrade(final Context context, String updataurl) {
         DialogManager.getInstance().toast("更新中，请稍等");
         OkDownload.getInstance().removeAll(true);
         GetRequest request = new GetRequest(updataurl);
@@ -45,7 +44,11 @@ public class UpgradeUtil {
                     @Override
                     public void onFinish(File file, Progress progress) {
                         Log.e("UpdateDialog", "onFinish");
-                        ApkUtils.install(context, file);
+                        try {
+                            ApkUtils.install(context, file);
+                        }catch (Exception e){
+                            e.printStackTrace();
+                        }
                     }
 
                     @Override

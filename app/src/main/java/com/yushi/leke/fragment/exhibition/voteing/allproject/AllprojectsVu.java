@@ -77,7 +77,7 @@ public class AllprojectsVu extends BaseListVu<AllprojectsContract.Presenter> imp
                     pvOptions.setOnDismissListener(new OnDismissListener() {
                         @Override
                         public void onDismiss(Object o) {
-
+                            mPersenter.GetmoreFromwork(String.valueOf(tv_choose_work.getText()));
                         }
                     });
                     pvOptions.setPicker(worklist);//一级选择器

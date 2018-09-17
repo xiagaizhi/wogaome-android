@@ -5,6 +5,12 @@
     android:layout_height="@dimen/px292"
     android:background="@color/white"
     android:orientation="vertical">
+    <View
+        android:layout_alignParentTop="true"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px1"
+        android:background="@color/color_gray_levele"
+        />
     <com.facebook.drawee.view.SimpleDraweeView
         android:layout_marginTop="@dimen/px50"
         android:layout_marginLeft="@dimen/px36"

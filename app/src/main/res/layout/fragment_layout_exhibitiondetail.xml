@@ -7,18 +7,11 @@
         android:id="@+id/video_view"
         android:layout_width="match_parent"
         android:layout_height="@dimen/y420" />
-    <fragment
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:name="com.yushi.leke.fragment.exhibition.voteing.VoteingFragment"
-        android:tag="com.yushi.leke.fragment.exhibition.Mytestmvp.MytestpageFragment">
 
-
-    </fragment>
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_weight="1"
-        android:id="@+id/fl_content"
+        android:id="@+id/fl_exhibition_content"
         android:layout_height="0dp">
 
     </FrameLayout>

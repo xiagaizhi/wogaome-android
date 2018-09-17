@@ -33,5 +33,8 @@ public abstract class YFListHttpCallBack extends BaseHttpCallBack {
 
     }
 
-
+    @Override
+    public void onFinish() {
+        vu.getRecyclerView().getPTR().refreshComplete();
+    }
 }

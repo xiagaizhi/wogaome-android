@@ -18,6 +18,7 @@ import com.yufan.library.Global;
 import com.yufan.library.api.ApiManager;
 import com.yufan.library.base.BaseApplication;
 import com.yufan.library.manager.SPManager;
+import com.yufan.library.manager.UserManager;
 
 /**
  * Created by mengfantao on 18/2/2.
@@ -25,13 +26,15 @@ import com.yufan.library.manager.SPManager;
 
 public class App extends BaseApplication {
     private static App instance;
+
     //TODO 申请第三方开发者账号
     {
         PlatformConfig.setWeixin("wxa78cb5eacb190d7f", "e05682fc1299b50066a491633c3a9820");
         PlatformConfig.setQQZone("1107596034", "R7Fw2IprSaHgsQgb");
         PlatformConfig.setSinaWeibo("xinlangid", "xinlangsecret", "xinlanghuidiao");
     }
-    public static App getApp(){
+
+    public static App getApp() {
         return instance;
     }
 
@@ -39,7 +42,7 @@ public class App extends BaseApplication {
     @Override
     public void onCreate() {
         super.onCreate();
-        instance=this;
+        instance = this;
         /**
          * 防止第三方服务多次执行．
          */
@@ -51,9 +54,15 @@ public class App extends BaseApplication {
         }
         XGPushConfig.enableDebug(this, true);
         QbSdk.initX5Environment(getApplicationContext(), null);
-        ApiManager.getInstance().init(SPManager.getInstance().getInt(Global.SP_KEY_SERVICE_TYPE,BuildConfig.API_TYPE));
-    //注册信鸽
-        XGPushManager.registerPush(getApplicationContext(),
+        ApiManager.getInstance().init(SPManager.getInstance().getInt(Global.SP_KEY_SERVICE_TYPE, BuildConfig.API_TYPE));
+        //注册信鸽
+        registerXGPush(UserManager.getInstance().getUid());
+        initCustomPushNotificationBuilder(getApplicationContext());
+        OkGo.getInstance().init(this);
+    }
+
+    public void registerXGPush(String uid) {
+        XGPushManager.registerPush(getApplicationContext(), uid,
                 new XGIOperateCallback() {
                     @Override
                     public void onSuccess(Object data, int flag) {
@@ -70,8 +79,6 @@ public class App extends BaseApplication {
 
                     }
                 });
-        initCustomPushNotificationBuilder(getApplicationContext());
-        OkGo.getInstance().init(this);
     }
 
     /**
@@ -108,7 +115,6 @@ public class App extends BaseApplication {
         XGPushManager.setPushNotificationBuilder(this, 999, build);
         XGPushManager.setDefaultNotificationBuilder(this, build);
     }
-
 
 
 }

@@ -41,7 +41,6 @@ public abstract class BaseHttpCallBack implements IHttpCallBack {
             if (vu != null) {
                 vu.setStateGone();
             }
-
             onSuccess(mApiBean);
         } else if (TextUtils.equals(ApiBean.TOKEN_LOSE, mApiBean.getCode())) {
             //登录

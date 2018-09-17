@@ -13,11 +13,23 @@ public class Global {
      * 浏览器页面url
      */
     public static final String BUNDLE_KEY_BROWSER_URL = "BUNDLE_KEY_BROWSER_URL";
+
+    public static final String BUNDLE_KEY_EXHIBITION_TYE = "BUNDLE_KEY_EXHIBITION_TYE";
+    public static final int EXHIBITION_TYE_NO_START = 1;//未开始
+    public static final int EXHIBITION_TYE_SINGUP = 2;//报名中
+    public static final int EXHIBITION_TYE_VOTING = 3;//投票中
+    public static final int EXHIBITION_TYE_END = 4;//已结束
+
     public static final String SP_KEY_SERVICE_TYPE = "SP_KEY_SERVICE_TYPE";
     /**
      * 新手指引
      */
     public static final String SP_KEY_NEW_GUIDE = "SP_KEY_NEW_GUIDE";
+    /**
+     * 广告key
+     */
+    public static final String SP_AD_KEY = "SP_AD_KEY";
+    public static final String SP_GUIDE_KEY = "SP_GUIDE_KEY";
     public static final String ARG_MEDIA_ID = "media_id";
     /**
      * 支付结果通知广播action
@@ -28,6 +40,11 @@ public class Global {
      * token失效通知广播action
      */
     public static final String BROADCAST_TOKEN_LOSE = "BROADCAST_TOKEN_LOSE";
+
+    /**
+     * 广告跳转
+     */
+    public static final String BROADCAST_ACTION_ADJUMP = "BROADCAST_ACTION_ADJUMP";
     /**
      * 支付结果返回data true:成功 false:失败
      */
@@ -51,4 +68,6 @@ public class Global {
      * 压缩之后图片路径
      */
     public final static String SAVE_COMPRESSION_IMAGE_PATH = DEFAULT_SAVE_IMAGE_PATH + "compressionPhotos" + File.separator;
+
+
 }

@@ -15,6 +15,8 @@ public interface AllprojectsContract {
     }
 
     interface Presenter extends Pr {
-
+        void Getmore();
+        void GetmoreFromwork(String industry);
+        void Getmorefrocity();
     }
 }

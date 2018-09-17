@@ -25,8 +25,13 @@ import com.aliyun.vodplayerview.view.control.ControlView;
 import com.aliyun.vodplayerview.view.tipsview.ErrorInfo;
 import com.aliyun.vodplayerview.widget.AliyunScreenMode;
 import com.aliyun.vodplayerview.widget.AliyunVodPlayerView;
+import com.yufan.library.Global;
 import com.yufan.library.base.BaseFragment;
 import com.yufan.library.inject.VuClass;
+import com.yushi.leke.R;
+import com.yushi.leke.UIHelper;
+import com.yushi.leke.fragment.browser.BrowserBaseFragment;
+import com.yushi.leke.fragment.exhibition.voteing.VoteingFragment;
 
 import java.lang.ref.WeakReference;
 import java.text.SimpleDateFormat;
@@ -48,13 +53,32 @@ public class ExhibitionDetailFragment extends BaseFragment<ExhibitionDetailContr
      */
     private boolean inRequest;
 
+    private int exhibitionType;
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         requestVidSts();
         initAliyunPlayerView();
+        Bundle bundle = getArguments();
+        if (bundle != null) {
+            exhibitionType = bundle.getInt(Global.BUNDLE_KEY_EXHIBITION_TYE);
+        }
+        switch (exhibitionType) {
+            case Global.EXHIBITION_TYE_NO_START:
+                loadRootFragment(R.id.fl_exhibition_content, UIHelper.creat(BrowserBaseFragment.class).put(Global.BUNDLE_KEY_BROWSER_URL, "").build());
+                break;
+            case Global.EXHIBITION_TYE_SINGUP:
+                loadRootFragment(R.id.fl_exhibition_content, UIHelper.creat(BrowserBaseFragment.class).put(Global.BUNDLE_KEY_BROWSER_URL, "").build());
+                break;
+            case Global.EXHIBITION_TYE_VOTING:
+                loadRootFragment(R.id.fl_exhibition_content, UIHelper.creat(VoteingFragment.class).build());
+                break;
+            case Global.EXHIBITION_TYE_END:
+                loadRootFragment(R.id.fl_exhibition_content, UIHelper.creat(VoteingFragment.class).build());
+                break;
+        }
     }
-
 
 
     @Override
@@ -117,7 +141,7 @@ public class ExhibitionDetailFragment extends BaseFragment<ExhibitionDetailContr
         mAliyunVodPlayerView.setmOnPlayerViewClickListener(new AliyunVodPlayerView.OnPlayerViewClickListener() {
             @Override
             public void onClick(AliyunScreenMode screenMode, AliyunVodPlayerView.PlayViewType viewType) {
-                if(viewType== AliyunVodPlayerView.PlayViewType.BackPressed){
+                if (viewType == AliyunVodPlayerView.PlayViewType.BackPressed) {
                     pop();
                 }
             }
@@ -227,8 +251,6 @@ public class ExhibitionDetailFragment extends BaseFragment<ExhibitionDetailContr
     }
 
 
-
-
     private static class MyChangeQualityListener implements IAliyunVodPlayer.OnChangeQualityListener {
 
         private WeakReference<ExhibitionDetailFragment> weakReference;
@@ -329,9 +351,9 @@ public class ExhibitionDetailFragment extends BaseFragment<ExhibitionDetailContr
                 mAliyunVodPlayerView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
 
                 //设置view的布局，宽高之类
-                LinearLayout.LayoutParams aliVcVideoViewLayoutParams = (LinearLayout.LayoutParams)mAliyunVodPlayerView
+                LinearLayout.LayoutParams aliVcVideoViewLayoutParams = (LinearLayout.LayoutParams) mAliyunVodPlayerView
                         .getLayoutParams();
-                aliVcVideoViewLayoutParams.height = (int)(ScreenUtils.getWidth(getContext()) * 9.0f / 16);
+                aliVcVideoViewLayoutParams.height = (int) (ScreenUtils.getWidth(getContext()) * 9.0f / 16);
                 aliVcVideoViewLayoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT;
                 //                if (!isStrangePhone()) {
                 //                    aliVcVideoViewLayoutParams.topMargin = getSupportActionBar().getHeight();
@@ -352,7 +374,7 @@ public class ExhibitionDetailFragment extends BaseFragment<ExhibitionDetailContr
                 }
 
                 //设置view的布局，宽高
-                LinearLayout.LayoutParams aliVcVideoViewLayoutParams = (LinearLayout.LayoutParams)mAliyunVodPlayerView
+                LinearLayout.LayoutParams aliVcVideoViewLayoutParams = (LinearLayout.LayoutParams) mAliyunVodPlayerView
                         .getLayoutParams();
                 aliVcVideoViewLayoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT;
                 aliVcVideoViewLayoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT;
@@ -426,7 +448,7 @@ public class ExhibitionDetailFragment extends BaseFragment<ExhibitionDetailContr
     }
 
     private void hideShowMoreDialog(boolean from, AliyunScreenMode currentMode) {
-        getVu().hideShowMoreDialog(from,currentMode);
+        getVu().hideShowMoreDialog(from, currentMode);
     }
 
 
