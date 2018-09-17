@@ -36,6 +36,9 @@ public class AllprojectsFragment extends BaseListFragment<AllprojectsContract.IV
     public void onRefresh() {
         getalldata(getVu().getRecyclerView().getPageManager().getCurrentIndex(),"1",getVu().getindustry(),getVu().getcity());
     }
+    /*
+    *获取数据
+     */
     private void getalldata(final int currentPage, String activityid, final String industry, final String city) {
         ApiManager.getCall(ApiManager.getInstance().create(YFApi.class)
                 .getvoteallpro(currentPage,activityid,industry,city))

@@ -34,13 +34,11 @@ import java.util.List;
 public class AllprojectsVu extends BaseListVu<AllprojectsContract.Presenter> implements AllprojectsContract.IView {
     @FindView(R.id.recyclerview)
     private YFRecyclerView mYFRecyclerView;
-    private SpinerPopWindow<String> cityspinner;
-    private SpinerPopWindow<String> workspinner;
-    private List<String> list;
-    private List<String> listwork;
     private TextView tv_choose_city, tv_choose_work;
     Industryinfolist industryinfolist;
     List<String>worklist=new ArrayList<>();
+    private Boolean flag=false;
+    private int count=0;
     @Override
     public void initView(View view) {
         super.initView(view);
@@ -62,7 +60,7 @@ public class AllprojectsVu extends BaseListVu<AllprojectsContract.Presenter> imp
                         public void onOptionsSelect(int options1, int options2, int options3, View v) {
                             tv_choose_work.setText( worklist.get(options1));
                         }
-                    }).setTitleText("城市选择")
+                    }).setTitleText("选择")
                             .setDividerColor(Color.BLACK)
                             .setTextColorCenter(Color.BLACK)
                             .setContentTextSize(20)
@@ -77,7 +75,10 @@ public class AllprojectsVu extends BaseListVu<AllprojectsContract.Presenter> imp
                     pvOptions.setOnDismissListener(new OnDismissListener() {
                         @Override
                         public void onDismiss(Object o) {
+                            mYFRecyclerView.getPageManager().resetIndex();
                             mPersenter.onLoadMore(mYFRecyclerView.getPageManager().getCurrentIndex());
+
+
                         }
                     });
                     pvOptions.setPicker(worklist);//一级选择器
@@ -126,25 +127,12 @@ public class AllprojectsVu extends BaseListVu<AllprojectsContract.Presenter> imp
      * 初始化数据
      */
     private void initData() {
-        list = new ArrayList<String>();
-        for (int i = 0; i < 5; i++) {
-            list.add("北京");
-        }
-        listwork = new ArrayList<String>();
-        for (int i = 0; i < 5; i++) {
-            listwork.add("金融行业");
-        }
         tv_choose_city = (TextView) findViewById(R.id.tv_choose_city);
         tv_choose_city.setClickable(true);
         tv_choose_city.setOnClickListener(clickListener);
         tv_choose_work = (TextView) findViewById(R.id.tv_choose_work);
         tv_choose_work.setClickable(true);
         tv_choose_work.setOnClickListener(clickListener);
-        cityspinner = new SpinerPopWindow<>(getContext(), list, itemClickListener);
-        cityspinner.setOnDismissListener(dismissListener);
-        workspinner = new SpinerPopWindow<>(getContext(), listwork, workitemClickListener);
-        workspinner.setOnDismissListener(dismissListener);
-
     }
 
     /**
@@ -166,49 +154,12 @@ public class AllprojectsVu extends BaseListVu<AllprojectsContract.Presenter> imp
         public void onClick(View v) {
             switch (v.getId()) {
                 case R.id.tv_choose_city:
-                    //cityspinner.setWidth(tv_choose_city.getWidth());
-                    //cityspinner.showAsDropDown(tv_choose_city);
-                    // setTextImage(R.drawable.icon_up);
                     break;
                 case R.id.tv_choose_work:
-                    //workspinner.setWidth(tv_choose_work.getWidth());
-                    //workspinner.showAsDropDown(tv_choose_work);
                     showCityPickerView();
                     worklist.removeAll(worklist);
-                    // setTextImage(R.drawable.icon_up);
                     break;
             }
-        }
-    };
-    /**
-     * popupwindow显示的ListView的item点击事件
-     */
-    private AdapterView.OnItemClickListener itemClickListener = new AdapterView.OnItemClickListener() {
-        @Override
-        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            cityspinner.dismiss();
-            tv_choose_city.setText(list.get(position));
-            Toast.makeText(getContext(), "点击了:" + list.get(position), Toast.LENGTH_LONG).show();
-        }
-    };
-    /**
-     * popupwindow显示的ListView的item点击事件
-     */
-    private AdapterView.OnItemClickListener workitemClickListener = new AdapterView.OnItemClickListener() {
-        @Override
-        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            workspinner.dismiss();
-            tv_choose_work.setText(listwork.get(position));
-            Toast.makeText(getContext(), "点击了:" + listwork.get(position), Toast.LENGTH_LONG).show();
-        }
-    };
-    /**
-     * 监听popupwindow取消
-     */
-    private PopupWindow.OnDismissListener dismissListener = new PopupWindow.OnDismissListener() {
-        @Override
-        public void onDismiss() {
-            //setTextImage(R.drawable.icon_down);
         }
     };
 }
