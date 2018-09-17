@@ -1,6 +1,8 @@
 package com.yufan.library.view.recycler;
 
 
+import android.util.Log;
+
 import com.yufan.library.inter.ICallBack;
 
 import java.util.ArrayList;

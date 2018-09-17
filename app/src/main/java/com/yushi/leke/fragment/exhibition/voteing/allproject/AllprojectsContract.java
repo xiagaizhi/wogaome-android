@@ -12,11 +12,10 @@ import java.util.List;
 public interface AllprojectsContract {
     interface IView extends VuList {
         void showCityPickerView();
+        String getindustry();
+        String getcity();
     }
 
     interface Presenter extends Pr {
-        void Getmore();
-        void GetmoreFromwork(String industry);
-        void Getmorefrocity();
     }
 }

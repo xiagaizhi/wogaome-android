@@ -51,7 +51,7 @@ public class AllprojectsVu extends BaseListVu<AllprojectsContract.Presenter> imp
     public void showCityPickerView() {
         ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).getindustrylist("1")).useCache(false).enqueue(new BaseHttpCallBack() {
             @Override
-            public void onSuccess(ApiBean mApiBean) {
+            public void onSuccess(final ApiBean mApiBean) {
                 if (!TextUtils.isEmpty(mApiBean.getData())) {
                     industryinfolist = JSON.parseObject(mApiBean.getData(), Industryinfolist.class);
                     for (int i = 0; i< industryinfolist.getIndustryList().size(); i++){
@@ -77,7 +77,7 @@ public class AllprojectsVu extends BaseListVu<AllprojectsContract.Presenter> imp
                     pvOptions.setOnDismissListener(new OnDismissListener() {
                         @Override
                         public void onDismiss(Object o) {
-                            mPersenter.GetmoreFromwork(String.valueOf(tv_choose_work.getText()));
+                            mPersenter.onLoadMore(mYFRecyclerView.getPageManager().getCurrentIndex());
                         }
                     });
                     pvOptions.setPicker(worklist);//一级选择器
@@ -93,6 +93,17 @@ public class AllprojectsVu extends BaseListVu<AllprojectsContract.Presenter> imp
 
             }
         });
+    }
+
+    @Override
+    public String getindustry() {
+
+        return String.valueOf(tv_choose_work.getText());
+    }
+
+    @Override
+    public String getcity() {
+        return  String.valueOf(tv_choose_city.getText());
     }
 
     @Override

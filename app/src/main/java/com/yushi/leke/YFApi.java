@@ -407,6 +407,20 @@ public interface YFApi {
             @Field("activityId") String  activityId
     );
     /**
+     * 行业选择项目
+     * @param
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("app/v1/activity/listIndustryFromProject")
+    Call<ResponseBody>
+    getvoteallpro(
+            @Field("currentPage") int currentPage,
+            @Field("activityId") String  activityId,
+            @Field("industry")String industry,
+            @Field("address")String address
+    );
+    /**
      * 获取投票已结束信息
      * @param
      * @return
