@@ -12,16 +12,18 @@ public abstract class YFListHttpCallBack extends BaseHttpCallBack {
 
     private PageInfo pageInfo;
     private VuList vu;
+    private boolean havaRequestSuccess;
 
     public YFListHttpCallBack(VuList vu) {
         this.pageInfo = vu.getRecyclerView().getPageManager();
-        this.vu=vu;
+        this.vu = vu;
     }
 
     @Override
     public void onSuccess(ApiBean mApiBean) {
         pageInfo.next();
         pageInfo.setPageState(PageInfo.PAGE_STATE_NONE);
+        havaRequestSuccess = true;
 
     }
 
@@ -35,6 +37,10 @@ public abstract class YFListHttpCallBack extends BaseHttpCallBack {
 
     @Override
     public void onFinish() {
+        if (!havaRequestSuccess) {
+            vu.setStateError();
+            pageInfo.setPageState(PageInfo.PAGE_STATE_ERROR);
+        }
         vu.getRecyclerView().getPTR().refreshComplete();
     }
 }

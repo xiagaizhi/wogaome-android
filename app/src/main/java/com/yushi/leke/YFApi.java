@@ -457,4 +457,11 @@ public interface YFApi {
     Call<ResponseBody>
     playVideoForProject(
     );
+
+    @FormUrlEncoded
+    @POST("app/v1/activity/playVideoCount")
+    Call<ResponseBody>
+    playVideoCount(
+            @Field("projectId") String projectId
+    );
 }
