@@ -430,30 +430,12 @@ public interface YFApi {
     listActivity(
             @Field("currentPage") int currentPage
     );
-    /**
-     * 行业城市选择项目信息
-     * @param
-     * @return
-     */
-    @FormUrlEncoded
-    @POST("app/v1/activity/allProjectForVote")
-    Call<ResponseBody>
-    getvoteallpro(
-            @Field("currentPage") int currentPage,
-            @Field("activityId") String activityId
-    );
-    /**
-     * 行业选择项目信息
-     * @param
-     * @return
-     */
-    @FormUrlEncoded
-    @POST("app/v1/activity/allProjectForVote")
-    Call<ResponseBody>
-    getvoteworkpro(
-            @Field("currentPage") int currentPage,
-            @Field("activityId") String activityId,
-            @Field("industry")String industry
-    );
 
+    @FormUrlEncoded
+    @POST("app/v1/activity/tradeLKCForVote")
+    Call<ResponseBody>
+    tradeLKCForVote(
+            @Field("token") String token,
+            @Field("lkc") String lkc
+    );
 }

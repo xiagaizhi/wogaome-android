@@ -16,7 +16,7 @@ public class VoteInitInfo {
     private BigDecimal voteCount;
     private String entrepreneur;
     private BigDecimal lkc;
-    private boolean isHaveTradePwd;
+    private int isHaveTradePwd;
 
     public String getLogo() {
         return logo;
@@ -74,11 +74,11 @@ public class VoteInitInfo {
         this.lkc = lkc;
     }
 
-    public boolean isHaveTradePwd() {
+    public int getIsHaveTradePwd() {
         return isHaveTradePwd;
     }
 
-    public void setIsHaveTradePwd(boolean haveTradePwd) {
-        isHaveTradePwd = haveTradePwd;
+    public void setIsHaveTradePwd(int isHaveTradePwd) {
+        this.isHaveTradePwd = isHaveTradePwd;
     }
 }

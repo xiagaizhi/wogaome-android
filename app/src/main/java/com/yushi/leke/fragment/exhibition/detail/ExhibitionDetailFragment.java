@@ -64,17 +64,17 @@ public class ExhibitionDetailFragment extends BaseFragment<ExhibitionDetailContr
         if (bundle != null) {
             exhibitionType = bundle.getInt(Global.BUNDLE_KEY_EXHIBITION_TYE);
         }
-        switch (exhibitionType) {
-            case Global.EXHIBITION_TYE_NO_START:
+        switch (exhibitionType) {//活动进度（0--未开始，1--报名中，2--投票中，3--已结束）
+            case 0:
                 loadRootFragment(R.id.fl_exhibition_content, UIHelper.creat(BrowserBaseFragment.class).put(Global.BUNDLE_KEY_BROWSER_URL, "").build());
                 break;
-            case Global.EXHIBITION_TYE_SINGUP:
+            case 1:
                 loadRootFragment(R.id.fl_exhibition_content, UIHelper.creat(BrowserBaseFragment.class).put(Global.BUNDLE_KEY_BROWSER_URL, "").build());
                 break;
-            case Global.EXHIBITION_TYE_VOTING:
+            case 2:
                 loadRootFragment(R.id.fl_exhibition_content, UIHelper.creat(VoteingFragment.class).build());
                 break;
-            case Global.EXHIBITION_TYE_END:
+            case 3:
                 loadRootFragment(R.id.fl_exhibition_content, UIHelper.creat(VoteingFragment.class).build());
                 break;
         }
