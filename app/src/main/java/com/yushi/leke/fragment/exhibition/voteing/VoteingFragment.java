@@ -86,10 +86,10 @@ public class VoteingFragment extends BaseListFragment<VoteingContract.IView> imp
                             if (infolist != null && infolist.getProjectList().size() > 0) {
                                 if (currentPage == 0) {
                                     list.clear();
-                                }
-                                if (mICallBack != null) {//请求播放第一条视频
-                                    Voteinginfo voteinginfo = infolist.getProjectList().get(0);
-                                    mICallBack.OnBackResult(voteinginfo.getAliVideoId(), voteinginfo.getTitle(), voteinginfo.getId());
+                                    if (mICallBack != null) {//请求播放第一条视频
+                                        Voteinginfo voteinginfo = infolist.getProjectList().get(0);
+                                        mICallBack.OnBackResult(voteinginfo.getAliVideoId(), voteinginfo.getTitle(), voteinginfo.getId());
+                                    }
                                 }
                                 list.addAll(infolist.getProjectList());
                                 vu.getRecyclerView().getAdapter().notifyDataSetChanged();
