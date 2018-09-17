@@ -415,4 +415,9 @@ public interface YFApi {
             @Field("token") String token,
             @Field("lkc") String lkc
     );
+
+    @POST("app/v1/activity/playVideoForProject")
+    Call<ResponseBody>
+    playVideoForProject(
+    );
 }

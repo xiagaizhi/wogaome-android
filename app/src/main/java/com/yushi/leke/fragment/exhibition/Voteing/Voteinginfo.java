@@ -10,6 +10,16 @@ public class Voteinginfo {
     private int playCount;
     private String desc;
     private String id;
+    private String aliVideoId;
+
+    public String getAliVideoId() {
+        return aliVideoId;
+    }
+
+    public void setAliVideoId(String aliVideoId) {
+        this.aliVideoId = aliVideoId;
+    }
+
     public Voteinginfo(){
 
     }

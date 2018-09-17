@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,12 +27,21 @@ import com.aliyun.vodplayerview.view.tipsview.ErrorInfo;
 import com.aliyun.vodplayerview.widget.AliyunScreenMode;
 import com.aliyun.vodplayerview.widget.AliyunVodPlayerView;
 import com.yufan.library.Global;
+import com.yufan.library.api.ApiBean;
+import com.yufan.library.api.ApiManager;
+import com.yufan.library.api.BaseHttpCallBack;
 import com.yufan.library.base.BaseFragment;
 import com.yufan.library.inject.VuClass;
+import com.yufan.library.inter.ICallBack;
+import com.yufan.library.manager.DialogManager;
 import com.yushi.leke.R;
 import com.yushi.leke.UIHelper;
+import com.yushi.leke.YFApi;
 import com.yushi.leke.fragment.browser.BrowserBaseFragment;
 import com.yushi.leke.fragment.exhibition.Voteing.VoteingFragment;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.lang.ref.WeakReference;
 import java.text.SimpleDateFormat;
@@ -40,25 +50,25 @@ import java.text.SimpleDateFormat;
  * Created by mengfantao on 18/8/2.
  */
 @VuClass(ExhibitionDetailVu.class)
-public class ExhibitionDetailFragment extends BaseFragment<ExhibitionDetailContract.IView> implements ExhibitionDetailContract.Presenter {
-
-    private SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss.SS");
+public class ExhibitionDetailFragment extends BaseFragment<ExhibitionDetailContract.IView> implements ExhibitionDetailContract.Presenter, ICallBack {
     private AliyunVodPlayerView mAliyunVodPlayerView = null;
     private ErrorInfo currentError = ErrorInfo.Normal;
-
     private static final String DEFAULT_URL = "http://player.alicdn.com/video/aliyunmedia.mp4";
     private static final String DEFAULT_VID = "6e783360c811449d8692b2117acc9212";
     /**
      * get StsToken stats
      */
     private boolean inRequest;
-
     private int exhibitionType;
+
+    private VoteingFragment mVoteingFragment;
+    private String currentVid;
+    private String currentTitle;
+    private boolean isSuccessRequestAliplayerInfo;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        requestVidSts();
         initAliyunPlayerView();
         Bundle bundle = getArguments();
         if (bundle != null) {
@@ -72,12 +82,72 @@ public class ExhibitionDetailFragment extends BaseFragment<ExhibitionDetailContr
                 loadRootFragment(R.id.fl_exhibition_content, UIHelper.creat(BrowserBaseFragment.class).put(Global.BUNDLE_KEY_BROWSER_URL, "").build());
                 break;
             case 2:
-                loadRootFragment(R.id.fl_exhibition_content, UIHelper.creat(VoteingFragment.class).build());
+                mVoteingFragment = (VoteingFragment) UIHelper.creat(VoteingFragment.class).build();
+                mVoteingFragment.setmICallBack(this);
+                loadRootFragment(R.id.fl_exhibition_content, mVoteingFragment);
                 break;
             case 3:
-                loadRootFragment(R.id.fl_exhibition_content, UIHelper.creat(VoteingFragment.class).build());
+                mVoteingFragment = (VoteingFragment) UIHelper.creat(VoteingFragment.class).build();
+                mVoteingFragment.setmICallBack(this);
+                loadRootFragment(R.id.fl_exhibition_content, mVoteingFragment);
                 break;
         }
+    }
+
+
+    /**
+     * 回传视频vid
+     *
+     * @param s
+     */
+    @Override
+    public void OnBackResult(Object... s) {
+        String tempVid = (String) s[0];
+        String tempTitle = (String) s[1];
+        if (!TextUtils.equals(currentVid, tempVid)) {//当前播放vid和需要切换vid不同才做切换操作
+            currentVid = tempVid;
+            currentTitle = tempTitle;
+            getAliplayerInfo();
+        }
+    }
+
+    /**
+     * 获取阿里云播放所需配置
+     */
+    private void getAliplayerInfo() {
+        isSuccessRequestAliplayerInfo = false;
+        DialogManager.getInstance().showLoadingDialog();
+        ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).playVideoForProject()).useCache(false).enqueue(new BaseHttpCallBack() {
+            @Override
+            public void onSuccess(ApiBean mApiBean) {
+                if (!TextUtils.isEmpty(mApiBean.getData())) {
+                    try {
+                        JSONObject jsonObject = new JSONObject(mApiBean.getData());
+                        PlayParameter.PLAY_PARAM_SCU_TOKEN = jsonObject.getString("token");
+                        PlayParameter.PLAY_PARAM_AK_ID = jsonObject.getString("keyId");
+                        PlayParameter.PLAY_PARAM_AK_SECRE = jsonObject.getString("KeySecret");
+                        isSuccessRequestAliplayerInfo = true;
+                        changePlayVidSource(currentVid, currentTitle);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onError(int id, Exception e) {
+
+            }
+
+            @Override
+            public void onFinish() {
+                if (!isSuccessRequestAliplayerInfo) {
+                    currentVid = "";
+                    currentTitle = "";
+                }
+                DialogManager.getInstance().dismiss();
+            }
+        });
     }
 
 
@@ -122,7 +192,7 @@ public class ExhibitionDetailFragment extends BaseFragment<ExhibitionDetailContr
         mAliyunVodPlayerView = getVu().getAliyunVodPlayerView();
         //保持屏幕敞亮
         mAliyunVodPlayerView.setKeepScreenOn(true);
-        PlayParameter.PLAY_PARAM_URL = DEFAULT_URL;
+//        PlayParameter.PLAY_PARAM_URL = DEFAULT_URL;
         String sdDir = Environment.getExternalStorageDirectory().getAbsolutePath() + "/test_save_cache";
         mAliyunVodPlayerView.setPlayingCache(false, sdDir, 60 * 60 /*时长, s */, 300 /*大小，MB*/);
         mAliyunVodPlayerView.setTheme(AliyunVodPlayerView.Theme.Blue);
@@ -148,17 +218,6 @@ public class ExhibitionDetailFragment extends BaseFragment<ExhibitionDetailContr
         });
     }
 
-    /**
-     * 请求sts
-     */
-    private void requestVidSts() {
-        if (inRequest) {
-            return;
-        }
-        inRequest = true;
-        PlayParameter.PLAY_PARAM_VID = DEFAULT_VID;
-        VidStsUtil.getVidSts(PlayParameter.PLAY_PARAM_VID, new MyStsListener(this));
-    }
 
     private boolean isStrangePhone() {
         boolean strangePhone = "mx5".equalsIgnoreCase(Build.DEVICE)
@@ -172,6 +231,7 @@ public class ExhibitionDetailFragment extends BaseFragment<ExhibitionDetailContr
         VcPlayerLog.e("lfj1115 ", " Build.Device = " + Build.DEVICE + " , isStrange = " + strangePhone);
         return strangePhone;
     }
+
 
     private static class MyPrepareListener implements IAliyunVodPlayer.OnPreparedListener {
 
