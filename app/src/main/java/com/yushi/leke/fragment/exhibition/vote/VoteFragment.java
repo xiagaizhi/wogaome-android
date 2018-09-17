@@ -26,16 +26,21 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.yufan.library.api.ApiBean;
 import com.yufan.library.api.ApiManager;
 import com.yufan.library.api.BaseHttpCallBack;
+import com.yufan.library.inter.ICallBack;
 import com.yufan.library.manager.DialogManager;
 import com.yushi.leke.R;
 import com.yushi.leke.YFApi;
+import com.yushi.leke.dialog.CommonDialog;
+import com.yushi.leke.util.RechargeUtil;
+
+import java.math.BigDecimal;
 
 /**
  * 作者：Created by zhanyangyang on 2018/9/10 10:26
  * 邮箱：zhanyangyang@hzyushi.cn
  */
 
-public class VoteFragment extends DialogFragment implements View.OnClickListener {
+public class VoteFragment extends DialogFragment implements View.OnClickListener, RechargeUtil.CheckRechargePwdInterf {
     private Button btn_vote;
     private SimpleDraweeView img_logo;
     private TextView tv_title;
@@ -47,6 +52,12 @@ public class VoteFragment extends DialogFragment implements View.OnClickListener
     private LinearLayout ll_edit_lkc;
     private ImageView img_vote_success;
     private VoteInitInfo voteInitInfo;
+    private ICallBack mICallBack;
+
+
+    public void setmICallBack(ICallBack mICallBack) {
+        this.mICallBack = mICallBack;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -75,9 +86,9 @@ public class VoteFragment extends DialogFragment implements View.OnClickListener
         super.onViewCreated(view, savedInstanceState);
         Bundle bundle = getArguments();
         if (bundle != null) {
-            String activityId = bundle.getString("activityId");
+            String projectId = bundle.getString("projectId");
             ApiManager.getCall(ApiManager.getInstance().create(YFApi.class)
-                    .vote(activityId))
+                    .vote(projectId))
                     .useCache(false).enqueue(new BaseHttpCallBack() {
                 @Override
                 public void onSuccess(ApiBean mApiBean) {
@@ -172,20 +183,27 @@ public class VoteFragment extends DialogFragment implements View.OnClickListener
                 dismiss();
                 break;
             case R.id.btn_vote:
-                if (voteInitInfo != null && voteInitInfo.isHaveTradePwd()) {//投投票
-
-                }else {
-
-                }
                 if (TextUtils.equals("立即投票", btn_vote.getText().toString())) {
-                    DialogManager.getInstance().showLoadingDialog();
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            voteSuccessToUpdateView();
-                            DialogManager.getInstance().dismiss();
-                        }
-                    }, 500);
+                    if (voteInitInfo != null && voteInitInfo.getIsHaveTradePwd() == 1) {//校验交易密码，通过后发起投票
+                        RechargeUtil.getInstance().checkRechargePwd(getActivity(), "支付", this);
+                    } else {
+                        new CommonDialog(getContext())
+                                .setTitle("您还未设置交易密码，请先设置您的交易密码")
+                                .setPositiveName("去设置")
+                                .setNegativeName("取消")
+                                .setCommonClickListener(new CommonDialog.CommonDialogClick() {
+                                    @Override
+                                    public void onClick(CommonDialog commonDialog, int actionType) {
+                                        commonDialog.dismiss();
+                                        if (actionType == CommonDialog.COMMONDIALOG_ACTION_POSITIVE) {
+                                            if (mICallBack != null) {
+                                                mICallBack.OnBackResult();
+                                            }
+                                            dismiss();
+                                        }
+                                    }
+                                }).show();
+                    }
                 } else {
                     resetView();
                 }
@@ -226,5 +244,37 @@ public class VoteFragment extends DialogFragment implements View.OnClickListener
         img_vote_success.setVisibility(View.GONE);
         btn_vote.setText("立即投票");
         et_lkc.setText("");
+    }
+
+    @Override
+    public void returnCheckResult(boolean isSuccess, String token) {
+        //发起投票
+        if (TextUtils.equals("立即投票", btn_vote.getText().toString())) {
+            DialogManager.getInstance().showLoadingDialog();
+            ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).tradeLKCForVote(token, String.valueOf(getCurrentChoiceVoteNum())))
+                    .useCache(false)
+                    .enqueue(new BaseHttpCallBack() {
+                        @Override
+                        public void onSuccess(ApiBean mApiBean) {
+                            //更新页面数据
+                            voteSuccessToUpdateView();
+                            voteInitInfo.setLkc(voteInitInfo.getLkc().subtract(new BigDecimal(getCurrentChoiceVoteNum())));
+                            voteInitInfo.setVoteCount(voteInitInfo.getVoteCount().add(new BigDecimal(getCurrentChoiceVoteNum())));
+                            bindData(voteInitInfo);
+                        }
+
+                        @Override
+                        public void onError(int id, Exception e) {
+
+                        }
+
+                        @Override
+                        public void onFinish() {
+                            DialogManager.getInstance().dismiss();
+                        }
+                    });
+        } else {
+            resetView();
+        }
     }
 }

@@ -1,4 +1,4 @@
-package com.yushi.leke.fragment.exhibition.vote;
+package com.yushi.leke.fragment.exhibition.win;
 
 import java.math.BigDecimal;
 

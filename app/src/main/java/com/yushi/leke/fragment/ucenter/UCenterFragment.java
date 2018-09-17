@@ -220,7 +220,7 @@ public class UCenterFragment extends BaseFragment<UCenterContract.IView> impleme
         } else if (TextUtils.equals("我的会员", key)) {
             getRootFragment().start(UIHelper.creat(BrowserBaseFragment.class).put(Global.BUNDLE_KEY_BROWSER_URL, ApiManager.getInstance().getApiConfig().getMineVip()).build());
         } else if (TextUtils.equals("分享好友", key)) {
-            getRootFragment().start(UIHelper.creat(BrowserBaseFragment.class).put(Global.BUNDLE_KEY_BROWSER_URL, ApiManager.getInstance().getApiConfig().getTestH5()).build());
+            getRootFragment().start(UIHelper.creat(BrowserBaseFragment.class).put(Global.BUNDLE_KEY_BROWSER_URL, ApiManager.getInstance().getApiConfig().getFriendShare()).build());
         }
     }
 

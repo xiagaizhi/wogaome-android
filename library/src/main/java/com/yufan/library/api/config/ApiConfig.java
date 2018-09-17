@@ -107,5 +107,9 @@ public class ApiConfig {
         return "http://web.leke.com/#/nickName";
     }
 
+    public String getExhibitionDetail(String activityId){
+        return webDomains[apiType] + "#/";
+    }
+
 
 }

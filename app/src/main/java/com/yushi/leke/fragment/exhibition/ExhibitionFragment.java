@@ -13,6 +13,7 @@ import com.yufan.library.Global;
 import com.yufan.library.api.ApiBean;
 import com.yufan.library.api.ApiManager;
 import com.yufan.library.api.YFListHttpCallBack;
+import com.yufan.library.api.config.ApiConfig;
 import com.yufan.library.base.BaseListFragment;
 import com.yufan.library.inject.VuClass;
 import com.yufan.library.inter.ICallBack;
@@ -20,6 +21,7 @@ import com.yufan.library.view.recycler.PageInfo;
 import com.yushi.leke.UIHelper;
 import com.yushi.leke.YFApi;
 import com.yushi.leke.activity.MusicPlayerActivity;
+import com.yushi.leke.fragment.browser.BrowserBaseFragment;
 import com.yushi.leke.fragment.exhibition.detail.ExhibitionDetailFragment;
 
 import me.drakeet.multitype.MultiTypeAdapter;
@@ -47,7 +49,11 @@ public class ExhibitionFragment extends BaseListFragment<ExhibitionContract.IVie
             @Override
             public void OnBackResult(Object... s) {
                 ExhibitionInfo info = (ExhibitionInfo) s[0];//活动进度（0--未开始，1--报名中，2--投票中，3--已结束）
-                getRootFragment().start(UIHelper.creat(ExhibitionDetailFragment.class).put(Global.BUNDLE_KEY_EXHIBITION_TYE, info.getActivityProgress()).build());
+                if (info.getActivityProgress() == 0 || info.getActivityProgress() == 1) {//h5详情页面
+                    getRootFragment().start(UIHelper.creat(BrowserBaseFragment.class).put(Global.BUNDLE_KEY_BROWSER_URL, ApiManager.getInstance().getApiConfig().getExhibitionDetail(info.getActivityId())).build());
+                } else {//原生详情页面
+                    getRootFragment().start(UIHelper.creat(ExhibitionDetailFragment.class).put(Global.BUNDLE_KEY_EXHIBITION_TYE, info.getActivityProgress()).build());
+                }
             }
         }));
         list.add(new ExhibitionTopInfo());

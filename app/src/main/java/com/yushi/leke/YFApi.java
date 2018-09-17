@@ -346,7 +346,7 @@ public interface YFApi {
     @POST("app/v1/activity/vote")
     Call<ResponseBody>
     vote(//投票页面初始化
-         @Field("activityId") String activityId
+         @Field("projectId") String projectId
     );
     /**
      * 发送修改手机密码验证码
@@ -406,5 +406,13 @@ public interface YFApi {
     Call<ResponseBody>
     listActivity(
             @Field("currentPage") int currentPage
+    );
+
+    @FormUrlEncoded
+    @POST("app/v1/activity/tradeLKCForVote")
+    Call<ResponseBody>
+    tradeLKCForVote(
+            @Field("token") String token,
+            @Field("lkc") String lkc
     );
 }

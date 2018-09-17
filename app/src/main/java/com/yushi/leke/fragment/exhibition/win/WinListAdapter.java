@@ -1,4 +1,4 @@
-package com.yushi.leke.fragment.exhibition.vote;
+package com.yushi.leke.fragment.exhibition.win;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
@@ -8,11 +8,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
-import com.yufan.library.util.PxUtil;
 import com.yushi.leke.R;
 
 import java.util.List;
