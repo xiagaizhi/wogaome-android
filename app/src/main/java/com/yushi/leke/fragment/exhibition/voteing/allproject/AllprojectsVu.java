@@ -3,10 +3,8 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.PopupWindow;
 import android.widget.TextView;
-import android.widget.Toast;
+
 import com.alibaba.fastjson.JSON;
 import com.bigkoo.pickerview.builder.OptionsPickerBuilder;
 import com.bigkoo.pickerview.listener.OnDismissListener;
@@ -25,7 +23,7 @@ import com.yufan.library.widget.StateLayout;
 import com.yufan.library.widget.AppToolbar;
 import com.yufan.library.view.recycler.YFRecyclerView;
 import com.yushi.leke.YFApi;
-import com.yushi.leke.fragment.exhibition.voteing.spinner.SpinerPopWindow;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,16 +35,13 @@ public class AllprojectsVu extends BaseListVu<AllprojectsContract.Presenter> imp
     private TextView tv_choose_city, tv_choose_work;
     Industryinfolist industryinfolist;
     List<String>worklist=new ArrayList<>();
-    private Boolean flag=false;
-    private int count=0;
     @Override
     public void initView(View view) {
         super.initView(view);
         initData();
     }
 
-    @Override
-    public void showCityPickerView() {
+    private void showworkPickerView() {
         ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).getindustrylist("1")).useCache(false).enqueue(new BaseHttpCallBack() {
             @Override
             public void onSuccess(final ApiBean mApiBean) {
@@ -67,8 +62,7 @@ public class AllprojectsVu extends BaseListVu<AllprojectsContract.Presenter> imp
                             .setOptionsSelectChangeListener(new OnOptionsSelectChangeListener() {
                                 @Override
                                 public void onOptionsSelectChanged(int options1, int options2, int options3) {
-                                    String str = "options1: " + options1 + "\noptions2: " + options2 + "\noptions3: " + options3;
-                                    Toast.makeText(getContext(), str, Toast.LENGTH_SHORT).show();
+                                    tv_choose_work.setText(worklist.get(options1));
                                 }
                             })
                             .build();
@@ -156,7 +150,7 @@ public class AllprojectsVu extends BaseListVu<AllprojectsContract.Presenter> imp
                 case R.id.tv_choose_city:
                     break;
                 case R.id.tv_choose_work:
-                    showCityPickerView();
+                    showworkPickerView();
                     worklist.removeAll(worklist);
                     break;
             }

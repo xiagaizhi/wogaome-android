@@ -11,7 +11,6 @@ import java.util.List;
 
 public interface AllprojectsContract {
     interface IView extends VuList {
-        void showCityPickerView();
         String getindustry();
         String getcity();
     }
