@@ -38,6 +38,7 @@ import com.yushi.leke.R;
 import com.yushi.leke.UIHelper;
 import com.yushi.leke.YFApi;
 import com.yushi.leke.fragment.browser.BrowserBaseFragment;
+import com.yushi.leke.fragment.exhibition.voteend.VoteendFragment;
 import com.yushi.leke.fragment.exhibition.voteing.VoteingFragment;
 
 import org.json.JSONException;
@@ -60,7 +61,6 @@ public class ExhibitionDetailFragment extends BaseFragment<ExhibitionDetailContr
     private boolean inRequest;
     private int exhibitionType;
 
-    private VoteingFragment mVoteingFragment;
     private String currentVid;
     private String currentTitle;
     private String currentProjectId;
@@ -82,14 +82,14 @@ public class ExhibitionDetailFragment extends BaseFragment<ExhibitionDetailContr
                 loadRootFragment(R.id.fl_exhibition_content, UIHelper.creat(BrowserBaseFragment.class).put(Global.BUNDLE_KEY_BROWSER_URL, "").build());
                 break;
             case 2:
-                mVoteingFragment = (VoteingFragment) UIHelper.creat(VoteingFragment.class).build();
+                VoteingFragment mVoteingFragment = (VoteingFragment) UIHelper.creat(VoteingFragment.class).build();
                 mVoteingFragment.setmICallBack(this);
                 loadRootFragment(R.id.fl_exhibition_content, mVoteingFragment);
                 break;
             case 3:
-                mVoteingFragment = (VoteingFragment) UIHelper.creat(VoteingFragment.class).build();
-                mVoteingFragment.setmICallBack(this);
-                loadRootFragment(R.id.fl_exhibition_content, mVoteingFragment);
+                VoteendFragment voteendFragment = (VoteendFragment) UIHelper.creat(VoteendFragment.class).build();
+                voteendFragment.setmICallBack(this);
+                loadRootFragment(R.id.fl_exhibition_content, voteendFragment);
                 break;
         }
     }
