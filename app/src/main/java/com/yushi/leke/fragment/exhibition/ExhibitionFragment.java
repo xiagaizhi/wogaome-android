@@ -50,7 +50,10 @@ public class ExhibitionFragment extends BaseListFragment<ExhibitionContract.IVie
                 if (info.getActivityProgress() == 0 || info.getActivityProgress() == 1) {//h5详情页面
                     getRootFragment().start(UIHelper.creat(BrowserBaseFragment.class).put(Global.BUNDLE_KEY_BROWSER_URL, ApiManager.getInstance().getApiConfig().getExhibitionDetail(info.getActivityId())).build());
                 } else {//原生详情页面
-                    getRootFragment().start(UIHelper.creat(ExhibitionDetailFragment.class).put(Global.BUNDLE_KEY_EXHIBITION_TYE, info.getActivityProgress()).build());
+                    getRootFragment().start(UIHelper.creat(ExhibitionDetailFragment.class)
+                            .put(Global.BUNDLE_KEY_EXHIBITION_TYE, info.getActivityProgress())
+                            .put(Global.BUNDLE_KEY_ACTIVITYID,info.getActivityId())
+                            .build());
                 }
             }
         }));

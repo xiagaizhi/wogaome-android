@@ -8,7 +8,7 @@ public class Voteinginfo {
     private String entrepreneur;
     private int votes;
     private int playCount;
-    private String desc;
+    private String introduction;
     private String id;
     private String aliVideoId;
 
@@ -23,7 +23,7 @@ public class Voteinginfo {
     public Voteinginfo(){
 
     }
-    public Voteinginfo(String title, String video100Pic, String address, String industry, String entrepreneur, int votes, int playCount, String desc, String id){
+    public Voteinginfo(String title, String video100Pic, String address, String industry, String entrepreneur, int votes, int playCount, String introduction, String id){
         this.title = title;
         this.video100Pic=video100Pic;
         this.address=address;
@@ -31,7 +31,7 @@ public class Voteinginfo {
         this.entrepreneur=entrepreneur;
         this.votes=votes;
         this.playCount=playCount;
-        this.desc=desc;
+        this.introduction = introduction;
         this.id=id;
     }
 
@@ -39,9 +39,9 @@ public class Voteinginfo {
         this.id = id;
     }
 
-    public void setDesc(String desc) {
+    public void setIntroduction(String introduction) {
 
-        this.desc = desc;
+        this.introduction = introduction;
     }
 
     public void setPlayCount(int playCount) {
@@ -84,9 +84,9 @@ public class Voteinginfo {
         return id;
     }
 
-    public String getDesc() {
+    public String getIntroduction() {
 
-        return desc;
+        return introduction;
     }
 
     public int getPlayCount() {

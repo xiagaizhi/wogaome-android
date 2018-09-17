@@ -1,8 +1,9 @@
-package com.yushi.leke.fragment.exhibition.voteing.allproject;
+package com.yushi.leke.fragment.exhibition.voteend.allproject;
 
-public class Industryinfo {
+public class Industryendinfo {
     private int industryId;
     private String industryName;
+
     public int getIndustryId() {
         return industryId;
     }

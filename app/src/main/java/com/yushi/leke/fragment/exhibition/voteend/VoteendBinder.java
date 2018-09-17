@@ -39,7 +39,7 @@ public class VoteendBinder extends ItemViewBinder<Voteendinfo, VoteendBinder.Vie
         viewHolder.tv_vote_name.setText("创业者：" + voteendinfo.getEntrepreneur());
         viewHolder.tv_vote_describe.setText(voteendinfo.getIntroduction());
         viewHolder.btn_vote_support.setText("已结束");
-        viewHolder.btn_vote_support.setTextColor(R.color.color_gray_level3);
+        viewHolder.btn_vote_support.setTextColor(R.color.color_gray_levele);
         viewHolder.tv_vote_describe.setClickable(true);
         viewHolder.rl_root.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -1,4 +1,4 @@
-package com.yushi.leke.fragment.exhibition.voteing.allproject;
+package com.yushi.leke.fragment.exhibition.voteend.allproject;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -6,13 +6,11 @@ import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.yufan.library.Global;
 import com.yufan.library.api.ApiBean;
 import com.yufan.library.api.ApiManager;
-import com.yufan.library.api.BaseHttpCallBack;
 import com.yufan.library.api.YFListHttpCallBack;
 import com.yufan.library.base.BaseListFragment;
 import com.yufan.library.inject.VuClass;
@@ -21,16 +19,15 @@ import com.yufan.library.view.recycler.PageInfo;
 import com.yushi.leke.YFApi;
 import com.yushi.leke.fragment.exhibition.vote.VoteFragment;
 
-import java.util.List;
-
 import me.drakeet.multitype.MultiTypeAdapter;
+
 /**
  * Created by mengfantao on 18/8/2.
  */
-@VuClass(AllprojectsVu.class)
-public class AllprojectsFragment extends BaseListFragment<AllprojectsContract.IView> implements AllprojectsContract.Presenter {
-    MultiTypeAdapter adapter;
-    Allprojectsinfolist infolist;
+@VuClass(AllendVu.class)
+public class AllendFragment extends BaseListFragment<AllendContract.IView> implements AllendContract.Presenter {
+    private MultiTypeAdapter adapter;
+    private Allendinfolist infolist;
     private String activityid;
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -39,7 +36,7 @@ public class AllprojectsFragment extends BaseListFragment<AllprojectsContract.IV
         if (bundle!=null){
             activityid=bundle.getString(Global.BUNDLE_KEY_ACTIVITYID);
         }
-        Log.d("2009",String.valueOf(activityid));
+        Log.d("LOGH",activityid);
         init();
     }
     @Override
@@ -55,14 +52,14 @@ public class AllprojectsFragment extends BaseListFragment<AllprojectsContract.IV
      */
     private void getalldata(final int currentPage, String activityid, final String industry, final String city) {
         ApiManager.getCall(ApiManager.getInstance().create(YFApi.class)
-                .getvoteallpro(currentPage,activityid,industry,city))
+                .getvoteenddata(currentPage,activityid,industry,city))
                 .useCache(false)
                 .enqueue(new YFListHttpCallBack(getVu()) {
                     @Override
                     public void onSuccess(ApiBean mApiBean) {
                         super.onSuccess(mApiBean);
                         if (!TextUtils.isEmpty(mApiBean.getData())) {
-                            infolist= JSON.parseObject(mApiBean.getData(), Allprojectsinfolist.class);
+                            infolist= JSON.parseObject(mApiBean.getData(), Allendinfolist.class);
                             if (infolist != null && infolist.getProjectList().size() > 0) {
                                 if (currentPage == 0) {
                                     list.clear();
@@ -72,29 +69,15 @@ public class AllprojectsFragment extends BaseListFragment<AllprojectsContract.IV
                             } else {
                                 vu.getRecyclerView().getPageManager().setPageState(PageInfo.PAGE_STATE_NO_MORE);
                             }
-                        }else {
-                            list.clear();
-                            vu.getRecyclerView().getAdapter().notifyDataSetChanged();
-                            Toast.makeText(getContext(),"try again",Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
     }
     void init(){
         adapter=new MultiTypeAdapter();
-        adapter.register(Allprojectsinfo.class,new AllprojectBinder(new ICallBack() {
+        adapter.register(Allendinfo.class,new AllendBinder(new ICallBack() {
             @Override
             public void OnBackResult(Object... s) {
-                    Log.d("LOG",String.valueOf(s[0]));
-                    int type = (int) s[0];
-                    if (type == 1) {
-                        String projectId = (String) s[1];
-                        VoteFragment voteFragment = new VoteFragment();
-                        Bundle args = new Bundle();
-                        args.putString("projectId", projectId);
-                        voteFragment.setArguments(args);
-                        voteFragment.show(getFragmentManager(), "VoteFragment");
-                    }
 
             }
         }));

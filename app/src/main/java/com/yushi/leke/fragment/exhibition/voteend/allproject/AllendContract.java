@@ -1,15 +1,13 @@
-package com.yushi.leke.fragment.exhibition.voteing.allproject;
+package com.yushi.leke.fragment.exhibition.voteend.allproject;
 
 import com.yufan.library.base.Pr;
 import com.yufan.library.base.VuList;
-
-import java.util.List;
 
 /**
  * Created by mengfantao on 18/8/2.
  */
 
-public interface AllprojectsContract {
+public interface AllendContract {
     interface IView extends VuList {
         String getindustry();
         String getcity();

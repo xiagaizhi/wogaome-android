@@ -1,8 +1,8 @@
-package com.yushi.leke.fragment.exhibition.voteing.allproject;
+package com.yushi.leke.fragment.exhibition.voteend.allproject;
 
+import android.annotation.SuppressLint;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,9 +15,9 @@ import com.yushi.leke.R;
 
 import me.drakeet.multitype.ItemViewBinder;
 
-public class AllprojectBinder extends ItemViewBinder<Allprojectsinfo,AllprojectBinder.ViewHolder>{
+public class AllendBinder extends ItemViewBinder<Allendinfo, AllendBinder.ViewHolder>{
     ICallBack callBack;
-    public AllprojectBinder(ICallBack callBack){
+    public AllendBinder(ICallBack callBack){
         this.callBack = callBack;
     }
     @NonNull
@@ -26,23 +26,18 @@ public class AllprojectBinder extends ItemViewBinder<Allprojectsinfo,AllprojectB
         return new ViewHolder(layoutInflater.inflate(R.layout.xx_doend_item,viewGroup,false));
     }
 
+    @SuppressLint("ResourceAsColor")
     @Override
-    protected void onBindViewHolder(@NonNull ViewHolder viewHolder, @NonNull final Allprojectsinfo Allprojectsinfo) {
-        viewHolder.sdv.setImageURI(Allprojectsinfo.getLogo());
-        viewHolder.tv_vote_playsum.setText(String.valueOf(Allprojectsinfo.getPlayCount()));
-        viewHolder.tv_vote_title.setText(Allprojectsinfo.getTitle());
-        viewHolder.tv_vote_sum.setText(String.valueOf(Allprojectsinfo.getVotes()));
-        viewHolder.tv_vote_province.setText(Allprojectsinfo.getAddress()+" / "+Allprojectsinfo.getIndustry());
-        viewHolder.tv_vote_name.setText("创业者："+Allprojectsinfo.getEntrepreneur());
-        viewHolder.tv_vote_describe.setText(Allprojectsinfo.getDesc());
-        viewHolder.btn_vote_support.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (callBack != null) {//发起投票
-                    callBack.OnBackResult(1, Allprojectsinfo.getId());
-                }
-            }
-        });
+    protected void onBindViewHolder(@NonNull ViewHolder viewHolder, @NonNull final Allendinfo Allendinfo) {
+        viewHolder.sdv.setImageURI(Allendinfo.getLogo());
+        viewHolder.tv_vote_playsum.setText(String.valueOf(Allendinfo.getPlayCount()));
+        viewHolder.tv_vote_title.setText(Allendinfo.getTitle());
+        viewHolder.tv_vote_sum.setText(String.valueOf(Allendinfo.getVotes()));
+        viewHolder.tv_vote_province.setText(Allendinfo.getAddress()+" / "+ Allendinfo.getIndustry());
+        viewHolder.tv_vote_name.setText("创业者："+ Allendinfo.getEntrepreneur());
+        viewHolder.tv_vote_describe.setText(Allendinfo.getIntroduction());
+        viewHolder.btn_vote_support.setText("已结束");
+        viewHolder.btn_vote_support.setTextColor(R.color.color_gray_levele);
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {

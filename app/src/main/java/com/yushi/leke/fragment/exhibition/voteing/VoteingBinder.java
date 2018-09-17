@@ -5,7 +5,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -35,7 +34,7 @@ public class VoteingBinder extends ItemViewBinder<Voteinginfo, VoteingBinder.Vie
         viewHolder.tv_vote_sum.setText(String.valueOf(voteinginfo.getVotes()));
         viewHolder.tv_vote_province.setText(voteinginfo.getAddress() + " / " + voteinginfo.getIndustry());
         viewHolder.tv_vote_name.setText("创业者：" + voteinginfo.getEntrepreneur());
-        viewHolder.tv_vote_describe.setText(voteinginfo.getDesc());
+        viewHolder.tv_vote_describe.setText(voteinginfo.getIntroduction());
         viewHolder.tv_vote_describe.setClickable(true);
         viewHolder.btn_vote_support.setOnClickListener(new View.OnClickListener() {
             @Override

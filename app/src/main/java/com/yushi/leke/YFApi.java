@@ -396,7 +396,7 @@ public interface YFApi {
     logout(
     );
     /**
-     * 行业选择项目
+     * 行业选择列表
      * @param
      * @return
      */
@@ -404,6 +404,17 @@ public interface YFApi {
     @POST("app/v1/activity/listIndustryFromProject")
     Call<ResponseBody>
     getindustrylist(
+            @Field("activityId") String  activityId
+    );
+    /**
+     * 城市选择列表
+     * @param
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("app/v1/activity/listAddressFromProject")
+    Call<ResponseBody>
+    getcitylist(
             @Field("activityId") String  activityId
     );
     /**
@@ -430,7 +441,9 @@ public interface YFApi {
     Call<ResponseBody>
     getvoteenddata(
             @Field("currentPage") int currentPage,
-            @Field("activityId") String activityId
+            @Field("activityId") String activityId,
+            @Field("industry")String industry,
+            @Field("address")String address
     );
 
     @POST("app/v1/common/initAd")

@@ -33,6 +33,7 @@
                 android:text="请选择城市"
                 android:textSize="@dimen/px30" />
             <ImageView
+                android:id="@+id/img_city"
                 android:layout_marginRight="@dimen/px20"
                 android:layout_weight="1"
                 android:layout_width="@dimen/px30"
@@ -58,6 +59,7 @@
                 android:textSize="@dimen/px30"
                 />
             <ImageView
+                android:id="@+id/img_work"
                 android:layout_marginRight="@dimen/px20"
                 android:layout_weight="1"
                 android:layout_width="@dimen/px30"

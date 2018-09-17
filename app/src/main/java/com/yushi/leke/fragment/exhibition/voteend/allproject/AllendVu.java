@@ -1,9 +1,12 @@
-package com.yushi.leke.fragment.exhibition.voteing.allproject;
+package com.yushi.leke.fragment.exhibition.voteend.allproject;
+
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import com.alibaba.fastjson.JSON;
 import com.bigkoo.pickerview.builder.OptionsPickerBuilder;
 import com.bigkoo.pickerview.listener.OnDismissListener;
@@ -13,25 +16,27 @@ import com.bigkoo.pickerview.view.OptionsPickerView;
 import com.yufan.library.api.ApiBean;
 import com.yufan.library.api.ApiManager;
 import com.yufan.library.api.BaseHttpCallBack;
-import com.yushi.leke.R;
 import com.yufan.library.base.BaseListVu;
 import com.yufan.library.inject.FindLayout;
 import com.yufan.library.inject.FindView;
 import com.yufan.library.inject.Title;
-import com.yufan.library.widget.StateLayout;
-import com.yufan.library.widget.AppToolbar;
 import com.yufan.library.view.recycler.YFRecyclerView;
+import com.yufan.library.widget.AppToolbar;
+import com.yufan.library.widget.StateLayout;
+import com.yushi.leke.R;
 import com.yushi.leke.YFApi;
+
 import java.util.ArrayList;
 import java.util.List;
 
 @FindLayout(layout = R.layout.xx_allproject_main)
 @Title("参赛项目活动")
-public class AllprojectsVu extends BaseListVu<AllprojectsContract.Presenter> implements AllprojectsContract.IView {
+public class AllendVu extends BaseListVu<AllendContract.Presenter> implements AllendContract.IView {
     @FindView(R.id.recyclerview)
     private YFRecyclerView mYFRecyclerView;
     private TextView tv_choose_city, tv_choose_work;
     private ImageView img_city,img_work;
+    Industryendinfolist industryendinfolist;
     List<String>worklist=new ArrayList<>();
     List<String>citylist=new ArrayList<>();
     @Override
@@ -39,17 +44,17 @@ public class AllprojectsVu extends BaseListVu<AllprojectsContract.Presenter> imp
         super.initView(view);
         initData();
     }
-    /**
-     * 行业选择框
-     */
     private void showworkPickerView() {
-        ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).getindustrylist(mPersenter.getactivityid())).useCache(false).enqueue(new BaseHttpCallBack() {
+        ApiManager.getCall(ApiManager.getInstance().create(YFApi.class)
+                .getindustrylist(mPersenter.getactivityid()))
+                .useCache(false)
+                .enqueue(new BaseHttpCallBack() {
             @Override
             public void onSuccess(final ApiBean mApiBean) {
                 if (!TextUtils.isEmpty(mApiBean.getData())) {
-                    Industryinfolist industryinfolist= JSON.parseObject(mApiBean.getData(),Industryinfolist .class);
-                    for (int i = 0; i< industryinfolist.getIndustryList().size(); i++){
-                        worklist.add(industryinfolist.getIndustryList().get(i).getIndustryName());
+                    industryendinfolist = JSON.parseObject(mApiBean.getData(), Industryendinfolist.class);
+                    for (int i = 0; i< industryendinfolist.getIndustryList().size(); i++){
+                        worklist.add(industryendinfolist.getIndustryList().get(i).getIndustryName());
                     }
                     OptionsPickerView pvOptions = new OptionsPickerBuilder(getContext(), new OnOptionsSelectListener() {
                         @Override
@@ -90,57 +95,54 @@ public class AllprojectsVu extends BaseListVu<AllprojectsContract.Presenter> imp
             }
         });
     }
-    /**
-     * 城市选择框
-     */
     private void showcityPickerView() {
         ApiManager.getCall(ApiManager.getInstance().create(YFApi.class)
                 .getcitylist(mPersenter.getactivityid()))
                 .useCache(false)
                 .enqueue(new BaseHttpCallBack() {
-            @Override
-            public void onSuccess(final ApiBean mApiBean) {
-                if (!TextUtils.isEmpty(mApiBean.getData())) {
-                    Cityinfolist cityinfolist= JSON.parseObject(mApiBean.getData(),Cityinfolist .class);
-                    for (int i = 0; i< cityinfolist.getAddressList().size(); i++){
-                        citylist.add(cityinfolist.getAddressList().get(i));
-                    }
-                    OptionsPickerView pvOptions = new OptionsPickerBuilder(getContext(), new OnOptionsSelectListener() {
-                        @Override
-                        public void onOptionsSelect(int options1, int options2, int options3, View v) {
-                            tv_choose_city.setText( citylist.get(options1));
-                        }
-                    }).setTitleText("选择")
-                            .setDividerColor(Color.BLACK)
-                            .setTextColorCenter(Color.BLACK)
-                            .setContentTextSize(20)
-                            .setOptionsSelectChangeListener(new OnOptionsSelectChangeListener() {
+                    @Override
+                    public void onSuccess(final ApiBean mApiBean) {
+                        if (!TextUtils.isEmpty(mApiBean.getData())) {
+                            Cityinfolist cityinfolist= JSON.parseObject(mApiBean.getData(),Cityinfolist .class);
+                            for (int i = 0; i< cityinfolist.getAddressList().size(); i++){
+                                citylist.add(cityinfolist.getAddressList().get(i));
+                            }
+                            OptionsPickerView pvOptions = new OptionsPickerBuilder(getContext(), new OnOptionsSelectListener() {
                                 @Override
-                                public void onOptionsSelectChanged(int options1, int options2, int options3) {
-                                    tv_choose_city.setText(citylist.get(options1));
+                                public void onOptionsSelect(int options1, int options2, int options3, View v) {
+                                    tv_choose_city.setText( citylist.get(options1));
                                 }
-                            })
-                            .build();
-                    pvOptions.setOnDismissListener(new OnDismissListener() {
-                        @Override
-                        public void onDismiss(Object o) {
-                            mYFRecyclerView.getPageManager().resetIndex();
-                            mPersenter.onLoadMore(mYFRecyclerView.getPageManager().getCurrentIndex());
+                            }).setTitleText("选择")
+                                    .setDividerColor(Color.BLACK)
+                                    .setTextColorCenter(Color.BLACK)
+                                    .setContentTextSize(20)
+                                    .setOptionsSelectChangeListener(new OnOptionsSelectChangeListener() {
+                                        @Override
+                                        public void onOptionsSelectChanged(int options1, int options2, int options3) {
+                                            tv_choose_city.setText(citylist.get(options1));
+                                        }
+                                    })
+                                    .build();
+                            pvOptions.setOnDismissListener(new OnDismissListener() {
+                                @Override
+                                public void onDismiss(Object o) {
+                                    mYFRecyclerView.getPageManager().resetIndex();
+                                    mPersenter.onLoadMore(mYFRecyclerView.getPageManager().getCurrentIndex());
+                                }
+                            });
+                            pvOptions.setPicker(citylist);//一级选择器
+                            pvOptions.show();
                         }
-                    });
-                    pvOptions.setPicker(citylist);//一级选择器
-                    pvOptions.show();
-                }
-            }
-            @Override
-            public void onError(int id, Exception e) {
+                    }
+                    @Override
+                    public void onError(int id, Exception e) {
 
-            }
-            @Override
-            public void onFinish() {
+                    }
+                    @Override
+                    public void onFinish() {
 
-            }
-        });
+                    }
+                });
     }
     @Override
     public String getindustry() {
@@ -156,13 +158,10 @@ public class AllprojectsVu extends BaseListVu<AllprojectsContract.Presenter> imp
     public void initStatusLayout(StateLayout stateLayout) {
         super.initStatusLayout(stateLayout);
     }
-
-
     @Override
     public boolean initTitle(AppToolbar appToolbar) {
         return super.initTitle(appToolbar);
     }
-
     @Override
     public YFRecyclerView getRecyclerView() {
         return mYFRecyclerView;
@@ -183,8 +182,9 @@ public class AllprojectsVu extends BaseListVu<AllprojectsContract.Presenter> imp
         img_work= (ImageView) findViewById(R.id.img_work);
         img_work.setOnClickListener(clickListener);
     }
+
     /**
-     * tv监听事件
+     * 监听事件
      */
     private View.OnClickListener clickListener = new View.OnClickListener() {
         @Override

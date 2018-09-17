@@ -60,7 +60,7 @@ public class ExhibitionDetailFragment extends BaseFragment<ExhibitionDetailContr
      */
     private boolean inRequest;
     private int exhibitionType;
-
+    private String activityid;
     private String currentVid;
     private String currentTitle;
     private String currentProjectId;
@@ -73,6 +73,7 @@ public class ExhibitionDetailFragment extends BaseFragment<ExhibitionDetailContr
         Bundle bundle = getArguments();
         if (bundle != null) {
             exhibitionType = bundle.getInt(Global.BUNDLE_KEY_EXHIBITION_TYE);
+            activityid=bundle.getString(Global.BUNDLE_KEY_ACTIVITYID);
         }
         switch (exhibitionType) {//活动进度（0--未开始，1--报名中，2--投票中，3--已结束）
             case 0:
@@ -82,12 +83,16 @@ public class ExhibitionDetailFragment extends BaseFragment<ExhibitionDetailContr
                 loadRootFragment(R.id.fl_exhibition_content, UIHelper.creat(BrowserBaseFragment.class).put(Global.BUNDLE_KEY_BROWSER_URL, "").build());
                 break;
             case 2:
-                VoteingFragment mVoteingFragment = (VoteingFragment) UIHelper.creat(VoteingFragment.class).build();
+                VoteingFragment mVoteingFragment = (VoteingFragment) UIHelper.creat(VoteingFragment.class)
+                        .put(Global.BUNDLE_KEY_ACTIVITYID,activityid)
+                        .build();
                 mVoteingFragment.setmICallBack(this);
                 loadRootFragment(R.id.fl_exhibition_content, mVoteingFragment);
                 break;
             case 3:
-                VoteendFragment voteendFragment = (VoteendFragment) UIHelper.creat(VoteendFragment.class).build();
+                VoteendFragment voteendFragment = (VoteendFragment) UIHelper.creat(VoteendFragment.class)
+                        .put(Global.BUNDLE_KEY_ACTIVITYID,activityid)
+                        .build();
                 voteendFragment.setmICallBack(this);
                 loadRootFragment(R.id.fl_exhibition_content, voteendFragment);
                 break;

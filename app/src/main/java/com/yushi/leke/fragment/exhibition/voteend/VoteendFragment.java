@@ -6,19 +6,18 @@ import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-
 import com.alibaba.fastjson.JSON;
+import com.yufan.library.Global;
 import com.yufan.library.api.ApiBean;
 import com.yufan.library.api.ApiManager;
-import com.yufan.library.api.BaseHttpCallBack;
 import com.yufan.library.api.YFListHttpCallBack;
 import com.yufan.library.base.BaseListFragment;
 import com.yufan.library.inject.VuClass;
 import com.yufan.library.inter.ICallBack;
 import com.yufan.library.view.recycler.PageInfo;
+import com.yushi.leke.UIHelper;
 import com.yushi.leke.YFApi;
-import com.yushi.leke.fragment.exhibition.voteing.Voteinginfo;
-import com.yushi.leke.fragment.exhibition.voteing.Voteinginfolist;
+import com.yushi.leke.fragment.exhibition.voteend.allproject.AllendFragment;
 
 import me.drakeet.multitype.MultiTypeAdapter;
 
@@ -29,9 +28,8 @@ import me.drakeet.multitype.MultiTypeAdapter;
 public class VoteendFragment extends BaseListFragment<VoteendContract.IView> implements VoteendContract.Presenter {
     private MultiTypeAdapter adapter;
     private Voteendinfolist infolist;
-
     private ICallBack mICallBack;
-
+    private String activityid;
     public void setmICallBack(ICallBack mICallBack) {
         this.mICallBack = mICallBack;
     }
@@ -39,6 +37,11 @@ public class VoteendFragment extends BaseListFragment<VoteendContract.IView> imp
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        Bundle bundle = getArguments();
+        if (bundle!=null){
+            activityid=bundle.getString(Global.BUNDLE_KEY_ACTIVITYID);
+        }
+        Log.d("LOGH",activityid);
         adapter = new MultiTypeAdapter();
         adapter.register(Voteendinfo.class, new VoteendBinder(new ICallBack() {
             @Override
@@ -51,26 +54,26 @@ public class VoteendFragment extends BaseListFragment<VoteendContract.IView> imp
         vu.getRecyclerView().setAdapter(adapter);
         adapter.setItems(list);
         vu.getRecyclerView().getAdapter().notifyDataSetChanged();
-        getvotedata(getVu().getRecyclerView().getPageManager().getCurrentIndex());
+        getvoteenddata(getVu().getRecyclerView().getPageManager().getCurrentIndex());
     }
 
     @Override
     public void onLoadMore(int index) {
-        getvotedata(index);
+        getvoteenddata(index);
     }
 
 
     @Override
     public void onRefresh() {
-        getvotedata(getVu().getRecyclerView().getPageManager().getCurrentIndex());
+        getvoteenddata(getVu().getRecyclerView().getPageManager().getCurrentIndex());
     }
 
     /**
      * 请求数据
      */
-    private void getvotedata(final int currentPage) {
+    private void getvoteenddata(final int currentPage) {
         ApiManager.getCall(ApiManager.getInstance().create(YFApi.class)
-                .getvotedata(currentPage, "1"))
+                .getvoteenddata(currentPage, activityid,"0","0"))
                 .useCache(false)
                 .enqueue(new YFListHttpCallBack(getVu()) {
                     @Override
@@ -82,11 +85,10 @@ public class VoteendFragment extends BaseListFragment<VoteendContract.IView> imp
                                 if (currentPage == 0) {
                                     list.clear();
                                     if (mICallBack != null) {//请求播放第一条视频
-                                        Voteendinfo voteinginfo = infolist.getProjectList().get(0);
-                                        mICallBack.OnBackResult(voteinginfo.getAliVideoId(), voteinginfo.getTitle(), voteinginfo.getId());
+                                        Voteendinfo voteendinfo = infolist.getProjectList().get(0);
+                                        mICallBack.OnBackResult(voteendinfo.getAliVideoId(), voteendinfo.getTitle(), voteendinfo.getId());
                                     }
                                 }
-
                                 list.addAll(infolist.getProjectList());
                                 vu.getRecyclerView().getAdapter().notifyDataSetChanged();
                             } else {
@@ -100,6 +102,8 @@ public class VoteendFragment extends BaseListFragment<VoteendContract.IView> imp
 
     @Override
     public void MyCallback() {
-
+        getRootFragment().start(UIHelper.creat(AllendFragment.class)
+                .put(Global.BUNDLE_KEY_ACTIVITYID,activityid)
+                .build());
     }
 }

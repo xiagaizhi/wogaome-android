@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 
 import com.alibaba.fastjson.JSON;
+import com.yufan.library.Global;
 import com.yufan.library.api.ApiBean;
 import com.yufan.library.api.ApiManager;
 import com.yufan.library.api.YFListHttpCallBack;
@@ -30,7 +31,7 @@ public class VoteingFragment extends BaseListFragment<VoteingContract.IView> imp
     private MultiTypeAdapter adapter;
     private Voteinginfolist infolist;
     private ICallBack mICallBack;
-
+    private String activityid;
     public void setmICallBack(ICallBack mICallBack) {
         this.mICallBack = mICallBack;
     }
@@ -38,8 +39,12 @@ public class VoteingFragment extends BaseListFragment<VoteingContract.IView> imp
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        Bundle bundle = getArguments();
+        if (bundle!=null){
+            activityid=bundle.getString(Global.BUNDLE_KEY_ACTIVITYID);
+        }
+        Log.d("2009",String.valueOf(activityid));
         adapter = new MultiTypeAdapter();
-        Log.d("LOG", "oncreat");
         adapter.register(Voteinginfo.class, new VoteingBinder(new ICallBack() {
             @Override
             public void OnBackResult(Object... s) {
@@ -75,7 +80,7 @@ public class VoteingFragment extends BaseListFragment<VoteingContract.IView> imp
      */
     private void getvotedata(final int currentPage) {
         ApiManager.getCall(ApiManager.getInstance().create(YFApi.class)
-                .getvotedata(currentPage, "1"))
+                .getvotedata(currentPage, activityid))
                 .useCache(false)
                 .enqueue(new YFListHttpCallBack(getVu()) {
                     @Override
@@ -109,7 +114,10 @@ public class VoteingFragment extends BaseListFragment<VoteingContract.IView> imp
 
     @Override
     public void MyCallback() {
-        getRootFragment().start(UIHelper.creat(AllprojectsFragment.class).build());
+        getRootFragment().start(UIHelper
+                .creat(AllprojectsFragment.class)
+                .put(Global.BUNDLE_KEY_ACTIVITYID,activityid)
+                .build());
     }
 
 }
