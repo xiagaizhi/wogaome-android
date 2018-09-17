@@ -85,7 +85,7 @@
                 android:textSize="@dimen/px24" />
 
 
-            <TextView
+            <Button
                 android:id="@+id/btn_vote_support"
                 android:layout_width="@dimen/px137"
                 android:layout_height="@dimen/px54"

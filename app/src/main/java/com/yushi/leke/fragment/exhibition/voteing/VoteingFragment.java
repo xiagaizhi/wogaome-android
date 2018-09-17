@@ -1,4 +1,4 @@
-package com.yushi.leke.fragment.exhibition.Voteing;
+package com.yushi.leke.fragment.exhibition.voteing;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -11,24 +11,24 @@ import com.alibaba.fastjson.JSON;
 import com.yufan.library.api.ApiBean;
 import com.yufan.library.api.ApiManager;
 import com.yufan.library.api.BaseHttpCallBack;
+import com.yufan.library.api.YFListHttpCallBack;
 import com.yufan.library.base.BaseListFragment;
 import com.yufan.library.inject.VuClass;
 import com.yufan.library.inter.ICallBack;
 import com.yufan.library.view.recycler.PageInfo;
 import com.yushi.leke.UIHelper;
 import com.yushi.leke.YFApi;
-import com.yushi.leke.fragment.exhibition.Voteing.allproject.allprojectsFragment;
 import com.yushi.leke.fragment.exhibition.vote.VoteFragment;
+import com.yushi.leke.fragment.exhibition.voteing.allproject.AllprojectsFragment;
 
 import me.drakeet.multitype.MultiTypeAdapter;
-
 /**
  * Created by mengfantao on 18/8/2.
  */
 @VuClass(VoteingVu.class)
 public class VoteingFragment extends BaseListFragment<VoteingContract.IView> implements VoteingContract.Presenter {
     private MultiTypeAdapter adapter;
-    private Voteinginfolist doendinfo;
+    private Voteinginfolist infolist;
     private ICallBack mICallBack;
 
     public void setmICallBack(ICallBack mICallBack) {
@@ -74,40 +74,30 @@ public class VoteingFragment extends BaseListFragment<VoteingContract.IView> imp
     /**
      * 请求数据
      *
-     * @param currentpage
+     *
      */
-    private void getvotedata(final int currentpage) {
-        ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).getvotedata(currentpage, "1")).useCache(false).enqueue(new BaseHttpCallBack() {
-            @Override
-            public void onSuccess(ApiBean mApiBean) {
-                if (!TextUtils.isEmpty(mApiBean.getData())) {
-                    doendinfo = JSON.parseObject(mApiBean.getData(), Voteinginfolist.class);
-                    if (doendinfo != null && doendinfo.getProjectList() != null && doendinfo.getProjectList().size() > 0) {
-                        if (currentpage == 0) {
-                            list.clear();
+    private void getvotedata(final int currentPage) {
+        ApiManager.getCall(ApiManager.getInstance().create(YFApi.class)
+                .getvotedata(currentPage,"1"))
+                .useCache(false)
+                .enqueue(new YFListHttpCallBack(getVu()) {
+                    @Override
+                    public void onSuccess(ApiBean mApiBean) {
+                        super.onSuccess(mApiBean);
+                        if (!TextUtils.isEmpty(mApiBean.getData())) {
+                            infolist= JSON.parseObject(mApiBean.getData(), Voteinginfolist.class);
+                            if (infolist != null && infolist.getProjectList().size() > 0) {
+                                if (currentPage == 0) {
+                                    list.clear();
+                                }
+                                list.addAll(infolist.getProjectList());
+                                vu.getRecyclerView().getAdapter().notifyDataSetChanged();
+                            } else {
+                                vu.getRecyclerView().getPageManager().setPageState(PageInfo.PAGE_STATE_NO_MORE);
+                            }
                         }
-                        if (mICallBack != null) {//请求播放第一条视频
-                            mICallBack.OnBackResult(doendinfo.getProjectList().get(0).getAliVideoId(), doendinfo.getProjectList().get(0).getTitle());
-                        }
-                        list.addAll(doendinfo.getProjectList());
-                        getVu().getRecyclerView().getAdapter().notifyDataSetChanged();
-                    } else {
-                        vu.getRecyclerView().getPageManager().setPageState(PageInfo.PAGE_STATE_NO_MORE);
                     }
-
-                }
-            }
-
-            @Override
-            public void onError(int id, Exception e) {
-
-            }
-
-            @Override
-            public void onFinish() {
-
-            }
-        });
+                });
     }
 
 
@@ -118,7 +108,7 @@ public class VoteingFragment extends BaseListFragment<VoteingContract.IView> imp
 
     @Override
     public void MyCallback() {
-        getRootFragment().start(UIHelper.creat(allprojectsFragment.class).build());
+        getRootFragment().start(UIHelper.creat(AllprojectsFragment.class).build());
     }
 
 }

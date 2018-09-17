@@ -30,7 +30,6 @@ public class VoteendVu extends BaseListVu<VoteendContract.Presenter> implements 
                 mPersenter.MyCallback();
             }
         });
-        mYFRecyclerView.setOnPagerListener(pagerListener);
     }
 
     @Override
@@ -44,17 +43,4 @@ public class VoteendVu extends BaseListVu<VoteendContract.Presenter> implements 
     public YFRecyclerView getRecyclerView() {
         return mYFRecyclerView;
     }
-    private YFRecyclerView.OnPagerListener pagerListener=new YFRecyclerView.OnPagerListener() {
-        @Override
-        public void onLoadMore(int index) {
-            mYFRecyclerView.getPageManager().next();
-            mPersenter.Loadmore();
-            tv.setText("第"+mYFRecyclerView.getPageManager().getCurrentIndex()+"次刷新页面");
-        }
-
-        @Override
-        public void onRefresh() {
-
-        }
-    };
 }

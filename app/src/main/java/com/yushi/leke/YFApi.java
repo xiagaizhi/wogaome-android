@@ -412,7 +412,7 @@ public interface YFApi {
      * @return
      */
     @FormUrlEncoded
-    @POST("app/v1/activity/listIndustryFromProject")
+    @POST("app/v1/activity/allProjectForVote")
     Call<ResponseBody>
     getvoteallpro(
             @Field("currentPage") int currentPage,
