@@ -18,6 +18,7 @@ import com.yufan.library.view.recycler.PageInfo;
 import com.yushi.leke.UIHelper;
 import com.yushi.leke.YFApi;
 import com.yushi.leke.fragment.exhibition.Voteing.allproject.allprojectsFragment;
+import com.yushi.leke.fragment.exhibition.vote.VoteFragment;
 
 import me.drakeet.multitype.MultiTypeAdapter;
 
@@ -28,6 +29,11 @@ import me.drakeet.multitype.MultiTypeAdapter;
 public class VoteingFragment extends BaseListFragment<VoteingContract.IView> implements VoteingContract.Presenter {
     private MultiTypeAdapter adapter;
     private Voteinginfolist doendinfo;
+    private ICallBack mICallBack;
+
+    public void setmICallBack(ICallBack mICallBack) {
+        this.mICallBack = mICallBack;
+    }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -37,7 +43,20 @@ public class VoteingFragment extends BaseListFragment<VoteingContract.IView> imp
         adapter.register(Voteinginfo.class, new VoteingBinder(new ICallBack() {
             @Override
             public void OnBackResult(Object... s) {
+                if (mICallBack != null) {
+                    int type = (int) s[0];
+                    if (type == 1) {
+                        String projectId = (String) s[1];
+                        VoteFragment voteFragment = new VoteFragment();
+                        Bundle args = new Bundle();
+                        args.putString("projectId", projectId);
+                        voteFragment.setArguments(args);
+                        voteFragment.show(getFragmentManager(), "VoteFragment");
+                    } else if (type == 2) {
+                        mICallBack.OnBackResult(s[1], s[2]);
+                    }
 
+                }
             }
         }));
         vu.getRecyclerView().setAdapter(adapter);
@@ -63,13 +82,16 @@ public class VoteingFragment extends BaseListFragment<VoteingContract.IView> imp
             public void onSuccess(ApiBean mApiBean) {
                 if (!TextUtils.isEmpty(mApiBean.getData())) {
                     doendinfo = JSON.parseObject(mApiBean.getData(), Voteinginfolist.class);
-                    if (doendinfo != null && doendinfo.getProjectList()!=null && doendinfo.getProjectList().size()>0){
-                        if (currentpage == 0){
+                    if (doendinfo != null && doendinfo.getProjectList() != null && doendinfo.getProjectList().size() > 0) {
+                        if (currentpage == 0) {
                             list.clear();
+                        }
+                        if (mICallBack != null) {//请求播放第一条视频
+                            mICallBack.OnBackResult(doendinfo.getProjectList().get(0).getAliVideoId(), doendinfo.getProjectList().get(0).getTitle());
                         }
                         list.addAll(doendinfo.getProjectList());
                         getVu().getRecyclerView().getAdapter().notifyDataSetChanged();
-                    }else {
+                    } else {
                         vu.getRecyclerView().getPageManager().setPageState(PageInfo.PAGE_STATE_NO_MORE);
                     }
 

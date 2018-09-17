@@ -55,25 +55,38 @@ public class ExhibitionViewBinder extends ItemViewBinder<ExhibitionInfo, Exhibit
 
     @Override
     protected void onBindViewHolder(@NonNull ViewHolder holder, @NonNull final ExhibitionInfo category) {
-        if (category.isJustOne()) {//仅有一个活动
-            holder.btn_apply.setVisibility(View.VISIBLE);
-        } else {
-            holder.btn_apply.setVisibility(View.GONE);
-        }
         switch (category.getActivityProgress()) {//活动进度（0--未开始，1--报名中，2--投票中，3--已结束）
             case 0:
+                holder.tv_exhibtion_state.setText("未开始...");
+                holder.tv_active_state.setVisibility(View.GONE);
+                holder.btn_apply.setVisibility(View.GONE);
                 break;
             case 1:
+                holder.tv_exhibtion_state.setText("报名中...");
+                holder.tv_active_state.setVisibility(View.GONE);
+                holder.btn_apply.setVisibility(View.GONE);
                 break;
             case 2:
+                holder.tv_exhibtion_state.setText("投票中...");
+                if (category.isJustOne()) {
+                    holder.tv_active_state.setVisibility(View.GONE);
+                    holder.btn_apply.setVisibility(View.VISIBLE);
+                } else {
+                    holder.btn_apply.setVisibility(View.GONE);
+                    holder.tv_active_state.setVisibility(View.VISIBLE);
+                }
                 break;
             case 3:
+                holder.tv_exhibtion_state.setText("已结束...");
+                holder.tv_active_state.setVisibility(View.GONE);
+                holder.btn_apply.setVisibility(View.GONE);
                 break;
         }
+
         holder.sdv.setImageURI(Uri.parse(category.getBgPicture()));
         holder.tv_title.setText(category.getTitle());
         holder.tv_action_company.setText("主办方：" + category.getOrganizer());
-        holder.tv_action_time.setText("活动时间："+ StringUtil.formatTime(category.getStartDate(),category.getEndDate()));
+        holder.tv_action_time.setText("活动时间：" + StringUtil.formatTime(category.getStartDate(), category.getEndDate()));
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -91,6 +104,7 @@ public class ExhibitionViewBinder extends ItemViewBinder<ExhibitionInfo, Exhibit
         public TextView tv_active_state;
         public TextView tv_action_company;
         public TextView tv_action_time;
+        public TextView tv_exhibtion_state;
 
 
         public Button btn_apply;
@@ -102,6 +116,7 @@ public class ExhibitionViewBinder extends ItemViewBinder<ExhibitionInfo, Exhibit
             tv_active_state = itemView.findViewById(R.id.tv_active_state);
             tv_action_company = itemView.findViewById(R.id.tv_action_company);
             tv_action_time = itemView.findViewById(R.id.tv_action_time);
+            tv_exhibtion_state = itemView.findViewById(R.id.tv_exhibtion_state);
             btn_apply = itemView.findViewById(R.id.btn_apply);
         }
     }

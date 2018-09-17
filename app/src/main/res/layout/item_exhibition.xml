@@ -55,6 +55,7 @@
             android:layout_marginBottom="@dimen/y30"
             android:layout_marginLeft="@dimen/px30"
             android:text="主办方：浙江宇石网络科技有限公司"
+            android:textSize="@dimen/px24"
             android:textColor="@color/white" />
 
         <TextView
@@ -65,7 +66,18 @@
             android:layout_marginBottom="@dimen/y20"
             android:layout_marginLeft="@dimen/px30"
             android:text="活动时间: 2018-08-01／08-12"
+            android:textSize="@dimen/px30"
             android:textColor="@color/white" />
+        <TextView
+            android:id="@+id/tv_exhibtion_state"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/tv_action_time"
+            android:layout_marginBottom="@dimen/y20"
+            android:layout_marginLeft="@dimen/px30"
+            android:text="投票中..."
+            android:textSize="@dimen/px48"
+            android:textColor="@color/color_yellow_level0" />
 
         <TextView
             android:id="@+id/tv_active_state"

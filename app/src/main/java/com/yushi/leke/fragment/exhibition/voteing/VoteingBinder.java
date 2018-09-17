@@ -26,29 +26,39 @@ public class VoteingBinder extends ItemViewBinder<Voteinginfo,VoteingBinder.View
     }
 
     @Override
-    protected void onBindViewHolder(@NonNull ViewHolder viewHolder, @NonNull final Voteinginfo Voteinginfo) {
-        viewHolder.tv_vote_playsum.setText(String.valueOf(Voteinginfo.getPlayCount()));
-        viewHolder.sdv.setImageURI(Voteinginfo.getVideo100Pic());
-        viewHolder.tv_vote_title.setText(Voteinginfo.getTitle());
-        viewHolder.tv_vote_sum.setText(String.valueOf(Voteinginfo.getVotes()));
-        viewHolder.tv_vote_province.setText(Voteinginfo.getAddress()+" / "+Voteinginfo.getIndustry());
-        viewHolder.tv_vote_name.setText("创业者："+Voteinginfo.getEntrepreneur());
-        viewHolder.tv_vote_describe.setText(Voteinginfo.getDesc());
+    protected void onBindViewHolder(@NonNull ViewHolder viewHolder, @NonNull final Voteinginfo voteinginfo) {
+        viewHolder.tv_vote_playsum.setText(String.valueOf(voteinginfo.getPlayCount()));
+        viewHolder.sdv.setImageURI(voteinginfo.getVideo100Pic());
+        viewHolder.tv_vote_title.setText(voteinginfo.getTitle());
+        viewHolder.tv_vote_sum.setText(String.valueOf(voteinginfo.getVotes()));
+        viewHolder.tv_vote_province.setText(voteinginfo.getAddress()+" / "+voteinginfo.getIndustry());
+        viewHolder.tv_vote_name.setText("创业者："+voteinginfo.getEntrepreneur());
+        viewHolder.tv_vote_describe.setText(voteinginfo.getDesc());
         viewHolder.tv_vote_describe.setClickable(true);
-        viewHolder.tv_vote_describe.setOnClickListener(new View.OnClickListener() {
+        viewHolder.btn_vote_support.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                callBack.OnBackResult(Voteinginfo);
+            public void onClick(View v) {
+                if (callBack!=null){//发起投票
+                    callBack.OnBackResult(1,voteinginfo.getId());
+                }
             }
         });
-
+        viewHolder.rl_root.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {//切换视屏
+                if (callBack!=null){
+                    callBack.OnBackResult(2,voteinginfo.getAliVideoId(),voteinginfo.getTitle());
+                }
+            }
+        });
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
         public SimpleDraweeView sdv;
         public TextView tv_vote_playsum,tv_vote_title,tv_vote_sum
                 ,tv_vote_province,tv_vote_name,tv_vote_describe;
-        public Button btn_vote_support;
+        public TextView btn_vote_support;
+        public View rl_root;
         ViewHolder(@NonNull View itemView) {
             super(itemView);
             sdv=  itemView.findViewById(R.id.sdv);
@@ -59,6 +69,7 @@ public class VoteingBinder extends ItemViewBinder<Voteinginfo,VoteingBinder.View
             tv_vote_name=itemView.findViewById(R.id.tv_vote_name);
             btn_vote_support=itemView.findViewById(R.id.btn_vote_support);
             tv_vote_describe=itemView.findViewById(R.id.tv_vote_describe);
+            rl_root = itemView.findViewById(R.id.rl_root);
         }
     }
 }

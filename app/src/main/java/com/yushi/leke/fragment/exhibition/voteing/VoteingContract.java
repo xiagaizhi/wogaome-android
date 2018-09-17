@@ -13,6 +13,5 @@ public interface VoteingContract {
     }
     interface Presenter extends Pr {
         void MyCallback();
-        void Loadmore();
     }
 }
