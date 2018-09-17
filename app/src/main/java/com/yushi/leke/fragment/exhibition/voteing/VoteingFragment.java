@@ -10,7 +10,6 @@ import android.view.View;
 import com.alibaba.fastjson.JSON;
 import com.yufan.library.api.ApiBean;
 import com.yufan.library.api.ApiManager;
-import com.yufan.library.api.BaseHttpCallBack;
 import com.yufan.library.api.YFListHttpCallBack;
 import com.yufan.library.base.BaseListFragment;
 import com.yufan.library.inject.VuClass;
@@ -22,6 +21,7 @@ import com.yushi.leke.fragment.exhibition.vote.VoteFragment;
 import com.yushi.leke.fragment.exhibition.voteing.allproject.AllprojectsFragment;
 
 import me.drakeet.multitype.MultiTypeAdapter;
+
 /**
  * Created by mengfantao on 18/8/2.
  */
@@ -53,7 +53,7 @@ public class VoteingFragment extends BaseListFragment<VoteingContract.IView> imp
                         voteFragment.setArguments(args);
                         voteFragment.show(getFragmentManager(), "VoteFragment");
                     } else if (type == 2) {
-                        mICallBack.OnBackResult(s[1], s[2]);
+                        mICallBack.OnBackResult(s[1], s[2], s[3]);
                     }
 
                 }
@@ -70,25 +70,26 @@ public class VoteingFragment extends BaseListFragment<VoteingContract.IView> imp
         getvotedata(index);
     }
 
-
     /**
      * 请求数据
-     *
-     *
      */
     private void getvotedata(final int currentPage) {
         ApiManager.getCall(ApiManager.getInstance().create(YFApi.class)
-                .getvotedata(currentPage,"1"))
+                .getvotedata(currentPage, "1"))
                 .useCache(false)
                 .enqueue(new YFListHttpCallBack(getVu()) {
                     @Override
                     public void onSuccess(ApiBean mApiBean) {
                         super.onSuccess(mApiBean);
                         if (!TextUtils.isEmpty(mApiBean.getData())) {
-                            infolist= JSON.parseObject(mApiBean.getData(), Voteinginfolist.class);
+                            infolist = JSON.parseObject(mApiBean.getData(), Voteinginfolist.class);
                             if (infolist != null && infolist.getProjectList().size() > 0) {
                                 if (currentPage == 0) {
                                     list.clear();
+                                }
+                                if (mICallBack != null) {//请求播放第一条视频
+                                    Voteinginfo voteinginfo = infolist.getProjectList().get(0);
+                                    mICallBack.OnBackResult(voteinginfo.getAliVideoId(), voteinginfo.getTitle(), voteinginfo.getId());
                                 }
                                 list.addAll(infolist.getProjectList());
                                 vu.getRecyclerView().getAdapter().notifyDataSetChanged();

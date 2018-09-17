@@ -44,7 +44,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.lang.ref.WeakReference;
-import java.text.SimpleDateFormat;
 
 /**
  * Created by mengfantao on 18/8/2.
@@ -64,6 +63,7 @@ public class ExhibitionDetailFragment extends BaseFragment<ExhibitionDetailContr
     private VoteingFragment mVoteingFragment;
     private String currentVid;
     private String currentTitle;
+    private String currentProjectId;
     private boolean isSuccessRequestAliplayerInfo;
 
     @Override
@@ -104,9 +104,11 @@ public class ExhibitionDetailFragment extends BaseFragment<ExhibitionDetailContr
     public void OnBackResult(Object... s) {
         String tempVid = (String) s[0];
         String tempTitle = (String) s[1];
+        String tempProjectId = (String) s[2];
         if (!TextUtils.equals(currentVid, tempVid)) {//当前播放vid和需要切换vid不同才做切换操作
             currentVid = tempVid;
             currentTitle = tempTitle;
+            currentProjectId = tempProjectId;
             getAliplayerInfo();
         }
     }
@@ -144,6 +146,7 @@ public class ExhibitionDetailFragment extends BaseFragment<ExhibitionDetailContr
                 if (!isSuccessRequestAliplayerInfo) {
                     currentVid = "";
                     currentTitle = "";
+                    currentProjectId = "";
                 }
                 DialogManager.getInstance().dismiss();
             }
@@ -186,6 +189,34 @@ public class ExhibitionDetailFragment extends BaseFragment<ExhibitionDetailContr
         vidSts.setTitle(title);
         mAliyunVodPlayerView.setVidSts(vidSts);
 
+        playVideoCount();
+    }
+
+    /**
+     * 上报 视频播放数
+     */
+    private void playVideoCount() {
+        ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).playVideoCount(currentProjectId)).enqueue(new BaseHttpCallBack() {
+            @Override
+            public void onSuccess(ApiBean mApiBean) {
+
+            }
+
+            @Override
+            public void onResponse(ApiBean mApiBean) {
+
+            }
+
+            @Override
+            public void onError(int id, Exception e) {
+
+            }
+
+            @Override
+            public void onFinish() {
+
+            }
+        });
     }
 
     private void initAliyunPlayerView() {
