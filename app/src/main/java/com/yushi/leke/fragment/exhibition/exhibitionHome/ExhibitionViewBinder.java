@@ -58,10 +58,13 @@ public class ExhibitionViewBinder extends ItemViewBinder<ExhibitionInfo, Exhibit
                 break;
             case 1:
                 holder.tv_exhibtion_state.setText("报名中...");
-                holder.tv_active_state.setVisibility(View.GONE);
+                holder.tv_active_state.setText("立即报名");
+                holder.tv_active_state.setVisibility(View.VISIBLE);
                 break;
             case 2:
                 holder.tv_exhibtion_state.setText("投票中...");
+                holder.tv_active_state.setText("立即投票");
+                holder.tv_active_state.setVisibility(View.VISIBLE);
                 break;
             case 3:
                 holder.tv_exhibtion_state.setText("已结束...");

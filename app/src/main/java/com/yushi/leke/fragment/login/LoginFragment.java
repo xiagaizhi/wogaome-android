@@ -35,6 +35,7 @@ import com.yufan.library.util.SoftInputUtil;
 import com.yufan.library.widget.anim.AFVerticalAnimator;
 import com.yufan.share.ILoginCallback;
 import com.yufan.share.ShareUtils;
+import com.yushi.leke.App;
 import com.yushi.leke.BuildConfig;
 import com.yushi.leke.UIHelper;
 import com.yushi.leke.YFApi;
@@ -120,6 +121,7 @@ public class LoginFragment extends BaseFragment<LoginContract.IView> implements 
                             JSONObject jsonObject= JSON.parseObject(mApiBean.getData());
                             UserManager.getInstance().setToken(jsonObject.getString("token"));
                             UserManager.getInstance().setUid(jsonObject.getString("uid"));
+                            App.getApp().registerXGPush(UserManager.getInstance().getUid());
                             startWithPopTo(UIHelper.creat(MainFragment.class).build(), LoginFragment.class,true);
                             mShareUtils.logout(SHARE_MEDIA.WEIXIN);
                         }
