@@ -1,15 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:fresco="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:paddingLeft="@dimen/px36"
     android:paddingRight="@dimen/px36"
     android:background="@color/white"
     android:layout_height="wrap_content">
-
+    <View
+        android:layout_alignParentTop= "true"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px1"
+        android:id="@+id/view_bottom_line"
+        android:background="@color/color_gray_levele"
+        />
     <TextView
-        android:id="@+id/tv_project_introduction"
+        android:id="@+id/tv_introduction_title"
         android:layout_marginTop="@dimen/px50"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -19,15 +24,23 @@
         android:textColor="@color/color_black"
          />
     <TextView
-        android:layout_below="@+id/tv_project_introduction"
+        android:layout_below="@+id/tv_introduction_title"
         android:layout_marginTop="@dimen/px20"
-        android:layout_marginBottom="@dimen/px32"
+        android:layout_marginBottom="@dimen/px41"
         android:id="@+id/tv_introduction_content"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:singleLine="false"
         android:text="@string/project_introduction_content"
         android:textSize="@dimen/px28"
-        android:textColor="@color/color_gray_level6"
+        android:textColor="#FF999999"
+        android:letterSpacing="0.1"
+        android:lineSpacingExtra="@dimen/px20"
+        />
+    <View
+        android:layout_below="@id/tv_introduction_content"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px1"
+        android:background="@color/color_gray_levele"
         />
 </RelativeLayout>
