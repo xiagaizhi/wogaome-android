@@ -23,6 +23,7 @@ import com.yufan.library.inject.VuClass;
 import com.yufan.library.manager.DialogManager;
 import com.yufan.library.manager.UserManager;
 import com.yufan.library.util.SoftInputUtil;
+import com.yushi.leke.App;
 import com.yushi.leke.UIHelper;
 import com.yushi.leke.YFApi;
 import com.yushi.leke.fragment.browser.BrowserBaseFragment;
@@ -72,6 +73,7 @@ public class RegisterFragment extends BaseFragment<RegisterContract.IView> imple
               JSONObject jsonObject= JSON.parseObject(mApiBean.getData());
               UserManager.getInstance().setToken(jsonObject.getString("token"));
               UserManager.getInstance().setUid(jsonObject.getString("uid"));
+              App.getApp().registerXGPush(UserManager.getInstance().getUid());
               startWithPopTo(UIHelper.creat(MainFragment.class).build(), LoginFragment.class,true);
 
           }

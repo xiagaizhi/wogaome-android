@@ -7,11 +7,14 @@ import android.support.multidex.MultiDexApplication;
 
 import com.facebook.drawee.BuildConfig;
 import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.imagepipeline.core.ImagePipelineConfig;
 import com.tencent.bugly.Bugly;
 import com.umeng.commonsdk.UMConfigure;
 
 import java.util.Iterator;
 import java.util.List;
+
+import okhttp3.OkHttpClient;
 
 /**
  * Created by mengfantao on 18/2/2.

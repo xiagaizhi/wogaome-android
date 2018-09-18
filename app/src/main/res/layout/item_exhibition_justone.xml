@@ -9,7 +9,7 @@
     <ImageView
         android:id="@+id/img_exhibition_bg"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/y896"
+        android:layout_height="@dimen/y772"
         android:layout_marginBottom="@dimen/y8"
         android:layout_marginLeft="@dimen/px10"
         android:layout_marginRight="@dimen/px10"
@@ -18,11 +18,11 @@
     <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/sdv"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/y844"
-        android:layout_marginBottom="@dimen/y30"
+        android:layout_height="@dimen/y730"
+        android:layout_marginBottom="@dimen/y12"
         android:layout_marginLeft="@dimen/px36"
         android:layout_marginRight="@dimen/px36"
-        android:layout_marginTop="@dimen/y22"
+        android:layout_marginTop="@dimen/y18"
         fresco:roundedCornerRadius="5dp" />
 
     <RelativeLayout
@@ -79,23 +79,20 @@
             android:text="投票中..."
             android:textColor="@color/color_yellow_level0"
             android:textSize="@dimen/px48" />
-
-        <TextView
-            android:id="@+id/tv_active_state"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/y54"
-            android:layout_alignBottom="@+id/tv_action_company"
-            android:layout_alignParentEnd="true"
-            android:layout_marginBottom="6dp"
-            android:layout_marginEnd="10dp"
-            android:background="@drawable/shape_bg_eee_27"
-            android:gravity="center_vertical"
-            android:paddingLeft="@dimen/px24"
-            android:paddingRight="@dimen/px24"
-            android:text="参与投票"
-            android:textColor="@color/color_blue_level6"
-            android:textSize="@dimen/px28"
-            android:textStyle="bold" />
     </RelativeLayout>
+
+    <Button
+        android:id="@+id/btn_apply"
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_width="@dimen/px600"
+        android:layout_height="@dimen/y138"
+        android:layout_below="@+id/img_exhibition_bg"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/selector_big_btn_blue"
+        android:gravity="center"
+        android:text="立即申请"
+        android:layout_marginBottom="@dimen/y30"
+        android:textColor="@color/white"
+        android:textSize="@dimen/px34" />
 
 </RelativeLayout>

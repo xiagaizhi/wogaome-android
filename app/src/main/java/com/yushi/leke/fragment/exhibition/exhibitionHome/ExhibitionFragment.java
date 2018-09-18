@@ -1,4 +1,4 @@
-package com.yushi.leke.fragment.exhibition;
+package com.yushi.leke.fragment.exhibition.exhibitionHome;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -43,6 +43,13 @@ public class ExhibitionFragment extends BaseListFragment<ExhibitionContract.IVie
                 }
             }
         }));
+        adapter.register(ExhibitionErrorInfo.class,new ExhibitionErrorBinder(new ICallBack() {
+            @Override
+            public void OnBackResult(Object... s) {
+                onRefresh();
+            }
+        }));
+        adapter.register(ExhibitionEmptyInfo.class, new ExhibitionEmptyBinder());
         adapter.register(ExhibitionInfo.class, new ExhibitionViewBinder(new ICallBack() {
             @Override
             public void OnBackResult(Object... s) {
@@ -52,9 +59,19 @@ public class ExhibitionFragment extends BaseListFragment<ExhibitionContract.IVie
                 } else {//原生详情页面
                     getRootFragment().start(UIHelper.creat(ExhibitionDetailFragment.class)
                             .put(Global.BUNDLE_KEY_EXHIBITION_TYE, info.getActivityProgress())
-                            .put(Global.BUNDLE_KEY_ACTIVITYID,info.getActivityId())
+                            .put(Global.BUNDLE_KEY_ACTIVITYID, info.getActivityId())
                             .build());
                 }
+            }
+        }));
+        adapter.register(ExhibitionJustOneInfo.class, new ExhibitionJustOneViewBinder(new ICallBack() {
+            @Override
+            public void OnBackResult(Object... s) {
+                ExhibitionJustOneInfo info = (ExhibitionJustOneInfo) s[0];//活动进度（2--投票中 并且只有一个活动）
+                getRootFragment().start(UIHelper.creat(ExhibitionDetailFragment.class)
+                        .put(Global.BUNDLE_KEY_EXHIBITION_TYE, info.getActivityProgress())
+                        .put(Global.BUNDLE_KEY_ACTIVITYID, info.getActivityId())
+                        .build());
             }
         }));
         list.add(new ExhibitionTopInfo());
@@ -78,14 +95,35 @@ public class ExhibitionFragment extends BaseListFragment<ExhibitionContract.IVie
                                     list.clear();
                                     list.add(new ExhibitionTopInfo());
                                     if (exhibitionInfoList.getList().size() == 1) {
-                                        exhibitionInfoList.getList().get(0).setJustOne(true);
+                                        ExhibitionInfo exhibitionInfo = exhibitionInfoList.getList().get(0);
+                                        if (exhibitionInfo.getActivityProgress() == 2) {
+                                            ExhibitionJustOneInfo exhibitionJustOneInfo = new ExhibitionJustOneInfo(exhibitionInfo);
+                                            list.add(exhibitionJustOneInfo);
+                                            vu.getRecyclerView().getAdapter().notifyDataSetChanged();
+                                            return;
+                                        }
                                     }
                                 }
                                 list.addAll(exhibitionInfoList.getList());
                                 vu.getRecyclerView().getAdapter().notifyDataSetChanged();
                             } else {
+                                if (currentPage == 0) {
+                                    list.clear();
+                                    list.add(new ExhibitionTopInfo());
+                                    list.add(new ExhibitionEmptyInfo());
+                                    vu.getRecyclerView().getAdapter().notifyDataSetChanged();
+                                }
                                 vu.getRecyclerView().getPageManager().setPageState(PageInfo.PAGE_STATE_NO_MORE);
                             }
+                        }
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        super.onFinish();
+                        if (currentPage == 0 && list.size()<=1){
+                            list.add(new ExhibitionErrorInfo());
+                            vu.getRecyclerView().getAdapter().notifyDataSetChanged();
                         }
                     }
                 });

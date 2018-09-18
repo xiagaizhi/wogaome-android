@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/rl_1"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/px160"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/px36">
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/sdv"
+            android:layout_width="@dimen/px160"
+            android:layout_height="@dimen/px120"
+            android:layout_centerInParent="true" />
+
+        <ImageView
+            android:id="@+id/iv_play_state"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:src="@drawable/ic_player_play_detail" />
+
+        <TextView
+            android:id="@+id/tv_state"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/sdv"
+            android:drawableLeft="@drawable/ic_subscription_headset"
+            android:drawablePadding="2dp"
+            android:paddingBottom="@dimen/px2"
+            android:paddingLeft="@dimen/px8"
+            android:text="123"
+            android:textColor="@color/white"
+            android:textSize="@dimen/px18" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/px20"
+        android:layout_toRightOf="@id/rl_1"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="永不放弃01集"
+            android:textColor="@color/color_gray_level3"
+            android:textSize="@dimen/px32"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/px20"
+            android:text="00:11:12 / 54583 人听过"
+            android:textColor="@color/color_gray_level6"
+
+            android:textSize="@dimen/px24" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="@dimen/px36"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="@dimen/px133"
+            android:layout_height="@dimen/px54"
+            android:background="@drawable/shape_bg_bt_c9_radius_27">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ic_play_headset_red"
+              android:layout_centerInParent="true"
+                android:textColor="@color/alivc_red"
+                android:text="试听"
+                android:padding="0dp"
+                android:textSize="@dimen/px30"
+                android:textStyle="bold"
+        />
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="免费"
+            android:textColor="@color/color_gray_level9"
+            android:textSize="@dimen/px18" />
+    </LinearLayout>
+
+    <View
+        android:id="@+id/view_bottom_line"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px1"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="@dimen/px20"
+        android:layout_marginTop="@dimen/px35"
+        android:layout_toRightOf="@+id/rl_1"
+        android:background="@color/color_gray_levele" />
+
+</RelativeLayout>

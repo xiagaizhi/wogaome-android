@@ -27,6 +27,7 @@ import com.yushi.leke.util.ArgsUtil;
 
 import java.util.HashMap;
 import java.util.Map;
+import com.yushi.leke.fragment.paySafe.PaySafetyFragment;
 
 import me.drakeet.multitype.MultiTypeAdapter;
 
@@ -34,11 +35,12 @@ import me.drakeet.multitype.MultiTypeAdapter;
  * Created by mengfantao on 18/8/2.
  */
 @VuClass(VoteingVu.class)
-public class VoteingFragment extends BaseListFragment<VoteingContract.IView> implements VoteingContract.Presenter {
+public class VoteingFragment extends BaseListFragment<VoteingContract.IView> implements VoteingContract.Presenter, ICallBack {
     private MultiTypeAdapter adapter;
     private Voteinginfolist infolist;
     private ICallBack mICallBack;
     private String activityid;
+
     public void setmICallBack(ICallBack mICallBack) {
         this.mICallBack = mICallBack;
     }
@@ -47,10 +49,10 @@ public class VoteingFragment extends BaseListFragment<VoteingContract.IView> imp
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         Bundle bundle = getArguments();
-        if (bundle!=null){
-            activityid=bundle.getString(Global.BUNDLE_KEY_ACTIVITYID);
+        if (bundle != null) {
+            activityid = bundle.getString(Global.BUNDLE_KEY_ACTIVITYID);
         }
-        Log.d("2009",String.valueOf(activityid));
+        Log.d("2009", String.valueOf(activityid));
         adapter = new MultiTypeAdapter();
         adapter.register(Voteinginfo.class, new VoteingBinder(new ICallBack() {
             @Override
@@ -60,6 +62,7 @@ public class VoteingFragment extends BaseListFragment<VoteingContract.IView> imp
                     if (type == 1) {
                         String projectId = (String) s[1];
                         VoteFragment voteFragment = new VoteFragment();
+                        voteFragment.setmICallBack(VoteingFragment.this);
                         Bundle args = new Bundle();
                         args.putString("projectId", projectId);
                         voteFragment.setArguments(args);
@@ -125,8 +128,13 @@ public class VoteingFragment extends BaseListFragment<VoteingContract.IView> imp
     public void MyCallback() {
         getRootFragment().start(UIHelper
                 .creat(AllprojectsFragment.class)
-                .put(Global.BUNDLE_KEY_ACTIVITYID,activityid)
+                .put(Global.BUNDLE_KEY_ACTIVITYID, activityid)
                 .build());
+    }
+
+    @Override
+    public void OnBackResult(Object... s) {
+        getRootFragment().start(UIHelper.creat(PaySafetyFragment.class).build());
     }
     void datapoint(){
         MANHitBuilders.MANCustomHitBuilder hitBuilder = new MANHitBuilders.MANCustomHitBuilder("playmusic");

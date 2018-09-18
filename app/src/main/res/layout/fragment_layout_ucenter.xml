@@ -89,6 +89,8 @@
                         android:layout_width="@dimen/px144"
                         android:layout_height="@dimen/px144"
                         android:layout_centerInParent="true"
+                        fresco:failureImage="@drawable/ic_head_default"
+                        fresco:placeholderImage="@drawable/ic_head_default"
                         fresco:placeholderImageScaleType="focusCrop"
                         fresco:roundAsCircle="true" />
 

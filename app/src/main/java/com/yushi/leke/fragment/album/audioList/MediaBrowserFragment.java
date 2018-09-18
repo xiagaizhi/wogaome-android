@@ -136,6 +136,7 @@ public class MediaBrowserFragment extends BaseListFragment<MediaBrowserContract.
                     LogHelper.d(TAG, "Received metadata change to media ",
                             metadata.getDescription().getMediaId());
                     getVu().notifyDataSetChanged();
+
                 }//播放的媒体数据发生变化时的回调
 
                 @Override
@@ -143,6 +144,7 @@ public class MediaBrowserFragment extends BaseListFragment<MediaBrowserContract.
                     super.onPlaybackStateChanged(state);
                     LogHelper.d(TAG, "Received state change: ", state);
                     getVu().notifyDataSetChanged();
+                    getVu().getRecyclerView().getAdapter().notifyDataSetChanged();
                 }//播放状态发生改变时的回调
             };
 
@@ -185,10 +187,11 @@ public class MediaBrowserFragment extends BaseListFragment<MediaBrowserContract.
         super.onViewCreated(view, savedInstanceState);
         adapter=new MultiTypeAdapter();
         adapter.setItems(list);
-        adapter.register(MediaBrowserCompat.MediaItem.class,new CategoryItemViewBinder(new CategoryItemViewBinder.OnItemClick() {
+        adapter.register(MediaBrowserCompat.MediaItem.class,new MediaBrowserViewBinder(getActivity(),new MediaBrowserViewBinder.OnItemClick() {
             @Override
             public void onClick(MediaBrowserCompat.MediaItem mediaItem) {
                 mMediaFragmentListener.onMediaItemSelected(mediaItem);
+
             }
         }));
         vu.getRecyclerView().setAdapter(adapter);
@@ -210,5 +213,6 @@ public class MediaBrowserFragment extends BaseListFragment<MediaBrowserContract.
             }
         },1000);
     }
+
 
 }

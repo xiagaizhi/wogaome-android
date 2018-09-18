@@ -30,6 +30,8 @@ public class MediaBrowserVu extends BaseListVu<MediaBrowserContract.Presenter> i
     @Override
     public void initStatusLayout(StateLayout stateLayout) {
         super.initStatusLayout(stateLayout);
+
+
     }
 
     @Override

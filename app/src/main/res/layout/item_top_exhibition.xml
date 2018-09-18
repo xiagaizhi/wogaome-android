@@ -12,7 +12,7 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/px98"
+            android:layout_height="@dimen/y98"
             android:layout_marginLeft="@dimen/px36"
             android:layout_marginRight="@dimen/px36">
 
@@ -30,7 +30,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:paddingTop="@dimen/px15"
+                android:paddingTop="@dimen/y15"
                 android:src="@drawable/anim_player_blue"
                 />
         </RelativeLayout>
