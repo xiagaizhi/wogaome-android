@@ -12,7 +12,6 @@ import com.alibaba.fastjson.JSON;
 import com.yufan.library.Global;
 import com.yufan.library.api.ApiBean;
 import com.yufan.library.api.ApiManager;
-import com.yufan.library.api.BaseHttpCallBack;
 import com.yufan.library.api.YFListHttpCallBack;
 import com.yufan.library.base.BaseListFragment;
 import com.yufan.library.inject.VuClass;
@@ -20,8 +19,6 @@ import com.yufan.library.inter.ICallBack;
 import com.yufan.library.view.recycler.PageInfo;
 import com.yushi.leke.YFApi;
 import com.yushi.leke.fragment.exhibition.vote.VoteFragment;
-
-import java.util.List;
 
 import me.drakeet.multitype.MultiTypeAdapter;
 /**
@@ -55,7 +52,7 @@ public class AllprojectsFragment extends BaseListFragment<AllprojectsContract.IV
      */
     private void getalldata(final int currentPage, String activityid, final String industry, final String city) {
         ApiManager.getCall(ApiManager.getInstance().create(YFApi.class)
-                .getvoteallpro(currentPage,activityid,industry,city))
+                .getvoteingallpro(currentPage,activityid,industry,city))
                 .useCache(false)
                 .enqueue(new YFListHttpCallBack(getVu()) {
                     @Override

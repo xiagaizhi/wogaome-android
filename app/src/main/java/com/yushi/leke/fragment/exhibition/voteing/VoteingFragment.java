@@ -80,7 +80,7 @@ public class VoteingFragment extends BaseListFragment<VoteingContract.IView> imp
      */
     private void getvotedata(final int currentPage) {
         ApiManager.getCall(ApiManager.getInstance().create(YFApi.class)
-                .getvotedata(currentPage, activityid))
+                .getvoteingdata(currentPage, activityid))
                 .useCache(false)
                 .enqueue(new YFListHttpCallBack(getVu()) {
                     @Override

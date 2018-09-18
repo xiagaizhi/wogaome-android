@@ -92,6 +92,7 @@
                 android:layout_alignParentRight="true"
                 android:background="@drawable/shape_bg_eee_27"
                 android:text="+支持"
+                android:textStyle="bold"
                 style="?android:attr/borderlessButtonStyle"
                 android:gravity="center"
                 android:textColor="@color/tv_blue"

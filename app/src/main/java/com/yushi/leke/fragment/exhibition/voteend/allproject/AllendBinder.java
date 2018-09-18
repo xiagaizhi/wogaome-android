@@ -35,7 +35,7 @@ public class AllendBinder extends ItemViewBinder<Allendinfo, AllendBinder.ViewHo
         viewHolder.tv_vote_sum.setText(String.valueOf(Allendinfo.getVotes()));
         viewHolder.tv_vote_province.setText(Allendinfo.getAddress()+" / "+ Allendinfo.getIndustry());
         viewHolder.tv_vote_name.setText("创业者："+ Allendinfo.getEntrepreneur());
-        viewHolder.tv_vote_describe.setText(Allendinfo.getIntroduction());
+        viewHolder.tv_vote_describe.setText(Allendinfo.getDesc());
         viewHolder.btn_vote_support.setText("已结束");
         viewHolder.btn_vote_support.setTextColor(R.color.color_gray_levele);
     }

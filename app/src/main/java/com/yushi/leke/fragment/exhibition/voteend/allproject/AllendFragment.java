@@ -52,7 +52,7 @@ public class AllendFragment extends BaseListFragment<AllendContract.IView> imple
      */
     private void getalldata(final int currentPage, String activityid, final String industry, final String city) {
         ApiManager.getCall(ApiManager.getInstance().create(YFApi.class)
-                .getvoteenddata(currentPage,activityid,industry,city))
+                .getvoteendallpro(currentPage,activityid,industry,city))
                 .useCache(false)
                 .enqueue(new YFListHttpCallBack(getVu()) {
                     @Override

@@ -386,7 +386,7 @@ public interface YFApi {
     @FormUrlEncoded
     @POST("app/v1/activity/detailForVote")
     Call<ResponseBody>
-    getvotedata(
+    getvoteingdata(
             @Field("currentPage") int currentPage,
             @Field("activityId") String activityId
     );
@@ -418,14 +418,14 @@ public interface YFApi {
             @Field("activityId") String  activityId
     );
     /**
-     * 行业选择项目
+     * 行业城市选择投票中项目
      * @param
      * @return
      */
     @FormUrlEncoded
     @POST("app/v1/activity/allProjectForVote")
     Call<ResponseBody>
-    getvoteallpro(
+    getvoteingallpro(
             @Field("currentPage") int currentPage,
             @Field("activityId") String  activityId,
             @Field("industry")String industry,
@@ -441,11 +441,22 @@ public interface YFApi {
     Call<ResponseBody>
     getvoteenddata(
             @Field("currentPage") int currentPage,
-            @Field("activityId") String activityId,
+            @Field("activityId") String activityId
+    );
+    /**
+     * 行业城市选择投票已结束项目
+     * @param
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("app/v1/activity/allProjectForVoteOver")
+    Call<ResponseBody>
+    getvoteendallpro(
+            @Field("currentPage") int currentPage,
+            @Field("activityId") String  activityId,
             @Field("industry")String industry,
             @Field("address")String address
     );
-
     @POST("app/v1/common/initAd")
     Call<ResponseBody>
     initAd(//广告初始化

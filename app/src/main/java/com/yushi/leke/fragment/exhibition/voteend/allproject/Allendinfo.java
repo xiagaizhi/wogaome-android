@@ -8,15 +8,15 @@ public class Allendinfo {
     private String entrepreneur;
     private int votes;
     private int playCount;
-    private String introduction;
+    private String desc;
     private String id;
     private String aliVideoId;
-    public String getIntroduction() {
-        return introduction;
+    public String getDesc() {
+        return desc;
     }
 
-    public void setIntroduction(String introduction) {
-        this.introduction = introduction;
+    public void setDesc(String desc) {
+        this.desc = desc;
     }
 
 
