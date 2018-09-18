@@ -18,6 +18,7 @@ import com.yufan.library.inject.VuClass;
 import com.yushi.leke.UIHelper;
 import com.yushi.leke.activity.MusicPlayerActivity;
 import com.yushi.leke.fragment.album.audioList.MediaBrowserFragment;
+import com.yushi.leke.fragment.album.detail.DetailFragment;
 import com.yushi.leke.fragment.searcher.SearchFragment;
 
 import me.yokeyword.fragmentation.SupportFragment;
@@ -33,7 +34,7 @@ public class AlbumDetailFragment extends BaseFragment<AlbumDetailContract.IView>
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         fragments[0] = UIHelper.creat(MediaBrowserFragment.class).build();
-        fragments[1] = UIHelper.creat(SearchFragment.class).build();
+        fragments[1] = UIHelper.creat(DetailFragment.class).build();
                 getVu().getViewPager().setAdapter(new FragmentPagerAdapter(getChildFragmentManager()) {
             @Override
             public int getCount() {
