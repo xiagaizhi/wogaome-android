@@ -23,6 +23,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -59,29 +61,37 @@ public class ExhibitionViewBinder extends ItemViewBinder<ExhibitionInfo, Exhibit
             case 0:
                 holder.tv_exhibtion_state.setText("未开始...");
                 holder.tv_active_state.setVisibility(View.GONE);
-                holder.btn_apply.setVisibility(View.GONE);
                 break;
             case 1:
                 holder.tv_exhibtion_state.setText("报名中...");
                 holder.tv_active_state.setVisibility(View.GONE);
-                holder.btn_apply.setVisibility(View.GONE);
                 break;
             case 2:
                 holder.tv_exhibtion_state.setText("投票中...");
                 if (category.isJustOne()) {
                     holder.tv_active_state.setVisibility(View.GONE);
-                    holder.btn_apply.setVisibility(View.VISIBLE);
                 } else {
-                    holder.btn_apply.setVisibility(View.GONE);
                     holder.tv_active_state.setVisibility(View.VISIBLE);
                 }
                 break;
             case 3:
                 holder.tv_exhibtion_state.setText("已结束...");
                 holder.tv_active_state.setVisibility(View.GONE);
-                holder.btn_apply.setVisibility(View.GONE);
                 break;
         }
+        RelativeLayout.LayoutParams exhibitionBgParams = (RelativeLayout.LayoutParams) holder.img_exhibition_bg.getLayoutParams();
+        RelativeLayout.LayoutParams sdvParams = (RelativeLayout.LayoutParams) holder.sdv.getLayoutParams();
+        if (category.getActivityProgress() == 2 && category.isJustOne()) {
+            holder.btn_apply.setVisibility(View.VISIBLE);
+            exhibitionBgParams.height = (int) holder.img_exhibition_bg.getContext().getResources().getDimension(R.dimen.y796);
+            sdvParams.height = (int) holder.sdv.getContext().getResources().getDimension(R.dimen.y752);
+        } else {
+            holder.btn_apply.setVisibility(View.GONE);
+            exhibitionBgParams.height = (int) holder.img_exhibition_bg.getContext().getResources().getDimension(R.dimen.y896);
+            sdvParams.height = (int) holder.sdv.getContext().getResources().getDimension(R.dimen.y852);
+        }
+        holder.sdv.setLayoutParams(sdvParams);
+        holder.img_exhibition_bg.setLayoutParams(exhibitionBgParams);
 
         holder.sdv.setImageURI(Uri.parse(category.getBgPicture()));
         holder.tv_title.setText(category.getTitle());
@@ -105,6 +115,7 @@ public class ExhibitionViewBinder extends ItemViewBinder<ExhibitionInfo, Exhibit
         public TextView tv_action_company;
         public TextView tv_action_time;
         public TextView tv_exhibtion_state;
+        public ImageView img_exhibition_bg;
 
 
         public Button btn_apply;
@@ -118,6 +129,7 @@ public class ExhibitionViewBinder extends ItemViewBinder<ExhibitionInfo, Exhibit
             tv_action_time = itemView.findViewById(R.id.tv_action_time);
             tv_exhibtion_state = itemView.findViewById(R.id.tv_exhibtion_state);
             btn_apply = itemView.findViewById(R.id.btn_apply);
+            img_exhibition_bg = itemView.findViewById(R.id.img_exhibition_bg);
         }
     }
 

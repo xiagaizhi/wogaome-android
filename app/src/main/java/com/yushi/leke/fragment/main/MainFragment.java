@@ -48,6 +48,7 @@ import me.yokeyword.fragmentation.anim.FragmentAnimator;
 public class MainFragment extends BaseFragment<MainContract.IView> implements MainContract.Presenter {
     private SupportFragment[] mFragments = new SupportFragment[3];
     private long[] mHits = new long[2];
+    private UpdateInfo updateInfo;
 
 
     private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
@@ -114,17 +115,8 @@ public class MainFragment extends BaseFragment<MainContract.IView> implements Ma
             @Override
             public void onSuccess(ApiBean mApiBean) {
                 if (!TextUtils.isEmpty(mApiBean.getData())) {
-                    final UpdateInfo updateInfo = JSON.parseObject(mApiBean.getData(), UpdateInfo.class);
-                    if (updateInfo != null && updateInfo.isNeedUpdate()) {
-                        UpdateDialog updateDialog = new UpdateDialog(_mActivity, updateInfo, new ICallBack() {
-                            @Override
-                            public void OnBackResult(Object... s) {
-                                //退出app
-                                _mActivity.finish();
-                            }
-                        });
-                        updateDialog.show();
-                    }
+                    updateInfo = JSON.parseObject(mApiBean.getData(), UpdateInfo.class);
+                    showUpdateDialog();
                 }
             }
 
@@ -138,6 +130,20 @@ public class MainFragment extends BaseFragment<MainContract.IView> implements Ma
 
             }
         });
+    }
+
+    private void showUpdateDialog() {
+        if (updateInfo != null && updateInfo.isNeedUpdate()) {
+            UpdateDialog updateDialog = new UpdateDialog(_mActivity, updateInfo, new ICallBack() {
+                @Override
+                public void OnBackResult(Object... s) {
+                    //退出app
+                    _mActivity.finish();
+                }
+            });
+            updateDialog.show();
+        }
+
     }
 
     public void hasUnreadMsg(boolean hasUnreadMsg) {
