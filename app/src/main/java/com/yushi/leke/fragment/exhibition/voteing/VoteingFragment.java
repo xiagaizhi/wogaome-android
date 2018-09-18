@@ -6,8 +6,11 @@ import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-
 import com.alibaba.fastjson.JSON;
+import com.alibaba.sdk.android.man.MANHitBuilders;
+import com.alibaba.sdk.android.man.MANPageHitBuilder;
+import com.alibaba.sdk.android.man.MANService;
+import com.alibaba.sdk.android.man.MANServiceProvider;
 import com.yufan.library.Global;
 import com.yufan.library.api.ApiBean;
 import com.yufan.library.api.ApiManager;
@@ -20,6 +23,10 @@ import com.yushi.leke.UIHelper;
 import com.yushi.leke.YFApi;
 import com.yushi.leke.fragment.exhibition.vote.VoteFragment;
 import com.yushi.leke.fragment.exhibition.voteing.allproject.AllprojectsFragment;
+import com.yushi.leke.util.ArgsUtil;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import me.drakeet.multitype.MultiTypeAdapter;
 
@@ -57,6 +64,7 @@ public class VoteingFragment extends BaseListFragment<VoteingContract.IView> imp
                         args.putString("projectId", projectId);
                         voteFragment.setArguments(args);
                         voteFragment.show(getFragmentManager(), "VoteFragment");
+                        ArgsUtil.datapoint(ArgsUtil.VOTE_NAME,"null",ArgsUtil.UID,ArgsUtil.VOTE_CODE,projectId,null);
                     } else if (type == 2) {
                         mICallBack.OnBackResult(s[1], s[2], s[3]);
                     }
@@ -68,6 +76,7 @@ public class VoteingFragment extends BaseListFragment<VoteingContract.IView> imp
         adapter.setItems(list);
         vu.getRecyclerView().getAdapter().notifyDataSetChanged();
         getvotedata(getVu().getRecyclerView().getPageManager().getCurrentIndex());
+        datapoint();
     }
 
     @Override
@@ -119,5 +128,12 @@ public class VoteingFragment extends BaseListFragment<VoteingContract.IView> imp
                 .put(Global.BUNDLE_KEY_ACTIVITYID,activityid)
                 .build());
     }
-
+    void datapoint(){
+        MANHitBuilders.MANCustomHitBuilder hitBuilder = new MANHitBuilders.MANCustomHitBuilder("playmusic");
+        hitBuilder.setEventPage("listen");
+        hitBuilder.setProperty("type", "rock");
+        hitBuilder.setProperty("title", "wonderful tonight");
+        MANService manService = MANServiceProvider.getService();
+        manService.getMANAnalytics().getDefaultTracker().send(hitBuilder.build());
+    }
 }
