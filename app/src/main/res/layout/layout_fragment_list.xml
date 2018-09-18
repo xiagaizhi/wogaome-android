@@ -11,7 +11,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/recyclerview"
-    app:needLoadMore="true"
-    android:background="#fff2f4f7"
-    />
+    app:needLoadMore="true"/>
+    <!--android:background="#fff2f4f7"-->
+
 </com.yufan.library.view.ptr.PtrClassicFrameLayout>

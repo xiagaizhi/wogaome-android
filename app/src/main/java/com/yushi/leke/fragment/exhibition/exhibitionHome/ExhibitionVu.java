@@ -1,4 +1,4 @@
-package com.yushi.leke.fragment.exhibition;
+package com.yushi.leke.fragment.exhibition.exhibitionHome;
 
 import android.graphics.drawable.AnimationDrawable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -32,8 +32,8 @@ public class ExhibitionVu extends BaseListVu<ExhibitionContract.Presenter> imple
     @Override
     public void initView(View view) {
         super.initView(view);
-        topHeightMin = getContext().getResources().getDimension(R.dimen.px68);
-        topHeightMax=getContext().getResources().getDimension(R.dimen.px98);
+        topHeightMin = getContext().getResources().getDimension(R.dimen.y68);
+        topHeightMax=getContext().getResources().getDimension(R.dimen.y98);
         mYFRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
