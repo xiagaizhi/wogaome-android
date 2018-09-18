@@ -19,7 +19,7 @@ public interface ExhibitionDetailContract {
     }
 
     interface Presenter extends Pr {
-
+        void share();
 
     }
 }

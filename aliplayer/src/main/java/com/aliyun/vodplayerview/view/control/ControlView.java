@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -140,6 +141,7 @@ public class ControlView extends RelativeLayout implements ViewAction, ITheme {
     private OnScreenModeClickListener mOnScreenModeClickListener;
     // 显示更多
     private OnShowMoreClickListener mOnShowMoreClickListener;
+    private LinearLayout alivc_right_container;
 
 
     public ControlView(Context context) {
@@ -157,6 +159,12 @@ public class ControlView extends RelativeLayout implements ViewAction, ITheme {
         init();
     }
 
+
+    public LinearLayout getToolBarRightContainer(){
+        return alivc_right_container;
+    }
+
+
     private void init() {
         //Inflate布局
         LayoutInflater.from(getContext()).inflate(R.layout.alivc_view_control, this, true);
@@ -168,6 +176,7 @@ public class ControlView extends RelativeLayout implements ViewAction, ITheme {
     }
 
     private void findAllViews() {
+        alivc_right_container = findViewById(R.id.alivc_right_container);
         mTitleBar = findViewById(R.id.titlebar);
         mControlBar = findViewById(R.id.controlbar);
 

@@ -40,6 +40,16 @@
             android:padding="@dimen/alivc_titlebar_title_right_margin"
             android:src="@drawable/alivc_more"
             android:visibility="gone" />
+
+        <LinearLayout
+            android:id="@+id/alivc_right_container"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:gravity="right|center_vertical"
+            android:orientation="horizontal" />
+
     </LinearLayout>
 
     <ImageView
@@ -162,7 +172,6 @@
             android:paddingRight="8dp" />
 
     </LinearLayout>
-
 
 
 </merge>

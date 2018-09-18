@@ -636,6 +636,10 @@ public class AliyunVodPlayerView extends RelativeLayout implements ITheme {
         addSubView(mCoverView);
     }
 
+    public ControlView getmControlView(){
+        return mControlView;
+    }
+
     /**
      * 初始化控制栏view
      */
