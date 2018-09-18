@@ -4,6 +4,8 @@ import android.os.Bundle;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.alibaba.sdk.android.man.MANService;
+import com.alibaba.sdk.android.man.MANServiceProvider;
 import com.yufan.library.Global;
 import com.yufan.library.api.ApiBean;
 import com.yufan.library.api.ApiManager;
@@ -79,7 +81,7 @@ public class LoginPhoneFragment extends BaseFragment<LoginPhoneContract.IView> i
     }
 
     @Override
-    public void login(String phone, String password) {
+    public void login(final String phone, String password) {
         DialogManager.getInstance().showLoadingDialog();
         EnhancedCall call= ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).loginViaPwd(phone,password));//
         call.enqueue(new BaseHttpCallBack() {
@@ -88,8 +90,11 @@ public class LoginPhoneFragment extends BaseFragment<LoginPhoneContract.IView> i
               JSONObject jsonObject= JSON.parseObject(mApiBean.getData());
              UserManager.getInstance().setToken(jsonObject.getString("token"));
               UserManager.getInstance().setUid(jsonObject.getString("uid"));
+                MANService manService = MANServiceProvider.getService();
+                 // 用户登录埋点
+                manService.getMANAnalytics().updateUserAccount("usernick", phone);
                 App.getApp().registerXGPush(UserManager.getInstance().getUid());
-              startWithPopTo(UIHelper.creat(MainFragment.class).build(), LoginFragment.class,true);
+                startWithPopTo(UIHelper.creat(MainFragment.class).build(), LoginFragment.class,true);
                 ArgsUtil.datapoint(ArgsUtil.LOGIN_PHONE_NAME,"null",ArgsUtil.UID,ArgsUtil.LOGIN_PHONE_CODE,null,null);
             }
 

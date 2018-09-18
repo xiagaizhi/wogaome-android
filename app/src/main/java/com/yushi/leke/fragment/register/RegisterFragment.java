@@ -4,6 +4,8 @@ import android.os.Bundle;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.alibaba.sdk.android.man.MANService;
+import com.alibaba.sdk.android.man.MANServiceProvider;
 import com.alibaba.verificationsdk.ui.IActivityCallback;
 import com.alibaba.verificationsdk.ui.VerifyActivity;
 import com.alibaba.verificationsdk.ui.VerifyType;
@@ -65,7 +67,7 @@ public class RegisterFragment extends BaseFragment<RegisterContract.IView> imple
 
 
     @Override
-    public void register(String phone, String password, String verifcationCode) {
+    public void register(final String phone, String password, String verifcationCode) {
         DialogManager.getInstance().showLoadingDialog();
         EnhancedCall call= ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).registerViaVcode(phone,password,verifcationCode));
       call.enqueue(new BaseHttpCallBack() {
@@ -76,6 +78,9 @@ public class RegisterFragment extends BaseFragment<RegisterContract.IView> imple
               UserManager.getInstance().setUid(jsonObject.getString("uid"));
               App.getApp().registerXGPush(UserManager.getInstance().getUid());
               startWithPopTo(UIHelper.creat(MainFragment.class).build(), LoginFragment.class,true);
+              // 注册用户埋点
+              MANService manService = MANServiceProvider.getService();
+              manService.getMANAnalytics().userRegister(phone);
               ArgsUtil.datapoint(ArgsUtil.REG_PHONE_NAME,"null",ArgsUtil.UID,ArgsUtil.REG_PHONE_CODE,null,null);
           }
 
