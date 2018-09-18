@@ -1,5 +1,4 @@
 apply plugin: 'com.android.application'
-
 android {
 
     compileSdkVersion gradle.compileSdkVersion
@@ -115,15 +114,15 @@ dependencies {
     implementation 'com.android.support:mediarouter-v7:' + gradle.supportLibraryVersion
     implementation 'com.google.android.exoplayer:exoplayer:r2.5.0'
     //信鸽jar
-    compile 'com.tencent.xinge:xinge:3.2.6-release'
+    implementation 'com.tencent.xinge:xinge:3.2.6-release'
     //jg包
-    compile'com.tencent.jg:jg:1.1'
+    implementation'com.tencent.jg:jg:1.1'
     //wup包
-    compile 'com.tencent.wup:wup:1.0.0.E-release'
+    implementation 'com.tencent.wup:wup:1.0.0.E-release'
     //mid包
-    compile 'com.tencent.mid:mid:4.0.6-release'
-    compile 'com.github.hackware1993:MagicIndicator:1.5.0'
-    compile project(':aliplayer')
+    implementation 'com.tencent.mid:mid:4.0.6-release'
+
+    implementation project(':aliplayer')
     implementation project(':library')
     implementation project(':musicplayer')
 }

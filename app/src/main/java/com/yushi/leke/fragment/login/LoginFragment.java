@@ -8,6 +8,9 @@ import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.alibaba.sdk.android.man.MANHitBuilders;
+import com.alibaba.sdk.android.man.MANService;
+import com.alibaba.sdk.android.man.MANServiceProvider;
 import com.tencent.smtt.sdk.CookieManager;
 import com.tencent.smtt.sdk.CookieSyncManager;
 import com.umeng.socialize.UMShareAPI;
@@ -35,6 +38,7 @@ import com.yufan.library.util.SoftInputUtil;
 import com.yufan.library.widget.anim.AFVerticalAnimator;
 import com.yufan.share.ILoginCallback;
 import com.yufan.share.ShareUtils;
+import com.yushi.leke.App;
 import com.yushi.leke.BuildConfig;
 import com.yushi.leke.UIHelper;
 import com.yushi.leke.YFApi;
@@ -44,6 +48,7 @@ import com.yushi.leke.fragment.login.loginPhone.LoginPhoneFragment;
 import com.yushi.leke.fragment.main.MainFragment;
 import com.yushi.leke.fragment.musicplayer.MusicPlayerFragment;
 import com.yushi.leke.fragment.register.RegisterFragment;
+import com.yushi.leke.util.ArgsUtil;
 
 import java.util.Map;
 
@@ -120,8 +125,10 @@ public class LoginFragment extends BaseFragment<LoginContract.IView> implements 
                             JSONObject jsonObject= JSON.parseObject(mApiBean.getData());
                             UserManager.getInstance().setToken(jsonObject.getString("token"));
                             UserManager.getInstance().setUid(jsonObject.getString("uid"));
+                            App.getApp().registerXGPush(UserManager.getInstance().getUid());
                             startWithPopTo(UIHelper.creat(MainFragment.class).build(), LoginFragment.class,true);
                             mShareUtils.logout(SHARE_MEDIA.WEIXIN);
+                            ArgsUtil.datapoint(ArgsUtil.REG_WX_NAME,"null",ArgsUtil.UID,ArgsUtil.REG_WX_CODE,null,null);
                         }
 
                         @Override

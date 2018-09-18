@@ -43,6 +43,12 @@ public class ExhibitionFragment extends BaseListFragment<ExhibitionContract.IVie
                 }
             }
         }));
+        adapter.register(ExhibitionErrorInfo.class,new ExhibitionErrorBinder(new ICallBack() {
+            @Override
+            public void OnBackResult(Object... s) {
+                onRefresh();
+            }
+        }));
         adapter.register(ExhibitionEmptyInfo.class, new ExhibitionEmptyBinder());
         adapter.register(ExhibitionInfo.class, new ExhibitionViewBinder(new ICallBack() {
             @Override
@@ -109,6 +115,15 @@ public class ExhibitionFragment extends BaseListFragment<ExhibitionContract.IVie
                                 }
                                 vu.getRecyclerView().getPageManager().setPageState(PageInfo.PAGE_STATE_NO_MORE);
                             }
+                        }
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        super.onFinish();
+                        if (currentPage == 0 && list.size()<=1){
+                            list.add(new ExhibitionErrorInfo());
+                            vu.getRecyclerView().getAdapter().notifyDataSetChanged();
                         }
                     }
                 });

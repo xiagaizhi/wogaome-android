@@ -90,6 +90,9 @@ public class AdFragmentFragment extends BaseFragment<AdFragmentContract.IView> i
                 _mActivity.getWindow().setBackgroundDrawableResource(R.color.white);
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 fragmentManager.beginTransaction().remove(AdFragmentFragment.this).commit();
+                Intent filter = new Intent();
+                filter.setAction(Global.BROADCAST_ACTION_UPGRADE);
+                LocalBroadcastManager.getInstance(BaseApplication.getInstance()).sendBroadcast(filter);
             }
             isJumpTomain = true;
         }

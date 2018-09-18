@@ -17,15 +17,17 @@ import com.yufan.library.base.BaseListFragment;
 import com.yufan.library.inject.VuClass;
 import com.yufan.library.inter.ICallBack;
 import com.yufan.library.view.recycler.PageInfo;
+import com.yushi.leke.UIHelper;
 import com.yushi.leke.YFApi;
 import com.yushi.leke.fragment.exhibition.vote.VoteFragment;
+import com.yushi.leke.fragment.paySafe.PaySafetyFragment;
 
 import me.drakeet.multitype.MultiTypeAdapter;
 /**
  * Created by mengfantao on 18/8/2.
  */
 @VuClass(AllprojectsVu.class)
-public class AllprojectsFragment extends BaseListFragment<AllprojectsContract.IView> implements AllprojectsContract.Presenter {
+public class AllprojectsFragment extends BaseListFragment<AllprojectsContract.IView> implements AllprojectsContract.Presenter, ICallBack {
     MultiTypeAdapter adapter;
     Allprojectsinfolist infolist;
     private String activityid;
@@ -87,6 +89,7 @@ public class AllprojectsFragment extends BaseListFragment<AllprojectsContract.IV
                     if (type == 1) {
                         String projectId = (String) s[1];
                         VoteFragment voteFragment = new VoteFragment();
+                        voteFragment.setmICallBack(AllprojectsFragment.this);
                         Bundle args = new Bundle();
                         args.putString("projectId", projectId);
                         voteFragment.setArguments(args);
@@ -104,5 +107,10 @@ public class AllprojectsFragment extends BaseListFragment<AllprojectsContract.IV
     @Override
     public String getactivityid() {
         return activityid;
+    }
+
+    @Override
+    public void OnBackResult(Object... s) {
+        getRootFragment().start(UIHelper.creat(PaySafetyFragment.class).build());
     }
 }

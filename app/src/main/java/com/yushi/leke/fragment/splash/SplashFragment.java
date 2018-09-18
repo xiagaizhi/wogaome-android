@@ -1,6 +1,7 @@
 package com.yushi.leke.fragment.splash;
 
 import android.Manifest;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 
@@ -13,12 +14,14 @@ import com.yufan.library.Global;
 import com.yufan.library.api.ApiBean;
 import com.yufan.library.api.ApiManager;
 import com.yufan.library.api.BaseHttpCallBack;
+import com.yufan.library.base.BaseApplication;
 import com.yufan.library.base.BaseFragment;
 
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.content.LocalBroadcastManager;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.WindowManager;
@@ -202,6 +205,9 @@ public class SplashFragment extends BaseFragment<SplashContract.IView> implement
                             _mActivity.getWindow().setAttributes(lp);
                             _mActivity.getWindow().setBackgroundDrawableResource(R.color.white);
                         }
+                        Intent filter = new Intent();
+                        filter.setAction(Global.BROADCAST_ACTION_UPGRADE);
+                        LocalBroadcastManager.getInstance(BaseApplication.getInstance()).sendBroadcast(filter);
                     }
                 }
             }

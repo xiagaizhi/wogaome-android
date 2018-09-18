@@ -20,4 +20,6 @@ public abstract class BaseActivity extends SupportActivity implements IActivity 
         super.onCreate(savedInstanceState);
         DialogManager.getInstance().init(this);
     }
+
+
 }
