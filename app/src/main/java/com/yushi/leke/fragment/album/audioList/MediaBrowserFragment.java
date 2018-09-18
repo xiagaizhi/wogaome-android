@@ -185,7 +185,7 @@ public class MediaBrowserFragment extends BaseListFragment<MediaBrowserContract.
         super.onViewCreated(view, savedInstanceState);
         adapter=new MultiTypeAdapter();
         adapter.setItems(list);
-        adapter.register(MediaBrowserCompat.MediaItem.class,new CategoryItemViewBinder(new CategoryItemViewBinder.OnItemClick() {
+        adapter.register(MediaBrowserCompat.MediaItem.class,new MediaBrowserViewBinder(new MediaBrowserViewBinder.OnItemClick() {
             @Override
             public void onClick(MediaBrowserCompat.MediaItem mediaItem) {
                 mMediaFragmentListener.onMediaItemSelected(mediaItem);
