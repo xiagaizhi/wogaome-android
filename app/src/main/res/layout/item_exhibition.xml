@@ -55,8 +55,8 @@
             android:layout_marginBottom="@dimen/y30"
             android:layout_marginLeft="@dimen/px30"
             android:text="主办方：浙江宇石网络科技有限公司"
-            android:textSize="@dimen/px24"
-            android:textColor="@color/white" />
+            android:textColor="@color/white"
+            android:textSize="@dimen/px24" />
 
         <TextView
             android:id="@+id/tv_action_time"
@@ -66,8 +66,9 @@
             android:layout_marginBottom="@dimen/y20"
             android:layout_marginLeft="@dimen/px30"
             android:text="活动时间: 2018-08-01／08-12"
-            android:textSize="@dimen/px30"
-            android:textColor="@color/white" />
+            android:textColor="@color/white"
+            android:textSize="@dimen/px30" />
+
         <TextView
             android:id="@+id/tv_exhibtion_state"
             android:layout_width="wrap_content"
@@ -76,8 +77,8 @@
             android:layout_marginBottom="@dimen/y20"
             android:layout_marginLeft="@dimen/px30"
             android:text="投票中..."
-            android:textSize="@dimen/px48"
-            android:textColor="@color/color_yellow_level0" />
+            android:textColor="@color/color_yellow_level0"
+            android:textSize="@dimen/px48" />
 
         <TextView
             android:id="@+id/tv_active_state"
@@ -99,12 +100,11 @@
 
     <Button
         android:id="@+id/btn_apply"
+        style="?android:attr/borderlessButtonStyle"
         android:layout_width="@dimen/px600"
-        android:layout_height="@dimen/px138"
+        android:layout_height="@dimen/y138"
         android:layout_below="@+id/img_exhibition_bg"
         android:layout_centerHorizontal="true"
-        android:visibility="gone"
-        android:layout_marginBottom="@dimen/px20"
         android:background="@drawable/selector_big_btn_blue"
         android:gravity="center"
         android:text="立即申请"
