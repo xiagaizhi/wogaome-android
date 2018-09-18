@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.yushi.leke.fragment.exhibition;
+package com.yushi.leke.fragment.exhibition.exhibitionHome;
 
 import android.net.Uri;
 import android.support.annotation.NonNull;
@@ -22,17 +22,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.yufan.library.inter.ICallBack;
 import com.yufan.library.util.StringUtil;
 import com.yushi.leke.R;
-
-import java.text.SimpleDateFormat;
 
 import me.drakeet.multitype.ItemViewBinder;
 
@@ -50,9 +46,7 @@ public class ExhibitionViewBinder extends ItemViewBinder<ExhibitionInfo, Exhibit
     @Override
     protected @NonNull
     ViewHolder onCreateViewHolder(@NonNull LayoutInflater inflater, @NonNull ViewGroup parent) {
-
         return new ViewHolder(inflater.inflate(R.layout.item_exhibition, parent, false));
-
     }
 
     @Override
@@ -68,30 +62,12 @@ public class ExhibitionViewBinder extends ItemViewBinder<ExhibitionInfo, Exhibit
                 break;
             case 2:
                 holder.tv_exhibtion_state.setText("投票中...");
-                if (category.isJustOne()) {
-                    holder.tv_active_state.setVisibility(View.GONE);
-                } else {
-                    holder.tv_active_state.setVisibility(View.VISIBLE);
-                }
                 break;
             case 3:
                 holder.tv_exhibtion_state.setText("已结束...");
                 holder.tv_active_state.setVisibility(View.GONE);
                 break;
         }
-        RelativeLayout.LayoutParams exhibitionBgParams = (RelativeLayout.LayoutParams) holder.img_exhibition_bg.getLayoutParams();
-        RelativeLayout.LayoutParams sdvParams = (RelativeLayout.LayoutParams) holder.sdv.getLayoutParams();
-        if (category.getActivityProgress() == 2 && category.isJustOne()) {
-            holder.btn_apply.setVisibility(View.VISIBLE);
-            exhibitionBgParams.height = (int) holder.img_exhibition_bg.getContext().getResources().getDimension(R.dimen.y796);
-            sdvParams.height = (int) holder.sdv.getContext().getResources().getDimension(R.dimen.y752);
-        } else {
-            holder.btn_apply.setVisibility(View.GONE);
-            exhibitionBgParams.height = (int) holder.img_exhibition_bg.getContext().getResources().getDimension(R.dimen.y896);
-            sdvParams.height = (int) holder.sdv.getContext().getResources().getDimension(R.dimen.y852);
-        }
-        holder.sdv.setLayoutParams(sdvParams);
-        holder.img_exhibition_bg.setLayoutParams(exhibitionBgParams);
 
         holder.sdv.setImageURI(Uri.parse(category.getBgPicture()));
         holder.tv_title.setText(category.getTitle());
@@ -117,9 +93,6 @@ public class ExhibitionViewBinder extends ItemViewBinder<ExhibitionInfo, Exhibit
         public TextView tv_exhibtion_state;
         public ImageView img_exhibition_bg;
 
-
-        public Button btn_apply;
-
         ViewHolder(@NonNull View itemView) {
             super(itemView);
             sdv = itemView.findViewById(R.id.sdv);
@@ -128,7 +101,6 @@ public class ExhibitionViewBinder extends ItemViewBinder<ExhibitionInfo, Exhibit
             tv_action_company = itemView.findViewById(R.id.tv_action_company);
             tv_action_time = itemView.findViewById(R.id.tv_action_time);
             tv_exhibtion_state = itemView.findViewById(R.id.tv_exhibtion_state);
-            btn_apply = itemView.findViewById(R.id.btn_apply);
             img_exhibition_bg = itemView.findViewById(R.id.img_exhibition_bg);
         }
     }

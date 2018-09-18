@@ -1,4 +1,4 @@
-package com.yushi.leke.fragment.exhibition;
+package com.yushi.leke.fragment.exhibition.exhibitionHome;
 
 /**
  * Created by mengfantao on 18/8/30.
@@ -12,15 +12,6 @@ public class ExhibitionInfo {
     private String endDate;
     private String organizer;
     private String activityId;
-    private boolean isJustOne;
-
-    public boolean isJustOne() {
-        return isJustOne;
-    }
-
-    public void setJustOne(boolean justOne) {
-        isJustOne = justOne;
-    }
 
     public String getTitle() {
         return title;

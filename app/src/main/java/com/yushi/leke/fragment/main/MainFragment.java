@@ -33,7 +33,7 @@ import com.yushi.leke.dialog.update.UpdateDialog;
 import com.yushi.leke.dialog.update.UpdateInfo;
 import com.yushi.leke.fragment.browser.BrowserBaseFragment;
 import com.yushi.leke.fragment.home.SubscriptionsFragment;
-import com.yushi.leke.fragment.exhibition.ExhibitionFragment;
+import com.yushi.leke.fragment.exhibition.exhibitionHome.ExhibitionFragment;
 import com.yushi.leke.fragment.login.LoginFragment;
 import com.yushi.leke.fragment.test.TestListFragment;
 import com.yushi.leke.fragment.ucenter.UCenterFragment;

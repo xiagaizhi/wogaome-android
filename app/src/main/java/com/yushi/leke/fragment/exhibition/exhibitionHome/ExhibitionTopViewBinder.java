@@ -14,9 +14,8 @@
  * limitations under the License.
  */
 
-package com.yushi.leke.fragment.exhibition;
+package com.yushi.leke.fragment.exhibition.exhibitionHome;
 
-import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -27,7 +26,6 @@ import android.widget.ImageView;
 
 import com.yufan.library.inter.ICallBack;
 import com.yushi.leke.R;
-import com.yushi.leke.activity.MusicPlayerActivity;
 
 import me.drakeet.multitype.ItemViewBinder;
 
