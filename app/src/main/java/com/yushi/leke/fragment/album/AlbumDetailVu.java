@@ -43,6 +43,14 @@ public class AlbumDetailVu extends BaseVu<AlbumDetailContract.Presenter> impleme
         mTabLayout.addTab(mTabLayout.newTab().setText("专辑详情"));
         mTabLayout.setupWithViewPager(mViewPager);
         expandableTextView.setText("backButton.backButton.setOnClickListener(new View.OnClickListener() {setOnClickListener(new View.OnClickListener() {backButton.setOnClickListener(new View.OnClickListener() {backButton.setOnClickListener(new View.OnClickListener() {backButton.setOnClickListener(new View.OnClickListener() {");
+
+        mTabLayout.post(new Runnable() {
+            @Override
+            public void run() {
+                ViewUtils.setIndicator(mTabLayout,60,60);
+            }
+        });
+
     }
 
     @Override

@@ -488,4 +488,53 @@ public interface YFApi {
     playVideoCount(
             @Field("projectId") String projectId
     );
+
+
+    /**
+     * 全局搜索
+     *
+     */
+    @FormUrlEncoded
+    @POST("app/v1/audioActivitySearch/globalSearch")
+    Call<ResponseBody>
+    globalSearch( @Field("content") String content);
+    /**
+     * 音频搜索
+     *
+     */
+    @FormUrlEncoded
+    @POST("app/v1/audioActivitySearch/audioSearch")
+    Call<ResponseBody>
+    audioSearch( @Field("content") String content,
+                 @Field("currentPage") String currentPage
+    );
+    /**
+     * 活动搜索
+     *
+     */
+    @FormUrlEncoded
+    @POST("app/v1/audioActivitySearch/activitySearch")
+    Call<ResponseBody>
+    activitySearch( @Field("content") String content,
+                    @Field("currentPage") String currentPage);
+    /**
+     *专辑详情
+     *
+     */
+    @FormUrlEncoded
+    @POST("app/v1/albumDetail/getAlbum")
+    Call<ResponseBody>
+    getAlbum( @Field("albumId") String albumId);
+
+    /**
+     *首页专辑列表
+     *
+     */
+    @FormUrlEncoded
+    @POST("app/v1/albumChannelRelation/showAlbum")
+    Call<ResponseBody>
+    showAlbum( @Field("channelId") String channelId,
+               @Field("currentPage") String currentPage);
+
+
 }

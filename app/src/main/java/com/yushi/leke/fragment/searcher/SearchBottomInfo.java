@@ -6,9 +6,27 @@ package com.yushi.leke.fragment.searcher;
 
 public class SearchBottomInfo {
 
-    public boolean isSubscriptions;
+     boolean hasMore;
+    String message;
 
-    public SearchBottomInfo(boolean isSubscriptions) {
-        this.isSubscriptions = isSubscriptions;
+    public SearchBottomInfo(boolean hasMore, String message) {
+        this.hasMore = hasMore;
+        this.message = message;
+    }
+
+    public boolean isHasMore() {
+        return hasMore;
+    }
+
+    public void setHasMore(boolean hasMore) {
+        this.hasMore = hasMore;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 }

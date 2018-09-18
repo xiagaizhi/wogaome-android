@@ -9,18 +9,27 @@ import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.yufan.library.Global;
+import com.yufan.library.api.ApiBean;
+import com.yufan.library.api.ApiManager;
+import com.yufan.library.api.BaseHttpCallBack;
+import com.yufan.library.api.YFListHttpCallBack;
 import com.yufan.library.base.BaseListFragment;
 import com.yufan.library.inject.VuClass;
 import com.yufan.library.inter.ICallBack;
 import com.yufan.library.util.SoftInputUtil;
 import com.yufan.library.widget.anim.AFVerticalAnimator;
 import com.yushi.leke.UIHelper;
+import com.yushi.leke.YFApi;
 import com.yushi.leke.fragment.album.audioList.MediaBrowserFragment;
-import com.yushi.leke.fragment.home.SubscriptionInfo;
+import com.yushi.leke.fragment.home.AudioInfo;
 import com.yushi.leke.fragment.home.SubscriptionsViewBinder;
 import com.yushi.leke.fragment.searcher.activity.SearchActivityFragment;
 import com.yushi.leke.fragment.searcher.audio.SearchAudioFragment;
+
+import java.util.List;
 
 import me.drakeet.multitype.MultiTypeAdapter;
 import me.yokeyword.fragmentation.anim.FragmentAnimator;
@@ -33,13 +42,12 @@ import static android.content.Context.INPUT_METHOD_SERVICE;
 @VuClass(SearchVu.class)
 public class SearchFragment extends BaseListFragment<SearchContract.IView> implements SearchContract.Presenter {
     private MultiTypeAdapter adapter;
-    private Handler handler=new Handler();
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         adapter=new MultiTypeAdapter();
         adapter.register(SearchActionInfo.class,new SearchActionViewBinder());
-        adapter.register(SubscriptionInfo.class,new SubscriptionsViewBinder(new ICallBack() {
+        adapter.register(AudioInfo.class,new SubscriptionsViewBinder(new ICallBack() {
             @Override
             public void OnBackResult(Object... s) {
                 getRootFragment().start(UIHelper.creat(MediaBrowserFragment.class).build());
@@ -52,11 +60,9 @@ public class SearchFragment extends BaseListFragment<SearchContract.IView> imple
              switch ((int)s[0]){
                  case SearchTabBottomViewBinder.SEARCH_MORE_AUDIO:
                     start(UIHelper.creat(SearchAudioFragment.class).put(Global.SEARCH_KEY,getVu().getSearchKey()).build());
-
                      break;
                  case SearchTabBottomViewBinder.SEARCH_MORE_ACTIVITY:
                      start(UIHelper.creat(SearchActivityFragment.class).put(Global.SEARCH_KEY,getVu().getSearchKey()).build());
-
                      break;
              }
             }
@@ -65,7 +71,6 @@ public class SearchFragment extends BaseListFragment<SearchContract.IView> imple
         adapter.setItems(list);
         vu.getRecyclerView().getAdapter().notifyDataSetChanged();
     }
-
 
 
     @Override
@@ -99,17 +104,28 @@ public class SearchFragment extends BaseListFragment<SearchContract.IView> imple
 
     @Override
     public void search(String searchKey) {
-        list.add("音频");
-        list.add(new SubscriptionInfo(false,"http://oss.cyzone.cn/2018/0823/20180823043455198.jpg"));
-        list.add(new SubscriptionInfo(false,"http://oss.cyzone.cn/2018/0824/20180824122615453.jpeg"));
-        list.add(new SubscriptionInfo(true,"http://oss.cyzone.cn/2018/0823/20180823043455198.jpg"));
-        list.add(new SearchBottomInfo(true));
-        list.add("活动");
-        list.add(new SearchActionInfo(false,"http://oss.cyzone.cn/2018/0822/20180822015244231.png"));
-        list.add(new SearchActionInfo(false,"http://oss.cyzone.cn/2018/0818/20180818024625113.jpg"));
-        list.add(new SearchActionInfo(true,"http://oss.cyzone.cn/2018/0817/20180817095437396.jpg"));
-        list.add(new SearchBottomInfo(false));
-        vu.getRecyclerView().getAdapter().notifyDataSetChanged();
+
+        ApiManager.getCall( ApiManager.getInstance().create(YFApi.class).globalSearch(searchKey)).enqueue(new YFListHttpCallBack(vu) {
+            @Override
+            public void onSuccess(ApiBean mApiBean) {
+                super.onSuccess(mApiBean);
+              JSONObject jsonObject= JSON.parseObject(mApiBean.data);
+              int moreActivity=  jsonObject.getInteger("moreActivity");
+              int moreAudio=jsonObject.getInteger("moreAudio");
+              List<SearchActionInfo> searchActionInfos= JSON.parseArray(jsonObject.getString("activity"),SearchActionInfo.class);
+                List<AudioInfo> audioInfos= JSON.parseArray(jsonObject.getString("audio"),AudioInfo.class);
+                list.clear();
+                list.add("音频");
+                list.addAll(audioInfos);
+                list.add(new SearchBottomInfo(moreAudio==1,"查看更多项目"));
+                list.add("活动");
+                list.addAll(searchActionInfos);
+                list.add(new SearchBottomInfo(moreActivity==1,"查看更多活动"));
+
+            }
+
+
+        });
         SoftInputUtil.hideSoftInput(getActivity(),getView());
     }
 

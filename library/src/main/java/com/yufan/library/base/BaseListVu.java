@@ -72,8 +72,10 @@ public abstract class BaseListVu <T extends Pr>extends BaseVu implements VuList{
         mStateLayout.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         initStatusLayout(mStateLayout);
         recyclerViewModel.setEmptyView(mStateLayout);
+
     }
     protected final   void initState() {
+
     }
 
     @Override

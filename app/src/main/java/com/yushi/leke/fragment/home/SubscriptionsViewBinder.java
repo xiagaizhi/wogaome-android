@@ -32,7 +32,7 @@ import me.drakeet.multitype.ItemViewBinder;
 /**
  * 订阅专栏 订阅 专辑
  */
-public class SubscriptionsViewBinder extends ItemViewBinder<SubscriptionInfo, SubscriptionsViewBinder.ViewHolder> {
+public class SubscriptionsViewBinder extends ItemViewBinder<AudioInfo, SubscriptionsViewBinder.ViewHolder> {
     private  ICallBack callBack;
     public SubscriptionsViewBinder(ICallBack callBack) {
 this.callBack=callBack;
@@ -41,16 +41,13 @@ this.callBack=callBack;
     @Override
     protected @NonNull
     ViewHolder onCreateViewHolder(@NonNull LayoutInflater inflater, @NonNull ViewGroup parent) {
-
         return new ViewHolder(inflater.inflate(R.layout.item_subscriptions, parent, false));
-
     }
 
     @Override
-    protected void onBindViewHolder(@NonNull ViewHolder holder, @NonNull final SubscriptionInfo category) {
-
-        holder.sdv.setImageURI(Uri.parse(category.url));
-        if (category.isLast) {
+    protected void onBindViewHolder(@NonNull ViewHolder holder, @NonNull final AudioInfo category) {
+        holder.sdv.setImageURI(Uri.parse(category.icon));
+        if (getAdapter().getItemCount()==getPosition(holder)-1) {
             holder.view_bottom_line.setVisibility(View.INVISIBLE);
         } else {
             holder.view_bottom_line.setVisibility(View.VISIBLE);

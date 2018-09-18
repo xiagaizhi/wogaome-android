@@ -51,32 +51,31 @@ public class SearchTabBottomViewBinder extends ItemViewBinder<SearchBottomInfo, 
 
     @Override
     protected void onBindViewHolder(@NonNull ViewHolder holder, @NonNull final SearchBottomInfo category) {
-            if(category.isSubscriptions){
-                holder.view_line.setVisibility(View.VISIBLE);
-                holder.tv_title.setText("查看更多项目");
-                holder.rl_more.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                    if(callBack!=null){
-                        callBack.OnBackResult(SEARCH_MORE_AUDIO);
-                    }
-                    }
-                });
-            }else {
-                holder.view_line.setVisibility(View.INVISIBLE);
-                holder.tv_title.setText("查看更多活动");
-                holder.rl_more.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if(callBack!=null){
-                            callBack.OnBackResult(SEARCH_MORE_ACTIVITY);
+            if(category.hasMore){
+                holder.tv_title.setText(category.getMessage());
+                if("查看更多活动".equals(category.getMessage())){
+                    holder.view_line.setVisibility(View.INVISIBLE);
+                    holder.rl_more.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if(callBack!=null){
+                                callBack.OnBackResult(SEARCH_MORE_ACTIVITY);
+                            }
                         }
-                    }
-                });
+                    });
+                }else if("查看更多项目".equals(category.getMessage())){
+                    holder.view_line.setVisibility(View.VISIBLE);
+                    holder.rl_more.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if(callBack!=null){
+                                callBack.OnBackResult(SEARCH_MORE_AUDIO);
+                            }
+                        }
+                    });
+                }
             }
-
     }
-
 
     static class ViewHolder extends RecyclerView.ViewHolder {
        View view_line;

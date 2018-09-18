@@ -8,17 +8,27 @@ import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.yufan.library.Global;
+import com.yufan.library.api.ApiBean;
+import com.yufan.library.api.ApiManager;
+import com.yufan.library.api.BaseHttpCallBack;
+import com.yufan.library.api.YFListHttpCallBack;
 import com.yufan.library.base.BaseListFragment;
 import com.yufan.library.inject.VuClass;
 import com.yufan.library.inter.ICallBack;
 import com.yufan.library.util.SoftInputUtil;
+import com.yufan.library.view.recycler.PageInfo;
 import com.yufan.library.widget.anim.AFVerticalAnimator;
 import com.yushi.leke.UIHelper;
+import com.yushi.leke.YFApi;
 import com.yushi.leke.fragment.album.audioList.MediaBrowserFragment;
-import com.yushi.leke.fragment.home.SubscriptionInfo;
+import com.yushi.leke.fragment.home.AudioInfo;
 import com.yushi.leke.fragment.home.SubscriptionsViewBinder;
 import com.yushi.leke.fragment.searcher.SearchTabTitleViewBinder;
+
+import java.util.List;
 
 import me.drakeet.multitype.MultiTypeAdapter;
 import me.yokeyword.fragmentation.anim.FragmentAnimator;
@@ -36,7 +46,7 @@ public class SearchAudioFragment extends BaseListFragment<SearchAudioContract.IV
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         adapter = new MultiTypeAdapter();
-        adapter.register(SubscriptionInfo.class, new SubscriptionsViewBinder(new ICallBack() {
+        adapter.register(AudioInfo.class, new SubscriptionsViewBinder(new ICallBack() {
             @Override
             public void OnBackResult(Object... s) {
                 getRootFragment().start(UIHelper.creat(MediaBrowserFragment.class).build());
@@ -56,7 +66,16 @@ public class SearchAudioFragment extends BaseListFragment<SearchAudioContract.IV
 
     @Override
     public void onLoadMore(int index) {
+        ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).audioSearch(getVu().getEditText().getText().toString(),getVu().getRecyclerView().getPageManager().getCurrentIndex()+"")).enqueue(new YFListHttpCallBack(vu) {
+            @Override
+            public void onSuccess(ApiBean mApiBean) {
+                super.onSuccess(mApiBean);
+                JSONObject jsonObject= JSON.parseObject(mApiBean.data);
+                List<AudioInfo> audioInfos= JSON.parseArray(jsonObject.getString("list"),AudioInfo.class);
+                list.addAll(audioInfos);
+            }
 
+        });
     }
 
     @Override
@@ -86,19 +105,19 @@ public class SearchAudioFragment extends BaseListFragment<SearchAudioContract.IV
 
     @Override
     public void search(String searchKey) {
-        list.add("音频");
-        list.add(new SubscriptionInfo(false, "http://oss.cyzone.cn/2018/0823/20180823043455198.jpg"));
-        list.add(new SubscriptionInfo(false, "http://oss.cyzone.cn/2018/0824/20180824122615453.jpeg"));
-        list.add(new SubscriptionInfo(true, "http://oss.cyzone.cn/2018/0823/20180823043455198.jpg"));
-        list.add(new SubscriptionInfo(false, "http://oss.cyzone.cn/2018/0824/20180824122615453.jpeg"));
-        list.add(new SubscriptionInfo(true, "http://oss.cyzone.cn/2018/0823/20180823043455198.jpg"));
-        list.add(new SubscriptionInfo(false, "http://oss.cyzone.cn/2018/0823/20180823043455198.jpg"));
-        list.add(new SubscriptionInfo(false, "http://oss.cyzone.cn/2018/0824/20180824122615453.jpeg"));
-        list.add(new SubscriptionInfo(true, "http://oss.cyzone.cn/2018/0823/20180823043455198.jpg"));
-        list.add(new SubscriptionInfo(false, "http://oss.cyzone.cn/2018/0824/20180824122615453.jpeg"));
-        list.add(new SubscriptionInfo(true, "http://oss.cyzone.cn/2018/0823/20180823043455198.jpg"));
+        ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).audioSearch(getVu().getEditText().getText().toString(),getVu().getRecyclerView().getPageManager().getCurrentIndex()+"")).enqueue(new YFListHttpCallBack(vu) {
+            @Override
+            public void onSuccess(ApiBean mApiBean) {
+                super.onSuccess(mApiBean);
+                JSONObject jsonObject= JSON.parseObject(mApiBean.data);
+                List<AudioInfo> audioInfos= JSON.parseArray(jsonObject.getString("list"),AudioInfo.class);
+                list.clear();
+                list.add("音频");
+                list.addAll(audioInfos);
+            }
 
-        vu.getRecyclerView().getAdapter().notifyDataSetChanged();
+        });
+
         SoftInputUtil.hideSoftInput(getActivity(), getView());
     }
     @Override

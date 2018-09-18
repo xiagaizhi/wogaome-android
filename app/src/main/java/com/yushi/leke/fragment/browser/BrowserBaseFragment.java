@@ -44,6 +44,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONStringer;
 
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
+
 
 /**
  * Created by mengfantao on 18/7/26.
@@ -232,6 +236,10 @@ public class BrowserBaseFragment extends BaseFragment<BrowserContract.View> impl
     protected void loadCookie(CookieManager cookie) {
         CookieSyncManager.createInstance(getActivity());
         cookie.setAcceptCookie(true);
+        Map<String, String> cookies = ApiManager.getInstance().getApiHeader(getContext());
+        for (String key : cookies.keySet()) {
+            cookie.setCookie(mIntentUrl,key+"="+cookies.get(key));
+        }
         cookie.setCookie(mIntentUrl, "token=" + UserManager.getInstance().getToken());
         CookieSyncManager.getInstance().sync();
     }
@@ -372,24 +380,7 @@ public class BrowserBaseFragment extends BaseFragment<BrowserContract.View> impl
                 }
             });
 
-            registerHandler("web_nativeParams", new WVJBHandler() {
-                @Override
-                public void request(Object data, WVJBResponseCallback callback) {
-                    JSONObject browserData =new JSONObject(ApiManager.getInstance().getApiHeader(getContext()));
-                    final JSONObject jsonStringer=new JSONObject();
-                    try {
-                        jsonStringer.put("code",2000);
-                        jsonStringer.put("message","");
-                        jsonStringer.put("data",browserData);
-                        if (callback!=null){
-                            callback.callback(jsonStringer);
-                        }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
 
-                }
-            });
 
             registerHandler("web_zfGoods", new WVJBHandler() {
                 @Override

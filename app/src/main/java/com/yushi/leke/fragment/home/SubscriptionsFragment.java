@@ -7,15 +7,25 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.View;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.yufan.library.api.ApiBean;
+import com.yufan.library.api.ApiManager;
+import com.yufan.library.api.BaseHttpCallBack;
+import com.yufan.library.api.YFListHttpCallBack;
 import com.yufan.library.base.BaseListFragment;
 import com.yufan.library.inject.VuClass;
 import com.yufan.library.inter.ICallBack;
 import com.yufan.library.view.recycler.PageInfo;
 import com.yushi.leke.UIHelper;
+import com.yushi.leke.YFApi;
 import com.yushi.leke.activity.MusicPlayerActivity;
 import com.yushi.leke.fragment.album.AlbumDetailFragment;
-import com.yushi.leke.fragment.album.audioList.MediaBrowserFragment;
+import com.yushi.leke.fragment.searcher.SearchActionInfo;
+import com.yushi.leke.fragment.searcher.SearchBottomInfo;
 import com.yushi.leke.fragment.searcher.SearchFragment;
+
+import java.util.List;
 
 import me.drakeet.multitype.MultiTypeAdapter;
 
@@ -47,49 +57,55 @@ public class SubscriptionsFragment extends BaseListFragment<SubscriptionsContrac
                 }
             }
         }));
-        adapter.register(SubscriptionInfo.class,new SubscriptionsViewBinder(new ICallBack() {
+        adapter.register(AudioInfo.class,new SubscriptionsViewBinder(new ICallBack() {
             @Override
             public void OnBackResult(Object... s) {
                 getRootFragment().start(UIHelper.creat(AlbumDetailFragment.class).build());
             }
         }));
         vu.getRecyclerView().setAdapter(adapter);
-        list.add(new SubscriptionBanner());
-        list.add(new SubscriptionInfo(false,"http://oss.cyzone.cn/2018/0830/20180830040720965.jpg"));
-        list.add(new SubscriptionInfo(false,"http://oss.cyzone.cn/2018/0823/20180823105708870.png"));
-        list.add(new SubscriptionInfo(false,"http://oss.cyzone.cn/2018/0830/20180830040720965.jpg"));
-        list.add(new SubscriptionInfo(false,"http://oss.cyzone.cn/2018/0823/20180823105708870.png"));
-        list.add(new SubscriptionInfo(false,"http://oss.cyzone.cn/2018/0830/20180830040720965.jpg"));
-        list.add(new SubscriptionInfo(false,"http://oss.cyzone.cn/2018/0823/20180823105708870.png"));
-        list.add(new SubscriptionInfo(false,"http://oss.cyzone.cn/2018/0830/20180830040720965.jpg"));
-        list.add(new SubscriptionInfo(false,"http://oss.cyzone.cn/2018/0823/20180823105708870.png"));
-        list.add(new SubscriptionInfo(true,"http://oss.cyzone.cn/2018/0830/20180830040720965.jpg"));
         adapter.setItems(list);
         vu.getRecyclerView().getAdapter().notifyDataSetChanged();
+        onRefresh();
     }
 
 
     @Override
     public void onLoadMore(int index) {
-        handler.postDelayed(new Runnable() {
+        ApiManager.getCall( ApiManager.getInstance().create(YFApi.class).showAlbum("channelId",getVu().getRecyclerView().getPageManager().getCurrentIndex()+"")).enqueue(new YFListHttpCallBack(vu) {
             @Override
-            public void run() {
-                getVu().getRecyclerView().getPTR().refreshComplete();
-                getVu(). getRecyclerView().getPageManager().setPageState(PageInfo.PAGE_STATE_NONE);
+            public void onSuccess(ApiBean mApiBean) {
+                JSONObject jsonObject= JSON.parseObject(mApiBean.data);
+                List<AudioInfo> actionInfos= JSON.parseArray(jsonObject.getString("list"),AudioInfo.class);
+                list.addAll(actionInfos);
             }
-        },1000);
+            @Override
+            public void onFailure(int id, Exception e) {
+
+            }
+        });
     }
 
-private Handler handler=new Handler();
     @Override
     public void onRefresh() {
-        handler.postDelayed(new Runnable() {
+
+        ApiManager.getCall( ApiManager.getInstance().create(YFApi.class).showAlbum("channelId",getVu().getRecyclerView().getPageManager().getCurrentIndex()+"")).enqueue(new YFListHttpCallBack(vu) {
             @Override
-            public void run() {
-                getVu().getRecyclerView().getPTR().refreshComplete();
-                getVu(). getRecyclerView().getPageManager().setPageState(PageInfo.PAGE_STATE_NONE);
+            public void onSuccess(ApiBean mApiBean) {
+                super.onSuccess(mApiBean);
+                JSONObject jsonObject= JSON.parseObject(mApiBean.data);
+                List<AudioInfo> actionInfos= JSON.parseArray(jsonObject.getString("list"),AudioInfo.class);
+                list.clear();
+                list.add(new SubscriptionBanner());
+                list.addAll(actionInfos);
             }
-        },1000);
+
+            @Override
+            public void onFailure(int id, Exception e) {
+
+            }
+        });
+
     }
 
     @Override

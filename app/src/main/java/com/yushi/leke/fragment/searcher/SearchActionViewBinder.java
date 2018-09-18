@@ -25,7 +25,6 @@ import android.view.ViewGroup;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.yushi.leke.R;
-import com.yushi.leke.fragment.home.SubscriptionInfo;
 
 import me.drakeet.multitype.ItemViewBinder;
 
@@ -49,12 +48,13 @@ public class SearchActionViewBinder extends ItemViewBinder<SearchActionInfo, Sea
     @Override
     protected void onBindViewHolder(@NonNull ViewHolder holder, @NonNull final SearchActionInfo category) {
 
-        holder.sdv.setImageURI(Uri.parse(category.url));
-        if (category.isLast) {
+        holder.sdv.setImageURI(Uri.parse(category.horizontalIcon));
+        if (getAdapter().getItemCount()==getPosition(holder)-1) {
             holder.view_bottom_line.setVisibility(View.INVISIBLE);
         } else {
             holder.view_bottom_line.setVisibility(View.VISIBLE);
         }
+
 
     }
 

@@ -8,14 +8,25 @@ import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.yufan.library.Global;
+import com.yufan.library.api.ApiBean;
+import com.yufan.library.api.ApiManager;
+import com.yufan.library.api.BaseHttpCallBack;
+import com.yufan.library.api.YFListHttpCallBack;
 import com.yufan.library.base.BaseListFragment;
 import com.yufan.library.inject.VuClass;
 import com.yufan.library.util.SoftInputUtil;
+import com.yufan.library.view.recycler.PageInfo;
 import com.yufan.library.widget.anim.AFVerticalAnimator;
+import com.yushi.leke.YFApi;
+import com.yushi.leke.fragment.home.AudioInfo;
 import com.yushi.leke.fragment.searcher.SearchActionInfo;
 import com.yushi.leke.fragment.searcher.SearchActionViewBinder;
 import com.yushi.leke.fragment.searcher.SearchTabTitleViewBinder;
+
+import java.util.List;
 
 import me.drakeet.multitype.MultiTypeAdapter;
 import me.yokeyword.fragmentation.anim.FragmentAnimator;
@@ -49,7 +60,16 @@ public class SearchActivityFragment extends BaseListFragment<SearchActivityContr
 
     @Override
     public void onLoadMore(int index) {
+        ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).activitySearch(getVu().getEditText().getText().toString(),getVu().getRecyclerView().getPageManager().getCurrentIndex()+"")).enqueue(new YFListHttpCallBack(vu) {
+            @Override
+            public void onSuccess(ApiBean mApiBean) {
+                super.onSuccess(mApiBean);
+                JSONObject jsonObject= JSON.parseObject(mApiBean.data);
+                List<SearchActionInfo> actionInfos= JSON.parseArray(jsonObject.getString("list"),SearchActionInfo.class);
+                list.addAll(actionInfos);
+            }
 
+        });
     }
 
     @Override
@@ -77,17 +97,20 @@ public class SearchActivityFragment extends BaseListFragment<SearchActivityContr
 
     @Override
     public void search(String searchKey) {
-        list.add("活动");
-        list.add(new SearchActionInfo(false,"http://oss.cyzone.cn/2018/0822/20180822015244231.png"));
-        list.add(new SearchActionInfo(false,"http://oss.cyzone.cn/2018/0818/20180818024625113.jpg"));
-        list.add(new SearchActionInfo(true,"http://oss.cyzone.cn/2018/0817/20180817095437396.jpg"));
-        list.add(new SearchActionInfo(false,"http://oss.cyzone.cn/2018/0822/20180822015244231.png"));
-        list.add(new SearchActionInfo(false,"http://oss.cyzone.cn/2018/0818/20180818024625113.jpg"));
-        list.add(new SearchActionInfo(true,"http://oss.cyzone.cn/2018/0817/20180817095437396.jpg"));
-        list.add(new SearchActionInfo(false,"http://oss.cyzone.cn/2018/0822/20180822015244231.png"));
-        list.add(new SearchActionInfo(false,"http://oss.cyzone.cn/2018/0818/20180818024625113.jpg"));
-        list.add(new SearchActionInfo(true,"http://oss.cyzone.cn/2018/0817/20180817095437396.jpg"));
-        vu.getRecyclerView().getAdapter().notifyDataSetChanged();
+        ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).activitySearch(searchKey,getVu().getRecyclerView().getPageManager().getCurrentIndex()+"")).enqueue(new YFListHttpCallBack(vu) {
+            @Override
+            public void onSuccess(ApiBean mApiBean) {
+                super.onSuccess(mApiBean);
+                JSONObject jsonObject= JSON.parseObject(mApiBean.data);
+                List<SearchActionInfo> actionInfos= JSON.parseArray(jsonObject.getString("list"),SearchActionInfo.class);
+                list.clear();
+                list.add("活动");
+                list.addAll(actionInfos);
+
+            }
+
+
+        });
         SoftInputUtil.hideSoftInput(getActivity(),getView());
     }
     @Override

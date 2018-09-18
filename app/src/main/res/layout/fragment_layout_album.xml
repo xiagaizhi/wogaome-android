@@ -133,8 +133,7 @@
                 app:tabIndicatorHeight="@dimen/px6"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
                 app:tabIndicatorColor="@color/color_blue_level6"
-                android:layout_marginRight="@dimen/px93"
-                android:layout_marginLeft="@dimen/px93"
+
                 app:tabSelectedTextColor="@color/color_blue_level6"
                 app:tabTextColor="@color/color_gray_level9" />
         </android.support.design.widget.AppBarLayout>
