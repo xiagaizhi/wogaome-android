@@ -1,10 +1,14 @@
 package com.yushi.leke.fragment.exhibition.detail;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.SeekBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.aliyun.vodplayerview.view.choice.AlivcShowMoreDialog;
@@ -13,6 +17,7 @@ import com.aliyun.vodplayerview.view.more.ShowMoreView;
 import com.aliyun.vodplayerview.view.more.SpeedValue;
 import com.aliyun.vodplayerview.widget.AliyunScreenMode;
 import com.aliyun.vodplayerview.widget.AliyunVodPlayerView;
+import com.yufan.library.inject.AnnotateUtils;
 import com.yushi.leke.R;
 import com.yufan.library.base.BaseVu;
 import com.yufan.library.inject.FindLayout;
@@ -20,6 +25,7 @@ import com.yufan.library.inject.FindView;
 import com.yufan.library.inject.Title;
 import com.yufan.library.widget.StateLayout;
 import com.yufan.library.widget.AppToolbar;
+import com.yushi.leke.fragment.exhibition.vote.VoteFragment;
 
 /**
  * Created by mengfantao on 18/8/2.
@@ -30,10 +36,12 @@ public class ExhibitionDetailVu extends BaseVu<ExhibitionDetailContract.Presente
     @FindView(R.id.video_view)
     private AliyunVodPlayerView mAliyunVodPlayerView;
     private AlivcShowMoreDialog showMoreDialog;
+    private ImageView shareIcon;
 
     @Override
     public void initView(View view) {
-
+        LinearLayout mToolBarRightContainer = mAliyunVodPlayerView.getmControlView().getToolBarRightContainer();
+        mToolBarRightContainer.addView(shareIcon);
     }
 
 
@@ -41,7 +49,6 @@ public class ExhibitionDetailVu extends BaseVu<ExhibitionDetailContract.Presente
     public void initStatusLayout(StateLayout stateLayout) {
         super.initStatusLayout(stateLayout);
     }
-
 
 
     public void showMore(final Context activity) {
@@ -139,8 +146,19 @@ public class ExhibitionDetailVu extends BaseVu<ExhibitionDetailContract.Presente
         }
     }
 
+
     @Override
     public boolean initTitle(AppToolbar appToolbar) {
-        return true;
+        shareIcon = appToolbar.creatRightView(ImageView.class);
+        shareIcon.setImageResource(R.drawable.ic_share_white);
+        shareIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mAliyunVodPlayerView.changeScreenMode(AliyunScreenMode.Small);
+                mPersenter.share();
+            }
+        });
+        return false;
     }
+
 }

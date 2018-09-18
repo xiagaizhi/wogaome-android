@@ -14,7 +14,7 @@
             android:layout_width="@dimen/px60"
             android:layout_height="@dimen/px60"
             android:layout_alignParentRight="true"
-            android:layout_marginRight="@dimen/px98"
+            android:layout_marginRight="@dimen/y98"
             android:src="@drawable/ic_btn_update_close" />
 
         <RelativeLayout
@@ -23,8 +23,8 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/img_upgrade_close"
             android:layout_marginBottom="@dimen/px112"
-            android:layout_marginLeft="@dimen/px98"
-            android:layout_marginRight="@dimen/px98"
+            android:layout_marginLeft="@dimen/y98"
+            android:layout_marginRight="@dimen/y98"
             android:layout_marginTop="@dimen/px52"
             android:background="@drawable/shape_bg_update">
 

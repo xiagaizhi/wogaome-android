@@ -4,7 +4,7 @@
 
     <!-- 圆角 -->
     <corners
-        android:radius="@dimen/px12"
+        android:radius="@dimen/px16"
         />
     <solid
 

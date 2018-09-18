@@ -38,6 +38,7 @@ import com.yushi.leke.R;
 import com.yushi.leke.UIHelper;
 import com.yushi.leke.YFApi;
 import com.yushi.leke.fragment.browser.BrowserBaseFragment;
+import com.yushi.leke.fragment.exhibition.vote.VoteFragment;
 import com.yushi.leke.fragment.exhibition.voteend.VoteendFragment;
 import com.yushi.leke.fragment.exhibition.voteing.VoteingFragment;
 
@@ -267,7 +268,6 @@ public class ExhibitionDetailFragment extends BaseFragment<ExhibitionDetailContr
         VcPlayerLog.e("lfj1115 ", " Build.Device = " + Build.DEVICE + " , isStrange = " + strangePhone);
         return strangePhone;
     }
-
 
     private static class MyPrepareListener implements IAliyunVodPlayer.OnPreparedListener {
 
@@ -648,5 +648,8 @@ public class ExhibitionDetailFragment extends BaseFragment<ExhibitionDetailContr
         updatePlayerViewMode();
     }
 
+    @Override
+    public void share() {
+    }
 
 }

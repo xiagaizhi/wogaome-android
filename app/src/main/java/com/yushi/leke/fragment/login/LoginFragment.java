@@ -128,6 +128,10 @@ public class LoginFragment extends BaseFragment<LoginContract.IView> implements 
                             App.getApp().registerXGPush(UserManager.getInstance().getUid());
                             startWithPopTo(UIHelper.creat(MainFragment.class).build(), LoginFragment.class,true);
                             mShareUtils.logout(SHARE_MEDIA.WEIXIN);
+                            // 用户登录埋点
+                            MANService manService = MANServiceProvider.getService();
+                            manService.getMANAnalytics().updateUserAccount("usernick", "weixinlogin");
+                            App.getApp().registerXGPush(UserManager.getInstance().getUid());
                             ArgsUtil.datapoint(ArgsUtil.REG_WX_NAME,"null",ArgsUtil.UID,ArgsUtil.REG_WX_CODE,null,null);
                         }
 

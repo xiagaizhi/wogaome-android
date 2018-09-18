@@ -90,11 +90,11 @@ public class LoginPhoneFragment extends BaseFragment<LoginPhoneContract.IView> i
               JSONObject jsonObject= JSON.parseObject(mApiBean.getData());
              UserManager.getInstance().setToken(jsonObject.getString("token"));
               UserManager.getInstance().setUid(jsonObject.getString("uid"));
+                startWithPopTo(UIHelper.creat(MainFragment.class).build(), LoginFragment.class,true);
+                // 用户登录埋点
                 MANService manService = MANServiceProvider.getService();
-                 // 用户登录埋点
                 manService.getMANAnalytics().updateUserAccount("usernick", phone);
                 App.getApp().registerXGPush(UserManager.getInstance().getUid());
-                startWithPopTo(UIHelper.creat(MainFragment.class).build(), LoginFragment.class,true);
                 ArgsUtil.datapoint(ArgsUtil.LOGIN_PHONE_NAME,"null",ArgsUtil.UID,ArgsUtil.LOGIN_PHONE_CODE,null,null);
             }
 

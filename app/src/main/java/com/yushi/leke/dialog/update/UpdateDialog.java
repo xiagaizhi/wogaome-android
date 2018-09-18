@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Display;
@@ -69,8 +70,14 @@ public class UpdateDialog extends Dialog implements View.OnClickListener {
         img_upgrade_close = view.findViewById(R.id.img_upgrade_close);
         img_upgrade_close.setOnClickListener(this);
         btn_upgrade.setOnClickListener(this);
+
+        rey_upgrade_info.setLayoutManager(new LinearLayoutManager(mContext));
         mUpdateInfoAdapter = new UpdateInfoAdapter(mContext, upgradeInfos);
         rey_upgrade_info.setAdapter(mUpdateInfoAdapter);
+        upgradeInfos.add("更新信息1更新信息1更新信息1");
+        upgradeInfos.add("更新信息2更新信息1更新信息1");
+        upgradeInfos.add("更新信息3");
+
         if (mUpdateInfo.isForceUpdate()) {
             setOnKeyListener(new DialogInterface.OnKeyListener() {//点返回键强制不让dialog消失
                 @Override
