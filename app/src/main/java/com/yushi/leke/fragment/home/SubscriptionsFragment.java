@@ -21,6 +21,9 @@ import com.yushi.leke.UIHelper;
 import com.yushi.leke.YFApi;
 import com.yushi.leke.activity.MusicPlayerActivity;
 import com.yushi.leke.fragment.album.AlbumDetailFragment;
+import com.yushi.leke.fragment.exhibition.exhibitionHome.ExhibitionErrorBinder;
+import com.yushi.leke.fragment.exhibition.exhibitionHome.ExhibitionErrorInfo;
+import com.yushi.leke.fragment.exhibition.exhibitionHome.ExhibitionTopInfo;
 import com.yushi.leke.fragment.searcher.SearchActionInfo;
 import com.yushi.leke.fragment.searcher.SearchBottomInfo;
 import com.yushi.leke.fragment.searcher.SearchFragment;
@@ -63,7 +66,14 @@ public class SubscriptionsFragment extends BaseListFragment<SubscriptionsContrac
                 getRootFragment().start(UIHelper.creat(AlbumDetailFragment.class).build());
             }
         }));
+        adapter.register(ExhibitionErrorInfo.class,new ExhibitionErrorBinder(new ICallBack() {
+            @Override
+            public void OnBackResult(Object... s) {
+                onRefresh();
+            }
+        }));
         vu.getRecyclerView().setAdapter(adapter);
+        list.add(new SubscriptionBanner());
         adapter.setItems(list);
         vu.getRecyclerView().getAdapter().notifyDataSetChanged();
         onRefresh();
@@ -79,10 +89,7 @@ public class SubscriptionsFragment extends BaseListFragment<SubscriptionsContrac
                 List<AudioInfo> actionInfos= JSON.parseArray(jsonObject.getString("list"),AudioInfo.class);
                 list.addAll(actionInfos);
             }
-            @Override
-            public void onFailure(int id, Exception e) {
 
-            }
         });
     }
 
@@ -100,10 +107,6 @@ public class SubscriptionsFragment extends BaseListFragment<SubscriptionsContrac
                 list.addAll(actionInfos);
             }
 
-            @Override
-            public void onFailure(int id, Exception e) {
-
-            }
         });
 
     }
