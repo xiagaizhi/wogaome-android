@@ -18,6 +18,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -66,6 +67,9 @@ public class MainFragment extends BaseFragment<MainContract.IView> implements Ma
                     String actionUrl = intent.getStringExtra("actionUrl");
                     start(UIHelper.creat(BrowserBaseFragment.class).put(Global.BUNDLE_KEY_BROWSER_URL, actionUrl).build());
                     break;
+                case Global.BROADCAST_ACTION_UPGRADE:
+                    checkAppUpdate();
+                    break;
             }
         }
     };
@@ -76,6 +80,7 @@ public class MainFragment extends BaseFragment<MainContract.IView> implements Ma
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(Global.BROADCAST_TOKEN_LOSE);
         intentFilter.addAction(Global.BROADCAST_ACTION_ADJUMP);
+        intentFilter.addAction(Global.BROADCAST_ACTION_UPGRADE);
         LocalBroadcastManager.getInstance(_mActivity).registerReceiver(broadcastReceiver, intentFilter);
     }
 
@@ -104,7 +109,6 @@ public class MainFragment extends BaseFragment<MainContract.IView> implements Ma
             mFragments[1] = findChildFragment(ExhibitionFragment.class);
             mFragments[2] = findChildFragment(UCenterFragment.class);
         }
-        checkAppUpdate();
     }
 
     /**
