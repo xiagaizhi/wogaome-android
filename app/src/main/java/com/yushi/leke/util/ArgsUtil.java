@@ -20,9 +20,9 @@ public class ArgsUtil {
     public static final String LOGIN_PHONE_CODE="0301";
     public static final String VOTE_NAME="vote";
     public static final String VOTE_CODE="0090";
-    public static void datapoint(String name1,String name2,String value1,String value2,String value3,String values){
-        MANHitBuilders.MANCustomHitBuilder hitBuilder = new MANHitBuilders.MANCustomHitBuilder(name1);
-        hitBuilder.setEventPage(name2);
+    public static void datapoint(String eventname,String associatname,String value1,String value2,String value3,String values){
+        MANHitBuilders.MANCustomHitBuilder hitBuilder = new MANHitBuilders.MANCustomHitBuilder(eventname);
+        hitBuilder.setEventPage(associatname);
         if (value1!=null){
             hitBuilder.setProperty(ArgsUtil.ARG1, value1);
         }
