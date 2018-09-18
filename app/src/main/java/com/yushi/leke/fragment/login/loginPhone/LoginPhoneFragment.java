@@ -27,6 +27,7 @@ import com.yushi.leke.fragment.login.LoginFragment;
 import com.yushi.leke.fragment.main.MainFragment;
 import com.yushi.leke.fragment.register.RegisterFragment;
 import com.yushi.leke.fragment.resetPassword.ResetPasswordFragment;
+import com.yushi.leke.util.ArgsUtil;
 
 
 /**
@@ -46,11 +47,11 @@ public class LoginPhoneFragment extends BaseFragment<LoginPhoneContract.IView> i
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
     }
 
     @Override
     public void onRefresh() {
-
     }
 
 
@@ -89,6 +90,7 @@ public class LoginPhoneFragment extends BaseFragment<LoginPhoneContract.IView> i
               UserManager.getInstance().setUid(jsonObject.getString("uid"));
                 App.getApp().registerXGPush(UserManager.getInstance().getUid());
               startWithPopTo(UIHelper.creat(MainFragment.class).build(), LoginFragment.class,true);
+                ArgsUtil.datapoint(ArgsUtil.LOGIN_PHONE_NAME,"null",ArgsUtil.UID,ArgsUtil.LOGIN_PHONE_CODE,null,null);
             }
 
             @Override

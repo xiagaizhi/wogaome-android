@@ -29,6 +29,7 @@ import com.yushi.leke.YFApi;
 import com.yushi.leke.fragment.browser.BrowserBaseFragment;
 import com.yushi.leke.fragment.login.LoginFragment;
 import com.yushi.leke.fragment.main.MainFragment;
+import com.yushi.leke.util.ArgsUtil;
 
 
 import java.util.Map;
@@ -75,7 +76,7 @@ public class RegisterFragment extends BaseFragment<RegisterContract.IView> imple
               UserManager.getInstance().setUid(jsonObject.getString("uid"));
               App.getApp().registerXGPush(UserManager.getInstance().getUid());
               startWithPopTo(UIHelper.creat(MainFragment.class).build(), LoginFragment.class,true);
-
+              ArgsUtil.datapoint(ArgsUtil.REG_PHONE_NAME,"null",ArgsUtil.UID,ArgsUtil.REG_PHONE_CODE,null,null);
           }
 
           @Override

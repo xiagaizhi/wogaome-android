@@ -1,5 +1,5 @@
 apply plugin: 'com.android.library'
-
+apply plugin: 'com.aliyun.ams.emas-services'
 android {
     compileSdkVersion gradle.compileSdkVersion
   //  buildToolsVersion gradle.buildToolsVersion

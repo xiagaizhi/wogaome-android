@@ -8,6 +8,9 @@ buildscript {
             url 'https://maven.google.com/'
             name 'Google'
         }
+        maven {
+            url 'http://maven.aliyun.com/nexus/content/repositories/releases/'
+        }
         google()
     }
     dependencies {
@@ -16,6 +19,8 @@ buildscript {
         classpath 'com.github.dcendents:android-maven-gradle-plugin:1.4.1'
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
+        // 添加emas-services插件
+        classpath 'com.aliyun.ams:emas-services:1.0.1'
     }
 }
 
@@ -29,7 +34,9 @@ allprojects {
             url 'https://maven.google.com/'
             name 'Google'
         }
-
+        maven {
+            url 'http://maven.aliyun.com/nexus/content/repositories/releases/'
+        }
     }
 }
 
