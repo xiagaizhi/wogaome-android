@@ -171,6 +171,9 @@ public final class VodPlayback implements Playback {
      */
     @Override
     public int getState() {
+        if(mAliyunVodPlayer==null){
+            return PlaybackStateCompat.STATE_NONE;
+        }
         switch (mAliyunVodPlayer.getPlayerState()) {
             case Idle:
                 return PlaybackStateCompat.STATE_PAUSED;
