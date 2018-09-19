@@ -110,5 +110,25 @@ public class AlbumDetailFragment extends BaseFragment<AlbumDetailContract.IView>
                     public void onFinish() {
                     }
                 });
+        ApiManager.getCall(ApiManager.getInstance().create(YFApi.class)
+                .substate(albumId))
+                .useCache(false)
+                .enqueue(new BaseHttpCallBack() {
+                    @Override
+                    public void onSuccess(ApiBean mApiBean) {
+                        if (!TextUtils.isEmpty(mApiBean.getData())) {
+                            int state= Integer.parseInt(mApiBean.getData());
+                            getVu().showsubstate(state);
+                        }
+                    }
+
+                    @Override
+                    public void onError(int id, Exception e) {
+                    }
+
+                    @Override
+                    public void onFinish() {
+                    }
+                });
     }
 }

@@ -589,6 +589,15 @@ public interface YFApi {
     @POST("app/v1/banner/showBanners")
     Call<ResponseBody>
     showBanners();
-
+    /**
+     *是否订阅
+     *
+     */
+    @FormUrlEncoded
+    @POST("app/v1/albumDetail/subscribeCheck")
+    Call<ResponseBody>
+    substate(
+            @Field("albumId")int albumId
+    );
 
 }
