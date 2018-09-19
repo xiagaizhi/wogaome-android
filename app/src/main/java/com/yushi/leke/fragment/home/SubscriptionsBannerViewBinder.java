@@ -59,6 +59,7 @@ public class SubscriptionsBannerViewBinder extends ItemViewBinder<SubscriptionBa
     public static final int BANNER_BINDER_MUSIC = 1;
     public static final int BANNER_BINDER_SEARCH = 2;
     public static final int BANNER_BINDER_ITEM = 3;
+
     public SubscriptionsBannerViewBinder(ICallBack callBack) {
         this.callBack = callBack;
     }
@@ -68,12 +69,10 @@ public class SubscriptionsBannerViewBinder extends ItemViewBinder<SubscriptionBa
     ViewHolder onCreateViewHolder(@NonNull LayoutInflater inflater, @NonNull ViewGroup parent) {
 
         return new ViewHolder(inflater.inflate(R.layout.item_top_subscriptions, parent, false));
-
     }
 
     @Override
     protected void onBindViewHolder(@NonNull ViewHolder holder, @NonNull final SubscriptionBanner category) {
-
         holder.rightMusic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -89,20 +88,22 @@ public class SubscriptionsBannerViewBinder extends ItemViewBinder<SubscriptionBa
             }
         });
         ((AnimationDrawable) holder.rightMusic.getDrawable()).start();
+        if (category == null || category.getBannerItemInfos() == null || category.getBannerItemInfos().size() == 0) {
+            return;
+        }
         holder.mConvenientBanner.setPageTransformer(false, new ScaleTransformer());
         holder.mConvenientBanner.setOffscreenPageLimit(3);
-        List<String> list = new ArrayList<>();
-        list.add("http://oss.cyzone.cn/2018/0810/20180810095648712.jpg");
-        list.add("http://oss.cyzone.cn/2018/0808/20180808022315645.png");
-        list.add("http://oss.cyzone.cn/2018/0731/20180731065933886.jpeg");
-        list.add("http://oss.cyzone.cn/2018/0730/20180730071658744.jpg");
-        list.add("http://oss.cyzone.cn/2015/1228/20151228041950459.jpg");
-        list.add("http://oss.cyzone.cn/2018/0116/20180116052244372.png");
-        holder.mConvenientBanner.setImages(list).setImageLoader(new ImageLoaderInterface<View>() {
+        List<BannerItemInfo> bannerItemInfos = category.getBannerItemInfos();
+//        List<String> imgs = new ArrayList<>();
+//        for (BannerItemInfo bannerItemInfo : bannerItemInfos) {
+//            imgs.add(bannerItemInfo.getIcon());
+//        }
+        holder.mConvenientBanner.setImages(bannerItemInfos).setImageLoader(new ImageLoaderInterface<View>() {
             @Override
             public void displayImage(int position, Context context, Object path, View view) {
                 SimpleDraweeView simpleDraweeView = (SimpleDraweeView) view;
-                simpleDraweeView.setImageURI((String)path);
+                BannerItemInfo bannerItemInfo = (BannerItemInfo) path;
+                simpleDraweeView.setImageURI(bannerItemInfo.getIcon());
             }
 
             @Override
@@ -120,6 +121,8 @@ public class SubscriptionsBannerViewBinder extends ItemViewBinder<SubscriptionBa
                         //.setRoundingParams(RoundingParams.asCircle())
                         //设置淡入淡出动画持续时间(单位：毫秒ms)
                         .setFadeDuration(300)
+                        .setPlaceholderImage(R.drawable.default_banner)
+                        .setFailureImage(R.drawable.default_banner)
                         //构建
                         .build();
                 //设置Hierarchy
@@ -135,8 +138,8 @@ public class SubscriptionsBannerViewBinder extends ItemViewBinder<SubscriptionBa
 
             @Override
             public void OnBannerClick(int position) {
-                if(callBack!=null){
-                    callBack.OnBackResult(BANNER_BINDER_ITEM);
+                if (callBack != null) {
+                    callBack.OnBackResult(BANNER_BINDER_ITEM, position);
                 }
             }
         });
@@ -158,22 +161,21 @@ public class SubscriptionsBannerViewBinder extends ItemViewBinder<SubscriptionBa
 
             rightMusic = itemView.findViewById(R.id.iv_anim_icon);
             rl_searchbar = itemView.findViewById(R.id.rl_searchbar);
-            mConvenientBanner=itemView.findViewById(R.id.viewpager);
+            mConvenientBanner = itemView.findViewById(R.id.viewpager);
             mConvenientBanner.addOnAttachStateChangeListener(new View.OnAttachStateChangeListener() {
                 @Override
                 public void onViewAttachedToWindow(View view) {
-                  mConvenientBanner.startAutoPlay();
+                    mConvenientBanner.startAutoPlay();
 
                 }
 
                 @Override
                 public void onViewDetachedFromWindow(View view) {
-                   mConvenientBanner.stopAutoPlay();
+                    mConvenientBanner.stopAutoPlay();
                 }
             });
         }
     }
-
 
 
 }

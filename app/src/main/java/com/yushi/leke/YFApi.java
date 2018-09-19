@@ -572,4 +572,12 @@ public interface YFApi {
             @Field("albumId")String albumId
     );
 
+    /**
+     * 首页banner
+     */
+    @POST("app/v1/banner/showBanners")
+    Call<ResponseBody>
+    showBanners();
+
+
 }
