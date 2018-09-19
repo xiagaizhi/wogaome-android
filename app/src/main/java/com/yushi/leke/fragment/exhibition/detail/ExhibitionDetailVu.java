@@ -17,7 +17,6 @@ import com.aliyun.vodplayerview.view.more.ShowMoreView;
 import com.aliyun.vodplayerview.view.more.SpeedValue;
 import com.aliyun.vodplayerview.widget.AliyunScreenMode;
 import com.aliyun.vodplayerview.widget.AliyunVodPlayerView;
-import com.yufan.library.inject.AnnotateUtils;
 import com.yushi.leke.R;
 import com.yufan.library.base.BaseVu;
 import com.yufan.library.inject.FindLayout;
@@ -25,7 +24,6 @@ import com.yufan.library.inject.FindView;
 import com.yufan.library.inject.Title;
 import com.yufan.library.widget.StateLayout;
 import com.yufan.library.widget.AppToolbar;
-import com.yushi.leke.fragment.exhibition.vote.VoteFragment;
 
 /**
  * Created by mengfantao on 18/8/2.
@@ -57,7 +55,6 @@ public class ExhibitionDetailVu extends BaseVu<ExhibitionDetailContract.Presente
         moreValue.setSpeed(mAliyunVodPlayerView.getCurrentSpeed());
         moreValue.setVolume(mAliyunVodPlayerView.getCurrentVolume());
         moreValue.setScreenBrightness(mAliyunVodPlayerView.getCurrentScreenBrigtness());
-
         ShowMoreView showMoreView = new ShowMoreView(activity, moreValue);
         showMoreDialog.setContentView(showMoreView);
         showMoreDialog.show();

@@ -64,8 +64,15 @@ public class MainFragment extends BaseFragment<MainContract.IView> implements Ma
                     getRootFragment().startWithPopTo(UIHelper.creat(LoginFragment.class).build(), MainFragment.class, true);
                     break;
                 case Global.BROADCAST_ACTION_ADJUMP://广告具体跳转
-                    String actionUrl = intent.getStringExtra("actionUrl");
-                    start(UIHelper.creat(BrowserBaseFragment.class).put(Global.BUNDLE_KEY_BROWSER_URL, actionUrl).build());
+                    String h5Url = intent.getStringExtra("h5Url");
+                    String nativeUrl = intent.getStringExtra("nativeUrl");
+                    if (!TextUtils.isEmpty(nativeUrl)) {
+                        // TODO: 2018/9/19 跳转原生页面
+                    } else {
+                        if (!TextUtils.isEmpty(h5Url)) {
+                            start(UIHelper.creat(BrowserBaseFragment.class).put(Global.BUNDLE_KEY_BROWSER_URL, h5Url).build());
+                        }
+                    }
                     break;
                 case Global.BROADCAST_ACTION_UPGRADE:
                     checkAppUpdate();

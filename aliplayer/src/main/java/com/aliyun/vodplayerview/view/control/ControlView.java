@@ -60,7 +60,10 @@ public class ControlView extends RelativeLayout implements ViewAction, ITheme {
     private PlayState mPlayState = PlayState.NotPlaying;
     //播放按钮
     private ImageView mPlayStateBtn;
-
+    //视频播放音量
+    private PlayVoice mPlayVolumeState = PlayVoice.Quiet;
+    //控制静音
+    private ImageView mPlayControlVolume;
 
 
     //锁定屏幕方向相关
@@ -133,6 +136,8 @@ public class ControlView extends RelativeLayout implements ViewAction, ITheme {
     private OnBackClickListener mOnBackClickListener;
     //播放按钮点击监听
     private OnPlayStateClickListener mOnPlayStateClickListener;
+    //是否静音
+    private OnControlVolumeClickListener mOnControlVolumeClickListener;
     //清晰度按钮点击监听
     private OnQualityBtnClickListener mOnQualityBtnClickListener;
     //锁屏按钮点击监听
@@ -160,7 +165,7 @@ public class ControlView extends RelativeLayout implements ViewAction, ITheme {
     }
 
 
-    public LinearLayout getToolBarRightContainer(){
+    public LinearLayout getToolBarRightContainer() {
         return alivc_right_container;
     }
 
@@ -187,6 +192,7 @@ public class ControlView extends RelativeLayout implements ViewAction, ITheme {
         mScreenModeBtn = (ImageView) findViewById(R.id.alivc_screen_mode);
         mScreenLockBtn = (ImageView) findViewById(R.id.alivc_screen_lock);
         mPlayStateBtn = (ImageView) findViewById(R.id.alivc_player_state);
+        mPlayControlVolume = (ImageView) findViewById(R.id.alivc_control_volume);
 
         mLargeInfoBar = findViewById(R.id.alivc_info_large_bar);
         mLargePositionText = (TextView) findViewById(R.id.alivc_info_large_position);
@@ -199,6 +205,7 @@ public class ControlView extends RelativeLayout implements ViewAction, ITheme {
         mSmallPositionText = (TextView) findViewById(R.id.alivc_info_small_position);
         mSmallDurationText = (TextView) findViewById(R.id.alivc_info_small_duration);
         mSmallSeekbar = (SeekBar) findViewById(R.id.alivc_info_small_seekbar);
+        mSmallSeekbar.setThumb(getResources().getDrawable(R.drawable.alivc_custom_seek_thumb));
     }
 
     private void setViewListener() {
@@ -221,6 +228,21 @@ public class ControlView extends RelativeLayout implements ViewAction, ITheme {
                 }
             }
         });
+        mPlayControlVolume.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mOnControlVolumeClickListener != null) {
+                    if (mPlayVolumeState == PlayVoice.NotQuiet) {
+                        mPlayVolumeState = PlayVoice.Quiet;
+                        mOnControlVolumeClickListener.onControlVolumeClick(true);
+                    } else if (mPlayVolumeState == PlayVoice.Quiet) {
+                        mPlayVolumeState = PlayVoice.NotQuiet;
+                        mOnControlVolumeClickListener.onControlVolumeClick(false);
+                    }
+                    updatePlayVoluneBtn();
+                }
+            }
+        });
 //锁屏按钮监听
         mScreenLockBtn.setOnClickListener(new OnClickListener() {
             @Override
@@ -230,8 +252,6 @@ public class ControlView extends RelativeLayout implements ViewAction, ITheme {
                 }
             }
         });
-
-
 
 
 //大小屏按钮监听
@@ -369,15 +389,11 @@ public class ControlView extends RelativeLayout implements ViewAction, ITheme {
         updateShowMoreBtn();
 
 
-
     }
 
 
-
-
-
     /**
-     *  更新更多按钮的显示和隐藏
+     * 更新更多按钮的显示和隐藏
      */
     private void updateShowMoreBtn() {
         if (mAliyunScreenMode == AliyunScreenMode.Full) {
@@ -407,6 +423,11 @@ public class ControlView extends RelativeLayout implements ViewAction, ITheme {
     public void setPlayState(PlayState playState) {
         mPlayState = playState;
         updatePlayStateBtn();
+    }
+
+    public void setmPlayVolumeState(PlayVoice playVolumeState){
+        mPlayVolumeState = playVolumeState;
+        updatePlayVoluneBtn();
     }
 
     /**
@@ -519,6 +540,7 @@ public class ControlView extends RelativeLayout implements ViewAction, ITheme {
         updateAllTitleBar(); //更新标题显示
         updateAllControlBar();//更新控制栏显示
         updateShowMoreBtn();
+        updatePlayVoluneBtn();
 
 
     }
@@ -675,6 +697,17 @@ public class ControlView extends RelativeLayout implements ViewAction, ITheme {
     }
 
     /**
+     * 更新控制音量
+     */
+    private void updatePlayVoluneBtn() {
+        if (mPlayVolumeState == PlayVoice.NotQuiet) {
+            mPlayControlVolume.setImageResource(R.drawable.alivc_volume_notquiet);
+        } else if (mPlayVolumeState == PlayVoice.Quiet) {
+            mPlayControlVolume.setImageResource(R.drawable.alivc_volume_quiet);
+        }
+    }
+
+    /**
      * 监听view是否可见。从而实现5秒隐藏的功能
      *
      * @param changedView
@@ -801,7 +834,7 @@ public class ControlView extends RelativeLayout implements ViewAction, ITheme {
     }
 
     public void setOnDownloadClickListener(
-        OnDownloadClickListener onDownloadClickListener) {
+            OnDownloadClickListener onDownloadClickListener) {
         this.onDownloadClickListener = onDownloadClickListener;
     }
 
@@ -888,6 +921,17 @@ public class ControlView extends RelativeLayout implements ViewAction, ITheme {
         Playing, NotPlaying
     }
 
+    /**
+     * 播放状态
+     */
+    public enum PlayVoice {
+        /**
+         * NotQuiet:不静音
+         * Quiet: 静音
+         */
+        NotQuiet, Quiet
+    }
+
     public interface OnPlayStateClickListener {
         /**
          * 播放按钮点击事件
@@ -895,9 +939,20 @@ public class ControlView extends RelativeLayout implements ViewAction, ITheme {
         void onPlayStateClick();
     }
 
+    public interface OnControlVolumeClickListener {
+        /**
+         * 控制音量按钮
+         */
+        void onControlVolumeClick(boolean isQuiet);
+    }
+
 
     public void setOnPlayStateClickListener(OnPlayStateClickListener onPlayStateClickListener) {
         mOnPlayStateClickListener = onPlayStateClickListener;
+    }
+
+    public void setmOnControlVolumeClickListener(OnControlVolumeClickListener mOnControlVolumeClickListener) {
+        this.mOnControlVolumeClickListener = mOnControlVolumeClickListener;
     }
 
     /**
@@ -908,7 +963,7 @@ public class ControlView extends RelativeLayout implements ViewAction, ITheme {
     }
 
     public void setOnShowMoreClickListener(
-        OnShowMoreClickListener listener) {
+            OnShowMoreClickListener listener) {
         this.mOnShowMoreClickListener = listener;
     }
 }

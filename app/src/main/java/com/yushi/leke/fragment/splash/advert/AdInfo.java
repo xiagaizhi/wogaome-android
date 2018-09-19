@@ -1,6 +1,5 @@
 package com.yushi.leke.fragment.splash.advert;
 
-import android.graphics.Bitmap;
 
 import java.io.Serializable;
 
@@ -10,9 +9,11 @@ import java.io.Serializable;
  */
 
 public class AdInfo implements Serializable{
-    private String adKey;
-    private String adImgurl;
-    private String actionUrl;
+    private String id;
+    private String icon;
+    private String h5Url;
+    private String nativeUrl;
+
 
     private byte[] bitmap;
 
@@ -24,27 +25,35 @@ public class AdInfo implements Serializable{
         this.bitmap = bitmap;
     }
 
-    public String getAdKey() {
-        return adKey;
+    public String getId() {
+        return id;
     }
 
-    public void setAdKey(String adKey) {
-        this.adKey = adKey;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public String getAdImgurl() {
-        return adImgurl;
+    public String getIcon() {
+        return icon;
     }
 
-    public void setAdImgurl(String adImgurl) {
-        this.adImgurl = adImgurl;
+    public void setIcon(String icon) {
+        this.icon = icon;
     }
 
-    public String getActionUrl() {
-        return actionUrl;
+    public String getH5Url() {
+        return h5Url;
     }
 
-    public void setActionUrl(String actionUrl) {
-        this.actionUrl = actionUrl;
+    public void setH5Url(String h5Url) {
+        this.h5Url = h5Url;
+    }
+
+    public String getNativeUrl() {
+        return nativeUrl;
+    }
+
+    public void setNativeUrl(String nativeUrl) {
+        this.nativeUrl = nativeUrl;
     }
 }
