@@ -600,5 +600,24 @@ public interface YFApi {
     substate(
             @Field("albumId")int albumId
     );
-
+    /**
+     *订阅专辑
+     *
+     */
+    @FormUrlEncoded
+    @POST("app/v1/albumDetail/subscribe")
+    Call<ResponseBody>
+    registeralbum(
+            @Field("albumId")int albumId
+    );
+    /**
+     *取消订阅专辑
+     *
+     */
+    @FormUrlEncoded
+    @POST("app/v1/mySubscribe/cancelSubscribe")
+    Call<ResponseBody>
+    unregisteralbum(
+            @Field("albumId")int albumId
+    );
 }

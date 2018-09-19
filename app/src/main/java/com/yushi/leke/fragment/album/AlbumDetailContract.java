@@ -20,6 +20,7 @@ public interface AlbumDetailContract {
 
     interface Presenter extends Pr {
     void onMusicMenuClick();
-
+    void register();
+    void unregister();
     }
 }

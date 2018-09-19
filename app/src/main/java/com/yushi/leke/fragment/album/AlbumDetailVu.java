@@ -115,10 +115,22 @@ public class AlbumDetailVu extends BaseVu<AlbumDetailContract.Presenter> impleme
                 sdv_sub.setImageURI("res:///" +R.drawable.ic_sub_unstate);
                 tv_sub.setText("订阅");
                 tv_sub.setTextColor(Color.parseColor("#FF666666"));
+                sdv_sub.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        mPersenter.register();
+                    }
+                });
                 break;
             case 1:
                 sdv_sub.setImageURI("res:///" +R.drawable.ic_sub_onstate);
                 tv_sub.setText("已订阅");
+                sdv_sub.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        mPersenter.unregister();
+                    }
+                });
                 break;
         }
     }

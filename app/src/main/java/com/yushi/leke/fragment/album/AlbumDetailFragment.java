@@ -19,6 +19,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.yufan.library.base.BaseFragment;
 import com.yufan.library.inject.VuClass;
@@ -90,6 +91,7 @@ public class AlbumDetailFragment extends BaseFragment<AlbumDetailContract.IView>
         startActivity(intent);
     }
     private void getdata(){
+        //获取专辑数据
         ApiManager.getCall(ApiManager.getInstance().create(YFApi.class)
                 .albumdetail(String.valueOf(albumId)))
                 .useCache(false)
@@ -99,6 +101,7 @@ public class AlbumDetailFragment extends BaseFragment<AlbumDetailContract.IView>
                         if (!TextUtils.isEmpty(mApiBean.getData())) {
                             AlbumDetailinfo infolist = JSON.parseObject(mApiBean.getData(), AlbumDetailinfo.class);
                             getVu().showtext(infolist);
+                            getstatedate();
                         }
                     }
 
@@ -110,6 +113,9 @@ public class AlbumDetailFragment extends BaseFragment<AlbumDetailContract.IView>
                     public void onFinish() {
                     }
                 });
+    }
+    private void getstatedate(){
+        //获取订阅状态
         ApiManager.getCall(ApiManager.getInstance().create(YFApi.class)
                 .substate(albumId))
                 .useCache(false)
@@ -120,6 +126,51 @@ public class AlbumDetailFragment extends BaseFragment<AlbumDetailContract.IView>
                             int state= Integer.parseInt(mApiBean.getData());
                             getVu().showsubstate(state);
                         }
+                    }
+
+                    @Override
+                    public void onError(int id, Exception e) {
+                    }
+
+                    @Override
+                    public void onFinish() {
+                    }
+                });
+    }
+    @Override
+    public void register() {
+        //订阅专辑
+        ApiManager.getCall(ApiManager.getInstance().create(YFApi.class)
+                .registeralbum(albumId))
+                .useCache(false)
+                .enqueue(new BaseHttpCallBack() {
+                    @Override
+                    public void onSuccess(ApiBean mApiBean) {
+                        Toast.makeText(getContext(),"订阅成功",Toast.LENGTH_SHORT).show();
+                        getstatedate();
+                    }
+
+                    @Override
+                    public void onError(int id, Exception e) {
+                    }
+
+                    @Override
+                    public void onFinish() {
+                    }
+                });
+    }
+
+    @Override
+    public void unregister() {
+        //取消订阅专辑
+        ApiManager.getCall(ApiManager.getInstance().create(YFApi.class)
+                .unregisteralbum(albumId))
+                .useCache(false)
+                .enqueue(new BaseHttpCallBack() {
+                    @Override
+                    public void onSuccess(ApiBean mApiBean) {
+                        Toast.makeText(getContext(),"取消订阅成功",Toast.LENGTH_SHORT).show();
+                        getstatedate();
                     }
 
                     @Override
