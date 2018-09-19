@@ -140,7 +140,7 @@ public class ApiManager {
         apiHeaders.put("Accept-Language", Locale.getDefault().toString());
         apiHeaders.put("Connection", "Keep-Alive");
         apiHeaders.put("Content-Type", "application/x-www-form-urlencoded");
-        apiHeaders.put("User-Agent", "");
+
         apiHeaders.put("LK-App-Version", DeviceUtil.VersionName(context) + "_" + DeviceUtil.VersionCode(context));//app版本  1.0.0_101_10
         apiHeaders.put("LK-Device-Id", DeviceUtil.IMEI(context));//imei
         apiHeaders.put("LK-Network-Type", Netutil.GetNetworkType(context));//网络类型

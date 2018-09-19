@@ -58,6 +58,7 @@ public class BrowserBaseFragment extends BaseFragment<BrowserContract.View> impl
     private ValueCallback<Uri> uploadFile;
     private String mIntentUrl;
     private WVJBWebViewClient wVJBWebViewClient;
+    private WebSettings webSetting;
 
     //    private int REQUEST_CODE_CHOOSE=8;
     @Override
@@ -198,7 +199,7 @@ public class BrowserBaseFragment extends BaseFragment<BrowserContract.View> impl
             webView.getX5WebViewExtension().setScrollBarFadingEnabled(false);
             webView.getX5WebViewExtension().invokeMiscMethod("setVideoParams", data);
         }
-        WebSettings webSetting = webView.getSettings();
+         webSetting = webView.getSettings();
         webSetting.setAllowFileAccess(true);
         webSetting.setLayoutAlgorithm(LayoutAlgorithm.NARROW_COLUMNS);
         webSetting.setSupportZoom(true);
@@ -240,6 +241,7 @@ public class BrowserBaseFragment extends BaseFragment<BrowserContract.View> impl
         for (String key : cookies.keySet()) {
             cookie.setCookie(mIntentUrl,key+"="+cookies.get(key));
         }
+        cookie.setCookie(mIntentUrl,"User-Agent="+webSetting.getUserAgentString());
         cookie.setCookie(mIntentUrl, "token=" + UserManager.getInstance().getToken());
         CookieSyncManager.getInstance().sync();
     }
