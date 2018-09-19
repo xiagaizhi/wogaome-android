@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.yufan.library.Global;
 import com.yufan.library.api.ApiBean;
 import com.yufan.library.api.ApiManager;
 import com.yufan.library.api.BaseHttpCallBack;
@@ -26,6 +27,7 @@ import com.yushi.leke.fragment.album.AlbumDetailFragment;
 import com.yushi.leke.fragment.exhibition.exhibitionHome.ExhibitionErrorBinder;
 import com.yushi.leke.fragment.exhibition.exhibitionHome.ExhibitionErrorInfo;
 import com.yushi.leke.fragment.searcher.SearchFragment;
+import com.yushi.leke.util.ArgsUtil;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -42,7 +44,7 @@ import me.drakeet.multitype.MultiTypeAdapter;
 public class SubscriptionsFragment extends BaseListFragment<SubscriptionsContract.IView> implements SubscriptionsContract.Presenter {
     private MultiTypeAdapter adapter;
     private SubscriptionBanner subscriptionBanner;
-
+    private int albumId;
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -68,7 +70,10 @@ public class SubscriptionsFragment extends BaseListFragment<SubscriptionsContrac
         adapter.register(Homeinfo.class, new SubscriptionsViewBinder(new ICallBack() {
             @Override
             public void OnBackResult(Object... s) {
-                getRootFragment().start(UIHelper.creat(AlbumDetailFragment.class).build());
+                Homeinfo info= (Homeinfo) s[0];
+                getRootFragment().start(UIHelper.creat(AlbumDetailFragment.class)
+                        .put(Global.BUNDLE_KEY_ALBUMID,info.getAlbumId())
+                        .build());
             }
         }));
         adapter.register(ExhibitionErrorInfo.class, new ExhibitionErrorBinder(new ICallBack() {
@@ -125,7 +130,7 @@ public class SubscriptionsFragment extends BaseListFragment<SubscriptionsContrac
 
     private void getdata(final int currentpage) {
         ApiManager.getCall(ApiManager.getInstance().create(YFApi.class)
-                .showAlbum("channelId", currentpage+""))
+                .showAlbum("2", currentpage+""))
                 .useCache(false)
                 .enqueue(new YFListHttpCallBack(getVu()) {
                     @Override

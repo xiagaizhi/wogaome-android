@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import com.alibaba.fastjson.JSON;
+import com.yufan.library.Global;
 import com.yufan.library.api.ApiBean;
 import com.yufan.library.api.ApiManager;
 import com.yufan.library.api.BaseHttpCallBack;
@@ -37,12 +38,18 @@ import me.yokeyword.fragmentation.SupportFragment;
 @VuClass(AlbumDetailVu.class)
 public class AlbumDetailFragment extends BaseFragment<AlbumDetailContract.IView> implements AlbumDetailContract.Presenter {
     private SupportFragment[] fragments=new SupportFragment[2];
-
+    private int albumId;
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        Bundle bundle = getArguments();
+        if (bundle!=null){
+            albumId=bundle.getInt(Global.BUNDLE_KEY_ALBUMID);
+        }
         fragments[0] = UIHelper.creat(MediaBrowserFragment.class).build();
-        fragments[1] = UIHelper.creat(DetailforalbumFragment.class).build();
+        fragments[1] = UIHelper.creat(DetailforalbumFragment.class)
+                .put(Global.BUNDLE_KEY_ALBUMID,albumId)
+                .build();
                 getVu().getViewPager().setAdapter(new FragmentPagerAdapter(getChildFragmentManager()) {
             @Override
             public int getCount() {
@@ -84,7 +91,7 @@ public class AlbumDetailFragment extends BaseFragment<AlbumDetailContract.IView>
     }
     private void getdata(){
         ApiManager.getCall(ApiManager.getInstance().create(YFApi.class)
-                .albumdetail("121"))
+                .albumdetail(albumId))
                 .useCache(false)
                 .enqueue(new BaseHttpCallBack() {
                     @Override

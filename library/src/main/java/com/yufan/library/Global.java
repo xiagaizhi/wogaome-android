@@ -16,9 +16,13 @@ public class Global {
 
     public static final String BUNDLE_KEY_EXHIBITION_TYE = "BUNDLE_KEY_EXHIBITION_TYE";
 
-    public static String BUNDLE_KEY_ACTIVITYID="BUNDLE_KEY_ACTIVITYID";
-
     public static final String SP_KEY_SERVICE_TYPE = "SP_KEY_SERVICE_TYPE";
+
+    /**
+     * 专辑ID和activityID
+     */
+    public static String BUNDLE_KEY_ACTIVITYID="BUNDLE_KEY_ACTIVITYID";
+    public static String BUNDLE_KEY_ALBUMID="albumId";
     /**
      * 新手指引
      */

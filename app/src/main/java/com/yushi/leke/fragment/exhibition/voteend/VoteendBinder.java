@@ -1,6 +1,7 @@
 package com.yushi.leke.fragment.exhibition.voteend;
 
 import android.annotation.SuppressLint;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -39,7 +40,7 @@ public class VoteendBinder extends ItemViewBinder<Voteendinfo, VoteendBinder.Vie
         viewHolder.tv_vote_name.setText("创业者：" + voteendinfo.getEntrepreneur());
         viewHolder.tv_vote_describe.setText(voteendinfo.getIntroduction());
         viewHolder.btn_vote_support.setText("已结束");
-        viewHolder.btn_vote_support.setTextColor(R.color.color_gray_levele);
+        viewHolder.btn_vote_support.setTextColor(Color.parseColor("#FF999999"));
         viewHolder.tv_vote_describe.setClickable(true);
         viewHolder.rl_root.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -1,6 +1,7 @@
 package com.yushi.leke.fragment.exhibition.voteend.allproject;
 
 import android.annotation.SuppressLint;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -37,7 +38,7 @@ public class AllendBinder extends ItemViewBinder<Allendinfo, AllendBinder.ViewHo
         viewHolder.tv_vote_name.setText("创业者："+ Allendinfo.getEntrepreneur());
         viewHolder.tv_vote_describe.setText(Allendinfo.getDesc());
         viewHolder.btn_vote_support.setText("已结束");
-        viewHolder.btn_vote_support.setTextColor(R.color.color_gray_levele);
+        viewHolder.btn_vote_support.setTextColor(Color.parseColor("#FF999999"));
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {

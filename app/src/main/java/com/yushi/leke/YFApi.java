@@ -569,7 +569,7 @@ public interface YFApi {
     @POST("app/v1/albumDetail/getAlbum")
     Call<ResponseBody>
     albumdetail(
-            @Field("albumId")String albumId
+            @Field("albumId")int albumId
     );
 
     /**

@@ -3,6 +3,7 @@ package com.yushi.leke.fragment.album.detailforalbum;
 import android.os.Bundle;
 
 import com.alibaba.fastjson.JSON;
+import com.yufan.library.Global;
 import com.yufan.library.api.ApiBean;
 import com.yufan.library.api.ApiManager;
 import com.yufan.library.api.BaseHttpCallBack;
@@ -25,10 +26,14 @@ import com.yushi.leke.fragment.album.AlbumDetailinfo;
  */
 @VuClass(DetailforalbumVu.class)
 public class DetailforalbumFragment extends BaseFragment<DetailforalbumContract.IView> implements DetailforalbumContract.Presenter {
-
+    private int albumId;
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        Bundle bundle = getArguments();
+        if (bundle!=null){
+            albumId=bundle.getInt(Global.BUNDLE_KEY_ALBUMID);
+        }
         getdata();
     }
 
@@ -39,7 +44,7 @@ public class DetailforalbumFragment extends BaseFragment<DetailforalbumContract.
     }
     private void getdata(){
         ApiManager.getCall(ApiManager.getInstance().create(YFApi.class)
-                .albumdetail("121"))
+                .albumdetail(albumId))
                 .useCache(false)
                 .enqueue(new BaseHttpCallBack() {
                     @Override
