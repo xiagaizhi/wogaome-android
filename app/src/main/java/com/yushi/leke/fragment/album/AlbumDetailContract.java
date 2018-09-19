@@ -12,7 +12,7 @@ import com.yufan.library.base.Vu;
 
 public interface AlbumDetailContract {
     interface IView extends Vu {
-
+        void showtext(AlbumDetailinfo info);
         ViewPager getViewPager();
         SimpleDraweeView getDraweeView();
     }

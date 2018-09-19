@@ -536,5 +536,15 @@ public interface YFApi {
     showAlbum( @Field("channelId") String channelId,
                @Field("currentPage")int  currentPage);
 
+    /**
+     *专辑详情
+     *
+     */
+    @FormUrlEncoded
+    @POST("app/v1/albumDetail/getAlbum")
+    Call<ResponseBody>
+    albumdetail(
+            @Field("albumId")String albumId
+    );
 
 }
