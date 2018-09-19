@@ -19,6 +19,8 @@ public class Global {
     public static String BUNDLE_KEY_ACTIVITYID="BUNDLE_KEY_ACTIVITYID";
 
     public static final String SP_KEY_SERVICE_TYPE = "SP_KEY_SERVICE_TYPE";
+    public static final String SP_KEY_MEDIA_ID = "SP_KEY_MEDIA_ID";
+    public static final String SP_KEY_ALBUM_ID = "SP_KEY_ALBUM_ID";
     /**
      * 新手指引
      */

@@ -17,8 +17,10 @@ import android.text.TextUtils;
 import android.view.WindowManager;
 
 import com.umeng.socialize.UMShareAPI;
+import com.yufan.library.Global;
 import com.yufan.library.base.BaseActivity;
 import com.yufan.library.inter.ICallBack;
+import com.yufan.library.manager.SPManager;
 import com.yufan.library.manager.UserManager;
 import com.yufan.library.util.FileUtil;
 import com.yushi.leke.R;
@@ -27,6 +29,7 @@ import com.yushi.leke.fragment.login.LoginFragment;
 import com.yushi.leke.fragment.main.MainFragment;
 import com.yushi.leke.fragment.splash.SplashFragment;
 import com.yushi.leke.uamp.MusicService;
+import com.yushi.leke.uamp.model.MusicProvider;
 import com.yushi.leke.uamp.ui.MediaBrowserProvider;
 import com.yushi.leke.uamp.utils.LogHelper;
 import com.yushi.leke.uamp.utils.ResourceHelper;
@@ -42,6 +45,7 @@ private String     TAG="MainActivity";
             "com.yushi.leke.uamp.CURRENT_MEDIA_DESCRIPTION";
     private MediaBrowserCompat mMediaBrowser;
     private List<IActivityResult> results=new ArrayList<>();
+    private String mediaId;
 
     public void registerIActivityResult(IActivityResult callBack) {
         if(!results.contains(callBack)){
@@ -85,6 +89,8 @@ private String     TAG="MainActivity";
         }else {
             loadRootFragment(R.id.activity_content_level0, UIHelper.creat(LoginFragment.class).build());
         }
+         mediaId=  SPManager.getInstance().getString(Global.SP_KEY_MEDIA_ID,"");
+
 
     }
     private void startFullScreenActivityIfNeeded(Intent intent) {
@@ -117,6 +123,9 @@ private String     TAG="MainActivity";
         MediaControllerCompat controllerCompat = MediaControllerCompat.getMediaController(this);
         if (controllerCompat != null) {
             controllerCompat.unregisterCallback(mMediaControllerCallback);
+        }
+        if (mMediaBrowser != null && mMediaBrowser.isConnected() && mediaId != null) {
+            mMediaBrowser.unsubscribe(mediaId);
         }
         mMediaBrowser.disconnect();
     }
@@ -205,6 +214,28 @@ private String     TAG="MainActivity";
                     LogHelper.d(TAG, "onConnected");
                     try {
                         connectToSession(mMediaBrowser.getSessionToken());
+                      String ablumId=  SPManager.getInstance().getString(Global.SP_KEY_ALBUM_ID,"");
+                        if(MusicProvider.getInstance().getMusics().size()==0&& !TextUtils.isEmpty(ablumId)){
+                            mMediaBrowser.unsubscribe(ablumId);
+                            mMediaBrowser.subscribe(ablumId, new MediaBrowserCompat.SubscriptionCallback(){
+                                @Override
+                                public void onChildrenLoaded(@NonNull String parentId,
+                                                             @NonNull List<MediaBrowserCompat.MediaItem> children) {
+                                    try {
+                                        LogHelper.d(TAG, "fragment onChildrenLoaded, parentId=" + parentId +
+                                                "  count=" + children.size());
+
+                                        if(!TextUtils.isEmpty(mediaId)){
+                                            MediaControllerCompat.getMediaController(MainActivity.this).getTransportControls()
+                                                    .prepareFromMediaId(mediaId, null);
+                                        }
+                                    } catch (Throwable t) {
+                                        LogHelper.e(TAG, "Error on childrenloaded", t);
+                                    }
+                                }
+                            });
+
+                        }
                     } catch (RemoteException e) {
                         LogHelper.e(TAG, e, "could not connect media controller");
 
