@@ -44,7 +44,7 @@ public class DetailforalbumFragment extends BaseFragment<DetailforalbumContract.
     }
     private void getdata(){
         ApiManager.getCall(ApiManager.getInstance().create(YFApi.class)
-                .albumdetail(albumId))
+                .albumdetail(String.valueOf(albumId)))
                 .useCache(false)
                 .enqueue(new BaseHttpCallBack() {
                     @Override

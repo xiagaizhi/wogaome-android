@@ -32,10 +32,13 @@ import com.yushi.leke.UIHelper;
 import com.yushi.leke.YFApi;
 import com.yushi.leke.dialog.update.UpdateDialog;
 import com.yushi.leke.dialog.update.UpdateInfo;
+import com.yushi.leke.fragment.album.AlbumDetailFragment;
 import com.yushi.leke.fragment.browser.BrowserBaseFragment;
+import com.yushi.leke.fragment.exhibition.detail.ExhibitionDetailFragment;
 import com.yushi.leke.fragment.home.SubscriptionsFragment;
 import com.yushi.leke.fragment.exhibition.exhibitionHome.ExhibitionFragment;
 import com.yushi.leke.fragment.login.LoginFragment;
+import com.yushi.leke.fragment.splash.advert.NativeJumpInfo;
 import com.yushi.leke.fragment.test.TestListFragment;
 import com.yushi.leke.fragment.ucenter.UCenterFragment;
 
@@ -65,9 +68,20 @@ public class MainFragment extends BaseFragment<MainContract.IView> implements Ma
                     break;
                 case Global.BROADCAST_ACTION_ADJUMP://广告具体跳转
                     String h5Url = intent.getStringExtra("h5Url");
-                    String nativeUrl = intent.getStringExtra("nativeUrl");
-                    if (!TextUtils.isEmpty(nativeUrl)) {
-                        // TODO: 2018/9/19 跳转原生页面
+                    NativeJumpInfo nativeJumpInfo = (NativeJumpInfo) intent.getSerializableExtra("nativeUrl");
+                    if (nativeJumpInfo != null) {//0：活动 1：专辑
+                        if (TextUtils.equals("0", nativeJumpInfo.getDetailType())) {
+                            getRootFragment().start(UIHelper.creat(AlbumDetailFragment.class).put(Global.BUNDLE_KEY_ALBUMID, nativeJumpInfo.getDetailId()).build());
+                        } else if (TextUtils.equals("1", nativeJumpInfo.getDetailType())) {
+                            if (nativeJumpInfo.getActivityProgress() == 0 || nativeJumpInfo.getActivityProgress() == 1) {//h5详情页面
+                                getRootFragment().start(UIHelper.creat(BrowserBaseFragment.class).put(Global.BUNDLE_KEY_BROWSER_URL, ApiManager.getInstance().getApiConfig().getExhibitionDetail(nativeJumpInfo.getDetailId())).build());
+                            } else {//原生详情页面
+                                getRootFragment().start(UIHelper.creat(ExhibitionDetailFragment.class)
+                                        .put(Global.BUNDLE_KEY_EXHIBITION_TYE, nativeJumpInfo.getActivityProgress())
+                                        .put(Global.BUNDLE_KEY_ACTIVITYID, nativeJumpInfo.getDetailId())
+                                        .build());
+                            }
+                        }
                     } else {
                         if (!TextUtils.isEmpty(h5Url)) {
                             start(UIHelper.creat(BrowserBaseFragment.class).put(Global.BUNDLE_KEY_BROWSER_URL, h5Url).build());

@@ -28,12 +28,10 @@
 
     <TextView
         android:id="@+id/tv_badge"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/px16"
+        android:layout_height="@dimen/px16"
         android:layout_alignRight="@+id/view0"
         android:background="@drawable/widget_view_badger_new"
         android:gravity="center"
-        android:textColor="#ffffff"
-        android:textSize="1sp"
         android:visibility="gone" />
 </RelativeLayout>

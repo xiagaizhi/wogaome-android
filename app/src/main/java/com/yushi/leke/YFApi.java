@@ -337,9 +337,11 @@ public interface YFApi {
 
     );
 
+    @FormUrlEncoded
     @POST("app/v1/activity/winlist")
     Call<ResponseBody>
     winlist(//获胜名单
+            @Field("activityId") String activityId
     );
 
     @FormUrlEncoded
@@ -550,26 +552,25 @@ public interface YFApi {
     @FormUrlEncoded
     @POST("app/v1/albumChannelRelation/showAlbum")
     Call<ResponseBody>
-    showAlbum( @Field("channelId") String channelId,
-               @Field("currentPage") String currentPage);
+    showAlbum(@Field("channelId") String channelId,
+              @Field("currentPage") int currentPage);
+
     /**
-     *专辑播放列表
-     *
+     * 专辑播放列表
      */
     @FormUrlEncoded
     @POST("app/v1/albumDetail/getPlayList")
     Call<ResponseBody>
-    getPlayList( @Field("albumId") String channelId);
+    getPlayList(@Field("albumId") String channelId);
 
     /**
-     *专辑详情
-     *
+     * 专辑详情
      */
     @FormUrlEncoded
     @POST("app/v1/albumDetail/getAlbum")
     Call<ResponseBody>
     albumdetail(
-            @Field("albumId")int albumId
+            @Field("albumId") String albumId
     );
 
     /**

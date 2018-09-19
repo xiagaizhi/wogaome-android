@@ -106,6 +106,7 @@ public class UCenterVu extends BaseVu<UCenterContract.Presenter> implements UCen
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.img_messgae://消息
+                mPersenter.openMessagePage();
                 break;
             case R.id.img_player://播放器
                 mPersenter.startPlayer();

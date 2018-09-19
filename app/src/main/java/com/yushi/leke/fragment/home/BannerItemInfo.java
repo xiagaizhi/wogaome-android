@@ -1,5 +1,7 @@
 package com.yushi.leke.fragment.home;
 
+import com.yushi.leke.fragment.splash.advert.NativeJumpInfo;
+
 /**
  * 作者：Created by zhanyangyang on 2018/9/19 14:23
  * 邮箱：zhanyangyang@hzyushi.cn
@@ -11,7 +13,7 @@ public class BannerItemInfo {
     private String deleted;
     private String h5Url;
     private String icon;
-    private String nativeUrl;
+    private NativeJumpInfo nativeUrl;
     private String osType;
     private String sortNumber;
     private String title;
@@ -57,11 +59,11 @@ public class BannerItemInfo {
         this.icon = icon;
     }
 
-    public String getNativeUrl() {
+    public NativeJumpInfo getNativeUrl() {
         return nativeUrl;
     }
 
-    public void setNativeUrl(String nativeUrl) {
+    public void setNativeUrl(NativeJumpInfo nativeUrl) {
         this.nativeUrl = nativeUrl;
     }
 

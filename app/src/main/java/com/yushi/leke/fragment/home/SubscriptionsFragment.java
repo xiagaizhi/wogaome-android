@@ -24,9 +24,12 @@ import com.yushi.leke.UIHelper;
 import com.yushi.leke.YFApi;
 import com.yushi.leke.activity.MusicPlayerActivity;
 import com.yushi.leke.fragment.album.AlbumDetailFragment;
+import com.yushi.leke.fragment.browser.BrowserBaseFragment;
+import com.yushi.leke.fragment.exhibition.detail.ExhibitionDetailFragment;
 import com.yushi.leke.fragment.exhibition.exhibitionHome.ExhibitionErrorBinder;
 import com.yushi.leke.fragment.exhibition.exhibitionHome.ExhibitionErrorInfo;
 import com.yushi.leke.fragment.searcher.SearchFragment;
+import com.yushi.leke.fragment.splash.advert.NativeJumpInfo;
 import com.yushi.leke.util.ArgsUtil;
 
 import org.json.JSONArray;
@@ -44,7 +47,7 @@ import me.drakeet.multitype.MultiTypeAdapter;
 public class SubscriptionsFragment extends BaseListFragment<SubscriptionsContract.IView> implements SubscriptionsContract.Presenter {
     private MultiTypeAdapter adapter;
     private SubscriptionBanner subscriptionBanner;
-    private int albumId;
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -61,7 +64,31 @@ public class SubscriptionsFragment extends BaseListFragment<SubscriptionsContrac
                         break;
                     case SubscriptionsBannerViewBinder.BANNER_BINDER_ITEM:
                         int position = (int) s[1];
-                        getRootFragment().start(UIHelper.creat(AlbumDetailFragment.class).build());
+                        if (subscriptionBanner != null && subscriptionBanner.getBannerItemInfos() != null && subscriptionBanner.getBannerItemInfos().size() > position) {
+                            BannerItemInfo bannerItemInfo = subscriptionBanner.getBannerItemInfos().get(position);
+                            if (bannerItemInfo != null) {
+                                NativeJumpInfo nativeJumpInfo = bannerItemInfo.getNativeUrl();
+                                if (nativeJumpInfo != null) {//0：活动 1：专辑
+                                    if (TextUtils.equals("0", nativeJumpInfo.getDetailType())) {
+                                        getRootFragment().start(UIHelper.creat(AlbumDetailFragment.class).put(Global.BUNDLE_KEY_ALBUMID, nativeJumpInfo.getDetailId()).build());
+                                    } else if (TextUtils.equals("1", nativeJumpInfo.getDetailType())) {
+                                        if (nativeJumpInfo.getActivityProgress() == 0 || nativeJumpInfo.getActivityProgress() == 1) {//h5详情页面
+                                            getRootFragment().start(UIHelper.creat(BrowserBaseFragment.class).put(Global.BUNDLE_KEY_BROWSER_URL, ApiManager.getInstance().getApiConfig().getExhibitionDetail(nativeJumpInfo.getDetailId())).build());
+                                        } else {//原生详情页面
+                                            getRootFragment().start(UIHelper.creat(ExhibitionDetailFragment.class)
+                                                    .put(Global.BUNDLE_KEY_EXHIBITION_TYE, nativeJumpInfo.getActivityProgress())
+                                                    .put(Global.BUNDLE_KEY_ACTIVITYID, nativeJumpInfo.getDetailId())
+                                                    .build());
+                                        }
+                                    }
+                                } else {
+                                    if (!TextUtils.isEmpty(bannerItemInfo.getH5Url())) {
+                                        start(UIHelper.creat(BrowserBaseFragment.class).put(Global.BUNDLE_KEY_BROWSER_URL, bannerItemInfo.getH5Url()).build());
+                                    }
+                                }
+                            }
+                        }
+
 
                         break;
                 }
@@ -70,9 +97,9 @@ public class SubscriptionsFragment extends BaseListFragment<SubscriptionsContrac
         adapter.register(Homeinfo.class, new SubscriptionsViewBinder(new ICallBack() {
             @Override
             public void OnBackResult(Object... s) {
-                Homeinfo info= (Homeinfo) s[0];
+                Homeinfo info = (Homeinfo) s[0];
                 getRootFragment().start(UIHelper.creat(AlbumDetailFragment.class)
-                        .put(Global.BUNDLE_KEY_ALBUMID,info.getAlbumId())
+                        .put(Global.BUNDLE_KEY_ALBUMID, info.getAlbumId())
                         .build());
             }
         }));
@@ -98,21 +125,11 @@ public class SubscriptionsFragment extends BaseListFragment<SubscriptionsContrac
                     @Override
                     public void onSuccess(ApiBean mApiBean) {
                         if (!TextUtils.isEmpty(mApiBean.getData())) {
-                            try {
-                                JSONArray jsonArray = new JSONArray(mApiBean.getData());
-                                List<BannerItemInfo> banners = new ArrayList<>();
-                                for (int i = 0; i < jsonArray.length(); i++) {
-                                    BannerItemInfo bannerItemInfo = JSON.parseObject(jsonArray.optJSONObject(i).toString(), BannerItemInfo.class);
-                                    banners.add(bannerItemInfo);
-                                }
-                                if (banners != null && banners.size() > 0) {
-                                    subscriptionBanner.setBannerItemInfos(banners);
-                                    vu.getRecyclerView().getAdapter().notifyDataSetChanged();
-                                }
-                            } catch (JSONException e) {
-                                e.printStackTrace();
+                            List<BannerItemInfo> banners = JSON.parseArray(mApiBean.getData(), BannerItemInfo.class);
+                            if (banners != null && banners.size() > 0) {
+                                subscriptionBanner.setBannerItemInfos(banners);
+                                vu.getRecyclerView().getAdapter().notifyDataSetChanged();
                             }
-
                         }
                     }
 
@@ -130,7 +147,7 @@ public class SubscriptionsFragment extends BaseListFragment<SubscriptionsContrac
 
     private void getdata(final int currentpage) {
         ApiManager.getCall(ApiManager.getInstance().create(YFApi.class)
-                .showAlbum("2", currentpage+""))
+                .showAlbum("channelId", currentpage))
                 .useCache(false)
                 .enqueue(new YFListHttpCallBack(getVu()) {
                     @Override

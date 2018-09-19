@@ -69,18 +69,23 @@ public class WinlistDialogFragment extends DialogFragment implements View.OnClic
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).winlist())
+        String activityId = "";
+        Bundle args = getArguments();
+        if (args != null) {
+            activityId = args.getString("activityId");
+        }
+        ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).winlist(activityId))
                 .useCache(true)
                 .enqueue(new BaseHttpCallBack() {
                     @Override
                     public void onSuccess(ApiBean mApiBean) {
                         if (TextUtils.isEmpty(mApiBean.getData())) {
                             winProjectInfoList = JSON.parseObject(mApiBean.getData(), WinProjectInfoList.class);
-                           if (winProjectInfoList!=null&&winProjectInfoList.getWinList() != null && winProjectInfoList.getWinList().size()>0){
-                               winListInfoList.clear();
-                               winListInfoList.addAll(winProjectInfoList.getWinList());
-                               mWinListAdapter.notifyDataSetChanged();
-                           }
+                            if (winProjectInfoList != null && winProjectInfoList.getWinList() != null && winProjectInfoList.getWinList().size() > 0) {
+                                winListInfoList.clear();
+                                winListInfoList.addAll(winProjectInfoList.getWinList());
+                                mWinListAdapter.notifyDataSetChanged();
+                            }
                         }
                     }
 

@@ -38,7 +38,7 @@ public class UCenterFragment extends BaseFragment<UCenterContract.IView> impleme
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-//        hasUnreadmsg();
+        hasUnreadmsg();
         getMyProfile();
         getMyBaseInfo();
     }
@@ -110,19 +110,17 @@ public class UCenterFragment extends BaseFragment<UCenterContract.IView> impleme
                         if (!TextUtils.isEmpty(data)) {
                             try {
                                 JSONObject jsonObject = new JSONObject(data);
-                                String hasUnreadMsg = jsonObject.optString("hasUnreadMsg", "N");
-                                if (TextUtils.equals("Y", hasUnreadMsg) || TextUtils.equals("y", hasUnreadMsg)) {
+                                String hasUnreadNoticeMsg = jsonObject.optString("hasUnreadNoticeMsg", "N");
+                                String hasUnreadSysMsg = jsonObject.optString("hasUnreadSysMsg", "N");
+                                if (TextUtils.equals("Y", hasUnreadNoticeMsg)
+                                        || TextUtils.equals("y", hasUnreadNoticeMsg)
+                                        || TextUtils.equals("Y", hasUnreadSysMsg)
+                                        || TextUtils.equals("y", hasUnreadSysMsg)) {
                                     getVu().hasUnreadMsg(true);
-                                    Fragment fragment = getParentFragment();
-                                    if (fragment != null && fragment instanceof MainFragment) {
-                                        ((MainFragment) fragment).hasUnreadMsg(true);
-                                    }
+                                    setMainTabMsgState(true);
                                 } else {
                                     getVu().hasUnreadMsg(false);
-                                    Fragment fragment = getParentFragment();
-                                    if (fragment != null && fragment instanceof MainFragment) {
-                                        ((MainFragment) fragment).hasUnreadMsg(false);
-                                    }
+                                    setMainTabMsgState(false);
                                 }
 
                             } catch (JSONException e) {
@@ -226,14 +224,27 @@ public class UCenterFragment extends BaseFragment<UCenterContract.IView> impleme
 
     @Override
     public void toRefresh() {
-//        hasUnreadmsg();
+        hasUnreadmsg();
         getMyProfile();
         getMyBaseInfo();
     }
 
+    @Override
+    public void openMessagePage() {
+        getVu().hasUnreadMsg(false);
+        setMainTabMsgState(false);
+    }
+
+    private void setMainTabMsgState(boolean hasMsg) {
+        Fragment fragment = getParentFragment();
+        if (fragment != null && fragment instanceof MainFragment) {
+            ((MainFragment) fragment).hasUnreadMsg(hasMsg);
+        }
+    }
+
     public void updatePersonInfo(boolean isAll) {
         if (isAll) {
-//            hasUnreadmsg();
+            hasUnreadmsg();
             getMyProfile();
             getMyBaseInfo();
         } else {
