@@ -14,11 +14,13 @@ import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.yufan.library.Global;
 import com.yufan.library.api.ApiBean;
 import com.yufan.library.api.ApiManager;
 import com.yufan.library.api.YFListHttpCallBack;
 import com.yufan.library.base.BaseListFragment;
 import com.yufan.library.inject.VuClass;
+import com.yufan.library.manager.SPManager;
 import com.yufan.library.view.recycler.PageInfo;
 import com.yushi.leke.YFApi;
 import com.yushi.leke.fragment.test.CategoryItemViewBinder;
@@ -41,7 +43,7 @@ public class MediaBrowserFragment extends BaseListFragment<MediaBrowserContract.
 
 
     private MediaBrowserProvider mMediaFragmentListener;
-    private String mMediaId="__BY_GENRE__/Rock";
+    private String mAlbumId;
 
 
 
@@ -53,7 +55,7 @@ public class MediaBrowserFragment extends BaseListFragment<MediaBrowserContract.
         // fetch browsing information to fill the listview:
         MediaBrowserCompat mediaBrowser = mMediaFragmentListener.getMediaBrowser();
 
-        LogHelper.d(TAG, "fragment.onStart, mediaId=", mMediaId,
+        LogHelper.d(TAG, "fragment.onStart, mediaId=", mAlbumId,
                 "  onConnected=" + mediaBrowser.isConnected());
 
         if (mediaBrowser.isConnected()) {
@@ -66,8 +68,8 @@ public class MediaBrowserFragment extends BaseListFragment<MediaBrowserContract.
     public void onStop() {
         super.onStop();
         MediaBrowserCompat mediaBrowser = mMediaFragmentListener.getMediaBrowser();
-        if (mediaBrowser != null && mediaBrowser.isConnected() && mMediaId != null) {
-            mediaBrowser.unsubscribe(mMediaId);
+        if (mediaBrowser != null && mediaBrowser.isConnected() && mAlbumId != null) {
+            mediaBrowser.unsubscribe(mAlbumId);
         }
         MediaControllerCompat controller = MediaControllerCompat.getMediaController(getActivity());
         if (controller != null) {
@@ -99,12 +101,12 @@ public class MediaBrowserFragment extends BaseListFragment<MediaBrowserContract.
         if (isDetached()) {
             return;
         }
-        mMediaId = getMediaId();
-        if (mMediaId == null) {
-            mMediaId = mMediaFragmentListener.getMediaBrowser().getRoot();
+        mAlbumId = getMediaId();
+        if (mAlbumId == null) {
+            mAlbumId = mMediaFragmentListener.getMediaBrowser().getRoot();
         }
-        mMediaId="__BY_GENRE__/Rock";
-        getVu().updateTitle(mMediaId);
+        SPManager.getInstance().saveValue(Global.SP_KEY_ALBUM_ID,mAlbumId);
+        getVu().updateTitle(mAlbumId);
 
         // Unsubscribing before subscribing is required if this mediaId already has a subscriber
         // on this MediaBrowser instance. Subscribing to an already subscribed mediaId will replace
@@ -115,9 +117,9 @@ public class MediaBrowserFragment extends BaseListFragment<MediaBrowserContract.
         // subscriber or not. Currently this only happens if the mediaID has no previous
         // subscriber or if the media content changes on the service side, so we need to
         // unsubscribe first.
-        mMediaFragmentListener.getMediaBrowser().unsubscribe(mMediaId);
+        mMediaFragmentListener.getMediaBrowser().unsubscribe(mAlbumId);
 
-        mMediaFragmentListener.getMediaBrowser().subscribe(mMediaId, mSubscriptionCallback);
+        mMediaFragmentListener.getMediaBrowser().subscribe(mAlbumId, mSubscriptionCallback);
 
         // Add MediaController callback so we can redraw the list when metadata changes:
         MediaControllerCompat controller = MediaControllerCompat.getMediaController(getActivity());
@@ -139,10 +141,10 @@ public class MediaBrowserFragment extends BaseListFragment<MediaBrowserContract.
                     if (metadata == null) {
                         return;
                     }
+                    SPManager.getInstance().saveValue(Global.SP_KEY_MEDIA_ID,metadata.getDescription().getMediaId());
                     LogHelper.d(TAG, "Received metadata change to media ",
                             metadata.getDescription().getMediaId());
                     getVu().notifyDataSetChanged();
-
                 }//播放的媒体数据发生变化时的回调
 
                 @Override
