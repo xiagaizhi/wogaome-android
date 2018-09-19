@@ -12,7 +12,7 @@ public class AdInfo implements Serializable{
     private String id;
     private String icon;
     private String h5Url;
-    private String nativeUrl;
+    private NativeJumpInfo nativeUrl;
 
 
     private byte[] bitmap;
@@ -49,11 +49,12 @@ public class AdInfo implements Serializable{
         this.h5Url = h5Url;
     }
 
-    public String getNativeUrl() {
+
+    public NativeJumpInfo getNativeUrl() {
         return nativeUrl;
     }
 
-    public void setNativeUrl(String nativeUrl) {
+    public void setNativeUrl(NativeJumpInfo nativeUrl) {
         this.nativeUrl = nativeUrl;
     }
 }
