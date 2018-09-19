@@ -348,8 +348,10 @@ public interface YFApi {
     vote(//投票页面初始化
          @Field("activityId") String activityId
     );
+
     /**
      * 发送修改手机密码验证码
+     *
      * @param
      * @return
      */
@@ -360,8 +362,10 @@ public interface YFApi {
 
 
     );
+
     /**
      * 修改密码
+     *
      * @param
      * @return
      */
@@ -378,8 +382,10 @@ public interface YFApi {
     Call<ResponseBody>
     checkAppUpdate(
     );
+
     /**
      * 获取投票中信息
+     *
      * @param
      * @return
      */
@@ -395,8 +401,10 @@ public interface YFApi {
     Call<ResponseBody>
     logout(
     );
+
     /**
      * 行业选择列表
+     *
      * @param
      * @return
      */
@@ -404,10 +412,12 @@ public interface YFApi {
     @POST("app/v1/activity/listIndustryFromProject")
     Call<ResponseBody>
     getindustrylist(
-            @Field("activityId") String  activityId
+            @Field("activityId") String activityId
     );
+
     /**
      * 城市选择列表
+     *
      * @param
      * @return
      */
@@ -415,10 +425,12 @@ public interface YFApi {
     @POST("app/v1/activity/listAddressFromProject")
     Call<ResponseBody>
     getcitylist(
-            @Field("activityId") String  activityId
+            @Field("activityId") String activityId
     );
+
     /**
      * 行业城市选择投票中项目
+     *
      * @param
      * @return
      */
@@ -427,12 +439,14 @@ public interface YFApi {
     Call<ResponseBody>
     getvoteingallpro(
             @Field("currentPage") int currentPage,
-            @Field("activityId") String  activityId,
-            @Field("industry")String industry,
-            @Field("address")String address
+            @Field("activityId") String activityId,
+            @Field("industry") String industry,
+            @Field("address") String address
     );
+
     /**
      * 获取投票已结束信息
+     *
      * @param
      * @return
      */
@@ -443,8 +457,10 @@ public interface YFApi {
             @Field("currentPage") int currentPage,
             @Field("activityId") String activityId
     );
+
     /**
      * 行业城市选择投票已结束项目
+     *
      * @param
      * @return
      */
@@ -453,13 +469,16 @@ public interface YFApi {
     Call<ResponseBody>
     getvoteendallpro(
             @Field("currentPage") int currentPage,
-            @Field("activityId") String  activityId,
-            @Field("industry")String industry,
-            @Field("address")String address
+            @Field("activityId") String activityId,
+            @Field("industry") String industry,
+            @Field("address") String address
     );
-    @POST("app/v1/common/initAd")
+
+    @FormUrlEncoded
+    @POST("app/v1/common/getGuideAd")
     Call<ResponseBody>
-    initAd(//广告初始化
+    getGuideAd(//广告初始化
+               @Field("osType") int osType //1:iOS 2:Android
     );
 
     @FormUrlEncoded
@@ -492,49 +511,47 @@ public interface YFApi {
 
     /**
      * 全局搜索
-     *
      */
     @FormUrlEncoded
     @POST("app/v1/audioActivitySearch/globalSearch")
     Call<ResponseBody>
-    globalSearch( @Field("content") String content);
+    globalSearch(@Field("content") String content);
+
     /**
      * 音频搜索
-     *
      */
     @FormUrlEncoded
     @POST("app/v1/audioActivitySearch/audioSearch")
     Call<ResponseBody>
-    audioSearch( @Field("content") String content,
-                 @Field("currentPage") String currentPage
+    audioSearch(@Field("content") String content,
+                @Field("currentPage") String currentPage
     );
+
     /**
      * 活动搜索
-     *
      */
     @FormUrlEncoded
     @POST("app/v1/audioActivitySearch/activitySearch")
     Call<ResponseBody>
-    activitySearch( @Field("content") String content,
-                    @Field("currentPage") String currentPage);
+    activitySearch(@Field("content") String content,
+                   @Field("currentPage") String currentPage);
+
     /**
-     *专辑详情
-     *
+     * 专辑详情
      */
     @FormUrlEncoded
     @POST("app/v1/albumDetail/getAlbum")
     Call<ResponseBody>
-    getAlbum( @Field("albumId") String albumId);
+    getAlbum(@Field("albumId") String albumId);
 
     /**
-     *首页专辑列表
-     *
+     * 首页专辑列表
      */
     @FormUrlEncoded
     @POST("app/v1/albumChannelRelation/showAlbum")
     Call<ResponseBody>
-    showAlbum( @Field("channelId") String channelId,
-               @Field("currentPage")int  currentPage);
+    showAlbum(@Field("channelId") String channelId,
+              @Field("currentPage") int currentPage);
 
 
 }

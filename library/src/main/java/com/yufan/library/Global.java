@@ -26,7 +26,7 @@ public class Global {
     /**
      * 广告key
      */
-    public static final String SP_AD_KEY = "SP_AD_KEY";
+    public static final String SP_AD_ID = "SP_AD_ID";
     public static final String SP_GUIDE_KEY = "SP_GUIDE_KEY";
     public static final String ARG_MEDIA_ID = "media_id";
     /**

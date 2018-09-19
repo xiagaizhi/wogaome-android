@@ -30,7 +30,7 @@ import com.yushi.leke.fragment.browser.BrowserBaseFragment;
  */
 @VuClass(AdFragmentVu.class)
 public class AdFragmentFragment extends BaseFragment<AdFragmentContract.IView> implements AdFragmentContract.Presenter {
-    private String adKey;
+    private String adId;
     private Bitmap bitmap;
     private AdInfo adInfo;
     private boolean isJumpTomain;
@@ -62,9 +62,9 @@ public class AdFragmentFragment extends BaseFragment<AdFragmentContract.IView> i
         super.onViewCreated(view, savedInstanceState);
         Bundle bundle = getArguments();
         if (bundle != null) {
-            adKey = bundle.getString("adKey");
-            if (!TextUtils.isEmpty(adKey)) {
-                adInfo = (AdInfo) CacheManager.readObject(_mActivity, adKey);
+            adId = bundle.getString("adId");
+            if (!TextUtils.isEmpty(adId)) {
+                adInfo = (AdInfo) CacheManager.readObject(_mActivity, adId);
                 if (adInfo != null) {
                     bitmap = BitmapFactory.decodeByteArray(adInfo.getBitmap(), 0, adInfo.getBitmap().length);
                     getVu().updateAd(adInfo, bitmap);
@@ -103,9 +103,9 @@ public class AdFragmentFragment extends BaseFragment<AdFragmentContract.IView> i
         //打开广告具体跳转页面
         Intent filter = new Intent();
         filter.setAction(Global.BROADCAST_ACTION_ADJUMP);
-        filter.putExtra("actionUrl", adInfo.getActionUrl());
+        filter.putExtra("h5Url", adInfo.getH5Url());
+        filter.putExtra("nativeUrl",adInfo.getNativeUrl());
         LocalBroadcastManager.getInstance(BaseApplication.getInstance()).sendBroadcast(filter);
-//        getRootFragment().start(UIHelper.creat(BrowserBaseFragment.class).put(Global.BUNDLE_KEY_BROWSER_URL, adInfo.getActionUrl()).build());
         //关闭广告页面
         mHandler.sendEmptyMessageDelayed(0x200,100);
     }
