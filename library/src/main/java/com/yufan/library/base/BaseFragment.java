@@ -44,6 +44,7 @@ public abstract class BaseFragment<V extends Vu> extends SupportFragment impleme
         try {
             vu =(V) AnnotateUtils.getVu(this).newInstance();
             vu.setPresenter(this);
+            getBundleDate();
             vu.init(inflater, container);
             view = vu.getView();
         } catch (java.lang.InstantiationException e) {
@@ -53,6 +54,9 @@ public abstract class BaseFragment<V extends Vu> extends SupportFragment impleme
         }
 
         return view;
+    }
+
+    public void getBundleDate(){
     }
     @Override
     public void onLazyInitView(@Nullable Bundle savedInstanceState) {

@@ -9,7 +9,7 @@ import java.io.Serializable;
  */
 
 public class AdInfo implements Serializable{
-    private String id;
+    private String key;
     private String icon;
     private String h5Url;
     private NativeJumpInfo nativeUrl;
@@ -25,12 +25,12 @@ public class AdInfo implements Serializable{
         this.bitmap = bitmap;
     }
 
-    public String getId() {
-        return id;
+    public String getKey() {
+        return key;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setKey(String key) {
+        this.key = key;
     }
 
     public String getIcon() {

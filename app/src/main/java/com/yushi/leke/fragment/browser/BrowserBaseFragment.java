@@ -10,7 +10,9 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
 import com.alibaba.fastjson.JSON;
 import com.aliyun.vodplayer.utils.JsonUtil;
@@ -61,20 +63,31 @@ public class BrowserBaseFragment extends BaseFragment<BrowserContract.View> impl
     private WebSettings webSetting;
 
     //    private int REQUEST_CODE_CHOOSE=8;
+    private boolean haveHead = true;
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        initbrowser(vu.getWebView());
+    }
+
+    @Override
+    public void getBundleDate() {
         Bundle bundle = getArguments();
         if (bundle != null) {
             mIntentUrl = bundle.getString(Global.BUNDLE_KEY_BROWSER_URL);
+            haveHead = bundle.getBoolean(Global.BUNDLE_KEY_BROWSER_HAVE_HEAD,true);
         }
-        initbrowser(vu.getWebView());
     }
 
 
     @Override
     public boolean isPtrEnable() {
         return false;
+    }
+
+    @Override
+    public boolean getHaveHead() {
+        return haveHead;
     }
 
 

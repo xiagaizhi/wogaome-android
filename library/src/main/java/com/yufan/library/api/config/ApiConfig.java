@@ -78,7 +78,7 @@ public class ApiConfig {
      * 我的路演
      */
     public String getMyRoadShow() {
-        return webDomains[apiType] + "#/";
+        return webDomains[apiType] + "#/play/my";
     }
 
     /**
@@ -92,7 +92,7 @@ public class ApiConfig {
      * 我的投票
      */
     public String getMyVote() {
-        return webDomains[apiType] + "#/";
+        return webDomains[apiType] + "#/myVote";
     }
 
     /**

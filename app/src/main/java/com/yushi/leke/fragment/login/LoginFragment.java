@@ -1,6 +1,9 @@
 package com.yushi.leke.fragment.login;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -25,6 +28,7 @@ import com.yufan.library.base.BaseFragment;
 import android.os.SystemClock;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.content.LocalBroadcastManager;
 import android.view.View;
 import android.view.WindowManager;
 
@@ -43,6 +47,7 @@ import com.yushi.leke.BuildConfig;
 import com.yushi.leke.UIHelper;
 import com.yushi.leke.YFApi;
 import com.yushi.leke.activity.MainActivity;
+import com.yushi.leke.dialog.update.UpgradeUtil;
 import com.yushi.leke.fragment.browser.BrowserBaseFragment;
 import com.yushi.leke.fragment.login.loginPhone.LoginPhoneFragment;
 import com.yushi.leke.fragment.main.MainFragment;
@@ -62,20 +67,37 @@ public class LoginFragment extends BaseFragment<LoginContract.IView> implements 
     private long[] mHits = new long[5];
     private ShareUtils mShareUtils;
 
+    private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            switch (action) {
+                case Global.BROADCAST_ACTION_UPGRADE:
+                    UpgradeUtil.checkAppUpdate(_mActivity);
+                    break;
+            }
+        }
+    };
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(Global.BROADCAST_ACTION_UPGRADE);
+        LocalBroadcastManager.getInstance(_mActivity).registerReceiver(broadcastReceiver, intentFilter);
     }
-    private  MainActivity.IActivityResult  mResult=   new MainActivity.IActivityResult() {
+
+    private MainActivity.IActivityResult mResult = new MainActivity.IActivityResult() {
         @Override
         public void onActivityResult(int requestCode, int resultCode, Intent data) {
-            UMShareAPI.get(getActivity()).onActivityResult(requestCode,resultCode,data);
+            UMShareAPI.get(getActivity()).onActivityResult(requestCode, resultCode, data);
         }
     };
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING|WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING | WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         mShareUtils = new ShareUtils(getActivity());
         ((MainActivity) getActivity()).registerIActivityResult(mResult);
         clearCookie();
@@ -85,13 +107,13 @@ public class LoginFragment extends BaseFragment<LoginContract.IView> implements 
     public void onDestroy() {
         super.onDestroy();
         ((MainActivity) getActivity()).unregisterIActivityResult(mResult);
+        LocalBroadcastManager.getInstance(_mActivity).unregisterReceiver(broadcastReceiver);
     }
 
     @Override
     public void onRefresh() {
 
     }
-
 
 
     @Override
@@ -107,7 +129,7 @@ public class LoginFragment extends BaseFragment<LoginContract.IView> implements 
     @Override
     public void onWeixinLoginClick() {
 
-        if(!mShareUtils.isInstall(getActivity(),SHARE_MEDIA.WEIXIN)){
+        if (!mShareUtils.isInstall(getActivity(), SHARE_MEDIA.WEIXIN)) {
             DialogManager.getInstance().toast("未安装微信");
             return;
         }
@@ -117,22 +139,22 @@ public class LoginFragment extends BaseFragment<LoginContract.IView> implements 
             @Override
             public void onSuccess(Map<String, String> map, SHARE_MEDIA share_media, Map<String, String> map1) {
                 DialogManager.getInstance().dismiss();
-                if(share_media==SHARE_MEDIA.WEIXIN){
-               EnhancedCall call= ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).registerViaOAuth(map.get("accessToken"),"1",map.get("openid")));
+                if (share_media == SHARE_MEDIA.WEIXIN) {
+                    EnhancedCall call = ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).registerViaOAuth(map.get("accessToken"), "1", map.get("openid")));
                     call.enqueue(new BaseHttpCallBack() {
                         @Override
                         public void onSuccess(ApiBean mApiBean) {
-                            JSONObject jsonObject= JSON.parseObject(mApiBean.getData());
+                            JSONObject jsonObject = JSON.parseObject(mApiBean.getData());
                             UserManager.getInstance().setToken(jsonObject.getString("token"));
                             UserManager.getInstance().setUid(jsonObject.getString("uid"));
                             App.getApp().registerXGPush(UserManager.getInstance().getUid());
-                            startWithPopTo(UIHelper.creat(MainFragment.class).build(), LoginFragment.class,true);
+                            startWithPopTo(UIHelper.creat(MainFragment.class).build(), LoginFragment.class, true);
                             mShareUtils.logout(SHARE_MEDIA.WEIXIN);
                             // 用户登录埋点
                             MANService manService = MANServiceProvider.getService();
                             manService.getMANAnalytics().updateUserAccount("usernick", "weixinlogin");
                             App.getApp().registerXGPush(UserManager.getInstance().getUid());
-                            ArgsUtil.datapoint(ArgsUtil.REG_WX_NAME,"null",ArgsUtil.UID,ArgsUtil.REG_WX_CODE,null,null);
+                            ArgsUtil.datapoint(ArgsUtil.REG_WX_NAME, "null", ArgsUtil.UID, ArgsUtil.REG_WX_CODE, null, null);
                         }
 
                         @Override
@@ -145,8 +167,8 @@ public class LoginFragment extends BaseFragment<LoginContract.IView> implements 
 
                         }
                     });
-                }else {
-                   // ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).registerViaOAuth(map.get("accessToken"),"2"));
+                } else {
+                    // ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).registerViaOAuth(map.get("accessToken"),"2"));
                 }
 
             }
@@ -177,10 +199,10 @@ public class LoginFragment extends BaseFragment<LoginContract.IView> implements 
         SPManager.getInstance().saveValue(Global.SP_KEY_SERVICE_TYPE, dialog.getSelectedIndex());
         DialogManager.getInstance().toast("修改成功");
         clearCookie();
-        ApiManager.getInstance().init(SPManager.getInstance().getInt(Global.SP_KEY_SERVICE_TYPE,BuildConfig.API_TYPE));
+        ApiManager.getInstance().init(SPManager.getInstance().getInt(Global.SP_KEY_SERVICE_TYPE, BuildConfig.API_TYPE));
     }
 
-    private void clearCookie(){
+    private void clearCookie() {
         CookieSyncManager.createInstance(getActivity());
         CookieManager.getInstance().removeAllCookie();
         CookieManager.getInstance().removeSessionCookie();
@@ -193,7 +215,7 @@ public class LoginFragment extends BaseFragment<LoginContract.IView> implements 
         System.arraycopy(mHits, 1, mHits, 0, mHits.length - 1);
         mHits[mHits.length - 1] = SystemClock.uptimeMillis();
         if (mHits[0] >= (SystemClock.uptimeMillis() - 1000)) {
-            mHits=new long[5];
+            mHits = new long[5];
             int apiType = SPManager.getInstance().getInt(Global.SP_KEY_SERVICE_TYPE, BuildConfig.API_TYPE);
             getVu().showServiceSelector(apiType);
         }
@@ -208,6 +230,6 @@ public class LoginFragment extends BaseFragment<LoginContract.IView> implements 
     @Override
     public void onSupportInvisible() {
         super.onSupportInvisible();
-        SoftInputUtil.hideSoftInput(getActivity(),getView());
+        SoftInputUtil.hideSoftInput(getActivity(), getView());
     }
 }

@@ -32,6 +32,7 @@ import com.yushi.leke.UIHelper;
 import com.yushi.leke.YFApi;
 import com.yushi.leke.dialog.update.UpdateDialog;
 import com.yushi.leke.dialog.update.UpdateInfo;
+import com.yushi.leke.dialog.update.UpgradeUtil;
 import com.yushi.leke.fragment.album.AlbumDetailFragment;
 import com.yushi.leke.fragment.browser.BrowserBaseFragment;
 import com.yushi.leke.fragment.exhibition.detail.ExhibitionDetailFragment;
@@ -52,7 +53,6 @@ import me.yokeyword.fragmentation.anim.FragmentAnimator;
 public class MainFragment extends BaseFragment<MainContract.IView> implements MainContract.Presenter {
     private SupportFragment[] mFragments = new SupportFragment[3];
     private long[] mHits = new long[2];
-    private UpdateInfo updateInfo;
 
 
     private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
@@ -89,7 +89,7 @@ public class MainFragment extends BaseFragment<MainContract.IView> implements Ma
                     }
                     break;
                 case Global.BROADCAST_ACTION_UPGRADE:
-                    checkAppUpdate();
+                    UpgradeUtil.checkAppUpdate(_mActivity);
                     break;
             }
         }
@@ -130,45 +130,6 @@ public class MainFragment extends BaseFragment<MainContract.IView> implements Ma
             mFragments[1] = findChildFragment(ExhibitionFragment.class);
             mFragments[2] = findChildFragment(UCenterFragment.class);
         }
-    }
-
-    /**
-     * 检查更新
-     */
-    private void checkAppUpdate() {
-        ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).checkAppUpdate()).useCache(false).enqueue(new BaseHttpCallBack() {
-            @Override
-            public void onSuccess(ApiBean mApiBean) {
-                if (!TextUtils.isEmpty(mApiBean.getData())) {
-                    updateInfo = JSON.parseObject(mApiBean.getData(), UpdateInfo.class);
-                    showUpdateDialog();
-                }
-            }
-
-            @Override
-            public void onError(int id, Exception e) {
-
-            }
-
-            @Override
-            public void onFinish() {
-
-            }
-        });
-    }
-
-    private void showUpdateDialog() {
-        if (updateInfo != null && updateInfo.isNeedUpdate()) {
-            UpdateDialog updateDialog = new UpdateDialog(_mActivity, updateInfo, new ICallBack() {
-                @Override
-                public void OnBackResult(Object... s) {
-                    //退出app
-                    _mActivity.finish();
-                }
-            });
-            updateDialog.show();
-        }
-
     }
 
     public void hasUnreadMsg(boolean hasUnreadMsg) {

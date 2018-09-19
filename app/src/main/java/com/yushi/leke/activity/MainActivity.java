@@ -124,7 +124,7 @@ private String     TAG="MainActivity";
         if (controllerCompat != null) {
             controllerCompat.unregisterCallback(mMediaControllerCallback);
         }
-        if (mMediaBrowser != null && mMediaBrowser.isConnected() && mediaId != null) {
+        if (mMediaBrowser != null && mMediaBrowser.isConnected() &&  !TextUtils.isEmpty(mediaId)) {
             mMediaBrowser.unsubscribe(mediaId);
         }
         mMediaBrowser.disconnect();

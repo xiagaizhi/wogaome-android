@@ -111,9 +111,9 @@ public class SplashFragment extends BaseFragment<SplashContract.IView> implement
     }
 
     private void getAdInfo() {
-        String adId = SPManager.getInstance().getString(Global.SP_AD_ID, "");
-        if (!TextUtils.isEmpty(adId) && CacheManager.isExistDataCache(_mActivity, adId)) {//广告缓存存在，直接展示
-            Serializable serializable = CacheManager.readObject(_mActivity, adId);
+        String adKey = SPManager.getInstance().getString(Global.SP_AD_KEY, "");
+        if (!TextUtils.isEmpty(adKey) && CacheManager.isExistDataCache(_mActivity, adKey)) {//广告缓存存在，直接展示
+            Serializable serializable = CacheManager.readObject(_mActivity, adKey);
             if (serializable != null && serializable instanceof AdInfo) {
                 adInfo = (AdInfo) serializable;
             }
@@ -127,15 +127,15 @@ public class SplashFragment extends BaseFragment<SplashContract.IView> implement
                     if (!TextUtils.isEmpty(mApiBean.getData())) {
                         final AdInfo mAdInfo = JSON.parseObject(mApiBean.getData(), AdInfo.class);
                         if (mAdInfo != null) {
-                            if (!CacheManager.isExistDataCache(_mActivity, mAdInfo.getId())) {
+                            if (!CacheManager.isExistDataCache(_mActivity, mAdInfo.getKey())) {
                                 Glide.with(_mActivity).load(mAdInfo.getIcon()).asBitmap().into(new SimpleTarget<Bitmap>() {
                                     @Override
                                     public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
                                         ByteArrayOutputStream baos = new ByteArrayOutputStream();
                                         resource.compress(Bitmap.CompressFormat.JPEG, 80, baos);
                                         mAdInfo.setBitmap(baos.toByteArray());
-                                        CacheManager.saveObject(_mActivity, mAdInfo, mAdInfo.getId());
-                                        SPManager.getInstance().saveValue(Global.SP_AD_ID, mAdInfo.getId());
+                                        CacheManager.saveObject(_mActivity, mAdInfo, mAdInfo.getKey());
+                                        SPManager.getInstance().saveValue(Global.SP_AD_KEY, mAdInfo.getKey());
                                     }
                                 });
                             }
@@ -173,8 +173,8 @@ public class SplashFragment extends BaseFragment<SplashContract.IView> implement
                     UIHelper.openFragment(_mActivity, UIHelper.creat(GuideFragmentFragment.class).build(), false);
                     SPManager.getInstance().saveValue(Global.SP_GUIDE_KEY + YFUtil.getVersionName(), true);
                 } else {
-                    if (adInfo != null && !TextUtils.isEmpty(adInfo.getId())) {
-                        UIHelper.openFragment(_mActivity, UIHelper.creat(AdFragmentFragment.class).put("adId", adInfo.getId()).build(), false);
+                    if (adInfo != null && !TextUtils.isEmpty(adInfo.getKey())) {
+                        UIHelper.openFragment(_mActivity, UIHelper.creat(AdFragmentFragment.class).put(Global.BUNDLE_AD_KEY, adInfo.getKey()).build(), false);
                     } else {
                         if (_mActivity != null && !_mActivity.isFinishing()) {
                             WindowManager.LayoutParams lp = _mActivity.getWindow().getAttributes();

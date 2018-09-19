@@ -30,7 +30,7 @@ import com.yushi.leke.fragment.browser.BrowserBaseFragment;
  */
 @VuClass(AdFragmentVu.class)
 public class AdFragmentFragment extends BaseFragment<AdFragmentContract.IView> implements AdFragmentContract.Presenter {
-    private String adId;
+    private String adKey;
     private Bitmap bitmap;
     private AdInfo adInfo;
     private boolean isJumpTomain;
@@ -62,9 +62,9 @@ public class AdFragmentFragment extends BaseFragment<AdFragmentContract.IView> i
         super.onViewCreated(view, savedInstanceState);
         Bundle bundle = getArguments();
         if (bundle != null) {
-            adId = bundle.getString("adId");
-            if (!TextUtils.isEmpty(adId)) {
-                adInfo = (AdInfo) CacheManager.readObject(_mActivity, adId);
+            adKey = bundle.getString(Global.BUNDLE_AD_KEY);
+            if (!TextUtils.isEmpty(adKey)) {
+                adInfo = (AdInfo) CacheManager.readObject(_mActivity, adKey);
                 if (adInfo != null) {
                     bitmap = BitmapFactory.decodeByteArray(adInfo.getBitmap(), 0, adInfo.getBitmap().length);
                     getVu().updateAd(adInfo, bitmap);

@@ -21,16 +21,15 @@ import com.yushi.leke.R;
  * Created by mengfantao on 18/7/26.
  */
 @FindLayout(layoutName = "browser_layout", statusLayoutParentName = "rl_status")
-public class BrowserVu extends BaseVu<BrowserContract.Presenter>  implements BrowserContract.View{
-  private   TextView titleView;//标题
+public class BrowserVu extends BaseVu<BrowserContract.Presenter> implements BrowserContract.View {
+    private TextView titleView;//标题
     private ViewGroup mViewParent;
     private PtrClassicFrameLayout mPtrClassicFrameLayout;
     private ProgressBar mPageLoadingProgressBar;
     private WebView mWebView;
     private View myVideoView;
     private View myNormalView;
-
-
+    private ImageView leftView;
 
 
     @Override
@@ -46,7 +45,7 @@ public class BrowserVu extends BaseVu<BrowserContract.Presenter>  implements Bro
         mPageLoadingProgressBar.setMax(100);
         mPageLoadingProgressBar.setProgressDrawable(getContext().getResources()
                 .getDrawable(R.drawable.color_progressbar));
-        if(!mPersenter.isPtrEnable()){
+        if (!mPersenter.isPtrEnable()) {
             mPtrClassicFrameLayout.setPullToRefresh(false);
         }
         mWebView = new WebView(getContext(), null);
@@ -57,7 +56,7 @@ public class BrowserVu extends BaseVu<BrowserContract.Presenter>  implements Bro
 
     @Override
     public boolean initTitle(AppToolbar appToolbar) {
-        ImageView leftView=  appToolbar.creatLeftView(ImageView.class);
+        leftView = appToolbar.creatLeftView(ImageView.class);
         leftView.setImageResource(R.drawable.left_back_black_arrows);
         leftView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,7 +64,7 @@ public class BrowserVu extends BaseVu<BrowserContract.Presenter>  implements Bro
                 mPersenter.onBackPressed();
             }
         });
-        titleView= appToolbar.creatCenterView(TextView.class);
+        titleView = appToolbar.creatCenterView(TextView.class);
         titleView.setText("");
         titleView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,9 +74,13 @@ public class BrowserVu extends BaseVu<BrowserContract.Presenter>  implements Bro
         });
         titleView.setLines(1);
         titleView.setEllipsize(TextUtils.TruncateAt.END);
-        ImageView rightView=  appToolbar.creatRightView(ImageView.class);
+        ImageView rightView = appToolbar.creatRightView(ImageView.class);
         rightView.setVisibility(View.GONE);
-        appToolbar.build();
+        if (!mPersenter.getHaveHead()){
+            titleView.setTextColor(getContext().getResources().getColor(R.color.white));
+            leftView.setImageResource(R.drawable.left_back_white_arrows);
+        }
+        appToolbar.build(mPersenter.getHaveHead());
         return true;
     }
 
@@ -116,8 +119,8 @@ public class BrowserVu extends BaseVu<BrowserContract.Presenter>  implements Bro
 
     @Override
     public void onReceivedTitle(WebView view, String arg1) {
-        if (!TextUtils.isEmpty(arg1) ) {
-            if (titleView!= null) {
+        if (!TextUtils.isEmpty(arg1)) {
+            if (titleView != null) {
                 titleView.setText(arg1);
             }
         }
@@ -127,10 +130,16 @@ public class BrowserVu extends BaseVu<BrowserContract.Presenter>  implements Bro
     @Override
     public void onPageFinished(WebView view, String url) {
 
-        if(mPtrClassicFrameLayout!=null){
+        if (mPtrClassicFrameLayout != null) {
             mPtrClassicFrameLayout.refreshComplete();
         }
         mPageLoadingProgressBar.setVisibility(View.GONE);
+        if (!mPersenter.getHaveHead()){
+            titleView.setTextColor(getContext().getResources().getColor(R.color.white));
+            leftView.setImageResource(R.drawable.left_back_white_arrows);
+        }
+
+
 
     }
 
@@ -141,6 +150,9 @@ public class BrowserVu extends BaseVu<BrowserContract.Presenter>  implements Bro
 
     @Override
     public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
-
+        if (!mPersenter.getHaveHead()){
+            titleView.setTextColor(getContext().getResources().getColor(R.color.color_gray_level3));
+            leftView.setImageResource(R.drawable.left_back_black_arrows);
+        }
     }
 }

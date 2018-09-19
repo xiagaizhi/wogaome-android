@@ -13,8 +13,10 @@ public class Global {
      * 浏览器页面url
      */
     public static final String BUNDLE_KEY_BROWSER_URL = "BUNDLE_KEY_BROWSER_URL";
+    public static final String BUNDLE_KEY_BROWSER_HAVE_HEAD = "BUNDLE_KEY_BROWSER_HAVE_HEAD";
 
     public static final String BUNDLE_KEY_EXHIBITION_TYE = "BUNDLE_KEY_EXHIBITION_TYE";
+    public static final String BUNDLE_AD_KEY = "BUNDLE_AD_KEY";
 
     public static final String SP_KEY_SERVICE_TYPE = "SP_KEY_SERVICE_TYPE";
     public static final String SP_KEY_MEDIA_ID = "SP_KEY_MEDIA_ID";
@@ -32,7 +34,7 @@ public class Global {
     /**
      * 广告key
      */
-    public static final String SP_AD_ID = "SP_AD_ID";
+    public static final String SP_AD_KEY = "SP_AD_KEY";
     public static final String SP_GUIDE_KEY = "SP_GUIDE_KEY";
     public static final String ARG_MEDIA_ID = "media_id";
     /**

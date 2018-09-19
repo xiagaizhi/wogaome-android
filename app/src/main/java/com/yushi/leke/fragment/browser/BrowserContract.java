@@ -42,5 +42,6 @@ public interface BrowserContract {
     interface Presenter extends Pr {
         void onBackPressed();
        boolean isPtrEnable();
+       boolean getHaveHead();
     }
 }
