@@ -17,7 +17,6 @@
 package com.yushi.leke.uamp.model;
 
 import android.graphics.Bitmap;
-import android.os.AsyncTask;
 import android.support.v4.media.MediaBrowserCompat;
 import android.support.v4.media.MediaMetadataCompat;
 
@@ -27,7 +26,6 @@ import com.alibaba.fastjson.JSONObject;
 import com.yufan.library.api.ApiBean;
 import com.yufan.library.api.ApiManager;
 import com.yufan.library.api.BaseHttpCallBack;
-import com.yufan.library.api.YFListHttpCallBack;
 import com.yushi.leke.YFApi;
 import com.yushi.leke.fragment.album.audioList.AlbumAudio;
 import com.yushi.leke.uamp.utils.LogHelper;
@@ -36,9 +34,7 @@ import com.yushi.leke.uamp.utils.MediaIDHelper;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Locale;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
