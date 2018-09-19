@@ -24,8 +24,10 @@ import android.text.TextUtils;
 
 
 import com.yushi.leke.uamp.model.MusicProvider;
+import com.yushi.leke.uamp.model.MutableMediaMetadata;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 
@@ -53,9 +55,9 @@ public class QueueHelper {
         String categoryValue = hierarchy[1];
     LogHelper.d(TAG, "Creating playing queue for ", categoryType, ",  ", categoryValue);
 
-        Iterable<MediaMetadataCompat> tracks = null;
+        Collection<MutableMediaMetadata> tracks = null;
         // This sample only supports genre and by_search category types.
-        tracks = musicProvider.getMusicsByGenre();
+        tracks = musicProvider.getMusics();
         if (tracks == null) {
            LogHelper.e(TAG, "Unrecognized category type: ", categoryType, " for media ", mediaId);
             return null;
@@ -90,17 +92,17 @@ public class QueueHelper {
     }
 
     private static List<MediaSessionCompat.QueueItem> convertToQueue(
-            Iterable<MediaMetadataCompat> tracks, String... categories) {
+            Collection<MutableMediaMetadata> tracks, String... categories) {
         List<MediaSessionCompat.QueueItem> queue = new ArrayList<>();
         int count = 0;
-        for (MediaMetadataCompat track : tracks) {
+        for (MutableMediaMetadata track : tracks) {
 
             // We create a hierarchy-aware mediaID, so we know what the queue is about by looking
             // at the QueueItem media IDs.
             String hierarchyAwareMediaID = MediaIDHelper.createMediaID(
-                    track.getDescription().getMediaId(), categories);
+                    track.metadata.getDescription().getMediaId(), categories);
 
-            MediaMetadataCompat trackCopy = new MediaMetadataCompat.Builder(track)
+            MediaMetadataCompat trackCopy = new MediaMetadataCompat.Builder(track.metadata)
                     .putString(MediaMetadataCompat.METADATA_KEY_MEDIA_ID, hierarchyAwareMediaID)
                     .build();
 

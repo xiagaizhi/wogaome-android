@@ -96,4 +96,17 @@ public abstract class BaseListVu <T extends Pr>extends BaseVu implements VuList{
         appToolbar.build();
         return true;
     }
+    public  void setStateError() {
+
+        if(getRecyclerView().getPageManager().getCurrentIndex()!=1){
+            mStateLayout.setStateError();
+        }
+    }
+
+    public final void setStateEmpty() {
+
+        if(getRecyclerView().getPageManager().getCurrentIndex()!=1){
+            mStateLayout.setStateEmpty();
+        }
+    }
 }
