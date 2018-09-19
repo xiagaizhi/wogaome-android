@@ -36,8 +36,8 @@
             android:layout_width="@dimen/px200"
             android:layout_height="@dimen/px200"
             android:layout_centerInParent="true"
-            fresco:failureImage="@drawable/ic_head_default"
-            fresco:placeholderImage="@drawable/ic_head_default"
+            fresco:failureImage="@drawable/default_head"
+            fresco:placeholderImage="@drawable/default_head"
             fresco:placeholderImageScaleType="focusCrop"
             fresco:roundAsCircle="true" />
 

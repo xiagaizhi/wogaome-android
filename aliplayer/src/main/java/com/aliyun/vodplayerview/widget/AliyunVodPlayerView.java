@@ -654,6 +654,12 @@ public class AliyunVodPlayerView extends RelativeLayout implements ITheme {
                 switchPlayerState();
             }
         });
+        mControlView.setmOnControlVolumeClickListener(new ControlView.OnControlVolumeClickListener() {
+            @Override
+            public void onControlVolumeClick(boolean isQuiet) {
+                mAliyunVodPlayer.setMuteMode(isQuiet);
+            }
+        });
         //设置进度条的seek监听
         mControlView.setOnSeekListener(new ControlView.OnSeekListener() {
             @Override
@@ -1213,6 +1219,8 @@ public class AliyunVodPlayerView extends RelativeLayout implements ITheme {
             public void onAutoPlayStarted() {
                 //自动播放开始,需要设置播放状态
                 mControlView.setPlayState(ControlView.PlayState.Playing);
+                mAliyunVodPlayer.setMuteMode(true);
+                mControlView.setmPlayVolumeState(ControlView.PlayVoice.Quiet);
                 if (mOutAutoPlayListener != null) {
                     mOutAutoPlayListener.onAutoPlayStarted();
                 }
@@ -1738,6 +1746,7 @@ public class AliyunVodPlayerView extends RelativeLayout implements ITheme {
 
         clearAllSource();
         reset();
+        mControlView.setmPlayVolumeState(ControlView.PlayVoice.Quiet);
 
 
         mAliyunVidSts = vidSts;

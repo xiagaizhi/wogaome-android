@@ -98,6 +98,7 @@ public class ExhibitionDetailFragment extends BaseFragment<ExhibitionDetailContr
                 loadRootFragment(R.id.fl_exhibition_content, voteendFragment);
                 break;
         }
+        changePlayVidSource("","测试");
     }
 
 
@@ -188,10 +189,10 @@ public class ExhibitionDetailFragment extends BaseFragment<ExhibitionDetailContr
      */
     private void changePlayVidSource(String vid, String title) {
         AliyunVidSts vidSts = new AliyunVidSts();
-        vidSts.setVid(vid);
-        vidSts.setAcId(PlayParameter.PLAY_PARAM_AK_ID);
-        vidSts.setAkSceret(PlayParameter.PLAY_PARAM_AK_SECRE);
-        vidSts.setSecurityToken(PlayParameter.PLAY_PARAM_SCU_TOKEN);
+        vidSts.setVid("3e26acd869764806b46d06f23ccdf20d");
+        vidSts.setAcId("STS.NJPPuuJSVa5xdFjoEoic2Z923");
+        vidSts.setAkSceret("Hb6XNcCCZqziSkgftyv2x1ELuP5AwD67FMKBnUmadiou");
+        vidSts.setSecurityToken("CAISjgJ1q6Ft5B2yfSjIr4nlG8/Bp4x31veTZmDbi0U6ZewetfyZ0Tz2IHtKenZsCegav/Q3nW1V7vsdlrBtTJNJSEnDKNF36pkS6g66eIvGvYmz5LkJ0FMF9IAkT0yV5tTbRsmkZu6/E67fUzKpvyt3xqSAO1fGdle5MJqPpId6Z9AMJGeRZiZHA9EkQGkPtsgWZzmzWPG2KUyo+B2yanBloQ1hk2hyxL2iy8mHkHrkgUb91/UeqvaaQPHmTbE1Z88kAofpgrcnJvKfiHYI0XUQqvcq1p4j0Czco9SQD2NW5xi7KOfO+rVtVlQiOPZlR/4c8KmszaQl57SOyJ6U1RFBMexQVD7YQI2wGDdS2XJ/9rwagAGdvssy9sEKk6fWa2LDiLBHtrpvoWqVrPs4fTpIKRSPZfYQ3cwFTr+sbKg1Liwtuo5UAS7CKns7IFDK+nHSAfOqDYjLmedxliPf9iV/X6iC+den/lYmiFfin3YJGDriYAAvl8nfb7g2GUfZLBa4UKK5apqtaFBeKj/+FvfMvLR1Og==");
         vidSts.setTitle(title);
         mAliyunVodPlayerView.setVidSts(vidSts);
 

@@ -5,7 +5,7 @@
         <shape>
             <corners android:radius="1dip" />
             <solid android:color="#999999" />
-            <size android:height="2dp" />
+            <size android:height="1.5dp" />
         </shape>
     </item>
 
@@ -14,7 +14,7 @@
             <shape>
                 <corners android:radius="1dip" />
                 <solid android:color="#cccccc" />
-                <size android:height="2dp" />
+                <size android:height="1.5dp" />
             </shape>
         </clip>
     </item>
@@ -23,8 +23,8 @@
         <clip>
             <shape>
                 <corners android:radius="1dip" />
-                <solid android:color="@color/alivc_color_player_colorAccent" />
-                <size android:height="2dp" />
+                <solid android:color="#007AFF" />
+                <size android:height="1.5dp" />
             </shape>
         </clip>
     </item>
