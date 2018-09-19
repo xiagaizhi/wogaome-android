@@ -26,6 +26,7 @@ import com.yushi.leke.YFApi;
 import com.yushi.leke.activity.MusicPlayerActivity;
 import com.yushi.leke.fragment.album.audioList.MediaBrowserFragment;
 import com.yushi.leke.fragment.album.detail.DetailFragment;
+import com.yushi.leke.fragment.album.detailforalbum.DetailforalbumFragment;
 import com.yushi.leke.fragment.searcher.SearchFragment;
 
 import me.yokeyword.fragmentation.SupportFragment;
@@ -40,9 +41,8 @@ public class AlbumDetailFragment extends BaseFragment<AlbumDetailContract.IView>
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Log.d("LOGH","123");
         fragments[0] = UIHelper.creat(MediaBrowserFragment.class).build();
-        fragments[1] = UIHelper.creat(DetailFragment.class).build();
+        fragments[1] = UIHelper.creat(DetailforalbumFragment.class).build();
                 getVu().getViewPager().setAdapter(new FragmentPagerAdapter(getChildFragmentManager()) {
             @Override
             public int getCount() {
@@ -82,14 +82,13 @@ public class AlbumDetailFragment extends BaseFragment<AlbumDetailContract.IView>
         Intent intent = new Intent(getActivity(), MusicPlayerActivity.class);
         startActivity(intent);
     }
-    void getdata(){
+    private void getdata(){
         ApiManager.getCall(ApiManager.getInstance().create(YFApi.class)
                 .albumdetail("121"))
                 .useCache(false)
                 .enqueue(new BaseHttpCallBack() {
                     @Override
                     public void onSuccess(ApiBean mApiBean) {
-                        Log.d("LOGH",mApiBean.getData());
                         if (!TextUtils.isEmpty(mApiBean.getData())) {
                             AlbumDetailinfo infolist = JSON.parseObject(mApiBean.getData(), AlbumDetailinfo.class);
                             getVu().showtext(infolist);
@@ -98,12 +97,10 @@ public class AlbumDetailFragment extends BaseFragment<AlbumDetailContract.IView>
 
                     @Override
                     public void onError(int id, Exception e) {
-                        Log.d("LOGH","earr");
                     }
 
                     @Override
                     public void onFinish() {
-                        Log.d("LOGH","finsh");
                     }
                 });
     }

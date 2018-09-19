@@ -9,12 +9,18 @@ import android.support.v4.media.MediaBrowserCompat;
 import android.support.v4.media.MediaMetadataCompat;
 import android.support.v4.media.session.MediaControllerCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Toast;
 
+import com.alibaba.fastjson.JSON;
+import com.yufan.library.api.ApiBean;
+import com.yufan.library.api.ApiManager;
+import com.yufan.library.api.BaseHttpCallBack;
 import com.yufan.library.base.BaseListFragment;
 import com.yufan.library.inject.VuClass;
 import com.yufan.library.view.recycler.PageInfo;
+import com.yushi.leke.YFApi;
 import com.yushi.leke.fragment.test.CategoryItemViewBinder;
 import com.yushi.leke.uamp.ui.MediaBrowserProvider;
 import com.yushi.leke.uamp.utils.LogHelper;
@@ -213,6 +219,4 @@ public class MediaBrowserFragment extends BaseListFragment<MediaBrowserContract.
             }
         },1000);
     }
-
-
 }

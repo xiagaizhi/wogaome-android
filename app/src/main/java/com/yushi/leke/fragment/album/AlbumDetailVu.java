@@ -99,7 +99,7 @@ public class AlbumDetailVu extends BaseVu<AlbumDetailContract.Presenter> impleme
             tv_name.setText(info.getAlbum().getCreator()+"·简介");
             tv_playcount.setText(info.getAlbumViewTimes()+"次");
             tv_total.setText("全"+info.getAudioQuantity()+"集");
-            expandableTextView.setText(info.getAlbum().getIntroduction());
+            expandableTextView.setText(info.getAlbum().getCreatorInfo());
         }
     }
 

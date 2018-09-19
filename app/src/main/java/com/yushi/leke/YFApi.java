@@ -564,4 +564,15 @@ public interface YFApi {
             @Field("albumId")String albumId
     );
 
+    /**
+     *专辑详情播放列表
+     *
+     */
+    @FormUrlEncoded
+    @POST("app/v1/albumDetail/getPlayList")
+    Call<ResponseBody>
+    albummusiclist(
+            @Field("albumId")String albumId,
+            @Field("currentPage")String currentPage
+    );
 }
