@@ -47,6 +47,7 @@ import com.yushi.leke.uamp.playback.LocalPlayback;
 import com.yushi.leke.uamp.playback.Playback;
 import com.yushi.leke.uamp.playback.PlaybackManager;
 import com.yushi.leke.uamp.playback.QueueManager;
+import com.yushi.leke.uamp.playback.VodPlayback;
 import com.yushi.leke.uamp.utils.CarHelper;
 import com.yushi.leke.uamp.utils.LogHelper;
 import com.yushi.leke.uamp.utils.TvHelper;
@@ -193,7 +194,7 @@ public class MusicService extends MediaBrowserServiceCompat implements
                 });
 
         //Service初始化时传入PlaybackManager中的是LocalPlayback
-        LocalPlayback playback = new LocalPlayback(this, mMusicProvider);
+        VodPlayback playback = new VodPlayback(this, mMusicProvider);
         mPlaybackManager = new PlaybackManager(this, getResources(), mMusicProvider, queueManager,
                 playback);
 

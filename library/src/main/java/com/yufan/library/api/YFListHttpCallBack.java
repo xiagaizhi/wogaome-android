@@ -43,6 +43,9 @@ public abstract class YFListHttpCallBack extends BaseHttpCallBack {
             vu.setStateError();
             pageInfo.setPageState(PageInfo.PAGE_STATE_ERROR);
         }
-        vu.getRecyclerView().getPTR().refreshComplete();
+        if( vu.getRecyclerView().getPTR()!=null){
+            vu.getRecyclerView().getPTR().refreshComplete();
+        }
+
     }
 }

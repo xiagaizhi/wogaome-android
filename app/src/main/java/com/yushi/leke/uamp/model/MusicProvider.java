@@ -22,10 +22,19 @@ import android.support.v4.media.MediaBrowserCompat;
 import android.support.v4.media.MediaMetadataCompat;
 
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.yufan.library.api.ApiBean;
+import com.yufan.library.api.ApiManager;
+import com.yufan.library.api.BaseHttpCallBack;
+import com.yufan.library.api.YFListHttpCallBack;
+import com.yushi.leke.YFApi;
+import com.yushi.leke.fragment.album.audioList.AlbumAudio;
 import com.yushi.leke.uamp.utils.LogHelper;
 import com.yushi.leke.uamp.utils.MediaIDHelper;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
@@ -47,10 +56,7 @@ public class MusicProvider {
 
     private static final String TAG = LogHelper.makeLogTag(MusicProvider.class);
 
-    private MusicProviderSource mSource;
 
-    //音乐数据分类（按音乐类型）缓存
-    private List<MediaMetadataCompat> mMusicList;
     private final ConcurrentMap<String, MutableMediaMetadata> mMusicListById;
     private static MusicProvider musicProvider;
     private final Set<String> mFavoriteTracks;
@@ -66,9 +72,6 @@ public class MusicProvider {
     }
 
 
-    public MusicProvider() {
-        this(new RemoteJSONSource());
-    }
     public static MusicProvider getInstance(){
         if(musicProvider==null){
             musicProvider=new MusicProvider();
@@ -76,9 +79,7 @@ public class MusicProvider {
         return musicProvider;
     }
 
-    public MusicProvider(MusicProviderSource source) {
-        mSource = source;
-        mMusicList = new ArrayList<>();
+    public MusicProvider() {
         mMusicListById = new ConcurrentHashMap<>();
         mFavoriteTracks = Collections.newSetFromMap(new ConcurrentHashMap<String, Boolean>());//map change to set
     }
@@ -88,11 +89,11 @@ public class MusicProvider {
     /**
      * Get music tracks of the given genre
      */
-    public List<MediaMetadataCompat> getMusicsByGenre() {
+    public Collection<MutableMediaMetadata> getMusics() {
         if (mCurrentState != State.INITIALIZED) {
             return Collections.emptyList();
         }
-        return mMusicList;
+        return mMusicListById.values();
     }
 
 
@@ -167,74 +168,68 @@ public class MusicProvider {
             }
             return;
         }
-
-        //在单独的线程中异步加载音乐目录
-        new AsyncTask<String, Void, State>() {
+        ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).getPlayList(parentMediaId)).enqueue(new BaseHttpCallBack() {
             @Override
-            protected State doInBackground(String... params) {
-                retrieveMedia(params[0]);
-                return mCurrentState;
-            }
-
-            @Override
-            protected void onPostExecute(State current) {
-                if (callback != null) {
-                    callback.onMusicCatalogReady(current == State.INITIALIZED);
-                }
-            }
-        }.execute(parentMediaId);
-    }
-
-
-    /**
-     * 请求网络
-     */
-    private synchronized void retrieveMedia(String mediaId) {
-        try {
-            if (mCurrentState == State.NON_INITIALIZED) {
-                mCurrentState = State.INITIALIZING;
-
-                Iterator<MediaMetadataCompat> tracks = mSource.iterator();
-                mMusicList.clear();
+            public void onSuccess(ApiBean mApiBean) {
+                JSONObject jsonObject= JSON.parseObject(mApiBean.data);
+                String listStr=    jsonObject.getString("audioViewInfoList");
+                List<AlbumAudio> albumAudios= JSON.parseArray(listStr,AlbumAudio.class);
                 mMusicListById.clear();
-                while (tracks.hasNext()) {
-                    MediaMetadataCompat item = tracks.next();
+                for (int i=0;i<albumAudios.size();i++) {
+                    AlbumAudio albumAudio=  albumAudios.get(i);
+                    MediaMetadataCompat item=     new MediaMetadataCompat.Builder()
+                            .putString(MediaMetadataCompat.METADATA_KEY_MEDIA_ID, albumAudio.getAliVideoId())
+                            .putString(MusicProviderSource.CUSTOM_METADATA_TRACK_SOURCE, "")
+                            .putString(MediaMetadataCompat.METADATA_KEY_ALBUM, "")
+                            .putString(MediaMetadataCompat.METADATA_KEY_ARTIST, "")
+                            .putLong(MediaMetadataCompat.METADATA_KEY_DURATION,1)
+                            .putString(MediaMetadataCompat.METADATA_KEY_GENRE, "")
+                            .putString(MediaMetadataCompat.METADATA_KEY_ALBUM_ART_URI, "")
+                            .putString(MediaMetadataCompat.METADATA_KEY_TITLE, "")
+                            .putLong(MediaMetadataCompat.METADATA_KEY_TRACK_NUMBER, 1)
+                            .putLong(MediaMetadataCompat.METADATA_KEY_NUM_TRACKS, 1)
+                            .build();
                     String musicId = item.getString(MediaMetadataCompat.METADATA_KEY_MEDIA_ID);
                     mMusicListById.put(musicId, new MutableMediaMetadata(musicId, item));
-                    mMusicList.add(item);
                 }
                 mCurrentState = State.INITIALIZED;
             }
-        } finally {
-            if (mCurrentState != State.INITIALIZED) {
-                // Something bad happened, so we reset state to NON_INITIALIZED to allow
-                // retries (eg if the network connection is temporary unavailable)
-                mCurrentState = State.NON_INITIALIZED;
+
+            @Override
+            public void onError(int id, Exception e) {
+
             }
-        }
+
+            @Override
+            public void onFinish() {
+
+            }
+        });
+
     }
+
+
 
 
     public List<MediaBrowserCompat.MediaItem> getChildren() {
         List<MediaBrowserCompat.MediaItem> mediaItems = new ArrayList<>();
-
-        for (MediaMetadataCompat metadata : getMusicsByGenre()) {
+        for (MutableMediaMetadata metadata : getMusics()) {
             mediaItems.add(createMediaItem(metadata));
         }
         return mediaItems;
     }
 
 
-    private MediaBrowserCompat.MediaItem createMediaItem(MediaMetadataCompat metadata) {
+    private MediaBrowserCompat.MediaItem createMediaItem(MutableMediaMetadata metadata) {
         // Since mediaMetadata fields are immutable, we need to create a copy, so we
         // can set a hierarchy-aware mediaID. We will need to know the media hierarchy
         // when we get a onPlayFromMusicID call, so we can create the proper queue based
         // on where the music was selected from (by artist, by genre, random, etc)
         //我们可以基于在音乐类型的选择（由艺术家、流派、随机、等）构建适当的音乐队列
-        String genre = metadata.getString(MediaMetadataCompat.METADATA_KEY_GENRE);
+        String genre = metadata.metadata.getString(MediaMetadataCompat.METADATA_KEY_GENRE);
         String hierarchyAwareMediaID = MediaIDHelper.createMediaID(
-                metadata.getDescription().getMediaId(), MEDIA_ID_MUSICS_BY_GENRE, genre);
-        MediaMetadataCompat copy = new MediaMetadataCompat.Builder(metadata)
+                metadata.metadata.getDescription().getMediaId(), MEDIA_ID_MUSICS_BY_GENRE, genre);
+        MediaMetadataCompat copy = new MediaMetadataCompat.Builder(metadata.metadata)
                 .putString(MediaMetadataCompat.METADATA_KEY_MEDIA_ID, hierarchyAwareMediaID)
                 .build();
         return new MediaBrowserCompat.MediaItem(copy.getDescription(),

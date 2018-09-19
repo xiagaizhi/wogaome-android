@@ -9,14 +9,15 @@ import android.support.v4.media.MediaBrowserCompat;
 import android.support.v4.media.MediaMetadataCompat;
 import android.support.v4.media.session.MediaControllerCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.Toast;
 
+import com.airbnb.lottie.L;
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.yufan.library.api.ApiBean;
 import com.yufan.library.api.ApiManager;
-import com.yufan.library.api.BaseHttpCallBack;
+import com.yufan.library.api.YFListHttpCallBack;
 import com.yufan.library.base.BaseListFragment;
 import com.yufan.library.inject.VuClass;
 import com.yufan.library.view.recycler.PageInfo;
@@ -172,9 +173,6 @@ public class MediaBrowserFragment extends BaseListFragment<MediaBrowserContract.
                         LogHelper.d(TAG, "fragment onChildrenLoaded, parentId=" + parentId +
                                 "  count=" + children.size());
 
-                        list.clear();
-                        list.addAll(children);
-                        vu.getRecyclerView().getAdapter().notifyDataSetChanged();
                     } catch (Throwable t) {
                         LogHelper.e(TAG, "Error on childrenloaded", t);
                     }
@@ -193,7 +191,7 @@ public class MediaBrowserFragment extends BaseListFragment<MediaBrowserContract.
         super.onViewCreated(view, savedInstanceState);
         adapter=new MultiTypeAdapter();
         adapter.setItems(list);
-        adapter.register(MediaBrowserCompat.MediaItem.class,new MediaBrowserViewBinder(getActivity(),new MediaBrowserViewBinder.OnItemClick() {
+        adapter.register(AlbumAudio.class,new MediaBrowserViewBinder(getActivity(),new MediaBrowserViewBinder.OnItemClick() {
             @Override
             public void onClick(MediaBrowserCompat.MediaItem mediaItem) {
                 mMediaFragmentListener.onMediaItemSelected(mediaItem);
@@ -205,18 +203,34 @@ public class MediaBrowserFragment extends BaseListFragment<MediaBrowserContract.
 
     @Override
     public void onLoadMore(int index) {
+        ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).getPlayList(mMediaId)).enqueue(new YFListHttpCallBack(vu) {
+            @Override
+            public void onSuccess(ApiBean mApiBean) {
+                super.onSuccess(mApiBean);
+                JSONObject jsonObject= JSON.parseObject(mApiBean.data);
+                String listStr=    jsonObject.getString("audioViewInfoList");
+                List<AlbumAudio> albumAudios= JSON.parseArray(listStr,AlbumAudio.class);
+                list.addAll(albumAudios);
+            }
 
+
+        });
     }
 
-    private Handler handler=new Handler();
     @Override
     public void onRefresh() {
-        handler.postDelayed(new Runnable() {
+        ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).getPlayList(mMediaId)).enqueue(new YFListHttpCallBack(vu) {
             @Override
-            public void run() {
-                getVu().getRecyclerView().getPTR().refreshComplete();
-                getVu(). getRecyclerView().getPageManager().setPageState(PageInfo.PAGE_STATE_NONE);
+            public void onSuccess(ApiBean mApiBean) {
+                super.onSuccess(mApiBean);
+               JSONObject jsonObject= JSON.parseObject(mApiBean.data);
+           String listStr=    jsonObject.getString("audioViewInfoList");
+              List<AlbumAudio> albumAudios= JSON.parseArray(listStr,AlbumAudio.class);
+                list.clear();
+              list.addAll(albumAudios);
             }
-        },1000);
+        });
     }
+
+
 }

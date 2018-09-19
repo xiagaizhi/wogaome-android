@@ -152,11 +152,13 @@ public abstract class BaseVu<T extends Pr> implements Vu ,View.OnClickListener{
         mStateLayout.setVisibility(View.GONE);
     }
 
-    public final void setStateError() {
+    public  void setStateError() {
+
+
         mStateLayout.setStateError();
     }
 
-    public final void setStateEmpty() {
+    public  void setStateEmpty() {
         mStateLayout.setStateEmpty();
     }
 
