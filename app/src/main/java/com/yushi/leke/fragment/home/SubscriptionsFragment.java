@@ -125,7 +125,7 @@ public class SubscriptionsFragment extends BaseListFragment<SubscriptionsContrac
 
     private void getdata(final int currentpage) {
         ApiManager.getCall(ApiManager.getInstance().create(YFApi.class)
-                .showAlbum("channelId", currentpage))
+                .showAlbum("channelId", currentpage+""))
                 .useCache(false)
                 .enqueue(new YFListHttpCallBack(getVu()) {
                     @Override
