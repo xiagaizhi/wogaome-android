@@ -32,7 +32,7 @@ import static android.support.v4.media.session.PlaybackStateCompat.STATE_PLAYING
  * Created by mengfantao on 18/9/18.
  */
 
-public class MediaBrowserViewBinder  extends ItemViewBinder<AlbumAudio, MediaBrowserViewBinder.ViewHolder> {
+public class MediaBrowserViewBinder  extends ItemViewBinder<MediaBrowserCompat.MediaItem, MediaBrowserViewBinder.ViewHolder> {
     private OnItemClick clickListener;
     private Activity activity;
     public MediaBrowserViewBinder(Activity activity,OnItemClick clickListener) {
@@ -47,22 +47,22 @@ public class MediaBrowserViewBinder  extends ItemViewBinder<AlbumAudio, MediaBro
         return new ViewHolder(view);
     }
     @Override
-    protected void onBindViewHolder(@NonNull final ViewHolder viewHolder, @NonNull final AlbumAudio mediaItem) {
-//        viewHolder.tv_name.setText(mediaItem.getDescription().getTitle());
-//        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if(clickListener!=null){
-//                    clickListener.onClick(mediaItem);
-//
-//                }
-//            }
-//        });
-//
-//     int state=   getMediaItemState(activity,mediaItem);
-//     Drawable drawable=   getDrawableByState(activity,state);
-//        viewHolder.iv_play_state.setImageDrawable(drawable);
-//        viewHolder.sdv.setImageURI(mediaItem.getDescription().getIconUri());
+    protected void onBindViewHolder(@NonNull final ViewHolder viewHolder, @NonNull final MediaBrowserCompat.MediaItem mediaItem) {
+        viewHolder.tv_name.setText(mediaItem.getDescription().getTitle());
+        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(clickListener!=null){
+                    clickListener.onClick(mediaItem);
+
+                }
+            }
+        });
+
+     int state=   getMediaItemState(activity,mediaItem);
+     Drawable drawable=   getDrawableByState(activity,state);
+        viewHolder.iv_play_state.setImageDrawable(drawable);
+        viewHolder.sdv.setImageURI(mediaItem.getDescription().getIconUri());
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {

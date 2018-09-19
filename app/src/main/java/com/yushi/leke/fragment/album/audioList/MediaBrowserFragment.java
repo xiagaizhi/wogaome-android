@@ -12,7 +12,6 @@ import android.support.v4.media.session.PlaybackStateCompat;
 import android.view.View;
 import android.widget.Toast;
 
-import com.airbnb.lottie.L;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.yufan.library.api.ApiBean;
@@ -172,7 +171,9 @@ public class MediaBrowserFragment extends BaseListFragment<MediaBrowserContract.
                     try {
                         LogHelper.d(TAG, "fragment onChildrenLoaded, parentId=" + parentId +
                                 "  count=" + children.size());
-
+                        list.clear();
+                        list.addAll(children);
+                        vu.getRecyclerView().getAdapter().notifyDataSetChanged();
                     } catch (Throwable t) {
                         LogHelper.e(TAG, "Error on childrenloaded", t);
                     }
@@ -191,7 +192,7 @@ public class MediaBrowserFragment extends BaseListFragment<MediaBrowserContract.
         super.onViewCreated(view, savedInstanceState);
         adapter=new MultiTypeAdapter();
         adapter.setItems(list);
-        adapter.register(AlbumAudio.class,new MediaBrowserViewBinder(getActivity(),new MediaBrowserViewBinder.OnItemClick() {
+        adapter.register(MediaBrowserCompat.MediaItem.class,new MediaBrowserViewBinder(getActivity(),new MediaBrowserViewBinder.OnItemClick() {
             @Override
             public void onClick(MediaBrowserCompat.MediaItem mediaItem) {
                 mMediaFragmentListener.onMediaItemSelected(mediaItem);
@@ -203,33 +204,12 @@ public class MediaBrowserFragment extends BaseListFragment<MediaBrowserContract.
 
     @Override
     public void onLoadMore(int index) {
-        ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).getPlayList(mMediaId)).enqueue(new YFListHttpCallBack(vu) {
-            @Override
-            public void onSuccess(ApiBean mApiBean) {
-                super.onSuccess(mApiBean);
-                JSONObject jsonObject= JSON.parseObject(mApiBean.data);
-                String listStr=    jsonObject.getString("audioViewInfoList");
-                List<AlbumAudio> albumAudios= JSON.parseArray(listStr,AlbumAudio.class);
-                list.addAll(albumAudios);
-            }
 
-
-        });
     }
 
     @Override
     public void onRefresh() {
-        ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).getPlayList(mMediaId)).enqueue(new YFListHttpCallBack(vu) {
-            @Override
-            public void onSuccess(ApiBean mApiBean) {
-                super.onSuccess(mApiBean);
-               JSONObject jsonObject= JSON.parseObject(mApiBean.data);
-           String listStr=    jsonObject.getString("audioViewInfoList");
-              List<AlbumAudio> albumAudios= JSON.parseArray(listStr,AlbumAudio.class);
-                list.clear();
-              list.addAll(albumAudios);
-            }
-        });
+
     }
 
 
