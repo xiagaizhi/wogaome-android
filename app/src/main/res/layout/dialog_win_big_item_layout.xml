@@ -2,12 +2,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:fresco="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:orientation="vertical"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
     <View
         android:id="@+id/view_line_top"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/px48"/>
+        android:layout_height="@dimen/px48" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -23,9 +24,9 @@
             android:drawableBottom="@drawable/win_rank_bottom_shape"
             android:drawablePadding="@dimen/px20"
             android:text="1"
-            android:textStyle="bold"
             android:textColor="@color/color_F45D5D"
-            android:textSize="@dimen/px64" />
+            android:textSize="@dimen/px64"
+            android:textStyle="bold" />
 
         <LinearLayout
             android:id="@+id/ll_head"
@@ -45,6 +46,8 @@
                 android:id="@+id/img_logo"
                 android:layout_width="@dimen/px160"
                 android:layout_height="@dimen/px160"
+                fresco:failureImage="@drawable/default_video_square"
+                fresco:placeholderImage="@drawable/default_video_square"
                 fresco:roundedCornerRadius="@dimen/px12" />
         </LinearLayout>
 
@@ -95,9 +98,10 @@
             android:textColor="@color/color_FA5A5A"
             android:textSize="@dimen/px24" />
     </RelativeLayout>
+
     <View
         android:id="@+id/view_line_bottom"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/px43"/>
+        android:layout_height="@dimen/px43" />
 
 </LinearLayout>

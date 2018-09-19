@@ -35,6 +35,16 @@ public class AlbumDetailVu extends BaseVu<AlbumDetailContract.Presenter> impleme
     private SimpleDraweeView sdv;
     @FindView(R.id.tv_album_detail)
     private ExpandableTextView expandableTextView;
+    @FindView(R.id.tv_sub_title)
+    private TextView tv_sub_title;
+    @FindView(R.id.tv_subject_title)
+    private TextView tv_subject_title;
+    @FindView(R.id.tv_name)
+    private TextView tv_name;
+    @FindView(R.id.tv_playcount)
+    private TextView tv_playcount;
+    @FindView(R.id.tv_total)
+    private TextView tv_total;
     private ImageView musicAnim;
 
     @Override
@@ -42,8 +52,6 @@ public class AlbumDetailVu extends BaseVu<AlbumDetailContract.Presenter> impleme
         mTabLayout.addTab(mTabLayout.newTab().setText("课程内容"));
         mTabLayout.addTab(mTabLayout.newTab().setText("专辑详情"));
         mTabLayout.setupWithViewPager(mViewPager);
-        expandableTextView.setText("backButton.backButton.setOnClickListener(new View.OnClickListener() {setOnClickListener(new View.OnClickListener() {backButton.setOnClickListener(new View.OnClickListener() {backButton.setOnClickListener(new View.OnClickListener() {backButton.setOnClickListener(new View.OnClickListener() {");
-
         mTabLayout.post(new Runnable() {
             @Override
             public void run() {
@@ -82,6 +90,17 @@ public class AlbumDetailVu extends BaseVu<AlbumDetailContract.Presenter> impleme
     @Override
     public void initStatusLayout(StateLayout stateLayout) {
         super.initStatusLayout(stateLayout);
+    }
+
+    @Override
+    public void showtext(AlbumDetailinfo info) {
+        if (info!=null){
+            tv_subject_title.setText(info.getAlbum().getCreator()+"·"+info.getAlbum().getAlbumName());
+            tv_name.setText(info.getAlbum().getCreator()+"·简介");
+            tv_playcount.setText(info.getAlbumViewTimes()+"次");
+            tv_total.setText("全"+info.getAudioQuantity()+"集");
+            expandableTextView.setText(info.getAlbum().getIntroduction());
+        }
     }
 
     @Override

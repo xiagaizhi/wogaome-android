@@ -19,9 +19,11 @@ package com.yushi.leke.fragment.home;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.yufan.library.inter.ICallBack;
@@ -32,7 +34,7 @@ import me.drakeet.multitype.ItemViewBinder;
 /**
  * 订阅专栏 订阅 专辑
  */
-public class SubscriptionsViewBinder extends ItemViewBinder<AudioInfo, SubscriptionsViewBinder.ViewHolder> {
+public class SubscriptionsViewBinder extends ItemViewBinder<Homeinfo, SubscriptionsViewBinder.ViewHolder> {
     private  ICallBack callBack;
     public SubscriptionsViewBinder(ICallBack callBack) {
 this.callBack=callBack;
@@ -45,8 +47,14 @@ this.callBack=callBack;
     }
 
     @Override
-    protected void onBindViewHolder(@NonNull ViewHolder holder, @NonNull final AudioInfo category) {
-        holder.sdv.setImageURI(Uri.parse(category.icon));
+    protected void onBindViewHolder(@NonNull ViewHolder holder, @NonNull final Homeinfo category) {
+        holder.tv_playcount.setText(category.getViewTimes());
+        holder.tv_title.setText(category.getAlbumName());
+        holder.tv_name.setText(category.getCreator());
+        holder.tv_industry.setText(category.getCreatorInfo());
+        holder.tv_othertitle.setText(category.getIntroduction());
+
+        holder.sdv.setImageURI(Uri.parse(category.getHorizontalIcon()));
         if (getAdapter().getItemCount()==getPosition(holder)-1) {
             holder.view_bottom_line.setVisibility(View.INVISIBLE);
         } else {
@@ -66,10 +74,18 @@ this.callBack=callBack;
     static class ViewHolder extends RecyclerView.ViewHolder {
         SimpleDraweeView sdv;
         View view_bottom_line;
+        TextView tv_playcount,tv_title,tv_ab1,tv_ab2,tv_name,tv_industry,tv_othertitle;
         ViewHolder(@NonNull View itemView) {
             super(itemView);
             sdv=itemView.findViewById(R.id.sdv);
             view_bottom_line=itemView.findViewById(R.id.view_bottom_line);
+            tv_playcount=itemView.findViewById(R.id.tv_playcount);
+            tv_title=itemView.findViewById(R.id.tv_title);
+            tv_ab1=itemView.findViewById(R.id.tv_tab1);
+            tv_ab2=itemView.findViewById(R.id.tv_tab2);
+            tv_name=itemView.findViewById(R.id.tv_name);
+            tv_industry=itemView.findViewById(R.id.tv_industry);
+            tv_othertitle=itemView.findViewById(R.id.tv_othertitle);
 
         }
     }
