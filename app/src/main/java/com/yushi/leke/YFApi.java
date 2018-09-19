@@ -337,9 +337,11 @@ public interface YFApi {
 
     );
 
+    @FormUrlEncoded
     @POST("app/v1/activity/winlist")
     Call<ResponseBody>
     winlist(//获胜名单
+            @Field("activityId") String activityId
     );
 
     @FormUrlEncoded
@@ -550,34 +552,72 @@ public interface YFApi {
     @FormUrlEncoded
     @POST("app/v1/albumChannelRelation/showAlbum")
     Call<ResponseBody>
-    showAlbum( @Field("channelId") String channelId,
-               @Field("currentPage") String currentPage);
+    showAlbum(@Field("channelId") String channelId,
+              @Field("currentPage") int currentPage);
+
     /**
-     *专辑播放列表
-     *
+     * 专辑播放列表
      */
     @FormUrlEncoded
     @POST("app/v1/albumDetail/getPlayList")
     Call<ResponseBody>
-    getPlayList( @Field("albumId") String channelId);
+    getPlayList(@Field("albumId") String channelId);
 
     /**
-     *专辑详情
-     *
+     * 专辑详情
      */
     @FormUrlEncoded
     @POST("app/v1/albumDetail/getAlbum")
     Call<ResponseBody>
     albumdetail(
-            @Field("albumId")String albumId
+            @Field("albumId") String albumId
     );
 
+    /**
+     *专辑详情播放列表
+     *
+     */
+    @FormUrlEncoded
+    @POST("app/v1/albumDetail/getPlayList")
+    Call<ResponseBody>
+    albummusiclist(
+            @Field("albumId")String albumId,
+            @Field("currentPage")String currentPage
+    );
     /**
      * 首页banner
      */
     @POST("app/v1/banner/showBanners")
     Call<ResponseBody>
     showBanners();
-
-
+    /**
+     *是否订阅
+     *
+     */
+    @FormUrlEncoded
+    @POST("app/v1/albumDetail/subscribeCheck")
+    Call<ResponseBody>
+    substate(
+            @Field("albumId")int albumId
+    );
+    /**
+     *订阅专辑
+     *
+     */
+    @FormUrlEncoded
+    @POST("app/v1/albumDetail/subscribe")
+    Call<ResponseBody>
+    registeralbum(
+            @Field("albumId")int albumId
+    );
+    /**
+     *取消订阅专辑
+     *
+     */
+    @FormUrlEncoded
+    @POST("app/v1/mySubscribe/cancelSubscribe")
+    Call<ResponseBody>
+    unregisteralbum(
+            @Field("albumId")int albumId
+    );
 }

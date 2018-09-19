@@ -107,6 +107,11 @@ public class ApiConfig {
         return "http://web.leke.com/#/nickName";
     }
 
+    /**
+     * 活动详情页 未开始／报名中
+     * @param activityId
+     * @return
+     */
     public String getExhibitionDetail(String activityId){
         return webDomains[apiType] + "#/";
     }

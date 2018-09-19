@@ -31,5 +31,7 @@ public interface UCenterContract {
         void openBrowserPage(String key);
 
         void toRefresh();
+
+        void openMessagePage();
     }
 }

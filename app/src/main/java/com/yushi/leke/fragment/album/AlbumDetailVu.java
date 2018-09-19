@@ -1,5 +1,6 @@
 package com.yushi.leke.fragment.album;
 
+import android.graphics.Color;
 import android.graphics.drawable.AnimationDrawable;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.TabLayout;
@@ -45,6 +46,10 @@ public class AlbumDetailVu extends BaseVu<AlbumDetailContract.Presenter> impleme
     private TextView tv_playcount;
     @FindView(R.id.tv_total)
     private TextView tv_total;
+    @FindView(R.id.sdv_sub)
+    private SimpleDraweeView sdv_sub;
+    @FindView(R.id.tv_sub)
+    private TextView tv_sub;
     private ImageView musicAnim;
 
     @Override
@@ -99,7 +104,34 @@ public class AlbumDetailVu extends BaseVu<AlbumDetailContract.Presenter> impleme
             tv_name.setText(info.getAlbum().getCreator()+"·简介");
             tv_playcount.setText(info.getAlbumViewTimes()+"次");
             tv_total.setText("全"+info.getAudioQuantity()+"集");
-            expandableTextView.setText(info.getAlbum().getIntroduction());
+            expandableTextView.setText(info.getAlbum().getCreatorInfo());
+        }
+    }
+
+    @Override
+    public void showsubstate(int state) {
+        switch (state){
+            case 0:
+                sdv_sub.setImageURI("res:///" +R.drawable.ic_sub_unstate);
+                tv_sub.setText("订阅");
+                tv_sub.setTextColor(Color.parseColor("#FF666666"));
+                sdv_sub.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        mPersenter.register();
+                    }
+                });
+                break;
+            case 1:
+                sdv_sub.setImageURI("res:///" +R.drawable.ic_sub_onstate);
+                tv_sub.setText("已订阅");
+                sdv_sub.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        mPersenter.unregister();
+                    }
+                });
+                break;
         }
     }
 

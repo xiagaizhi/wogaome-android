@@ -3,6 +3,7 @@ package com.yushi.leke.fragment.exhibition.voteend;
 import android.view.View;
 import android.widget.TextView;
 
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.yufan.library.base.BaseListVu;
 import com.yufan.library.inject.FindLayout;
 import com.yufan.library.inject.FindView;
@@ -19,9 +20,12 @@ public class VoteendVu extends BaseListVu<VoteendContract.Presenter> implements 
     @FindView(R.id.recyclerview)
     private YFRecyclerView mYFRecyclerView;
     TextView tv;
+    SimpleDraweeView sdv;
     @Override
     public void initView(View view) {
         super.initView(view);
+        sdv= (SimpleDraweeView) findViewById(R.id.sdv);
+        sdv.setImageURI("res:///" +R.drawable.ic_end_img);
         tv= (TextView) findViewById(R.id.tv_vote_checkall);
         tv.setClickable(true);
         tv.setOnClickListener(new View.OnClickListener() {
