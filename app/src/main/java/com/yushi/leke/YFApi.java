@@ -534,7 +534,7 @@ public interface YFApi {
     @POST("app/v1/albumChannelRelation/showAlbum")
     Call<ResponseBody>
     showAlbum( @Field("channelId") String channelId,
-               @Field("currentPage") String currentPage);
+               @Field("currentPage")int  currentPage);
 
 
 }

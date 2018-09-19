@@ -25,6 +25,7 @@ import com.yushi.leke.UIHelper;
 import com.yushi.leke.YFApi;
 import com.yushi.leke.fragment.album.audioList.MediaBrowserFragment;
 import com.yushi.leke.fragment.home.AudioInfo;
+import com.yushi.leke.fragment.home.Homeinfo;
 import com.yushi.leke.fragment.home.SubscriptionsViewBinder;
 import com.yushi.leke.fragment.searcher.SearchTabTitleViewBinder;
 
@@ -46,7 +47,7 @@ public class SearchAudioFragment extends BaseListFragment<SearchAudioContract.IV
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         adapter = new MultiTypeAdapter();
-        adapter.register(AudioInfo.class, new SubscriptionsViewBinder(new ICallBack() {
+        adapter.register(Homeinfo.class, new SubscriptionsViewBinder(new ICallBack() {
             @Override
             public void OnBackResult(Object... s) {
                 getRootFragment().start(UIHelper.creat(MediaBrowserFragment.class).build());
