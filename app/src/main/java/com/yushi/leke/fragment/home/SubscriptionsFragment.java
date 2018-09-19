@@ -174,7 +174,6 @@ public class SubscriptionsFragment extends BaseListFragment<SubscriptionsContrac
     @Override
     public void onLoadMore(int index) {
         getdata(index);
-        Toast.makeText(getContext(), String.valueOf(getVu().getRecyclerView().getPageManager().getCurrentIndex()), Toast.LENGTH_SHORT).show();
     }
 
     @Override
