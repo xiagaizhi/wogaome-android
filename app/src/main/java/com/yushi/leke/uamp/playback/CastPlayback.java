@@ -238,7 +238,7 @@ public class CastPlayback implements Playback {
         mediaMetadata.addImage(image);
 
         //noinspection ResourceType
-        return new MediaInfo.Builder(track.getString(MusicProviderSource.CUSTOM_METADATA_TRACK_SOURCE))
+        return new MediaInfo.Builder(track.getString(""))
                 .setContentType(MIME_TYPE_AUDIO_MPEG)
                 .setStreamType(MediaInfo.STREAM_TYPE_BUFFERED)
                 .setMetadata(mediaMetadata)
