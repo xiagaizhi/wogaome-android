@@ -75,8 +75,8 @@ private String     TAG="MainActivity";
         ImageView imageView = new ImageView(this);
         LinearLayout.LayoutParams rightLayoutParams = new  LinearLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
         imageView.setLayoutParams(rightLayoutParams);
-        imageView.setImageResource(R.drawable.anim_player_blue);
-        ((AnimationDrawable) imageView.getDrawable()).start();
+
+
         imageView.setPadding(0, 0,PxUtil.convertDIP2PX(this,18), 0);
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override

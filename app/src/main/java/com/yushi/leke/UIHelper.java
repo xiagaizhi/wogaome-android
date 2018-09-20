@@ -2,6 +2,7 @@ package com.yushi.leke;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.drawable.AnimationDrawable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -55,6 +56,19 @@ public class UIHelper {
         beginTransaction.commitAllowingStateLoss();
     }
 
+    public static ImageView getWhiteMusicView(Activity activity, AppToolbar toolbar) {
+        ImageView musicView = null;
+        if (activity instanceof MainActivity) {
+            musicView = ((MainActivity) activity).getMusicView();
+            if (musicView.getParent() != null) {
+                ((ViewGroup) musicView.getParent()).removeView(musicView);
+            }
+            toolbar.getRightViewGroup().addView(musicView);
+        }
+        musicView.setImageResource(R.drawable.anim_player_blue);
+        ((AnimationDrawable) musicView.getDrawable()).start();
+        return musicView;
+    }
     public static ImageView getMusicView(Activity activity, AppToolbar toolbar) {
         ImageView musicView = null;
         if (activity instanceof MainActivity) {
@@ -64,9 +78,10 @@ public class UIHelper {
             }
             toolbar.getRightViewGroup().addView(musicView);
         }
+        musicView.setImageResource(R.drawable.anim_player_blue);
+        ((AnimationDrawable) musicView.getDrawable()).start();
         return musicView;
     }
-
 
 
 }
