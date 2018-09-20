@@ -88,9 +88,6 @@ public class SubscriptionsBannerViewBinder extends ItemViewBinder<SubscriptionBa
             }
         });
         ((AnimationDrawable) holder.rightMusic.getDrawable()).start();
-        if (category == null || category.getBannerItemInfos() == null || category.getBannerItemInfos().size() == 0) {
-            return;
-        }
         holder.mConvenientBanner.setPageTransformer(false, new ScaleTransformer());
         holder.mConvenientBanner.setOffscreenPageLimit(3);
         List<BannerItemInfo> bannerItemInfos = category.getBannerItemInfos();
@@ -98,12 +95,16 @@ public class SubscriptionsBannerViewBinder extends ItemViewBinder<SubscriptionBa
 //        for (BannerItemInfo bannerItemInfo : bannerItemInfos) {
 //            imgs.add(bannerItemInfo.getIcon());
 //        }
+        if (bannerItemInfos == null || bannerItemInfos.size()==0){
+            bannerItemInfos = new ArrayList<>();
+            bannerItemInfos.add(new BannerItemInfo());
+        }
         holder.mConvenientBanner.setImages(bannerItemInfos).setImageLoader(new ImageLoaderInterface<View>() {
             @Override
             public void displayImage(int position, Context context, Object path, View view) {
                 SimpleDraweeView simpleDraweeView = (SimpleDraweeView) view;
                 BannerItemInfo bannerItemInfo = (BannerItemInfo) path;
-                simpleDraweeView.setImageURI(bannerItemInfo.getIcon());
+                simpleDraweeView.setImageURI(String.valueOf(bannerItemInfo.getIcon()));
             }
 
             @Override

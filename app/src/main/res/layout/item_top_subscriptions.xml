@@ -93,14 +93,4 @@
         android:background="@color/color_gray_levele"
 
         />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/px36"
-        android:layout_marginRight="@dimen/px36"
-        android:text="精品大师课"
-        android:textStyle="bold"
-        android:textColor="@color/color_gray_level3"
-        android:textSize="@dimen/px42" />
 </LinearLayout>
