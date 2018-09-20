@@ -7,7 +7,7 @@
 
     <RelativeLayout
         android:id="@+id/rl_1"
-        android:layout_width="wrap_content"
+        android:layout_width="@dimen/px160"
         android:layout_height="@dimen/px160"
         android:layout_centerVertical="true"
         android:layout_marginLeft="@dimen/px36">
@@ -26,7 +26,7 @@
             android:src="@drawable/ic_player_play_detail" />
 
         <TextView
-            android:id="@+id/tv_state"
+            android:id="@+id/tv_num"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@id/sdv"
@@ -37,7 +37,15 @@
             android:text="123"
             android:textColor="@color/white"
             android:textSize="@dimen/px18" />
-
+        <ProgressBar
+            style="@android:style/Widget.ProgressBar.Horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:max="100"
+            android:progress="18"
+            android:progressDrawable="@drawable/progress_bar_medialist"
+            android:layout_alignParentBottom="true"
+            android:id="@+id/pb_media" />
     </RelativeLayout>
 
     <LinearLayout
@@ -63,7 +71,7 @@
             android:layout_marginTop="@dimen/px20"
             android:text="00:11:12 / 54583 人听过"
             android:textColor="@color/color_gray_level6"
-
+            android:id="@+id/tv_info"
             android:textSize="@dimen/px24" />
     </LinearLayout>
 
@@ -87,6 +95,7 @@
               android:layout_centerInParent="true"
                 android:textColor="@color/alivc_red"
                 android:text="试听"
+                android:id="@+id/tv_action"
                 android:padding="0dp"
                 android:textSize="@dimen/px30"
                 android:textStyle="bold"
@@ -98,6 +107,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:text="免费"
+            android:id="@+id/tv_free"
             android:textColor="@color/color_gray_level9"
             android:textSize="@dimen/px18" />
     </LinearLayout>

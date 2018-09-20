@@ -109,16 +109,40 @@ public class SubscriptionsFragment extends BaseListFragment<SubscriptionsContrac
                 onRefresh();
             }
         }));
-        vu.getRecyclerView().setAdapter(adapter);
         subscriptionBanner = new SubscriptionBanner();
         list.add(subscriptionBanner);
         adapter.setItems(list);
-        vu.getRecyclerView().getAdapter().notifyDataSetChanged();
-        getBannerdata();
-        getdata(getVu().getRecyclerView().getPageManager().getCurrentIndex());
+        vu.getRecyclerView().setAdapter(adapter);
+
     }
 
-    private void getBannerdata() {
+
+
+    @Override
+    public void onLoadMore(int index) {
+        ApiManager.getCall(ApiManager.getInstance().create(YFApi.class)
+                .showAlbum("channelId", index))
+                .useCache(false)
+                .enqueue(new YFListHttpCallBack(getVu()) {
+                    @Override
+                    public void onSuccess(ApiBean mApiBean) {
+                        super.onSuccess(mApiBean);
+                        if (!TextUtils.isEmpty(mApiBean.getData())) {
+                            Homeinfolist infolist = JSON.parseObject(mApiBean.getData(), Homeinfolist.class);
+                            if (infolist != null && infolist.getList().size() > 0) {
+                                list.addAll(infolist.getList());
+                                vu.getRecyclerView().getAdapter().notifyDataSetChanged();
+                            } else {
+                                vu.getRecyclerView().getPageManager().setPageState(PageInfo.PAGE_STATE_NO_MORE);
+                            }
+                        }
+                    }
+
+                });
+    }
+
+    @Override
+    public void onRefresh() {
         ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).showBanners())
                 .useCache(false)
                 .enqueue(new BaseHttpCallBack() {
@@ -143,11 +167,8 @@ public class SubscriptionsFragment extends BaseListFragment<SubscriptionsContrac
 
                     }
                 });
-    }
-
-    private void getdata(final int currentpage) {
         ApiManager.getCall(ApiManager.getInstance().create(YFApi.class)
-                .showAlbum("channelId", currentpage))
+                .showAlbum("channelId", 1))
                 .useCache(false)
                 .enqueue(new YFListHttpCallBack(getVu()) {
                     @Override
@@ -156,10 +177,8 @@ public class SubscriptionsFragment extends BaseListFragment<SubscriptionsContrac
                         if (!TextUtils.isEmpty(mApiBean.getData())) {
                             Homeinfolist infolist = JSON.parseObject(mApiBean.getData(), Homeinfolist.class);
                             if (infolist != null && infolist.getList().size() > 0) {
-                                if (currentpage == 0) {
-                                    list.clear();
-                                    list.add(subscriptionBanner);
-                                }
+                                list.clear();
+                                list.add(subscriptionBanner);
                                 list.addAll(infolist.getList());
                                 vu.getRecyclerView().getAdapter().notifyDataSetChanged();
                             } else {
@@ -169,17 +188,6 @@ public class SubscriptionsFragment extends BaseListFragment<SubscriptionsContrac
                     }
 
                 });
-    }
-
-    @Override
-    public void onLoadMore(int index) {
-        getdata(index);
-    }
-
-    @Override
-    public void onRefresh() {
-        getBannerdata();
-        getdata(getVu().getRecyclerView().getPageManager().getCurrentIndex());
     }
 
     @Override

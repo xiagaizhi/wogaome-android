@@ -11,10 +11,12 @@ import android.support.v4.media.MediaBrowserCompat;
 import android.support.v4.media.session.MediaControllerCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -63,18 +65,29 @@ public class MediaBrowserViewBinder  extends ItemViewBinder<MediaBrowserCompat.M
      Drawable drawable=   getDrawableByState(activity,state);
         viewHolder.iv_play_state.setImageDrawable(drawable);
         viewHolder.sdv.setImageURI(mediaItem.getDescription().getIconUri());
+
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
 
+        private  TextView tv_free;
+        private  TextView tv_action;
+        private  TextView tv_info;
         private TextView tv_name;
         private ImageView iv_play_state;
         private SimpleDraweeView sdv;
+        private TextView tv_num;
+        private ProgressBar pb_media;
         ViewHolder(@NonNull View itemView) {
             super(itemView);
             tv_name= itemView.findViewById(R.id.tv_name);
             sdv=itemView.findViewById(R.id.sdv);
             iv_play_state=itemView.findViewById(R.id.iv_play_state);
+            tv_num=itemView.findViewById(R.id.tv_num);
+            tv_info=itemView.findViewById(R.id.tv_info);
+            tv_action=itemView.findViewById(R.id.tv_action);
+            tv_free=itemView.findViewById(R.id.tv_free);
+            pb_media=itemView.findViewById(R.id.pb_media);
         }
     }
 
