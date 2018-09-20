@@ -63,7 +63,7 @@
                     android:layout_marginLeft="@dimen/px36"
                     android:layout_marginRight="@dimen/px36"
                     android:layout_marginTop="@dimen/px21"
-                    android:src="@drawable/ic_toolbar_player_blue" />
+                    android:src="@drawable/anim_player_blue" />
             </LinearLayout>
 
             <LinearLayout

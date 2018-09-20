@@ -41,6 +41,7 @@
             android:textSize="@dimen/px32"
             android:layout_height="wrap_content" />
         <LinearLayout
+            android:id="@+id/ll_tag"
             android:layout_width="wrap_content"
             android:orientation="horizontal"
             android:layout_marginTop="@dimen/px15"
@@ -69,6 +70,19 @@
                 android:layout_marginLeft="@dimen/px10"
                 android:paddingLeft="@dimen/px12"
                 android:id="@+id/tv_tab2"
+                android:background="@drawable/shape_bg_tab_dash_blue6"
+                android:textColor="@color/color_blue_level6"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:textSize="@dimen/px22"
+                android:text="创业"
+                android:paddingRight="@dimen/px12"
+                android:paddingBottom="@dimen/px2"
+                android:paddingTop="@dimen/px2"
+                android:layout_marginLeft="@dimen/px10"
+                android:paddingLeft="@dimen/px12"
+                android:id="@+id/tv_tab3"
                 android:background="@drawable/shape_bg_tab_dash_blue6"
                 android:textColor="@color/color_blue_level6"
                 android:layout_height="wrap_content" />
