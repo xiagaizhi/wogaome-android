@@ -46,7 +46,7 @@ public class WinlistDialogFragment extends DialogFragment implements View.OnClic
     public void onStart() {
         super.onStart();
         //设置fragment高度 、宽度
-        int dialogHeight = (int) (getResources().getDisplayMetrics().heightPixels * 0.6);
+        int dialogHeight = (int) (getResources().getDisplayMetrics().heightPixels * 0.65);
         getDialog().getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, dialogHeight);
         getDialog().setCanceledOnTouchOutside(true);
     }

@@ -633,10 +633,8 @@ public interface YFApi {
     );
 
 
-    @FormUrlEncoded
     @POST("app/v1/albumChannelRelation/showChannel")
     Call<ResponseBody>
     showChannel(
-            @Field("currentPage")int currentPage
     );
 }

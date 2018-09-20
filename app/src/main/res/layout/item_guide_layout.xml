@@ -10,15 +10,17 @@
         android:layout_height="match_parent"
         android:scaleType="fitXY" />
 
-    <ImageButton
+    <Button
         android:id="@+id/btn_go_login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="50dp"
-        android:background="@drawable/start_bt_selecter"
-        android:visibility="gone"
-        />
+        android:layout_marginBottom="@dimen/y170"
+        android:background="@drawable/btn_guide_blue"
+        android:gravity="center"
+        android:text="立即体验"
+        android:textColor="@color/white"
+        android:textSize="@dimen/px34" />
 
 </RelativeLayout>
