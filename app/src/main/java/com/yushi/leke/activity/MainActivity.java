@@ -4,6 +4,7 @@ import android.app.ActivityManager;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.RemoteException;
@@ -14,7 +15,11 @@ import android.support.v4.media.session.MediaControllerCompat;
 import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
 import android.text.TextUtils;
+import android.view.View;
 import android.view.WindowManager;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import com.umeng.socialize.UMShareAPI;
 import com.yufan.library.Global;
@@ -23,6 +28,7 @@ import com.yufan.library.inter.ICallBack;
 import com.yufan.library.manager.SPManager;
 import com.yufan.library.manager.UserManager;
 import com.yufan.library.util.FileUtil;
+import com.yufan.library.util.PxUtil;
 import com.yushi.leke.R;
 import com.yushi.leke.UIHelper;
 import com.yushi.leke.fragment.login.LoginFragment;
@@ -35,7 +41,11 @@ import com.yushi.leke.uamp.utils.LogHelper;
 import com.yushi.leke.uamp.utils.ResourceHelper;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import me.yokeyword.fragmentation.SupportFragment;
 
 public class MainActivity extends BaseActivity implements MediaBrowserProvider {
 private String     TAG="MainActivity";
@@ -45,7 +55,9 @@ private String     TAG="MainActivity";
             "com.yushi.leke.uamp.CURRENT_MEDIA_DESCRIPTION";
     private MediaBrowserCompat mMediaBrowser;
     private List<IActivityResult> results=new ArrayList<>();
+
     private String mediaId;
+    private String ablumId;
 
     public void registerIActivityResult(IActivityResult callBack) {
         if(!results.contains(callBack)){
@@ -56,6 +68,24 @@ private String     TAG="MainActivity";
         if(results.contains(callBack)){
             results.remove(callBack);
         }
+    }
+
+
+    public ImageView getMusicView(){
+        ImageView imageView = new ImageView(this);
+        LinearLayout.LayoutParams rightLayoutParams = new  LinearLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+        imageView.setLayoutParams(rightLayoutParams);
+        imageView.setImageResource(R.drawable.anim_player_blue);
+        ((AnimationDrawable) imageView.getDrawable()).start();
+        imageView.setPadding(0, 0,PxUtil.convertDIP2PX(this,18), 0);
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), MusicPlayerActivity.class);
+                v.getContext().startActivity(intent);
+            }
+        });
+        return imageView;
     }
 
     @Override
@@ -89,7 +119,8 @@ private String     TAG="MainActivity";
         }else {
             loadRootFragment(R.id.activity_content_level0, UIHelper.creat(LoginFragment.class).build());
         }
-         mediaId=  SPManager.getInstance().getString(Global.SP_KEY_MEDIA_ID,"");
+         ablumId=  SPManager.getInstance().getString(Global.SP_KEY_ALBUM_ID,"");
+         mediaId=  SPManager.getInstance().getString(Global.SP_KEY_ALBUM_ID,"");
 
 
     }
@@ -124,8 +155,8 @@ private String     TAG="MainActivity";
         if (controllerCompat != null) {
             controllerCompat.unregisterCallback(mMediaControllerCallback);
         }
-        if (mMediaBrowser != null && mMediaBrowser.isConnected() &&  !TextUtils.isEmpty(mediaId)) {
-            mMediaBrowser.unsubscribe(mediaId);
+        if (mMediaBrowser != null && mMediaBrowser.isConnected() &&  !TextUtils.isEmpty(ablumId)) {
+            mMediaBrowser.unsubscribe(ablumId);
         }
         mMediaBrowser.disconnect();
     }
@@ -214,7 +245,7 @@ private String     TAG="MainActivity";
                     LogHelper.d(TAG, "onConnected");
                     try {
                         connectToSession(mMediaBrowser.getSessionToken());
-                      String ablumId=  SPManager.getInstance().getString(Global.SP_KEY_ALBUM_ID,"");
+
                         if(MusicProvider.getInstance().getMusics().size()==0&& !TextUtils.isEmpty(ablumId)){
                             mMediaBrowser.unsubscribe(ablumId);
                             mMediaBrowser.subscribe(ablumId, new MediaBrowserCompat.SubscriptionCallback(){

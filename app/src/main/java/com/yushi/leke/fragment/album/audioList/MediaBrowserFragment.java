@@ -2,7 +2,6 @@ package com.yushi.leke.fragment.album.audioList;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.media.MediaBrowserCompat;
@@ -12,18 +11,10 @@ import android.support.v4.media.session.PlaybackStateCompat;
 import android.view.View;
 import android.widget.Toast;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.yufan.library.Global;
-import com.yufan.library.api.ApiBean;
-import com.yufan.library.api.ApiManager;
-import com.yufan.library.api.YFListHttpCallBack;
 import com.yufan.library.base.BaseListFragment;
 import com.yufan.library.inject.VuClass;
 import com.yufan.library.manager.SPManager;
-import com.yufan.library.view.recycler.PageInfo;
-import com.yushi.leke.YFApi;
-import com.yushi.leke.fragment.test.CategoryItemViewBinder;
 import com.yushi.leke.uamp.ui.MediaBrowserProvider;
 import com.yushi.leke.uamp.utils.LogHelper;
 

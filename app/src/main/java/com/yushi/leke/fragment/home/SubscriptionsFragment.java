@@ -28,6 +28,7 @@ import com.yushi.leke.fragment.browser.BrowserBaseFragment;
 import com.yushi.leke.fragment.exhibition.detail.ExhibitionDetailFragment;
 import com.yushi.leke.fragment.exhibition.exhibitionHome.ExhibitionErrorBinder;
 import com.yushi.leke.fragment.exhibition.exhibitionHome.ExhibitionErrorInfo;
+import com.yushi.leke.fragment.exhibition.exhibitionHome.ExhibitionFragment;
 import com.yushi.leke.fragment.searcher.SearchFragment;
 import com.yushi.leke.fragment.splash.advert.NativeJumpInfo;
 import com.yushi.leke.util.ArgsUtil;
@@ -200,4 +201,6 @@ public class SubscriptionsFragment extends BaseListFragment<SubscriptionsContrac
     public void onSearchBarClick() {
         getRootFragment().start(UIHelper.creat(SearchFragment.class).build());
     }
+
+
 }

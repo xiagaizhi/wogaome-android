@@ -34,8 +34,8 @@ public abstract class BaseListFragment<V extends VuList> extends BaseFragment {
         View view = null;
         try {
             vu =(V) AnnotateUtils.getVu(this).newInstance();
-            vu.init(inflater, container);
             vu.setPresenter(this);
+            vu.init(inflater, container);
             view = vu.getView();
         } catch (java.lang.InstantiationException e) {
             e.printStackTrace();
