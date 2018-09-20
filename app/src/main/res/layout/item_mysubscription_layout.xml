@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/px240"
+    android:layout_marginLeft="@dimen/px36"
+    android:layout_marginRight="@dimen/px36">
+
+    <RelativeLayout
+        android:id="@+id/rl_right"
+        android:layout_width="@dimen/px218"
+        android:layout_height="@dimen/px168"
+        android:layout_centerVertical="true">
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/img_logo"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            fresco:failureImage="@drawable/default_video_rectangle"
+            fresco:placeholderImage="@drawable/default_video_rectangle"
+            fresco:placeholderImageScaleType="focusCrop" />
+
+        <TextView
+            android:id="@+id/tv_playcount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/sdv"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="@dimen/px7"
+            android:layout_marginLeft="@dimen/px14"
+            android:drawableLeft="@drawable/ic_subscription_headset"
+            android:drawablePadding="2dp"
+            android:padding="@dimen/px11"
+            android:text="123"
+            android:textColor="@color/white"
+            android:textSize="@dimen/px20" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/px20"
+        android:layout_toRightOf="@+id/rl_right"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:text="永不放弃"
+            android:textColor="@color/color_gray_level3"
+            android:textSize="@dimen/px32" />
+
+        <LinearLayout
+            android:id="@+id/ll_tag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/px15"
+            android:layout_marginTop="@dimen/px15"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_tab1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/shape_bg_tab_dash_blue6"
+                android:paddingBottom="@dimen/px2"
+                android:paddingLeft="@dimen/px12"
+                android:paddingRight="@dimen/px12"
+                android:paddingTop="@dimen/px2"
+                android:text="创业"
+                android:textColor="@color/color_blue_level6"
+                android:textSize="@dimen/px22" />
+
+            <TextView
+                android:id="@+id/tv_tab2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/px10"
+                android:background="@drawable/shape_bg_tab_dash_blue6"
+                android:paddingBottom="@dimen/px2"
+                android:paddingLeft="@dimen/px12"
+                android:paddingRight="@dimen/px12"
+                android:paddingTop="@dimen/px2"
+                android:text="创业"
+                android:textColor="@color/color_blue_level6"
+                android:textSize="@dimen/px22" />
+
+            <TextView
+                android:id="@+id/tv_tab3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/px10"
+                android:background="@drawable/shape_bg_tab_dash_blue6"
+                android:paddingBottom="@dimen/px2"
+                android:paddingLeft="@dimen/px12"
+                android:paddingRight="@dimen/px12"
+                android:paddingTop="@dimen/px2"
+                android:text="创业"
+                android:textColor="@color/color_blue_level6"
+                android:textSize="@dimen/px22" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:text="马云"
+                android:textColor="@color/color_gray_level6"
+                android:textSize="@dimen/px24" />
+
+            <View
+                android:layout_width="@dimen/px1"
+                android:layout_height="@dimen/px17"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/px8"
+                android:layout_marginRight="@dimen/px8"
+                android:background="#d7d7d7" />
+
+            <TextView
+                android:id="@+id/tv_industry"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:text="阿里巴巴创始人"
+                android:textColor="@color/color_gray_level6"
+                android:textSize="@dimen/px24" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_othertitle"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="bottom"
+            android:singleLine="true"
+            android:text="这里显示副标题，简历奖励简历简历这里显示副标题，简历奖励简历简历..."
+            android:textColor="@color/color_gray_level6"
+            android:textSize="@dimen/px24" />
+
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px1"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="@dimen/px20"
+        android:layout_toRightOf="@+id/rl_right"
+        android:background="@color/color_gray_levele" />
+
+
+</RelativeLayout>

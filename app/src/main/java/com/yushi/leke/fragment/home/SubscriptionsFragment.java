@@ -113,6 +113,7 @@ public class SubscriptionsFragment extends BaseListFragment<SubscriptionsContrac
         list.add(subscriptionBanner);
         adapter.setItems(list);
         vu.getRecyclerView().setAdapter(adapter);
+        onRefresh();
 
     }
 

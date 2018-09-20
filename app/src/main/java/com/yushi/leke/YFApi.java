@@ -618,6 +618,17 @@ public interface YFApi {
     @POST("app/v1/mySubscribe/cancelSubscribe")
     Call<ResponseBody>
     unregisteralbum(
-            @Field("albumId")int albumId
+            @Field("albumId")String albumId
+    );
+
+    /**
+     *我的订阅
+     *
+     */
+    @FormUrlEncoded
+    @POST("app/v1/mySubscribe/getMySubscribe")
+    Call<ResponseBody>
+    getMySubscribe(
+            @Field("currentPage")int currentPage
     );
 }

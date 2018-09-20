@@ -19,7 +19,7 @@ public class PageInfo {
     public static final int PAGE_STATE_NO_MORE=2;//无更多数据
     public static final int PAGE_STATE_ERROR=3;//加载失败
     private int mState=0;
-    private int mCurrentIndex=0;
+    private int mCurrentIndex=1;
     private ICallBack callBack;
 
     public void setCallBack(ICallBack callBack) {
@@ -36,7 +36,7 @@ public class PageInfo {
         return mState!=PAGE_STATE_LOADING;
     }
     public void resetIndex(){
-        mCurrentIndex=0;
+        mCurrentIndex=1;
     }
 
 

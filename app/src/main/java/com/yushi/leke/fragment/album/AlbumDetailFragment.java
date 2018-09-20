@@ -164,7 +164,7 @@ public class AlbumDetailFragment extends BaseFragment<AlbumDetailContract.IView>
     public void unregister() {
         //取消订阅专辑
         ApiManager.getCall(ApiManager.getInstance().create(YFApi.class)
-                .unregisteralbum(albumId))
+                .unregisteralbum(String.valueOf(albumId)))
                 .useCache(false)
                 .enqueue(new BaseHttpCallBack() {
                     @Override
