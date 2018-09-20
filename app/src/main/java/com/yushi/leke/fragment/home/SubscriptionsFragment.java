@@ -25,6 +25,7 @@ import com.yushi.leke.fragment.browser.BrowserBaseFragment;
 import com.yushi.leke.fragment.exhibition.detail.ExhibitionDetailFragment;
 import com.yushi.leke.fragment.exhibition.exhibitionHome.ExhibitionErrorBinder;
 import com.yushi.leke.fragment.exhibition.exhibitionHome.ExhibitionErrorInfo;
+import com.yushi.leke.fragment.home.subscriptionChannel.SubscriptionChannelFragment;
 import com.yushi.leke.fragment.exhibition.exhibitionHome.ExhibitionFragment;
 import com.yushi.leke.fragment.searcher.SearchFragment;
 import com.yushi.leke.fragment.splash.advert.NativeJumpInfo;
@@ -101,10 +102,13 @@ public class SubscriptionsFragment extends BaseListFragment<SubscriptionsContrac
                 onRefresh();
             }
         }));
-        adapter.register(SubscriptionColumnInfo.class,new SubscriptionsColumnViewBinder(new ICallBack() {
+        adapter.register(SubscriptionColumnInfo.class, new SubscriptionsColumnViewBinder(new ICallBack() {
             @Override
             public void OnBackResult(Object... s) {
-
+                SubscriptionColumnInfo subscriptionColumnInfo = (SubscriptionColumnInfo) s[0];
+                getRootFragment().start(UIHelper.creat(SubscriptionChannelFragment.class)
+                        .put(Global.BUNDLE_CHANNEL_NAME, subscriptionColumnInfo.getChannelName())
+                        .put(Global.BUNDLE_CHANNEL_ID, subscriptionColumnInfo.getChannelId()).build());
             }
         }));
         subscriptionBanner = new SubscriptionBanner();
@@ -112,36 +116,6 @@ public class SubscriptionsFragment extends BaseListFragment<SubscriptionsContrac
         adapter.setItems(list);
         vu.getRecyclerView().setAdapter(adapter);
         onRefresh();
-    }
-
-
-    @Override
-    public void onLoadMore(int index) {
-        ApiManager.getCall(ApiManager.getInstance().create(YFApi.class)
-                .showChannel(index))
-                .useCache(false)
-                .enqueue(new YFListHttpCallBack(getVu()) {
-                    @Override
-                    public void onSuccess(ApiBean mApiBean) {
-                        super.onSuccess(mApiBean);
-                        if (!TextUtils.isEmpty(mApiBean.getData())) {
-                            List<SubscriptionChannelInfo> subscriptionChannelInfos = JSON.parseArray(mApiBean.getData(), SubscriptionChannelInfo.class);
-                            if (subscriptionChannelInfos != null && subscriptionChannelInfos.size() > 0) {
-                                for (SubscriptionChannelInfo temp : subscriptionChannelInfos) {
-                                    SubscriptionColumnInfo subscriptionColumnInfo = new SubscriptionColumnInfo();
-                                    subscriptionColumnInfo.setChannelId(temp.getChannelId());
-                                    subscriptionColumnInfo.setChannelName(temp.getChannelName());
-                                    subscriptionColumnInfo.setMore(temp.getMore());
-                                    list.add(subscriptionColumnInfo);
-                                    list.addAll(temp.getAlbumViewInfoList());
-                                }
-                            } else {
-                                vu.getRecyclerView().getPageManager().setPageState(PageInfo.PAGE_STATE_NO_MORE);
-                            }
-                        }
-                    }
-
-                });
     }
 
     @Override

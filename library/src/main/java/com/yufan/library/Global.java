@@ -17,6 +17,8 @@ public class Global {
 
     public static final String BUNDLE_KEY_EXHIBITION_TYE = "BUNDLE_KEY_EXHIBITION_TYE";
     public static final String BUNDLE_AD_KEY = "BUNDLE_AD_KEY";
+    public static final String BUNDLE_CHANNEL_ID = "BUNDLE_CHANNEL_ID";
+    public static final String BUNDLE_CHANNEL_NAME = "BUNDLE_CHANNEL_NAME";
 
     public static final String SP_KEY_SERVICE_TYPE = "SP_KEY_SERVICE_TYPE";
     public static final String SP_KEY_MEDIA_ID = "SP_KEY_MEDIA_ID";
