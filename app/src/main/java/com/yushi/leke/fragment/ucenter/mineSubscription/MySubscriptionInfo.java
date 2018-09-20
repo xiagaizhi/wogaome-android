@@ -19,7 +19,24 @@ public class MySubscriptionInfo {
     private String albumStatus;
     private String ctime;
     private String introduction;
+    private String viewPeople;
+    private String viewTimes;
 
+    public String getViewPeople() {
+        return viewPeople;
+    }
+
+    public void setViewPeople(String viewPeople) {
+        this.viewPeople = viewPeople;
+    }
+
+    public String getViewTimes() {
+        return viewTimes;
+    }
+
+    public void setViewTimes(String viewTimes) {
+        this.viewTimes = viewTimes;
+    }
 
     public String getAlbumName() {
         return albumName;

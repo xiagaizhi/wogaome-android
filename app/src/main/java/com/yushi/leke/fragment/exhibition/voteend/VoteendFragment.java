@@ -4,8 +4,8 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
+
 import com.alibaba.fastjson.JSON;
 import com.yufan.library.Global;
 import com.yufan.library.api.ApiBean;
@@ -30,6 +30,7 @@ public class VoteendFragment extends BaseListFragment<VoteendContract.IView> imp
     private Voteendinfolist infolist;
     private ICallBack mICallBack;
     private String activityid;
+
     public void setmICallBack(ICallBack mICallBack) {
         this.mICallBack = mICallBack;
     }
@@ -38,10 +39,9 @@ public class VoteendFragment extends BaseListFragment<VoteendContract.IView> imp
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         Bundle bundle = getArguments();
-        if (bundle!=null){
-            activityid=bundle.getString(Global.BUNDLE_KEY_ACTIVITYID);
+        if (bundle != null) {
+            activityid = bundle.getString(Global.BUNDLE_KEY_ACTIVITYID);
         }
-        Log.d("LOGH",activityid);
         adapter = new MultiTypeAdapter();
         adapter.register(Voteendinfo.class, new VoteendBinder(new ICallBack() {
             @Override
@@ -54,26 +54,13 @@ public class VoteendFragment extends BaseListFragment<VoteendContract.IView> imp
         vu.getRecyclerView().setAdapter(adapter);
         adapter.setItems(list);
         vu.getRecyclerView().getAdapter().notifyDataSetChanged();
-        getvoteenddata(getVu().getRecyclerView().getPageManager().getCurrentIndex());
+        onRefresh();
     }
 
     @Override
     public void onLoadMore(int index) {
-        getvoteenddata(index);
-    }
-
-
-    @Override
-    public void onRefresh() {
-        getvoteenddata(getVu().getRecyclerView().getPageManager().getCurrentIndex());
-    }
-
-    /**
-     * 请求数据
-     */
-    private void getvoteenddata(final int currentPage) {
         ApiManager.getCall(ApiManager.getInstance().create(YFApi.class)
-                .getvoteenddata(currentPage, activityid))
+                .getvoteenddata(index, activityid))
                 .useCache(false)
                 .enqueue(new YFListHttpCallBack(getVu()) {
                     @Override
@@ -82,12 +69,38 @@ public class VoteendFragment extends BaseListFragment<VoteendContract.IView> imp
                         if (!TextUtils.isEmpty(mApiBean.getData())) {
                             infolist = JSON.parseObject(mApiBean.getData(), Voteendinfolist.class);
                             if (infolist != null && infolist.getProjectList().size() > 0) {
-                                if (currentPage == 0) {
-                                    list.clear();
-                                    if (mICallBack != null) {//请求播放第一条视频
-                                        Voteendinfo voteendinfo = infolist.getProjectList().get(0);
-                                        mICallBack.OnBackResult(voteendinfo.getAliVideoId(), voteendinfo.getTitle(), voteendinfo.getId());
-                                    }
+                                list.clear();
+                                if (mICallBack != null) {//请求播放第一条视频
+                                    Voteendinfo voteendinfo = infolist.getProjectList().get(0);
+                                    mICallBack.OnBackResult(voteendinfo.getAliVideoId(), voteendinfo.getTitle(), voteendinfo.getId());
+                                }
+                                list.addAll(infolist.getProjectList());
+                                vu.getRecyclerView().getAdapter().notifyDataSetChanged();
+                            } else {
+                                vu.getRecyclerView().getPageManager().setPageState(PageInfo.PAGE_STATE_NO_MORE);
+                            }
+                        }
+                    }
+                });
+    }
+
+
+    @Override
+    public void onRefresh() {
+        ApiManager.getCall(ApiManager.getInstance().create(YFApi.class)
+                .getvoteenddata(1, activityid))
+                .useCache(false)
+                .enqueue(new YFListHttpCallBack(getVu()) {
+                    @Override
+                    public void onSuccess(ApiBean mApiBean) {
+                        super.onSuccess(mApiBean);
+                        if (!TextUtils.isEmpty(mApiBean.getData())) {
+                            infolist = JSON.parseObject(mApiBean.getData(), Voteendinfolist.class);
+                            if (infolist != null && infolist.getProjectList().size() > 0) {
+                                list.clear();
+                                if (mICallBack != null) {//请求播放第一条视频
+                                    Voteendinfo voteendinfo = infolist.getProjectList().get(0);
+                                    mICallBack.OnBackResult(voteendinfo.getAliVideoId(), voteendinfo.getTitle(), voteendinfo.getId());
                                 }
                                 list.addAll(infolist.getProjectList());
                                 vu.getRecyclerView().getAdapter().notifyDataSetChanged();
@@ -103,7 +116,7 @@ public class VoteendFragment extends BaseListFragment<VoteendContract.IView> imp
     @Override
     public void MyCallback() {
         getRootFragment().start(UIHelper.creat(AllendFragment.class)
-                .put(Global.BUNDLE_KEY_ACTIVITYID,activityid)
+                .put(Global.BUNDLE_KEY_ACTIVITYID, activityid)
                 .build());
     }
 }

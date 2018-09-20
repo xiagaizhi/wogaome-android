@@ -40,6 +40,7 @@ public class MySubscriptionViewBinder extends ItemViewBinder<MySubscriptionInfo,
         viewHolder.tv_name.setText(mySubscriptionInfo.getCreator());
         viewHolder.tv_industry.setText(mySubscriptionInfo.getCreatorInfo());
         viewHolder.tv_othertitle.setText(mySubscriptionInfo.getIntroduction());
+        viewHolder.tv_playcount.setText(mySubscriptionInfo.getViewTimes());
         if (!TextUtils.isEmpty(mySubscriptionInfo.getTags())) {
             String[] tags = mySubscriptionInfo.getTags().split(",");
             if (tags.length == 0) {
@@ -70,6 +71,7 @@ public class MySubscriptionViewBinder extends ItemViewBinder<MySubscriptionInfo,
             viewHolder.ll_tag.setVisibility(View.GONE);
         }
 
+
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -99,6 +101,7 @@ public class MySubscriptionViewBinder extends ItemViewBinder<MySubscriptionInfo,
         private TextView tv_othertitle;
         private LinearLayout ll_tag;
         private TextView tv_tab1, tv_tab2, tv_tab3;
+        private TextView tv_playcount;
 
         ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -111,6 +114,7 @@ public class MySubscriptionViewBinder extends ItemViewBinder<MySubscriptionInfo,
             tv_tab1 = itemView.findViewById(R.id.tv_tab1);
             tv_tab2 = itemView.findViewById(R.id.tv_tab2);
             tv_tab3 = itemView.findViewById(R.id.tv_tab3);
+            tv_playcount = itemView.findViewById(R.id.tv_playcount);
         }
     }
 }

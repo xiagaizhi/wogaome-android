@@ -43,7 +43,7 @@ public class ExhibitionFragment extends BaseListFragment<ExhibitionContract.IVie
                 }
             }
         }));
-        adapter.register(ExhibitionErrorInfo.class,new ExhibitionErrorBinder(new ICallBack() {
+        adapter.register(ExhibitionErrorInfo.class, new ExhibitionErrorBinder(new ICallBack() {
             @Override
             public void OnBackResult(Object... s) {
                 onRefresh();
@@ -77,12 +77,13 @@ public class ExhibitionFragment extends BaseListFragment<ExhibitionContract.IVie
         list.add(new ExhibitionTopInfo());
         adapter.setItems(list);
         vu.getRecyclerView().setAdapter(adapter);
-        getActivityList(getVu().getRecyclerView().getPageManager().getCurrentIndex());
+        onRefresh();
     }
 
 
-    private void getActivityList(final int currentPage) {
-        ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).listActivity(currentPage))
+    @Override
+    public void onLoadMore(int index) {
+        ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).listActivity(index))
                 .useCache(false)
                 .enqueue(new YFListHttpCallBack(getVu()) {
                     @Override
@@ -91,28 +92,9 @@ public class ExhibitionFragment extends BaseListFragment<ExhibitionContract.IVie
                         if (!TextUtils.isEmpty(mApiBean.getData())) {
                             ExhibitionInfoList exhibitionInfoList = JSON.parseObject(mApiBean.getData(), ExhibitionInfoList.class);
                             if (exhibitionInfoList != null && exhibitionInfoList.getList().size() > 0) {
-                                if (currentPage == 0) {
-                                    list.clear();
-                                    list.add(new ExhibitionTopInfo());
-                                    if (exhibitionInfoList.getList().size() == 1) {
-                                        ExhibitionInfo exhibitionInfo = exhibitionInfoList.getList().get(0);
-                                        if (exhibitionInfo.getActivityProgress() == 2) {
-                                            ExhibitionJustOneInfo exhibitionJustOneInfo = new ExhibitionJustOneInfo(exhibitionInfo);
-                                            list.add(exhibitionJustOneInfo);
-                                            vu.getRecyclerView().getAdapter().notifyDataSetChanged();
-                                            return;
-                                        }
-                                    }
-                                }
                                 list.addAll(exhibitionInfoList.getList());
                                 vu.getRecyclerView().getAdapter().notifyDataSetChanged();
                             } else {
-                                if (currentPage == 0) {
-                                    list.clear();
-                                    list.add(new ExhibitionTopInfo());
-                                    list.add(new ExhibitionEmptyInfo());
-                                    vu.getRecyclerView().getAdapter().notifyDataSetChanged();
-                                }
                                 vu.getRecyclerView().getPageManager().setPageState(PageInfo.PAGE_STATE_NO_MORE);
                             }
                         }
@@ -121,22 +103,53 @@ public class ExhibitionFragment extends BaseListFragment<ExhibitionContract.IVie
                     @Override
                     public void onFinish() {
                         super.onFinish();
-                        if (currentPage == 0 && list.size()<=1){
-                            list.add(new ExhibitionErrorInfo());
-                            vu.getRecyclerView().getAdapter().notifyDataSetChanged();
-                        }
                     }
                 });
     }
 
     @Override
-    public void onLoadMore(int index) {
-        getActivityList(index);
-    }
-
-    @Override
     public void onRefresh() {
-        getActivityList(getVu().getRecyclerView().getPageManager().getCurrentIndex());
+        ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).listActivity(1))
+                .useCache(false)
+                .enqueue(new YFListHttpCallBack(getVu()) {
+                    @Override
+                    public void onSuccess(ApiBean mApiBean) {
+                        super.onSuccess(mApiBean);
+                        if (!TextUtils.isEmpty(mApiBean.getData())) {
+                            ExhibitionInfoList exhibitionInfoList = JSON.parseObject(mApiBean.getData(), ExhibitionInfoList.class);
+                            if (exhibitionInfoList != null && exhibitionInfoList.getList().size() > 0) {
+                                list.clear();
+                                list.add(new ExhibitionTopInfo());
+                                if (exhibitionInfoList.getList().size() == 1) {
+                                    ExhibitionInfo exhibitionInfo = exhibitionInfoList.getList().get(0);
+                                    if (exhibitionInfo.getActivityProgress() == 2) {
+                                        ExhibitionJustOneInfo exhibitionJustOneInfo = new ExhibitionJustOneInfo(exhibitionInfo);
+                                        list.add(exhibitionJustOneInfo);
+                                        vu.getRecyclerView().getAdapter().notifyDataSetChanged();
+                                        return;
+                                    }
+                                }
+                                list.addAll(exhibitionInfoList.getList());
+                                vu.getRecyclerView().getAdapter().notifyDataSetChanged();
+                            } else {
+                                list.clear();
+                                list.add(new ExhibitionTopInfo());
+                                list.add(new ExhibitionEmptyInfo());
+                                vu.getRecyclerView().getAdapter().notifyDataSetChanged();
+                                vu.getRecyclerView().getPageManager().setPageState(PageInfo.PAGE_STATE_NO_MORE);
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        super.onFinish();
+                        if (list.size() <= 1) {
+                            list.add(new ExhibitionErrorInfo());
+                            vu.getRecyclerView().getAdapter().notifyDataSetChanged();
+                        }
+                    }
+                });
     }
 
     @Override

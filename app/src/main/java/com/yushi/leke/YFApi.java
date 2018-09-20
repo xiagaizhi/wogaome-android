@@ -552,7 +552,7 @@ public interface YFApi {
     @FormUrlEncoded
     @POST("app/v1/albumChannelRelation/showAlbum")
     Call<ResponseBody>
-    showAlbum(@Field("channelId") String channelId,
+    showAlbum(@Field("channelId") long channelId,
               @Field("currentPage") int currentPage);
 
     /**
