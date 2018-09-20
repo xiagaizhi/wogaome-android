@@ -29,6 +29,7 @@ import android.view.WindowManager;
 import com.yufan.library.cache.CacheManager;
 import com.yufan.library.inject.VuClass;
 import com.yufan.library.manager.SPManager;
+import com.yufan.library.manager.UserManager;
 import com.yufan.library.util.SIDUtil;
 import com.yufan.library.util.YFUtil;
 import com.yushi.leke.R;
@@ -173,7 +174,7 @@ public class SplashFragment extends BaseFragment<SplashContract.IView> implement
                     UIHelper.openFragment(_mActivity, UIHelper.creat(GuideFragmentFragment.class).build(), false);
                     SPManager.getInstance().saveValue(Global.SP_GUIDE_KEY + YFUtil.getVersionName(), true);
                 } else {
-                    if (adInfo != null && !TextUtils.isEmpty(adInfo.getKey())) {
+                    if (adInfo != null && !TextUtils.isEmpty(adInfo.getKey()) && !TextUtils.isEmpty(UserManager.getInstance().getToken())) {
                         UIHelper.openFragment(_mActivity, UIHelper.creat(AdFragmentFragment.class).put(Global.BUNDLE_AD_KEY, adInfo.getKey()).build(), false);
                     } else {
                         if (_mActivity != null && !_mActivity.isFinishing()) {

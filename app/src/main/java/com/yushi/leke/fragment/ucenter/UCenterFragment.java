@@ -21,6 +21,7 @@ import com.yushi.leke.YFApi;
 import com.yushi.leke.fragment.browser.BrowserBaseFragment;
 import com.yushi.leke.fragment.main.MainFragment;
 import com.yushi.leke.fragment.setting.SettingFragment;
+import com.yushi.leke.fragment.ucenter.mineSubscription.MySubscriptionFragment;
 import com.yushi.leke.fragment.ucenter.personalInfo.PersonalInfoFragment;
 import com.yushi.leke.fragment.wallet.MyWalletFragment;
 
@@ -210,7 +211,7 @@ public class UCenterFragment extends BaseFragment<UCenterContract.IView> impleme
         if (TextUtils.equals("我的路演", key)) {
             getRootFragment().start(UIHelper.creat(BrowserBaseFragment.class).put(Global.BUNDLE_KEY_BROWSER_URL, ApiManager.getInstance().getApiConfig().getMyRoadShow()).build());
         } else if (TextUtils.equals("我的订阅", key)) {
-            getRootFragment().start(UIHelper.creat(BrowserBaseFragment.class).put(Global.BUNDLE_KEY_BROWSER_URL, ApiManager.getInstance().getApiConfig().getMySubscribe()).build());
+            getRootFragment().start(UIHelper.creat(MySubscriptionFragment.class).build());
         } else if (TextUtils.equals("我的投票", key)) {
             getRootFragment().start(UIHelper.creat(BrowserBaseFragment.class).put(Global.BUNDLE_KEY_BROWSER_URL, ApiManager.getInstance().getApiConfig().getMyVote()).build());
         } else if (TextUtils.equals("我的等级", key)) {

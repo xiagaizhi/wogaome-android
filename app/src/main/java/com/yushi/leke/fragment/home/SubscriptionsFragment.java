@@ -113,15 +113,15 @@ public class SubscriptionsFragment extends BaseListFragment<SubscriptionsContrac
         list.add(subscriptionBanner);
         adapter.setItems(list);
         vu.getRecyclerView().setAdapter(adapter);
+        onRefresh();
 
     }
-
 
 
     @Override
     public void onLoadMore(int index) {
         ApiManager.getCall(ApiManager.getInstance().create(YFApi.class)
-                .showAlbum("channelId", index))
+                .showAlbum(101001, index))
                 .useCache(false)
                 .enqueue(new YFListHttpCallBack(getVu()) {
                     @Override
@@ -168,7 +168,7 @@ public class SubscriptionsFragment extends BaseListFragment<SubscriptionsContrac
                     }
                 });
         ApiManager.getCall(ApiManager.getInstance().create(YFApi.class)
-                .showAlbum("channelId", 1))
+                .showAlbum(101001, 1))
                 .useCache(false)
                 .enqueue(new YFListHttpCallBack(getVu()) {
                     @Override

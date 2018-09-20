@@ -2,6 +2,7 @@ package com.yushi.leke;
 
 import android.content.Context;
 import android.net.Uri;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.alibaba.sdk.android.man.MANHitBuilders;
@@ -58,7 +59,7 @@ public class App extends BaseApplication {
         QbSdk.initX5Environment(getApplicationContext(), null);
         ApiManager.getInstance().init(SPManager.getInstance().getInt(Global.SP_KEY_SERVICE_TYPE, BuildConfig.API_TYPE));
         //注册信鸽
-        registerXGPush(UserManager.getInstance().getUid());
+        registerXGPush(UserManager.getInstance().getToken());
         initCustomPushNotificationBuilder(getApplicationContext());
         OkGo.getInstance().init(this);
         initManService();
@@ -90,6 +91,9 @@ public class App extends BaseApplication {
         ArgsUtil.datapoint(ArgsUtil.APP_START,"null",ArgsUtil.UID,ArgsUtil.STARTCODE,null,null);
     }
     public void registerXGPush(String uid) {
+        if (TextUtils.isEmpty(uid)){
+            uid = "*";
+        }
         XGPushManager.registerPush(getApplicationContext(), uid,
                 new XGIOperateCallback() {
                     @Override
