@@ -29,7 +29,7 @@ import com.yushi.leke.activity.MusicPlayerActivity;
 /**
  * Created by mengfantao on 18/8/2.
  */
-@FindLayout(layout = R.layout.layout_fragment_list)
+@FindLayout(layout = R.layout.layout_subscription_fragment_list)
 @Title("订阅专栏")
 public class SubscriptionsVu extends BaseListVu<SubscriptionsContract.Presenter> implements SubscriptionsContract.IView {
     @FindView(R.id.recyclerview)

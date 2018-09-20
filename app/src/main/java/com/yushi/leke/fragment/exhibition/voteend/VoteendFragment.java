@@ -18,6 +18,7 @@ import com.yufan.library.view.recycler.PageInfo;
 import com.yushi.leke.UIHelper;
 import com.yushi.leke.YFApi;
 import com.yushi.leke.fragment.exhibition.voteend.allproject.AllendFragment;
+import com.yushi.leke.fragment.exhibition.win.WinlistDialogFragment;
 
 import me.drakeet.multitype.MultiTypeAdapter;
 
@@ -55,6 +56,7 @@ public class VoteendFragment extends BaseListFragment<VoteendContract.IView> imp
         adapter.setItems(list);
         vu.getRecyclerView().getAdapter().notifyDataSetChanged();
         onRefresh();
+        openWinPage();
     }
 
     @Override
@@ -118,5 +120,11 @@ public class VoteendFragment extends BaseListFragment<VoteendContract.IView> imp
         getRootFragment().start(UIHelper.creat(AllendFragment.class)
                 .put(Global.BUNDLE_KEY_ACTIVITYID, activityid)
                 .build());
+    }
+
+    @Override
+    public void openWinPage() {
+        WinlistDialogFragment winlistDialogFragment = new WinlistDialogFragment();
+        winlistDialogFragment.show(getFragmentManager(), "WinlistDialogFragment");
     }
 }

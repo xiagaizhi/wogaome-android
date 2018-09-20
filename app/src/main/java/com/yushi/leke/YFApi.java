@@ -631,4 +631,12 @@ public interface YFApi {
     getMySubscribe(
             @Field("currentPage")int currentPage
     );
+
+
+    @FormUrlEncoded
+    @POST("app/v1/albumChannelRelation/showChannel")
+    Call<ResponseBody>
+    showChannel(
+            @Field("currentPage")int currentPage
+    );
 }

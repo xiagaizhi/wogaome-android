@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:fresco="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:background="@color/white"
@@ -57,12 +56,11 @@
         android:layout_height="@dimen/px152"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true">
-        <com.facebook.drawee.view.SimpleDraweeView
+        <ImageView
             android:id="@+id/sdv"
-            fresco:roundAsCircle="true"
             android:layout_width="@dimen/px112"
-            android:layout_height="@dimen/px112"
-            fresco:roundedCornerRadius="2dp" />
+            android:src="@drawable/ic_end_img"
+            android:layout_height="@dimen/px112" />
     </LinearLayout>
 
 </RelativeLayout>

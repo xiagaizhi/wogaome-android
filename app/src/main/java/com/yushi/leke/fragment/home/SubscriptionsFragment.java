@@ -5,12 +5,9 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.yufan.library.Global;
 import com.yufan.library.api.ApiBean;
 import com.yufan.library.api.ApiManager;
@@ -31,10 +28,6 @@ import com.yushi.leke.fragment.exhibition.exhibitionHome.ExhibitionErrorInfo;
 import com.yushi.leke.fragment.exhibition.exhibitionHome.ExhibitionFragment;
 import com.yushi.leke.fragment.searcher.SearchFragment;
 import com.yushi.leke.fragment.splash.advert.NativeJumpInfo;
-import com.yushi.leke.util.ArgsUtil;
-
-import org.json.JSONArray;
-import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -84,13 +77,11 @@ public class SubscriptionsFragment extends BaseListFragment<SubscriptionsContrac
                                     }
                                 } else {
                                     if (!TextUtils.isEmpty(bannerItemInfo.getH5Url())) {
-                                        start(UIHelper.creat(BrowserBaseFragment.class).put(Global.BUNDLE_KEY_BROWSER_URL, bannerItemInfo.getH5Url()).build());
+                                        getRootFragment().start(UIHelper.creat(BrowserBaseFragment.class).put(Global.BUNDLE_KEY_BROWSER_URL, bannerItemInfo.getH5Url()).build());
                                     }
                                 }
                             }
                         }
-
-
                         break;
                 }
             }
@@ -110,29 +101,40 @@ public class SubscriptionsFragment extends BaseListFragment<SubscriptionsContrac
                 onRefresh();
             }
         }));
+        adapter.register(SubscriptionColumnInfo.class,new SubscriptionsColumnViewBinder(new ICallBack() {
+            @Override
+            public void OnBackResult(Object... s) {
+
+            }
+        }));
         subscriptionBanner = new SubscriptionBanner();
         list.add(subscriptionBanner);
         adapter.setItems(list);
         vu.getRecyclerView().setAdapter(adapter);
         onRefresh();
-
     }
 
 
     @Override
     public void onLoadMore(int index) {
         ApiManager.getCall(ApiManager.getInstance().create(YFApi.class)
-                .showAlbum(101001, index))
+                .showChannel(index))
                 .useCache(false)
                 .enqueue(new YFListHttpCallBack(getVu()) {
                     @Override
                     public void onSuccess(ApiBean mApiBean) {
                         super.onSuccess(mApiBean);
                         if (!TextUtils.isEmpty(mApiBean.getData())) {
-                            Homeinfolist infolist = JSON.parseObject(mApiBean.getData(), Homeinfolist.class);
-                            if (infolist != null && infolist.getList().size() > 0) {
-                                list.addAll(infolist.getList());
-                                vu.getRecyclerView().getAdapter().notifyDataSetChanged();
+                            List<SubscriptionChannelInfo> subscriptionChannelInfos = JSON.parseArray(mApiBean.getData(), SubscriptionChannelInfo.class);
+                            if (subscriptionChannelInfos != null && subscriptionChannelInfos.size() > 0) {
+                                for (SubscriptionChannelInfo temp : subscriptionChannelInfos) {
+                                    SubscriptionColumnInfo subscriptionColumnInfo = new SubscriptionColumnInfo();
+                                    subscriptionColumnInfo.setChannelId(temp.getChannelId());
+                                    subscriptionColumnInfo.setChannelName(temp.getChannelName());
+                                    subscriptionColumnInfo.setMore(temp.getMore());
+                                    list.add(subscriptionColumnInfo);
+                                    list.addAll(temp.getAlbumViewInfoList());
+                                }
                             } else {
                                 vu.getRecyclerView().getPageManager().setPageState(PageInfo.PAGE_STATE_NO_MORE);
                             }
@@ -152,6 +154,10 @@ public class SubscriptionsFragment extends BaseListFragment<SubscriptionsContrac
                         if (!TextUtils.isEmpty(mApiBean.getData())) {
                             List<BannerItemInfo> banners = JSON.parseArray(mApiBean.getData(), BannerItemInfo.class);
                             if (banners != null && banners.size() > 0) {
+                                if (subscriptionBanner.getBannerItemInfos() == null) {
+                                    subscriptionBanner.setBannerItemInfos(new ArrayList<BannerItemInfo>());
+                                }
+                                subscriptionBanner.getBannerItemInfos().clear();
                                 subscriptionBanner.setBannerItemInfos(banners);
                                 vu.getRecyclerView().getAdapter().notifyDataSetChanged();
                             }
@@ -169,19 +175,25 @@ public class SubscriptionsFragment extends BaseListFragment<SubscriptionsContrac
                     }
                 });
         ApiManager.getCall(ApiManager.getInstance().create(YFApi.class)
-                .showAlbum(101001, 1))
+                .showChannel(1))
                 .useCache(false)
                 .enqueue(new YFListHttpCallBack(getVu()) {
                     @Override
                     public void onSuccess(ApiBean mApiBean) {
                         super.onSuccess(mApiBean);
                         if (!TextUtils.isEmpty(mApiBean.getData())) {
-                            Homeinfolist infolist = JSON.parseObject(mApiBean.getData(), Homeinfolist.class);
-                            if (infolist != null && infolist.getList().size() > 0) {
+                            List<SubscriptionChannelInfo> subscriptionChannelInfos = JSON.parseArray(mApiBean.getData(), SubscriptionChannelInfo.class);
+                            if (subscriptionChannelInfos != null && subscriptionChannelInfos.size() > 0) {
                                 list.clear();
                                 list.add(subscriptionBanner);
-                                list.addAll(infolist.getList());
-                                vu.getRecyclerView().getAdapter().notifyDataSetChanged();
+                                for (SubscriptionChannelInfo temp : subscriptionChannelInfos) {
+                                    SubscriptionColumnInfo subscriptionColumnInfo = new SubscriptionColumnInfo();
+                                    subscriptionColumnInfo.setChannelId(temp.getChannelId());
+                                    subscriptionColumnInfo.setChannelName(temp.getChannelName());
+                                    subscriptionColumnInfo.setMore(temp.getMore());
+                                    list.add(subscriptionColumnInfo);
+                                    list.addAll(temp.getAlbumViewInfoList());
+                                }
                             } else {
                                 vu.getRecyclerView().getPageManager().setPageState(PageInfo.PAGE_STATE_NO_MORE);
                             }
