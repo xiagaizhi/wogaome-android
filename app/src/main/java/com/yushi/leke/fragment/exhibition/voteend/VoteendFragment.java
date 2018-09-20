@@ -17,6 +17,7 @@ import com.yufan.library.inter.ICallBack;
 import com.yufan.library.view.recycler.PageInfo;
 import com.yushi.leke.UIHelper;
 import com.yushi.leke.YFApi;
+import com.yushi.leke.dialog.recharge.ShareDialog;
 import com.yushi.leke.fragment.exhibition.voteend.allproject.AllendFragment;
 
 import me.drakeet.multitype.MultiTypeAdapter;
@@ -87,6 +88,8 @@ public class VoteendFragment extends BaseListFragment<VoteendContract.IView> imp
 
     @Override
     public void onRefresh() {
+        ShareDialog shareDialog=new ShareDialog();
+        shareDialog.show(getFragmentManager(),"ShareDialog");
         ApiManager.getCall(ApiManager.getInstance().create(YFApi.class)
                 .getvoteenddata(1, activityid))
                 .useCache(false)

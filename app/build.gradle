@@ -125,4 +125,9 @@ dependencies {
     implementation project(':aliplayer')
     implementation project(':library')
     implementation project(':musicplayer')
+    //二维码
+    implementation 'com.google.zxing:core:3.3.3'
+    implementation 'com.journeyapps:zxing-android-embedded:3.3.0'
+    //百分比布局
+    implementation'com.android.support:percent:25.3.0'
 }

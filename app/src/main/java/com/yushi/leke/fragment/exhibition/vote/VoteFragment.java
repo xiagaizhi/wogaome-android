@@ -71,6 +71,9 @@ public class VoteFragment extends DialogFragment implements View.OnClickListener
         //设置无标题
         getDialog().requestWindowFeature(Window.FEATURE_NO_TITLE);
         //设置从底部弹出
+        final Window window = getDialog().getWindow();
+        window.setBackgroundDrawableResource(R.color.transparent);
+        window.getDecorView().setPadding(0, 0, 0, 0);
         WindowManager.LayoutParams params = getDialog().getWindow().getAttributes();
         params.gravity = Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL;
         getDialog().getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
