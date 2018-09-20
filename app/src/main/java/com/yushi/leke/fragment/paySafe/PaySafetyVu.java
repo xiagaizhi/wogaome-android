@@ -11,6 +11,7 @@ import com.yufan.library.inject.FindLayout;
 import com.yufan.library.inject.Title;
 import com.yufan.library.widget.StateLayout;
 import com.yufan.library.widget.AppToolbar;
+import com.yushi.leke.UIHelper;
 
 /**
  * Created by mengfantao on 18/8/2.
@@ -39,8 +40,7 @@ public class PaySafetyVu extends BaseVu<PaySafetyContract.Presenter> implements 
     @Override
     public boolean initTitle(AppToolbar appToolbar) {
         super.initTitle(appToolbar);
-        ImageView playerIcon = appToolbar.creatRightView(ImageView.class);
-        playerIcon.setImageResource(R.drawable.ic_toolbar_player_blue);
+        UIHelper.getMusicView(mPersenter.getActivity(),appToolbar);
         appToolbar.build();
         return true;
     }

@@ -21,6 +21,7 @@ import com.yufan.library.inject.FindLayout;
 import com.yufan.library.inject.Title;
 import com.yufan.library.widget.StateLayout;
 import com.yufan.library.widget.AppToolbar;
+import com.yushi.leke.UIHelper;
 
 /**
  * Created by mengfantao on 18/8/2.
@@ -68,11 +69,8 @@ public class AlbumDetailVu extends BaseVu<AlbumDetailContract.Presenter> impleme
 
     @Override
     public boolean initTitle(AppToolbar appToolbar) {
+        musicAnim = UIHelper.getMusicView(mPersenter.getActivity(),appToolbar);
         ImageView backButton=   appToolbar.creatLeftView(ImageView.class);
-        musicAnim = appToolbar.creatRightView(ImageView.class);
-        musicAnim.setImageResource(R.drawable.anim_player_blue);
-        musicAnim.setPadding(0, 0, (int) getContext().getResources().getDimension(R.dimen.px36), 0);
-        ((AnimationDrawable) musicAnim.getDrawable()).start();
         musicAnim.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

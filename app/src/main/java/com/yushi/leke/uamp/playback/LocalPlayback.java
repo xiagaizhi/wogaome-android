@@ -221,7 +221,7 @@ public final class LocalPlayback implements Playback {
                                     item.getDescription().getMediaId()));
 
             //获取音乐资源的路径
-            String source = track.getString(MusicProviderSource.CUSTOM_METADATA_TRACK_SOURCE);
+            String source="";//; = track.getString(MusicProviderSource.CUSTOM_METADATA_TRACK_SOURCE);
             if (source != null) {
                 source = source.replaceAll(" ", "%20"); // Escape spaces for URLs
             }

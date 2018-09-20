@@ -29,7 +29,7 @@ import com.yushi.leke.activity.MusicPlayerActivity;
 /**
  * Created by mengfantao on 18/8/2.
  */
-@FindLayout(layout = R.layout.layout_fragment_list)
+@FindLayout(layout = R.layout.layout_subscription_fragment_list)
 @Title("订阅专栏")
 public class SubscriptionsVu extends BaseListVu<SubscriptionsContract.Presenter> implements SubscriptionsContract.IView {
     @FindView(R.id.recyclerview)
@@ -97,13 +97,10 @@ public class SubscriptionsVu extends BaseListVu<SubscriptionsContract.Presenter>
     @Override
     public boolean initTitle(AppToolbar appToolbar) {
         this.appToolbar = appToolbar;
+        musicAnim = UIHelper.getMusicView(mPersenter.getActivity(),appToolbar);
         mTitleView = appToolbar.creatCenterView(TextView.class);
         searchBar = appToolbar.creatRightView(ImageView.class);
-        musicAnim = appToolbar.creatRightView(ImageView.class);
         searchBar.setImageResource(R.drawable.ic_search_blue);
-        musicAnim.setImageResource(R.drawable.anim_player_blue);
-        musicAnim.setPadding(0, 0, (int) getContext().getResources().getDimension(R.dimen.px36), 0);
-        ((AnimationDrawable) musicAnim.getDrawable()).start();
         mTitleView.setText("订阅专栏");
         mTitleView.setAlpha(0f);
         mTitleView .getPaint().setFakeBoldText(true);

@@ -1,6 +1,7 @@
 package com.yushi.leke.fragment.exhibition.voteend;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
@@ -19,6 +20,7 @@ import com.yushi.leke.UIHelper;
 import com.yushi.leke.YFApi;
 import com.yushi.leke.dialog.recharge.ShareDialog;
 import com.yushi.leke.fragment.exhibition.voteend.allproject.AllendFragment;
+import com.yushi.leke.fragment.exhibition.win.WinlistDialogFragment;
 
 import me.drakeet.multitype.MultiTypeAdapter;
 
@@ -56,6 +58,7 @@ public class VoteendFragment extends BaseListFragment<VoteendContract.IView> imp
         adapter.setItems(list);
         vu.getRecyclerView().getAdapter().notifyDataSetChanged();
         onRefresh();
+        openWinPage();
     }
 
     @Override
@@ -121,5 +124,11 @@ public class VoteendFragment extends BaseListFragment<VoteendContract.IView> imp
         getRootFragment().start(UIHelper.creat(AllendFragment.class)
                 .put(Global.BUNDLE_KEY_ACTIVITYID, activityid)
                 .build());
+    }
+
+    @Override
+    public void openWinPage() {
+        WinlistDialogFragment winlistDialogFragment = new WinlistDialogFragment();
+        winlistDialogFragment.show(getFragmentManager(), "WinlistDialogFragment");
     }
 }

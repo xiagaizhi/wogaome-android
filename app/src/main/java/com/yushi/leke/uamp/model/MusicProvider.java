@@ -174,16 +174,21 @@ public class MusicProvider {
                 for (int i=0;i<albumAudios.size();i++) {
                     AlbumAudio albumAudio=  albumAudios.get(i);
                     MediaMetadataCompat item=     new MediaMetadataCompat.Builder()
-                            .putString(MediaMetadataCompat.METADATA_KEY_MEDIA_ID, albumAudio.getAliVideoId())
-                            .putString(MusicProviderSource.CUSTOM_METADATA_TRACK_SOURCE, "")
-                            .putString(MediaMetadataCompat.METADATA_KEY_ALBUM, "")
-                            .putString(MediaMetadataCompat.METADATA_KEY_ARTIST, "")
-                            .putLong(MediaMetadataCompat.METADATA_KEY_DURATION,1)
-                            .putString(MediaMetadataCompat.METADATA_KEY_GENRE, "")
+                            .putString(MediaMetadataCompat.METADATA_KEY_MEDIA_ID, albumAudio.getAudioId()+"")
+                            .putString(MediaMetadataCompat.METADATA_KEY_ALBUM,albumAudio.getAlbumId()+"")
+                            .putString(MediaMetadataCompat.METADATA_KEY_ARTIST, "作者")
+                            .putLong(MediaMetadataCompat.METADATA_KEY_DURATION,albumAudio.getDuration())
                             .putString(MediaMetadataCompat.METADATA_KEY_ALBUM_ART_URI, "")
-                            .putString(MediaMetadataCompat.METADATA_KEY_TITLE, "")
-                            .putLong(MediaMetadataCompat.METADATA_KEY_TRACK_NUMBER, 1)
-                            .putLong(MediaMetadataCompat.METADATA_KEY_NUM_TRACKS, 1)
+                            .putString(MediaMetadataCompat.METADATA_KEY_TITLE,albumAudio.getAudioName())
+                            .putLong(MutableMediaMetadata.baseCount,albumAudio.getBaseCount())
+                            .putLong(MutableMediaMetadata.audioStatus,albumAudio.getAudioStatus())
+                            .putLong(MutableMediaMetadata.ctime,albumAudio.getCtime())
+                            .putLong(MutableMediaMetadata.deleted,albumAudio.getDeleted())
+                            .putLong(MutableMediaMetadata.listenable,albumAudio.getListenable())
+                            .putLong(MutableMediaMetadata.size,albumAudio.getSize())
+                            .putLong(MutableMediaMetadata.utime,albumAudio.getUtime())
+                            .putLong(MutableMediaMetadata.viewPeople,albumAudio.getViewPeople())
+                            .putLong(MutableMediaMetadata.viewTimes,albumAudio.getViewTimes())
                             .build();
                     String musicId = item.getString(MediaMetadataCompat.METADATA_KEY_MEDIA_ID);
                     mMusicListById.put(musicId, new MutableMediaMetadata(musicId, item));

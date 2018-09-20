@@ -33,8 +33,8 @@ public class App extends BaseApplication {
     //TODO 申请第三方开发者账号
     {
         PlatformConfig.setWeixin("wxa78cb5eacb190d7f", "e05682fc1299b50066a491633c3a9820");
-        PlatformConfig.setQQZone("1107596034", "R7Fw2IprSaHgsQgb");
-        PlatformConfig.setSinaWeibo("xinlangid", "xinlangsecret", "xinlanghuidiao");
+        PlatformConfig.setQQZone("101501863", "6d939e10d19d2a084b31d20e87439ec6");
+        PlatformConfig.setSinaWeibo("2717963759", "faadd994d811dc9186935fa5365abe6a", "http://open.weibo.com/apps/2717963759/privilege/oauth");
     }
 
     public static App getApp() {

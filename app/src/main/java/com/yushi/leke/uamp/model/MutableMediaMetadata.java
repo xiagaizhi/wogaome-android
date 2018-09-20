@@ -26,6 +26,15 @@ import android.text.TextUtils;
  */
 public class MutableMediaMetadata {
 
+    public static final String baseCount="com.yushi.leke.uamp.model.baseCount";
+    public static final String audioStatus="com.yushi.leke.uamp.model.audioStatus";
+    public static final String ctime="com.yushi.leke.uamp.model.ctime";
+    public static final String deleted="com.yushi.leke.uamp.model.deleted";
+    public static final String listenable="com.yushi.leke.uamp.model.listenable";
+    public static final String size="com.yushi.leke.uamp.model.size";
+    public static final String utime="com.yushi.leke.uamp.model.utime";
+    public static final String viewPeople="com.yushi.leke.uamp.model.viewPeople";
+    public static final String viewTimes="com.yushi.leke.uamp.model.viewTimes";
     public MediaMetadataCompat metadata;
     public final String trackId;
 

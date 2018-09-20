@@ -83,7 +83,7 @@ public class MusicPlayerVu extends BaseVu<MusicPlayerContract.Presenter> impleme
 
     @Override
     public boolean initTitle(AppToolbar appToolbar) {
-
+        //UIHelper.getMusicView(mPersenter.getActivity(),appToolbar,MusicPlayerFragment.class);
       TextView titltView=  appToolbar.creatCenterView(TextView.class);
         titltView.setTextColor(Color.WHITE);
         titltView.setText("音乐播放器");
@@ -95,7 +95,6 @@ public class MusicPlayerVu extends BaseVu<MusicPlayerContract.Presenter> impleme
                 mPersenter.finish();
             }
         });
-        UIHelper.showMusic(appToolbar.creatRightView(ImageView.class));
         appToolbar.build(false);
         return true;
     }

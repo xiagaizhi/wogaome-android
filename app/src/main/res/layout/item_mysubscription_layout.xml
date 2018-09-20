@@ -18,6 +18,7 @@
             android:layout_height="match_parent"
             fresco:failureImage="@drawable/default_video_rectangle"
             fresco:placeholderImage="@drawable/default_video_rectangle"
+            fresco:failureImageScaleType="focusCrop"
             fresco:placeholderImageScaleType="focusCrop" />
 
         <TextView

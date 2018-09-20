@@ -152,6 +152,8 @@ public class ExhibitionFragment extends BaseListFragment<ExhibitionContract.IVie
                 });
     }
 
+
+
     @Override
     public void onMusicMenuClick() {
         Intent intent = new Intent(getContext(), MusicPlayerActivity.class);

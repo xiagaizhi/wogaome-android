@@ -1,5 +1,6 @@
 package com.yushi.leke.fragment.ucenter;
 
+import android.graphics.drawable.AnimationDrawable;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
@@ -78,6 +79,7 @@ public class UCenterVu extends BaseVu<UCenterContract.Presenter> implements UCen
     public void initView(View view) {
         ll_personal_info.setOnClickListener(this);
         img_messgae.setOnClickListener(this);
+        ((AnimationDrawable) img_player.getDrawable()).start();
         img_player.setOnClickListener(this);
         rl_roadshow.setOnClickListener(this);
         rl_subscribe.setOnClickListener(this);

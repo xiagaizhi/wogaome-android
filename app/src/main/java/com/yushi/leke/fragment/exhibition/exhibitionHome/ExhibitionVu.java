@@ -15,6 +15,9 @@ import com.yufan.library.inject.Title;
 import com.yufan.library.widget.StateLayout;
 import com.yufan.library.widget.AppToolbar;
 import com.yufan.library.view.recycler.YFRecyclerView;
+import com.yushi.leke.UIHelper;
+import com.yushi.leke.fragment.album.AlbumDetailVu;
+
 /**
  * Created by mengfantao on 18/8/2.
  */
@@ -81,13 +84,12 @@ public class ExhibitionVu extends BaseListVu<ExhibitionContract.Presenter> imple
     @Override
     public boolean initTitle(AppToolbar appToolbar) {
         this.appToolbar=appToolbar;
+        musicAnim=   UIHelper.getMusicView(mPersenter.getActivity(),appToolbar);
         mTitleView=     appToolbar.creatCenterView(TextView.class);
-        musicAnim=  appToolbar.creatRightView(ImageView.class);
-        musicAnim.setImageResource(R.drawable.anim_player_blue);
-        ((AnimationDrawable) musicAnim.getDrawable()).start();
         mTitleView.setText("路演厅");
         mTitleView.setAlpha(0);
         mTitleView .getPaint().setFakeBoldText(true);
+
         musicAnim.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

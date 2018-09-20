@@ -120,6 +120,7 @@ public class SplashFragment extends BaseFragment<SplashContract.IView> implement
             }
         }
         //有没有广告缓存，都发起网络请求，请求最新广告信息并且缓存，供下次启动备用
+        if (TextUtils.isEmpty(UserManager.getInstance().getToken()))return;
         ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).getGuideAd(2)).useCache(false).enqueue(new BaseHttpCallBack() {
             @Override
             public void onResponse(ApiBean mApiBean) {

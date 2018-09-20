@@ -125,7 +125,7 @@ public class ExhibitionDetailFragment extends BaseFragment<ExhibitionDetailContr
      */
     private void getAliplayerInfo() {
         isSuccessRequestAliplayerInfo = false;
-        DialogManager.getInstance().showLoadingDialog();
+//        DialogManager.getInstance().showLoadingDialog();
         ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).playVideoForProject()).useCache(false).enqueue(new BaseHttpCallBack() {
             @Override
             public void onSuccess(ApiBean mApiBean) {
@@ -155,7 +155,7 @@ public class ExhibitionDetailFragment extends BaseFragment<ExhibitionDetailContr
                     currentTitle = "";
                     currentProjectId = "";
                 }
-                DialogManager.getInstance().dismiss();
+//                DialogManager.getInstance().dismiss();
             }
         });
     }
