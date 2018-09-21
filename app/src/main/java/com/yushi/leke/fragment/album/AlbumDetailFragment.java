@@ -39,13 +39,13 @@ import me.yokeyword.fragmentation.SupportFragment;
 @VuClass(AlbumDetailVu.class)
 public class AlbumDetailFragment extends BaseFragment<AlbumDetailContract.IView> implements AlbumDetailContract.Presenter {
     private SupportFragment[] fragments=new SupportFragment[2];
-    private int albumId;
+    private String albumId;
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         Bundle bundle = getArguments();
         if (bundle!=null){
-            albumId=bundle.getInt(Global.BUNDLE_KEY_ALBUMID);
+            albumId=bundle.getString(Global.BUNDLE_KEY_ALBUMID);
         }
         fragments[0] = UIHelper.creat(MediaBrowserFragment.class) .put(Global.BUNDLE_KEY_ALBUMID,albumId).build();
         fragments[1] = UIHelper.creat(DetailforalbumFragment.class)
