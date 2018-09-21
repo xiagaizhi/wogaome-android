@@ -1,32 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/rl_root"
     android:layout_width="match_parent"
     android:layout_height="@dimen/px292"
-    android:id="@+id/rl_root"
     android:background="@color/white"
     android:orientation="vertical">
+
     <View
-        android:layout_alignParentTop="true"
         android:layout_width="match_parent"
         android:layout_height="@dimen/px1"
-        android:background="@color/color_gray_levele"
-        />
+        android:layout_alignParentTop="true"
+        android:background="@color/color_gray_levele" />
+
     <com.facebook.drawee.view.SimpleDraweeView
-        android:layout_marginTop="@dimen/px50"
-        android:layout_marginLeft="@dimen/px36"
         android:id="@+id/sdv"
         android:layout_width="@dimen/px256"
         android:layout_height="@dimen/px144"
+        android:layout_marginLeft="@dimen/px36"
+        android:layout_marginTop="@dimen/px50"
+        fresco:failureImage="@drawable/default_video_rectangle"
+        fresco:failureImageScaleType="focusCrop"
+        fresco:placeholderImage="@drawable/default_video_rectangle"
+        fresco:placeholderImageScaleType="focusCrop"
         fresco:roundedCornerRadius="2dp" />
 
     <TextView
         android:id="@+id/tv_vote_playsum"
-        android:layout_marginTop="@dimen/px50"
-        android:layout_marginLeft="@dimen/px36"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@id/sdv"
+        android:layout_marginLeft="@dimen/px36"
+        android:layout_marginTop="@dimen/px50"
         android:drawableLeft="@drawable/ic_subscription_headset"
         android:drawablePadding="2dp"
         android:padding="@dimen/px11"
@@ -37,8 +42,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/sdv"
         android:layout_marginTop="@dimen/px50"
+        android:layout_toRightOf="@+id/sdv"
         android:orientation="vertical">
 
         <RelativeLayout
@@ -72,9 +77,10 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/px24"
             android:layout_marginLeft="@dimen/px20"
-            android:layout_marginRight="@dimen/px24">
+            android:layout_marginRight="@dimen/px24"
+            android:layout_marginTop="@dimen/px24">
+
             <TextView
                 android:id="@+id/tv_vote_province"
                 android:layout_width="wrap_content"
@@ -87,16 +93,16 @@
 
             <Button
                 android:id="@+id/btn_vote_support"
+                style="?android:attr/borderlessButtonStyle"
                 android:layout_width="@dimen/px137"
                 android:layout_height="@dimen/px54"
                 android:layout_alignParentRight="true"
                 android:background="@drawable/shape_bg_eee_27"
-                android:text="+支持"
-                android:textStyle="bold"
-                style="?android:attr/borderlessButtonStyle"
                 android:gravity="center"
+                android:text="+支持"
                 android:textColor="@color/tv_blue"
-                android:textSize="@dimen/px28" />
+                android:textSize="@dimen/px28"
+                android:textStyle="bold" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -120,22 +126,21 @@
 
     <TextView
         android:id="@+id/tv_vote_describe"
-        android:layout_marginLeft="@dimen/px36"
-        android:layout_marginRight="@dimen/px28"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/sdv"
+        android:layout_marginLeft="@dimen/px36"
+        android:layout_marginRight="@dimen/px28"
         android:layout_marginTop="@dimen/px20"
         android:singleLine="true"
         android:text="这个来介绍项目的内容，并且在字体不得超过24个字…"
         android:textColor="@color/color_gray_level6"
-        android:textSize="@dimen/px28"
-       />
+        android:textSize="@dimen/px28" />
+
     <View
-        android:layout_alignParentBottom="true"
+        android:id="@+id/view_bottom_line"
         android:layout_width="match_parent"
         android:layout_height="@dimen/px1"
-        android:id="@+id/view_bottom_line"
-        android:background="@color/color_gray_levele"
-        />
+        android:layout_alignParentBottom="true"
+        android:background="@color/color_gray_levele" />
 </RelativeLayout>

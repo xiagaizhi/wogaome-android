@@ -67,11 +67,15 @@ public class ExhibitionFragment extends BaseListFragment<ExhibitionContract.IVie
         adapter.register(ExhibitionJustOneInfo.class, new ExhibitionJustOneViewBinder(new ICallBack() {
             @Override
             public void OnBackResult(Object... s) {
-                ExhibitionJustOneInfo info = (ExhibitionJustOneInfo) s[0];//活动进度（2--投票中 并且只有一个活动）
-                getRootFragment().start(UIHelper.creat(ExhibitionDetailFragment.class)
-                        .put(Global.BUNDLE_KEY_EXHIBITION_TYE, info.getActivityProgress())
-                        .put(Global.BUNDLE_KEY_ACTIVITYID, info.getActivityId())
-                        .build());
+                ExhibitionJustOneInfo info = (ExhibitionJustOneInfo) s[0];//活动进度（1--报名中， 2--投票中 并且只有一个活动）
+                if (info.getActivityProgress() == 0 || info.getActivityProgress() == 1) {//h5详情页面
+                    getRootFragment().start(UIHelper.creat(BrowserBaseFragment.class).put(Global.BUNDLE_KEY_BROWSER_URL, ApiManager.getInstance().getApiConfig().getExhibitionDetail(info.getActivityId())).build());
+                } else {//原生详情页面
+                    getRootFragment().start(UIHelper.creat(ExhibitionDetailFragment.class)
+                            .put(Global.BUNDLE_KEY_EXHIBITION_TYE, info.getActivityProgress())
+                            .put(Global.BUNDLE_KEY_ACTIVITYID, info.getActivityId())
+                            .build());
+                }
             }
         }));
         list.add(new ExhibitionTopInfo());
@@ -122,7 +126,7 @@ public class ExhibitionFragment extends BaseListFragment<ExhibitionContract.IVie
                                 list.add(new ExhibitionTopInfo());
                                 if (exhibitionInfoList.getList().size() == 1) {
                                     ExhibitionInfo exhibitionInfo = exhibitionInfoList.getList().get(0);
-                                    if (exhibitionInfo.getActivityProgress() == 2) {
+                                    if (exhibitionInfo.getActivityProgress() == 1 || exhibitionInfo.getActivityProgress() == 2) {
                                         ExhibitionJustOneInfo exhibitionJustOneInfo = new ExhibitionJustOneInfo(exhibitionInfo);
                                         list.add(exhibitionJustOneInfo);
                                         vu.getRecyclerView().getAdapter().notifyDataSetChanged();
@@ -151,7 +155,6 @@ public class ExhibitionFragment extends BaseListFragment<ExhibitionContract.IVie
                     }
                 });
     }
-
 
 
     @Override

@@ -71,9 +71,6 @@ public class VoteFragment extends DialogFragment implements View.OnClickListener
         //设置无标题
         getDialog().requestWindowFeature(Window.FEATURE_NO_TITLE);
         //设置从底部弹出
-        final Window window = getDialog().getWindow();
-        window.setBackgroundDrawableResource(R.color.transparent);
-        window.getDecorView().setPadding(0, 0, 0, 0);
         WindowManager.LayoutParams params = getDialog().getWindow().getAttributes();
         params.gravity = Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL;
         getDialog().getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
@@ -95,7 +92,7 @@ public class VoteFragment extends DialogFragment implements View.OnClickListener
                     .useCache(false).enqueue(new BaseHttpCallBack() {
                 @Override
                 public void onSuccess(ApiBean mApiBean) {
-                    if (TextUtils.isEmpty(mApiBean.getData())) {
+                    if (!TextUtils.isEmpty(mApiBean.getData())) {
                         voteInitInfo = JSON.parseObject(mApiBean.getData(), VoteInitInfo.class);
                         if (voteInitInfo != null) {
                             bindData(voteInitInfo);
@@ -150,7 +147,6 @@ public class VoteFragment extends DialogFragment implements View.OnClickListener
         img_vote_success = view.findViewById(R.id.img_vote_success);
         et_lkc.setTextSize(17);
         view.findViewById(R.id.img_vote_add).setOnClickListener(this);
-//        tv_lkc_num.setText(Html.fromHtml("我的LKC余额:<<font color='#FA5A5A'>" + "12344" + "</font>(1LKC等于1票)"));
         et_lkc.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -168,6 +164,14 @@ public class VoteFragment extends DialogFragment implements View.OnClickListener
                     et_lkc.setTextSize(17);
                     btn_vote.setEnabled(false);
                 } else {
+                    if (voteInitInfo != null) {
+                        int temp = voteInitInfo.getLkc().setScale(0, BigDecimal.ROUND_DOWN).compareTo(new BigDecimal(getCurrentChoiceVoteNum()));
+                        if (temp == -1) {//lkc币不足
+                            et_lkc.setText(String.valueOf(voteInitInfo.getLkc().setScale(0, BigDecimal.ROUND_DOWN)));
+                            DialogManager.getInstance().toast("投票数不可大于LKC余额");
+                        }
+                    }
+
                     et_lkc.setTextSize(29);
                     btn_vote.setEnabled(true);
                 }

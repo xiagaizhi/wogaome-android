@@ -348,7 +348,7 @@ public interface YFApi {
     @POST("app/v1/activity/vote")
     Call<ResponseBody>
     vote(//投票页面初始化
-         @Field("activityId") String activityId
+         @Field("projectId") String projectId
     );
 
     /**
