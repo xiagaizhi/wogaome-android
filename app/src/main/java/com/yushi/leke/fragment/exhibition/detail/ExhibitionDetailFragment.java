@@ -15,6 +15,7 @@ import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.alibaba.fastjson.JSON;
 import com.alivc.player.VcPlayerLog;
 import com.aliyun.vodplayer.media.AliyunLocalSource;
 import com.aliyun.vodplayer.media.AliyunVidSts;
@@ -34,13 +35,16 @@ import com.yufan.library.base.BaseFragment;
 import com.yufan.library.inject.VuClass;
 import com.yufan.library.inter.ICallBack;
 import com.yufan.library.manager.DialogManager;
+import com.yufan.share.ShareModel;
 import com.yushi.leke.R;
 import com.yushi.leke.UIHelper;
 import com.yushi.leke.YFApi;
+import com.yushi.leke.dialog.recharge.ShareDialog;
 import com.yushi.leke.fragment.browser.BrowserBaseFragment;
 import com.yushi.leke.fragment.exhibition.vote.VoteFragment;
 import com.yushi.leke.fragment.exhibition.voteend.VoteendFragment;
 import com.yushi.leke.fragment.exhibition.voteing.VoteingFragment;
+import com.yushi.leke.share.ShareMenuActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -54,8 +58,6 @@ import java.lang.ref.WeakReference;
 public class ExhibitionDetailFragment extends BaseFragment<ExhibitionDetailContract.IView> implements ExhibitionDetailContract.Presenter, ICallBack {
     private AliyunVodPlayerView mAliyunVodPlayerView = null;
     private ErrorInfo currentError = ErrorInfo.Normal;
-    private static final String DEFAULT_URL = "http://player.alicdn.com/video/aliyunmedia.mp4";
-    private static final String DEFAULT_VID = "6e783360c811449d8692b2117acc9212";
     /**
      * get StsToken stats
      */
@@ -66,16 +68,12 @@ public class ExhibitionDetailFragment extends BaseFragment<ExhibitionDetailContr
     private String currentTitle;
     private String currentProjectId;
     private boolean isSuccessRequestAliplayerInfo;
+    private ShareInfo mShareInfo;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initAliyunPlayerView();
-        Bundle bundle = getArguments();
-        if (bundle != null) {
-            exhibitionType = bundle.getInt(Global.BUNDLE_KEY_EXHIBITION_TYE);
-            activityid=bundle.getString(Global.BUNDLE_KEY_ACTIVITYID);
-        }
         switch (exhibitionType) {//活动进度（0--未开始，1--报名中，2--投票中，3--已结束）
             case 0:
                 loadRootFragment(R.id.fl_exhibition_content, UIHelper.creat(BrowserBaseFragment.class).put(Global.BUNDLE_KEY_BROWSER_URL, "").build());
@@ -85,22 +83,66 @@ public class ExhibitionDetailFragment extends BaseFragment<ExhibitionDetailContr
                 break;
             case 2:
                 VoteingFragment mVoteingFragment = (VoteingFragment) UIHelper.creat(VoteingFragment.class)
-                        .put(Global.BUNDLE_KEY_ACTIVITYID,activityid)
+                        .put(Global.BUNDLE_KEY_ACTIVITYID, activityid)
                         .build();
                 mVoteingFragment.setmICallBack(this);
                 loadRootFragment(R.id.fl_exhibition_content, mVoteingFragment);
                 break;
             case 3:
                 VoteendFragment voteendFragment = (VoteendFragment) UIHelper.creat(VoteendFragment.class)
-                        .put(Global.BUNDLE_KEY_ACTIVITYID,activityid)
+                        .put(Global.BUNDLE_KEY_ACTIVITYID, activityid)
                         .build();
                 voteendFragment.setmICallBack(this);
                 loadRootFragment(R.id.fl_exhibition_content, voteendFragment);
                 break;
         }
-        changePlayVidSource("","测试");
+        getShareinfo(false);
     }
 
+    @Override
+    public void getBundleDate() {
+        Bundle bundle = getArguments();
+        if (bundle != null) {
+            exhibitionType = bundle.getInt(Global.BUNDLE_KEY_EXHIBITION_TYE);
+            activityid = bundle.getString(Global.BUNDLE_KEY_ACTIVITYID);
+        }
+    }
+
+    private void getShareinfo(final boolean isAutoStart) {
+        if (isAutoStart) {
+            DialogManager.getInstance().showLoadingDialog();
+        }
+        ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).sharedetail(activityid))
+                .useCache(false)
+                .enqueue(new BaseHttpCallBack() {
+                    @Override
+                    public void onSuccess(ApiBean mApiBean) {
+                        if (!TextUtils.isEmpty(mApiBean.getData())) {
+                            mShareInfo = JSON.parseObject(mApiBean.getData(), ShareInfo.class);
+                            if (isAutoStart) {
+                                ShareModel shareModel = new ShareModel();
+                                shareModel.setContent(mShareInfo.getSubTitle());
+                                shareModel.setTitle(mShareInfo.getTitle());
+                                shareModel.setIcon(mShareInfo.getShareIcon());
+                                shareModel.setTargetUrl(ApiManager.getInstance().getApiConfig().getExhibitionDetail(activityid));
+                                ShareMenuActivity.startShare(ExhibitionDetailFragment.this,shareModel);
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onError(int id, Exception e) {
+
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        if (isAutoStart) {
+                            DialogManager.getInstance().dismiss();
+                        }
+                    }
+                });
+    }
 
     /**
      * 回传视频vid
@@ -650,6 +692,27 @@ public class ExhibitionDetailFragment extends BaseFragment<ExhibitionDetailContr
 
     @Override
     public void share() {
+        if (mShareInfo != null) {
+            ShareModel shareModel = new ShareModel();
+            shareModel.setContent(mShareInfo.getSubTitle());
+            shareModel.setTitle(mShareInfo.getTitle());
+            shareModel.setIcon(mShareInfo.getShareIcon());
+            shareModel.setTargetUrl(ApiManager.getInstance().getApiConfig().getExhibitionDetail(activityid));
+            ShareMenuActivity.startShare(ExhibitionDetailFragment.this,shareModel);
+        } else {
+            getShareinfo(true);
+        }
+    }
+
+    @Override
+    public void openActivityInstruction() {
+        // TODO: 2018/9/21 打开活动说明 
+//        start(UIHelper.creat(BrowserBaseFragment.class).put(Global.BUNDLE_KEY_BROWSER_URL,"").build());
+    }
+
+    @Override
+    public int getExhibitionType() {
+        return exhibitionType;
     }
 
 }

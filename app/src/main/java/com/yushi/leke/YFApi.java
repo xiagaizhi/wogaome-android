@@ -644,4 +644,11 @@ public interface YFApi {
     getStsAuth(
 
     );
+
+    @FormUrlEncoded
+    @POST("app/v1/activity/sharedetail")
+    Call<ResponseBody>
+    sharedetail(
+            @Field("activityId")String activityId
+    );
 }

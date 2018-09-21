@@ -35,10 +35,14 @@ public class ExhibitionDetailVu extends BaseVu<ExhibitionDetailContract.Presente
     private AliyunVodPlayerView mAliyunVodPlayerView;
     private AlivcShowMoreDialog showMoreDialog;
     private ImageView shareIcon;
+    private ImageView detailIcon;
 
     @Override
     public void initView(View view) {
         LinearLayout mToolBarRightContainer = mAliyunVodPlayerView.getmControlView().getToolBarRightContainer();
+        if (mPersenter.getExhibitionType() == 3) {
+            mToolBarRightContainer.addView(detailIcon);
+        }
         mToolBarRightContainer.addView(shareIcon);
     }
 
@@ -153,6 +157,14 @@ public class ExhibitionDetailVu extends BaseVu<ExhibitionDetailContract.Presente
             public void onClick(View v) {
                 mAliyunVodPlayerView.changeScreenMode(AliyunScreenMode.Small);
                 mPersenter.share();
+            }
+        });
+        detailIcon = appToolbar.creatRightView(ImageView.class);
+        detailIcon.setImageResource(R.drawable.ic_activity_instructions);
+        detailIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mPersenter.openActivityInstruction();
             }
         });
         return false;

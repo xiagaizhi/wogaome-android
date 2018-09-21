@@ -3,8 +3,6 @@ package com.yufan.library.api;
 import android.content.Intent;
 import android.support.v4.content.LocalBroadcastManager;
 import android.text.TextUtils;
-import android.util.Log;
-import android.widget.Toast;
 
 import com.yufan.library.Global;
 import com.yufan.library.base.BaseApplication;
@@ -37,9 +35,6 @@ public abstract class BaseHttpCallBack implements IHttpCallBack {
 
     @Override
     public void onResponse(ApiBean mApiBean) {
-        Log.d("LOGH","data:"+mApiBean.getData());
-        Log.d("LOGH","code:"+mApiBean.getCode());
-        Log.d("LOGH","message:"+mApiBean.getMessage());;
         if (ApiBean.checkOK(mApiBean.getCode())) {
             if (vu != null) {
                 vu.setStateGone();

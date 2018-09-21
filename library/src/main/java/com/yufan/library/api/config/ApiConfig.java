@@ -6,8 +6,8 @@ package com.yufan.library.api.config;
 
 public class ApiConfig {
 
-    private String[] domains = new String[]{"http://app.leke-dev.com/", "http://app.leke-dev.com/", "http://app.test.leke.com/", "http://app.leke-dev.com/", "http://yapi.youximao.cn/mock/29/"};//域名
-    private String[] webDomains = new String[]{"http://web.leke.com/", "http://web.leke.com/", "http://web.test.leke.com/", "http://web.leke-dev.com/", "http://web.leke-dev.com/"};//h5主域名
+    private String[] domains = new String[]{"http://app.leke-dev.com/", "http://app.leke-dev.com/", "http://app.test.leke.com/", "http://app.dev.leke.com/", "http://yapi.youximao.cn/mock/29/"};//域名
+    private String[] webDomains = new String[]{"http://web.leke.com/", "http://web.leke.com/", "http://web.test.leke.com/", "http://web.dev.leke.com/", "http://web.leke-dev.com/"};//h5主域名
     private int apiType;//环境
     private final String protocol = "http://alifile.leke.com/public/protocol.html";
 
@@ -92,7 +92,7 @@ public class ApiConfig {
      * 分享好友
      */
     public String getFriendShare() {
-        return webDomains[apiType] + "#/inviteFriends/myInvite";
+        return webDomains[apiType] + "#/inviteFriends";
     }
 
     /**
@@ -106,8 +106,12 @@ public class ApiConfig {
     }
 
 
-    public String getMessage(){
-        return webDomains[apiType] +"#/my/message";
+    /**
+     * @param type 1:代表通知消息 2:代表系统消息
+     * @return
+     */
+    public String getMessage(int type) {
+        return webDomains[apiType] + "#/my/message/" + type;
     }
 
 
