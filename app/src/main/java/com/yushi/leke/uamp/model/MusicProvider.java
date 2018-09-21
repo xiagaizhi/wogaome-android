@@ -218,10 +218,10 @@ public class MusicProvider {
                             .putString(MediaMetadataCompat.METADATA_KEY_MEDIA_ID, albumAudio.getAudioId()+"")
                             .putString(MediaMetadataCompat.METADATA_KEY_ALBUM,albumAudio.getAlbumId()+"")
                             .putString(MediaMetadataCompat.METADATA_KEY_ARTIST, "作者")
-                            .putLong(MediaMetadataCompat.METADATA_KEY_DURATION,albumAudio.getDuration())
                             .putString(MediaMetadataCompat.METADATA_KEY_ALBUM_ART_URI, "")
                             .putString(MediaMetadataCompat.METADATA_KEY_TITLE,albumAudio.getAudioName())
                             .build();
+                    item.getDescription().getExtras().getInt(MediaMetadataCompat.METADATA_KEY_DURATION,albumAudio.getDuration());
                     item.getDescription().getExtras().putInt(MutableMediaMetadata.baseCount,albumAudio.getBaseCount());
                     item.getDescription().getExtras().putInt(MutableMediaMetadata.audioStatus,albumAudio.getAudioStatus());
                     item.getDescription().getExtras().putLong(MutableMediaMetadata.ctime,albumAudio.getCtime());

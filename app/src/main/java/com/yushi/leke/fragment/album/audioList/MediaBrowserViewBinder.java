@@ -70,13 +70,13 @@ public class MediaBrowserViewBinder  extends ItemViewBinder<MediaBrowserCompat.M
         viewHolder.sdv.setImageURI(mediaItem.getDescription().getIconUri());
         viewHolder.pb_media.setMax(mediaItem.getDescription().getExtras().getInt(MediaMetadataCompat.METADATA_KEY_DURATION));
         viewHolder.tv_num.setText("未播放");
-        viewHolder.tv_info.setText(mediaItem.getDescription().getExtras().getInt(MediaMetadataCompat.METADATA_KEY_DURATION)+"");
+        viewHolder.tv_info.setText(mediaItem.getDescription().getExtras().getInt(MediaMetadataCompat.METADATA_KEY_DURATION)+"/"+mediaItem.getDescription().getExtras().getInt(MutableMediaMetadata.viewPeople)+"人听过");
         viewHolder.tv_action.setText(mediaItem.getDescription().getExtras().getInt(MutableMediaMetadata.listenable)==1?"试听":"播放");
       int level= mediaItem.getDescription().getExtras().getInt(MutableMediaMetadata.levelStatus);
         if(level==0){
             viewHolder.tv_free.setText("免费");
         }else {
-            viewHolder.tv_free.setText("黄金段位解锁");
+            viewHolder.tv_free.setText("未解锁");
         }
 
     }
