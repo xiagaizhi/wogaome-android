@@ -204,7 +204,7 @@ public class MusicProvider {
             }
             return;
         }
-        ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).getPlayList(parentMediaId)).enqueue(new BaseHttpCallBack() {
+        ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).getPlayList(parentMediaId,"1")).enqueue(new BaseHttpCallBack() {
             @Override
             public void onSuccess(ApiBean mApiBean) {
                 JSONObject jsonObject= JSON.parseObject(mApiBean.data);
