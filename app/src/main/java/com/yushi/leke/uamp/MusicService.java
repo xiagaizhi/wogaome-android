@@ -294,6 +294,7 @@ public class MusicService extends MediaBrowserServiceCompat implements
 
         mDelayedStopHandler.removeCallbacksAndMessages(null);
         mSession.release();
+        MusicProvider.getInstance().recycleTimer();
     }
 
     @Override

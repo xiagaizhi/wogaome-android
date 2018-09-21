@@ -639,4 +639,10 @@ public interface YFApi {
     showChannel(
             @Field("currentPage")int currentPage
     );
+
+    @POST("app/v1/common/getStsAuth")
+    Call<ResponseBody>
+    getStsAuth(
+
+    );
 }

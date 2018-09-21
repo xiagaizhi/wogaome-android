@@ -38,7 +38,6 @@ public class Global {
      */
     public static final String SP_AD_KEY = "SP_AD_KEY";
     public static final String SP_GUIDE_KEY = "SP_GUIDE_KEY";
-    public static final String ARG_MEDIA_ID = "media_id";
     /**
      * 支付结果通知广播action
      */

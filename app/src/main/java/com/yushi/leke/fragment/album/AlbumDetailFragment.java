@@ -47,7 +47,7 @@ public class AlbumDetailFragment extends BaseFragment<AlbumDetailContract.IView>
         if (bundle!=null){
             albumId=bundle.getInt(Global.BUNDLE_KEY_ALBUMID);
         }
-        fragments[0] = UIHelper.creat(MediaBrowserFragment.class).build();
+        fragments[0] = UIHelper.creat(MediaBrowserFragment.class) .put(Global.BUNDLE_KEY_ALBUMID,albumId).build();
         fragments[1] = UIHelper.creat(DetailforalbumFragment.class)
                 .put(Global.BUNDLE_KEY_ALBUMID,albumId)
                 .build();

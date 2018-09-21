@@ -22,8 +22,6 @@ import java.util.List;
 
 import me.drakeet.multitype.MultiTypeAdapter;
 
-import static com.yufan.library.Global.ARG_MEDIA_ID;
-
 /**
  * Created by mengfantao on 18/8/2.
  */
@@ -78,7 +76,7 @@ public class MediaBrowserFragment extends BaseListFragment<MediaBrowserContract.
     public String getMediaId() {
         Bundle args = getArguments();
         if (args != null) {
-            return args.getString(ARG_MEDIA_ID);
+            return args.getString(Global.BUNDLE_KEY_ALBUMID);
         }
         return null;
     }

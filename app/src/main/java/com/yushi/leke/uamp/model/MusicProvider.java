@@ -36,6 +36,8 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
@@ -56,6 +58,34 @@ public class MusicProvider {
     private final ConcurrentMap<String, MutableMediaMetadata> mMusicListById;
     private static MusicProvider musicProvider;
     private final Set<String> mFavoriteTracks;
+    private    AliyunAuth aliyunAuth;
+    private final Timer timer;
+    private final TimerTask task = new TimerTask() {
+        @Override
+        public void run() {
+        ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).getStsAuth()).enqueue(new BaseHttpCallBack() {
+            @Override
+            public void onSuccess(ApiBean mApiBean) {
+                aliyunAuth =  JSON.parseObject(mApiBean.data,AliyunAuth.class);
+            }
+
+            @Override
+            public void onError(int id, Exception e) {
+
+            }
+
+            @Override
+            public void onFinish() {
+
+            }
+        });
+
+        }
+    };
+
+    public AliyunAuth getAliyunAuth() {
+        return aliyunAuth;
+    }
 
     enum State {
         NON_INITIALIZED, INITIALIZING, INITIALIZED
@@ -75,9 +105,19 @@ public class MusicProvider {
         return musicProvider;
     }
 
+
+    public void recycleTimer(){
+        if(timer!=null){
+            timer.cancel();
+        }
+    }
     public MusicProvider() {
         mMusicListById = new ConcurrentHashMap<>();
         mFavoriteTracks = Collections.newSetFromMap(new ConcurrentHashMap<String, Boolean>());//map change to set
+         timer = new Timer();
+        timer.scheduleAtFixedRate(task,0,30*60*1000);
+
+
     }
 
 

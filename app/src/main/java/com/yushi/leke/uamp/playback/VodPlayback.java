@@ -50,6 +50,7 @@ import com.aliyun.vodplayer.media.AliyunPlayAuth;
 import com.aliyun.vodplayer.media.AliyunVidSts;
 import com.aliyun.vodplayer.media.AliyunVodPlayer;
 import com.aliyun.vodplayer.media.IAliyunVodPlayer;
+import com.aliyun.vodplayerview.constants.PlayParameter;
 import com.yushi.leke.uamp.MusicService;
 import com.yushi.leke.uamp.model.MusicProvider;
 import com.yushi.leke.uamp.model.MusicProviderSource;
@@ -268,7 +269,12 @@ public final class VodPlayback implements Playback {
                     }
                 }
             });
-            prepareVidsts(new AliyunVidSts());
+            AliyunVidSts aliyunVidSts=  new AliyunVidSts();
+            aliyunVidSts.setVid(item.getDescription().getMediaId());
+            aliyunVidSts.setAcId(MusicProvider.getInstance().getAliyunAuth().getAccessKeyId());
+            aliyunVidSts.setAkSceret(MusicProvider.getInstance().getAliyunAuth().getAccessKeySecret());
+            aliyunVidSts.setSecurityToken(MusicProvider.getInstance().getAliyunAuth().getSecurityToken());
+            prepareVidsts(aliyunVidSts);
             // If we are streaming from the internet, we want to hold a
             // Wifi lock, which prevents the Wifi radio from going to
             // sleep while the song is playing.
