@@ -100,7 +100,7 @@
             android:layout_width="0dp"
             android:layout_height="@dimen/alivc_info_bar_height"
             android:layout_weight="1"
-            android:paddingLeft="6dp">
+            android:paddingLeft="7dp">
 
             <LinearLayout
                 android:id="@+id/alivc_info_large_bar"

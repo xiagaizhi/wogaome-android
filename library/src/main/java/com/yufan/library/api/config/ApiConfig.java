@@ -92,7 +92,7 @@ public class ApiConfig {
      * 分享好友
      */
     public String getFriendShare() {
-        return webDomains[apiType] + "#/inviteFriends/myInvite";
+        return webDomains[apiType] + "#/inviteFriends";
     }
 
     /**
