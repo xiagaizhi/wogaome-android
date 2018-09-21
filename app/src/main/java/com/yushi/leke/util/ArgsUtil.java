@@ -5,7 +5,7 @@ import com.alibaba.sdk.android.man.MANService;
 import com.alibaba.sdk.android.man.MANServiceProvider;
 
 public class ArgsUtil {
-    public static final String ARG1="arg1";
+    public static final String ARG1="uid";
     public static final String ARG2="arg2";
     public static final String ARG3="arg3";
     public static final String ARGS="args";

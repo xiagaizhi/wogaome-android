@@ -23,14 +23,15 @@ public abstract class YFListHttpCallBack extends BaseHttpCallBack {
 
     @Override
     public void onSuccess(ApiBean mApiBean) {
+        Log.d("LOGH","success");
         pageInfo.next();
         pageInfo.setPageState(PageInfo.PAGE_STATE_NONE);
         havaRequestSuccess = true;
-
     }
 
     @Override
     public void onError(int id, Exception e) {
+        Log.d("LOGH","error:"+e.toString());
         vu.setStateError();
         pageInfo.setPageState(PageInfo.PAGE_STATE_ERROR);
         DialogManager.getInstance().toast(e.getMessage());

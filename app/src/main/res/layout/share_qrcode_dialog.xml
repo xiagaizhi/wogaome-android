@@ -45,21 +45,29 @@
              />
       </LinearLayout>
       <RelativeLayout
-          android:background="@drawable/ic_share_pic"
           android:id="@+id/llthree"
           android:layout_marginTop="@dimen/px48"
           android:layout_below="@id/lltwo"
           android:layout_width="match_parent"
           android:layout_height="@dimen/px227">
-         <com.facebook.drawee.view.SimpleDraweeView
-             android:layout_marginLeft="@dimen/px173"
-             android:id="@+id/sdv_data"
-             android:layout_width="@dimen/px176"
-             android:layout_height="@dimen/px203"
-             />
          <ImageView
-             android:layout_width="match_parent"
-             android:layout_height="match_parent" />
+             android:background="@drawable/ic_share_pic"
+             android:layout_width="@dimen/px383"
+             android:layout_height="@dimen/px227"
+             android:layout_marginLeft="@dimen/px74"/>
+         <com.yufan.library.view.HexagonImageView
+             android:layout_marginLeft="@dimen/px173"
+             android:id="@+id/six_out"
+             android:layout_width="@dimen/px176"
+             android:layout_height="@dimen/px176"
+             android:background="@color/tv_blue" />
+         <com.yufan.library.view.HexagonImageView
+             android:layout_marginLeft="@dimen/px178"
+             android:layout_marginTop="@dimen/px5"
+             android:id="@+id/six_in"
+             android:layout_width="@dimen/px166"
+             android:layout_height="@dimen/px166"
+             android:background="@color/tv_blue" />
       </RelativeLayout>
       <RelativeLayout
           android:layout_below="@+id/llthree"
@@ -102,16 +110,17 @@
             android:orientation="vertical">
 
            <TextView
+               android:id="@+id/tv_industry"
                android:layout_width="wrap_content"
                android:layout_height="wrap_content"
                android:text="这里显示一句话介绍，最多20个字体为极限哦"
                android:textColor="#FFFFFFFF"
                android:textSize="@dimen/px20" />
-           <com.facebook.drawee.view.SimpleDraweeView
+           <ImageView
                android:layout_marginTop="@dimen/px40"
-               android:id="@+id/sdv_qrcode"
+               android:id="@+id/img_qrcode"
                android:layout_width="@dimen/px130"
-               android:layout_height="@dimen/px140"
+               android:layout_height="@dimen/px130"
                />
            <TextView
                android:layout_width="wrap_content"
@@ -128,6 +137,7 @@
           android:layout_width="@dimen/px600"
           android:layout_height="@dimen/px138">
          <Button
+             android:id="@+id/btn_save"
              android:text="保存至手机"
              android:textSize="@dimen/px38"
              android:textColor="@color/white"

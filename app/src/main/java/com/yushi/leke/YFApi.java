@@ -598,7 +598,7 @@ public interface YFApi {
     @POST("app/v1/albumDetail/subscribeCheck")
     Call<ResponseBody>
     substate(
-            @Field("albumId")int albumId
+            @Field("albumId")String albumId
     );
     /**
      *订阅专辑
@@ -608,7 +608,7 @@ public interface YFApi {
     @POST("app/v1/albumDetail/subscribe")
     Call<ResponseBody>
     registeralbum(
-            @Field("albumId")int albumId
+            @Field("albumId")String albumId
     );
     /**
      *取消订阅专辑

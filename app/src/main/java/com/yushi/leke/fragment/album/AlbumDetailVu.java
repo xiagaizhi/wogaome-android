@@ -103,12 +103,14 @@ public class AlbumDetailVu extends BaseVu<AlbumDetailContract.Presenter> impleme
             tv_playcount.setText(info.getAlbumViewTimes()+"次");
             tv_total.setText("全"+info.getAudioQuantity()+"集");
             expandableTextView.setText(info.getAlbum().getCreatorInfo());
+            sdv.setImageURI(info.getAlbum().getHorizontalIcon());
         }
     }
 
     @Override
     public void showsubstate(int state) {
         switch (state){
+            //未订阅
             case 0:
                 sdv_sub.setImageURI("res:///" +R.drawable.ic_sub_unstate);
                 tv_sub.setText("订阅");
@@ -120,6 +122,7 @@ public class AlbumDetailVu extends BaseVu<AlbumDetailContract.Presenter> impleme
                     }
                 });
                 break;
+            //已订阅
             case 1:
                 sdv_sub.setImageURI("res:///" +R.drawable.ic_sub_onstate);
                 tv_sub.setText("已订阅");

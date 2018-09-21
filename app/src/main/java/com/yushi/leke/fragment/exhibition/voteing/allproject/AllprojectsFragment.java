@@ -90,7 +90,7 @@ public class AllprojectsFragment extends BaseListFragment<AllprojectsContract.IV
     @Override
     public void onRefresh() {
         ApiManager.getCall(ApiManager.getInstance().create(YFApi.class)
-                .getvoteingallpro(1, activityid, getVu().getindustry(), getVu().getcity()))
+                .getvoteingallpro(getVu().getRecyclerView().getPageManager().getCurrentIndex(),activityid, getVu().getindustry(), getVu().getcity()))
                 .useCache(false)
                 .enqueue(new YFListHttpCallBack(getVu()) {
                     @Override

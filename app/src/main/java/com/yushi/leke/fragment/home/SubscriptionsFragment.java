@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 
 import com.alibaba.fastjson.JSON;
@@ -65,7 +66,10 @@ public class SubscriptionsFragment extends BaseListFragment<SubscriptionsContrac
                                 NativeJumpInfo nativeJumpInfo = bannerItemInfo.getNativeUrl();
                                 if (nativeJumpInfo != null) {//0：活动 1：专辑
                                     if (TextUtils.equals("0", nativeJumpInfo.getDetailType())) {
-                                        getRootFragment().start(UIHelper.creat(AlbumDetailFragment.class).put(Global.BUNDLE_KEY_ALBUMID, nativeJumpInfo.getDetailId()).build());
+                                        getRootFragment().start(UIHelper
+                                                .creat(AlbumDetailFragment.class)
+                                                .put(Global.BUNDLE_KEY_ALBUMID, nativeJumpInfo.getDetailId())
+                                                .build());
                                     } else if (TextUtils.equals("1", nativeJumpInfo.getDetailType())) {
                                         if (nativeJumpInfo.getActivityProgress() == 0 || nativeJumpInfo.getActivityProgress() == 1) {//h5详情页面
                                             getRootFragment().start(UIHelper.creat(BrowserBaseFragment.class).put(Global.BUNDLE_KEY_BROWSER_URL, ApiManager.getInstance().getApiConfig().getExhibitionDetail(nativeJumpInfo.getDetailId())).build());

@@ -39,13 +39,13 @@ import me.yokeyword.fragmentation.SupportFragment;
 @VuClass(AlbumDetailVu.class)
 public class AlbumDetailFragment extends BaseFragment<AlbumDetailContract.IView> implements AlbumDetailContract.Presenter {
     private SupportFragment[] fragments=new SupportFragment[2];
-    private int albumId;
+    private String albumId;
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         Bundle bundle = getArguments();
         if (bundle!=null){
-            albumId=bundle.getInt(Global.BUNDLE_KEY_ALBUMID);
+            albumId=bundle.getString(Global.BUNDLE_KEY_ALBUMID);
         }
         fragments[0] = UIHelper.creat(MediaBrowserFragment.class) .put(Global.BUNDLE_KEY_ALBUMID,albumId).build();
         fragments[1] = UIHelper.creat(DetailforalbumFragment.class)
@@ -75,7 +75,6 @@ public class AlbumDetailFragment extends BaseFragment<AlbumDetailContract.IView>
             }
 
         });
-      getVu().getDraweeView().setImageURI("http://oss.cyzone.cn/2018/0913/efc0926cbb1b445240345aa343134958.jpg");
       getdata();
     }
 
@@ -93,7 +92,7 @@ public class AlbumDetailFragment extends BaseFragment<AlbumDetailContract.IView>
     private void getdata(){
         //获取专辑数据
         ApiManager.getCall(ApiManager.getInstance().create(YFApi.class)
-                .albumdetail(String.valueOf(albumId)))
+                .albumdetail(albumId))
                 .useCache(false)
                 .enqueue(new BaseHttpCallBack() {
                     @Override
@@ -124,6 +123,7 @@ public class AlbumDetailFragment extends BaseFragment<AlbumDetailContract.IView>
                     public void onSuccess(ApiBean mApiBean) {
                         if (!TextUtils.isEmpty(mApiBean.getData())) {
                             int state= Integer.parseInt(mApiBean.getData());
+                            Log.d("LOGH","end getstate");
                             getVu().showsubstate(state);
                         }
                     }
@@ -164,7 +164,7 @@ public class AlbumDetailFragment extends BaseFragment<AlbumDetailContract.IView>
     public void unregister() {
         //取消订阅专辑
         ApiManager.getCall(ApiManager.getInstance().create(YFApi.class)
-                .unregisteralbum(String.valueOf(albumId)))
+                .unregisteralbum(albumId))
                 .useCache(false)
                 .enqueue(new BaseHttpCallBack() {
                     @Override

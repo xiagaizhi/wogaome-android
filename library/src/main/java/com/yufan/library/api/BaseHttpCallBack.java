@@ -37,6 +37,9 @@ public abstract class BaseHttpCallBack implements IHttpCallBack {
 
     @Override
     public void onResponse(ApiBean mApiBean) {
+        Log.d("LOGH","data:"+mApiBean.getData());
+        Log.d("LOGH","code:"+mApiBean.getCode());
+        Log.d("LOGH","message:"+mApiBean.getMessage());;
         if (ApiBean.checkOK(mApiBean.getCode())) {
             if (vu != null) {
                 vu.setStateGone();
