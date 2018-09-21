@@ -140,8 +140,11 @@ public class ExhibitionFragment extends BaseListFragment<ExhibitionContract.IVie
                                 list.add(new ExhibitionTopInfo());
                                 list.add(new ExhibitionEmptyInfo());
                                 vu.getRecyclerView().getAdapter().notifyDataSetChanged();
+                                vu.setStateEmpty();
                                 vu.getRecyclerView().getPageManager().setPageState(PageInfo.PAGE_STATE_NO_MORE);
                             }
+                        }else {
+                            vu.setStateEmpty();
                         }
                     }
 

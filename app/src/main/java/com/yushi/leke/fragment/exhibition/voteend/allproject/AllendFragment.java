@@ -91,8 +91,11 @@ public class AllendFragment extends BaseListFragment<AllendContract.IView> imple
                                 list.addAll(infolist.getProjectList());
                                 vu.getRecyclerView().getAdapter().notifyDataSetChanged();
                             } else {
+                                vu.setStateEmpty();
                                 vu.getRecyclerView().getPageManager().setPageState(PageInfo.PAGE_STATE_NO_MORE);
                             }
+                        }else {
+                            vu.setStateEmpty();
                         }
                     }
                 });

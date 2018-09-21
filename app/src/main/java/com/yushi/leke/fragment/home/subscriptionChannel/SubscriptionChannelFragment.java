@@ -90,6 +90,7 @@ public class SubscriptionChannelFragment extends BaseListFragment<SubscriptionCh
                             list.addAll(mySubscriptionInfos.getList());
                             vu.getRecyclerView().getAdapter().notifyDataSetChanged();
                         } else {
+                            vu.setStateEmpty();
                             vu.getRecyclerView().getPageManager().setPageState(PageInfo.PAGE_STATE_NO_MORE);
                         }
                     }

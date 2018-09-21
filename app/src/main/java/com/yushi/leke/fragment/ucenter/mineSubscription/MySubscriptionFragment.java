@@ -113,12 +113,13 @@ public class MySubscriptionFragment extends BaseListFragment<MySubscriptionContr
                     @Override
                     public void onSuccess(ApiBean mApiBean) {
                         super.onSuccess(mApiBean);
-                        list.clear();
                         MySubscriptionInfoList mySubscriptionInfos = JSON.parseObject(mApiBean.getData(), MySubscriptionInfoList.class);
                         if (mySubscriptionInfos != null && mySubscriptionInfos.getList().size() > 0) {
+                            list.clear();
                             list.addAll(mySubscriptionInfos.getList());
                             vu.getRecyclerView().getAdapter().notifyDataSetChanged();
                         } else {
+                            vu.setStateEmpty();
                             vu.getRecyclerView().getPageManager().setPageState(PageInfo.PAGE_STATE_NO_MORE);
                         }
                     }
