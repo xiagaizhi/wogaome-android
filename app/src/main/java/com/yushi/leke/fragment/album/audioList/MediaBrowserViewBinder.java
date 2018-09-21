@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v4.media.MediaBrowserCompat;
+import android.support.v4.media.MediaMetadataCompat;
 import android.support.v4.media.session.MediaControllerCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
 import android.support.v7.widget.RecyclerView;
@@ -20,8 +21,10 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.yufan.library.Global;
 import com.yushi.leke.R;
 import com.yushi.leke.fragment.test.CategoryItemViewBinder;
+import com.yushi.leke.uamp.model.MutableMediaMetadata;
 import com.yushi.leke.uamp.utils.MediaIDHelper;
 
 import me.drakeet.multitype.ItemViewBinder;
@@ -65,7 +68,15 @@ public class MediaBrowserViewBinder  extends ItemViewBinder<MediaBrowserCompat.M
      Drawable drawable=   getDrawableByState(activity,state);
         viewHolder.iv_play_state.setImageDrawable(drawable);
         viewHolder.sdv.setImageURI(mediaItem.getDescription().getIconUri());
+        viewHolder.pb_media.setMax(mediaItem.getDescription().getExtras().getInt(MediaMetadataCompat.METADATA_KEY_DURATION));
+        viewHolder.tv_num.setText("未播放");
+        viewHolder.tv_info.setText(mediaItem.getDescription().getExtras().getInt(MediaMetadataCompat.METADATA_KEY_DURATION)+"");
+        viewHolder.tv_action.setText(mediaItem.getDescription().getExtras().getInt(MutableMediaMetadata.listenable)==1?"试听":"播放");
+      int level= mediaItem.getDescription().getExtras().getInt(MutableMediaMetadata.levelStatus);
+        if(level==0){
 
+        }
+        viewHolder.tv_free.setText("");
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
