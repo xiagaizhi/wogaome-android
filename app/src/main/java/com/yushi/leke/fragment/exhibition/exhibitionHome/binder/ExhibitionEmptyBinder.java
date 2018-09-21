@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.yushi.leke.fragment.exhibition.exhibitionHome;
+package com.yushi.leke.fragment.exhibition.exhibitionHome.binder;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -22,45 +22,39 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.yufan.library.inter.ICallBack;
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.yushi.leke.R;
+import com.yushi.leke.fragment.exhibition.exhibitionHome.bean.ExhibitionEmptyInfo;
 
 import me.drakeet.multitype.ItemViewBinder;
 
 
 /**
- * 路演大厅
+ * 路演大厅 没有活动的空页面展示
  */
-public class ExhibitionErrorBinder extends ItemViewBinder<ExhibitionErrorInfo, ExhibitionErrorBinder.ViewHolder> {
-    private ICallBack mICallBack;
+public class ExhibitionEmptyBinder extends ItemViewBinder<ExhibitionEmptyInfo, ExhibitionEmptyBinder.ViewHolder> {
 
-    public ExhibitionErrorBinder(ICallBack iCallBack) {
-        this.mICallBack = iCallBack;
-    }
 
     @Override
     protected @NonNull
     ViewHolder onCreateViewHolder(@NonNull LayoutInflater inflater, @NonNull ViewGroup parent) {
 
-        return new ViewHolder(inflater.inflate(R.layout.layout_error, parent, false));
+        return new ViewHolder(inflater.inflate(R.layout.item_exhibition_empty, parent, false));
 
     }
 
     @Override
-    protected void onBindViewHolder(@NonNull ViewHolder holder, @NonNull final ExhibitionErrorInfo category) {
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mICallBack.OnBackResult();
-            }
-        });
+    protected void onBindViewHolder(@NonNull ViewHolder holder, @NonNull final ExhibitionEmptyInfo category) {
+        holder.sdv.setImageURI("res://com.yushi.leke/"+R.drawable.empty_activity_prepare);
     }
 
 
     static class ViewHolder extends RecyclerView.ViewHolder {
+        public SimpleDraweeView sdv;
 
         ViewHolder(@NonNull View itemView) {
             super(itemView);
+            sdv = itemView.findViewById(R.id.sdv);
         }
     }
 

@@ -1,4 +1,4 @@
-package com.yushi.leke.fragment.home;
+package com.yushi.leke.fragment.home.bean;
 
 /**
  * Created by mengfantao on 18/8/30.

@@ -1,7 +1,6 @@
 package com.yushi.leke.fragment.searcher;
 
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.KeyEvent;
@@ -14,7 +13,6 @@ import com.alibaba.fastjson.JSONObject;
 import com.yufan.library.Global;
 import com.yufan.library.api.ApiBean;
 import com.yufan.library.api.ApiManager;
-import com.yufan.library.api.BaseHttpCallBack;
 import com.yufan.library.api.YFListHttpCallBack;
 import com.yufan.library.base.BaseListFragment;
 import com.yufan.library.inject.VuClass;
@@ -24,9 +22,9 @@ import com.yufan.library.widget.anim.AFVerticalAnimator;
 import com.yushi.leke.UIHelper;
 import com.yushi.leke.YFApi;
 import com.yushi.leke.fragment.album.audioList.MediaBrowserFragment;
-import com.yushi.leke.fragment.home.AudioInfo;
-import com.yushi.leke.fragment.home.Homeinfo;
-import com.yushi.leke.fragment.home.SubscriptionsViewBinder;
+import com.yushi.leke.fragment.home.bean.AudioInfo;
+import com.yushi.leke.fragment.home.bean.Homeinfo;
+import com.yushi.leke.fragment.home.binder.SubscriptionsViewBinder;
 import com.yushi.leke.fragment.searcher.activity.SearchActivityFragment;
 import com.yushi.leke.fragment.searcher.audio.SearchAudioFragment;
 

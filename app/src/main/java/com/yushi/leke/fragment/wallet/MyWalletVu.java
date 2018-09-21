@@ -24,6 +24,7 @@ import com.yufan.library.inject.FindLayout;
 import com.yufan.library.inject.Title;
 import com.yufan.library.widget.StateLayout;
 import com.yufan.library.widget.AppToolbar;
+import com.yushi.leke.UIHelper;
 
 /**
  * Created by mengfantao on 18/8/2.
@@ -102,8 +103,7 @@ public class MyWalletVu extends BaseVu<MyWalletContract.Presenter> implements My
             }
         });
 
-        ImageView playerIcon = appToolbar.creatRightView(ImageView.class);
-        playerIcon.setImageResource(R.drawable.ic_toolbar_player_white);
+        ImageView playerIcon = UIHelper.getWhiteMusicView(mPersenter.getActivity(),appToolbar);
         playerIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

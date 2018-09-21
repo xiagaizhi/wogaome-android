@@ -1,6 +1,6 @@
 package com.yushi.leke.fragment.home.subscriptionChannel;
 
-import com.yushi.leke.fragment.home.Homeinfo;
+import com.yushi.leke.fragment.home.bean.Homeinfo;
 
 import java.util.List;
 

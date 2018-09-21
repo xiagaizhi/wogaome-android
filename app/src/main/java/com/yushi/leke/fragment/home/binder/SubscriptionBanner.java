@@ -1,4 +1,6 @@
-package com.yushi.leke.fragment.home;
+package com.yushi.leke.fragment.home.binder;
+
+import com.yushi.leke.fragment.home.bean.BannerItemInfo;
 
 import java.util.List;
 
