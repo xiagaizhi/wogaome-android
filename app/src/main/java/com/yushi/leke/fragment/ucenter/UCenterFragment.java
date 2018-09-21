@@ -235,6 +235,7 @@ public class UCenterFragment extends BaseFragment<UCenterContract.IView> impleme
 
     @Override
     public void openMessagePage() {
+        getRootFragment().start(UIHelper.creat(BrowserBaseFragment.class).put(Global.BUNDLE_KEY_BROWSER_URL, ApiManager.getInstance().getApiConfig().getMessage()).build());
         getVu().hasUnreadMsg(false);
         setMainTabMsgState(false);
     }

@@ -4,6 +4,7 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -47,9 +48,9 @@ public class GuideFragmentVu extends BaseVu<GuideFragmentContract.Presenter> imp
             @Override
             public void onPageSelected(int arg0) {
                 for (int i = 0; i < guide_dots.getChildCount(); i++) {
-                    ((ImageView) guide_dots.getChildAt(i)).setImageResource(R.drawable.ic_dot_unchecked);
+                    ((ImageView) guide_dots.getChildAt(i)).setImageResource(R.drawable.ic_dot_unchecked_shape);
                 }
-                ((ImageView) guide_dots.getChildAt(arg0)).setImageResource(R.drawable.ic_dot_checked);
+                ((ImageView) guide_dots.getChildAt(arg0)).setImageResource(R.drawable.ic_dot_checked_shape);
             }
 
             @Override
@@ -80,7 +81,7 @@ public class GuideFragmentVu extends BaseVu<GuideFragmentContract.Presenter> imp
         View view = LayoutInflater.from(getContext()).inflate(
                 R.layout.item_guide_layout, null);
         ImageView imageView = (ImageView) view.findViewById(R.id.iguide_img);
-        ImageView btn_go_login = (ImageView) view.findViewById(R.id.btn_go_login);
+        Button btn_go_login = (Button) view.findViewById(R.id.btn_go_login);
         btn_go_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -102,9 +103,9 @@ public class GuideFragmentVu extends BaseVu<GuideFragmentContract.Presenter> imp
         layoutParams.setMargins((int) getContext().getResources().getDimension(R.dimen.px8), 0, (int) getContext().getResources().getDimension(R.dimen.px8), 0);
         imageView.setLayoutParams(layoutParams);
         if (i == 0) {
-            imageView.setImageResource(R.drawable.ic_dot_checked);
+            imageView.setImageResource(R.drawable.ic_dot_checked_shape);
         } else {
-            imageView.setImageResource(R.drawable.ic_dot_unchecked);
+            imageView.setImageResource(R.drawable.ic_dot_unchecked_shape);
         }
         return imageView;
     }

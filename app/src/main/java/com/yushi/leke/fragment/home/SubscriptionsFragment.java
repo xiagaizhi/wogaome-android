@@ -149,7 +149,7 @@ public class SubscriptionsFragment extends BaseListFragment<SubscriptionsContrac
                     }
                 });
         ApiManager.getCall(ApiManager.getInstance().create(YFApi.class)
-                .showChannel(1))
+                .showChannel())
                 .useCache(false)
                 .enqueue(new YFListHttpCallBack(getVu()) {
                     @Override

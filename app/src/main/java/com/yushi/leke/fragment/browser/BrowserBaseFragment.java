@@ -410,6 +410,19 @@ public class BrowserBaseFragment extends BaseFragment<BrowserContract.View> impl
                     }
                 }
             });
+            registerHandler("web_doPoster", new WVJBHandler() {
+                @Override
+                public void request(Object data, WVJBResponseCallback callback) {
+                    if (data != null) {
+                        JSONObject mJSONObject = (JSONObject) data;
+                        String logo = mJSONObject.optString("avatar");
+                        String introduction = mJSONObject.optString("motto");
+                        String shareUrl= mJSONObject.optString("shareUrl");
+                        String userName= mJSONObject.optString("userName");
+                        String city= mJSONObject.optString("city");
+                    }
+                }
+            });
 
 
         }

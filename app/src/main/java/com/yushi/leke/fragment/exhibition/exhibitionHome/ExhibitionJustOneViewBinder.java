@@ -57,6 +57,13 @@ public class ExhibitionJustOneViewBinder extends ItemViewBinder<ExhibitionJustOn
         holder.tv_title.setText(category.getTitle());
         holder.tv_action_company.setText("主办方：" + category.getOrganizer());
         holder.tv_action_time.setText("活动时间：" + StringUtil.formatTime(category.getStartDate(), category.getEndDate()));
+        if (category.getActivityProgress() == 1){//报名中
+            holder.tv_exhibtion_state.setText("报名中...");
+            holder.btn_apply.setText("立即报名");
+        }else if (category.getActivityProgress() == 2){//投票中
+            holder.tv_exhibtion_state.setText("投票中...");
+            holder.btn_apply.setText("立即投票");
+        }
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -83,6 +90,7 @@ public class ExhibitionJustOneViewBinder extends ItemViewBinder<ExhibitionJustOn
         public TextView tv_action_time;
         public ImageView img_exhibition_bg;
         public Button btn_apply;
+        public TextView tv_exhibtion_state;
 
         ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -92,6 +100,7 @@ public class ExhibitionJustOneViewBinder extends ItemViewBinder<ExhibitionJustOn
             tv_action_time = itemView.findViewById(R.id.tv_action_time);
             btn_apply = itemView.findViewById(R.id.btn_apply);
             img_exhibition_bg = itemView.findViewById(R.id.img_exhibition_bg);
+            tv_exhibtion_state = itemView.findViewById(R.id.tv_exhibtion_state);
         }
     }
 

@@ -13,6 +13,7 @@ import com.yufan.library.inject.FindView;
 import com.yufan.library.inject.Title;
 import com.yufan.library.widget.StateLayout;
 import com.yufan.library.widget.AppToolbar;
+import com.yushi.leke.UIHelper;
 import com.yushi.leke.dialog.update.UpdateInfo;
 
 /**
@@ -47,8 +48,7 @@ public class AboutLekeVu extends BaseVu<AboutLekeContract.Presenter> implements 
     @Override
     public boolean initTitle(AppToolbar appToolbar) {
         super.initTitle(appToolbar);
-        ImageView player = appToolbar.creatRightView(ImageView.class);
-        player.setImageResource(R.drawable.ic_toolbar_player_blue);
+        ImageView player = UIHelper.getMusicView(mPersenter.getActivity(),appToolbar);
         player.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

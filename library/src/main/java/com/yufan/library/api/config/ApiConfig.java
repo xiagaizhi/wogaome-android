@@ -9,7 +9,7 @@ public class ApiConfig {
     private String[] domains = new String[]{"http://app.leke-dev.com/", "http://app.leke-dev.com/", "http://app.test.leke.com/", "http://app.leke-dev.com/", "http://yapi.youximao.cn/mock/29/"};//域名
     private String[] webDomains = new String[]{"http://web.leke.com/", "http://web.leke.com/", "http://web.test.leke.com/", "http://web.leke-dev.com/", "http://web.leke-dev.com/"};//h5主域名
     private int apiType;//环境
-    private final String  protocol="http://alifile.leke.com/public/protocol.html";
+    private final String protocol = "http://alifile.leke.com/public/protocol.html";
 
 
     public ApiConfig(int apiType) {
@@ -82,13 +82,6 @@ public class ApiConfig {
     }
 
     /**
-     * 我的订阅
-     */
-    public String getMySubscribe() {
-        return webDomains[apiType] + "#/";
-    }
-
-    /**
      * 我的投票
      */
     public String getMyVote() {
@@ -99,21 +92,22 @@ public class ApiConfig {
      * 分享好友
      */
     public String getFriendShare() {
-        return webDomains[apiType] + "#/";
-    }
-
-
-    public String getTestH5(){
-        return "http://web.leke.com/#/nickName";
+        return webDomains[apiType] + "#/inviteFriends/myInvite";
     }
 
     /**
      * 活动详情页 未开始／报名中
+     *
      * @param activityId
      * @return
      */
-    public String getExhibitionDetail(String activityId){
-        return webDomains[apiType] + "#/";
+    public String getExhibitionDetail(String activityId) {
+        return webDomains[apiType] + "#/play/detail/" + activityId;
+    }
+
+
+    public String getMessage(){
+        return webDomains[apiType] +"#/my/message";
     }
 
 

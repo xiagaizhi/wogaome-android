@@ -5,7 +5,6 @@ import android.net.Uri;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.alibaba.sdk.android.man.MANHitBuilders;
 import com.alibaba.sdk.android.man.MANService;
 import com.alibaba.sdk.android.man.MANServiceProvider;
 import com.lzy.okgo.OkGo;
@@ -34,7 +33,7 @@ public class App extends BaseApplication {
     {
         PlatformConfig.setWeixin("wxa78cb5eacb190d7f", "e05682fc1299b50066a491633c3a9820");
         PlatformConfig.setQQZone("101501863", "6d939e10d19d2a084b31d20e87439ec6");
-        PlatformConfig.setSinaWeibo("xinlangid", "xinlangsecret", "xinlanghuidiao");
+        PlatformConfig.setSinaWeibo("2717963759", "faadd994d811dc9186935fa5365abe6a", "http://open.weibo.com/apps/2717963759/privilege/oauth");
     }
 
     public static App getApp() {
