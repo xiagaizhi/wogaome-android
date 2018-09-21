@@ -14,16 +14,11 @@
  * limitations under the License.
  */
 
-package com.yushi.leke.fragment.home;
+package com.yushi.leke.fragment.home.binder;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
-import android.net.Uri;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,13 +31,12 @@ import com.facebook.drawee.generic.GenericDraweeHierarchyBuilder;
 import com.facebook.drawee.generic.RoundingParams;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.yufan.library.inter.ICallBack;
-import com.yufan.library.util.FormatImageUrlUtils;
 import com.yufan.library.view.banner.Banner;
 import com.yufan.library.view.banner.BannerConfig;
 import com.yufan.library.view.banner.listener.OnBannerClickListener;
 import com.yufan.library.view.banner.loader.ImageLoaderInterface;
 import com.yushi.leke.R;
-import com.yushi.leke.activity.MusicPlayerActivity;
+import com.yushi.leke.fragment.home.bean.BannerItemInfo;
 import com.yushi.leke.widget.transformer.ScaleTransformer;
 
 import java.util.ArrayList;

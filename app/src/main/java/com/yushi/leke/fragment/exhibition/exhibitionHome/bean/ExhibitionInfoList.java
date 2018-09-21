@@ -1,4 +1,4 @@
-package com.yushi.leke.fragment.exhibition.exhibitionHome;
+package com.yushi.leke.fragment.exhibition.exhibitionHome.bean;
 
 import java.util.List;
 

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.yushi.leke.fragment.home;
+package com.yushi.leke.fragment.home.binder;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -25,6 +25,7 @@ import android.widget.TextView;
 
 import com.yufan.library.inter.ICallBack;
 import com.yushi.leke.R;
+import com.yushi.leke.fragment.home.bean.SubscriptionColumnInfo;
 
 import me.drakeet.multitype.ItemViewBinder;
 

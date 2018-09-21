@@ -103,10 +103,12 @@ public class AllprojectsFragment extends BaseListFragment<AllprojectsContract.IV
                                 list.addAll(infolist.getProjectList());
                                 vu.getRecyclerView().getAdapter().notifyDataSetChanged();
                             } else {
+                                vu.setStateEmpty();
                                 vu.getRecyclerView().getPageManager().setPageState(PageInfo.PAGE_STATE_NO_MORE);
                             }
                         } else {
                             list.clear();
+                            vu.setStateEmpty();
                             vu.getRecyclerView().getAdapter().notifyDataSetChanged();
                         }
                     }

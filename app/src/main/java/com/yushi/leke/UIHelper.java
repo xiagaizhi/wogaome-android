@@ -65,7 +65,7 @@ public class UIHelper {
             }
             toolbar.getRightViewGroup().addView(musicView);
         }
-        musicView.setImageResource(R.drawable.anim_player_blue);
+        musicView.setImageResource(R.drawable.anim_player_white);
         ((AnimationDrawable) musicView.getDrawable()).start();
         return musicView;
     }

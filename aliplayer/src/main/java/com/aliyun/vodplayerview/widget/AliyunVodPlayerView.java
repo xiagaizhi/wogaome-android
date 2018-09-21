@@ -2058,7 +2058,9 @@ public class AliyunVodPlayerView extends RelativeLayout implements ITheme {
      * 暂停播放
      */
     public void pause() {
-        mControlView.setPlayState(ControlView.PlayState.NotPlaying);
+        if (mControlView!=null){
+            mControlView.setPlayState(ControlView.PlayState.NotPlaying);
+        }
 
         if (mAliyunVodPlayer == null) {
             return;

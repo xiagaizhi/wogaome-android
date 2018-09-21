@@ -17,7 +17,7 @@ import com.yufan.library.view.recycler.PageInfo;
 import com.yushi.leke.UIHelper;
 import com.yushi.leke.YFApi;
 import com.yushi.leke.fragment.album.AlbumDetailFragment;
-import com.yushi.leke.fragment.home.Homeinfo;
+import com.yushi.leke.fragment.home.bean.Homeinfo;
 
 import me.drakeet.multitype.MultiTypeAdapter;
 
@@ -90,6 +90,7 @@ public class SubscriptionChannelFragment extends BaseListFragment<SubscriptionCh
                             list.addAll(mySubscriptionInfos.getList());
                             vu.getRecyclerView().getAdapter().notifyDataSetChanged();
                         } else {
+                            vu.setStateEmpty();
                             vu.getRecyclerView().getPageManager().setPageState(PageInfo.PAGE_STATE_NO_MORE);
                         }
                     }

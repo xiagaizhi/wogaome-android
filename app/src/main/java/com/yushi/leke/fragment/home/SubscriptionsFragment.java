@@ -23,10 +23,17 @@ import com.yushi.leke.activity.MusicPlayerActivity;
 import com.yushi.leke.fragment.album.AlbumDetailFragment;
 import com.yushi.leke.fragment.browser.BrowserBaseFragment;
 import com.yushi.leke.fragment.exhibition.detail.ExhibitionDetailFragment;
-import com.yushi.leke.fragment.exhibition.exhibitionHome.ExhibitionErrorBinder;
-import com.yushi.leke.fragment.exhibition.exhibitionHome.ExhibitionErrorInfo;
+import com.yushi.leke.fragment.exhibition.exhibitionHome.binder.ExhibitionErrorBinder;
+import com.yushi.leke.fragment.exhibition.exhibitionHome.bean.ExhibitionErrorInfo;
+import com.yushi.leke.fragment.home.bean.BannerItemInfo;
+import com.yushi.leke.fragment.home.bean.Homeinfo;
+import com.yushi.leke.fragment.home.bean.SubscriptionChannelInfo;
+import com.yushi.leke.fragment.home.bean.SubscriptionColumnInfo;
+import com.yushi.leke.fragment.home.binder.SubscriptionBanner;
+import com.yushi.leke.fragment.home.binder.SubscriptionsBannerViewBinder;
+import com.yushi.leke.fragment.home.binder.SubscriptionsColumnViewBinder;
+import com.yushi.leke.fragment.home.binder.SubscriptionsViewBinder;
 import com.yushi.leke.fragment.home.subscriptionChannel.SubscriptionChannelFragment;
-import com.yushi.leke.fragment.exhibition.exhibitionHome.ExhibitionFragment;
 import com.yushi.leke.fragment.searcher.SearchFragment;
 import com.yushi.leke.fragment.splash.advert.NativeJumpInfo;
 
@@ -169,8 +176,11 @@ public class SubscriptionsFragment extends BaseListFragment<SubscriptionsContrac
                                     list.addAll(temp.getAlbumViewInfoList());
                                 }
                             } else {
+                                vu.setStateEmpty();
                                 vu.getRecyclerView().getPageManager().setPageState(PageInfo.PAGE_STATE_NO_MORE);
                             }
+                        }else {
+                            vu.setStateEmpty();
                         }
                     }
 
