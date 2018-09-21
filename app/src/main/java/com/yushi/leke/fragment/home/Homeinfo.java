@@ -6,7 +6,7 @@ public class Homeinfo {
     int utime;
     int lockLevel;
     String creatorInfo;
-    int albumId;
+    String albumId;
     String tags;
     String horizontalIcon;
     int deleted;
@@ -60,11 +60,11 @@ public class Homeinfo {
         this.creatorInfo = creatorInfo;
     }
 
-    public int getAlbumId() {
+    public String getAlbumId() {
         return albumId;
     }
 
-    public void setAlbumId(int albumId) {
+    public void setAlbumId(String albumId) {
         this.albumId = albumId;
     }
 
