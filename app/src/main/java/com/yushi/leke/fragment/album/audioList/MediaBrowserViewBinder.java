@@ -74,9 +74,11 @@ public class MediaBrowserViewBinder  extends ItemViewBinder<MediaBrowserCompat.M
         viewHolder.tv_action.setText(mediaItem.getDescription().getExtras().getInt(MutableMediaMetadata.listenable)==1?"试听":"播放");
       int level= mediaItem.getDescription().getExtras().getInt(MutableMediaMetadata.levelStatus);
         if(level==0){
-
+            viewHolder.tv_free.setText("免费");
+        }else {
+            viewHolder.tv_free.setText("黄金段位解锁");
         }
-        viewHolder.tv_free.setText("");
+
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
