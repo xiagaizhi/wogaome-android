@@ -1,4 +1,4 @@
-package com.yushi.leke.fragment.home;
+package com.yushi.leke.fragment.home.bean;
 
 public class Homeinfo {
     String albumName;

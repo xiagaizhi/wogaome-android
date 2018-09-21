@@ -20,7 +20,7 @@ public class AlbumAudio {
     int baseCount;//基础播放数
 
 
-    int ctime;
+    long ctime;
 
     int deleted;
 
@@ -39,6 +39,14 @@ public class AlbumAudio {
 
 
     int viewTimes;//播放次数
+
+    public long getCtime() {
+        return ctime;
+    }
+
+    public void setCtime(long ctime) {
+        this.ctime = ctime;
+    }
 
     public int getAlbumId() {
         return albumId;
@@ -88,13 +96,6 @@ public class AlbumAudio {
         this.baseCount = baseCount;
     }
 
-    public int getCtime() {
-        return ctime;
-    }
-
-    public void setCtime(int ctime) {
-        this.ctime = ctime;
-    }
 
     public int getDeleted() {
         return deleted;

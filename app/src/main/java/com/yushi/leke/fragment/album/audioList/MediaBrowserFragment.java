@@ -91,10 +91,10 @@ public class MediaBrowserFragment extends BaseListFragment<MediaBrowserContract.
             return;
         }
         mAlbumId = getMediaId();
-        if (mAlbumId == null) {
-            mAlbumId = mMediaFragmentListener.getMediaBrowser().getRoot();
+        if (mAlbumId != null) {
+            SPManager.getInstance().saveValue(Global.SP_KEY_ALBUM_ID,mAlbumId);
         }
-        SPManager.getInstance().saveValue(Global.SP_KEY_ALBUM_ID,mAlbumId);
+
         getVu().updateTitle(mAlbumId);
 
         // Unsubscribing before subscribing is required if this mediaId already has a subscriber

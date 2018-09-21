@@ -1,10 +1,10 @@
-package com.yushi.leke.fragment.exhibition.exhibitionHome;
+package com.yushi.leke.fragment.exhibition.exhibitionHome.bean;
 
 /**
  * Created by mengfantao on 18/8/30.
  */
 
-public class ExhibitionInfo {
+public class ExhibitionJustOneInfo {
     private String title;
     private String bgPicture;
     private int activityProgress;//活动进度（0--未开始，1--报名中，2--投票中，3--已结束）
@@ -13,6 +13,18 @@ public class ExhibitionInfo {
     private String organizer;
     private String activityId;
 
+    public ExhibitionJustOneInfo() {
+
+    }
+    public ExhibitionJustOneInfo(ExhibitionInfo exhibitionInfo) {
+        this.setTitle(exhibitionInfo.getTitle());
+        this.setBgPicture(exhibitionInfo.getBgPicture());
+        this.setActivityProgress(exhibitionInfo.getActivityProgress());
+        this.setStartDate(exhibitionInfo.getStartDate());
+        this.setEndDate(exhibitionInfo.getEndDate());
+        this.setOrganizer(exhibitionInfo.getOrganizer());
+        this.setActivityId(exhibitionInfo.getActivityId());
+    }
     public String getTitle() {
         return title;
     }

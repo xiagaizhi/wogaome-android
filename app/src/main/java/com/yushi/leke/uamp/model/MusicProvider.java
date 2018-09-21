@@ -48,7 +48,7 @@ import static com.yushi.leke.uamp.utils.MediaIDHelper.MEDIA_ID_MUSICS_BY_GENRE;
  * Simple data provider for music tracks. The actual metadata source is delegated to a
  * MusicProviderSource defined by a constructor argument of this class.
  * MusicProvider：简单的音乐数据提供者
- * 真实的数据源是由MusicProviderSource授予的，MusicProviderSource由本类构造函数的参数定义
+ *
  */
 public class MusicProvider {
 
@@ -209,6 +209,7 @@ public class MusicProvider {
             public void onSuccess(ApiBean mApiBean) {
                 JSONObject jsonObject= JSON.parseObject(mApiBean.data);
                 String listStr=    jsonObject.getString("audioViewInfoList");
+               int levelStatus= jsonObject.getInteger("levelStatus");
                 List<AlbumAudio> albumAudios= JSON.parseArray(listStr,AlbumAudio.class);
                 mMusicListById.clear();
                 for (int i=0;i<albumAudios.size();i++) {
@@ -217,19 +218,20 @@ public class MusicProvider {
                             .putString(MediaMetadataCompat.METADATA_KEY_MEDIA_ID, albumAudio.getAudioId()+"")
                             .putString(MediaMetadataCompat.METADATA_KEY_ALBUM,albumAudio.getAlbumId()+"")
                             .putString(MediaMetadataCompat.METADATA_KEY_ARTIST, "作者")
-                            .putLong(MediaMetadataCompat.METADATA_KEY_DURATION,albumAudio.getDuration())
                             .putString(MediaMetadataCompat.METADATA_KEY_ALBUM_ART_URI, "")
                             .putString(MediaMetadataCompat.METADATA_KEY_TITLE,albumAudio.getAudioName())
-                            .putLong(MutableMediaMetadata.baseCount,albumAudio.getBaseCount())
-                            .putLong(MutableMediaMetadata.audioStatus,albumAudio.getAudioStatus())
-                            .putLong(MutableMediaMetadata.ctime,albumAudio.getCtime())
-                            .putLong(MutableMediaMetadata.deleted,albumAudio.getDeleted())
-                            .putLong(MutableMediaMetadata.listenable,albumAudio.getListenable())
-                            .putLong(MutableMediaMetadata.size,albumAudio.getSize())
-                            .putLong(MutableMediaMetadata.utime,albumAudio.getUtime())
-                            .putLong(MutableMediaMetadata.viewPeople,albumAudio.getViewPeople())
-                            .putLong(MutableMediaMetadata.viewTimes,albumAudio.getViewTimes())
                             .build();
+                    item.getDescription().getExtras().getInt(MediaMetadataCompat.METADATA_KEY_DURATION,albumAudio.getDuration());
+                    item.getDescription().getExtras().putInt(MutableMediaMetadata.baseCount,albumAudio.getBaseCount());
+                    item.getDescription().getExtras().putInt(MutableMediaMetadata.audioStatus,albumAudio.getAudioStatus());
+                    item.getDescription().getExtras().putLong(MutableMediaMetadata.ctime,albumAudio.getCtime());
+                    item.getDescription().getExtras().putInt(MutableMediaMetadata.deleted,albumAudio.getDeleted());
+                    item.getDescription().getExtras().putInt(MutableMediaMetadata.listenable,albumAudio.getListenable());
+                    item.getDescription().getExtras().putInt(MutableMediaMetadata.size,albumAudio.getSize());
+                    item.getDescription().getExtras().putLong(MutableMediaMetadata.utime,albumAudio.getUtime());
+                    item.getDescription().getExtras().putInt(MutableMediaMetadata.viewPeople,albumAudio.getViewPeople());
+                    item.getDescription().getExtras().putInt(MutableMediaMetadata.viewTimes,albumAudio.getViewTimes());
+                    item.getDescription().getExtras().putInt(MutableMediaMetadata.levelStatus,levelStatus);
                     String musicId = item.getString(MediaMetadataCompat.METADATA_KEY_MEDIA_ID);
                     mMusicListById.put(musicId, new MutableMediaMetadata(musicId, item));
                 }

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.yushi.leke.fragment.home;
+package com.yushi.leke.fragment.home.binder;
 
 import android.net.Uri;
 import android.support.annotation.NonNull;
@@ -29,6 +29,7 @@ import android.widget.TextView;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.yufan.library.inter.ICallBack;
 import com.yushi.leke.R;
+import com.yushi.leke.fragment.home.bean.Homeinfo;
 
 import me.drakeet.multitype.ItemViewBinder;
 

@@ -21,6 +21,17 @@ import com.yushi.leke.YFApi;
 import com.yushi.leke.activity.MusicPlayerActivity;
 import com.yushi.leke.fragment.browser.BrowserBaseFragment;
 import com.yushi.leke.fragment.exhibition.detail.ExhibitionDetailFragment;
+import com.yushi.leke.fragment.exhibition.exhibitionHome.bean.ExhibitionEmptyInfo;
+import com.yushi.leke.fragment.exhibition.exhibitionHome.bean.ExhibitionErrorInfo;
+import com.yushi.leke.fragment.exhibition.exhibitionHome.bean.ExhibitionInfo;
+import com.yushi.leke.fragment.exhibition.exhibitionHome.bean.ExhibitionInfoList;
+import com.yushi.leke.fragment.exhibition.exhibitionHome.bean.ExhibitionJustOneInfo;
+import com.yushi.leke.fragment.exhibition.exhibitionHome.bean.ExhibitionTopInfo;
+import com.yushi.leke.fragment.exhibition.exhibitionHome.binder.ExhibitionEmptyBinder;
+import com.yushi.leke.fragment.exhibition.exhibitionHome.binder.ExhibitionErrorBinder;
+import com.yushi.leke.fragment.exhibition.exhibitionHome.binder.ExhibitionJustOneViewBinder;
+import com.yushi.leke.fragment.exhibition.exhibitionHome.binder.ExhibitionTopViewBinder;
+import com.yushi.leke.fragment.exhibition.exhibitionHome.binder.ExhibitionViewBinder;
 
 import me.drakeet.multitype.MultiTypeAdapter;
 

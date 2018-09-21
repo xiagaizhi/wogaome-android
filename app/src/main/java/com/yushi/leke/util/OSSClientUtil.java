@@ -65,7 +65,6 @@ public class OSSClientUtil {
                                     String bucketName = ossICredentialInfo.getBucket();
                                     String objectKey = ossICredentialInfo.getKey();
                                     String endpoint = ossICredentialInfo.getEndPoint();
-                                    // TODO: 2018/8/31  
                                     final String imgUrl = ossICredentialInfo.getDownloadPath();
                                     OSSCredentialProvider credentialProvider = new OSSStsTokenCredentialProvider(accessKeyId, secretKeyId, securityToken);
                                     OSS oss = new OSSClient(context, endpoint, credentialProvider, mConf);

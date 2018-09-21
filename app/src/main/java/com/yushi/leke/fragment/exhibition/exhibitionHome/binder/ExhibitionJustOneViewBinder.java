@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.yushi.leke.fragment.exhibition.exhibitionHome;
+package com.yushi.leke.fragment.exhibition.exhibitionHome.binder;
 
 import android.net.Uri;
 import android.support.annotation.NonNull;
@@ -22,6 +22,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -29,6 +30,7 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.yufan.library.inter.ICallBack;
 import com.yufan.library.util.StringUtil;
 import com.yushi.leke.R;
+import com.yushi.leke.fragment.exhibition.exhibitionHome.bean.ExhibitionJustOneInfo;
 
 import me.drakeet.multitype.ItemViewBinder;
 
@@ -36,47 +38,41 @@ import me.drakeet.multitype.ItemViewBinder;
 /**
  * 路演大厅 路演item
  */
-public class ExhibitionViewBinder extends ItemViewBinder<ExhibitionInfo, ExhibitionViewBinder.ViewHolder> {
+public class ExhibitionJustOneViewBinder extends ItemViewBinder<ExhibitionJustOneInfo, ExhibitionJustOneViewBinder.ViewHolder> {
     private ICallBack callBack;
 
-    public ExhibitionViewBinder(ICallBack callBack) {
+    public ExhibitionJustOneViewBinder(ICallBack callBack) {
         this.callBack = callBack;
     }
 
     @Override
     protected @NonNull
     ViewHolder onCreateViewHolder(@NonNull LayoutInflater inflater, @NonNull ViewGroup parent) {
-        return new ViewHolder(inflater.inflate(R.layout.item_exhibition, parent, false));
+        return new ViewHolder(inflater.inflate(R.layout.item_exhibition_justone, parent, false));
     }
 
     @Override
-    protected void onBindViewHolder(@NonNull ViewHolder holder, @NonNull final ExhibitionInfo category) {
-        switch (category.getActivityProgress()) {//活动进度（0--未开始，1--报名中，2--投票中，3--已结束）
-            case 0:
-                holder.tv_exhibtion_state.setText("未开始...");
-                holder.tv_active_state.setVisibility(View.GONE);
-                break;
-            case 1:
-                holder.tv_exhibtion_state.setText("报名中...");
-                holder.tv_active_state.setText("立即报名");
-                holder.tv_active_state.setVisibility(View.VISIBLE);
-                break;
-            case 2:
-                holder.tv_exhibtion_state.setText("投票中...");
-                holder.tv_active_state.setText("立即投票");
-                holder.tv_active_state.setVisibility(View.VISIBLE);
-                break;
-            case 3:
-                holder.tv_exhibtion_state.setText("已结束...");
-                holder.tv_active_state.setVisibility(View.GONE);
-                break;
-        }
-
+    protected void onBindViewHolder(@NonNull ViewHolder holder, @NonNull final ExhibitionJustOneInfo category) {
         holder.sdv.setImageURI(Uri.parse(category.getBgPicture()));
         holder.tv_title.setText(category.getTitle());
         holder.tv_action_company.setText("主办方：" + category.getOrganizer());
         holder.tv_action_time.setText("活动时间：" + StringUtil.formatTime(category.getStartDate(), category.getEndDate()));
+        if (category.getActivityProgress() == 1){//报名中
+            holder.tv_exhibtion_state.setText("报名中...");
+            holder.btn_apply.setText("立即报名");
+        }else if (category.getActivityProgress() == 2){//投票中
+            holder.tv_exhibtion_state.setText("投票中...");
+            holder.btn_apply.setText("立即投票");
+        }
         holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (callBack != null) {
+                    callBack.OnBackResult(category);
+                }
+            }
+        });
+        holder.btn_apply.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (callBack != null) {
@@ -90,21 +86,21 @@ public class ExhibitionViewBinder extends ItemViewBinder<ExhibitionInfo, Exhibit
     static class ViewHolder extends RecyclerView.ViewHolder {
         public SimpleDraweeView sdv;
         public TextView tv_title;
-        public TextView tv_active_state;
         public TextView tv_action_company;
         public TextView tv_action_time;
-        public TextView tv_exhibtion_state;
         public ImageView img_exhibition_bg;
+        public Button btn_apply;
+        public TextView tv_exhibtion_state;
 
         ViewHolder(@NonNull View itemView) {
             super(itemView);
             sdv = itemView.findViewById(R.id.sdv);
             tv_title = itemView.findViewById(R.id.tv_title);
-            tv_active_state = itemView.findViewById(R.id.tv_active_state);
             tv_action_company = itemView.findViewById(R.id.tv_action_company);
             tv_action_time = itemView.findViewById(R.id.tv_action_time);
-            tv_exhibtion_state = itemView.findViewById(R.id.tv_exhibtion_state);
+            btn_apply = itemView.findViewById(R.id.btn_apply);
             img_exhibition_bg = itemView.findViewById(R.id.img_exhibition_bg);
+            tv_exhibtion_state = itemView.findViewById(R.id.tv_exhibtion_state);
         }
     }
 

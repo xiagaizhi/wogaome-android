@@ -1,4 +1,4 @@
-package com.yushi.leke.fragment.home;
+package com.yushi.leke.fragment.home.bean;
 
 import com.yushi.leke.fragment.splash.advert.NativeJumpInfo;
 

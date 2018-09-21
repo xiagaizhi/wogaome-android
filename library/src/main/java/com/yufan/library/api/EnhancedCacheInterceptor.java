@@ -62,7 +62,7 @@ public class EnhancedCacheInterceptor implements Interceptor {
         String key=MD5Util.MD5(sb.toString());
         Log.d("http","response: "+json);
         CacheManager.saveObject(BaseApplication.getInstance(),json , key);
-        Log.d("CacheManager", "put cache-> key:" + key + "-> json:" + json);
+       // Log.d("CacheManager", "put cache-> key:" + key + "-> json:" + json);
         return response;
     }
 }

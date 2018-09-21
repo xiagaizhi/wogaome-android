@@ -83,7 +83,7 @@
                     android:id="@+id/tv_area_industry"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/y30"
+                    android:layout_marginTop="@dimen/y25"
                     android:layout_toRightOf="@+id/img_logo"
                     android:text="浙江省／金融行业"
                     android:textColor="@color/color_gray_level6"

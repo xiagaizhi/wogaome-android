@@ -160,20 +160,27 @@ public class VoteFragment extends DialogFragment implements View.OnClickListener
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (TextUtils.isEmpty(s)) {
+                if (TextUtils.isEmpty(s) || getCurrentChoiceVoteNum() == 0) {
                     et_lkc.setTextSize(17);
                     btn_vote.setEnabled(false);
                 } else {
+                    et_lkc.setTextSize(29);
+                    btn_vote.setEnabled(true);
                     if (voteInitInfo != null) {
                         int temp = voteInitInfo.getLkc().setScale(0, BigDecimal.ROUND_DOWN).compareTo(new BigDecimal(getCurrentChoiceVoteNum()));
                         if (temp == -1) {//lkc币不足
-                            et_lkc.setText(String.valueOf(voteInitInfo.getLkc().setScale(0, BigDecimal.ROUND_DOWN)));
+                            if (voteInitInfo.getLkc().setScale(0, BigDecimal.ROUND_DOWN).compareTo(new BigDecimal(0)) == 0){
+                                et_lkc.setText("");
+                                et_lkc.setTextSize(17);
+                                btn_vote.setEnabled(false);
+                            }else {
+                                et_lkc.setText(String.valueOf(voteInitInfo.getLkc().setScale(0, BigDecimal.ROUND_DOWN)));
+                            }
+
                             DialogManager.getInstance().toast("投票数不可大于LKC余额");
                         }
                     }
 
-                    et_lkc.setTextSize(29);
-                    btn_vote.setEnabled(true);
                 }
             }
         });

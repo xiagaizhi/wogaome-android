@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.yushi.leke.fragment.exhibition.exhibitionHome;
+package com.yushi.leke.fragment.exhibition.exhibitionHome.binder;
 
 import android.graphics.drawable.AnimationDrawable;
 import android.support.annotation.NonNull;
@@ -26,6 +26,7 @@ import android.widget.ImageView;
 
 import com.yufan.library.inter.ICallBack;
 import com.yushi.leke.R;
+import com.yushi.leke.fragment.exhibition.exhibitionHome.bean.ExhibitionTopInfo;
 
 import me.drakeet.multitype.ItemViewBinder;
 
