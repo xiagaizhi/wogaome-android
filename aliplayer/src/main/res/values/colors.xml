@@ -6,6 +6,8 @@
     <color name="alivc_green">#57AB44</color>
     <color name="alivc_orange">#EE7C33</color>
     <color name="alivc_red">#E94033</color>
+    <color name="alivc_blue_levelf">#007AFF</color>
+    <color name="alivc_gray_level6">#666666</color>
 
     <color name="alivc_info_text_duration">#9f9e9e</color>
     <color name="alivc_dialog_error_bg">#b2000000</color>

@@ -91,4 +91,41 @@ public class StringUtil {
         }
 
     }
+
+
+    public static String stringForTime(int timeMs) {
+        StringBuilder sb = new StringBuilder();
+        int seconds = timeMs % 60;
+        int minutes = (timeMs / 60) % 60;
+        int hours = timeMs / 3600;
+        if (hours == 0) {
+            sb.append("00:");
+        } else if (hours < 10) {
+            sb.append("0");
+            sb.append(hours);
+            sb.append(":");
+        } else {
+            sb.append(hours);
+            sb.append(":");
+        }
+        if (minutes == 0) {
+            sb.append("00:");
+        } else if (minutes < 10) {
+            sb.append("0");
+            sb.append(minutes);
+            sb.append(":");
+        } else {
+            sb.append(minutes);
+            sb.append(":");
+        }
+        if (seconds == 0) {
+            sb.append("00");
+        } else if (seconds < 10) {
+            sb.append("0");
+            sb.append(seconds);
+        } else {
+            sb.append(seconds);
+        }
+        return sb.toString();
+    }
 }
