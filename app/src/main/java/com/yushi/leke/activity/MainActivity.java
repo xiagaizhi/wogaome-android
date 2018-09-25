@@ -123,7 +123,7 @@ private String     TAG="MainActivity";
             loadRootFragment(R.id.activity_content_level0, UIHelper.creat(LoginFragment.class).build());
         }
          ablumId=  SPManager.getInstance().getString(Global.SP_KEY_ALBUM_ID,"");
-         mediaId=  SPManager.getInstance().getString(Global.SP_KEY_ALBUM_ID,"");
+         mediaId=  SPManager.getInstance().getString(Global.SP_KEY_MEDIA_ID,"");
 
 
     }

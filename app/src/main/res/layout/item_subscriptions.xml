@@ -12,6 +12,10 @@
     <com.facebook.drawee.view.SimpleDraweeView
         android:layout_width="@dimen/px217"
         android:id="@+id/sdv"
+        fresco:failureImage="@drawable/default_video_square"
+        fresco:placeholderImage="@drawable/default_video_square"
+        fresco:placeholderImageScaleType="focusCrop"
+        fresco:failureImageScaleType="focusCrop"
         fresco:roundedCornerRadius="2dp"
         android:layout_height="@dimen/px168" />
     <TextView

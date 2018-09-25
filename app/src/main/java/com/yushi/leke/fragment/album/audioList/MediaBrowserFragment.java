@@ -131,8 +131,7 @@ public class MediaBrowserFragment extends BaseListFragment<MediaBrowserContract.
                         return;
                     }
                     SPManager.getInstance().saveValue(Global.SP_KEY_MEDIA_ID,metadata.getDescription().getMediaId());
-                    LogHelper.d(TAG, "Received metadata change to media ",
-                            metadata.getDescription().getMediaId());
+                    LogHelper.d(TAG, "Received metadata change to media ", metadata.getDescription().getMediaId());
                     getVu().notifyDataSetChanged();
                 }//播放的媒体数据发生变化时的回调
 

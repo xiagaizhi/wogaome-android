@@ -31,6 +31,7 @@
         android:layout_width="@dimen/px16"
         android:layout_height="@dimen/px16"
         android:layout_alignRight="@+id/view0"
+        android:layout_marginTop="@dimen/y6"
         android:background="@drawable/widget_view_badger_new"
         android:gravity="center"
         android:visibility="gone" />
