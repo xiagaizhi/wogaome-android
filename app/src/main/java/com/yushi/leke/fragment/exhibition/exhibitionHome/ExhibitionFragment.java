@@ -19,6 +19,7 @@ import com.yufan.library.view.recycler.PageInfo;
 import com.yushi.leke.UIHelper;
 import com.yushi.leke.YFApi;
 import com.yushi.leke.activity.MusicPlayerActivity;
+import com.yushi.leke.dialog.ShareDialog;
 import com.yushi.leke.fragment.browser.BrowserBaseFragment;
 import com.yushi.leke.fragment.exhibition.detail.ExhibitionDetailFragment;
 import com.yushi.leke.fragment.exhibition.exhibitionHome.bean.ExhibitionEmptyInfo;
@@ -176,6 +177,4 @@ public class ExhibitionFragment extends BaseListFragment<ExhibitionContract.IVie
         Intent intent = new Intent(getContext(), MusicPlayerActivity.class);
         startActivity(intent);
     }
-
-
 }

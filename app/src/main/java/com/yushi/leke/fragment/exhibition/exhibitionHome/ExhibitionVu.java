@@ -1,5 +1,6 @@
 package com.yushi.leke.fragment.exhibition.exhibitionHome;
 
+import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -16,6 +17,7 @@ import com.yufan.library.widget.StateLayout;
 import com.yufan.library.widget.AppToolbar;
 import com.yufan.library.view.recycler.YFRecyclerView;
 import com.yushi.leke.UIHelper;
+import com.yushi.leke.dialog.ShareDialog;
 
 /**
  * Created by mengfantao on 18/8/2.
@@ -92,6 +94,9 @@ public class ExhibitionVu extends BaseListVu<ExhibitionContract.Presenter> imple
     @Override
     public boolean initTitle(AppToolbar appToolbar) {
         this.appToolbar=appToolbar;
+        img_history = appToolbar.creatRightView(ImageView.class);
+        img_history.setImageResource(R.drawable.ic_history_exc);
+        img_history.setAlpha(0f);
         musicAnim=   UIHelper.getMusicView(mPersenter.getActivity(),appToolbar);
         mTitleView=     appToolbar.creatCenterView(TextView.class);
         mTitleView.setText("路演厅");
@@ -105,9 +110,6 @@ public class ExhibitionVu extends BaseListVu<ExhibitionContract.Presenter> imple
                 }
             }
         });
-        img_history = appToolbar.creatRightView(ImageView.class);
-        img_history.setImageResource(R.drawable.ic_history_exc);
-        img_history.setAlpha(0f);
         img_history.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

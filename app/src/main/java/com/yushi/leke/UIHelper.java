@@ -76,7 +76,8 @@ public class UIHelper {
             if (musicView.getParent() != null) {
                 ((ViewGroup) musicView.getParent()).removeView(musicView);
             }
-            toolbar.getRightViewGroup().addView(musicView);
+            //toolbar.getRightViewGroup().addView(musicView);
+            musicView=toolbar.creatRightView(ImageView.class);
         }
         musicView.setImageResource(R.drawable.anim_player_blue);
         ((AnimationDrawable) musicView.getDrawable()).start();
