@@ -37,6 +37,7 @@ import me.drakeet.multitype.ItemViewBinder;
 public class ExhibitionTopViewBinder extends ItemViewBinder<ExhibitionTopInfo, ExhibitionTopViewBinder.ViewHolder> {
     private ICallBack callBack;
     public static final int MUSIC_EVENT = 1;
+    public static final int HISTORY_EVENT = 2;
     public ExhibitionTopViewBinder(ICallBack callBack) {
 this.callBack=callBack;
     }
@@ -61,18 +62,23 @@ this.callBack=callBack;
             }
         });
         ((AnimationDrawable) holder.rightMusic.getDrawable()).start();
+        holder.img_history_ic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
+            }
+        });
     }
 
 
     static class ViewHolder extends RecyclerView.ViewHolder {
 
         private ImageView rightMusic;
-
+        private ImageView img_history_ic;
         ViewHolder(@NonNull View itemView) {
             super(itemView);
             rightMusic=itemView.findViewById(R.id.iv_anim_icon);
-
+            img_history_ic=itemView.findViewById(R.id.img_history_icon);
         }
     }
 

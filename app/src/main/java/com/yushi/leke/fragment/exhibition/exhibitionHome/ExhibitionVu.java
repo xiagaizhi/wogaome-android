@@ -1,10 +1,10 @@
 package com.yushi.leke.fragment.exhibition.exhibitionHome;
 
-import android.graphics.drawable.AnimationDrawable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.yushi.leke.R;
@@ -16,7 +16,6 @@ import com.yufan.library.widget.StateLayout;
 import com.yufan.library.widget.AppToolbar;
 import com.yufan.library.view.recycler.YFRecyclerView;
 import com.yushi.leke.UIHelper;
-import com.yushi.leke.fragment.album.AlbumDetailVu;
 
 /**
  * Created by mengfantao on 18/8/2.
@@ -31,12 +30,14 @@ public class ExhibitionVu extends BaseListVu<ExhibitionContract.Presenter> imple
     private float topHeightMax;
     private float topHeightMin;
     private ImageView musicAnim;
-
+    private ImageView img_history;
+    private float historyBottom;
     @Override
     public void initView(View view) {
         super.initView(view);
         topHeightMin = getContext().getResources().getDimension(R.dimen.y68);
         topHeightMax=getContext().getResources().getDimension(R.dimen.y98);
+        historyBottom=getContext().getResources().getDimension(R.dimen.px158);
         mYFRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
@@ -68,9 +69,16 @@ public class ExhibitionVu extends BaseListVu<ExhibitionContract.Presenter> imple
                         musicAnim.setAlpha(0f);
 
                     }
+                    if(top_offset>historyBottom){
+                        float offset=(top_offset-historyBottom)/(topHeightMax-topHeightMin);
+                        img_history.setAlpha(offset);
+                    }else {
+                        img_history.setAlpha(0f);
+                    }
                 }else {
                     mTitleView.setAlpha(1f);
                     musicAnim.setAlpha(1f);
+                    img_history.setAlpha(1f);
                 }
             }
         });
@@ -89,13 +97,21 @@ public class ExhibitionVu extends BaseListVu<ExhibitionContract.Presenter> imple
         mTitleView.setText("路演厅");
         mTitleView.setAlpha(0);
         mTitleView .getPaint().setFakeBoldText(true);
-
         musicAnim.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(v.getAlpha()>0){
                     mPersenter.onMusicMenuClick();
                 }
+            }
+        });
+        img_history = appToolbar.creatRightView(ImageView.class);
+        img_history.setImageResource(R.drawable.ic_history_exc);
+        img_history.setAlpha(0f);
+        img_history.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
             }
         });
         appToolbar.build();

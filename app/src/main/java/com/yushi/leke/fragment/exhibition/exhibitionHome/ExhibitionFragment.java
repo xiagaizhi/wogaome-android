@@ -176,4 +176,6 @@ public class ExhibitionFragment extends BaseListFragment<ExhibitionContract.IVie
         Intent intent = new Intent(getContext(), MusicPlayerActivity.class);
         startActivity(intent);
     }
+
+
 }
