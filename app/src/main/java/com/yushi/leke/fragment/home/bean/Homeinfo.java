@@ -3,7 +3,7 @@ package com.yushi.leke.fragment.home.bean;
 public class Homeinfo {
     String albumName;
     String creator;
-    int utime;
+    long utime;
     int lockLevel;
     String creatorInfo;
     String albumId;
@@ -12,7 +12,7 @@ public class Homeinfo {
     int deleted;
     String shareIcon;
     int albumStatus;
-    int ctime;
+    long ctime;
     String introduction;
     String viewPeople;
     String viewTimes;
@@ -34,14 +34,6 @@ public class Homeinfo {
 
     public void setCreator(String creator) {
         this.creator = creator;
-    }
-
-    public int getUtime() {
-        return utime;
-    }
-
-    public void setUtime(int utime) {
-        this.utime = utime;
     }
 
     public int getLockLevel() {
@@ -108,14 +100,6 @@ public class Homeinfo {
         this.albumStatus = albumStatus;
     }
 
-    public int getCtime() {
-        return ctime;
-    }
-
-    public void setCtime(int ctime) {
-        this.ctime = ctime;
-    }
-
     public String getIntroduction() {
         return introduction;
     }
@@ -138,5 +122,21 @@ public class Homeinfo {
 
     public void setViewTimes(String viewTimes) {
         this.viewTimes = viewTimes;
+    }
+
+    public long getUtime() {
+        return utime;
+    }
+
+    public void setUtime(long utime) {
+        this.utime = utime;
+    }
+
+    public long getCtime() {
+        return ctime;
+    }
+
+    public void setCtime(long ctime) {
+        this.ctime = ctime;
     }
 }

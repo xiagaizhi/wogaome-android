@@ -52,7 +52,7 @@ public class AllprojectsFragment extends BaseListFragment<AllprojectsContract.IV
                     VoteFragment voteFragment = new VoteFragment();
                     voteFragment.setmICallBack(AllprojectsFragment.this);
                     Bundle args = new Bundle();
-                    args.putString("projectId", projectId);
+                    args.putString(Global.BUNDLE_PROJECT_ID, projectId);
                     voteFragment.setArguments(args);
                     voteFragment.show(getFragmentManager(), "VoteFragment");
                 }

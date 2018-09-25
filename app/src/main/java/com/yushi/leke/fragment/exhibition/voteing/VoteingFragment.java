@@ -56,7 +56,7 @@ public class VoteingFragment extends BaseListFragment<VoteingContract.IView> imp
                         VoteFragment voteFragment = new VoteFragment();
                         voteFragment.setmICallBack(VoteingFragment.this);
                         Bundle args = new Bundle();
-                        args.putString("projectId", projectId);
+                        args.putString(Global.BUNDLE_PROJECT_ID, projectId);
                         voteFragment.setArguments(args);
                         voteFragment.show(getFragmentManager(), "VoteFragment");
                         ArgsUtil.datapoint(ArgsUtil.VOTE_NAME, "null", ArgsUtil.UID, ArgsUtil.VOTE_CODE, projectId, null);

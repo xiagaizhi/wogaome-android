@@ -179,6 +179,7 @@ public class SubscriptionsFragment extends BaseListFragment<SubscriptionsContrac
                                     list.add(subscriptionColumnInfo);
                                     list.addAll(temp.getAlbumViewInfoList());
                                 }
+                                vu.getRecyclerView().getAdapter().notifyDataSetChanged();
                             } else {
                                 vu.setStateEmpty();
                                 vu.getRecyclerView().getPageManager().setPageState(PageInfo.PAGE_STATE_NO_MORE);

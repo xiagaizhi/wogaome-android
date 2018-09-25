@@ -495,7 +495,8 @@ public interface YFApi {
     Call<ResponseBody>
     tradeLKCForVote(
             @Field("token") String token,
-            @Field("lkc") String lkc
+            @Field("lkc") String lkc,
+            @Field("projectId") String projectId
     );
 
     @POST("app/v1/activity/playVideoForProject")

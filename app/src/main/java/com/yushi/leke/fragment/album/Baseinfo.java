@@ -6,14 +6,14 @@ public class Baseinfo {
     int albumStatus;
     String creator;
     String creatorInfo;
-    int ctime;
+    long ctime;
     int deleted;
     String horizontalIcon;
     String introduction;
     int lockLevel;
     String shareIcon;
     String tags;
-    int utime;
+    long utime;
 
     public Baseinfo() {
     }
@@ -56,14 +56,6 @@ public class Baseinfo {
 
     public void setCreatorInfo(String creatorInfo) {
         this.creatorInfo = creatorInfo;
-    }
-
-    public int getCtime() {
-        return ctime;
-    }
-
-    public void setCtime(int ctime) {
-        this.ctime = ctime;
     }
 
     public int getDeleted() {
@@ -114,11 +106,19 @@ public class Baseinfo {
         this.tags = tags;
     }
 
-    public int getUtime() {
+    public long getCtime() {
+        return ctime;
+    }
+
+    public void setCtime(long ctime) {
+        this.ctime = ctime;
+    }
+
+    public long getUtime() {
         return utime;
     }
 
-    public void setUtime(int utime) {
+    public void setUtime(long utime) {
         this.utime = utime;
     }
 }

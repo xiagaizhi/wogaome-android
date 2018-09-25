@@ -51,6 +51,7 @@
             android:name="com.yushi.leke.activity.MainActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:theme="@style/main_activity_style"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize|adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

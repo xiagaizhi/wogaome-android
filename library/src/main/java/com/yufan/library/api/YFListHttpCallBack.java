@@ -1,7 +1,5 @@
 package com.yufan.library.api;
 
-import android.util.Log;
-
 import com.yufan.library.base.VuList;
 import com.yufan.library.manager.DialogManager;
 import com.yufan.library.view.recycler.PageInfo;
@@ -23,7 +21,6 @@ public abstract class YFListHttpCallBack extends BaseHttpCallBack {
 
     @Override
     public void onSuccess(ApiBean mApiBean) {
-        Log.d("LOGH","success");
         pageInfo.next();
         pageInfo.setPageState(PageInfo.PAGE_STATE_NONE);
         havaRequestSuccess = true;
@@ -31,7 +28,6 @@ public abstract class YFListHttpCallBack extends BaseHttpCallBack {
 
     @Override
     public void onError(int id, Exception e) {
-        Log.d("LOGH","error:"+e.toString());
         vu.setStateError();
         pageInfo.setPageState(PageInfo.PAGE_STATE_ERROR);
         DialogManager.getInstance().toast(e.getMessage());

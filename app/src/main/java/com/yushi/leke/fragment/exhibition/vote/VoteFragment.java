@@ -23,6 +23,7 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.yufan.library.Global;
 import com.yufan.library.api.ApiBean;
 import com.yufan.library.api.ApiManager;
 import com.yufan.library.api.BaseHttpCallBack;
@@ -53,6 +54,7 @@ public class VoteFragment extends DialogFragment implements View.OnClickListener
     private ImageView img_vote_success;
     private VoteInitInfo voteInitInfo;
     private ICallBack mICallBack;
+    private String projectId;
 
 
     public void setmICallBack(ICallBack mICallBack) {
@@ -64,6 +66,8 @@ public class VoteFragment extends DialogFragment implements View.OnClickListener
         super.onCreate(savedInstanceState);
         //设置样式
         setStyle(DialogFragment.STYLE_NO_FRAME, R.style.CustomDatePickerDialog);
+        Bundle args= getArguments();
+        projectId = args.getString(Global.BUNDLE_PROJECT_ID);
     }
 
     @Override
@@ -86,7 +90,6 @@ public class VoteFragment extends DialogFragment implements View.OnClickListener
         super.onViewCreated(view, savedInstanceState);
         Bundle bundle = getArguments();
         if (bundle != null) {
-            String projectId = bundle.getString("projectId");
             ApiManager.getCall(ApiManager.getInstance().create(YFApi.class)
                     .vote(projectId))
                     .useCache(false).enqueue(new BaseHttpCallBack() {
@@ -265,7 +268,7 @@ public class VoteFragment extends DialogFragment implements View.OnClickListener
         //发起投票
         if (TextUtils.equals("立即投票", btn_vote.getText().toString())) {
             DialogManager.getInstance().showLoadingDialog();
-            ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).tradeLKCForVote(token, String.valueOf(getCurrentChoiceVoteNum())))
+            ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).tradeLKCForVote(token, String.valueOf(getCurrentChoiceVoteNum()),projectId))
                     .useCache(false)
                     .enqueue(new BaseHttpCallBack() {
                         @Override

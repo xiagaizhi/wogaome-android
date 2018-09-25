@@ -60,7 +60,6 @@ public class ShareMenuActivity extends BaseActivity {
     }
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-      setTheme(R.style.ThemeActivity);
         super.onCreate(savedInstanceState);
          Bundle bundle = getIntent().getExtras();
         if (bundle != null) {

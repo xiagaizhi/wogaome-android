@@ -38,12 +38,13 @@
 
                 <RelativeLayout
                     android:layout_width="@dimen/px46"
-                    android:layout_height="@dimen/px50"
+                    android:layout_height="@dimen/px54"
                     android:layout_marginTop="@dimen/px21">
 
                     <ImageView
                         android:id="@+id/img_messgae"
                         android:layout_width="@dimen/px46"
+                        android:layout_centerVertical="true"
                         android:layout_height="@dimen/px46"
                         android:src="@drawable/ic_toolbar_message" />
 
