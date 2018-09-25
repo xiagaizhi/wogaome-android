@@ -62,7 +62,6 @@ public class AllprojectsFragment extends BaseListFragment<AllprojectsContract.IV
         vu.getRecyclerView().setAdapter(adapter);
         adapter.setItems(list);
         vu.getRecyclerView().getAdapter().notifyDataSetChanged();
-        onRefresh();
     }
 
     @Override
@@ -90,7 +89,7 @@ public class AllprojectsFragment extends BaseListFragment<AllprojectsContract.IV
     @Override
     public void onRefresh() {
         ApiManager.getCall(ApiManager.getInstance().create(YFApi.class)
-                .getvoteingallpro(getVu().getRecyclerView().getPageManager().getCurrentIndex(),activityid, getVu().getindustry(), getVu().getcity()))
+                .getvoteingallpro(1,activityid, getVu().getindustry(), getVu().getcity()))
                 .useCache(false)
                 .enqueue(new YFListHttpCallBack(getVu()) {
                     @Override

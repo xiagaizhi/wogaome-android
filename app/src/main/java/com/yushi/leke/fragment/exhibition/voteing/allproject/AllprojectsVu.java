@@ -70,8 +70,7 @@ public class AllprojectsVu extends BaseListVu<AllprojectsContract.Presenter> imp
                     pvOptions.setOnDismissListener(new OnDismissListener() {
                         @Override
                         public void onDismiss(Object o) {
-                            mYFRecyclerView.getPageManager().resetIndex();
-                            mPersenter.onLoadMore(mYFRecyclerView.getPageManager().getCurrentIndex());
+                            mPersenter.onRefresh();
 
 
                         }
@@ -125,7 +124,7 @@ public class AllprojectsVu extends BaseListVu<AllprojectsContract.Presenter> imp
                         @Override
                         public void onDismiss(Object o) {
                             mYFRecyclerView.getPageManager().resetIndex();
-                            mPersenter.onLoadMore(mYFRecyclerView.getPageManager().getCurrentIndex());
+                            mPersenter.onRefresh();
                         }
                     });
                     pvOptions.setPicker(citylist);//一级选择器

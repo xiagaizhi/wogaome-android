@@ -40,6 +40,7 @@ import com.yufan.library.view.ptr.PtrDefaultHandler;
 import com.yufan.library.view.ptr.PtrFrameLayout;
 import com.yufan.library.view.ptr.PtrHandler;
 import com.yufan.library.webview.WVJBWebViewClient;
+import com.yushi.leke.dialog.ShareDialog;
 import com.yushi.leke.dialog.recharge.PayDialog;
 
 import org.json.JSONException;
@@ -420,6 +421,8 @@ public class BrowserBaseFragment extends BaseFragment<BrowserContract.View> impl
                         String shareUrl= mJSONObject.optString("shareUrl");
                         String userName= mJSONObject.optString("userName");
                         String city= mJSONObject.optString("city");
+                        ShareDialog shareDialog=new ShareDialog();
+                        shareDialog.show(getFragmentManager(),"ShareDialog");
                     }
                 }
             });

@@ -1,4 +1,4 @@
-package com.yushi.leke.dialog.recharge;
+package com.yushi.leke.dialog;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
