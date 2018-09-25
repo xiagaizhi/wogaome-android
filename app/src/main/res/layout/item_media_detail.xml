@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
     android:background="@color/white"
     android:orientation="vertical">
 
@@ -16,6 +17,10 @@
             android:id="@+id/sdv"
             android:layout_width="@dimen/px160"
             android:layout_height="@dimen/px120"
+            fresco:failureImage="@drawable/default_video_rectangle"
+            fresco:placeholderImage="@drawable/default_video_rectangle"
+            fresco:placeholderImageScaleType="focusCrop"
+            fresco:failureImageScaleType="focusCrop"
             android:layout_centerInParent="true" />
 
         <ImageView

@@ -63,25 +63,28 @@ public class MusicProvider {
     private final TimerTask task = new TimerTask() {
         @Override
         public void run() {
-            ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).getStsAuth()).enqueue(new BaseHttpCallBack() {
-                @Override
-                public void onSuccess(ApiBean mApiBean) {
-                    aliyunAuth = JSON.parseObject(mApiBean.data, AliyunAuth.class);
-                }
-
-                @Override
-                public void onError(int id, Exception e) {
-
-                }
-
-                @Override
-                public void onFinish() {
-
-                }
-            });
-
+            getAuth();
         }
     };
+
+    private void getAuth() {
+        ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).getAuth()).enqueue(new BaseHttpCallBack() {
+            @Override
+            public void onSuccess(ApiBean mApiBean) {
+                aliyunAuth = JSON.parseObject(mApiBean.data, AliyunAuth.class);
+            }
+
+            @Override
+            public void onError(int id, Exception e) {
+
+            }
+
+            @Override
+            public void onFinish() {
+
+            }
+        });
+    }
 
     public AliyunAuth getAliyunAuth() {
         return aliyunAuth;
@@ -196,14 +199,14 @@ public class MusicProvider {
      */
     public void retrieveMediaAsync(String parentMediaId, final Callback callback) {
         LogHelper.d(TAG, "retrieveMediaAsync called");
-        if (mCurrentState == State.INITIALIZED) {
-            if (callback != null) {
-                // Nothing to do, execute callback immediately
-                callback.onMusicCatalogReady(true);
-            }
-            return;
-        }
-        ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).getPlayList(parentMediaId, "1")).enqueue(new BaseHttpCallBack() {
+//        if (mCurrentState == State.INITIALIZED) {
+//            if (callback != null) {
+//                // Nothing to do, execute callback immediately
+//                callback.onMusicCatalogReady(true);
+//            }
+//            return;
+//        }
+        ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).getPlayList(parentMediaId)).enqueue(new BaseHttpCallBack() {
             @Override
             public void onSuccess(ApiBean mApiBean) {
                 JSONObject jsonObject = JSON.parseObject(mApiBean.data);
@@ -219,8 +222,9 @@ public class MusicProvider {
                             .putString(MediaMetadataCompat.METADATA_KEY_ARTIST, "作者")
                             .putString(MediaMetadataCompat.METADATA_KEY_ALBUM_ART_URI, "")
                             .putString(MediaMetadataCompat.METADATA_KEY_TITLE, albumAudio.getAudioName())
-                            .putLong(MediaMetadataCompat.METADATA_KEY_BT_FOLDER_TYPE,1)
+                            .putLong(MediaMetadataCompat.METADATA_KEY_BT_FOLDER_TYPE, 1)
                             .build();
+
                     item.getDescription().getExtras().putInt(MediaMetadataCompat.METADATA_KEY_DURATION, albumAudio.getDuration());
                     item.getDescription().getExtras().putInt(MutableMediaMetadata.baseCount, albumAudio.getBaseCount());
                     item.getDescription().getExtras().putInt(MutableMediaMetadata.audioStatus, albumAudio.getAudioStatus());
@@ -232,10 +236,15 @@ public class MusicProvider {
                     item.getDescription().getExtras().putInt(MutableMediaMetadata.viewPeople, albumAudio.getViewPeople());
                     item.getDescription().getExtras().putInt(MutableMediaMetadata.viewTimes, albumAudio.getViewTimes());
                     item.getDescription().getExtras().putInt(MutableMediaMetadata.levelStatus, levelStatus);
+                    item.getDescription().getExtras().putString(MutableMediaMetadata.videoId, albumAudio.getAliVideoId());
                     String musicId = item.getString(MediaMetadataCompat.METADATA_KEY_MEDIA_ID);
                     mMusicListById.put(musicId, new MutableMediaMetadata(musicId, item));
                 }
                 mCurrentState = State.INITIALIZED;
+                if (callback != null) {
+                    callback.onMusicCatalogReady(true);
+                }
+
             }
 
             @Override
@@ -273,8 +282,19 @@ public class MusicProvider {
         MediaMetadataCompat copy = new MediaMetadataCompat.Builder(metadata.metadata)
                 .putString(MediaMetadataCompat.METADATA_KEY_MEDIA_ID, hierarchyAwareMediaID)
                 .build();
-        return new MediaBrowserCompat.MediaItem(copy.getDescription(),
-                MediaBrowserCompat.MediaItem.FLAG_PLAYABLE);
+        copy.getDescription().getExtras().putInt(MediaMetadataCompat.METADATA_KEY_DURATION, metadata.metadata.getDescription().getExtras().getInt(MediaMetadataCompat.METADATA_KEY_DURATION));
+        copy.getDescription().getExtras().putInt(MutableMediaMetadata.baseCount, metadata.metadata.getDescription().getExtras().getInt(MutableMediaMetadata.baseCount));
+        copy.getDescription().getExtras().putInt(MutableMediaMetadata.audioStatus, metadata.metadata.getDescription().getExtras().getInt(MutableMediaMetadata.audioStatus));
+        copy.getDescription().getExtras().putLong(MutableMediaMetadata.ctime, metadata.metadata.getDescription().getExtras().getLong(MutableMediaMetadata.ctime));
+        copy.getDescription().getExtras().putInt(MutableMediaMetadata.deleted, metadata.metadata.getDescription().getExtras().getInt(MutableMediaMetadata.deleted));
+        copy.getDescription().getExtras().putInt(MutableMediaMetadata.listenable, metadata.metadata.getDescription().getExtras().getInt(MutableMediaMetadata.listenable));
+        copy.getDescription().getExtras().putInt(MutableMediaMetadata.size, metadata.metadata.getDescription().getExtras().getInt(MutableMediaMetadata.size));
+        copy.getDescription().getExtras().putLong(MutableMediaMetadata.utime, metadata.metadata.getDescription().getExtras().getLong(MutableMediaMetadata.utime));
+        copy.getDescription().getExtras().putInt(MutableMediaMetadata.viewPeople,metadata.metadata.getDescription().getExtras().getInt(MutableMediaMetadata.viewPeople));
+        copy.getDescription().getExtras().putInt(MutableMediaMetadata.viewTimes, metadata.metadata.getDescription().getExtras().getInt(MutableMediaMetadata.viewTimes));
+        copy.getDescription().getExtras().putInt(MutableMediaMetadata.levelStatus, metadata.metadata.getDescription().getExtras().getInt(MutableMediaMetadata.levelStatus));
+        copy.getDescription().getExtras().putString(MutableMediaMetadata.videoId, metadata.metadata.getDescription().getExtras().getString(MutableMediaMetadata.videoId));
+        return new MediaBrowserCompat.MediaItem(copy.getDescription(), MediaBrowserCompat.MediaItem.FLAG_PLAYABLE);
 
     }
 

@@ -106,6 +106,19 @@ public class QueueHelper {
                     .putString(MediaMetadataCompat.METADATA_KEY_MEDIA_ID, hierarchyAwareMediaID)
                     .build();
 
+            trackCopy.getDescription().getExtras().putInt(MediaMetadataCompat.METADATA_KEY_DURATION, track.metadata.getDescription().getExtras().getInt(MediaMetadataCompat.METADATA_KEY_DURATION));
+            trackCopy.getDescription().getExtras().putInt(MutableMediaMetadata.baseCount, track.metadata.getDescription().getExtras().getInt(MutableMediaMetadata.baseCount));
+            trackCopy.getDescription().getExtras().putInt(MutableMediaMetadata.audioStatus, track.metadata.getDescription().getExtras().getInt(MutableMediaMetadata.audioStatus));
+            trackCopy.getDescription().getExtras().putLong(MutableMediaMetadata.ctime, track.metadata.getDescription().getExtras().getLong(MutableMediaMetadata.ctime));
+            trackCopy.getDescription().getExtras().putInt(MutableMediaMetadata.deleted, track.metadata.getDescription().getExtras().getInt(MutableMediaMetadata.deleted));
+            trackCopy.getDescription().getExtras().putInt(MutableMediaMetadata.listenable, track.metadata.getDescription().getExtras().getInt(MutableMediaMetadata.listenable));
+            trackCopy.getDescription().getExtras().putInt(MutableMediaMetadata.size, track.metadata.getDescription().getExtras().getInt(MutableMediaMetadata.size));
+            trackCopy.getDescription().getExtras().putLong(MutableMediaMetadata.utime, track.metadata.getDescription().getExtras().getLong(MutableMediaMetadata.utime));
+            trackCopy.getDescription().getExtras().putInt(MutableMediaMetadata.viewPeople,track.metadata.getDescription().getExtras().getInt(MutableMediaMetadata.viewPeople));
+            trackCopy.getDescription().getExtras().putInt(MutableMediaMetadata.viewTimes, track.metadata.getDescription().getExtras().getInt(MutableMediaMetadata.viewTimes));
+            trackCopy.getDescription().getExtras().putInt(MutableMediaMetadata.levelStatus, track.metadata.getDescription().getExtras().getInt(MutableMediaMetadata.levelStatus));
+            trackCopy.getDescription().getExtras().putString(MutableMediaMetadata.videoId, track.metadata.getDescription().getExtras().getString(MutableMediaMetadata.videoId));
+
             // We don't expect queues to change after created, so we use the item index as the
             // queueId. Any other number unique in the queue would work.
             MediaSessionCompat.QueueItem item = new MediaSessionCompat.QueueItem(

@@ -36,6 +36,7 @@ public class MutableMediaMetadata {
     public static final String viewPeople="com.yushi.leke.uamp.model.viewPeople";
     public static final String viewTimes="com.yushi.leke.uamp.model.viewTimes";
     public static final String levelStatus="com.yushi.leke.uamp.model.levelStatus";
+    public static final String videoId = "com.yushi.leke.uamp.model.videoId";
     public MediaMetadataCompat metadata;
     public final String trackId;
 

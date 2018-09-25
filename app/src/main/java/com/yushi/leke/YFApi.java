@@ -562,8 +562,7 @@ public interface YFApi {
     @FormUrlEncoded
     @POST("app/v1/albumDetail/getPlayList")
     Call<ResponseBody>
-    getPlayList(@Field("albumId") String albumId,
-                @Field("currentPage") String currentPage);
+    getPlayList(@Field("albumId") String albumId);
 
     /**
      * 专辑详情
@@ -640,9 +639,9 @@ public interface YFApi {
     showChannel(
     );
 
-    @POST("app/v1/common/getStsAuth")
+    @POST("app/v1/albumDetail/getAuth")
     Call<ResponseBody>
-    getStsAuth(
+    getAuth(
 
     );
 

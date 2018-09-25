@@ -522,51 +522,6 @@ public class ExhibitionDetailFragment extends BaseFragment<ExhibitionDetailContr
         }
     }
 
-    private static class MyStsListener implements VidStsUtil.OnStsResultListener {
-
-        private WeakReference<ExhibitionDetailFragment> weakctivity;
-
-        public MyStsListener(ExhibitionDetailFragment act) {
-            weakctivity = new WeakReference<ExhibitionDetailFragment>(act);
-        }
-
-        @Override
-        public void onSuccess(String vid, String akid, String akSecret, String token) {
-            ExhibitionDetailFragment activity = weakctivity.get();
-            if (activity != null) {
-                activity.onStsSuccess(vid, akid, akSecret, token);
-            }
-        }
-
-        @Override
-        public void onFail() {
-            ExhibitionDetailFragment activity = weakctivity.get();
-            if (activity != null) {
-                activity.onStsFail();
-            }
-        }
-    }
-
-    private void onStsFail() {
-
-        Toast.makeText(getContext(), com.aliyun.vodplayer.R.string.request_vidsts_fail, Toast.LENGTH_LONG).show();
-        inRequest = false;
-        //finish();
-    }
-
-    private void onStsSuccess(String mVid, String akid, String akSecret, String token) {
-
-        PlayParameter.PLAY_PARAM_VID = mVid;
-        PlayParameter.PLAY_PARAM_AK_ID = akid;
-        PlayParameter.PLAY_PARAM_AK_SECRE = akSecret;
-        PlayParameter.PLAY_PARAM_SCU_TOKEN = token;
-
-        inRequest = false;
-        // 请求sts成功后, 加载播放资源,和视频列表
-        setPlaySource();
-
-    }
-
     private static class MyOrientationChangeListener implements AliyunVodPlayerView.OnOrientationChangeListener {
 
         private final WeakReference<ExhibitionDetailFragment> weakReference;
@@ -627,17 +582,18 @@ public class ExhibitionDetailFragment extends BaseFragment<ExhibitionDetailContr
         @Override
         public void onUrlTimeExpired(String s, String s1) {
             ExhibitionDetailFragment activity = weakReference.get();
-            activity.onUrlTimeExpired(s, s1);
+            activity.onUrlTimeExpired(s);
         }
     }
 
-    private void onUrlTimeExpired(String oldVid, String oldQuality) {
+    private void onUrlTimeExpired(String oldVid) {
         //requestVidSts();
-        AliyunVidSts vidSts = VidStsUtil.getVidSts(oldVid);
-        PlayParameter.PLAY_PARAM_VID = vidSts.getVid();
-        PlayParameter.PLAY_PARAM_AK_SECRE = vidSts.getAkSceret();
-        PlayParameter.PLAY_PARAM_AK_ID = vidSts.getAcId();
-        PlayParameter.PLAY_PARAM_SCU_TOKEN = vidSts.getSecurityToken();
+//        AliyunVidSts vidSts = VidStsUtil.getVidSts(oldVid);
+//        PlayParameter.PLAY_PARAM_VID = vidSts.getVid();
+//        PlayParameter.PLAY_PARAM_AK_SECRE = vidSts.getAkSceret();
+//        PlayParameter.PLAY_PARAM_AK_ID = vidSts.getAcId();
+//        PlayParameter.PLAY_PARAM_SCU_TOKEN = vidSts.getSecurityToken();
+        getAliplayerInfo();
 
     }
 

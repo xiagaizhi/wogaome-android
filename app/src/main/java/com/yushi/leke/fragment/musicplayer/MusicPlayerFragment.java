@@ -28,6 +28,7 @@ import android.support.v4.media.session.MediaControllerCompat;
 import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
 import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.View;
@@ -531,7 +532,9 @@ public class MusicPlayerFragment extends BaseFragment<MusicPlayerContract.IView>
             Uri media = mediaMetadataCompat.getIconUri();
             RoundFragment fragment = new RoundFragment();
             Bundle bundle = new Bundle();
-            bundle.putString("album", media.toString());
+            if (media!=null){
+                bundle.putString("album", media.toString());
+            }
             fragment.setArguments(bundle);
             return fragment;
         }

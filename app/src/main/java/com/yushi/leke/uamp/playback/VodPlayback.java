@@ -20,46 +20,23 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.media.AudioManager;
-import android.net.Uri;
 import android.net.wifi.WifiManager;
 import android.support.v4.media.MediaMetadataCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
-import android.text.Html;
 import android.text.TextUtils;
-//
-//import com.google.android.exoplayer2.DefaultLoadControl;
-//import com.google.android.exoplayer2.ExoPlaybackException;
-//import com.google.android.exoplayer2.ExoPlayer;
-//import com.google.android.exoplayer2.ExoPlayerFactory;
-//import com.google.android.exoplayer2.PlaybackParameters;
-//import com.google.android.exoplayer2.SimpleExoPlayer;
-//import com.google.android.exoplayer2.Timeline;
-//import com.google.android.exoplayer2.audio.AudioAttributes;
-//import com.google.android.exoplayer2.extractor.DefaultExtractorsFactory;
-//import com.google.android.exoplayer2.extractor.ExtractorsFactory;
-//import com.google.android.exoplayer2.source.ExtractorMediaSource;
-//import com.google.android.exoplayer2.source.MediaSource;
-//import com.google.android.exoplayer2.source.TrackGroupArray;
-//import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
-//import com.google.android.exoplayer2.trackselection.TrackSelectionArray;
-//import com.google.android.exoplayer2.upstream.DataSource;
-//import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
-//import com.google.android.exoplayer2.util.Util;
+
 import com.aliyun.vodplayer.media.AliyunLocalSource;
 import com.aliyun.vodplayer.media.AliyunPlayAuth;
 import com.aliyun.vodplayer.media.AliyunVidSts;
 import com.aliyun.vodplayer.media.AliyunVodPlayer;
 import com.aliyun.vodplayer.media.IAliyunVodPlayer;
-import com.aliyun.vodplayerview.constants.PlayParameter;
 import com.yushi.leke.uamp.MusicService;
 import com.yushi.leke.uamp.model.MusicProvider;
-import com.yushi.leke.uamp.model.MusicProviderSource;
+import com.yushi.leke.uamp.model.MutableMediaMetadata;
 import com.yushi.leke.uamp.utils.LogHelper;
 import com.yushi.leke.uamp.utils.MediaIDHelper;
 
 import static android.support.v4.media.session.MediaSessionCompat.QueueItem;
-//import static com.google.android.exoplayer2.C.CONTENT_TYPE_MUSIC;
-//import static com.google.android.exoplayer2.C.USAGE_MEDIA;
 
 /**
  * A class that implements local media playback using {@link
@@ -172,7 +149,7 @@ public final class VodPlayback implements Playback {
      */
     @Override
     public int getState() {
-        if(mAliyunVodPlayer==null){
+        if (mAliyunVodPlayer == null) {
             return PlaybackStateCompat.STATE_NONE;
         }
         switch (mAliyunVodPlayer.getPlayerState()) {
@@ -202,6 +179,7 @@ public final class VodPlayback implements Playback {
     public boolean isPlaying() {
         return mPlayOnFocusGain || (mAliyunVodPlayer != null && mAliyunVodPlayer.isPlaying());
     }
+
     /**
      * 清空之前设置的播放源
      */
@@ -220,6 +198,7 @@ public final class VodPlayback implements Playback {
         clearAllSource();
         mAliyunVodPlayer.prepareAsync(vidSts);
     }
+
     @Override
     public long getCurrentStreamPosition() {
         return mAliyunVodPlayer != null ? mAliyunVodPlayer.getCurrentPosition() : 0;
@@ -269,11 +248,18 @@ public final class VodPlayback implements Playback {
                     }
                 }
             });
-            AliyunVidSts aliyunVidSts=  new AliyunVidSts();
-            aliyunVidSts.setVid(item.getDescription().getMediaId());
-            aliyunVidSts.setAcId(MusicProvider.getInstance().getAliyunAuth().getAccessKeyId());
-            aliyunVidSts.setAkSceret(MusicProvider.getInstance().getAliyunAuth().getAccessKeySecret());
-            aliyunVidSts.setSecurityToken(MusicProvider.getInstance().getAliyunAuth().getSecurityToken());
+            AliyunVidSts aliyunVidSts = new AliyunVidSts();
+            String aliVideoId = item.getDescription().getExtras().getString(MutableMediaMetadata.videoId);
+            if (!TextUtils.isEmpty(aliVideoId)) {
+                aliyunVidSts.setVid(aliVideoId);
+                if (MusicProvider.getInstance().getAliyunAuth() != null) {
+                    aliyunVidSts.setAcId(MusicProvider.getInstance().getAliyunAuth().getAccessKeyId());
+                    aliyunVidSts.setAkSceret(MusicProvider.getInstance().getAliyunAuth().getAccessKeySecret());
+                    aliyunVidSts.setSecurityToken(MusicProvider.getInstance().getAliyunAuth().getSecurityToken());
+                }
+            }
+
+
             prepareVidsts(aliyunVidSts);
             // If we are streaming from the internet, we want to hold a
             // Wifi lock, which prevents the Wifi radio from going to
