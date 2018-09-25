@@ -55,19 +55,13 @@
              android:layout_width="@dimen/px383"
              android:layout_height="@dimen/px227"
              android:layout_marginLeft="@dimen/px74"/>
-         <com.yufan.library.view.HexagonImageView
+         <cn.lankton.anyshape.AnyshapeImageView
              android:layout_marginLeft="@dimen/px173"
-             android:id="@+id/six_out"
              android:layout_width="@dimen/px176"
-             android:layout_height="@dimen/px176"
-             android:background="@color/tv_blue" />
-         <com.yufan.library.view.HexagonImageView
-             android:layout_marginLeft="@dimen/px178"
-             android:layout_marginTop="@dimen/px5"
-             android:id="@+id/six_in"
-             android:layout_width="@dimen/px166"
-             android:layout_height="@dimen/px166"
-             android:background="@color/tv_blue" />
+             android:layout_height="@dimen/px203"
+             android:layout_marginTop="10dp"
+             android:src="@drawable/ic_logo_leke"
+             app:anyshapeMask="@drawable/ic_anyshape_title"/>
       </RelativeLayout>
       <RelativeLayout
           android:layout_below="@+id/llthree"

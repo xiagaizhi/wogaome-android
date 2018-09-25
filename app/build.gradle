@@ -130,4 +130,6 @@ dependencies {
     implementation 'com.journeyapps:zxing-android-embedded:3.3.0'
     //百分比布局
     implementation'com.android.support:percent:25.3.0'
+    //不规则图片布局
+    implementation 'cn.lankton:anyshape:1.0.0'
 }

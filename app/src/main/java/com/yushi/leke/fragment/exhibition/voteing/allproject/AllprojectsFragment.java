@@ -39,6 +39,7 @@ public class AllprojectsFragment extends BaseListFragment<AllprojectsContract.IV
             activityid = bundle.getString(Global.BUNDLE_KEY_ACTIVITYID);
         }
         init();
+        onRefresh();
     }
 
     private void init() {

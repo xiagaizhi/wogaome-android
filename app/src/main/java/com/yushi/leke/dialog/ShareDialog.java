@@ -26,7 +26,6 @@ public class ShareDialog extends DialogFragment {
     ImageView img_qrcode;
     TextView tv_name,tv_city,tv_introduc;
     Button btn_save;
-    HexagonImageView six_in;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -51,8 +50,5 @@ public class ShareDialog extends DialogFragment {
         Bitmap bitmap = QRCodeUtil.createlogocode("https://www.baidu.com", 130,
                 BitmapFactory.decodeResource(getResources(),R.drawable.ic_logo_leke));
         img_qrcode.setImageBitmap(bitmap);
-        six_in=view.findViewById(R.id.six_in);
-        String url = "http://cn.bing.com/az/hprichbg/rb/Dongdaemun_ZH-CN10736487148_1920x1080.jpg";
-        Glide.with(getContext()).load(R.drawable.ic_logo_leke).into(six_in);
     }
 }
