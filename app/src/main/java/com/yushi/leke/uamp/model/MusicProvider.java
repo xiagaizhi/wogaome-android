@@ -18,6 +18,7 @@ package com.yushi.leke.uamp.model;
 
 import android.graphics.Bitmap;
 import android.support.v4.media.MediaBrowserCompat;
+import android.support.v4.media.MediaDescriptionCompat;
 import android.support.v4.media.MediaMetadataCompat;
 
 
@@ -48,7 +49,6 @@ import static com.yushi.leke.uamp.utils.MediaIDHelper.MEDIA_ID_MUSICS_BY_GENRE;
  * Simple data provider for music tracks. The actual metadata source is delegated to a
  * MusicProviderSource defined by a constructor argument of this class.
  * MusicProvider：简单的音乐数据提供者
- *
  */
 public class MusicProvider {
 
@@ -58,27 +58,27 @@ public class MusicProvider {
     private final ConcurrentMap<String, MutableMediaMetadata> mMusicListById;
     private static MusicProvider musicProvider;
     private final Set<String> mFavoriteTracks;
-    private    AliyunAuth aliyunAuth;
+    private AliyunAuth aliyunAuth;
     private final Timer timer;
     private final TimerTask task = new TimerTask() {
         @Override
         public void run() {
-        ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).getStsAuth()).enqueue(new BaseHttpCallBack() {
-            @Override
-            public void onSuccess(ApiBean mApiBean) {
-                aliyunAuth =  JSON.parseObject(mApiBean.data,AliyunAuth.class);
-            }
+            ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).getStsAuth()).enqueue(new BaseHttpCallBack() {
+                @Override
+                public void onSuccess(ApiBean mApiBean) {
+                    aliyunAuth = JSON.parseObject(mApiBean.data, AliyunAuth.class);
+                }
 
-            @Override
-            public void onError(int id, Exception e) {
+                @Override
+                public void onError(int id, Exception e) {
 
-            }
+                }
 
-            @Override
-            public void onFinish() {
+                @Override
+                public void onFinish() {
 
-            }
-        });
+                }
+            });
 
         }
     };
@@ -98,28 +98,28 @@ public class MusicProvider {
     }
 
 
-    public static MusicProvider getInstance(){
-        if(musicProvider==null){
-            musicProvider=new MusicProvider();
+    public static MusicProvider getInstance() {
+        if (musicProvider == null) {
+            musicProvider = new MusicProvider();
         }
         return musicProvider;
     }
 
 
-    public void recycleTimer(){
-        if(timer!=null){
+    public void recycleTimer() {
+        if (timer != null) {
             timer.cancel();
         }
     }
+
     public MusicProvider() {
         mMusicListById = new ConcurrentHashMap<>();
         mFavoriteTracks = Collections.newSetFromMap(new ConcurrentHashMap<String, Boolean>());//map change to set
-         timer = new Timer();
-        timer.scheduleAtFixedRate(task,0,30*60*1000);
+        timer = new Timer();
+        timer.scheduleAtFixedRate(task, 0, 30 * 60 * 1000);
 
 
     }
-
 
 
     /**
@@ -131,7 +131,6 @@ public class MusicProvider {
         }
         return mMusicListById.values();
     }
-
 
 
     /**
@@ -195,7 +194,7 @@ public class MusicProvider {
      * 从服务端获取音乐路径列表，以及缓存列表数据以便将来直接引用
      * 使用musicId作为列表的关键字并将音乐按类型分组
      */
-    public void retrieveMediaAsync(String parentMediaId,final Callback callback) {
+    public void retrieveMediaAsync(String parentMediaId, final Callback callback) {
         LogHelper.d(TAG, "retrieveMediaAsync called");
         if (mCurrentState == State.INITIALIZED) {
             if (callback != null) {
@@ -204,34 +203,35 @@ public class MusicProvider {
             }
             return;
         }
-        ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).getPlayList(parentMediaId,"1")).enqueue(new BaseHttpCallBack() {
+        ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).getPlayList(parentMediaId, "1")).enqueue(new BaseHttpCallBack() {
             @Override
             public void onSuccess(ApiBean mApiBean) {
-                JSONObject jsonObject= JSON.parseObject(mApiBean.data);
-                String listStr=    jsonObject.getString("audioViewInfoList");
-               int levelStatus= jsonObject.getInteger("levelStatus");
-                List<AlbumAudio> albumAudios= JSON.parseArray(listStr,AlbumAudio.class);
+                JSONObject jsonObject = JSON.parseObject(mApiBean.data);
+                String listStr = jsonObject.getString("audioViewInfoList");
+                int levelStatus = jsonObject.getInteger("levelStatus");
+                List<AlbumAudio> albumAudios = JSON.parseArray(listStr, AlbumAudio.class);
                 mMusicListById.clear();
-                for (int i=0;i<albumAudios.size();i++) {
-                    AlbumAudio albumAudio=  albumAudios.get(i);
-                    MediaMetadataCompat item=     new MediaMetadataCompat.Builder()
-                            .putString(MediaMetadataCompat.METADATA_KEY_MEDIA_ID, albumAudio.getAudioId()+"")
-                            .putString(MediaMetadataCompat.METADATA_KEY_ALBUM,albumAudio.getAlbumId()+"")
+                for (int i = 0; i < albumAudios.size(); i++) {
+                    AlbumAudio albumAudio = albumAudios.get(i);
+                    MediaMetadataCompat item = new MediaMetadataCompat.Builder()
+                            .putString(MediaMetadataCompat.METADATA_KEY_MEDIA_ID, albumAudio.getAudioId() + "")
+                            .putString(MediaMetadataCompat.METADATA_KEY_ALBUM, albumAudio.getAlbumId() + "")
                             .putString(MediaMetadataCompat.METADATA_KEY_ARTIST, "作者")
                             .putString(MediaMetadataCompat.METADATA_KEY_ALBUM_ART_URI, "")
-                            .putString(MediaMetadataCompat.METADATA_KEY_TITLE,albumAudio.getAudioName())
+                            .putString(MediaMetadataCompat.METADATA_KEY_TITLE, albumAudio.getAudioName())
+                            .putLong(MediaMetadataCompat.METADATA_KEY_BT_FOLDER_TYPE,1)
                             .build();
-                    item.getDescription().getExtras().getInt(MediaMetadataCompat.METADATA_KEY_DURATION,albumAudio.getDuration());
-                    item.getDescription().getExtras().putInt(MutableMediaMetadata.baseCount,albumAudio.getBaseCount());
-                    item.getDescription().getExtras().putInt(MutableMediaMetadata.audioStatus,albumAudio.getAudioStatus());
-                    item.getDescription().getExtras().putLong(MutableMediaMetadata.ctime,albumAudio.getCtime());
-                    item.getDescription().getExtras().putInt(MutableMediaMetadata.deleted,albumAudio.getDeleted());
-                    item.getDescription().getExtras().putInt(MutableMediaMetadata.listenable,albumAudio.getListenable());
-                    item.getDescription().getExtras().putInt(MutableMediaMetadata.size,albumAudio.getSize());
-                    item.getDescription().getExtras().putLong(MutableMediaMetadata.utime,albumAudio.getUtime());
-                    item.getDescription().getExtras().putInt(MutableMediaMetadata.viewPeople,albumAudio.getViewPeople());
-                    item.getDescription().getExtras().putInt(MutableMediaMetadata.viewTimes,albumAudio.getViewTimes());
-                    item.getDescription().getExtras().putInt(MutableMediaMetadata.levelStatus,levelStatus);
+                    item.getDescription().getExtras().putInt(MediaMetadataCompat.METADATA_KEY_DURATION, albumAudio.getDuration());
+                    item.getDescription().getExtras().putInt(MutableMediaMetadata.baseCount, albumAudio.getBaseCount());
+                    item.getDescription().getExtras().putInt(MutableMediaMetadata.audioStatus, albumAudio.getAudioStatus());
+                    item.getDescription().getExtras().putLong(MutableMediaMetadata.ctime, albumAudio.getCtime());
+                    item.getDescription().getExtras().putInt(MutableMediaMetadata.deleted, albumAudio.getDeleted());
+                    item.getDescription().getExtras().putInt(MutableMediaMetadata.listenable, albumAudio.getListenable());
+                    item.getDescription().getExtras().putInt(MutableMediaMetadata.size, albumAudio.getSize());
+                    item.getDescription().getExtras().putLong(MutableMediaMetadata.utime, albumAudio.getUtime());
+                    item.getDescription().getExtras().putInt(MutableMediaMetadata.viewPeople, albumAudio.getViewPeople());
+                    item.getDescription().getExtras().putInt(MutableMediaMetadata.viewTimes, albumAudio.getViewTimes());
+                    item.getDescription().getExtras().putInt(MutableMediaMetadata.levelStatus, levelStatus);
                     String musicId = item.getString(MediaMetadataCompat.METADATA_KEY_MEDIA_ID);
                     mMusicListById.put(musicId, new MutableMediaMetadata(musicId, item));
                 }
@@ -250,8 +250,6 @@ public class MusicProvider {
         });
 
     }
-
-
 
 
     public List<MediaBrowserCompat.MediaItem> getChildren() {
