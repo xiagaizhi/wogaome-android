@@ -4,7 +4,6 @@ import java.util.List;
 
 public class Allprojectsinfolist {
     List<Allprojectsinfo>projectList;
-
     public List<Allprojectsinfo> getProjectList() {
         return projectList;
     }

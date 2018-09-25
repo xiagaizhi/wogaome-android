@@ -20,8 +20,6 @@ import com.yushi.leke.YFApi;
 import com.yushi.leke.dialog.CommonDialog;
 import com.yushi.leke.fragment.album.AlbumDetailFragment;
 
-import java.util.List;
-
 import me.drakeet.multitype.MultiTypeAdapter;
 
 /**

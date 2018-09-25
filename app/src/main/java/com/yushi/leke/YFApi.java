@@ -442,7 +442,7 @@ public interface YFApi {
     getvoteingallpro(
             @Field("currentPage") int currentPage,
             @Field("activityId") String activityId,
-            @Field("industry") String industry,
+            @Field("industry") long industry,
             @Field("address") String address
     );
 

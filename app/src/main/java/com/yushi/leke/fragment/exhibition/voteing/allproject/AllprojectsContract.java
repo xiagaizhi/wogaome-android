@@ -11,11 +11,15 @@ import java.util.List;
 
 public interface AllprojectsContract {
     interface IView extends VuList {
-        String getindustry();
+        long getindustry();
         String getcity();
+        void setCitylist(List list);
+        void setWorklist(List list,List list2);
     }
 
     interface Presenter extends Pr {
         String getactivityid();
+        void getCitylist();
+        void getWorklist();
     }
 }

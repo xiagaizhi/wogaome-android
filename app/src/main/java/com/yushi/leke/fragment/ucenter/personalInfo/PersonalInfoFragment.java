@@ -22,7 +22,6 @@ import com.yufan.library.util.AreaUtil;
 import com.yufan.library.util.SoftInputUtil;
 
 
-import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.NonNull;

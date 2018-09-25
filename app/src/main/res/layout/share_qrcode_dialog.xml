@@ -12,25 +12,32 @@
        android:layout_height="@dimen/px1111"
        >
    <RelativeLayout
-       android:background="@color/color_gray_level6"
        android:layout_width="@dimen/px523"
        android:layout_height="@dimen/px930"
        android:layout_marginTop="@dimen/px31"
        android:layout_marginLeft="@dimen/px38"
        android:layout_marginRight="@dimen/px38">
-      <LinearLayout
+      <ImageView
+          android:layout_marginLeft="@dimen/px1"
+          android:id="@+id/img_all"
+          android:scaleType="fitXY"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          />
+      <RelativeLayout
           android:id="@+id/llone"
           android:layout_marginTop="@dimen/px30"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:gravity="center">
+          >
          <com.facebook.drawee.view.SimpleDraweeView
              android:background="@drawable/ic_share_logo"
+             android:layout_marginLeft="@dimen/px226"
              android:id="@+id/sdv_logo"
              android:layout_width="@dimen/px70"
              android:layout_height="@dimen/px70"
              />
-      </LinearLayout>
+      </RelativeLayout>
       <LinearLayout
           android:layout_below="@id/llone"
           android:gravity="center"
@@ -50,18 +57,26 @@
           android:layout_below="@id/lltwo"
           android:layout_width="match_parent"
           android:layout_height="@dimen/px227">
+         <cn.lankton.anyshape.AnyshapeImageView
+             android:layout_marginLeft="@dimen/px170"
+             android:layout_width="@dimen/px176"
+             android:layout_height="@dimen/px203"
+             android:src="@drawable/ic_anyshape_text"
+             app:anyshapeMask="@drawable/ic_anyshape_out"
+             />
+         <cn.lankton.anyshape.AnyshapeImageView
+             android:id="@+id/anyshape_title"
+             android:layout_marginLeft="@dimen/px180"
+             android:layout_width="@dimen/px156"
+             android:layout_height="@dimen/px183"
+             android:layout_marginTop="@dimen/px10"
+             android:src="@drawable/ic_logo_leke"
+             app:anyshapeMask="@drawable/ic_anyshape_title"/>
          <ImageView
              android:background="@drawable/ic_share_pic"
              android:layout_width="@dimen/px383"
              android:layout_height="@dimen/px227"
              android:layout_marginLeft="@dimen/px74"/>
-         <cn.lankton.anyshape.AnyshapeImageView
-             android:layout_marginLeft="@dimen/px173"
-             android:layout_width="@dimen/px176"
-             android:layout_height="@dimen/px203"
-             android:layout_marginTop="10dp"
-             android:src="@drawable/ic_logo_leke"
-             app:anyshapeMask="@drawable/ic_anyshape_title"/>
       </RelativeLayout>
       <RelativeLayout
           android:layout_below="@+id/llthree"
