@@ -149,7 +149,7 @@ public class MusicPlayerVu extends BaseVu<MusicPlayerContract.Presenter> impleme
         if (metadata == null) {
             return;
         }
-        int duration = (int) metadata.getLong(MediaMetadataCompat.METADATA_KEY_DURATION);
+        int duration = (int) metadata.getDescription().getExtras().getLong(MediaMetadataCompat.METADATA_KEY_DURATION);
         mSeekbar.setMax(duration);
         mEnd.setText(DateUtils.formatElapsedTime(duration / 1000));
     }
@@ -166,21 +166,25 @@ public class MusicPlayerVu extends BaseVu<MusicPlayerContract.Presenter> impleme
             case PlaybackStateCompat.STATE_PLAYING:
 
                 mPlayPause.setSelected(false);
+                mPersenter.scheduleSeekbarUpdate();
 
                 break;
             case PlaybackStateCompat.STATE_PAUSED:
 
                 mPlayPause.setSelected(true);
+                mPersenter.stopSeekbarUpdate();
 
                 break;
             case PlaybackStateCompat.STATE_NONE:
             case PlaybackStateCompat.STATE_STOPPED:
 
                 mPlayPause.setSelected(true);
+                mPersenter.stopSeekbarUpdate();
 
                 break;
             case PlaybackStateCompat.STATE_BUFFERING:
                 mPlayPause.setSelected(true);
+                mPersenter.stopSeekbarUpdate();
                 break;
             default:
 

@@ -30,6 +30,7 @@ import com.aliyun.vodplayer.media.AliyunPlayAuth;
 import com.aliyun.vodplayer.media.AliyunVidSts;
 import com.aliyun.vodplayer.media.AliyunVodPlayer;
 import com.aliyun.vodplayer.media.IAliyunVodPlayer;
+import com.google.android.exoplayer2.ExoPlayer;
 import com.yushi.leke.uamp.MusicService;
 import com.yushi.leke.uamp.model.MusicProvider;
 import com.yushi.leke.uamp.model.MutableMediaMetadata;
@@ -156,13 +157,20 @@ public final class VodPlayback implements Playback {
             case SeekLive:
                 return PlaybackStateCompat.STATE_BUFFERING;//缓冲
             case Prepared:
+            case Replay:
+            case Started:
+            case ChangeQuality:
+            case Released:
                 return mAliyunVodPlayer.isPlaying()
                         ? PlaybackStateCompat.STATE_PLAYING
                         : PlaybackStateCompat.STATE_PAUSED;
             case Paused:
                 return PlaybackStateCompat.STATE_PAUSED;
             case Stopped:
+            case Completed:
                 return PlaybackStateCompat.STATE_PAUSED;
+            case Error:
+                return PlaybackStateCompat.STATE_ERROR;
             default:
                 return PlaybackStateCompat.STATE_NONE;
         }
@@ -209,6 +217,7 @@ public final class VodPlayback implements Playback {
 
     @Override
     public void play(QueueItem item) {
+
         mPlayOnFocusGain = true;
         tryToGetAudioFocus();
         registerAudioNoisyReceiver();
@@ -225,31 +234,32 @@ public final class VodPlayback implements Playback {
             if (mAliyunVodPlayer == null) {
                 mAliyunVodPlayer = new AliyunVodPlayer(mContext);
                 mAliyunVodPlayer.setAutoPlay(true);
-            }
-            mAliyunVodPlayer.setOnCompletionListener(new IAliyunVodPlayer.OnCompletionListener() {
-                @Override
-                public void onCompletion() {
-                    if (mCallback != null) {
-                        mCallback.onCompletion();
+                mAliyunVodPlayer.setOnCompletionListener(new IAliyunVodPlayer.OnCompletionListener() {
+                    @Override
+                    public void onCompletion() {
+                        if (mCallback != null) {
+                            mCallback.onCompletion();
+                        }
                     }
-                }
-            });
-            mAliyunVodPlayer.setOnAutoPlayListener(new IAliyunVodPlayer.OnAutoPlayListener() {
-                @Override
-                public void onAutoPlayStarted() {
-                    mAliyunVodPlayer.setVolume(50);
-                }
-            });
+                });
+                mAliyunVodPlayer.setOnAutoPlayListener(new IAliyunVodPlayer.OnAutoPlayListener() {
+                    @Override
+                    public void onAutoPlayStarted() {
+                        mAliyunVodPlayer.setVolume(50);
+                    }
+                });
 
-            //播放信息监听
-            mAliyunVodPlayer.setOnInfoListener(new IAliyunVodPlayer.OnInfoListener() {
-                @Override
-                public void onInfo(int arg0, int arg1) {
-                    if (mCallback != null) {
-                        mCallback.onPlaybackStatusChanged(getState());
+                //播放信息监听
+                mAliyunVodPlayer.setOnInfoListener(new IAliyunVodPlayer.OnInfoListener() {
+                    @Override
+                    public void onInfo(int arg0, int arg1) {
+                        if (mCallback != null) {
+                            mCallback.onPlaybackStatusChanged(getState());
+                        }
                     }
-                }
-            });
+                });
+            }
+
             AliyunVidSts aliyunVidSts = new AliyunVidSts();
             String aliVideoId = item.getDescription().getExtras().getString(MutableMediaMetadata.videoId);
             if (!TextUtils.isEmpty(aliVideoId)) {
@@ -291,6 +301,7 @@ public final class VodPlayback implements Playback {
         if (mAliyunVodPlayer != null) {
             registerAudioNoisyReceiver();
             mAliyunVodPlayer.seekTo((int) position);
+            mAliyunVodPlayer.start();
         }
     }
 

@@ -43,7 +43,6 @@ import com.google.android.gms.common.GoogleApiAvailability;
 import com.yushi.leke.activity.MusicPlayerActivity;
 import com.yushi.leke.uamp.model.MusicProvider;
 import com.yushi.leke.uamp.playback.CastPlayback;
-import com.yushi.leke.uamp.playback.LocalPlayback;
 import com.yushi.leke.uamp.playback.Playback;
 import com.yushi.leke.uamp.playback.PlaybackManager;
 import com.yushi.leke.uamp.playback.QueueManager;
@@ -418,7 +417,7 @@ public class MusicService extends MediaBrowserServiceCompat implements
             LogHelper.d(TAG, "onSessionEnded");
             mSessionExtras.remove(EXTRA_CONNECTED_CAST);
             mSession.setExtras(mSessionExtras);
-            Playback playback = new LocalPlayback(MusicService.this, mMusicProvider);
+            Playback playback = new VodPlayback(MusicService.this, mMusicProvider);
             mMediaRouter.setMediaSessionCompat(null);
             mPlaybackManager.switchToPlayback(playback, false);
         }

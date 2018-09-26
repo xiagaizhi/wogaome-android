@@ -43,5 +43,7 @@ public interface MusicPlayerContract {
         void fav();
 
         void finish();
+        void scheduleSeekbarUpdate();
+        void stopSeekbarUpdate();
     }
 }

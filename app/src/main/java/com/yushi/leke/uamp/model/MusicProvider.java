@@ -220,13 +220,14 @@ public class MusicProvider {
                             .putString(MediaMetadataCompat.METADATA_KEY_MEDIA_ID, albumAudio.getAudioId() + "")
                             .putString(MediaMetadataCompat.METADATA_KEY_ALBUM, albumAudio.getAlbumId() + "")
                             .putString(MediaMetadataCompat.METADATA_KEY_ARTIST, "作者")
-                            .putString(MediaMetadataCompat.METADATA_KEY_GENRE,albumAudio.getAlbumId()+"")
+                            .putString(MediaMetadataCompat.METADATA_KEY_GENRE, albumAudio.getAlbumId() + "")
                             .putString(MediaMetadataCompat.METADATA_KEY_ALBUM_ART_URI, "")
                             .putString(MediaMetadataCompat.METADATA_KEY_TITLE, albumAudio.getAudioName())
                             .putLong(MediaMetadataCompat.METADATA_KEY_BT_FOLDER_TYPE, 1)
+                            .putLong(MediaMetadataCompat.METADATA_KEY_DURATION, albumAudio.getDuration() * 1000)
                             .build();
 
-                    item.getDescription().getExtras().putInt(MediaMetadataCompat.METADATA_KEY_DURATION, albumAudio.getDuration());
+                    item.getDescription().getExtras().putInt(MediaMetadataCompat.METADATA_KEY_DURATION, albumAudio.getDuration() * 1000);
                     item.getDescription().getExtras().putInt(MutableMediaMetadata.baseCount, albumAudio.getBaseCount());
                     item.getDescription().getExtras().putInt(MutableMediaMetadata.audioStatus, albumAudio.getAudioStatus());
                     item.getDescription().getExtras().putLong(MutableMediaMetadata.ctime, albumAudio.getCtime());
@@ -291,7 +292,7 @@ public class MusicProvider {
         copy.getDescription().getExtras().putInt(MutableMediaMetadata.listenable, metadata.metadata.getDescription().getExtras().getInt(MutableMediaMetadata.listenable));
         copy.getDescription().getExtras().putInt(MutableMediaMetadata.size, metadata.metadata.getDescription().getExtras().getInt(MutableMediaMetadata.size));
         copy.getDescription().getExtras().putLong(MutableMediaMetadata.utime, metadata.metadata.getDescription().getExtras().getLong(MutableMediaMetadata.utime));
-        copy.getDescription().getExtras().putInt(MutableMediaMetadata.viewPeople,metadata.metadata.getDescription().getExtras().getInt(MutableMediaMetadata.viewPeople));
+        copy.getDescription().getExtras().putInt(MutableMediaMetadata.viewPeople, metadata.metadata.getDescription().getExtras().getInt(MutableMediaMetadata.viewPeople));
         copy.getDescription().getExtras().putInt(MutableMediaMetadata.viewTimes, metadata.metadata.getDescription().getExtras().getInt(MutableMediaMetadata.viewTimes));
         copy.getDescription().getExtras().putInt(MutableMediaMetadata.levelStatus, metadata.metadata.getDescription().getExtras().getInt(MutableMediaMetadata.levelStatus));
         copy.getDescription().getExtras().putString(MutableMediaMetadata.videoId, metadata.metadata.getDescription().getExtras().getString(MutableMediaMetadata.videoId));

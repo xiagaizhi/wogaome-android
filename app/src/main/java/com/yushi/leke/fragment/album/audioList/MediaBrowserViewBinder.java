@@ -110,7 +110,7 @@ public class MediaBrowserViewBinder extends ItemViewBinder<MediaBrowserCompat.Me
         } else if (levelStatus == 6) {
             viewHolder.tv_free.setText("至尊段位解锁");
         } else {
-            viewHolder.tv_free.setText("免费");
+            viewHolder.tv_free.setText("");
         }
 
     }

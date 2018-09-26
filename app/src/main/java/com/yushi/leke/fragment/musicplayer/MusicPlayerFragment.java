@@ -278,8 +278,7 @@ public class MusicPlayerFragment extends BaseFragment<MusicPlayerContract.IView>
     }
 
     private void connectToSession(MediaSessionCompat.Token token) throws RemoteException {
-        MediaControllerCompat mediaController = new MediaControllerCompat(
-                getContext(), token);
+        MediaControllerCompat mediaController = new MediaControllerCompat(getContext(), token);
         if (mediaController.getMetadata() == null) {
             getActivity().finish();
             return;
@@ -327,7 +326,8 @@ public class MusicPlayerFragment extends BaseFragment<MusicPlayerContract.IView>
         }
     }
 
-    private void scheduleSeekbarUpdate() {
+    @Override
+    public void scheduleSeekbarUpdate() {
         stopSeekbarUpdate();
         if (!mExecutorService.isShutdown()) {
             mScheduleFuture = mExecutorService.scheduleAtFixedRate(
@@ -341,7 +341,8 @@ public class MusicPlayerFragment extends BaseFragment<MusicPlayerContract.IView>
         }
     }
 
-    private void stopSeekbarUpdate() {
+    @Override
+    public void stopSeekbarUpdate() {
         if (mScheduleFuture != null) {
             mScheduleFuture.cancel(false);
         }

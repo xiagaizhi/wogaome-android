@@ -94,6 +94,7 @@ public class StringUtil {
 
 
     public static String stringForTime(int timeMs) {
+        timeMs = timeMs/1000;
         StringBuilder sb = new StringBuilder();
         int seconds = timeMs % 60;
         int minutes = (timeMs / 60) % 60;
