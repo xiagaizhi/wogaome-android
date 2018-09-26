@@ -3,6 +3,7 @@ package com.yushi.leke.fragment.searcher;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
@@ -104,15 +105,19 @@ public class SearchFragment extends BaseListFragment<SearchContract.IView> imple
     @Override
     public void search(String searchKey) {
 
-        ApiManager.getCall( ApiManager.getInstance().create(YFApi.class).globalSearch(searchKey)).enqueue(new YFListHttpCallBack(vu) {
+        ApiManager.getCall( ApiManager.getInstance()
+                .create(YFApi.class)
+                .globalSearch(searchKey))
+                .enqueue(new YFListHttpCallBack(vu) {
             @Override
             public void onSuccess(ApiBean mApiBean) {
                 super.onSuccess(mApiBean);
-              JSONObject jsonObject= JSON.parseObject(mApiBean.data);
-              int moreActivity=  jsonObject.getInteger("moreActivity");
-              int moreAudio=jsonObject.getInteger("moreAudio");
-              List<SearchActionInfo> searchActionInfos= JSON.parseArray(jsonObject.getString("activity"),SearchActionInfo.class);
-                List<AudioInfo> audioInfos= JSON.parseArray(jsonObject.getString("audio"),AudioInfo.class);
+                Log.d("LOGH",mApiBean.getCode()+"\n"+mApiBean.getData()+"\n"+mApiBean.getMessage());
+                JSONObject jsonObject= JSON.parseObject(mApiBean.data);
+                int moreActivity=  jsonObject.getInteger("moreActivity");
+                int moreAudio=jsonObject.getInteger("moreAudio");
+                List<SearchActionInfo> searchActionInfos= JSON.parseArray(jsonObject.getString("activity"),SearchActionInfo.class);
+                List<Homeinfo> audioInfos= JSON.parseArray(jsonObject.getString("audio"),Homeinfo.class);
                 list.clear();
                 list.add("音频");
                 list.addAll(audioInfos);
@@ -120,7 +125,7 @@ public class SearchFragment extends BaseListFragment<SearchContract.IView> imple
                 list.add("活动");
                 list.addAll(searchActionInfos);
                 list.add(new SearchBottomInfo(moreActivity==1,"查看更多活动"));
-
+                vu.getRecyclerView().getAdapter().notifyDataSetChanged();
             }
 
 
