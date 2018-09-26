@@ -64,7 +64,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_above="@+id/ll_tab1"
                     android:layout_width="@dimen/px92"
-                    android:layout_height="@dimen/px74"
+                    android:layout_height="wrap_content"
                     android:orientation="vertical"
                     >
                     <com.facebook.drawee.view.SimpleDraweeView
@@ -77,14 +77,14 @@
                         android:textColor="#FF007AFF"
                         android:gravity="center"
                         android:layout_width="@dimen/px56"
-                        android:layout_height="@dimen/px18"
-                        android:textSize="18px"/>
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/px18"/>
 
                 </LinearLayout>
-                <LinearLayout
+                <RelativeLayout
                     android:layout_width="wrap_content"
                     android:orientation="horizontal"
-                    android:gravity="bottom"
+                    android:gravity="center"
                     android:layout_below="@+id/sdv"
                     android:id="@+id/ll_tab1"
                     android:layout_marginLeft="@dimen/px36"
@@ -97,22 +97,33 @@
                         android:id="@+id/tv_name"
                         android:layout_height="wrap_content" />
                     <TextView
+                        android:layout_marginLeft="@dimen/px10"
+                        android:layout_marginRight="@dimen/px5"
                         android:id="@+id/tv_playcount"
+                        android:layout_toRightOf="@+id/tv_name"
+                        android:layout_alignParentBottom="true"
                         android:layout_width="wrap_content"
                         android:text="343次"
                         android:textColor="@color/color_gray_level6"
-                        android:drawableLeft="@drawable/ic_subscription_headset"
+                        android:drawableLeft="@drawable/ic_sub_black"
+                        android:drawablePadding="@dimen/px5"
                         android:layout_height="wrap_content" />
                     <TextView
+                        android:id="@+id/tv_point"
+                        android:layout_marginRight="@dimen/px5"
+                        android:layout_alignParentBottom="true"
+                        android:layout_toRightOf="@id/tv_playcount"
                         android:layout_width="wrap_content"
                         android:text=" · "
                         android:layout_height="wrap_content" />
                     <TextView
+                        android:layout_toRightOf="@+id/tv_point"
+                        android:layout_alignParentBottom="true"
                         android:layout_width="wrap_content"
                         android:text="更新至05集/全06集"
                         android:id="@+id/tv_total"
                         android:layout_height="wrap_content" />
-                </LinearLayout>
+                </RelativeLayout>
 
                 <com.yufan.library.widget.ExpandableTextView
                     android:layout_width="match_parent"
@@ -128,12 +139,10 @@
                         android:id="@id/expandable_text"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp"
+                        android:layout_marginTop="@dimen/px20"
                         android:fontFamily="sans-serif-light"
                         android:textSize="16sp"
-                        android:textColor="#666666" />
+                        android:textColor="@color/color_gray_level9" />
 
                     <ImageButton
                         android:id="@id/expand_collapse"

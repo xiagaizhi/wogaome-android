@@ -36,124 +36,12 @@ public class AllendVu extends BaseListVu<AllendContract.Presenter> implements Al
     private YFRecyclerView mYFRecyclerView;
     private TextView tv_choose_city, tv_choose_work;
     private ImageView img_city,img_work;
-    Industryendinfolist industryendinfolist;
-    List<String>worklist=new ArrayList<>();
-    List<String>citylist=new ArrayList<>();
+    long instroid=-1;
     @Override
     public void initView(View view) {
         super.initView(view);
         initData();
     }
-    private void showworkPickerView() {
-        ApiManager.getCall(ApiManager.getInstance().create(YFApi.class)
-                .getindustrylist(mPersenter.getactivityid()))
-                .useCache(false)
-                .enqueue(new BaseHttpCallBack() {
-            @Override
-            public void onSuccess(final ApiBean mApiBean) {
-                if (!TextUtils.isEmpty(mApiBean.getData())) {
-                    industryendinfolist = JSON.parseObject(mApiBean.getData(), Industryendinfolist.class);
-                    for (int i = 0; i< industryendinfolist.getIndustryList().size(); i++){
-                        worklist.add(industryendinfolist.getIndustryList().get(i).getIndustryName());
-                    }
-                    OptionsPickerView pvOptions = new OptionsPickerBuilder(getContext(), new OnOptionsSelectListener() {
-                        @Override
-                        public void onOptionsSelect(int options1, int options2, int options3, View v) {
-                            tv_choose_work.setText( worklist.get(options1));
-                        }
-                    }).setTitleText("选择")
-                            .setDividerColor(Color.BLACK)
-                            .setTextColorCenter(Color.BLACK)
-                            .setContentTextSize(20)
-                            .setOptionsSelectChangeListener(new OnOptionsSelectChangeListener() {
-                                @Override
-                                public void onOptionsSelectChanged(int options1, int options2, int options3) {
-                                    tv_choose_work.setText(worklist.get(options1));
-                                }
-                            })
-                            .build();
-                    pvOptions.setOnDismissListener(new OnDismissListener() {
-                        @Override
-                        public void onDismiss(Object o) {
-                            mYFRecyclerView.getPageManager().resetIndex();
-                            mPersenter.onLoadMore(mYFRecyclerView.getPageManager().getCurrentIndex());
-
-
-                        }
-                    });
-                    pvOptions.setPicker(worklist);//一级选择器
-                    pvOptions.show();
-                }
-            }
-            @Override
-            public void onError(int id, Exception e) {
-
-            }
-            @Override
-            public void onFinish() {
-
-            }
-        });
-    }
-    private void showcityPickerView() {
-        ApiManager.getCall(ApiManager.getInstance().create(YFApi.class)
-                .getcitylist(mPersenter.getactivityid()))
-                .useCache(false)
-                .enqueue(new BaseHttpCallBack() {
-                    @Override
-                    public void onSuccess(final ApiBean mApiBean) {
-                        if (!TextUtils.isEmpty(mApiBean.getData())) {
-                            Cityinfolist cityinfolist= JSON.parseObject(mApiBean.getData(),Cityinfolist .class);
-                            for (int i = 0; i< cityinfolist.getAddressList().size(); i++){
-                                citylist.add(cityinfolist.getAddressList().get(i));
-                            }
-                            OptionsPickerView pvOptions = new OptionsPickerBuilder(getContext(), new OnOptionsSelectListener() {
-                                @Override
-                                public void onOptionsSelect(int options1, int options2, int options3, View v) {
-                                    tv_choose_city.setText( citylist.get(options1));
-                                }
-                            }).setTitleText("选择")
-                                    .setDividerColor(Color.BLACK)
-                                    .setTextColorCenter(Color.BLACK)
-                                    .setContentTextSize(20)
-                                    .setOptionsSelectChangeListener(new OnOptionsSelectChangeListener() {
-                                        @Override
-                                        public void onOptionsSelectChanged(int options1, int options2, int options3) {
-                                            tv_choose_city.setText(citylist.get(options1));
-                                        }
-                                    })
-                                    .build();
-                            pvOptions.setOnDismissListener(new OnDismissListener() {
-                                @Override
-                                public void onDismiss(Object o) {
-                                    mYFRecyclerView.getPageManager().resetIndex();
-                                    mPersenter.onLoadMore(mYFRecyclerView.getPageManager().getCurrentIndex());
-                                }
-                            });
-                            pvOptions.setPicker(citylist);//一级选择器
-                            pvOptions.show();
-                        }
-                    }
-                    @Override
-                    public void onError(int id, Exception e) {
-
-                    }
-                    @Override
-                    public void onFinish() {
-
-                    }
-                });
-    }
-    @Override
-    public String getindustry() {
-        return String.valueOf(tv_choose_work.getText());
-    }
-
-    @Override
-    public String getcity() {
-        return  String.valueOf(tv_choose_city.getText());
-    }
-
     @Override
     public void initStatusLayout(StateLayout stateLayout) {
         super.initStatusLayout(stateLayout);
@@ -191,22 +79,63 @@ public class AllendVu extends BaseListVu<AllendContract.Presenter> implements Al
         public void onClick(View v) {
             switch (v.getId()) {
                 case R.id.tv_choose_city:
-                    showcityPickerView();
-                    citylist.clear();
+                    mPersenter.getCitylist();
                     break;
                 case R.id.img_city:
-                    showcityPickerView();
-                    citylist.clear();
+                    mPersenter.getCitylist();
                     break;
                 case R.id.tv_choose_work:
-                    showworkPickerView();
-                    worklist.removeAll(worklist);
+                    mPersenter.getWorklist();
                     break;
                 case R.id.img_work:
-                    showcityPickerView();
-                    citylist.clear();
+                    mPersenter.getWorklist();
                     break;
             }
         }
     };
+    @Override
+    public long getindustry() {
+        return instroid;
+    }
+
+    @Override
+    public String getcity() {
+        return  String.valueOf(tv_choose_city.getText());
+    }
+
+    @Override
+    public void setCitylist(final List citylist) {
+        OptionsPickerView pvOptions = new OptionsPickerBuilder(getContext(), new OnOptionsSelectListener() {
+            @Override
+            public void onOptionsSelect(int options1, int options2, int options3, View v) {
+                tv_choose_city.setText( String.valueOf(citylist.get(options1)));
+                mPersenter.onRefresh();
+            }
+        })
+                .setTitleText("选择")
+                .setDividerColor(Color.BLACK)
+                .setTextColorCenter(Color.BLACK)
+                .setContentTextSize(20)
+                .build();
+        pvOptions.setPicker(citylist);//一级选择器
+        pvOptions.show();
+    }
+
+    @Override
+    public void setWorklist(final List worklist,final List worklistid) {
+        OptionsPickerView pvOptions = new OptionsPickerBuilder(getContext(), new OnOptionsSelectListener() {
+            @Override
+            public void onOptionsSelect(int options1, int options2, int options3, View v) {
+                tv_choose_work.setText( String.valueOf(worklist.get(options1)));
+                instroid= (long) worklistid.get(options1);
+                mPersenter.onRefresh();
+            }
+        }).setTitleText("选择")
+                .setDividerColor(Color.BLACK)
+                .setTextColorCenter(Color.BLACK)
+                .setContentTextSize(20)
+                .build();
+        pvOptions.setPicker(worklist);//一级选择器
+        pvOptions.show();
+    }
 }

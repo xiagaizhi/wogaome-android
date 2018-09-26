@@ -10,12 +10,16 @@ import com.alibaba.fastjson.JSON;
 import com.yufan.library.Global;
 import com.yufan.library.api.ApiBean;
 import com.yufan.library.api.ApiManager;
+import com.yufan.library.api.BaseHttpCallBack;
 import com.yufan.library.api.YFListHttpCallBack;
 import com.yufan.library.base.BaseListFragment;
 import com.yufan.library.inject.VuClass;
 import com.yufan.library.inter.ICallBack;
 import com.yufan.library.view.recycler.PageInfo;
 import com.yushi.leke.YFApi;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import me.drakeet.multitype.MultiTypeAdapter;
 
@@ -27,7 +31,11 @@ public class AllendFragment extends BaseListFragment<AllendContract.IView> imple
     private MultiTypeAdapter adapter;
     private Allendinfolist infolist;
     private String activityid;
-
+    List<String> worklistname =new ArrayList<>();
+    List<Long>worklistid=new ArrayList<>();
+    List<String>citylist=new ArrayList<>();
+    long arg1;
+    String arg2;
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -77,6 +85,13 @@ public class AllendFragment extends BaseListFragment<AllendContract.IView> imple
 
     @Override
     public void onRefresh() {
+        if (getVu().getcity().equals("请选择城市")&&getVu().getindustry()==-1){
+            arg1=0;
+            arg2="";
+        }else {
+            arg1=getVu().getindustry();
+            arg2=getVu().getcity();
+        }
         ApiManager.getCall(ApiManager.getInstance().create(YFApi.class)
                 .getvoteendallpro(1, activityid, getVu().getindustry(), getVu().getcity()))
                 .useCache(false)
@@ -104,5 +119,63 @@ public class AllendFragment extends BaseListFragment<AllendContract.IView> imple
     @Override
     public String getactivityid() {
         return activityid;
+    }
+
+    @Override
+    public void getCitylist() {
+        ApiManager.getCall(ApiManager.getInstance().create(YFApi.class)
+                .getcitylist(getactivityid()))
+                .useCache(false)
+                .enqueue(new BaseHttpCallBack() {
+                    @Override
+                    public void onSuccess(final ApiBean mApiBean) {
+                        if (!TextUtils.isEmpty(mApiBean.getData())) {
+                            Cityinfolist cityinfolist= JSON.parseObject(mApiBean.getData(),Cityinfolist .class);
+                            citylist.clear();
+                            for (int i = 0; i< cityinfolist.getAddressList().size(); i++){
+                                citylist.add(cityinfolist.getAddressList().get(i));
+                                getVu().setCitylist(citylist);
+                            }
+                        }
+                    }
+                    @Override
+                    public void onError(int id, Exception e) {
+                    }
+                    @Override
+                    public void onFinish() {
+
+                    }
+                });
+    }
+
+    @Override
+    public void getWorklist() {
+        ApiManager.getCall(ApiManager.getInstance()
+                .create(YFApi.class)
+                .getindustrylist(getactivityid()))
+                .useCache(false)
+                .enqueue(new BaseHttpCallBack() {
+                    @Override
+                    public void onSuccess(final ApiBean mApiBean) {
+                        if (!TextUtils.isEmpty(mApiBean.getData())) {
+                            Industryendinfolist industryinfolist= JSON.parseObject(mApiBean.getData(),Industryendinfolist .class);
+                            worklistname.clear();
+                            worklistid.clear();
+                            for (int i = 0; i< industryinfolist.getIndustryList().size(); i++){
+                                worklistname.add(industryinfolist.getIndustryList().get(i).getIndustryName());
+                                worklistid.add(industryinfolist.getIndustryList().get(i).getIndustryId());
+                                getVu().setWorklist(worklistname,worklistid);
+                            }
+                        }
+                    }
+                    @Override
+                    public void onError(int id, Exception e) {
+
+                    }
+                    @Override
+                    public void onFinish() {
+
+                    }
+                });
     }
 }

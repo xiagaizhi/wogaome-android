@@ -1,14 +1,14 @@
 package com.yushi.leke.fragment.exhibition.voteend.allproject;
 
 public class Industryendinfo {
-    private int industryId;
+    private long industryId;
     private String industryName;
 
-    public int getIndustryId() {
+    public long getIndustryId() {
         return industryId;
     }
 
-    public void setIndustryId(int industryId) {
+    public void setIndustryId(long industryId) {
         this.industryId = industryId;
     }
 
