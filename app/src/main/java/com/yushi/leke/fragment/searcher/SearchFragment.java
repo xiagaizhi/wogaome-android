@@ -1,6 +1,7 @@
 package com.yushi.leke.fragment.searcher;
 
 import android.os.Bundle;
+import android.support.annotation.LongDef;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -22,7 +23,10 @@ import com.yufan.library.util.SoftInputUtil;
 import com.yufan.library.widget.anim.AFVerticalAnimator;
 import com.yushi.leke.UIHelper;
 import com.yushi.leke.YFApi;
+import com.yushi.leke.fragment.album.AlbumDetailFragment;
 import com.yushi.leke.fragment.album.audioList.MediaBrowserFragment;
+import com.yushi.leke.fragment.browser.BrowserBaseFragment;
+import com.yushi.leke.fragment.exhibition.detail.ExhibitionDetailFragment;
 import com.yushi.leke.fragment.home.bean.AudioInfo;
 import com.yushi.leke.fragment.home.bean.Homeinfo;
 import com.yushi.leke.fragment.home.binder.SubscriptionsViewBinder;
@@ -46,11 +50,31 @@ public class SearchFragment extends BaseListFragment<SearchContract.IView> imple
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         adapter=new MultiTypeAdapter();
-        adapter.register(SearchActionInfo.class,new SearchActionViewBinder());
+        adapter.register(SearchActionInfo.class,new SearchActionViewBinder(new ICallBack() {
+            @Override
+            public void OnBackResult(Object... s) {
+                SearchActionInfo info= (SearchActionInfo) s[0];
+                if (info.getProcessStatus()==0||info.getProcessStatus()==1){
+                    getRootFragment().start(UIHelper.creat(BrowserBaseFragment.class)
+                            .put(Global.BUNDLE_KEY_BROWSER_URL, ApiManager.getInstance().
+                                    getApiConfig()
+                                    .getExhibitionDetail(info.getId()))
+                            .build());
+                }else {//原生详情页面
+                    getRootFragment().start(UIHelper.creat(ExhibitionDetailFragment.class)
+                            .put(Global.BUNDLE_KEY_EXHIBITION_TYE, info.getProcessStatus())
+                            .put(Global.BUNDLE_KEY_ACTIVITYID, info.getId())
+                            .build());
+                }
+            }
+        }));
         adapter.register(Homeinfo.class,new SubscriptionsViewBinder(new ICallBack() {
             @Override
             public void OnBackResult(Object... s) {
-                getRootFragment().start(UIHelper.creat(MediaBrowserFragment.class).build());
+                Homeinfo homeinfo= (Homeinfo) s[0];
+                getRootFragment().start(UIHelper.creat(AlbumDetailFragment.class)
+                        .put(Global.BUNDLE_KEY_ALBUMID,homeinfo.getAlbumId())
+                        .build());
             }
         }));
         adapter.register(String.class,new SearchTabTitleViewBinder());

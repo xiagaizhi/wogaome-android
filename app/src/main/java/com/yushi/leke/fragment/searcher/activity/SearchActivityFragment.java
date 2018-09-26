@@ -16,6 +16,7 @@ import com.yufan.library.api.ApiManager;
 import com.yufan.library.api.YFListHttpCallBack;
 import com.yufan.library.base.BaseListFragment;
 import com.yufan.library.inject.VuClass;
+import com.yufan.library.inter.ICallBack;
 import com.yufan.library.util.SoftInputUtil;
 import com.yufan.library.widget.anim.AFVerticalAnimator;
 import com.yushi.leke.YFApi;
@@ -41,7 +42,12 @@ public class SearchActivityFragment extends BaseListFragment<SearchActivityContr
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         adapter=new MultiTypeAdapter();
-        adapter.register(SearchActionInfo.class,new SearchActionViewBinder());
+        adapter.register(SearchActionInfo.class,new SearchActionViewBinder(new ICallBack() {
+            @Override
+            public void OnBackResult(Object... s) {
+
+            }
+        }));
         adapter.register(String.class,new SearchTabTitleViewBinder());
         vu.getRecyclerView().setAdapter(adapter);
         adapter.setItems(list);

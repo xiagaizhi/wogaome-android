@@ -24,6 +24,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.yufan.library.inter.ICallBack;
 import com.yushi.leke.R;
 
 import me.drakeet.multitype.ItemViewBinder;
@@ -32,9 +33,9 @@ import me.drakeet.multitype.ItemViewBinder;
  * 搜索主页 搜索活动
  */
 public class SearchActionViewBinder extends ItemViewBinder<SearchActionInfo, SearchActionViewBinder.ViewHolder> {
-
-    public SearchActionViewBinder() {
-
+    private ICallBack callBack;
+    public SearchActionViewBinder(ICallBack callBack) {
+        this.callBack=callBack;
     }
 
     @Override
@@ -54,6 +55,14 @@ public class SearchActionViewBinder extends ItemViewBinder<SearchActionInfo, Sea
         } else {
             holder.view_bottom_line.setVisibility(View.VISIBLE);
         }
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(callBack!=null){
+                    callBack.OnBackResult(category);
+                }
+            }
+        });
 
 
     }
