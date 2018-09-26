@@ -302,7 +302,7 @@ public class PlaybackManager implements Playback.Callback {
         @Override
         public void onSeekTo(long position) {
             LogHelper.d(TAG, "onSeekTo:", position);
-            mPlayback.seekTo((int) position);
+            mPlayback.seekTo(position);
         }
 
         //播放指定媒体数据时触发

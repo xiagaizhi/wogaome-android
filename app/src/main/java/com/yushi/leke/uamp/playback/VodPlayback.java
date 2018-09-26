@@ -59,7 +59,7 @@ public final class VodPlayback implements Playback {
     public static final int VOLUME_DUCK = 20;
     // The volume we set the media player when we have audio focus.
     //当我们获取音频焦点时设置的播放音量大小
-    public static final int VOLUME_NORMAL = 50;
+    public static final int VOLUME_NORMAL = 40;
 
     // we don't have audio focus, and can't duck (play at a low volume)
     //没有获取到音频焦点，也不允许duck状态
@@ -245,7 +245,7 @@ public final class VodPlayback implements Playback {
                 mAliyunVodPlayer.setOnAutoPlayListener(new IAliyunVodPlayer.OnAutoPlayListener() {
                     @Override
                     public void onAutoPlayStarted() {
-                        mAliyunVodPlayer.setVolume(50);
+                        mAliyunVodPlayer.setVolume(VOLUME_NORMAL);
                     }
                 });
 
@@ -255,6 +255,22 @@ public final class VodPlayback implements Playback {
                     public void onInfo(int arg0, int arg1) {
                         if (mCallback != null) {
                             mCallback.onPlaybackStatusChanged(getState());
+                        }
+                    }
+                });
+                mAliyunVodPlayer.setOnStoppedListner(new IAliyunVodPlayer.OnStoppedListener() {
+                    @Override
+                    public void onStopped() {
+                        if (mCallback != null) {
+                            mCallback.onPlaybackStatusChanged(getState());
+                        }
+                    }
+                });
+                mAliyunVodPlayer.setOnErrorListener(new IAliyunVodPlayer.OnErrorListener() {
+                    @Override
+                    public void onError(int i, int i1, String s) {
+                        if (mCallback != null) {
+                            mCallback.onError("ExoPlayer error " + s);
                         }
                     }
                 });
@@ -281,6 +297,9 @@ public final class VodPlayback implements Playback {
         }
 
         configurePlayerState();
+        if (mCallback != null) {
+            mCallback.onPlaybackStatusChanged(getState());
+        }
 
     }
 
@@ -293,6 +312,9 @@ public final class VodPlayback implements Playback {
         // While paused, retain the player instance, but give up audio focus.
         releaseResources(false);
         unregisterAudioNoisyReceiver();
+        if (mCallback != null) {
+            mCallback.onPlaybackStatusChanged(getState());
+        }
     }
 
     @Override
@@ -300,8 +322,8 @@ public final class VodPlayback implements Playback {
         LogHelper.d(TAG, "seekTo called with ", position);
         if (mAliyunVodPlayer != null) {
             registerAudioNoisyReceiver();
-            mAliyunVodPlayer.seekTo((int) position);
-            mAliyunVodPlayer.start();
+            mAliyunVodPlayer.seekTo((int)position);
+            mAliyunVodPlayer.replay();
         }
     }
 

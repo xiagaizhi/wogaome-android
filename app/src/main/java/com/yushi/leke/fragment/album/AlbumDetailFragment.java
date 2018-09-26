@@ -123,7 +123,6 @@ public class AlbumDetailFragment extends BaseFragment<AlbumDetailContract.IView>
                     public void onSuccess(ApiBean mApiBean) {
                         if (!TextUtils.isEmpty(mApiBean.getData())) {
                             int state= Integer.parseInt(mApiBean.getData());
-                            Log.d("LOGH","end getstate");
                             getVu().showsubstate(state);
                         }
                     }
