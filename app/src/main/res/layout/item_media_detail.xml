@@ -13,32 +13,15 @@
         android:layout_centerVertical="true"
         android:layout_marginLeft="@dimen/px36">
 
-        <RelativeLayout
-            android:id="@+id/rl_logo"
-            android:layout_width="match_parent"
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/sdv"
+            android:layout_width="@dimen/px160"
             android:layout_height="@dimen/px120"
-            android:layout_centerVertical="true">
-
-            <com.facebook.drawee.view.SimpleDraweeView
-                android:id="@+id/sdv"
-                android:layout_width="@dimen/px160"
-                android:layout_height="@dimen/px120"
-                fresco:failureImage="@drawable/default_video_rectangle"
-                fresco:failureImageScaleType="focusCrop"
-                fresco:placeholderImage="@drawable/default_video_rectangle"
-                fresco:placeholderImageScaleType="focusCrop" />
-
-            <ProgressBar
-                android:id="@+id/pb_media"
-                style="@android:style/Widget.ProgressBar.Horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:layout_alignParentBottom="true"
-                android:max="100"
-                android:progress="18"
-                android:visibility="gone"
-                android:progressDrawable="@drawable/progress_bar_medialist" />
-        </RelativeLayout>
+            android:layout_centerVertical="true"
+            fresco:failureImage="@drawable/default_video_rectangle"
+            fresco:failureImageScaleType="focusCrop"
+            fresco:placeholderImage="@drawable/default_video_rectangle"
+            fresco:placeholderImageScaleType="focusCrop" />
 
 
         <ImageView
@@ -46,20 +29,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:src="@drawable/ic_player_play_detail" />
-
-        <TextView
-            android:id="@+id/tv_num"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@id/rl_logo"
-            android:drawableLeft="@drawable/ic_subscription_headset"
-            android:drawablePadding="2dp"
-            android:paddingBottom="@dimen/px2"
-            android:paddingLeft="@dimen/px8"
-            android:text="123"
-            android:textColor="@color/white"
-            android:textSize="@dimen/px18" />
+            android:src="@drawable/ic_subscription_headset" />
 
     </RelativeLayout>
 
@@ -108,10 +78,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:drawableLeft="@drawable/ic_play_headset_red"
+                android:drawableLeft="@drawable/ic_play_headset_blue"
                 android:padding="0dp"
                 android:text="试听"
-                android:textColor="@color/alivc_red"
+                android:textColor="@color/alivc_blue_levelf"
                 android:textSize="@dimen/px30"
                 android:textStyle="bold" />
         </RelativeLayout>
@@ -121,7 +91,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:text="免费"
             android:textColor="@color/color_gray_level9"
             android:textSize="@dimen/px18" />
     </LinearLayout>

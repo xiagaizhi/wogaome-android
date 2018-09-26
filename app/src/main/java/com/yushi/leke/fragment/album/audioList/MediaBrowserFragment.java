@@ -186,7 +186,7 @@ public class MediaBrowserFragment extends BaseListFragment<MediaBrowserContract.
             @Override
             public void onClick(MediaBrowserCompat.MediaItem mediaItem) {
                 mMediaFragmentListener.onMediaItemSelected(mediaItem);
-
+                getVu().getRecyclerView().getAdapter().notifyDataSetChanged();
             }
         }));
         vu.getRecyclerView().setAdapter(adapter);

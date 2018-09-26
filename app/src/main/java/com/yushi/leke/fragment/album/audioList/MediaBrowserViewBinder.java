@@ -57,44 +57,68 @@ public class MediaBrowserViewBinder extends ItemViewBinder<MediaBrowserCompat.Me
     @Override
     protected void onBindViewHolder(@NonNull final ViewHolder viewHolder, @NonNull final MediaBrowserCompat.MediaItem mediaItem) {
         viewHolder.tv_name.setText(mediaItem.getDescription().getTitle());
+        viewHolder.sdv.setImageURI(mediaItem.getDescription().getIconUri());
+        viewHolder.tv_info.setText(StringUtil.stringForTime(mediaItem.getDescription().getExtras().getInt(MediaMetadataCompat.METADATA_KEY_DURATION)) + "/" + mediaItem.getDescription().getExtras().getInt(MutableMediaMetadata.viewPeople) + "人听过");
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (clickListener != null) {
                     clickListener.onClick(mediaItem);
-
                 }
             }
         });
-
-        int state = getMediaItemState(activity, mediaItem);
-        Drawable drawable = getDrawableByState(activity, state);
-        viewHolder.iv_play_state.setImageDrawable(drawable);
-        viewHolder.sdv.setImageURI(mediaItem.getDescription().getIconUri());
-        viewHolder.pb_media.setMax(mediaItem.getDescription().getExtras().getInt(MediaMetadataCompat.METADATA_KEY_DURATION));
-        viewHolder.tv_num.setText("未播放");
-        viewHolder.tv_info.setText(StringUtil.stringForTime(mediaItem.getDescription().getExtras().getInt(MediaMetadataCompat.METADATA_KEY_DURATION)) + "/" + mediaItem.getDescription().getExtras().getInt(MutableMediaMetadata.viewPeople) + "人听过");
-
         int listenable = mediaItem.getDescription().getExtras().getInt(MutableMediaMetadata.listenable);
         int levelStatus = mediaItem.getDescription().getExtras().getInt(MutableMediaMetadata.levelStatus);
+        int state = getMediaItemState(activity, mediaItem);
         Drawable drawableLeft;
-        if (listenable == 1) {
-            drawableLeft = activity.getResources().getDrawable(R.drawable.ic_play_headset_red);
-            viewHolder.tv_action.setText("试听");
-            viewHolder.tv_action.setTextColor(activity.getResources().getColor(R.color.alivc_red));
-        } else {
-            viewHolder.tv_action.setText("播放");
-            if (levelStatus == 0) {//播放
-                drawableLeft = activity.getResources().getDrawable(R.drawable.ic_play_unlock_blue);
-                viewHolder.tv_action.setTextColor(activity.getResources().getColor(R.color.alivc_blue_levelf));
-            } else {//不可播放
-                drawableLeft = activity.getResources().getDrawable(R.drawable.ic_play_lock_gray);
-                viewHolder.tv_action.setTextColor(activity.getResources().getColor(R.color.color_gray_level9));
-            }
+        switch (state) {
+            case STATE_PLAYING:
+                viewHolder.iv_play_state.setImageResource(R.drawable.ic_player_paused_detail);
+                viewHolder.tv_name.setTextColor(activity.getResources().getColor(R.color.alivc_red));
+                viewHolder.tv_action.setTextColor(activity.getResources().getColor(R.color.alivc_red));
+                if (listenable == 1) {
+                    viewHolder.tv_action.setText("试听");
+                    drawableLeft = activity.getResources().getDrawable(R.drawable.ic_play_headset_red);
+                } else {
+                    viewHolder.tv_action.setText("播放");
+                    drawableLeft = activity.getResources().getDrawable(R.drawable.ic_play_unlock_red);
+                }
+                viewHolder.tv_action.setTextColor(activity.getResources().getColor(R.color.alivc_red));
+                break;
+            case STATE_PAUSED:
+                viewHolder.iv_play_state.setImageResource(R.drawable.ic_subscription_headset);
+                viewHolder.tv_name.setTextColor(activity.getResources().getColor(R.color.alivc_red));
+                viewHolder.tv_action.setTextColor(activity.getResources().getColor(R.color.alivc_red));
+                if (listenable == 1) {
+                    viewHolder.tv_action.setText("试听");
+                    drawableLeft = activity.getResources().getDrawable(R.drawable.ic_play_headset_red);
+                } else {
+                    viewHolder.tv_action.setText("播放");
+                    drawableLeft = activity.getResources().getDrawable(R.drawable.ic_play_unlock_red);
+                }
+                viewHolder.tv_action.setTextColor(activity.getResources().getColor(R.color.alivc_red));
+                break;
+            default:
+                viewHolder.iv_play_state.setImageResource(R.drawable.ic_subscription_headset);
+                viewHolder.tv_name.setTextColor(activity.getResources().getColor(R.color.color_gray_level3));
+                if (levelStatus == 1) {
+                    viewHolder.tv_action.setText("试听");
+                    drawableLeft = activity.getResources().getDrawable(R.drawable.ic_play_headset_blue);
+                    viewHolder.tv_action.setTextColor(activity.getResources().getColor(R.color.alivc_blue_levelf));
+                } else {
+                    viewHolder.tv_action.setText("播放");
+                    if (levelStatus == 0) {
+                        drawableLeft = activity.getResources().getDrawable(R.drawable.ic_play_unlock_blue);
+                        viewHolder.tv_action.setTextColor(activity.getResources().getColor(R.color.alivc_blue_levelf));
+                    } else {
+                        drawableLeft = activity.getResources().getDrawable(R.drawable.ic_play_lock_gray);
+                        viewHolder.tv_action.setTextColor(activity.getResources().getColor(R.color.color_gray_level6));
+                    }
+                }
+                break;
         }
 
-        viewHolder.tv_action.setCompoundDrawablesWithIntrinsicBounds(drawableLeft,
-                null, null, null);
+        viewHolder.tv_action.setCompoundDrawablesWithIntrinsicBounds(drawableLeft, null, null, null);
 
 
         if (levelStatus == 1) {
@@ -123,19 +147,15 @@ public class MediaBrowserViewBinder extends ItemViewBinder<MediaBrowserCompat.Me
         private TextView tv_name;
         private ImageView iv_play_state;
         private SimpleDraweeView sdv;
-        private TextView tv_num;
-        private ProgressBar pb_media;
 
         ViewHolder(@NonNull View itemView) {
             super(itemView);
             tv_name = itemView.findViewById(R.id.tv_name);
             sdv = itemView.findViewById(R.id.sdv);
             iv_play_state = itemView.findViewById(R.id.iv_play_state);
-            tv_num = itemView.findViewById(R.id.tv_num);
             tv_info = itemView.findViewById(R.id.tv_info);
             tv_action = itemView.findViewById(R.id.tv_action);
             tv_free = itemView.findViewById(R.id.tv_free);
-            pb_media = itemView.findViewById(R.id.pb_media);
         }
     }
 
@@ -144,7 +164,6 @@ public class MediaBrowserViewBinder extends ItemViewBinder<MediaBrowserCompat.Me
     }
 
     private Drawable getDrawableByState(Context context, int state) {
-
         switch (state) {
             case STATE_PLAYING:
                 Drawable playingDrawable =
@@ -152,12 +171,12 @@ public class MediaBrowserViewBinder extends ItemViewBinder<MediaBrowserCompat.Me
                 return playingDrawable;
             case STATE_PAUSED:
                 Drawable playDrawable = ContextCompat.getDrawable(context,
-                        R.drawable.ic_player_play_detail);
+                        R.drawable.ic_subscription_headset);
 
                 return playDrawable;
             default:
                 Drawable playDrawabled = ContextCompat.getDrawable(context,
-                        R.drawable.ic_player_play_detail);
+                        R.drawable.ic_subscription_headset);
 
                 return playDrawabled;
         }
@@ -177,12 +196,10 @@ public class MediaBrowserViewBinder extends ItemViewBinder<MediaBrowserCompat.Me
     }
 
 
-
     private int getStateFromController(Activity context) {
         MediaControllerCompat controller = MediaControllerCompat.getMediaController(context);
         PlaybackStateCompat pbState = controller.getPlaybackState();
-        if (pbState == null ||
-                pbState.getState() == PlaybackStateCompat.STATE_ERROR) {
+        if (pbState == null || pbState.getState() == PlaybackStateCompat.STATE_ERROR) {
             return STATE_NONE;
         } else if (pbState.getState() == STATE_PLAYING) {
             return STATE_PLAYING;

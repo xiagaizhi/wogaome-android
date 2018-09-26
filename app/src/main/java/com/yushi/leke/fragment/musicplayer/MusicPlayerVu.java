@@ -149,7 +149,7 @@ public class MusicPlayerVu extends BaseVu<MusicPlayerContract.Presenter> impleme
         if (metadata == null) {
             return;
         }
-        int duration = (int) metadata.getDescription().getExtras().getLong(MediaMetadataCompat.METADATA_KEY_DURATION);
+        int duration = (int) metadata.getLong(MediaMetadataCompat.METADATA_KEY_DURATION);
         mSeekbar.setMax(duration);
         mEnd.setText(DateUtils.formatElapsedTime(duration / 1000));
     }
