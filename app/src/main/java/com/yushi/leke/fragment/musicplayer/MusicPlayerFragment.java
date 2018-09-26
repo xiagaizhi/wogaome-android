@@ -289,7 +289,7 @@ public class MusicPlayerFragment extends BaseFragment<MusicPlayerContract.IView>
         PlaybackStateCompat state = mediaController.getPlaybackState();
         playQueueFragment = new PlayQueueFragment();
         playQueueFragment.setQueue(mediaController.getQueue());
-        playQueueFragment.setQueueTitle(mediaController.getQueueTitle());
+        playQueueFragment.setQueueTitle(mediaController.getMetadata().getDescription().getSubtitle());
         mAdapter.setQueue(mediaController.getQueue());
         List<MediaSessionCompat.QueueItem> queueItems = mediaController.getQueue();
         for (int i = 0; i < queueItems.size(); i++) {

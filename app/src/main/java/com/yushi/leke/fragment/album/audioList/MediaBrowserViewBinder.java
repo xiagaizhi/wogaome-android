@@ -86,7 +86,7 @@ public class MediaBrowserViewBinder extends ItemViewBinder<MediaBrowserCompat.Me
                 viewHolder.tv_action.setTextColor(activity.getResources().getColor(R.color.alivc_red));
                 break;
             case STATE_PAUSED:
-                viewHolder.iv_play_state.setImageResource(R.drawable.ic_subscription_headset);
+                viewHolder.iv_play_state.setImageResource(R.drawable.ic_subscription_headset_center);
                 viewHolder.tv_name.setTextColor(activity.getResources().getColor(R.color.alivc_red));
                 viewHolder.tv_action.setTextColor(activity.getResources().getColor(R.color.alivc_red));
                 if (listenable == 1) {
@@ -99,7 +99,7 @@ public class MediaBrowserViewBinder extends ItemViewBinder<MediaBrowserCompat.Me
                 viewHolder.tv_action.setTextColor(activity.getResources().getColor(R.color.alivc_red));
                 break;
             default:
-                viewHolder.iv_play_state.setImageResource(R.drawable.ic_subscription_headset);
+                viewHolder.iv_play_state.setImageResource(R.drawable.ic_subscription_headset_center);
                 viewHolder.tv_name.setTextColor(activity.getResources().getColor(R.color.color_gray_level3));
                 if (levelStatus == 1) {
                     viewHolder.tv_action.setText("试听");
@@ -171,12 +171,12 @@ public class MediaBrowserViewBinder extends ItemViewBinder<MediaBrowserCompat.Me
                 return playingDrawable;
             case STATE_PAUSED:
                 Drawable playDrawable = ContextCompat.getDrawable(context,
-                        R.drawable.ic_subscription_headset);
+                        R.drawable.ic_subscription_headset_center);
 
                 return playDrawable;
             default:
                 Drawable playDrawabled = ContextCompat.getDrawable(context,
-                        R.drawable.ic_subscription_headset);
+                        R.drawable.ic_subscription_headset_center);
 
                 return playDrawabled;
         }

@@ -20,7 +20,6 @@
             android:layout_marginRight="@dimen/px26"
             android:id="@+id/tv_queue_name"
             android:textColor="@color/color_gray_level3"
-            android:text="宋里·创业之路"
             android:padding="@dimen/px23"
             android:layout_height="wrap_content" />
         <android.support.v7.widget.RecyclerView

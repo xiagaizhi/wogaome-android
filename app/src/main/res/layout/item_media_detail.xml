@@ -18,9 +18,9 @@
             android:layout_width="@dimen/px160"
             android:layout_height="@dimen/px120"
             android:layout_centerVertical="true"
-            fresco:failureImage="@drawable/default_video_rectangle"
+            fresco:failureImage="@drawable/music_bg_shape"
             fresco:failureImageScaleType="focusCrop"
-            fresco:placeholderImage="@drawable/default_video_rectangle"
+            fresco:placeholderImage="@drawable/music_bg_shape"
             fresco:placeholderImageScaleType="focusCrop" />
 
 
@@ -29,7 +29,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:src="@drawable/ic_subscription_headset" />
+            android:src="@drawable/ic_subscription_headset_center" />
 
     </RelativeLayout>
 

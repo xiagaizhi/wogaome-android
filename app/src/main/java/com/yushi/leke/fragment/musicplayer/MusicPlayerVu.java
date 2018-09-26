@@ -1,21 +1,13 @@
 package com.yushi.leke.fragment.musicplayer;
 
-import android.animation.ObjectAnimator;
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.os.Message;
-import android.os.SystemClock;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.media.MediaDescriptionCompat;
 import android.support.v4.media.MediaMetadataCompat;
-import android.support.v4.media.session.MediaControllerCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
-import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.view.View;
-import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -26,14 +18,8 @@ import com.yufan.library.inject.FindView;
 import com.yufan.library.inject.Title;
 import com.yufan.library.widget.StateLayout;
 import com.yufan.library.widget.AppToolbar;
-import com.yushi.leke.UIHelper;
-import com.yushi.leke.uamp.MusicService;
-import com.yushi.leke.uamp.utils.LogHelper;
 import com.yushi.leke.widget.AlbumViewPager;
-import com.yushi.leke.widget.MyScroller;
 import com.yushi.leke.widget.PlayerSeekBar;
-
-import java.lang.reflect.Field;
 
 import static android.view.View.INVISIBLE;
 import static android.view.View.VISIBLE;
@@ -68,8 +54,8 @@ public class MusicPlayerVu extends BaseVu<MusicPlayerContract.Presenter> impleme
     TextView mDuration;
     @FindView(R.id.albumArt)
     ImageView albumArt;
-
-    private PlaybackStateCompat mLastPlaybackState;
+    TextView titltView;
+    private String albumName;
 
     @Override
     public void initView(View view) {
@@ -84,9 +70,14 @@ public class MusicPlayerVu extends BaseVu<MusicPlayerContract.Presenter> impleme
     @Override
     public boolean initTitle(AppToolbar appToolbar) {
         //UIHelper.getMusicView(mPersenter.getActivity(),appToolbar,MusicPlayerFragment.class);
-      TextView titltView=  appToolbar.creatCenterView(TextView.class);
+        titltView = appToolbar.creatCenterView(TextView.class);
         titltView.setTextColor(Color.WHITE);
-        titltView.setText("音乐播放器");
+        if (TextUtils.isEmpty(albumName)){
+            titltView.setText("音乐播放器");
+        }else {
+            titltView.setText(albumName);
+        }
+
         ImageView leftView = appToolbar.creatLeftView(ImageView.class);
         leftView.setImageResource(R.drawable.left_back_white_arrows);
         leftView.setOnClickListener(new View.OnClickListener() {
@@ -137,11 +128,7 @@ public class MusicPlayerVu extends BaseVu<MusicPlayerContract.Presenter> impleme
 
     @Override
     public void onUpdateMediaDescription(MediaDescriptionCompat description) {
-        StringBuffer sb = new StringBuffer();
-        sb.append(description.getTitle());
-        sb.append("-");
-        sb.append(description.getSubtitle());
-        tv_album_name.setText(sb.toString());
+        tv_album_name.setText(description.getTitle());
     }
 
     @Override
@@ -159,8 +146,6 @@ public class MusicPlayerVu extends BaseVu<MusicPlayerContract.Presenter> impleme
         if (state == null) {
             return;
         }
-        mLastPlaybackState = state;
-
 
         switch (state.getState()) {
             case PlaybackStateCompat.STATE_PLAYING:
@@ -212,5 +197,11 @@ public class MusicPlayerVu extends BaseVu<MusicPlayerContract.Presenter> impleme
         return mNeedle;
     }
 
-
+    @Override
+    public void setAlbumName(String name) {
+        albumName = name;
+        if (titltView != null) {
+            titltView.setText(name);
+        }
+    }
 }

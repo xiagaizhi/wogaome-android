@@ -212,6 +212,8 @@ public class MusicProvider {
                 JSONObject jsonObject = JSON.parseObject(mApiBean.data);
                 String listStr = jsonObject.getString("audioViewInfoList");
                 int levelStatus = jsonObject.getInteger("levelStatus");
+                String icon = jsonObject.getString("icon");
+                String albumName = jsonObject.getString("name");
                 List<AlbumAudio> albumAudios = JSON.parseArray(listStr, AlbumAudio.class);
                 mMusicListById.clear();
                 for (int i = 0; i < albumAudios.size(); i++) {
@@ -219,9 +221,9 @@ public class MusicProvider {
                     MediaMetadataCompat item = new MediaMetadataCompat.Builder()
                             .putString(MediaMetadataCompat.METADATA_KEY_MEDIA_ID, albumAudio.getAudioId() + "")
                             .putString(MediaMetadataCompat.METADATA_KEY_ALBUM, albumAudio.getAlbumId() + "")
-                            .putString(MediaMetadataCompat.METADATA_KEY_ARTIST, "作者")
+                            .putString(MediaMetadataCompat.METADATA_KEY_ARTIST, "测试")
                             .putString(MediaMetadataCompat.METADATA_KEY_GENRE, albumAudio.getAlbumId() + "")
-                            .putString(MediaMetadataCompat.METADATA_KEY_ALBUM_ART_URI, "")
+                            .putString(MediaMetadataCompat.METADATA_KEY_ALBUM_ART_URI, icon)
                             .putString(MediaMetadataCompat.METADATA_KEY_TITLE, albumAudio.getAudioName())
                             .putLong(MediaMetadataCompat.METADATA_KEY_BT_FOLDER_TYPE, 1)
                             .putLong(MediaMetadataCompat.METADATA_KEY_DURATION, albumAudio.getDuration() * 1000)
