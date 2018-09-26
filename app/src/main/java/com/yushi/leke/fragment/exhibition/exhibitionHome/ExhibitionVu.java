@@ -61,21 +61,19 @@ public class ExhibitionVu extends BaseListVu<ExhibitionContract.Presenter> imple
                                 Log.d("offset", "appToolbar:" + topHeightMax);
                                 mTitleView.setAlpha(offset);
                                 musicAnim.setAlpha(offset);
+                                img_history.setAlpha(offset);
+
                             }
                         }else {
                             mTitleView.setAlpha(1f);
                             musicAnim.setAlpha(1f);
+                            img_history.setAlpha(1f);
                         }
                     } else {
                         mTitleView.setAlpha(0f);
                         musicAnim.setAlpha(0f);
-
-                    }
-                    if(top_offset>historyBottom){
-                        float offset=(top_offset-historyBottom)/(topHeightMax-topHeightMin);
-                        img_history.setAlpha(offset);
-                    }else {
                         img_history.setAlpha(0f);
+
                     }
                 }else {
                     mTitleView.setAlpha(1f);
