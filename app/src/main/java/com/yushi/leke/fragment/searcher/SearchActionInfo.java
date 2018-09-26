@@ -20,10 +20,27 @@ public class SearchActionInfo {
     String shareIcon;//分享icon
     long ctime;
     int ranking;//获胜名次
-    long id;
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    String id;
     String verticalIcon;//竖屏大图
     String introduction;
     int status;//活动状态：0-上架中, 1-已下架
+    int processStatus;
+
+    public int getProcessStatus() {
+        return processStatus;
+    }
+
+    public void setProcessStatus(int processStatus) {
+        this.processStatus = processStatus;
+    }
 
     public SearchActionInfo() {
 
@@ -148,14 +165,6 @@ public class SearchActionInfo {
 
     public void setRanking(int ranking) {
         this.ranking = ranking;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
     }
 
     public String getVerticalIcon() {

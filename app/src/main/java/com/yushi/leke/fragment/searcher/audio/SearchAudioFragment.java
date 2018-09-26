@@ -3,6 +3,7 @@ package com.yushi.leke.fragment.searcher.audio;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
@@ -21,6 +22,7 @@ import com.yufan.library.util.SoftInputUtil;
 import com.yufan.library.widget.anim.AFVerticalAnimator;
 import com.yushi.leke.UIHelper;
 import com.yushi.leke.YFApi;
+import com.yushi.leke.fragment.album.AlbumDetailFragment;
 import com.yushi.leke.fragment.album.audioList.MediaBrowserFragment;
 import com.yushi.leke.fragment.home.bean.AudioInfo;
 import com.yushi.leke.fragment.home.bean.Homeinfo;
@@ -48,7 +50,10 @@ public class SearchAudioFragment extends BaseListFragment<SearchAudioContract.IV
         adapter.register(Homeinfo.class, new SubscriptionsViewBinder(new ICallBack() {
             @Override
             public void OnBackResult(Object... s) {
-                getRootFragment().start(UIHelper.creat(MediaBrowserFragment.class).build());
+                Homeinfo homeinfo= (Homeinfo) s[0];
+                getRootFragment().start(UIHelper.creat(AlbumDetailFragment.class)
+                        .put(Global.BUNDLE_KEY_ALBUMID,homeinfo.getAlbumId())
+                        .build());
             }
         }));
         adapter.register(String.class, new SearchTabTitleViewBinder());
@@ -64,14 +69,17 @@ public class SearchAudioFragment extends BaseListFragment<SearchAudioContract.IV
 
 
     @Override
-    public void onLoadMore(int index) {
-        ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).audioSearch(getVu().getEditText().getText().toString(),getVu().getRecyclerView().getPageManager().getCurrentIndex()+"")).enqueue(new YFListHttpCallBack(vu) {
+    public void onLoadMore(final int index) {
+        ApiManager.getCall(ApiManager.getInstance().create(YFApi.class)
+                .audioSearch(getVu().getEditText().getText().toString(),index))
+                .enqueue(new YFListHttpCallBack(vu) {
             @Override
             public void onSuccess(ApiBean mApiBean) {
                 super.onSuccess(mApiBean);
                 JSONObject jsonObject= JSON.parseObject(mApiBean.data);
-                List<AudioInfo> audioInfos= JSON.parseArray(jsonObject.getString("list"),AudioInfo.class);
+                List<Homeinfo> audioInfos= JSON.parseArray(jsonObject.getString("list"),Homeinfo.class);
                 list.addAll(audioInfos);
+                vu.getRecyclerView().getAdapter().notifyDataSetChanged();
             }
 
         });
@@ -81,13 +89,10 @@ public class SearchAudioFragment extends BaseListFragment<SearchAudioContract.IV
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING);
-
-
     }
 
     @Override
     public void onRefresh() {
-
     }
 
     @Override
@@ -104,15 +109,19 @@ public class SearchAudioFragment extends BaseListFragment<SearchAudioContract.IV
 
     @Override
     public void search(String searchKey) {
-        ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).audioSearch(getVu().getEditText().getText().toString(),getVu().getRecyclerView().getPageManager().getCurrentIndex()+"")).enqueue(new YFListHttpCallBack(vu) {
+        //默认从第一页开始加载
+        ApiManager.getCall(ApiManager.getInstance()
+                .create(YFApi.class)
+                .audioSearch(getVu().getEditText().getText().toString(),1)).enqueue(new YFListHttpCallBack(vu) {
             @Override
             public void onSuccess(ApiBean mApiBean) {
                 super.onSuccess(mApiBean);
                 JSONObject jsonObject= JSON.parseObject(mApiBean.data);
-                List<AudioInfo> audioInfos= JSON.parseArray(jsonObject.getString("list"),AudioInfo.class);
+                List<Homeinfo> audioInfos= JSON.parseArray(jsonObject.getString("list"),Homeinfo.class);
                 list.clear();
                 list.add("音频");
                 list.addAll(audioInfos);
+                vu.getRecyclerView().getAdapter().notifyDataSetChanged();
             }
 
         });
