@@ -58,7 +58,7 @@ public final class VodPlayback implements Playback {
     public static final int VOLUME_DUCK = 20;
     // The volume we set the media player when we have audio focus.
     //当我们获取音频焦点时设置的播放音量大小
-    public static final int VOLUME_NORMAL = 100;
+    public static final int VOLUME_NORMAL = 50;
 
     // we don't have audio focus, and can't duck (play at a low volume)
     //没有获取到音频焦点，也不允许duck状态
@@ -113,12 +113,10 @@ public final class VodPlayback implements Playback {
         this.mContext = applicationContext;
         this.mMusicProvider = musicProvider;
 
-        this.mAudioManager =
-                (AudioManager) applicationContext.getSystemService(Context.AUDIO_SERVICE);
+        this.mAudioManager = (AudioManager) applicationContext.getSystemService(Context.AUDIO_SERVICE);
         // Create the Wifi lock (this does not acquire the lock, this just creates it)
-        this.mWifiLock =
-                ((WifiManager) applicationContext.getSystemService(Context.WIFI_SERVICE))
-                        .createWifiLock(WifiManager.WIFI_MODE_FULL, "uAmp_lock");
+        this.mWifiLock = ((WifiManager) applicationContext.getSystemService(Context.WIFI_SERVICE))
+                .createWifiLock(WifiManager.WIFI_MODE_FULL, "uAmp_lock");
     }
 
     @Override
@@ -222,13 +220,11 @@ public final class VodPlayback implements Playback {
 
         if (mediaHasChanged || mAliyunVodPlayer == null) {
             releaseResources(false); // release everything except the player
-            MediaMetadataCompat track =
-                    mMusicProvider.getMusic(
-                            MediaIDHelper.extractMusicIDFromMediaID(
-                                    item.getDescription().getMediaId()));
+            MediaMetadataCompat track = mMusicProvider.getMusic(MediaIDHelper.extractMusicIDFromMediaID(item.getDescription().getMediaId()));
 
             if (mAliyunVodPlayer == null) {
                 mAliyunVodPlayer = new AliyunVodPlayer(mContext);
+                mAliyunVodPlayer.setAutoPlay(true);
             }
             mAliyunVodPlayer.setOnCompletionListener(new IAliyunVodPlayer.OnCompletionListener() {
                 @Override
@@ -236,6 +232,12 @@ public final class VodPlayback implements Playback {
                     if (mCallback != null) {
                         mCallback.onCompletion();
                     }
+                }
+            });
+            mAliyunVodPlayer.setOnAutoPlayListener(new IAliyunVodPlayer.OnAutoPlayListener() {
+                @Override
+                public void onAutoPlayStarted() {
+                    mAliyunVodPlayer.setVolume(50);
                 }
             });
 

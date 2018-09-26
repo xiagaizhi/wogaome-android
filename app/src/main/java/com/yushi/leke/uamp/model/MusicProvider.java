@@ -220,6 +220,7 @@ public class MusicProvider {
                             .putString(MediaMetadataCompat.METADATA_KEY_MEDIA_ID, albumAudio.getAudioId() + "")
                             .putString(MediaMetadataCompat.METADATA_KEY_ALBUM, albumAudio.getAlbumId() + "")
                             .putString(MediaMetadataCompat.METADATA_KEY_ARTIST, "作者")
+                            .putString(MediaMetadataCompat.METADATA_KEY_GENRE,albumAudio.getAlbumId()+"")
                             .putString(MediaMetadataCompat.METADATA_KEY_ALBUM_ART_URI, "")
                             .putString(MediaMetadataCompat.METADATA_KEY_TITLE, albumAudio.getAudioName())
                             .putLong(MediaMetadataCompat.METADATA_KEY_BT_FOLDER_TYPE, 1)

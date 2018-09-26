@@ -284,7 +284,7 @@ public class ExhibitionDetailFragment extends BaseFragment<ExhibitionDetailContr
         mAliyunVodPlayerView.setOnUrlTimeExpiredListener(new MyOnUrlTimeExpiredListener(this));
         mAliyunVodPlayerView.setOnShowMoreClickListener(new MyShowMoreClickLisener(this));
 
-        mAliyunVodPlayerView.enableNativeLog();
+        mAliyunVodPlayerView.disableNativeLog();
         mAliyunVodPlayerView.setmOnPlayerViewClickListener(new AliyunVodPlayerView.OnPlayerViewClickListener() {
             @Override
             public void onClick(AliyunScreenMode screenMode, AliyunVodPlayerView.PlayViewType viewType) {
