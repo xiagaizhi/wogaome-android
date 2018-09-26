@@ -19,7 +19,10 @@ import com.yufan.library.inject.VuClass;
 import com.yufan.library.inter.ICallBack;
 import com.yufan.library.util.SoftInputUtil;
 import com.yufan.library.widget.anim.AFVerticalAnimator;
+import com.yushi.leke.UIHelper;
 import com.yushi.leke.YFApi;
+import com.yushi.leke.fragment.browser.BrowserBaseFragment;
+import com.yushi.leke.fragment.exhibition.detail.ExhibitionDetailFragment;
 import com.yushi.leke.fragment.searcher.SearchActionInfo;
 import com.yushi.leke.fragment.searcher.SearchActionViewBinder;
 import com.yushi.leke.fragment.searcher.SearchTabTitleViewBinder;
@@ -45,7 +48,19 @@ public class SearchActivityFragment extends BaseListFragment<SearchActivityContr
         adapter.register(SearchActionInfo.class,new SearchActionViewBinder(new ICallBack() {
             @Override
             public void OnBackResult(Object... s) {
-
+                SearchActionInfo info= (SearchActionInfo) s[0];
+                if (info.getProcessStatus()==0||info.getProcessStatus()==1){
+                    getRootFragment().start(UIHelper.creat(BrowserBaseFragment.class)
+                            .put(Global.BUNDLE_KEY_BROWSER_URL, ApiManager.getInstance().
+                                    getApiConfig()
+                                    .getExhibitionDetail(info.getId()))
+                            .build());
+                }else {//原生详情页面
+                    getRootFragment().start(UIHelper.creat(ExhibitionDetailFragment.class)
+                            .put(Global.BUNDLE_KEY_EXHIBITION_TYE, info.getProcessStatus())
+                            .put(Global.BUNDLE_KEY_ACTIVITYID, info.getId())
+                            .build());
+                }
             }
         }));
         adapter.register(String.class,new SearchTabTitleViewBinder());
@@ -63,13 +78,15 @@ public class SearchActivityFragment extends BaseListFragment<SearchActivityContr
 
     @Override
     public void onLoadMore(int index) {
-        ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).activitySearch(getVu().getEditText().getText().toString(),getVu().getRecyclerView().getPageManager().getCurrentIndex()+"")).enqueue(new YFListHttpCallBack(vu) {
+        ApiManager.getCall(ApiManager.getInstance().create(YFApi.class)
+                .activitySearch(getVu().getEditText().getText().toString(),getVu().getRecyclerView().getPageManager().getCurrentIndex())).enqueue(new YFListHttpCallBack(vu) {
             @Override
             public void onSuccess(ApiBean mApiBean) {
                 super.onSuccess(mApiBean);
                 JSONObject jsonObject= JSON.parseObject(mApiBean.data);
                 List<SearchActionInfo> actionInfos= JSON.parseArray(jsonObject.getString("list"),SearchActionInfo.class);
                 list.addAll(actionInfos);
+                vu.getRecyclerView().getAdapter().notifyDataSetChanged();
             }
 
         });
@@ -100,7 +117,7 @@ public class SearchActivityFragment extends BaseListFragment<SearchActivityContr
 
     @Override
     public void search(String searchKey) {
-        ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).activitySearch(searchKey,getVu().getRecyclerView().getPageManager().getCurrentIndex()+"")).enqueue(new YFListHttpCallBack(vu) {
+        ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).activitySearch(searchKey,1)).enqueue(new YFListHttpCallBack(vu) {
             @Override
             public void onSuccess(ApiBean mApiBean) {
                 super.onSuccess(mApiBean);
@@ -109,7 +126,7 @@ public class SearchActivityFragment extends BaseListFragment<SearchActivityContr
                 list.clear();
                 list.add("活动");
                 list.addAll(actionInfos);
-
+                vu.getRecyclerView().getAdapter().notifyDataSetChanged();
             }
 
 

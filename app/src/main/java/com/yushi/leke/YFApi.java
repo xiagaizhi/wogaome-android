@@ -527,7 +527,7 @@ public interface YFApi {
     @POST("app/v1/audioActivitySearch/audioSearch")
     Call<ResponseBody>
     audioSearch(@Field("content") String content,
-                @Field("currentPage") String currentPage
+                @Field("currentPage") int currentPage
     );
 
     /**
@@ -537,7 +537,7 @@ public interface YFApi {
     @POST("app/v1/audioActivitySearch/activitySearch")
     Call<ResponseBody>
     activitySearch(@Field("content") String content,
-                   @Field("currentPage") String currentPage);
+                   @Field("currentPage") int currentPage);
 
     /**
      * 专辑详情

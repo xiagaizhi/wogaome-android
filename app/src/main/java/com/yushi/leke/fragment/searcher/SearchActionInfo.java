@@ -20,7 +20,6 @@ public class SearchActionInfo {
     String shareIcon;//分享icon
     long ctime;
     int ranking;//获胜名次
-
     public String getId() {
         return id;
     }

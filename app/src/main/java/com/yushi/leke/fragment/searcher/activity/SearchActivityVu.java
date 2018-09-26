@@ -5,6 +5,7 @@ import com.yushi.leke.R;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -67,6 +68,12 @@ public class SearchActivityVu extends BaseListVu<SearchActivityContract.Presente
 
                     iv_clear_search.setVisibility(View.VISIBLE);
                 }
+            }
+        });
+        et_search.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                return mPersenter.onKey(v,keyCode,event);
             }
         });
     }
