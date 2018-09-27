@@ -231,6 +231,7 @@ public class MusicPlayerFragment extends BaseFragment<MusicPlayerContract.IView>
                         controls.skipToQueueItem(pPosition);
                     }
                 }, 300);
+                getVu().hideGuide();
             }
         }
     };

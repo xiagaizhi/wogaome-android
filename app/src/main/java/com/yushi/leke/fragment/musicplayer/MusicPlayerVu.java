@@ -11,6 +11,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.yufan.library.Global;
+import com.yufan.library.manager.SPManager;
 import com.yushi.leke.R;
 import com.yufan.library.base.BaseVu;
 import com.yufan.library.inject.FindLayout;
@@ -30,6 +32,8 @@ import static android.view.View.VISIBLE;
 @FindLayout(layout = R.layout.fragment_layout_musicplayer)
 @Title("音乐播放器")
 public class MusicPlayerVu extends BaseVu<MusicPlayerContract.Presenter> implements MusicPlayerContract.IView {
+    @FindView(R.id.img_music_guide)
+    ImageView img_music_guide;
     @FindView(R.id.view_pager)
     AlbumViewPager mViewPager;
     @FindView(R.id.iv_needle)
@@ -67,6 +71,12 @@ public class MusicPlayerVu extends BaseVu<MusicPlayerContract.Presenter> impleme
         mSkipNext.setOnClickListener(this);
         playing_fav.setOnClickListener(this);
         mPersenter.onSeekBarChangeListener(mDuration, mSeekbar);
+        if (!SPManager.getInstance().getBoolean(Global.SP_KEY_MUSIC_PLAYER_GUIDE,false)){
+            img_music_guide.setVisibility(VISIBLE);
+            SPManager.getInstance().saveValue(Global.SP_KEY_MUSIC_PLAYER_GUIDE,true);
+        }else {
+            img_music_guide.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -223,5 +233,10 @@ public class MusicPlayerVu extends BaseVu<MusicPlayerContract.Presenter> impleme
     @Override
     public void setCanOperation(boolean isCanOperation) {
         this.isCanOperation = isCanOperation;
+    }
+
+    @Override
+    public void hideGuide() {
+        img_music_guide.setVisibility(View.GONE);
     }
 }

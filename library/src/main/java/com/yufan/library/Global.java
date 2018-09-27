@@ -24,6 +24,7 @@ public class Global {
     public static final String SP_KEY_SERVICE_TYPE = "SP_KEY_SERVICE_TYPE";
     public static final String SP_KEY_MEDIA_ID = "SP_KEY_MEDIA_ID";
     public static final String SP_KEY_ALBUM_ID = "SP_KEY_ALBUM_ID";
+    public static final String SP_KEY_MUSIC_PLAYER_GUIDE = "SP_KEY_MUSIC_GUIDE";
 
     /**
      * 专辑ID和activityID

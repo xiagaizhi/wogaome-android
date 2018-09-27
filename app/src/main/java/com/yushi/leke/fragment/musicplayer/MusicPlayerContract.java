@@ -35,6 +35,7 @@ public interface MusicPlayerContract {
         void setAlbumName(String albumName);
         void setSubState(String state);
         void setCanOperation(boolean isCanOperation);
+        void hideGuide();
     }
 
     interface Presenter extends Pr {

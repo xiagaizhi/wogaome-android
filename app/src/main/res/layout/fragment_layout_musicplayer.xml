@@ -35,6 +35,7 @@
                 android:orientation="horizontal">
 
                 <ImageView
+                    android:id="@+id/img_music_bg"
                     android:layout_width="@dimen/y618"
                     android:layout_height="@dimen/y618"
                     android:layout_centerHorizontal="true"
@@ -69,6 +70,16 @@
                     android:layout_width="match_parent"
                     android:background="@color/color_f0f0f0"
                     android:layout_height="@dimen/px1"/>
+
+                <ImageView
+                    android:id="@+id/img_music_guide"
+                    android:layout_width="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:src="@drawable/ic_music_guide"
+                    android:visibility="gone"
+                    android:layout_alignBottom="@+id/img_music_bg"
+                    android:layout_marginBottom="@dimen/px20"
+                    android:layout_height="wrap_content" />
             </RelativeLayout>
 
         </FrameLayout>
