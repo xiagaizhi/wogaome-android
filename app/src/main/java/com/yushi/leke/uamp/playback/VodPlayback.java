@@ -323,7 +323,6 @@ public final class VodPlayback implements Playback {
         if (mAliyunVodPlayer != null) {
             registerAudioNoisyReceiver();
             mAliyunVodPlayer.seekTo((int)position);
-            mAliyunVodPlayer.replay();
         }
     }
 

@@ -10,7 +10,7 @@ public class AlbumAudio {
     String aliVideoId;// 此音频在阿里云的Id
 
 
-    int audioId;
+    String audioId;
 
     String audioName;
 
@@ -35,18 +35,10 @@ public class AlbumAudio {
 
     long utime;
 
-    int viewPeople;//播放人数
+    long viewPeople;//播放人数
 
 
-    int viewTimes;//播放次数
-
-    public long getCtime() {
-        return ctime;
-    }
-
-    public void setCtime(long ctime) {
-        this.ctime = ctime;
-    }
+    long viewTimes;//播放次数
 
     public int getAlbumId() {
         return albumId;
@@ -64,11 +56,11 @@ public class AlbumAudio {
         this.aliVideoId = aliVideoId;
     }
 
-    public int getAudioId() {
+    public String getAudioId() {
         return audioId;
     }
 
-    public void setAudioId(int audioId) {
+    public void setAudioId(String audioId) {
         this.audioId = audioId;
     }
 
@@ -96,6 +88,13 @@ public class AlbumAudio {
         this.baseCount = baseCount;
     }
 
+    public long getCtime() {
+        return ctime;
+    }
+
+    public void setCtime(long ctime) {
+        this.ctime = ctime;
+    }
 
     public int getDeleted() {
         return deleted;
@@ -137,19 +136,19 @@ public class AlbumAudio {
         this.utime = utime;
     }
 
-    public int getViewPeople() {
+    public long getViewPeople() {
         return viewPeople;
     }
 
-    public void setViewPeople(int viewPeople) {
+    public void setViewPeople(long viewPeople) {
         this.viewPeople = viewPeople;
     }
 
-    public int getViewTimes() {
+    public long getViewTimes() {
         return viewTimes;
     }
 
-    public void setViewTimes(int viewTimes) {
+    public void setViewTimes(long viewTimes) {
         this.viewTimes = viewTimes;
     }
 }

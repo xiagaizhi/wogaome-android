@@ -237,12 +237,12 @@ public class MusicProvider {
                     item.getDescription().getExtras().putInt(MutableMediaMetadata.listenable, albumAudio.getListenable());
                     item.getDescription().getExtras().putInt(MutableMediaMetadata.size, albumAudio.getSize());
                     item.getDescription().getExtras().putLong(MutableMediaMetadata.utime, albumAudio.getUtime());
-                    item.getDescription().getExtras().putInt(MutableMediaMetadata.viewPeople, albumAudio.getViewPeople());
-                    item.getDescription().getExtras().putInt(MutableMediaMetadata.viewTimes, albumAudio.getViewTimes());
+                    item.getDescription().getExtras().putLong(MutableMediaMetadata.viewPeople, albumAudio.getViewPeople());
+                    item.getDescription().getExtras().putLong(MutableMediaMetadata.viewTimes, albumAudio.getViewTimes());
                     item.getDescription().getExtras().putInt(MutableMediaMetadata.levelStatus, levelStatus);
                     item.getDescription().getExtras().putString(MutableMediaMetadata.videoId, albumAudio.getAliVideoId());
                     String musicId = item.getString(MediaMetadataCompat.METADATA_KEY_MEDIA_ID);
-                    mMusicListById.put(musicId, new MutableMediaMetadata(musicId, item));
+                    mMusicListById.put(String.valueOf(i + 1), new MutableMediaMetadata(musicId, item));
                 }
                 mCurrentState = State.INITIALIZED;
                 if (callback != null) {
@@ -294,8 +294,8 @@ public class MusicProvider {
         copy.getDescription().getExtras().putInt(MutableMediaMetadata.listenable, metadata.metadata.getDescription().getExtras().getInt(MutableMediaMetadata.listenable));
         copy.getDescription().getExtras().putInt(MutableMediaMetadata.size, metadata.metadata.getDescription().getExtras().getInt(MutableMediaMetadata.size));
         copy.getDescription().getExtras().putLong(MutableMediaMetadata.utime, metadata.metadata.getDescription().getExtras().getLong(MutableMediaMetadata.utime));
-        copy.getDescription().getExtras().putInt(MutableMediaMetadata.viewPeople, metadata.metadata.getDescription().getExtras().getInt(MutableMediaMetadata.viewPeople));
-        copy.getDescription().getExtras().putInt(MutableMediaMetadata.viewTimes, metadata.metadata.getDescription().getExtras().getInt(MutableMediaMetadata.viewTimes));
+        copy.getDescription().getExtras().putLong(MutableMediaMetadata.viewPeople, metadata.metadata.getDescription().getExtras().getLong(MutableMediaMetadata.viewPeople));
+        copy.getDescription().getExtras().putLong(MutableMediaMetadata.viewTimes, metadata.metadata.getDescription().getExtras().getLong(MutableMediaMetadata.viewTimes));
         copy.getDescription().getExtras().putInt(MutableMediaMetadata.levelStatus, metadata.metadata.getDescription().getExtras().getInt(MutableMediaMetadata.levelStatus));
         copy.getDescription().getExtras().putString(MutableMediaMetadata.videoId, metadata.metadata.getDescription().getExtras().getString(MutableMediaMetadata.videoId));
         return new MediaBrowserCompat.MediaItem(copy.getDescription(), MediaBrowserCompat.MediaItem.FLAG_PLAYABLE);

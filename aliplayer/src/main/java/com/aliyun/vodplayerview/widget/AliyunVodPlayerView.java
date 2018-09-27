@@ -1431,6 +1431,7 @@ public class AliyunVodPlayerView extends RelativeLayout implements ITheme {
                     aliVcVideoViewLayoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT;
                     aliVcVideoViewLayoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT;
                 }
+//                setRenderRotate(IAliyunVodPlayer.VideoRotate.ROTATE_270);
             } else if (finalScreenMode == AliyunScreenMode.Small) {
 
                 if (getLockPortraitMode() == null) {
@@ -1442,6 +1443,7 @@ public class AliyunVodPlayerView extends RelativeLayout implements ITheme {
                     aliVcVideoViewLayoutParams.height = (int) (ScreenUtils.getWidth(context) * 9.0f / 16);
                     aliVcVideoViewLayoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT;
                 }
+//                setRenderRotate(IAliyunVodPlayer.VideoRotate.ROTATE_0);
             }
         }
 

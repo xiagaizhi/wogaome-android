@@ -290,7 +290,6 @@ public class MusicPlayerFragment extends BaseFragment<MusicPlayerContract.IView>
             getActivity().finish();
             return;
         }
-
         MediaControllerCompat.setMediaController(getActivity(), mediaController);
         mediaController.registerCallback(mCallback);
         PlaybackStateCompat state = mediaController.getPlaybackState();
