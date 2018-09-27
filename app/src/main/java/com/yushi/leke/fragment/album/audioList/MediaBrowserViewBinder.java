@@ -58,7 +58,7 @@ public class MediaBrowserViewBinder extends ItemViewBinder<MediaBrowserCompat.Me
     protected void onBindViewHolder(@NonNull final ViewHolder viewHolder, @NonNull final MediaBrowserCompat.MediaItem mediaItem) {
         viewHolder.tv_name.setText(mediaItem.getDescription().getTitle());
         viewHolder.sdv.setImageURI(mediaItem.getDescription().getIconUri());
-        viewHolder.tv_info.setText(StringUtil.stringForTime(mediaItem.getDescription().getExtras().getInt(MediaMetadataCompat.METADATA_KEY_DURATION)) + "/" + mediaItem.getDescription().getExtras().getInt(MutableMediaMetadata.viewPeople) + "人听过");
+        viewHolder.tv_info.setText(StringUtil.stringForTime(mediaItem.getDescription().getExtras().getInt(MediaMetadataCompat.METADATA_KEY_DURATION)) + "/" + mediaItem.getDescription().getExtras().getLong(MutableMediaMetadata.viewPeople) + "人听过");
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

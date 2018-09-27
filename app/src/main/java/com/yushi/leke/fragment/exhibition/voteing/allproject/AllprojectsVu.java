@@ -164,4 +164,9 @@ public class AllprojectsVu extends BaseListVu<AllprojectsContract.Presenter> imp
         pvOptions.show();
     }
 
+    @Override
+    public void seacherOnclick() {
+
+    }
+
 }

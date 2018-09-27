@@ -22,7 +22,6 @@ import com.aliyun.vodplayer.media.AliyunVidSts;
 import com.aliyun.vodplayer.media.IAliyunVodPlayer;
 import com.aliyun.vodplayerview.constants.PlayParameter;
 import com.aliyun.vodplayerview.utils.ScreenUtils;
-import com.aliyun.vodplayerview.utils.VidStsUtil;
 import com.aliyun.vodplayerview.view.control.ControlView;
 import com.aliyun.vodplayerview.view.tipsview.ErrorInfo;
 import com.aliyun.vodplayerview.widget.AliyunScreenMode;

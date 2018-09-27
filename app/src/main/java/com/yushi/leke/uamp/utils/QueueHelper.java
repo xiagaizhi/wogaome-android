@@ -114,8 +114,8 @@ public class QueueHelper {
             trackCopy.getDescription().getExtras().putInt(MutableMediaMetadata.listenable, track.metadata.getDescription().getExtras().getInt(MutableMediaMetadata.listenable));
             trackCopy.getDescription().getExtras().putInt(MutableMediaMetadata.size, track.metadata.getDescription().getExtras().getInt(MutableMediaMetadata.size));
             trackCopy.getDescription().getExtras().putLong(MutableMediaMetadata.utime, track.metadata.getDescription().getExtras().getLong(MutableMediaMetadata.utime));
-            trackCopy.getDescription().getExtras().putInt(MutableMediaMetadata.viewPeople,track.metadata.getDescription().getExtras().getInt(MutableMediaMetadata.viewPeople));
-            trackCopy.getDescription().getExtras().putInt(MutableMediaMetadata.viewTimes, track.metadata.getDescription().getExtras().getInt(MutableMediaMetadata.viewTimes));
+            trackCopy.getDescription().getExtras().putLong(MutableMediaMetadata.viewPeople,track.metadata.getDescription().getExtras().getLong(MutableMediaMetadata.viewPeople));
+            trackCopy.getDescription().getExtras().putLong(MutableMediaMetadata.viewTimes, track.metadata.getDescription().getExtras().getLong(MutableMediaMetadata.viewTimes));
             trackCopy.getDescription().getExtras().putInt(MutableMediaMetadata.levelStatus, track.metadata.getDescription().getExtras().getInt(MutableMediaMetadata.levelStatus));
             trackCopy.getDescription().getExtras().putString(MutableMediaMetadata.videoId, track.metadata.getDescription().getExtras().getString(MutableMediaMetadata.videoId));
 
