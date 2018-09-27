@@ -34,8 +34,6 @@ public class VoteingBinder extends ItemViewBinder<Voteinginfo, VoteingBinder.Vie
         viewHolder.tv_vote_sum.setText(String.valueOf(voteinginfo.getVotes()));
         viewHolder.tv_vote_province.setText(voteinginfo.getAddress() + " / " + voteinginfo.getIndustry());
         viewHolder.tv_vote_name.setText("创业者：" + voteinginfo.getEntrepreneur());
-        viewHolder.tv_vote_describe.setText(voteinginfo.getIntroduction());
-        viewHolder.tv_vote_describe.setClickable(true);
         viewHolder.btn_vote_support.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -56,7 +54,7 @@ public class VoteingBinder extends ItemViewBinder<Voteinginfo, VoteingBinder.Vie
 
     static class ViewHolder extends RecyclerView.ViewHolder {
         public SimpleDraweeView sdv;
-        public TextView tv_vote_playsum, tv_vote_title, tv_vote_sum, tv_vote_province, tv_vote_name, tv_vote_describe;
+        public TextView tv_vote_playsum, tv_vote_title, tv_vote_sum, tv_vote_province, tv_vote_name;
         public TextView btn_vote_support;
         public View rl_root;
 
@@ -69,7 +67,6 @@ public class VoteingBinder extends ItemViewBinder<Voteinginfo, VoteingBinder.Vie
             tv_vote_province = itemView.findViewById(R.id.tv_vote_province);
             tv_vote_name = itemView.findViewById(R.id.tv_vote_name);
             btn_vote_support = itemView.findViewById(R.id.btn_vote_support);
-            tv_vote_describe = itemView.findViewById(R.id.tv_vote_describe);
             rl_root = itemView.findViewById(R.id.rl_root);
         }
     }

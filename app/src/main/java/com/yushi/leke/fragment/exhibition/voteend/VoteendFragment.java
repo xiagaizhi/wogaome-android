@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 
 import com.alibaba.fastjson.JSON;
@@ -32,10 +33,6 @@ public class VoteendFragment extends BaseListFragment<VoteendContract.IView> imp
     private ICallBack mICallBack;
     private String activityid;
     private int exhibitionType;
-    public void setmICallBack(ICallBack mICallBack) {
-        this.mICallBack = mICallBack;
-    }
-
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -48,9 +45,7 @@ public class VoteendFragment extends BaseListFragment<VoteendContract.IView> imp
         adapter.register(Voteendinfo.class, new VoteendBinder(new ICallBack() {
             @Override
             public void OnBackResult(Object... s) {
-                if (mICallBack != null) {
-                    mICallBack.OnBackResult(s);
-                }
+
             }
         }));
         vu.getRecyclerView().setAdapter(adapter);

@@ -38,22 +38,13 @@ public class VoteendBinder extends ItemViewBinder<Voteendinfo, VoteendBinder.Vie
         viewHolder.tv_vote_sum.setText(String.valueOf(voteendinfo.getVotes()));
         viewHolder.tv_vote_province.setText(voteendinfo.getAddress() + " / " + voteendinfo.getIndustry());
         viewHolder.tv_vote_name.setText("创业者：" + voteendinfo.getEntrepreneur());
-        viewHolder.tv_vote_describe.setText(voteendinfo.getIntroduction());
         viewHolder.btn_vote_support.setText("已结束");
         viewHolder.btn_vote_support.setTextColor(Color.parseColor("#FF999999"));
-        viewHolder.tv_vote_describe.setClickable(true);
-        viewHolder.rl_root.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                callBack.OnBackResult(voteendinfo.getAliVideoId(), voteendinfo.getTitle(), voteendinfo.getId());
-            }
-        });
-
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
         public SimpleDraweeView sdv;
-        public TextView tv_vote_playsum, tv_vote_title, tv_vote_sum, tv_vote_province, tv_vote_name, tv_vote_describe;
+        public TextView tv_vote_playsum, tv_vote_title, tv_vote_sum, tv_vote_province, tv_vote_name;
         public Button btn_vote_support;
         public View rl_root;
 
@@ -66,7 +57,6 @@ public class VoteendBinder extends ItemViewBinder<Voteendinfo, VoteendBinder.Vie
             tv_vote_province = itemView.findViewById(R.id.tv_vote_province);
             tv_vote_name = itemView.findViewById(R.id.tv_vote_name);
             btn_vote_support = itemView.findViewById(R.id.btn_vote_support);
-            tv_vote_describe = itemView.findViewById(R.id.tv_vote_describe);
             rl_root = itemView.findViewById(R.id.rl_root);
         }
     }

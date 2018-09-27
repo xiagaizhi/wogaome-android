@@ -163,10 +163,4 @@ public class AllprojectsVu extends BaseListVu<AllprojectsContract.Presenter> imp
         pvOptions.setPicker(worklist);//一级选择器
         pvOptions.show();
     }
-
-    @Override
-    public void seacherOnclick() {
-
-    }
-
 }

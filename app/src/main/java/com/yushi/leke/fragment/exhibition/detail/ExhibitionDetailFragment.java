@@ -8,6 +8,7 @@ import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -89,8 +90,8 @@ public class ExhibitionDetailFragment extends BaseFragment<ExhibitionDetailContr
             case 3:
                 VoteendFragment voteendFragment = (VoteendFragment) UIHelper.creat(VoteendFragment.class)
                         .put(Global.BUNDLE_KEY_ACTIVITYID, activityid)
+                        .put(Global.BUNDLE_KEY_EXHIBITION_TYE, exhibitionType)
                         .build();
-                voteendFragment.setmICallBack(this);
                 loadRootFragment(R.id.fl_exhibition_content, voteendFragment);
                 break;
         }

@@ -190,6 +190,7 @@ public class AllendFragment extends BaseListFragment<AllendContract.IView> imple
     public void seacherOnclick() {
         start(UIHelper.creat(ActivitySeachFragment.class)
                 .put(Global.BUNDLE_KEY_EXHIBITION_TYE,exhibitionType)
+                .put(Global.BUNDLE_KEY_ACTIVITYID, activityid)
                 .build());
     }
 }

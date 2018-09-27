@@ -41,12 +41,12 @@ public class ActivitySeachFragment extends BaseListFragment<ActivitySeachContrac
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        init();
         Bundle bundle = getArguments();
         if (bundle != null) {
             activityid = bundle.getString(Global.BUNDLE_KEY_ACTIVITYID);
             exhibitionType=bundle.getInt(Global.BUNDLE_KEY_EXHIBITION_TYE);
         }
+        init();
     }
     private void init() {
         adapter = new MultiTypeAdapter();

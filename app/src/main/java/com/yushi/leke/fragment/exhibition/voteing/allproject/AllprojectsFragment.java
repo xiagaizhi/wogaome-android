@@ -48,7 +48,6 @@ public class AllprojectsFragment extends BaseListFragment<AllprojectsContract.IV
         if (bundle != null) {
             activityid = bundle.getString(Global.BUNDLE_KEY_ACTIVITYID);
             exhibitionType=bundle.getInt(Global.BUNDLE_KEY_EXHIBITION_TYE);
-            Log.d("LOGH", "voting:"+String.valueOf(exhibitionType));
         }
         init();
         onRefresh();
