@@ -38,6 +38,7 @@ import com.yushi.leke.uamp.MusicService;
 import com.yushi.leke.uamp.model.MusicProvider;
 import com.yushi.leke.uamp.ui.MediaBrowserProvider;
 import com.yushi.leke.uamp.utils.LogHelper;
+import com.yushi.leke.uamp.utils.MediaIDHelper;
 import com.yushi.leke.uamp.utils.ResourceHelper;
 
 import java.util.ArrayList;
@@ -196,8 +197,28 @@ private String     TAG="MainActivity";
     public void onMediaItemSelected(MediaBrowserCompat.MediaItem item) {
         LogHelper.d(TAG, "onMediaItemSelected, mediaId=" + item.getMediaId());
         if (item.isPlayable()) {//可播放状态
-            MediaControllerCompat.getMediaController(MainActivity.this).getTransportControls()
-                    .playFromMediaId(item.getMediaId(), null);
+            if (MediaIDHelper.isMediaItemPlaying(this, item)) {
+                PlaybackStateCompat state = MediaControllerCompat.getMediaController(this).getPlaybackState();
+                if (state != null) {
+                    MediaControllerCompat.TransportControls controls = MediaControllerCompat.getMediaController(this).getTransportControls();
+                    switch (state.getState()) {
+                        case PlaybackStateCompat.STATE_PLAYING: // fall through
+                        case PlaybackStateCompat.STATE_BUFFERING:
+                            controls.pause();
+                            break;
+                        case PlaybackStateCompat.STATE_PAUSED:
+                        case PlaybackStateCompat.STATE_STOPPED:
+                            controls.play();
+                            break;
+                        default:
+                            controls.play();
+                            break;
+                    }
+                }
+            } else {
+                MediaControllerCompat.getMediaController(MainActivity.this).getTransportControls()
+                        .playFromMediaId(item.getMediaId(), null);
+            }
         } else {
             LogHelper.w(TAG, "Ignoring MediaItem that is neither browsable nor playable: ",
                     "mediaId=", item.getMediaId());

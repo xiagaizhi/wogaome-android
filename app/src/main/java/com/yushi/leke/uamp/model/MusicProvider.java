@@ -206,6 +206,7 @@ public class MusicProvider {
 //            }
 //            return;
 //        }
+        getAuth();
         ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).getPlayList(parentMediaId)).enqueue(new BaseHttpCallBack() {
             @Override
             public void onSuccess(ApiBean mApiBean) {
