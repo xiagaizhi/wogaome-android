@@ -86,14 +86,22 @@ public class MediaBrowserViewBinder extends ItemViewBinder<MediaBrowserCompat.Me
                 break;
             case STATE_PAUSED:
                 viewHolder.iv_play_state.setImageResource(R.drawable.ic_subscription_headset_center);
-                viewHolder.tv_name.setTextColor(activity.getResources().getColor(R.color.alivc_red));
-                viewHolder.tv_action.setTextColor(activity.getResources().getColor(R.color.alivc_red));
                 if (listenable == 1) {
                     viewHolder.tv_action.setText("试听");
                     drawableLeft = activity.getResources().getDrawable(R.drawable.ic_play_headset_red);
+                    viewHolder.tv_action.setTextColor(activity.getResources().getColor(R.color.alivc_red));
+                    viewHolder.tv_name.setTextColor(activity.getResources().getColor(R.color.alivc_red));
                 } else {
                     viewHolder.tv_action.setText("播放");
-                    drawableLeft = activity.getResources().getDrawable(R.drawable.ic_play_unlock_red);
+                    if (levelStatus == 0) {
+                        drawableLeft = activity.getResources().getDrawable(R.drawable.ic_play_unlock_red);
+                        viewHolder.tv_action.setTextColor(activity.getResources().getColor(R.color.alivc_red));
+                        viewHolder.tv_name.setTextColor(activity.getResources().getColor(R.color.alivc_red));
+                    } else {
+                        drawableLeft = activity.getResources().getDrawable(R.drawable.ic_play_lock_gray);
+                        viewHolder.tv_action.setTextColor(activity.getResources().getColor(R.color.color_gray_level6));
+                        viewHolder.tv_name.setTextColor(activity.getResources().getColor(R.color.color_gray_level3));
+                    }
                 }
                 break;
             default:

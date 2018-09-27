@@ -66,7 +66,7 @@ public class VoteFragment extends DialogFragment implements View.OnClickListener
         super.onCreate(savedInstanceState);
         //设置样式
         setStyle(DialogFragment.STYLE_NO_FRAME, R.style.CustomDatePickerDialog);
-        Bundle args= getArguments();
+        Bundle args = getArguments();
         projectId = args.getString(Global.BUNDLE_PROJECT_ID);
     }
 
@@ -172,11 +172,11 @@ public class VoteFragment extends DialogFragment implements View.OnClickListener
                     if (voteInitInfo != null) {
                         int temp = voteInitInfo.getLkc().setScale(0, BigDecimal.ROUND_DOWN).compareTo(new BigDecimal(getCurrentChoiceVoteNum()));
                         if (temp == -1) {//lkc币不足
-                            if (voteInitInfo.getLkc().setScale(0, BigDecimal.ROUND_DOWN).compareTo(new BigDecimal(0)) == 0){
+                            if (voteInitInfo.getLkc().setScale(0, BigDecimal.ROUND_DOWN).compareTo(new BigDecimal(0)) == 0) {
                                 et_lkc.setText("");
                                 et_lkc.setTextSize(17);
                                 btn_vote.setEnabled(false);
-                            }else {
+                            } else {
                                 et_lkc.setText(String.valueOf(voteInitInfo.getLkc().setScale(0, BigDecimal.ROUND_DOWN)));
                             }
 
@@ -214,7 +214,7 @@ public class VoteFragment extends DialogFragment implements View.OnClickListener
                                         commonDialog.dismiss();
                                         if (actionType == CommonDialog.COMMONDIALOG_ACTION_POSITIVE) {
                                             if (mICallBack != null) {
-                                                mICallBack.OnBackResult();
+                                                mICallBack.OnBackResult(1);
                                             }
                                             dismiss();
                                         }
@@ -268,13 +268,16 @@ public class VoteFragment extends DialogFragment implements View.OnClickListener
         //发起投票
         if (TextUtils.equals("立即投票", btn_vote.getText().toString())) {
             DialogManager.getInstance().showLoadingDialog();
-            ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).tradeLKCForVote(token, String.valueOf(getCurrentChoiceVoteNum()),projectId))
+            ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).tradeLKCForVote(token, String.valueOf(getCurrentChoiceVoteNum()), projectId))
                     .useCache(false)
                     .enqueue(new BaseHttpCallBack() {
                         @Override
                         public void onSuccess(ApiBean mApiBean) {
                             //更新页面数据
                             voteSuccessToUpdateView();
+                            if (mICallBack != null) {
+                                mICallBack.OnBackResult(2, getCurrentChoiceVoteNum());
+                            }
                             voteInitInfo.setLkc(voteInitInfo.getLkc().subtract(new BigDecimal(getCurrentChoiceVoteNum())));
                             voteInitInfo.setVoteCount(voteInitInfo.getVoteCount().add(new BigDecimal(getCurrentChoiceVoteNum())));
                             bindData(voteInitInfo);

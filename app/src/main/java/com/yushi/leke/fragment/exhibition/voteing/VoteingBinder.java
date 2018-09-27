@@ -38,7 +38,7 @@ public class VoteingBinder extends ItemViewBinder<Voteinginfo, VoteingBinder.Vie
             @Override
             public void onClick(View v) {
                 if (callBack != null) {//发起投票
-                    callBack.OnBackResult(1, voteinginfo.getId());
+                    callBack.OnBackResult(1, voteinginfo);
                 }
             }
         });

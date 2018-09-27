@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 
 import com.alibaba.fastjson.JSON;
@@ -34,7 +33,9 @@ public class VoteingFragment extends BaseListFragment<VoteingContract.IView> imp
     private Voteinginfolist infolist;
     private ICallBack mICallBack;
     private String activityid;
+    private Voteinginfo choiceVoteinginfo;
     private int exhibitionType;
+
     public void setmICallBack(ICallBack mICallBack) {
         this.mICallBack = mICallBack;
     }
@@ -45,7 +46,7 @@ public class VoteingFragment extends BaseListFragment<VoteingContract.IView> imp
         Bundle bundle = getArguments();
         if (bundle != null) {
             activityid = bundle.getString(Global.BUNDLE_KEY_ACTIVITYID);
-            exhibitionType=bundle.getInt(Global.BUNDLE_KEY_EXHIBITION_TYE);
+            exhibitionType = bundle.getInt(Global.BUNDLE_KEY_EXHIBITION_TYE);
         }
         adapter = new MultiTypeAdapter();
         adapter.register(Voteinginfo.class, new VoteingBinder(new ICallBack() {
@@ -54,7 +55,8 @@ public class VoteingFragment extends BaseListFragment<VoteingContract.IView> imp
                 if (mICallBack != null) {
                     int type = (int) s[0];
                     if (type == 1) {
-                        String projectId = (String) s[1];
+                        choiceVoteinginfo = (Voteinginfo) s[1];
+                        String projectId = choiceVoteinginfo.getId();
                         VoteFragment voteFragment = new VoteFragment();
                         voteFragment.setmICallBack(VoteingFragment.this);
                         Bundle args = new Bundle();
@@ -120,7 +122,7 @@ public class VoteingFragment extends BaseListFragment<VoteingContract.IView> imp
                                 vu.setStateEmpty();
                                 vu.getRecyclerView().getPageManager().setPageState(PageInfo.PAGE_STATE_NO_MORE);
                             }
-                        }else {
+                        } else {
                             vu.setStateEmpty();
                         }
                     }
@@ -132,12 +134,25 @@ public class VoteingFragment extends BaseListFragment<VoteingContract.IView> imp
         getRootFragment().start(UIHelper
                 .creat(AllprojectsFragment.class)
                 .put(Global.BUNDLE_KEY_ACTIVITYID, activityid)
-                .put(Global.BUNDLE_KEY_EXHIBITION_TYE,exhibitionType)
+                .put(Global.BUNDLE_KEY_EXHIBITION_TYE, exhibitionType)
                 .build());
     }
 
     @Override
     public void OnBackResult(Object... s) {
-        getRootFragment().start(UIHelper.creat(PaySafetyFragment.class).build());
+        int type = (int) s[0];
+        switch (type) {
+            case 1:
+                getRootFragment().start(UIHelper.creat(PaySafetyFragment.class).build());
+                break;
+            case 2:
+                long voteNum = (long) s[1];
+                if (choiceVoteinginfo != null) {
+                    choiceVoteinginfo.setVotes(choiceVoteinginfo.getVotes() + voteNum);
+                    getVu().getRecyclerView().getAdapter().notifyDataSetChanged();
+                }
+                break;
+        }
+
     }
 }

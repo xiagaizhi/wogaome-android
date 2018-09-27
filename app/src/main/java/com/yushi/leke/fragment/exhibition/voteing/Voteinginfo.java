@@ -6,8 +6,8 @@ public class Voteinginfo {
     private String address;
     private String industry;
     private String entrepreneur;
-    private int votes;
-    private int playCount;
+    private long votes;
+    private long playCount;
     private String introduction;
     private String id;
     private String aliVideoId;
@@ -23,17 +23,6 @@ public class Voteinginfo {
     public Voteinginfo(){
 
     }
-    public Voteinginfo(String title, String video100Pic, String address, String industry, String entrepreneur, int votes, int playCount, String introduction, String id){
-        this.title = title;
-        this.video100Pic=video100Pic;
-        this.address=address;
-        this.industry=industry;
-        this.entrepreneur=entrepreneur;
-        this.votes=votes;
-        this.playCount=playCount;
-        this.introduction = introduction;
-        this.id=id;
-    }
 
     public void setId(String id) {
         this.id = id;
@@ -43,17 +32,6 @@ public class Voteinginfo {
 
         this.introduction = introduction;
     }
-
-    public void setPlayCount(int playCount) {
-
-        this.playCount = playCount;
-    }
-
-    public void setVotes(int votes) {
-
-        this.votes = votes;
-    }
-
     public void setEntrepreneur(String entrepreneur) {
 
         this.entrepreneur = entrepreneur;
@@ -89,16 +67,6 @@ public class Voteinginfo {
         return introduction;
     }
 
-    public int getPlayCount() {
-
-        return playCount;
-    }
-
-    public int getVotes() {
-
-        return votes;
-    }
-
     public String getEntrepreneur() {
 
         return entrepreneur;
@@ -122,6 +90,22 @@ public class Voteinginfo {
     public String getTitle() {
 
         return title;
+    }
+
+    public long getVotes() {
+        return votes;
+    }
+
+    public void setVotes(long votes) {
+        this.votes = votes;
+    }
+
+    public long getPlayCount() {
+        return playCount;
+    }
+
+    public void setPlayCount(long playCount) {
+        this.playCount = playCount;
     }
 }
 
