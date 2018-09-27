@@ -5,7 +5,9 @@ import android.graphics.drawable.AnimationDrawable;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -52,7 +54,10 @@ public class AlbumDetailVu extends BaseVu<AlbumDetailContract.Presenter> impleme
     @FindView(R.id.tv_sub)
     private TextView tv_sub;
     private ImageView musicAnim;
-
+    @FindView(R.id.app_bar_layout)
+    private AppBarLayout appBarLayout;
+    ImageView backButton;
+    private Boolean flag=false;//全局刷新判定
     @Override
     public void initView(View view) {
         mTabLayout.addTab(mTabLayout.newTab().setText("课程内容"));
@@ -64,13 +69,37 @@ public class AlbumDetailVu extends BaseVu<AlbumDetailContract.Presenter> impleme
                 ViewUtils.setIndicator(mTabLayout,60,60);
             }
         });
+        //applayout竖直方向偏移量监听
+        appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+            @Override
+            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+                int[] position = new int[2];
+                //获取tablayout距离当前窗口顶部位置
+                mTabLayout.getLocationInWindow(position);
+                if (position[1]<=220&&flag){
+                        expandableTextView.setVisibility(View.INVISIBLE);
+                        backButton.setImageResource(com.yufan.library.R.drawable.left_back_black_arrows);
+                        musicAnim.setImageResource(R.drawable.anim_player_blue);
+                        ((AnimationDrawable) musicAnim.getDrawable()).start();
+                        flag=false;
+                }else if (position[1]>220&&!flag){
+                    flag=true;
+                    expandableTextView.setVisibility(View.VISIBLE);
+                    backButton.setImageResource(com.yufan.library.R.drawable.left_back_white_arrows);
+                    musicAnim.setImageResource(R.drawable.anim_player_white);
+                    ((AnimationDrawable) musicAnim.getDrawable()).start();
+                }
+            }
+        });
 
     }
 
     @Override
     public boolean initTitle(AppToolbar appToolbar) {
         musicAnim = UIHelper.getMusicView(mPersenter.getActivity(),appToolbar);
-        ImageView backButton=   appToolbar.creatLeftView(ImageView.class);
+        musicAnim.setImageResource(R.drawable.anim_player_white);
+        ((AnimationDrawable) musicAnim.getDrawable()).start();
+        backButton=   appToolbar.creatLeftView(ImageView.class);
         musicAnim.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -85,7 +114,7 @@ public class AlbumDetailVu extends BaseVu<AlbumDetailContract.Presenter> impleme
                 getPresenter().onBackPressed();
             }
         });
-        backButton.setImageResource(com.yufan.library.R.drawable.left_back_black_arrows);
+        backButton.setImageResource(com.yufan.library.R.drawable.left_back_white_arrows);
         appToolbar.build(false);
         return true;
     }

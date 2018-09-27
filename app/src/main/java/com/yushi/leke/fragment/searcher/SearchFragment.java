@@ -136,7 +136,6 @@ public class SearchFragment extends BaseListFragment<SearchContract.IView> imple
             @Override
             public void onSuccess(ApiBean mApiBean) {
                 super.onSuccess(mApiBean);
-                Log.i("LOGH",mApiBean.getCode()+"\n"+mApiBean.getData()+"\n"+mApiBean.getMessage());
                 JSONObject jsonObject= JSON.parseObject(mApiBean.data);
                 int moreActivity=  jsonObject.getInteger("moreActivity");
                 int moreAudio=jsonObject.getInteger("moreAudio");

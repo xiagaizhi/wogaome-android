@@ -22,6 +22,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.yufan.library.inter.ICallBack;
@@ -50,6 +51,7 @@ public class SearchActionViewBinder extends ItemViewBinder<SearchActionInfo, Sea
     protected void onBindViewHolder(@NonNull ViewHolder holder, @NonNull final SearchActionInfo category) {
 
         holder.sdv.setImageURI(Uri.parse(category.horizontalIcon));
+
         if (getAdapter().getItemCount()==getPosition(holder)-1) {
             holder.view_bottom_line.setVisibility(View.INVISIBLE);
         } else {
@@ -71,10 +73,14 @@ public class SearchActionViewBinder extends ItemViewBinder<SearchActionInfo, Sea
     static class ViewHolder extends RecyclerView.ViewHolder {
         SimpleDraweeView sdv;
         View view_bottom_line;
-
+        TextView tv_playcount,tv_title,tv_time,tv_organizer;
         ViewHolder(@NonNull View itemView) {
             super(itemView);
             sdv = itemView.findViewById(R.id.sdv);
+            tv_playcount=itemView.findViewById(R.id.tv_playcount);
+            tv_title=itemView.findViewById(R.id.tv_title);
+            tv_time=itemView.findViewById(R.id.tv_time);
+            tv_organizer=itemView.findViewById(R.id.tv_organizer);
             view_bottom_line = itemView.findViewById(R.id.view_bottom_line);
         }
     }

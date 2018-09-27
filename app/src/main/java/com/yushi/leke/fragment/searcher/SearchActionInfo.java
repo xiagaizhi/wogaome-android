@@ -20,6 +20,11 @@ public class SearchActionInfo {
     String shareIcon;//分享icon
     long ctime;
     int ranking;//获胜名次
+    int processStatus;//活动进度
+    String id;
+    String verticalIcon;//竖屏大图
+    String introduction;
+    int status;//活动状态：0-上架中, 1-已下架
     public String getId() {
         return id;
     }
@@ -27,13 +32,6 @@ public class SearchActionInfo {
     public void setId(String id) {
         this.id = id;
     }
-
-    String id;
-    String verticalIcon;//竖屏大图
-    String introduction;
-    int status;//活动状态：0-上架中, 1-已下架
-    int processStatus;
-
     public int getProcessStatus() {
         return processStatus;
     }
@@ -45,8 +43,6 @@ public class SearchActionInfo {
     public SearchActionInfo() {
 
     }
-
-
     public String getQq() {
         return qq;
     }
