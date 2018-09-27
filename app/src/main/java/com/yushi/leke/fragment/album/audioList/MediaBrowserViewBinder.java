@@ -83,7 +83,6 @@ public class MediaBrowserViewBinder extends ItemViewBinder<MediaBrowserCompat.Me
                     viewHolder.tv_action.setText("播放");
                     drawableLeft = activity.getResources().getDrawable(R.drawable.ic_play_unlock_red);
                 }
-                viewHolder.tv_action.setTextColor(activity.getResources().getColor(R.color.alivc_red));
                 break;
             case STATE_PAUSED:
                 viewHolder.iv_play_state.setImageResource(R.drawable.ic_subscription_headset_center);
@@ -96,12 +95,11 @@ public class MediaBrowserViewBinder extends ItemViewBinder<MediaBrowserCompat.Me
                     viewHolder.tv_action.setText("播放");
                     drawableLeft = activity.getResources().getDrawable(R.drawable.ic_play_unlock_red);
                 }
-                viewHolder.tv_action.setTextColor(activity.getResources().getColor(R.color.alivc_red));
                 break;
             default:
                 viewHolder.iv_play_state.setImageResource(R.drawable.ic_subscription_headset_center);
                 viewHolder.tv_name.setTextColor(activity.getResources().getColor(R.color.color_gray_level3));
-                if (levelStatus == 1) {
+                if (listenable == 1) {
                     viewHolder.tv_action.setText("试听");
                     drawableLeft = activity.getResources().getDrawable(R.drawable.ic_play_headset_blue);
                     viewHolder.tv_action.setTextColor(activity.getResources().getColor(R.color.alivc_blue_levelf));

@@ -184,7 +184,7 @@ public class MusicPlayerVu extends BaseVu<MusicPlayerContract.Presenter> impleme
     @Override
     public void updateProgress(int currentPosition) {
 
-        mSeekbar.setProgress((int) currentPosition);
+        mSeekbar.setProgress(currentPosition);
     }
 
     @Override

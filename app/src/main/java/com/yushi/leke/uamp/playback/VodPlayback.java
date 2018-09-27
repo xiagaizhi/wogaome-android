@@ -56,7 +56,7 @@ public final class VodPlayback implements Playback {
     // allowed to reduce the volume instead of stopping playback.
     //当音频失去焦点，且不需要停止播放，只需要减小音量时，我们设置的媒体播放器音量大小
     //例如微信的提示音响起，我们只需要减小当前音乐的播放音量即可
-    public static final int VOLUME_DUCK = 20;
+    public static final int VOLUME_DUCK = 10;
     // The volume we set the media player when we have audio focus.
     //当我们获取音频焦点时设置的播放音量大小
     public static final int VOLUME_NORMAL = 40;
@@ -245,7 +245,7 @@ public final class VodPlayback implements Playback {
                 mAliyunVodPlayer.setOnAutoPlayListener(new IAliyunVodPlayer.OnAutoPlayListener() {
                     @Override
                     public void onAutoPlayStarted() {
-                        mAliyunVodPlayer.setVolume(VOLUME_NORMAL);
+//                        mAliyunVodPlayer.setVolume(mAliyunVodPlayer.getVolume());
                     }
                 });
 
@@ -400,7 +400,9 @@ public final class VodPlayback implements Playback {
                 // We're permitted to play, but only if we 'duck', ie: play softly
                 mAliyunVodPlayer.setVolume(VOLUME_DUCK);
             } else {
-                mAliyunVodPlayer.setVolume(VOLUME_NORMAL);
+                if (mAliyunVodPlayer.getVolume()<=0){
+                    mAliyunVodPlayer.setVolume(VOLUME_NORMAL);
+                }
             }
 
             // If we were playing when we lost focus, we need to resume playing.
