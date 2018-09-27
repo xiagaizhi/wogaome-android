@@ -2,7 +2,16 @@ package com.yushi.leke.fragment.exhibition.voteend;
 
 public class Voteendinfo {
     private String title;
-    private String logo;
+
+    public String getVideo100Pic() {
+        return video100Pic;
+    }
+
+    public void setVideo100Pic(String video100Pic) {
+        this.video100Pic = video100Pic;
+    }
+
+    private String video100Pic;
     private String address;
     private String industry;
     private String entrepreneur;
@@ -23,17 +32,6 @@ public class Voteendinfo {
     public Voteendinfo(){
 
     }
-    public Voteendinfo(String title, String logo, String address, String industry, String entrepreneur, int votes, int playCount, String introduction, String id){
-        this.title = title;
-        this.logo=logo;
-        this.address=address;
-        this.industry=industry;
-        this.entrepreneur=entrepreneur;
-        this.votes=votes;
-        this.playCount=playCount;
-        this.introduction=introduction;
-        this.id=id;
-    }
 
     public String getIntroduction() {
         return introduction;
@@ -43,13 +41,6 @@ public class Voteendinfo {
         this.introduction = introduction;
     }
 
-    public String getLogo() {
-        return logo;
-    }
-
-    public void setLogo(String logo) {
-        this.logo = logo;
-    }
 
     public void setId(String id) {
         this.id = id;

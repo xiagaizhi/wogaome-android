@@ -93,7 +93,7 @@ public class AllendFragment extends BaseListFragment<AllendContract.IView> imple
             arg2=getVu().getcity();
         }
         ApiManager.getCall(ApiManager.getInstance().create(YFApi.class)
-                .getvoteendallpro(1, activityid, getVu().getindustry(), getVu().getcity()))
+                .getvoteendallpro(1, activityid, arg1, arg2))
                 .useCache(false)
                 .enqueue(new YFListHttpCallBack(getVu()) {
                     @Override

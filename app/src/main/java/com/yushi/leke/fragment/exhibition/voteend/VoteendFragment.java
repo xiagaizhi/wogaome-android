@@ -128,6 +128,9 @@ public class VoteendFragment extends BaseListFragment<VoteendContract.IView> imp
     @Override
     public void openWinPage() {
         WinlistDialogFragment winlistDialogFragment = new WinlistDialogFragment();
+        Bundle bundle=new Bundle();
+        bundle.putString(Global.BUNDLE_KEY_ACTIVITYID, activityid);
+        winlistDialogFragment.setArguments(bundle);
         winlistDialogFragment.show(getFragmentManager(), "WinlistDialogFragment");
     }
 }

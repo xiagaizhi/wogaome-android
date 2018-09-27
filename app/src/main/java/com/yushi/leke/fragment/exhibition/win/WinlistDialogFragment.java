@@ -7,6 +7,7 @@ import android.support.v4.app.DialogFragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +16,7 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.alibaba.fastjson.JSON;
+import com.yufan.library.Global;
 import com.yufan.library.api.ApiBean;
 import com.yufan.library.api.ApiManager;
 import com.yufan.library.api.BaseHttpCallBack;
@@ -34,7 +36,6 @@ public class WinlistDialogFragment extends DialogFragment implements View.OnClic
     private List<WinProjectInfo> winListInfoList = new ArrayList<>();
     private WinListAdapter mWinListAdapter;
     private WinProjectInfoList winProjectInfoList;
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,7 +73,7 @@ public class WinlistDialogFragment extends DialogFragment implements View.OnClic
         String activityId = "";
         Bundle args = getArguments();
         if (args != null) {
-            activityId = args.getString("activityId");
+            activityId = args.getString(Global.BUNDLE_KEY_ACTIVITYID);
         }
         ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).winlist(activityId))
                 .useCache(true)

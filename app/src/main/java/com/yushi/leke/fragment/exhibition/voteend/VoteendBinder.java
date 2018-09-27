@@ -33,7 +33,7 @@ public class VoteendBinder extends ItemViewBinder<Voteendinfo, VoteendBinder.Vie
     @Override
     protected void onBindViewHolder(@NonNull ViewHolder viewHolder, @NonNull final Voteendinfo voteendinfo) {
         viewHolder.tv_vote_playsum.setText(String.valueOf(voteendinfo.getPlayCount()));
-        viewHolder.sdv.setImageURI(voteendinfo.getLogo());
+        viewHolder.sdv.setImageURI(voteendinfo.getVideo100Pic());
         viewHolder.tv_vote_title.setText(voteendinfo.getTitle());
         viewHolder.tv_vote_sum.setText(String.valueOf(voteendinfo.getVotes()));
         viewHolder.tv_vote_province.setText(voteendinfo.getAddress() + " / " + voteendinfo.getIndustry());

@@ -58,6 +58,7 @@ public class AlbumDetailVu extends BaseVu<AlbumDetailContract.Presenter> impleme
     private AppBarLayout appBarLayout;
     ImageView backButton;
     private Boolean flag=false;//全局刷新判定
+    private ImageView img_share;
     @Override
     public void initView(View view) {
         mTabLayout.addTab(mTabLayout.newTab().setText("课程内容"));
@@ -79,6 +80,7 @@ public class AlbumDetailVu extends BaseVu<AlbumDetailContract.Presenter> impleme
                 if (position[1]<=220&&flag){
                         expandableTextView.setVisibility(View.INVISIBLE);
                         backButton.setImageResource(com.yufan.library.R.drawable.left_back_black_arrows);
+                        img_share.setImageResource(R.drawable.ic_share_blue);
                         musicAnim.setImageResource(R.drawable.anim_player_blue);
                         ((AnimationDrawable) musicAnim.getDrawable()).start();
                         flag=false;
@@ -86,6 +88,7 @@ public class AlbumDetailVu extends BaseVu<AlbumDetailContract.Presenter> impleme
                     flag=true;
                     expandableTextView.setVisibility(View.VISIBLE);
                     backButton.setImageResource(com.yufan.library.R.drawable.left_back_white_arrows);
+                    img_share.setImageResource(R.drawable.ic_share_white);
                     musicAnim.setImageResource(R.drawable.anim_player_white);
                     ((AnimationDrawable) musicAnim.getDrawable()).start();
                 }
@@ -96,6 +99,8 @@ public class AlbumDetailVu extends BaseVu<AlbumDetailContract.Presenter> impleme
 
     @Override
     public boolean initTitle(AppToolbar appToolbar) {
+        img_share=appToolbar.creatRightView(ImageView.class);
+        img_share.setImageResource(R.drawable.ic_share_white);
         musicAnim = UIHelper.getMusicView(mPersenter.getActivity(),appToolbar);
         musicAnim.setImageResource(R.drawable.anim_player_white);
         ((AnimationDrawable) musicAnim.getDrawable()).start();
