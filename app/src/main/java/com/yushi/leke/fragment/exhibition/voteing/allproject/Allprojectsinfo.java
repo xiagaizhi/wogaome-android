@@ -6,8 +6,8 @@ public class Allprojectsinfo {
     private String address;
     private String industry;
     private String entrepreneur;
-    private int votes;
-    private int playCount;
+    private long votes;
+    private long playCount;
     private String id;
     public Allprojectsinfo(){
 
@@ -52,19 +52,19 @@ public class Allprojectsinfo {
         this.entrepreneur = entrepreneur;
     }
 
-    public int getVotes() {
+    public long getVotes() {
         return votes;
     }
 
-    public void setVotes(int votes) {
+    public void setVotes(long votes) {
         this.votes = votes;
     }
 
-    public int getPlayCount() {
+    public long getPlayCount() {
         return playCount;
     }
 
-    public void setPlayCount(int playCount) {
+    public void setPlayCount(long playCount) {
         this.playCount = playCount;
     }
 

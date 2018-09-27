@@ -21,6 +21,7 @@ import com.yushi.leke.YFApi;
 import com.yushi.leke.fragment.exhibition.vote.VoteFragment;
 import com.yushi.leke.fragment.exhibition.voteing.seacher.ActivitySeachFragment;
 import com.yushi.leke.fragment.paySafe.PaySafetyFragment;
+import com.yushi.leke.util.ArgsUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,6 +42,7 @@ public class AllprojectsFragment extends BaseListFragment<AllprojectsContract.IV
     List<String>citylist=new ArrayList<>();
     long arg1;
     String arg2;
+    private Allprojectsinfo choiceinfo;
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -60,15 +62,16 @@ public class AllprojectsFragment extends BaseListFragment<AllprojectsContract.IV
             public void OnBackResult(Object... s) {
                 int type = (int) s[0];
                 if (type == 1) {
-                    String projectId = (String) s[1];
+                    choiceinfo = (Allprojectsinfo) s[1];
+                    String projectId = choiceinfo.getId();
                     VoteFragment voteFragment = new VoteFragment();
                     voteFragment.setmICallBack(AllprojectsFragment.this);
                     Bundle args = new Bundle();
                     args.putString(Global.BUNDLE_PROJECT_ID, projectId);
                     voteFragment.setArguments(args);
                     voteFragment.show(getFragmentManager(), "VoteFragment");
+                    ArgsUtil.datapoint(ArgsUtil.VOTE_NAME, "null", ArgsUtil.UID, ArgsUtil.VOTE_CODE, projectId, null);
                 }
-
             }
         }));
         vu.getRecyclerView().setAdapter(adapter);
@@ -205,8 +208,18 @@ public class AllprojectsFragment extends BaseListFragment<AllprojectsContract.IV
     }
     @Override
     public void OnBackResult(Object... s) {
-        getRootFragment().start(UIHelper.creat(PaySafetyFragment.class)
-                .put(Global.BUNDLE_KEY_ACTIVITYID,activityid)
-                .build());
+        int type = (int) s[0];
+        switch (type) {
+            case 1:
+                getRootFragment().start(UIHelper.creat(PaySafetyFragment.class).build());
+                break;
+            case 2:
+                long voteNum = (long) s[1];
+                if (choiceinfo != null) {
+                    choiceinfo.setVotes(choiceinfo.getVotes() + voteNum);
+                    getVu().getRecyclerView().getAdapter().notifyDataSetChanged();
+                }
+                break;
+        }
     }
 }

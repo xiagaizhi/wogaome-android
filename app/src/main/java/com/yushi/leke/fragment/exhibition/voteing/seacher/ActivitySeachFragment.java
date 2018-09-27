@@ -18,6 +18,7 @@ import com.yufan.library.base.BaseListFragment;
 import com.yufan.library.inject.VuClass;
 import com.yufan.library.inter.ICallBack;
 import com.yufan.library.view.recycler.PageInfo;
+import com.yushi.leke.UIHelper;
 import com.yushi.leke.YFApi;
 import com.yushi.leke.fragment.exhibition.vote.VoteFragment;
 import com.yushi.leke.fragment.exhibition.voteend.allproject.AllendBinder;
@@ -25,6 +26,8 @@ import com.yushi.leke.fragment.exhibition.voteing.allproject.AllprojectBinder;
 import com.yushi.leke.fragment.exhibition.voteing.allproject.AllprojectsFragment;
 import com.yushi.leke.fragment.exhibition.voteing.allproject.Allprojectsinfo;
 import com.yushi.leke.fragment.exhibition.voteing.allproject.Allprojectsinfolist;
+import com.yushi.leke.fragment.paySafe.PaySafetyFragment;
+import com.yushi.leke.util.ArgsUtil;
 
 import me.drakeet.multitype.MultiTypeAdapter;
 
@@ -38,6 +41,7 @@ public class ActivitySeachFragment extends BaseListFragment<ActivitySeachContrac
     private MultiTypeAdapter adapter;
     private String activityid;
     private int exhibitionType;
+    private Allprojectsinfo choiceinfo;
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -58,13 +62,15 @@ public class ActivitySeachFragment extends BaseListFragment<ActivitySeachContrac
                     public void OnBackResult(Object... s) {
                         int type = (int) s[0];
                         if (type == 1) {
-                            String projectId = (String) s[1];
+                            choiceinfo = (Allprojectsinfo) s[1];
+                            String projectId = choiceinfo.getId();
                             VoteFragment voteFragment = new VoteFragment();
                             voteFragment.setmICallBack(ActivitySeachFragment.this);
                             Bundle args = new Bundle();
                             args.putString(Global.BUNDLE_PROJECT_ID, projectId);
                             voteFragment.setArguments(args);
                             voteFragment.show(getFragmentManager(), "VoteFragment");
+                            ArgsUtil.datapoint(ArgsUtil.VOTE_NAME, "null", ArgsUtil.UID, ArgsUtil.VOTE_CODE, projectId, null);
                         }
                     }
                 }));
@@ -85,13 +91,107 @@ public class ActivitySeachFragment extends BaseListFragment<ActivitySeachContrac
     }
     @Override
     public void onLoadMore(int index) {
-
+        switch (exhibitionType){
+            case 2:
+                ApiManager.getCall(ApiManager.getInstance().create(YFApi.class)
+                        .searchacting(index,activityid,vu.getEditText().getText().toString()))
+                        .useCache(false)
+                        .enqueue(new YFListHttpCallBack(getVu()) {
+                            @Override
+                            public void onSuccess(ApiBean mApiBean) {
+                                super.onSuccess(mApiBean);
+                                Allprojectsinfolist infolist;
+                                if (!TextUtils.isEmpty(mApiBean.getData())) {
+                                    infolist = JSON.parseObject(mApiBean.getData(), Allprojectsinfolist.class);
+                                    if (infolist != null && infolist.getProjectList().size() > 0) {
+                                        list.addAll(infolist.getProjectList());
+                                        vu.getRecyclerView().getAdapter().notifyDataSetChanged();
+                                    } else {
+                                        vu.getRecyclerView().getPageManager().setPageState(PageInfo.PAGE_STATE_NO_MORE);
+                                    }
+                                }
+                            }
+                        });
+                break;
+            case 3:
+                ApiManager.getCall(ApiManager.getInstance().create(YFApi.class)
+                        .searchactend(index,activityid,vu.getEditText().getText().toString()))
+                        .useCache(false)
+                        .enqueue(new YFListHttpCallBack(getVu()) {
+                            @Override
+                            public void onSuccess(ApiBean mApiBean) {
+                                super.onSuccess(mApiBean);
+                                Allprojectsinfolist infolist;
+                                if (!TextUtils.isEmpty(mApiBean.getData())) {
+                                    infolist = JSON.parseObject(mApiBean.getData(), Allprojectsinfolist.class);
+                                    if (infolist != null && infolist.getProjectList().size() > 0) {
+                                        list.addAll(infolist.getProjectList());
+                                        vu.getRecyclerView().getAdapter().notifyDataSetChanged();
+                                    } else {
+                                        vu.getRecyclerView().getPageManager().setPageState(PageInfo.PAGE_STATE_NO_MORE);
+                                    }
+                                }
+                            }
+                        });
+                break;
+        }
     }
 
 
     @Override
     public void onRefresh() {
-
+        if (vu.getEditText().getText().toString().equals("")){
+            return;
+        }
+        switch (exhibitionType){
+            case 2:
+                ApiManager.getCall(ApiManager.getInstance().create(YFApi.class)
+                        .searchacting(1,activityid,vu.getEditText().getText().toString()))
+                        .useCache(false)
+                        .enqueue(new YFListHttpCallBack(getVu()) {
+                            @Override
+                            public void onSuccess(ApiBean mApiBean) {
+                                super.onSuccess(mApiBean);
+                                Allprojectsinfolist infolist;
+                                if (!TextUtils.isEmpty(mApiBean.getData())) {
+                                    infolist = JSON.parseObject(mApiBean.getData(), Allprojectsinfolist.class);
+                                    if (infolist != null && infolist.getProjectList().size() > 0) {
+                                        list.clear();
+                                        list.addAll(infolist.getProjectList());
+                                        vu.getRecyclerView().getAdapter().notifyDataSetChanged();
+                                    } else {
+                                        vu.setStateEmpty();
+                                        vu.getRecyclerView().getPageManager().setPageState(PageInfo.PAGE_STATE_NO_MORE);
+                                    }
+                                } else {
+                                    vu.setStateEmpty();
+                                }
+                                Log.d("LOGH","111");
+                            }
+                        });
+                break;
+            case 3:
+                ApiManager.getCall(ApiManager.getInstance().create(YFApi.class)
+                        .searchactend(1,activityid,vu.getEditText().getText().toString()))
+                        .useCache(false)
+                        .enqueue(new YFListHttpCallBack(getVu()) {
+                            @Override
+                            public void onSuccess(ApiBean mApiBean) {
+                                super.onSuccess(mApiBean);
+                                Allprojectsinfolist infolist;
+                                if (!TextUtils.isEmpty(mApiBean.getData())) {
+                                    infolist = JSON.parseObject(mApiBean.getData(), Allprojectsinfolist.class);
+                                    if (infolist != null && infolist.getProjectList().size() > 0) {
+                                        list.addAll(infolist.getProjectList());
+                                        vu.getRecyclerView().getAdapter().notifyDataSetChanged();
+                                    } else {
+                                        vu.getRecyclerView().getPageManager().setPageState(PageInfo.PAGE_STATE_NO_MORE);
+                                    }
+                                }
+                            }
+                        });
+                break;
+        }
     }
 
     @Override
@@ -156,6 +256,18 @@ public class ActivitySeachFragment extends BaseListFragment<ActivitySeachContrac
 
     @Override
     public void OnBackResult(Object... s) {
-
+        int type = (int) s[0];
+        switch (type) {
+            case 1:
+                getRootFragment().start(UIHelper.creat(PaySafetyFragment.class).build());
+                break;
+            case 2:
+                long voteNum = (long) s[1];
+                if (choiceinfo != null) {
+                    choiceinfo.setVotes(choiceinfo.getVotes() + voteNum);
+                    getVu().getRecyclerView().getAdapter().notifyDataSetChanged();
+                }
+                break;
+        }
     }
 }

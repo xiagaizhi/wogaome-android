@@ -56,6 +56,12 @@
         android:layout_height="@dimen/px1"
         android:background="@color/color_gray_levelf0"
         />
+    <com.yufan.library.view.ptr.PtrClassicFrameLayout
+        android:layout_width="match_parent"
+        android:id="@+id/ptr"
+        android:background="@color/white"
+        android:layout_height="match_parent"
+        >
     <com.yufan.library.view.recycler.YFRecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -63,4 +69,5 @@
         app:needLoadMore="false"
         android:background="@color/white"
         />
+    </com.yufan.library.view.ptr.PtrClassicFrameLayout>
 </LinearLayout>

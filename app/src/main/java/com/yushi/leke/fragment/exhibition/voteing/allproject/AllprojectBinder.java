@@ -38,7 +38,7 @@ public class AllprojectBinder extends ItemViewBinder<Allprojectsinfo,AllprojectB
             @Override
             public void onClick(View v) {
                 if (callBack != null) {//发起投票
-                    callBack.OnBackResult(1, Allprojectsinfo.getId());
+                    callBack.OnBackResult(1, Allprojectsinfo);
                 }
             }
         });
