@@ -40,7 +40,8 @@ public abstract class BaseHttpCallBack implements IHttpCallBack {
                 vu.setStateGone();
             }
             onSuccess(mApiBean);
-        } else if (TextUtils.equals(ApiBean.TOKEN_LOSE, mApiBean.getCode())) {
+        } else if (TextUtils.equals(ApiBean.TOKEN_LOSE, mApiBean.getCode())
+                || TextUtils.equals(ApiBean.ACCOUNT_FROZEN, mApiBean.getCode())) {
             //登录
             Intent filter = new Intent();
             filter.setAction(Global.BROADCAST_TOKEN_LOSE);

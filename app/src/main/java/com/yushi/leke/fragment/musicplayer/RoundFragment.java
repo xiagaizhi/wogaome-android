@@ -2,6 +2,7 @@ package com.yushi.leke.fragment.musicplayer;
 
 
 import android.animation.Animator;
+import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.graphics.Color;
 import android.graphics.drawable.Animatable;
@@ -9,10 +10,12 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.DecelerateInterpolator;
 import android.view.animation.LinearInterpolator;
 
 import com.facebook.common.logging.FLog;
@@ -28,7 +31,6 @@ import com.facebook.imagepipeline.image.ImageInfo;
 import com.facebook.imagepipeline.image.QualityInfo;
 import com.facebook.imagepipeline.request.ImageRequest;
 import com.facebook.imagepipeline.request.ImageRequestBuilder;
-import com.yufan.library.manager.DialogManager;
 import com.yushi.leke.R;
 
 
@@ -39,8 +41,9 @@ public class RoundFragment extends Fragment {
 
     private WeakReference<ObjectAnimator> animatorWeakReference;
     private SimpleDraweeView sdv;
-    private String albumPath="";
-
+    private String albumPath = "";
+    private boolean isEmpty;
+    private AnimatorSet mAnimatorSet;
 
 
     @Override
@@ -49,8 +52,13 @@ public class RoundFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_roundimage, container, false);
         ((ViewGroup) rootView).setAnimationCacheEnabled(false);
         if (getArguments() != null) {
-            albumPath = getArguments().getString("album","");
+            albumPath = getArguments().getString("album", "");
         }
+        if (TextUtils.isEmpty(albumPath)) {
+            albumPath = "res://com.yushi.leke/" + R.drawable.bg_musicpalyer_default;
+            isEmpty = true;
+        }
+
         //  CircleImageView  circleImageView = (CircleImageView) rootView.findViewById(R.id.circle);
 
         sdv = (SimpleDraweeView) rootView.findViewById(R.id.sdv);
@@ -128,11 +136,11 @@ public class RoundFragment extends Fragment {
 
             @Override
             public void onFailure(String id, Throwable throwable) {
-           //  sdv.setImageURI(Uri.parse("res:/" + R.drawable.placeholder_disk_play_song));
+                //  sdv.setImageURI(Uri.parse("res:/" + R.drawable.placeholder_disk_play_song));
             }
         };
-        if (albumPath == null) {
-       sdv.setImageURI(Uri.parse(albumPath));
+        if (albumPath != null) {
+            sdv.setImageURI(Uri.parse(albumPath));
         } else {
             try {
 
@@ -165,9 +173,17 @@ public class RoundFragment extends Fragment {
         animator.setDuration(25000L);
         animator.setInterpolator(new LinearInterpolator());
         if (getView() != null)
-            getView().setTag(R.id.tag_animator,animator);
+            getView().setTag(R.id.tag_animator, animator);
+        if (isEmpty) {
+            ObjectAnimator mRotateAnim = (ObjectAnimator) getView().getTag(R.id.tag_animator);
+            mRotateAnim.setDuration(10000L);
+            if (mRotateAnim != null) {
+                mAnimatorSet = new AnimatorSet();
+                mAnimatorSet.playTogether(mRotateAnim, animator);
+                mAnimatorSet.start();
+            }
+        }
     }
-
 
 
     @Override
@@ -176,25 +192,28 @@ public class RoundFragment extends Fragment {
 
     }
 
-public void setUri(Uri uri){
-        if(!albumPath.equals(uri.toString())){
+    public void setUri(Uri uri) {
+        if (!albumPath.equals(uri.toString())) {
             sdv.setImageURI(uri);
         }
 
-}
+    }
+
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Log.e("roundfragment"," id = " + hashCode());
+        Log.e("roundfragment", " id = " + hashCode());
         ObjectAnimator animator = animatorWeakReference.get();
         if (animator != null) {
             animator.cancel();
-            Log.e("roundfragment"," id = " + hashCode() + "  , animator destroy");
+            Log.e("roundfragment", " id = " + hashCode() + "  , animator destroy");
         }
 //        RefWatcher refWatcher = MainApplication.getRefWatcher(getActivity());
 //        refWatcher.watch(this);
+        if (mAnimatorSet!= null && mAnimatorSet.isRunning()){
+           mAnimatorSet.cancel();
+        }
     }
-
 
 
 }

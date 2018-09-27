@@ -56,12 +56,14 @@ public class MusicPlayerVu extends BaseVu<MusicPlayerContract.Presenter> impleme
     ImageView albumArt;
     TextView titltView;
     private String albumName;
+    private boolean isCanOperation;
 
     @Override
     public void initView(View view) {
         playing_playlist.setOnClickListener(this);
         mSkipPrev.setOnClickListener(this);
         mPlayPause.setOnClickListener(this);
+        mPlayPause.setSelected(true);
         mSkipNext.setOnClickListener(this);
         playing_fav.setOnClickListener(this);
         mPersenter.onSeekBarChangeListener(mDuration, mSeekbar);
@@ -72,9 +74,9 @@ public class MusicPlayerVu extends BaseVu<MusicPlayerContract.Presenter> impleme
         //UIHelper.getMusicView(mPersenter.getActivity(),appToolbar,MusicPlayerFragment.class);
         titltView = appToolbar.creatCenterView(TextView.class);
         titltView.setTextColor(Color.WHITE);
-        if (TextUtils.isEmpty(albumName)){
+        if (TextUtils.isEmpty(albumName)) {
             titltView.setText("音乐播放器");
-        }else {
+        } else {
             titltView.setText(albumName);
         }
 
@@ -93,26 +95,28 @@ public class MusicPlayerVu extends BaseVu<MusicPlayerContract.Presenter> impleme
     @Override
     public void onClick(View v) {
         super.onClick(v);
+        if (isCanOperation) {
+            switch (v.getId()) {
+                case R.id.playing_playlist:
+                    mPersenter.showMusicListDialog();
 
-        switch (v.getId()) {
-            case R.id.playing_playlist:
-                mPersenter.showMusicListDialog();
+                    break;
+                case R.id.playing_pre:
+                    mPersenter.pre();
+                    break;
+                case R.id.playing_play:
+                    mPersenter.play();
+                    break;
+                case R.id.playing_next:
 
-                break;
-            case R.id.playing_pre:
-                mPersenter.pre();
-                break;
-            case R.id.playing_play:
-                mPersenter.play();
-                break;
-            case R.id.playing_next:
-
-                mPersenter.next();
-                break;
-            case R.id.playing_fav:
-                mPersenter.fav();
-                break;
+                    mPersenter.next();
+                    break;
+                case R.id.playing_fav:
+                    mPersenter.fav();
+                    break;
+            }
         }
+
     }
 
     @Override
@@ -207,12 +211,17 @@ public class MusicPlayerVu extends BaseVu<MusicPlayerContract.Presenter> impleme
 
     @Override
     public void setSubState(String state) {
-        if (TextUtils.equals(state,"0")){//未订阅
+        if (TextUtils.equals(state, "0")) {//未订阅
             playing_fav.setSelected(false);
             playing_fav.setVisibility(VISIBLE);
-        }else if (TextUtils.equals(state,"1")){//已经订阅
+        } else if (TextUtils.equals(state, "1")) {//已经订阅
             playing_fav.setSelected(true);
             playing_fav.setVisibility(VISIBLE);
         }
+    }
+
+    @Override
+    public void setCanOperation(boolean isCanOperation) {
+        this.isCanOperation = isCanOperation;
     }
 }

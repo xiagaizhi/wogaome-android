@@ -7,15 +7,15 @@ import android.text.TextUtils;
  */
 
 public class ApiBean {
-    public final static String  TOKEN_LOSE="2001";
-    public final static String  SUCCESS="2000";
+    public final static String TOKEN_LOSE = "2001";
+    public final static String ACCOUNT_FROZEN = "2002";
+    public final static String SUCCESS = "2000";
 
 
     public String code;
     public String message;
     public String data;
     public String json;
-
 
 
     public String getCode() {

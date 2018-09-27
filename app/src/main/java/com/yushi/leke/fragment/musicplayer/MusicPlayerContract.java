@@ -34,6 +34,7 @@ public interface MusicPlayerContract {
         ImageView getNeedleImageView();
         void setAlbumName(String albumName);
         void setSubState(String state);
+        void setCanOperation(boolean isCanOperation);
     }
 
     interface Presenter extends Pr {

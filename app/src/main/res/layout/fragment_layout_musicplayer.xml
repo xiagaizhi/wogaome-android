@@ -33,6 +33,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
+
                 <ImageView
                     android:layout_width="@dimen/y618"
                     android:layout_height="@dimen/y618"
@@ -64,6 +65,10 @@
                     android:layout_centerHorizontal="true"
                     android:id="@+id/iv_handler_topbar"
                     android:layout_height="wrap_content" />
+                <View
+                    android:layout_width="match_parent"
+                    android:background="@color/color_f0f0f0"
+                    android:layout_height="@dimen/px1"/>
             </RelativeLayout>
 
         </FrameLayout>
@@ -81,6 +86,7 @@
             android:textSize="@dimen/y50"
             android:gravity="center_vertical"
             android:textColor="@color/white"
+            android:text="暂无音频"
             android:layout_height="wrap_content" />
 
         <LinearLayout

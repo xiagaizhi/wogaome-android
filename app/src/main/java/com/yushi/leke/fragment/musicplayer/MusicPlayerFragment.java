@@ -37,19 +37,15 @@ import android.view.animation.DecelerateInterpolator;
 import android.view.animation.LinearInterpolator;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.yufan.library.base.BaseFragment;
 import com.yufan.library.inject.VuClass;
 import com.yushi.leke.YFApi;
 import com.yushi.leke.uamp.AlbumArtCache;
 import com.yushi.leke.uamp.MusicService;
-import com.yushi.leke.uamp.model.MusicProvider;
 import com.yushi.leke.uamp.utils.LogHelper;
 import com.yushi.leke.widget.MyScroller;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executors;
@@ -58,9 +54,6 @@ import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
 import me.yokeyword.fragmentation.anim.FragmentAnimator;
-
-import static android.view.View.INVISIBLE;
-import static android.view.View.VISIBLE;
 
 /**
  * Created by mengfantao on 18/8/2.
@@ -89,6 +82,7 @@ public class MusicPlayerFragment extends BaseFragment<MusicPlayerContract.IView>
     private PlaybackStateCompat mLastPlaybackState;
     private String mAlbumId;
     private String subState;
+    private boolean isCanOperation;
 
     private final MediaControllerCompat.Callback mCallback = new MediaControllerCompat.Callback() {
         @Override
@@ -217,6 +211,7 @@ public class MusicPlayerFragment extends BaseFragment<MusicPlayerContract.IView>
 
         @Override
         public void onPageScrollStateChanged(int pState) {
+            if (!isCanOperation) return;
             if (pState == ViewPager.SCROLL_STATE_DRAGGING && preState == ViewPager.SCROLL_STATE_IDLE) {
                 preState = ViewPager.SCROLL_STATE_DRAGGING;
                 MediaControllerCompat controllerCompat = MediaControllerCompat.getMediaController(getActivity());
@@ -287,9 +282,21 @@ public class MusicPlayerFragment extends BaseFragment<MusicPlayerContract.IView>
     private void connectToSession(MediaSessionCompat.Token token) throws RemoteException {
         MediaControllerCompat mediaController = new MediaControllerCompat(getContext(), token);
         if (mediaController.getMetadata() == null) {
-            getActivity().finish();
+//            getActivity().finish();
+            EmptyMusicFragmentAdapter emptyMusicFragmentAdapter = new EmptyMusicFragmentAdapter(getChildFragmentManager());
+            getVu().getViewPager().setAdapter(emptyMusicFragmentAdapter);
+
+            List<String> emptyList = new ArrayList<>();
+            emptyList.add("");
+            emptyMusicFragmentAdapter.setQueue(emptyList);
+            ObjectAnimator animator = ObjectAnimator.ofFloat(getVu().getNeedleImageView(), "rotation", -25, 0);
+            animator.setDuration(300);
+            animator.setInterpolator(new DecelerateInterpolator());
+            animator.start();
             return;
         }
+        isCanOperation = true;
+        getVu().setCanOperation(true);
         MediaControllerCompat.setMediaController(getActivity(), mediaController);
         mediaController.registerCallback(mCallback);
         PlaybackStateCompat state = mediaController.getPlaybackState();
@@ -614,6 +621,32 @@ public class MusicPlayerFragment extends BaseFragment<MusicPlayerContract.IView>
                 bundle.putString("album", media.toString());
             }
             fragment.setArguments(bundle);
+            return fragment;
+        }
+
+        @Override
+        public int getCount() {
+            return queueItems.size();
+        }
+    }
+
+    public class EmptyMusicFragmentAdapter extends FragmentPagerAdapter {
+        List<String> queueItems = new ArrayList<>();
+
+        public EmptyMusicFragmentAdapter(FragmentManager fm) {
+            super(fm);
+
+        }
+
+        public void setQueue(List<String> queueItems) {
+            this.queueItems.clear();
+            this.queueItems.addAll(queueItems);
+            notifyDataSetChanged();
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            RoundFragment fragment = new RoundFragment();
             return fragment;
         }
 
