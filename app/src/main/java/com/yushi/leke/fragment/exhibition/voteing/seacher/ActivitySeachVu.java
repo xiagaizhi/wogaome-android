@@ -80,8 +80,8 @@ public class ActivitySeachVu extends BaseListVu<ActivitySeachContract.Presenter>
 
     @Override
     public void initStatusLayout(StateLayout stateLayout) {
-        stateLayout.setEmptyView(View.inflate(getContext(),R.layout.view_search_empty,null));
-        stateLayout.setErrorView(null);
+        stateLayout.setErrorView(View.inflate(getContext(),R.layout.view_search_empty,null));
+        super.initStatusLayout(stateLayout);
     }
 
     @Override

@@ -140,62 +140,13 @@ public class ActivitySeachFragment extends BaseListFragment<ActivitySeachContrac
 
     @Override
     public void onRefresh() {
-        if (vu.getEditText().getText().toString().equals("")){
-            return;
-        }
-        switch (exhibitionType){
-            case 2:
-                ApiManager.getCall(ApiManager.getInstance().create(YFApi.class)
-                        .searchacting(1,activityid,vu.getEditText().getText().toString()))
-                        .useCache(false)
-                        .enqueue(new YFListHttpCallBack(getVu()) {
-                            @Override
-                            public void onSuccess(ApiBean mApiBean) {
-                                super.onSuccess(mApiBean);
-                                Allprojectsinfolist infolist;
-                                if (!TextUtils.isEmpty(mApiBean.getData())) {
-                                    infolist = JSON.parseObject(mApiBean.getData(), Allprojectsinfolist.class);
-                                    if (infolist != null && infolist.getProjectList().size() > 0) {
-                                        list.clear();
-                                        list.addAll(infolist.getProjectList());
-                                        vu.getRecyclerView().getAdapter().notifyDataSetChanged();
-                                    } else {
-                                        vu.setStateEmpty();
-                                        vu.getRecyclerView().getPageManager().setPageState(PageInfo.PAGE_STATE_NO_MORE);
-                                    }
-                                } else {
-                                    vu.setStateEmpty();
-                                }
-                                Log.d("LOGH","111");
-                            }
-                        });
-                break;
-            case 3:
-                ApiManager.getCall(ApiManager.getInstance().create(YFApi.class)
-                        .searchactend(1,activityid,vu.getEditText().getText().toString()))
-                        .useCache(false)
-                        .enqueue(new YFListHttpCallBack(getVu()) {
-                            @Override
-                            public void onSuccess(ApiBean mApiBean) {
-                                super.onSuccess(mApiBean);
-                                Allprojectsinfolist infolist;
-                                if (!TextUtils.isEmpty(mApiBean.getData())) {
-                                    infolist = JSON.parseObject(mApiBean.getData(), Allprojectsinfolist.class);
-                                    if (infolist != null && infolist.getProjectList().size() > 0) {
-                                        list.addAll(infolist.getProjectList());
-                                        vu.getRecyclerView().getAdapter().notifyDataSetChanged();
-                                    } else {
-                                        vu.getRecyclerView().getPageManager().setPageState(PageInfo.PAGE_STATE_NO_MORE);
-                                    }
-                                }
-                            }
-                        });
-                break;
-        }
     }
 
     @Override
     public void search(String searchKey) {
+        if (vu.getEditText().getText().toString().equals("")){
+            return;
+        }
         switch (exhibitionType){
             case 2:
                 ApiManager.getCall(ApiManager.getInstance().create(YFApi.class)
@@ -208,12 +159,16 @@ public class ActivitySeachFragment extends BaseListFragment<ActivitySeachContrac
                                 Allprojectsinfolist infolist;
                                 if (!TextUtils.isEmpty(mApiBean.getData())) {
                                     infolist = JSON.parseObject(mApiBean.getData(), Allprojectsinfolist.class);
+                                    list.clear();
                                     if (infolist != null && infolist.getProjectList().size() > 0) {
                                         list.addAll(infolist.getProjectList());
-                                        vu.getRecyclerView().getAdapter().notifyDataSetChanged();
                                     } else {
+                                        vu.setStateEmpty();
                                         vu.getRecyclerView().getPageManager().setPageState(PageInfo.PAGE_STATE_NO_MORE);
                                     }
+                                    vu.getRecyclerView().getAdapter().notifyDataSetChanged();
+                                } else {
+                                    vu.setStateEmpty();
                                 }
                             }
                         });
@@ -229,12 +184,16 @@ public class ActivitySeachFragment extends BaseListFragment<ActivitySeachContrac
                                 Allprojectsinfolist infolist;
                                 if (!TextUtils.isEmpty(mApiBean.getData())) {
                                     infolist = JSON.parseObject(mApiBean.getData(), Allprojectsinfolist.class);
+                                    list.clear();
                                     if (infolist != null && infolist.getProjectList().size() > 0) {
                                         list.addAll(infolist.getProjectList());
-                                        vu.getRecyclerView().getAdapter().notifyDataSetChanged();
                                     } else {
+                                        vu.setStateEmpty();
                                         vu.getRecyclerView().getPageManager().setPageState(PageInfo.PAGE_STATE_NO_MORE);
                                     }
+                                    vu.getRecyclerView().getAdapter().notifyDataSetChanged();
+                                } else {
+                                    vu.setStateEmpty();
                                 }
                             }
                         });
@@ -244,6 +203,7 @@ public class ActivitySeachFragment extends BaseListFragment<ActivitySeachContrac
 
     @Override
     public boolean onKey(View v, int keyCode, KeyEvent event) {
+        getVu().getRecyclerView().getPageManager().resetIndex();
         if (keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_UP) {
             //先隐藏键盘
             ((InputMethodManager) getActivity().getSystemService(INPUT_METHOD_SERVICE))
