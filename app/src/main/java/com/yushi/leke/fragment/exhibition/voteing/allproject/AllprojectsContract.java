@@ -15,6 +15,7 @@ public interface AllprojectsContract {
         String getcity();
         void setCitylist(List list);
         void setWorklist(List list,List list2);
+        void seacherOnclick();
     }
 
     interface Presenter extends Pr {

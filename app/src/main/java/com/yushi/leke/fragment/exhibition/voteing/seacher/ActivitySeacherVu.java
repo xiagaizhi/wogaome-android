@@ -13,8 +13,8 @@ import com.yufan.library.widget.AppToolbar;
 /**
  * Created by mengfantao on 18/8/2.
  */
-@FindLayout(layout = R.layout.fragment_layout_activityseacher)
-@Title("标题")
+@FindLayout(layout = R.layout.fragment_layout_search)
+@Title("搜索活动")
 public class ActivitySeacherVu extends BaseVu<ActivitySeacherContract.Presenter> implements ActivitySeacherContract.IView {
     @Override
     public void initView(View view) {
