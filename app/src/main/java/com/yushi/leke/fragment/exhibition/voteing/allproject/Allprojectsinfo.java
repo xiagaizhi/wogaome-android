@@ -8,7 +8,6 @@ public class Allprojectsinfo {
     private String entrepreneur;
     private int votes;
     private int playCount;
-    private String desc;
     private String id;
     public Allprojectsinfo(){
 
@@ -67,14 +66,6 @@ public class Allprojectsinfo {
 
     public void setPlayCount(int playCount) {
         this.playCount = playCount;
-    }
-
-    public String getDesc() {
-        return desc;
-    }
-
-    public void setDesc(String desc) {
-        this.desc = desc;
     }
 
     public String getId() {

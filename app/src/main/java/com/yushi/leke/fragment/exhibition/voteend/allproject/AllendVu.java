@@ -24,6 +24,7 @@ import com.yufan.library.view.recycler.YFRecyclerView;
 import com.yufan.library.widget.AppToolbar;
 import com.yufan.library.widget.StateLayout;
 import com.yushi.leke.R;
+import com.yushi.leke.UIHelper;
 import com.yushi.leke.YFApi;
 
 import java.util.ArrayList;
@@ -37,6 +38,10 @@ public class AllendVu extends BaseListVu<AllendContract.Presenter> implements Al
     private TextView tv_choose_city, tv_choose_work;
     private ImageView img_city,img_work;
     long instroid=-1;
+    ImageView backButton;
+    private TextView mTitleView;
+    private ImageView musicAnim;
+    private ImageView img_seacher;
     @Override
     public void initView(View view) {
         super.initView(view);
@@ -48,7 +53,36 @@ public class AllendVu extends BaseListVu<AllendContract.Presenter> implements Al
     }
     @Override
     public boolean initTitle(AppToolbar appToolbar) {
-        return super.initTitle(appToolbar);
+        img_seacher = appToolbar.creatRightView(ImageView.class);
+        img_seacher.setImageResource(R.drawable.ic_search_blue);
+        musicAnim=   UIHelper.getMusicView(mPersenter.getActivity(),appToolbar);
+        mTitleView=     appToolbar.creatCenterView(TextView.class);
+        mTitleView.setText("参赛项目活动");
+        mTitleView .getPaint().setFakeBoldText(true);
+        backButton=   appToolbar.creatLeftView(ImageView.class);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getPresenter().onBackPressed();
+            }
+        });
+        backButton.setImageResource(com.yufan.library.R.drawable.left_back_black_arrows);
+        musicAnim.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(v.getAlpha()>0){
+                    //mPersenter.onMusicMenuClick();
+                }
+            }
+        });
+        img_seacher.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mPersenter.seacherOnclick();
+            }
+        });
+        appToolbar.build();
+        return true;
     }
     @Override
     public YFRecyclerView getRecyclerView() {

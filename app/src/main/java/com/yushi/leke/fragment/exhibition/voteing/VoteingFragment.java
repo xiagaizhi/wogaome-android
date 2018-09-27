@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 
 import com.alibaba.fastjson.JSON;
@@ -33,7 +34,7 @@ public class VoteingFragment extends BaseListFragment<VoteingContract.IView> imp
     private Voteinginfolist infolist;
     private ICallBack mICallBack;
     private String activityid;
-
+    private int exhibitionType;
     public void setmICallBack(ICallBack mICallBack) {
         this.mICallBack = mICallBack;
     }
@@ -44,6 +45,7 @@ public class VoteingFragment extends BaseListFragment<VoteingContract.IView> imp
         Bundle bundle = getArguments();
         if (bundle != null) {
             activityid = bundle.getString(Global.BUNDLE_KEY_ACTIVITYID);
+            exhibitionType=bundle.getInt(Global.BUNDLE_KEY_EXHIBITION_TYE);
         }
         adapter = new MultiTypeAdapter();
         adapter.register(Voteinginfo.class, new VoteingBinder(new ICallBack() {
@@ -126,10 +128,11 @@ public class VoteingFragment extends BaseListFragment<VoteingContract.IView> imp
     }
 
     @Override
-    public void MyCallback() {
+    public void allprojectOnclick() {
         getRootFragment().start(UIHelper
                 .creat(AllprojectsFragment.class)
                 .put(Global.BUNDLE_KEY_ACTIVITYID, activityid)
+                .put(Global.BUNDLE_KEY_EXHIBITION_TYE,exhibitionType)
                 .build());
     }
 

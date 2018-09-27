@@ -32,7 +32,7 @@ public class VoteingVu extends BaseListVu<VoteingContract.Presenter> implements 
         tv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mPersenter.MyCallback();
+                mPersenter.allprojectOnclick();
             }
         });
     }

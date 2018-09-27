@@ -82,6 +82,7 @@ public class ExhibitionDetailFragment extends BaseFragment<ExhibitionDetailContr
             case 2:
                 VoteingFragment mVoteingFragment = (VoteingFragment) UIHelper.creat(VoteingFragment.class)
                         .put(Global.BUNDLE_KEY_ACTIVITYID, activityid)
+                        .put(Global.BUNDLE_KEY_EXHIBITION_TYE, exhibitionType)
                         .build();
                 mVoteingFragment.setmICallBack(this);
                 loadRootFragment(R.id.fl_exhibition_content, mVoteingFragment);

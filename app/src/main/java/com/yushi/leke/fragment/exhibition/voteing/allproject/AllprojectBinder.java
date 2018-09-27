@@ -34,7 +34,6 @@ public class AllprojectBinder extends ItemViewBinder<Allprojectsinfo,AllprojectB
         viewHolder.tv_vote_sum.setText(String.valueOf(Allprojectsinfo.getVotes()));
         viewHolder.tv_vote_province.setText(Allprojectsinfo.getAddress()+" / "+Allprojectsinfo.getIndustry());
         viewHolder.tv_vote_name.setText("创业者："+Allprojectsinfo.getEntrepreneur());
-        viewHolder.tv_vote_describe.setText(Allprojectsinfo.getDesc());
         viewHolder.btn_vote_support.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -49,7 +48,7 @@ public class AllprojectBinder extends ItemViewBinder<Allprojectsinfo,AllprojectB
         public View rl_root;
         public SimpleDraweeView sdv;
         public TextView tv_vote_playsum,tv_vote_title,tv_vote_sum
-                ,tv_vote_province,tv_vote_name,tv_vote_describe;
+                ,tv_vote_province,tv_vote_name;
         public Button btn_vote_support;
         ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -60,7 +59,6 @@ public class AllprojectBinder extends ItemViewBinder<Allprojectsinfo,AllprojectB
             tv_vote_province=itemView.findViewById(R.id.tv_vote_province);
             tv_vote_name=itemView.findViewById(R.id.tv_vote_name);
             btn_vote_support=itemView.findViewById(R.id.btn_vote_support);
-            tv_vote_describe=itemView.findViewById(R.id.tv_vote_describe);
             rl_root = itemView.findViewById(R.id.rl_root);
         }
     }

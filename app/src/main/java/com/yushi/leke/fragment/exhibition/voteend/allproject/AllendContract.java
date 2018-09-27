@@ -21,5 +21,6 @@ public interface AllendContract {
         String getactivityid();
         void getCitylist();
         void getWorklist();
+        void seacherOnclick();
     }
 }

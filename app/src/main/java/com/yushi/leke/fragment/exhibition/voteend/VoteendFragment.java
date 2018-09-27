@@ -31,7 +31,7 @@ public class VoteendFragment extends BaseListFragment<VoteendContract.IView> imp
     private Voteendinfolist infolist;
     private ICallBack mICallBack;
     private String activityid;
-
+    private int exhibitionType;
     public void setmICallBack(ICallBack mICallBack) {
         this.mICallBack = mICallBack;
     }
@@ -42,6 +42,7 @@ public class VoteendFragment extends BaseListFragment<VoteendContract.IView> imp
         Bundle bundle = getArguments();
         if (bundle != null) {
             activityid = bundle.getString(Global.BUNDLE_KEY_ACTIVITYID);
+            exhibitionType=bundle.getInt(Global.BUNDLE_KEY_EXHIBITION_TYE);
         }
         adapter = new MultiTypeAdapter();
         adapter.register(Voteendinfo.class, new VoteendBinder(new ICallBack() {
@@ -122,6 +123,7 @@ public class VoteendFragment extends BaseListFragment<VoteendContract.IView> imp
     public void MyCallback() {
         getRootFragment().start(UIHelper.creat(AllendFragment.class)
                 .put(Global.BUNDLE_KEY_ACTIVITYID, activityid)
+                .put(Global.BUNDLE_KEY_EXHIBITION_TYE,exhibitionType)
                 .build());
     }
 

@@ -16,7 +16,13 @@ import com.yufan.library.base.BaseListFragment;
 import com.yufan.library.inject.VuClass;
 import com.yufan.library.inter.ICallBack;
 import com.yufan.library.view.recycler.PageInfo;
+import com.yushi.leke.UIHelper;
 import com.yushi.leke.YFApi;
+import com.yushi.leke.fragment.exhibition.voteing.allproject.Allprojectsinfo;
+import com.yushi.leke.fragment.exhibition.voteing.allproject.Allprojectsinfolist;
+import com.yushi.leke.fragment.exhibition.voteing.allproject.Cityinfolist;
+import com.yushi.leke.fragment.exhibition.voteing.allproject.Industryinfolist;
+import com.yushi.leke.fragment.exhibition.voteing.seacher.ActivitySeachFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,8 +35,9 @@ import me.drakeet.multitype.MultiTypeAdapter;
 @VuClass(AllendVu.class)
 public class AllendFragment extends BaseListFragment<AllendContract.IView> implements AllendContract.Presenter {
     private MultiTypeAdapter adapter;
-    private Allendinfolist infolist;
+    private Allprojectsinfolist infolist;
     private String activityid;
+    private int exhibitionType;
     List<String> worklistname =new ArrayList<>();
     List<Long>worklistid=new ArrayList<>();
     List<String>citylist=new ArrayList<>();
@@ -42,6 +49,7 @@ public class AllendFragment extends BaseListFragment<AllendContract.IView> imple
         Bundle bundle = getArguments();
         if (bundle != null) {
             activityid = bundle.getString(Global.BUNDLE_KEY_ACTIVITYID);
+            exhibitionType=bundle.getInt(Global.BUNDLE_KEY_EXHIBITION_TYE);
         }
         init();
     }
@@ -49,7 +57,7 @@ public class AllendFragment extends BaseListFragment<AllendContract.IView> imple
 
     private void init() {
         adapter = new MultiTypeAdapter();
-        adapter.register(Allendinfo.class, new AllendBinder(new ICallBack() {
+        adapter.register(Allprojectsinfo.class, new AllendBinder(new ICallBack() {
             @Override
             public void OnBackResult(Object... s) {
 
@@ -71,7 +79,7 @@ public class AllendFragment extends BaseListFragment<AllendContract.IView> imple
                     public void onSuccess(ApiBean mApiBean) {
                         super.onSuccess(mApiBean);
                         if (!TextUtils.isEmpty(mApiBean.getData())) {
-                            infolist = JSON.parseObject(mApiBean.getData(), Allendinfolist.class);
+                            infolist = JSON.parseObject(mApiBean.getData(), Allprojectsinfolist.class);
                             if (infolist != null && infolist.getProjectList().size() > 0) {
                                 list.addAll(infolist.getProjectList());
                                 vu.getRecyclerView().getAdapter().notifyDataSetChanged();
@@ -100,7 +108,7 @@ public class AllendFragment extends BaseListFragment<AllendContract.IView> imple
                     public void onSuccess(ApiBean mApiBean) {
                         super.onSuccess(mApiBean);
                         if (!TextUtils.isEmpty(mApiBean.getData())) {
-                            infolist = JSON.parseObject(mApiBean.getData(), Allendinfolist.class);
+                            infolist = JSON.parseObject(mApiBean.getData(), Allprojectsinfolist.class);
                             if (infolist != null && infolist.getProjectList().size() > 0) {
                                 list.clear();
                                 list.addAll(infolist.getProjectList());
@@ -158,7 +166,7 @@ public class AllendFragment extends BaseListFragment<AllendContract.IView> imple
                     @Override
                     public void onSuccess(final ApiBean mApiBean) {
                         if (!TextUtils.isEmpty(mApiBean.getData())) {
-                            Industryendinfolist industryinfolist= JSON.parseObject(mApiBean.getData(),Industryendinfolist .class);
+                            Industryinfolist industryinfolist= JSON.parseObject(mApiBean.getData(),Industryinfolist .class);
                             worklistname.clear();
                             worklistid.clear();
                             for (int i = 0; i< industryinfolist.getIndustryList().size(); i++){
@@ -177,5 +185,11 @@ public class AllendFragment extends BaseListFragment<AllendContract.IView> imple
 
                     }
                 });
+    }
+    @Override
+    public void seacherOnclick() {
+        start(UIHelper.creat(ActivitySeachFragment.class)
+                .put(Global.BUNDLE_KEY_EXHIBITION_TYE,exhibitionType)
+                .build());
     }
 }

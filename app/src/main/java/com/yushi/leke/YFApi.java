@@ -475,7 +475,34 @@ public interface YFApi {
             @Field("industry") long industry,
             @Field("address") String address
     );
-
+    /**
+     * 搜索活动中项目
+     *
+     * @param
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("app/v1/activity/allProjectForVoteSearch")
+    Call<ResponseBody>
+    searchacting(
+            @Field("currentPage") int currentPage,
+            @Field("activityId") String activityId,
+            @Field("projectTitle") String projectTitle
+    );
+    /**
+     * 搜索活动已结束项目
+     *
+     * @param
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("app/v1/activity/allProjectForVoteOverSearch")
+    Call<ResponseBody>
+    searchactend(
+            @Field("currentPage") int currentPage,
+            @Field("activityId") String activityId,
+            @Field("projectTitle") String projectTitle
+    );
     @FormUrlEncoded
     @POST("app/v1/common/getGuideAd")
     Call<ResponseBody>

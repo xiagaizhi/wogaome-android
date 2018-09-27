@@ -13,10 +13,11 @@ import android.widget.TextView;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.yufan.library.inter.ICallBack;
 import com.yushi.leke.R;
+import com.yushi.leke.fragment.exhibition.voteing.allproject.Allprojectsinfo;
 
 import me.drakeet.multitype.ItemViewBinder;
 
-public class AllendBinder extends ItemViewBinder<Allendinfo, AllendBinder.ViewHolder>{
+public class AllendBinder extends ItemViewBinder<Allprojectsinfo, AllendBinder.ViewHolder>{
     ICallBack callBack;
     public AllendBinder(ICallBack callBack){
         this.callBack = callBack;
@@ -29,14 +30,13 @@ public class AllendBinder extends ItemViewBinder<Allendinfo, AllendBinder.ViewHo
 
     @SuppressLint("ResourceAsColor")
     @Override
-    protected void onBindViewHolder(@NonNull ViewHolder viewHolder, @NonNull final Allendinfo Allendinfo) {
-        viewHolder.sdv.setImageURI(Allendinfo.getLogo());
+    protected void onBindViewHolder(@NonNull ViewHolder viewHolder, @NonNull final Allprojectsinfo Allendinfo) {
+        viewHolder.sdv.setImageURI(Allendinfo.getVideo100Pic());
         viewHolder.tv_vote_playsum.setText(String.valueOf(Allendinfo.getPlayCount()));
         viewHolder.tv_vote_title.setText(Allendinfo.getTitle());
         viewHolder.tv_vote_sum.setText(String.valueOf(Allendinfo.getVotes()));
         viewHolder.tv_vote_province.setText(Allendinfo.getAddress()+" / "+ Allendinfo.getIndustry());
         viewHolder.tv_vote_name.setText("创业者："+ Allendinfo.getEntrepreneur());
-        viewHolder.tv_vote_describe.setText(Allendinfo.getDesc());
         viewHolder.btn_vote_support.setText("已结束");
         viewHolder.btn_vote_support.setTextColor(Color.parseColor("#FF999999"));
     }
@@ -45,7 +45,7 @@ public class AllendBinder extends ItemViewBinder<Allendinfo, AllendBinder.ViewHo
         public View rl_root;
         public SimpleDraweeView sdv;
         public TextView tv_vote_playsum,tv_vote_title,tv_vote_sum
-                ,tv_vote_province,tv_vote_name,tv_vote_describe;
+                ,tv_vote_province,tv_vote_name;
         public Button btn_vote_support;
         ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -56,7 +56,6 @@ public class AllendBinder extends ItemViewBinder<Allendinfo, AllendBinder.ViewHo
             tv_vote_province=itemView.findViewById(R.id.tv_vote_province);
             tv_vote_name=itemView.findViewById(R.id.tv_vote_name);
             btn_vote_support=itemView.findViewById(R.id.btn_vote_support);
-            tv_vote_describe=itemView.findViewById(R.id.tv_vote_describe);
             rl_root = itemView.findViewById(R.id.rl_root);
         }
     }
