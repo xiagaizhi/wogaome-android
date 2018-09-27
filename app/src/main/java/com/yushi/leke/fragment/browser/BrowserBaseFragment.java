@@ -233,6 +233,10 @@ public class BrowserBaseFragment extends BaseFragment<BrowserContract.View> impl
                 .getPath());
         // webSetting.setPageCacheCapacity(IX5WebSettings.DEFAULT_CACHE_CAPACITY);
         webSetting.setPluginState(WebSettings.PluginState.ON_DEMAND);
+        String ua = webSetting.getUserAgentString();
+        if (!(ua != null && ua.contains("LekeApp"))) {
+            webSetting.setUserAgentString(ua + "/LekeApp" );
+        }
         // webSetting.setRenderPriority(WebSettings.RenderPriority.HIGH);
         // webSetting.setPreFectch(true);
         long time = System.currentTimeMillis();
