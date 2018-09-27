@@ -2,7 +2,7 @@ package com.yushi.leke.fragment.exhibition.voteing.allproject;
 
 public class Allprojectsinfo {
     private String title;
-    private String logo;
+    private String video100Pic;
     private String address;
     private String industry;
     private String entrepreneur;
@@ -21,12 +21,12 @@ public class Allprojectsinfo {
         this.title = title;
     }
 
-    public String getLogo() {
-        return logo;
+    public String getVideo100Pic() {
+        return video100Pic;
     }
 
-    public void setLogo(String logo) {
-        this.logo = logo;
+    public void setVideo100Pic(String video100Pic) {
+        this.video100Pic = video100Pic;
     }
 
     public String getAddress() {
@@ -85,6 +85,6 @@ public class Allprojectsinfo {
         this.id = id;
     }
     public Allprojectsinfo(String logo) {
-        this.logo=logo;
+        this.video100Pic=logo;
     }
 }

@@ -26,6 +26,7 @@ import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.yufan.library.inter.ICallBack;
+import com.yufan.library.util.StringUtil;
 import com.yushi.leke.R;
 
 import me.drakeet.multitype.ItemViewBinder;
@@ -51,7 +52,9 @@ public class SearchActionViewBinder extends ItemViewBinder<SearchActionInfo, Sea
     protected void onBindViewHolder(@NonNull ViewHolder holder, @NonNull final SearchActionInfo category) {
 
         holder.sdv.setImageURI(Uri.parse(category.horizontalIcon));
-
+        holder.tv_title.setText(category.getTitle());
+        holder.tv_organizer.setText(category.getOrganizer());
+        holder.tv_time.setText(StringUtil.formatTime(category.getStartTime(),category.getEndTime()));
         if (getAdapter().getItemCount()==getPosition(holder)-1) {
             holder.view_bottom_line.setVisibility(View.INVISIBLE);
         } else {
@@ -73,11 +76,10 @@ public class SearchActionViewBinder extends ItemViewBinder<SearchActionInfo, Sea
     static class ViewHolder extends RecyclerView.ViewHolder {
         SimpleDraweeView sdv;
         View view_bottom_line;
-        TextView tv_playcount,tv_title,tv_time,tv_organizer;
+        TextView tv_title,tv_time,tv_organizer;
         ViewHolder(@NonNull View itemView) {
             super(itemView);
             sdv = itemView.findViewById(R.id.sdv);
-            tv_playcount=itemView.findViewById(R.id.tv_playcount);
             tv_title=itemView.findViewById(R.id.tv_title);
             tv_time=itemView.findViewById(R.id.tv_time);
             tv_organizer=itemView.findViewById(R.id.tv_organizer);

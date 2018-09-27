@@ -28,7 +28,7 @@ public class AllprojectBinder extends ItemViewBinder<Allprojectsinfo,AllprojectB
 
     @Override
     protected void onBindViewHolder(@NonNull ViewHolder viewHolder, @NonNull final Allprojectsinfo Allprojectsinfo) {
-        viewHolder.sdv.setImageURI(Allprojectsinfo.getLogo());
+        viewHolder.sdv.setImageURI(Allprojectsinfo.getVideo100Pic());
         viewHolder.tv_vote_playsum.setText(String.valueOf(Allprojectsinfo.getPlayCount()));
         viewHolder.tv_vote_title.setText(Allprojectsinfo.getTitle());
         viewHolder.tv_vote_sum.setText(String.valueOf(Allprojectsinfo.getVotes()));

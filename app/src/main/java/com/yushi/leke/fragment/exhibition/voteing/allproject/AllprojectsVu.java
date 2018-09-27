@@ -69,7 +69,7 @@ public class AllprojectsVu extends BaseListVu<AllprojectsContract.Presenter> imp
         img_seacher.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                mPersenter.seacherOnclick();
             }
         });
         appToolbar.build();

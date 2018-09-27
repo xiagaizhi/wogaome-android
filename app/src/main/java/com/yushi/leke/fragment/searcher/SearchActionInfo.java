@@ -21,7 +21,26 @@ public class SearchActionInfo {
     long ctime;
     int ranking;//获胜名次
     int processStatus;//活动进度
-    String id;
+    String startTime;//活动开始时间
+
+    public String getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(String startTime) {
+        this.startTime = startTime;
+    }
+
+    public String getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(String endTime) {
+        this.endTime = endTime;
+    }
+
+    String endTime;//活动结束时间
+    String id;//活动id
     String verticalIcon;//竖屏大图
     String introduction;
     int status;//活动状态：0-上架中, 1-已下架

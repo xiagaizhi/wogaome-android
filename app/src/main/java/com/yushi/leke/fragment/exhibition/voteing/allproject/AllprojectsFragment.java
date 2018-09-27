@@ -18,6 +18,7 @@ import com.yufan.library.view.recycler.PageInfo;
 import com.yushi.leke.UIHelper;
 import com.yushi.leke.YFApi;
 import com.yushi.leke.fragment.exhibition.vote.VoteFragment;
+import com.yushi.leke.fragment.exhibition.voteing.seacher.ActivitySeachFragment;
 import com.yushi.leke.fragment.paySafe.PaySafetyFragment;
 
 import java.util.ArrayList;
@@ -186,12 +187,20 @@ public class AllprojectsFragment extends BaseListFragment<AllprojectsContract.IV
             }
         });
     }
+
+    @Override
+    public void seacherOnclick() {
+        start(UIHelper.creat(ActivitySeachFragment.class).build());
+    }
+
     @Override
     public String getactivityid() {
         return activityid;
     }
     @Override
     public void OnBackResult(Object... s) {
-        getRootFragment().start(UIHelper.creat(PaySafetyFragment.class).build());
+        getRootFragment().start(UIHelper.creat(PaySafetyFragment.class)
+                .put(Global.BUNDLE_KEY_ACTIVITYID,activityid)
+                .build());
     }
 }
