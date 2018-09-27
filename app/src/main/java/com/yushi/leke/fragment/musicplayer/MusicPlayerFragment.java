@@ -2,13 +2,14 @@ package com.yushi.leke.fragment.musicplayer;
 
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
-import android.animation.ValueAnimator;
 import android.content.ComponentName;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 
+import com.yufan.library.api.ApiBean;
+import com.yufan.library.api.ApiManager;
+import com.yufan.library.api.BaseHttpCallBack;
 import com.yufan.library.widget.anim.AFVerticalAnimator;
 import com.yushi.leke.R;
 import com.yufan.library.base.BaseFragment;
@@ -36,9 +37,11 @@ import android.view.animation.DecelerateInterpolator;
 import android.view.animation.LinearInterpolator;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.yufan.library.base.BaseFragment;
 import com.yufan.library.inject.VuClass;
+import com.yushi.leke.YFApi;
 import com.yushi.leke.uamp.AlbumArtCache;
 import com.yushi.leke.uamp.MusicService;
 import com.yushi.leke.uamp.model.MusicProvider;
@@ -84,6 +87,8 @@ public class MusicPlayerFragment extends BaseFragment<MusicPlayerContract.IView>
     private PlayQueueFragment playQueueFragment;
     private ScheduledFuture<?> mScheduleFuture;
     private PlaybackStateCompat mLastPlaybackState;
+    private String mAlbumId;
+    private String subState;
 
     private final MediaControllerCompat.Callback mCallback = new MediaControllerCompat.Callback() {
         @Override
@@ -151,6 +156,7 @@ public class MusicPlayerFragment extends BaseFragment<MusicPlayerContract.IView>
             controllerCompat.unregisterCallback(mCallback);
         }
     }
+
     @Override
     public void onDestroy() {
         super.onDestroy();
@@ -158,6 +164,7 @@ public class MusicPlayerFragment extends BaseFragment<MusicPlayerContract.IView>
         mHandler.removeCallbacksAndMessages(null);
         mExecutorService.shutdown();
     }
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -234,8 +241,8 @@ public class MusicPlayerFragment extends BaseFragment<MusicPlayerContract.IView>
     };
 
     private void animScrollUp() {
-        if(isUIPlaying){
-            isUIPlaying=false;
+        if (isUIPlaying) {
+            isUIPlaying = false;
             Fragment fragment = (RoundFragment) getVu().getViewPager().getAdapter().instantiateItem(getVu().getViewPager(), getVu().getViewPager().getCurrentItem());
             ObjectAnimator mRotateAnim = (ObjectAnimator) fragment.getView().getTag(R.id.tag_animator);
             if (mAnimatorSet != null) {
@@ -255,7 +262,7 @@ public class MusicPlayerFragment extends BaseFragment<MusicPlayerContract.IView>
 
     private void animScrollIdle() {
         if (!isUIPlaying) {
-            isUIPlaying=true;
+            isUIPlaying = true;
             MediaControllerCompat controllerCompat = MediaControllerCompat.getMediaController(getActivity());
             if (controllerCompat.getPlaybackState().getState() == PlaybackStateCompat.STATE_PLAYING) {
                 Fragment fragment = (RoundFragment) getVu().getViewPager().getAdapter().instantiateItem(getVu().getViewPager(), getVu().getViewPager().getCurrentItem());
@@ -291,6 +298,9 @@ public class MusicPlayerFragment extends BaseFragment<MusicPlayerContract.IView>
         playQueueFragment.setQueue(mediaController.getQueue());
         playQueueFragment.setQueueTitle(mediaController.getMetadata().getDescription().getSubtitle());
         mAdapter.setQueue(mediaController.getQueue());
+        mAlbumId = String.valueOf(mediaController.getMetadata().getBundle().getString(MediaMetadataCompat.METADATA_KEY_ALBUM));
+        subscribeCheck(mAlbumId);
+        getVu().setAlbumName(String.valueOf(mediaController.getMetadata().getDescription().getSubtitle()));
         List<MediaSessionCompat.QueueItem> queueItems = mediaController.getQueue();
         for (int i = 0; i < queueItems.size(); i++) {
             if (queueItems.get(i).getQueueId() == state.getActiveQueueItemId()) {
@@ -503,7 +513,75 @@ public class MusicPlayerFragment extends BaseFragment<MusicPlayerContract.IView>
 
     @Override
     public void fav() {
+        if (TextUtils.equals(subState, "0")) {//未订阅
+            ApiManager.getCall(ApiManager.getInstance().create(YFApi.class)
+                    .registeralbum(mAlbumId))
+                    .useCache(false)
+                    .enqueue(new BaseHttpCallBack() {
+                        @Override
+                        public void onSuccess(ApiBean mApiBean) {
+                            subState = "1";
+                            getVu().setSubState(subState);
+                        }
 
+                        @Override
+                        public void onError(int id, Exception e) {
+                        }
+
+                        @Override
+                        public void onFinish() {
+                        }
+                    });
+        } else if (TextUtils.equals(subState, "1")) {//已经订阅
+            ApiManager.getCall(ApiManager.getInstance().create(YFApi.class)
+                    .unregisteralbum(mAlbumId))
+                    .useCache(false)
+                    .enqueue(new BaseHttpCallBack() {
+                        @Override
+                        public void onSuccess(ApiBean mApiBean) {
+                            subState = "0";
+                            getVu().setSubState(subState);
+                        }
+
+                        @Override
+                        public void onError(int id, Exception e) {
+                        }
+
+                        @Override
+                        public void onFinish() {
+                        }
+                    });
+        }
+    }
+
+
+    /**
+     * 查询是否已经订阅
+     *
+     * @param albumId
+     */
+    private void subscribeCheck(String albumId) {
+        ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).substate(albumId))
+                .useCache(false)
+                .enqueue(new BaseHttpCallBack() {
+                    @Override
+                    public void onSuccess(ApiBean mApiBean) {
+                        if (!TextUtils.isEmpty(mApiBean.getData())) {
+                            subState = mApiBean.getData();
+                            getVu().setSubState(subState);
+                        }
+                    }
+
+                    @Override
+                    public void onError(int id, Exception e) {
+
+                    }
+
+                    @Override
+                    public void onFinish() {
+
+                    }
+                });
     }
 
     @Override
@@ -533,7 +611,7 @@ public class MusicPlayerFragment extends BaseFragment<MusicPlayerContract.IView>
             Uri media = mediaMetadataCompat.getIconUri();
             RoundFragment fragment = new RoundFragment();
             Bundle bundle = new Bundle();
-            if (media!=null){
+            if (media != null) {
                 bundle.putString("album", media.toString());
             }
             fragment.setArguments(bundle);

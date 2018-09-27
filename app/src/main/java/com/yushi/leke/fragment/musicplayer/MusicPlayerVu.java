@@ -204,4 +204,15 @@ public class MusicPlayerVu extends BaseVu<MusicPlayerContract.Presenter> impleme
             titltView.setText(name);
         }
     }
+
+    @Override
+    public void setSubState(String state) {
+        if (TextUtils.equals(state,"0")){//未订阅
+            playing_fav.setSelected(false);
+            playing_fav.setVisibility(VISIBLE);
+        }else if (TextUtils.equals(state,"1")){//已经订阅
+            playing_fav.setSelected(true);
+            playing_fav.setVisibility(VISIBLE);
+        }
+    }
 }

@@ -33,6 +33,7 @@ public interface MusicPlayerContract {
 
         ImageView getNeedleImageView();
         void setAlbumName(String albumName);
+        void setSubState(String state);
     }
 
     interface Presenter extends Pr {

@@ -152,6 +152,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_weight="1"
+                    android:visibility="invisible"
                     android:src="@drawable/selector_music_subscription"
                     android:checked="true" />
 
