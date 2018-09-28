@@ -97,19 +97,14 @@ public class ShareDialog extends DialogFragment {
         });
         //加载背景，高斯模糊
         LoadImgToBackground(getActivity(), logo, re_scrrent);
-        //新建线程加载图片信息，发送到消息队列中
-        new Thread(new Runnable() {
+        //加载头像
+        Glide.with(getContext()).load(logo).asBitmap().into(new SimpleTarget<Bitmap>() {
             @Override
-            public void run() {
-                //加载图片
-                Bitmap bmp = getURLimage(logo);
-                Message msg = new Message();
-                msg.what = 0;
-                msg.obj = bmp;
-                handle.sendMessage(msg);
+            public void onResourceReady(Bitmap bitmap, GlideAnimation glideAnimation) {
+                //图片加载完成
+                anyshape_title.setImageBitmap(bitmap);
             }
-        }).start();
-        ;
+        });
         tv_name.setText(username);
         tv_city.setText(city);
         tv_introduc.setText(introduction);
@@ -194,40 +189,5 @@ public class ShareDialog extends DialogFragment {
         }
         // 通知图库更新
         getContext().sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.parse(Global.SAVE_SHARE_IMAGE_PATH)));
-    }
-
-    //在消息队列中实现对控件的更改
-    private Handler handle = new Handler() {
-        public void handleMessage(Message msg) {
-            switch (msg.what) {
-                case 0:
-                    Bitmap bmp = (Bitmap) msg.obj;
-                    if (bmp != null && !bmp.isRecycled()) {
-                        anyshape_title.setImageBitmap(bmp);
-                    }
-                    break;
-            }
-        }
-
-    };
-
-    //加载图片
-    public Bitmap getURLimage(String url) {
-        Bitmap bmp = null;
-        try {
-            URL myurl = new URL(url);
-            // 获得连接
-            HttpURLConnection conn = (HttpURLConnection) myurl.openConnection();
-            conn.setConnectTimeout(6000);//设置超时
-            conn.setDoInput(true);
-            conn.setUseCaches(false);//不缓存
-            conn.connect();
-            InputStream is = conn.getInputStream();//获得图片的数据流
-            bmp = BitmapFactory.decodeStream(is);
-            is.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return bmp;
     }
 }

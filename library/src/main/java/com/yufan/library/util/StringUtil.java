@@ -129,4 +129,8 @@ public class StringUtil {
         }
         return sb.toString();
     }
+    public static String getFormatedDateTime(String pattern, long dateTime) {
+        SimpleDateFormat sDateFormat = new SimpleDateFormat(pattern);
+        return sDateFormat.format(new Date(dateTime + 0));
+    }
 }
