@@ -232,7 +232,7 @@ public final class VodPlayback implements Playback {
         if (listenable == 1 || levelStatus == 0) {
             if (mediaHasChanged || mAliyunVodPlayer == null) {
                 releaseResources(false); // release everything except the player
-                MediaMetadataCompat track = mMusicProvider.getMusic(MediaIDHelper.extractMusicIDFromMediaID(item.getDescription().getMediaId()));
+
                 if (mAliyunVodPlayer == null) {
                     mAliyunVodPlayer = new AliyunVodPlayer(mContext);
                     mAliyunVodPlayer.setAutoPlay(true);

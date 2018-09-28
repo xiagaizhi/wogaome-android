@@ -96,14 +96,8 @@ public class QueueHelper {
         List<MediaSessionCompat.QueueItem> queue = new ArrayList<>();
         int count = 0;
         for (MutableMediaMetadata track : tracks) {
-
-            // We create a hierarchy-aware mediaID, so we know what the queue is about by looking
-            // at the QueueItem media IDs.
-            String hierarchyAwareMediaID = MediaIDHelper.createMediaID(
-                    track.metadata.getDescription().getMediaId(), categories);
-
             MediaMetadataCompat trackCopy = new MediaMetadataCompat.Builder(track.metadata)
-                    .putString(MediaMetadataCompat.METADATA_KEY_MEDIA_ID, hierarchyAwareMediaID)
+                    .putString(MediaMetadataCompat.METADATA_KEY_MEDIA_ID,  track.metadata.getDescription().getMediaId())
                     .build();
 
             trackCopy.getDescription().getExtras().putInt(MediaMetadataCompat.METADATA_KEY_DURATION, track.metadata.getDescription().getExtras().getInt(MediaMetadataCompat.METADATA_KEY_DURATION));
@@ -187,11 +181,10 @@ public class QueueHelper {
             long currentPlayingQueueId = controller.getPlaybackState().getActiveQueueItemId();
             String currentPlayingMediaId = controller.getMetadata().getDescription()
                     .getMediaId();
-            String itemMusicId = MediaIDHelper.extractMusicIDFromMediaID(
-                    queueItem.getDescription().getMediaId());
+
             if (queueItem.getQueueId() == currentPlayingQueueId
                     && currentPlayingMediaId != null
-                    && TextUtils.equals(currentPlayingMediaId, itemMusicId)) {
+                    && TextUtils.equals(currentPlayingMediaId, queueItem.getDescription().getMediaId())) {
                 return true;
             }
         }

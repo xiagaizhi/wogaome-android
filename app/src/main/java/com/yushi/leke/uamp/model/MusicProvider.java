@@ -220,7 +220,7 @@ public class MusicProvider {
                 for (int i = 0; i < albumAudios.size(); i++) {
                     AlbumAudio albumAudio = albumAudios.get(i);
                     MediaMetadataCompat item = new MediaMetadataCompat.Builder()
-                            .putString(MediaMetadataCompat.METADATA_KEY_MEDIA_ID, String.valueOf(i+1))
+                            .putString(MediaMetadataCompat.METADATA_KEY_MEDIA_ID,albumAudio.getAliVideoId())
                             .putString(MediaMetadataCompat.METADATA_KEY_ALBUM, albumAudio.getAlbumId() + "")
                             .putString(MediaMetadataCompat.METADATA_KEY_ARTIST, albumName)
                             .putString(MediaMetadataCompat.METADATA_KEY_ALBUM_ART_URI, icon)

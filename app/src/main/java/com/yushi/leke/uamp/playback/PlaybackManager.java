@@ -168,11 +168,10 @@ public class PlaybackManager implements Playback.Callback {
         if (mediaId == null) {
             return;
         }
-        String musicId = MediaIDHelper.extractMusicIDFromMediaID(mediaId);
-        int favoriteIcon = mMusicProvider.isFavorite(musicId) ?
+        int favoriteIcon = mMusicProvider.isFavorite(mediaId) ?
                 R.drawable.ic_star_on : R.drawable.ic_star_off;
         LogHelper.d(TAG, "updatePlaybackState, setting Favorite custom action of music ",
-                musicId, " current favorite=", mMusicProvider.isFavorite(musicId));
+                mediaId, " current favorite=", mMusicProvider.isFavorite(mediaId));
         Bundle customActionExtras = new Bundle();
 
         stateBuilder.addCustomAction(new PlaybackStateCompat.CustomAction.Builder(
@@ -363,8 +362,8 @@ public class PlaybackManager implements Playback.Callback {
                 if (currentMusic != null) {
                     String mediaId = currentMusic.getDescription().getMediaId();
                     if (mediaId != null) {
-                        String musicId = MediaIDHelper.extractMusicIDFromMediaID(mediaId);
-                        mMusicProvider.setFavorite(musicId, !mMusicProvider.isFavorite(musicId));
+
+                        mMusicProvider.setFavorite(mediaId, !mMusicProvider.isFavorite(mediaId));
                     }
                 }
                 // playback state needs to be updated because the "Favorite" icon on the

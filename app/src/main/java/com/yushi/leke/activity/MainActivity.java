@@ -86,9 +86,7 @@ private String     TAG="MainActivity";
                 v.getContext().startActivity(intent);
             }
         });
-//        if(TextUtils.isEmpty(ablumId)){
-//            imageView.setVisibility(View.GONE);
-//        }
+
         return imageView;
     }
 
