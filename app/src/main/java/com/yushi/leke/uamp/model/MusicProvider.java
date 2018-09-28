@@ -35,6 +35,7 @@ import com.yushi.leke.uamp.utils.MediaIDHelper;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Set;
 import java.util.Timer;
@@ -55,7 +56,7 @@ public class MusicProvider {
     private static final String TAG = LogHelper.makeLogTag(MusicProvider.class);
 
 
-    private final ConcurrentMap<String, MutableMediaMetadata> mMusicListById;
+    private final LinkedHashMap<String, MutableMediaMetadata> mMusicListById;
     private static MusicProvider musicProvider;
     private final Set<String> mFavoriteTracks;
     private AliyunAuth aliyunAuth;
@@ -116,7 +117,7 @@ public class MusicProvider {
     }
 
     public MusicProvider() {
-        mMusicListById = new ConcurrentHashMap<>();
+        mMusicListById = new LinkedHashMap<>();
         mFavoriteTracks = Collections.newSetFromMap(new ConcurrentHashMap<String, Boolean>());//map change to set
         timer = new Timer();
         timer.scheduleAtFixedRate(task, 0, 30 * 60 * 1000);

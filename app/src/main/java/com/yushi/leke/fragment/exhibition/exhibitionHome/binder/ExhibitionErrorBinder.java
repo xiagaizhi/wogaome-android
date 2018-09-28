@@ -56,7 +56,7 @@ public class ExhibitionErrorBinder extends ItemViewBinder<ExhibitionErrorInfo, E
     @Override
     protected void onBindViewHolder(@NonNull final ViewHolder holder, @NonNull final ExhibitionErrorInfo category) {
         if (TextUtils.isEmpty(Netutil.GetNetworkType(App.getApp()))) {
-            holder.tv_error_tips.setText("～呲～网络连接异常\\n请检查您的网络设置～呲～");
+            holder.tv_error_tips.setText("～呲～网络连接异常\n请检查您的网络设置～呲～");
             holder.img_error.setImageResource(R.drawable.empty_nonetwork);
         } else {
             holder.tv_error_tips.setText("呲～呲～未发现任何数据");
@@ -67,7 +67,7 @@ public class ExhibitionErrorBinder extends ItemViewBinder<ExhibitionErrorInfo, E
             public void onClick(View v) {
                 mICallBack.OnBackResult();
                 if (TextUtils.isEmpty(Netutil.GetNetworkType(App.getApp()))) {
-                    holder.tv_error_tips.setText("～呲～网络连接异常\\n请检查您的网络设置～呲～");
+                    holder.tv_error_tips.setText("～呲～网络连接异常\n请检查您的网络设置～呲～");
                     holder.img_error.setImageResource(R.drawable.empty_nonetwork);
                 } else {
                     holder.tv_error_tips.setText("呲～呲～未发现任何数据");
