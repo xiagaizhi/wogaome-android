@@ -55,6 +55,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONStringer;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
@@ -148,9 +150,16 @@ public class BrowserBaseFragment extends BaseFragment<BrowserContract.View> impl
         if (!TextUtils.isEmpty(url)) {
             if (url.startsWith("rbaction")) {//schame协议跳转
                 try {
-                    Intent in = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-                    in.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    _mActivity.startActivity(in);
+                    Uri uri = Uri.parse(url);
+//                    Uri uri = Uri.parse("rbaction://sns_share?title=标题&digest=内容&shareUrl=http%3A%2F%2Fweb.dev.leke.com%2F%23%2Fplay%2Fdetail%2F1&icon=http://lelian-dev.oss-cn-shanghai.aliyuncs.com/img/QQ%E6%88%AA%E5%9B%BE20180921173007.png");
+                    String auth = uri.getAuthority();
+                    if (TextUtils.equals(auth, "doSnsShare")) {//分享
+                        String title = uri.getQueryParameter("title");
+                        String digest = uri.getQueryParameter("digest");
+                        String shareUrl = uri.getQueryParameter("shareUrl");
+                        String icon = uri.getQueryParameter("icon");
+                        openShare(title, digest, icon, shareUrl);
+                    }
                 } catch (Exception e) {
                 }
             } else {//跳转h5
@@ -544,12 +553,7 @@ public class BrowserBaseFragment extends BaseFragment<BrowserContract.View> impl
                     String icon = jsonObject.optString("icon");
                     String shareUrl = jsonObject.optString("shareUrl");
                     String title = jsonObject.optString("title");
-                    ShareModel shareModel = new ShareModel();
-                    shareModel.setContent(digest);
-                    shareModel.setTitle(title);
-                    shareModel.setIcon(icon);
-                    shareModel.setTargetUrl(shareUrl);
-                    ShareMenuActivity.startShare(BrowserBaseFragment.this, shareModel);
+                    openShare(title, digest, icon, shareUrl);
                 }
             });
 
@@ -623,6 +627,31 @@ public class BrowserBaseFragment extends BaseFragment<BrowserContract.View> impl
             super.onReceivedError(view, errorCode, description, failingUrl);
             isError = true;
             vu.onReceivedError(view, errorCode, description, failingUrl);
+        }
+    }
+
+    /**
+     * 去分享
+     *
+     * @param title
+     * @param digest
+     * @param icon
+     * @param shareUrl
+     */
+    private void openShare(String title, String digest, String icon, String shareUrl) {
+        try {
+            title = URLDecoder.decode(title, "UTF-8");
+            digest = URLDecoder.decode(digest, "UTF-8");
+            icon = URLDecoder.decode(icon, "UTF-8");
+            shareUrl = URLDecoder.decode(shareUrl, "UTF-8");
+            ShareModel shareModel = new ShareModel();
+            shareModel.setContent(digest);
+            shareModel.setTitle(title);
+            shareModel.setIcon(icon);
+            shareModel.setTargetUrl(shareUrl);
+            ShareMenuActivity.startShare(BrowserBaseFragment.this, shareModel);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
         }
 
     }
