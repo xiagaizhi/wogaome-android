@@ -425,7 +425,7 @@ public class BrowserBaseFragment extends BaseFragment<BrowserContract.View> impl
                         String shareUrl= mJSONObject.optString("shareUrl");
                         String userName= mJSONObject.optString("userName");
                         String city= mJSONObject.optString("city");
-                        Log.d("LOGH",city+logo+introduction+userName+shareUrl);
+                        Log.d("LOGH","city:"+city + "\nlogo:"+logo+"\nin:"+introduction+"\nname:"+userName+"\nshare:"+shareUrl);
                         ShareDialog shareDialog=new ShareDialog();
                         Bundle bundle=new Bundle();
                         bundle.putString("logo",logo);

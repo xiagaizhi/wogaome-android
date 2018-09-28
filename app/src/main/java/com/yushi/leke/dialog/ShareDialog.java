@@ -1,8 +1,10 @@
 package com.yushi.leke.dialog;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
@@ -21,10 +23,14 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.GlideDrawable;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
 import com.yufan.library.Global;
 import com.yufan.library.manager.UserManager;
 import com.yushi.leke.R;
@@ -41,11 +47,11 @@ import cn.lankton.anyshape.AnyshapeImageView;
 import jp.wasabeef.glide.transformations.BlurTransformation;
 
 public class ShareDialog extends DialogFragment {
-    RelativeLayout re_scrrent;
+    LinearLayout re_scrrent;
     ImageView img_qrcode;
     TextView tv_name, tv_city, tv_introduc;
     Button btn_save;
-    ImageView img_all;
+    ImageView img_cancle;
     AnyshapeImageView anyshape_title;
     private String logo, introduction, shareurl, username, city;
 
@@ -67,11 +73,14 @@ public class ShareDialog extends DialogFragment {
     }
 
     private void init(View view) {
-        logo = getArguments().getString("logo");
-        introduction = getArguments().getString("introduction");
-        username = getArguments().getString("username");
-        shareurl = getArguments().getString("shareurl");
-        city = getArguments().getString("city");
+        Bundle bundle=getArguments();
+        if (bundle!=null){
+            logo = bundle.getString("logo");
+            introduction=bundle.getString("introduction");
+            shareurl=bundle.getString("shareurl");
+            username=bundle.getString("username");
+            city=bundle.getString("city");
+        }
         img_qrcode = view.findViewById(R.id.img_qrcode);
         tv_name = view.findViewById(R.id.tv_name);
         tv_city = view.findViewById(R.id.tv_city);
@@ -79,19 +88,20 @@ public class ShareDialog extends DialogFragment {
         btn_save = view.findViewById(R.id.btn_save);
         anyshape_title = view.findViewById(R.id.anyshape_title);
         re_scrrent = view.findViewById(R.id.re_sc);
-        //加载背景，
-        img_all = view.findViewById(R.id.img_all);
-        Glide.with(getContext())
-                .load(logo)
-                .dontAnimate()
-                //.error(R.drawable.no_music_rotate_img)
-                // 设置高斯模糊
-                .bitmapTransform(new BlurTransformation(getContext(), 14, 3))
-                .into(img_all);
+        img_cancle=view.findViewById(R.id.img_cancle);
+        img_cancle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dismiss();
+            }
+        });
+        //加载背景，高斯模糊
+        LoadImgToBackground(getActivity(), logo, re_scrrent);
         //新建线程加载图片信息，发送到消息队列中
         new Thread(new Runnable() {
             @Override
             public void run() {
+                //加载图片
                 Bitmap bmp = getURLimage(logo);
                 Message msg = new Message();
                 msg.what = 0;
@@ -103,36 +113,64 @@ public class ShareDialog extends DialogFragment {
         tv_name.setText(username);
         tv_city.setText(city);
         tv_introduc.setText(introduction);
-        Bitmap bitmap = QRCodeUtil.createlogocode(shareurl, 130,
-                BitmapFactory.decodeResource(getResources(), R.drawable.ic_logo_leke));
-        img_qrcode.setImageBitmap(bitmap);
+        //生成二维码
+        if (shareurl!=null){
+            Bitmap bitmap = QRCodeUtil.createlogocode(shareurl, 150,
+                    BitmapFactory.decodeResource(getResources(), R.drawable.ic_logo_leke));
+            img_qrcode.setImageBitmap(bitmap);
+        }
         btn_save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Bitmap bmp = convertViewToBitmap(re_scrrent);
+                //获取线性布局截图
+                Bitmap bmp = getLinearLayoutBitmap(re_scrrent);
                 saveBitmap(bmp);
                 re_scrrent.destroyDrawingCache();
                 dismiss();// 保存过后释放资源
             }
         });
     }
-
+    public static void LoadImgToBackground(Activity activity, Object img, final View view){
+        if (img==null){
+            return;
+        }
+        Glide.with(activity).load(img).bitmapTransform(new BlurTransformation(activity, 14, 3))
+                .into(new SimpleTarget<GlideDrawable>() {
+                    @Override
+                    public void onResourceReady(GlideDrawable resource, GlideAnimation<? super GlideDrawable> glideAnimation) {
+                        view.setBackgroundDrawable(resource);
+                    }
+                });
+    }
     /**
      * 对View进行量测，布局后截图
      *
      * @param view
      * @return
      */
-    public Bitmap convertViewToBitmap(View view) {
-        view.measure(View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED), View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
-        view.layout(0, 0, view.getMeasuredWidth(), view.getMeasuredHeight());
-        view.setDrawingCacheEnabled(true);
-        view.buildDrawingCache();
-        Bitmap bitmap = view.getDrawingCache();
+    /**
+     * 截取LinearLayout
+     **/
+    public static Bitmap getLinearLayoutBitmap(LinearLayout linearLayout) {
+        int h = 0;
+        Bitmap bitmap;
+        for (int i = 0; i < linearLayout.getChildCount(); i++) {
+            h += linearLayout.getChildAt(i).getHeight();
+        }
+        // 创建对应大小的bitmap
+        bitmap = Bitmap.createBitmap(linearLayout.getWidth(), h,
+                Bitmap.Config.ARGB_8888);
+        final Canvas canvas = new Canvas(bitmap);
+        linearLayout.draw(canvas);
         return bitmap;
     }
 
+
+
     public void saveBitmap(Bitmap bitmap) {
+        if (bitmap==null){
+            return;
+        }
         // 首先保存图片
         File appDir = new File(Global.SAVE_SHARE_IMAGE_PATH);
         if (!appDir.exists()) {
@@ -155,7 +193,7 @@ public class ShareDialog extends DialogFragment {
             e.printStackTrace();
         }
         // 通知图库更新
-        getContext().sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.parse("file://" + "/sdcard/namecard/")));
+        getContext().sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.parse(Global.SAVE_SHARE_IMAGE_PATH)));
     }
 
     //在消息队列中实现对控件的更改
