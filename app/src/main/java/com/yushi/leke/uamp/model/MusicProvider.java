@@ -58,6 +58,7 @@ public class MusicProvider {
     private final ConcurrentMap<String, MutableMediaMetadata> mMusicListById;
     private static MusicProvider musicProvider;
     private final Set<String> mFavoriteTracks;
+    private String musicAlbum;
     private AliyunAuth aliyunAuth;
     private final Timer timer;
     private final TimerTask task = new TimerTask() {
@@ -199,13 +200,12 @@ public class MusicProvider {
      */
     public void retrieveMediaAsync(String parentMediaId, final Callback callback) {
         LogHelper.d(TAG, "retrieveMediaAsync called");
-//        if (mCurrentState == State.INITIALIZED) {
-//            if (callback != null) {
-//                // Nothing to do, execute callback immediately
-//                callback.onMusicCatalogReady(true);
-//            }
-//            return;
-//        }
+
+        if(parentMediaId==musicAlbum&&mCurrentState == State.INITIALIZED){
+            callback.onMusicCatalogReady(true);
+            return;
+        }
+        musicAlbum=parentMediaId;
         getAuth();
         ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).getPlayList(parentMediaId)).enqueue(new BaseHttpCallBack() {
             @Override
@@ -252,7 +252,7 @@ public class MusicProvider {
 
             @Override
             public void onError(int id, Exception e) {
-
+                mCurrentState = State.NON_INITIALIZED;
             }
 
             @Override
