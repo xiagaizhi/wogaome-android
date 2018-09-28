@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.tencent.smtt.export.external.interfaces.IX5WebChromeClient;
 import com.tencent.smtt.sdk.WebView;
 import com.yufan.library.base.BaseVu;
@@ -16,6 +17,9 @@ import com.yufan.library.view.ptr.PtrClassicFrameLayout;
 import com.yufan.library.widget.AppToolbar;
 import com.yufan.library.widget.StateLayout;
 import com.yushi.leke.R;
+import com.yushi.leke.UIHelper;
+
+import java.util.List;
 
 /**
  * Created by mengfantao on 18/7/26.
@@ -30,6 +34,7 @@ public class BrowserVu extends BaseVu<BrowserContract.Presenter> implements Brow
     private View myVideoView;
     private View myNormalView;
     private ImageView leftView;
+    private AppToolbar mAppToolbar;
 
 
     @Override
@@ -56,6 +61,7 @@ public class BrowserVu extends BaseVu<BrowserContract.Presenter> implements Brow
 
     @Override
     public boolean initTitle(AppToolbar appToolbar) {
+        mAppToolbar = appToolbar;
         leftView = appToolbar.creatLeftView(ImageView.class);
         leftView.setImageResource(R.drawable.left_back_black_arrows);
         leftView.setOnClickListener(new View.OnClickListener() {
@@ -74,12 +80,14 @@ public class BrowserVu extends BaseVu<BrowserContract.Presenter> implements Brow
         });
         titleView.setLines(1);
         titleView.setEllipsize(TextUtils.TruncateAt.END);
-        ImageView rightView = appToolbar.creatRightView(ImageView.class);
-        rightView.setVisibility(View.GONE);
-        if (!mPersenter.getHaveHead()){
+        if (!mPersenter.getHaveHead()) {
             titleView.setTextColor(getContext().getResources().getColor(R.color.white));
             leftView.setImageResource(R.drawable.left_back_white_arrows);
+            UIHelper.getWhiteMusicView(mPersenter.getActivity(), appToolbar);
+        }else {
+            UIHelper.getMusicView(mPersenter.getActivity(), appToolbar);
         }
+
         appToolbar.build(mPersenter.getHaveHead());
         return true;
     }
@@ -134,11 +142,10 @@ public class BrowserVu extends BaseVu<BrowserContract.Presenter> implements Brow
             mPtrClassicFrameLayout.refreshComplete();
         }
         mPageLoadingProgressBar.setVisibility(View.GONE);
-        if (!mPersenter.getHaveHead()){
+        if (!mPersenter.getHaveHead()) {
             titleView.setTextColor(getContext().getResources().getColor(R.color.white));
             leftView.setImageResource(R.drawable.left_back_white_arrows);
         }
-
 
 
     }
@@ -150,9 +157,33 @@ public class BrowserVu extends BaseVu<BrowserContract.Presenter> implements Brow
 
     @Override
     public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
-        if (!mPersenter.getHaveHead()){
+        if (!mPersenter.getHaveHead()) {
             titleView.setTextColor(getContext().getResources().getColor(R.color.color_gray_level3));
             leftView.setImageResource(R.drawable.left_back_black_arrows);
         }
+    }
+
+    @Override
+    public void setNaviBar(NaviBarInfoList naviBarInfoList) {
+        String title = naviBarInfoList.getTitle();
+        List<NaviBarInfo> naviBarInfos = naviBarInfoList.getActions();
+        if (TextUtils.isEmpty(title)) {
+            titleView.setText(title);
+        }
+        if (naviBarInfos != null && naviBarInfos.size() > 0) {
+            for (final NaviBarInfo naviBarInfo : naviBarInfos) {
+                ImageView imageView = mAppToolbar.creatRightView(ImageView.class);
+                Glide.with(getContext()).load(naviBarInfo.getIcon()).into(imageView);
+                imageView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String url = naviBarInfo.getUrl();
+                        mPersenter.openPage(url);
+                    }
+                });
+            }
+            mAppToolbar.build();
+        }
+
     }
 }

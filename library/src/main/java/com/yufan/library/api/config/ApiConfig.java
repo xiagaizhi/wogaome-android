@@ -68,13 +68,6 @@ public class ApiConfig {
     }
 
     /**
-     * 算力说明
-     */
-    public String getPowerInstruction() {
-        return webDomains[apiType] + "#/myPower/powerInstruction";
-    }
-
-    /**
      * 我的路演
      */
     public String getMyRoadShow() {
@@ -112,6 +105,11 @@ public class ApiConfig {
      */
     public String getMessage(int type) {
         return webDomains[apiType] + "#/my/message/" + type;
+    }
+
+
+    public String getPastActivities(){
+        return webDomains[apiType] + "#/play/before";
     }
 
 

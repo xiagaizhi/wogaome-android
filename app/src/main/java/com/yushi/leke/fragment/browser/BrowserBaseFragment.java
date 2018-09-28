@@ -40,6 +40,7 @@ import com.yufan.library.view.ptr.PtrDefaultHandler;
 import com.yufan.library.view.ptr.PtrFrameLayout;
 import com.yufan.library.view.ptr.PtrHandler;
 import com.yufan.library.webview.WVJBWebViewClient;
+import com.yushi.leke.UIHelper;
 import com.yushi.leke.dialog.ShareDialog;
 import com.yushi.leke.dialog.recharge.PayDialog;
 
@@ -65,6 +66,7 @@ public class BrowserBaseFragment extends BaseFragment<BrowserContract.View> impl
 
     //    private int REQUEST_CODE_CHOOSE=8;
     private boolean haveHead = true;
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -76,7 +78,7 @@ public class BrowserBaseFragment extends BaseFragment<BrowserContract.View> impl
         Bundle bundle = getArguments();
         if (bundle != null) {
             mIntentUrl = bundle.getString(Global.BUNDLE_KEY_BROWSER_URL);
-            haveHead = bundle.getBoolean(Global.BUNDLE_KEY_BROWSER_HAVE_HEAD,true);
+            haveHead = bundle.getBoolean(Global.BUNDLE_KEY_BROWSER_HAVE_HEAD, true);
         }
     }
 
@@ -91,13 +93,24 @@ public class BrowserBaseFragment extends BaseFragment<BrowserContract.View> impl
         return haveHead;
     }
 
+    @Override
+    public void openPage(String url) {
+        if (!TextUtils.isEmpty(url)) {
+            if (url.startsWith("rbaction")) {//原生跳转
+
+            } else {//跳转h5
+                start(UIHelper.creat(BrowserBaseFragment.class).put(Global.BUNDLE_KEY_BROWSER_URL, url).build());
+            }
+        }
+    }
+
 
     protected WVJBWebViewClient getWebViewClient() {
         return new BrowserWebViewClient(vu.getWebView());
     }
 
     private void initbrowser(final WebView webView) {
-        wVJBWebViewClient=   getWebViewClient();
+        wVJBWebViewClient = getWebViewClient();
         webView.setWebViewClient(wVJBWebViewClient);
         vu.getPtr().setPtrHandler(new PtrHandler() {
             @Override
@@ -213,7 +226,7 @@ public class BrowserBaseFragment extends BaseFragment<BrowserContract.View> impl
             webView.getX5WebViewExtension().setScrollBarFadingEnabled(false);
             webView.getX5WebViewExtension().invokeMiscMethod("setVideoParams", data);
         }
-         webSetting = webView.getSettings();
+        webSetting = webView.getSettings();
         webSetting.setAllowFileAccess(true);
         webSetting.setLayoutAlgorithm(LayoutAlgorithm.NARROW_COLUMNS);
         webSetting.setSupportZoom(true);
@@ -235,7 +248,7 @@ public class BrowserBaseFragment extends BaseFragment<BrowserContract.View> impl
         webSetting.setPluginState(WebSettings.PluginState.ON_DEMAND);
         String ua = webSetting.getUserAgentString();
         if (!(ua != null && ua.contains("LekeApp"))) {
-            webSetting.setUserAgentString(ua + "/LekeApp" );
+            webSetting.setUserAgentString(ua + "/LekeApp");
         }
         // webSetting.setRenderPriority(WebSettings.RenderPriority.HIGH);
         // webSetting.setPreFectch(true);
@@ -257,9 +270,9 @@ public class BrowserBaseFragment extends BaseFragment<BrowserContract.View> impl
         cookie.setAcceptCookie(true);
         Map<String, String> cookies = ApiManager.getInstance().getApiHeader(getContext());
         for (String key : cookies.keySet()) {
-            cookie.setCookie(mIntentUrl,key+"="+cookies.get(key));
+            cookie.setCookie(mIntentUrl, key + "=" + cookies.get(key));
         }
-        cookie.setCookie(mIntentUrl,"User-Agent="+webSetting.getUserAgentString());
+        cookie.setCookie(mIntentUrl, "User-Agent=" + webSetting.getUserAgentString());
         cookie.setCookie(mIntentUrl, "token=" + UserManager.getInstance().getToken());
         CookieSyncManager.getInstance().sync();
     }
@@ -401,15 +414,14 @@ public class BrowserBaseFragment extends BaseFragment<BrowserContract.View> impl
             });
 
 
-
             registerHandler("web_zfGoods", new WVJBHandler() {
                 @Override
                 public void request(Object data, WVJBResponseCallback callback) {
                     if (data != null) {
                         JSONObject mJSONObject = (JSONObject) data;
                         String goodsId = mJSONObject.optString("goodsId");
-                        if (!TextUtils.isEmpty(goodsId)){
-                            PayDialog payDialog = new PayDialog(_mActivity, goodsId,3, true);
+                        if (!TextUtils.isEmpty(goodsId)) {
+                            PayDialog payDialog = new PayDialog(_mActivity, goodsId, 3, true);
                             payDialog.show();
                         }
                     }
@@ -422,19 +434,31 @@ public class BrowserBaseFragment extends BaseFragment<BrowserContract.View> impl
                         JSONObject mJSONObject = (JSONObject) data;
                         String logo = mJSONObject.optString("avatar");
                         String introduction = mJSONObject.optString("motto");
-                        String shareUrl= mJSONObject.optString("shareUrl");
-                        String userName= mJSONObject.optString("userName");
-                        String city= mJSONObject.optString("city");
-                        Log.d("LOGH",city+logo+introduction+userName+shareUrl);
-                        ShareDialog shareDialog=new ShareDialog();
-                        Bundle bundle=new Bundle();
-                        bundle.putString("logo",logo);
-                        bundle.putString("introduction",introduction);
-                        bundle.putString("shareurl",shareUrl);
-                        bundle.putString("username",userName);
-                        bundle.putString("city",city);
+                        String shareUrl = mJSONObject.optString("shareUrl");
+                        String userName = mJSONObject.optString("userName");
+                        String city = mJSONObject.optString("city");
+                        Log.d("LOGH", city + logo + introduction + userName + shareUrl);
+                        ShareDialog shareDialog = new ShareDialog();
+                        Bundle bundle = new Bundle();
+                        bundle.putString("logo", logo);
+                        bundle.putString("introduction", introduction);
+                        bundle.putString("shareurl", shareUrl);
+                        bundle.putString("username", userName);
+                        bundle.putString("city", city);
                         shareDialog.setArguments(bundle);
-                        shareDialog.show(getFragmentManager(),"ShareDialog");
+                        shareDialog.show(getFragmentManager(), "ShareDialog");
+                    }
+                }
+            });
+
+            registerHandler("web_setNaviBar", new WVJBHandler() {//设置自定义头部
+                @Override
+                public void request(Object data, WVJBResponseCallback callback) {
+                    if (data != null) {
+                        NaviBarInfoList naviBarInfoList = JSON.parseObject(data.toString(), NaviBarInfoList.class);
+                        if (naviBarInfoList != null) {
+                            getVu().setNaviBar(naviBarInfoList);
+                        }
                     }
                 }
             });

@@ -14,5 +14,6 @@ public interface ExhibitionContract {
 
     interface Presenter extends Pr {
     void onMusicMenuClick();
+    void openPastActivities();
     }
 }
