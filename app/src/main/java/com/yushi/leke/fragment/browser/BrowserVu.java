@@ -13,6 +13,7 @@ import com.tencent.smtt.export.external.interfaces.IX5WebChromeClient;
 import com.tencent.smtt.sdk.WebView;
 import com.yufan.library.base.BaseVu;
 import com.yufan.library.inject.FindLayout;
+import com.yufan.library.util.PxUtil;
 import com.yufan.library.view.ptr.PtrClassicFrameLayout;
 import com.yufan.library.widget.AppToolbar;
 import com.yufan.library.widget.StateLayout;
@@ -172,9 +173,10 @@ public class BrowserVu extends BaseVu<BrowserContract.Presenter> implements Brow
         }
         if (naviBarInfos != null && naviBarInfos.size() > 0) {
             mAppToolbar.getRightViewGroup().removeAllViews();
+            int h = PxUtil.convertDIP2PX(getContext(),22);
             for (final NaviBarInfo naviBarInfo : naviBarInfos) {
                 ImageView imageView = mAppToolbar.creatRightView(ImageView.class);
-                Glide.with(getContext()).load(naviBarInfo.getIcon()).into(imageView);
+                Glide.with(getContext()).load(naviBarInfo.getIcon()).override(h,h).into(imageView);
                 imageView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

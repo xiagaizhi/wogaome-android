@@ -40,9 +40,7 @@ public class ExhibitionDetailVu extends BaseVu<ExhibitionDetailContract.Presente
     @Override
     public void initView(View view) {
         LinearLayout mToolBarRightContainer = mAliyunVodPlayerView.getmControlView().getToolBarRightContainer();
-        if (mPersenter.getExhibitionType() == 3) {
-            mToolBarRightContainer.addView(detailIcon);
-        }
+        mToolBarRightContainer.addView(detailIcon);
         mToolBarRightContainer.addView(shareIcon);
     }
 

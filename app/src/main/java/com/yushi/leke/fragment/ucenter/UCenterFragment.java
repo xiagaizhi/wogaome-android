@@ -1,5 +1,6 @@
 package com.yushi.leke.fragment.ucenter;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.alibaba.fastjson.JSON;
@@ -18,6 +19,7 @@ import android.view.View;
 import com.yufan.library.inject.VuClass;
 import com.yushi.leke.UIHelper;
 import com.yushi.leke.YFApi;
+import com.yushi.leke.activity.MusicPlayerActivity;
 import com.yushi.leke.fragment.browser.BrowserBaseFragment;
 import com.yushi.leke.fragment.main.MainFragment;
 import com.yushi.leke.fragment.setting.SettingFragment;
@@ -150,7 +152,8 @@ public class UCenterFragment extends BaseFragment<UCenterContract.IView> impleme
 
     @Override
     public void startPlayer() {
-
+        Intent intent = new Intent(_mActivity, MusicPlayerActivity.class);
+        startActivity(intent);
     }
 
     @Override

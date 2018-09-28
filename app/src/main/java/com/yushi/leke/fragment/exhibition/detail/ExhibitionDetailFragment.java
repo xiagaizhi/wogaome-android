@@ -73,12 +73,6 @@ public class ExhibitionDetailFragment extends BaseFragment<ExhibitionDetailContr
         super.onViewCreated(view, savedInstanceState);
         initAliyunPlayerView();
         switch (exhibitionType) {//活动进度（0--未开始，1--报名中，2--投票中，3--已结束）
-            case 0:
-                loadRootFragment(R.id.fl_exhibition_content, UIHelper.creat(BrowserBaseFragment.class).put(Global.BUNDLE_KEY_BROWSER_URL, "").build());
-                break;
-            case 1:
-                loadRootFragment(R.id.fl_exhibition_content, UIHelper.creat(BrowserBaseFragment.class).put(Global.BUNDLE_KEY_BROWSER_URL, "").build());
-                break;
             case 2:
                 VoteingFragment mVoteingFragment = (VoteingFragment) UIHelper.creat(VoteingFragment.class)
                         .put(Global.BUNDLE_KEY_ACTIVITYID, activityid)
@@ -661,8 +655,7 @@ public class ExhibitionDetailFragment extends BaseFragment<ExhibitionDetailContr
 
     @Override
     public void openActivityInstruction() {
-        // TODO: 2018/9/21 打开活动说明 
-//        start(UIHelper.creat(BrowserBaseFragment.class).put(Global.BUNDLE_KEY_BROWSER_URL,"").build());
+        start(UIHelper.creat(BrowserBaseFragment.class).put(Global.BUNDLE_KEY_BROWSER_URL,ApiManager.getInstance().getApiConfig().getActivityIntroduction(activityid)).build());
     }
 
     @Override

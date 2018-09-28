@@ -80,8 +80,8 @@ public class BrowserBaseFragment extends BaseFragment<BrowserContract.View> impl
             switch (action) {
                 case Global.BROADCAST_PAY_RESUIL_ACTION:
                     boolean ispaySuccess = intent.getBooleanExtra(Global.INTENT_PAY_RESUIL_DATA, false);
-                    if (ispaySuccess){
-                        if (payWVJBResponseCallback != null){
+                    if (ispaySuccess) {
+                        if (payWVJBResponseCallback != null) {
                             payWVJBResponseCallback.callback("");
                         }
                         new CommonDialog(_mActivity).setTitle("恭喜您，充值成功！")
@@ -93,7 +93,7 @@ public class BrowserBaseFragment extends BaseFragment<BrowserContract.View> impl
                                         commonDialog.dismiss();
                                     }
                                 }).show();
-                    }else {
+                    } else {
                         new CommonDialog(_mActivity).setTitle("本次充值失败，请重新充值！")
                                 .setPositiveName("确定")
                                 .setHaveNegative(false)
