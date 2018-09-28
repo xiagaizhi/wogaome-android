@@ -97,6 +97,7 @@ public class ExhibitionFragment extends BaseListFragment<ExhibitionContract.IVie
             }
         }));
         list.add(new ExhibitionTopInfo());
+        list.add(new ExhibitionErrorInfo());
         adapter.setItems(list);
         vu.getRecyclerView().setAdapter(adapter);
         onRefresh();
@@ -169,10 +170,6 @@ public class ExhibitionFragment extends BaseListFragment<ExhibitionContract.IVie
                     @Override
                     public void onFinish() {
                         super.onFinish();
-                        if (list.size() <= 1) {
-                            list.add(new ExhibitionErrorInfo());
-                            vu.getRecyclerView().getAdapter().notifyDataSetChanged();
-                        }
                     }
                 });
     }

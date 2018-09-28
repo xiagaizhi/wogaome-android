@@ -35,14 +35,22 @@ import com.yufan.library.api.ApiManager;
 import com.yufan.library.base.BaseFragment;
 import com.yufan.library.inject.VuClass;
 import com.yufan.library.manager.UserManager;
+import com.yufan.library.util.DeviceUtil;
 import com.yufan.library.util.SoftInputUtil;
 import com.yufan.library.view.ptr.PtrDefaultHandler;
 import com.yufan.library.view.ptr.PtrFrameLayout;
 import com.yufan.library.view.ptr.PtrHandler;
 import com.yufan.library.webview.WVJBWebViewClient;
+import com.yufan.share.ShareModel;
+import com.yushi.leke.App;
 import com.yushi.leke.UIHelper;
 import com.yushi.leke.dialog.ShareDialog;
 import com.yushi.leke.dialog.recharge.PayDialog;
+import com.yushi.leke.fragment.album.AlbumDetailFragment;
+import com.yushi.leke.fragment.exhibition.detail.ExhibitionDetailFragment;
+import com.yushi.leke.fragment.login.LoginFragment;
+import com.yushi.leke.fragment.main.MainFragment;
+import com.yushi.leke.share.ShareMenuActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -96,8 +104,13 @@ public class BrowserBaseFragment extends BaseFragment<BrowserContract.View> impl
     @Override
     public void openPage(String url) {
         if (!TextUtils.isEmpty(url)) {
-            if (url.startsWith("rbaction")) {//原生跳转
-
+            if (url.startsWith("rbaction")) {//schame协议跳转
+                try {
+                    Intent in = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                    in.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    _mActivity.startActivity(in);
+                } catch (Exception e) {
+                }
             } else {//跳转h5
                 start(UIHelper.creat(BrowserBaseFragment.class).put(Global.BUNDLE_KEY_BROWSER_URL, url).build());
             }
@@ -459,6 +472,75 @@ public class BrowserBaseFragment extends BaseFragment<BrowserContract.View> impl
                         if (naviBarInfoList != null) {
                             getVu().setNaviBar(naviBarInfoList);
                         }
+                    }
+                }
+            });
+
+            registerHandler("web_tokenExpired", new WVJBHandler() {//token失效
+                @Override
+                public void request(Object data, WVJBResponseCallback callback) {
+                    UserManager.getInstance().setToken("");
+                    UserManager.getInstance().setUid("");
+                    App.getApp().registerXGPush("*");
+                    getRootFragment().startWithPopTo(UIHelper.creat(LoginFragment.class).build(), MainFragment.class, true);
+                }
+            });
+
+            registerHandler("web_copyText", new WVJBHandler() {//复制
+                @Override
+                public void request(Object data, WVJBResponseCallback callback) {
+                    DeviceUtil.copyTextToBoard(data.toString(), true);
+                }
+            });
+
+            registerHandler("web_doShare", new WVJBHandler() {//调用原生分享
+                @Override
+                public void request(Object data, WVJBResponseCallback callback) {
+                    JSONObject jsonObject = (JSONObject) data;
+                    String digest = jsonObject.optString("digest");
+                    String icon = jsonObject.optString("icon");
+                    String shareUrl = jsonObject.optString("shareUrl");
+                    String title = jsonObject.optString("title");
+                    ShareModel shareModel = new ShareModel();
+                    shareModel.setContent(digest);
+                    shareModel.setTitle(title);
+                    shareModel.setIcon(icon);
+                    shareModel.setTargetUrl(shareUrl);
+                    ShareMenuActivity.startShare(BrowserBaseFragment.this, shareModel);
+                }
+            });
+
+            registerHandler("web_jumpModule", new WVJBHandler() {
+                @Override
+                public void request(Object data, WVJBResponseCallback callback) {
+                    JSONObject jsonObject = (JSONObject) data;
+                    int type = jsonObject.optInt("type");//type: 要跳转的类型
+                    switch (type) {
+                        case 1://专辑详情页
+                            String albumId = jsonObject.optString("sid");
+                            start(UIHelper.creat(AlbumDetailFragment.class).put(Global.BUNDLE_KEY_ALBUMID, albumId).build());
+                            break;
+                        case 2://活动详情页
+                            String activityId = jsonObject.optString("sid");
+                            int activityProgress = jsonObject.optInt("status");//活动进度（0--未开始，1--报名中，2--投票中，3--已结束）
+                            if (activityProgress == 0 || activityProgress == 1) {//h5详情页面
+                                getRootFragment().start(UIHelper.creat(BrowserBaseFragment.class).put(Global.BUNDLE_KEY_BROWSER_URL, ApiManager.getInstance().getApiConfig().getExhibitionDetail(activityId)).build());
+                            } else {//原生详情页面
+                                getRootFragment().start(UIHelper.creat(ExhibitionDetailFragment.class)
+                                        .put(Global.BUNDLE_KEY_EXHIBITION_TYE, activityProgress)
+                                        .put(Global.BUNDLE_KEY_ACTIVITYID, activityId)
+                                        .build());
+                            }
+                            break;
+                        case 3://我的投票
+                            getRootFragment().start(UIHelper.creat(BrowserBaseFragment.class).put(Global.BUNDLE_KEY_BROWSER_URL, ApiManager.getInstance().getApiConfig().getMyVote()).build());
+                            break;
+                        case 4://我的邀请
+                            getRootFragment().start(UIHelper.creat(BrowserBaseFragment.class).put(Global.BUNDLE_KEY_BROWSER_URL, ApiManager.getInstance().getApiConfig().getMyInvite()).build());
+                            break;
+                        case 5://我的路演
+                            getRootFragment().start(UIHelper.creat(BrowserBaseFragment.class).put(Global.BUNDLE_KEY_BROWSER_URL, ApiManager.getInstance().getApiConfig().getMyRoadShow()).build());
+                            break;
                     }
                 }
             });

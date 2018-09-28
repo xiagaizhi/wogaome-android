@@ -83,12 +83,12 @@ public class SubscriptionsFragment extends BaseListFragment<SubscriptionsContrac
                             if (bannerItemInfo != null) {
                                 NativeJumpInfo nativeJumpInfo = bannerItemInfo.getNativeUrl();
                                 if (nativeJumpInfo != null) {//0：活动 1：专辑
-                                    if (TextUtils.equals("0", nativeJumpInfo.getDetailType())) {
+                                    if (TextUtils.equals("1", nativeJumpInfo.getDetailType())) {//专辑
                                         getRootFragment().start(UIHelper
                                                 .creat(AlbumDetailFragment.class)
                                                 .put(Global.BUNDLE_KEY_ALBUMID, nativeJumpInfo.getDetailId())
                                                 .build());
-                                    } else if (TextUtils.equals("1", nativeJumpInfo.getDetailType())) {
+                                    } else if (TextUtils.equals("0", nativeJumpInfo.getDetailType())) {//活动
                                         if (nativeJumpInfo.getActivityProgress() == 0 || nativeJumpInfo.getActivityProgress() == 1) {//h5详情页面
                                             getRootFragment().start(UIHelper.creat(BrowserBaseFragment.class).put(Global.BUNDLE_KEY_BROWSER_URL, ApiManager.getInstance().getApiConfig().getExhibitionDetail(nativeJumpInfo.getDetailId())).build());
                                         } else {//原生详情页面
@@ -153,7 +153,6 @@ public class SubscriptionsFragment extends BaseListFragment<SubscriptionsContrac
                         if (!TextUtils.isEmpty(mApiBean.getData())) {
                             List<BannerItemInfo> banners = JSON.parseArray(mApiBean.getData(), BannerItemInfo.class);
                             if (banners != null && banners.size() > 0) {
-                                list.add(subscriptionBanner);
                                 if (subscriptionBanner.getBannerItemInfos() == null) {
                                     subscriptionBanner.setBannerItemInfos(new ArrayList<BannerItemInfo>());
                                 }

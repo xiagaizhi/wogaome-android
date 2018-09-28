@@ -1,6 +1,7 @@
 package com.yufan.library.util;
 
 import android.Manifest;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
@@ -10,8 +11,12 @@ import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.support.v4.app.ActivityCompat;
 import android.telephony.TelephonyManager;
+import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
+
+import com.yufan.library.base.BaseApplication;
+import com.yufan.library.manager.DialogManager;
 
 import java.lang.reflect.Method;
 
@@ -289,5 +294,16 @@ public class DeviceUtil {
         sb.append("/LekeApp");
         Log.v("User-Agent", "User-Agent: " + sb.toString());
         return sb.toString();
+    }
+
+
+    public static void copyTextToBoard(String string, boolean isShowTips) {
+        if (TextUtils.isEmpty(string))
+            return;
+        ClipboardManager clip = (ClipboardManager) BaseApplication.getInstance().getSystemService(Context.CLIPBOARD_SERVICE);
+        clip.setText(string);
+        if (isShowTips) {
+            DialogManager.getInstance().toast("复制成功");
+        }
     }
 }
