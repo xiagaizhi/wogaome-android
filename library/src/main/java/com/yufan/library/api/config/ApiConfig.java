@@ -89,6 +89,14 @@ public class ApiConfig {
     }
 
     /**
+     * 我的邀请
+     * @return
+     */
+    public String getMyInvite(){
+        return webDomains[apiType]+"/inviteFriends/myInvite";
+    }
+
+    /**
      * 活动详情页 未开始／报名中
      *
      * @param activityId

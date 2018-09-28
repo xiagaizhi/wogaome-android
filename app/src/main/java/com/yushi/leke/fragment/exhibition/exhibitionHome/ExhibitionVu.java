@@ -97,11 +97,20 @@ public class ExhibitionVu extends BaseListVu<ExhibitionContract.Presenter> imple
         img_history = appToolbar.creatRightView(ImageView.class);
         img_history.setImageResource(R.drawable.ic_history_exc);
         img_history.setAlpha(0f);
-        musicAnim = UIHelper.getMusicView(mPersenter.getActivity(), appToolbar);
+
         mTitleView = appToolbar.creatCenterView(TextView.class);
         mTitleView.setText("路演厅");
         mTitleView.setAlpha(0);
         mTitleView.getPaint().setFakeBoldText(true);
+
+        img_history.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mPersenter.openPastActivities();
+            }
+        });
+        appToolbar.build();
+        musicAnim = UIHelper.getMusicView(mPersenter.getActivity(), appToolbar);
         musicAnim.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -110,13 +119,6 @@ public class ExhibitionVu extends BaseListVu<ExhibitionContract.Presenter> imple
                 }
             }
         });
-        img_history.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mPersenter.openPastActivities();
-            }
-        });
-        appToolbar.build();
         return true;
     }
 
