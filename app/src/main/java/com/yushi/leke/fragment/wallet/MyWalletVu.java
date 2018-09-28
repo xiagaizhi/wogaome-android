@@ -94,6 +94,8 @@ public class MyWalletVu extends BaseVu<MyWalletContract.Presenter> implements My
             }
         });
 
+
+
         keyIcon = appToolbar.creatRightView(ImageView.class);
         keyIcon.setImageResource(R.drawable.ic_toolbar_key);
         keyIcon.setOnClickListener(new View.OnClickListener() {
@@ -103,14 +105,8 @@ public class MyWalletVu extends BaseVu<MyWalletContract.Presenter> implements My
             }
         });
 
-        ImageView playerIcon = UIHelper.getWhiteMusicView(mPersenter.getActivity(),appToolbar);
-        playerIcon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mPersenter.openPlayer();
-            }
-        });
         appToolbar.build(false);
+        UIHelper.getWhiteMusicView(mPersenter.getActivity(),appToolbar);
         return true;
     }
 

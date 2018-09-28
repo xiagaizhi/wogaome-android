@@ -65,7 +65,9 @@ this.callBack=callBack;
         holder.img_history_ic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                if(callBack!=null){
+                    callBack.OnBackResult(HISTORY_EVENT);
+                }
             }
         });
     }

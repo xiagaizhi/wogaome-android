@@ -23,25 +23,40 @@ import com.yufan.library.base.Pr;
 import com.yufan.library.base.Vu;
 import com.yufan.library.view.ptr.PtrClassicFrameLayout;
 
+import java.util.List;
+
 /**
  * This specifies the contract between the view and the presenter.
- *业务接口
+ * 业务接口
  */
 public interface BrowserContract {
-    interface View  extends Vu{
+    interface View extends Vu {
         WebView getWebView();
+
         void onProgressChanged(WebView webView, int i);
+
         void onShowCustomView(android.view.View view, IX5WebChromeClient.CustomViewCallback customViewCallback);
+
         void onHideCustomView();
+
         void onReceivedTitle(WebView view, final String arg1);
+
         void onPageFinished(WebView view, String url);
+
         PtrClassicFrameLayout getPtr();
-      void   onReceivedError(WebView view, int errorCode, String description, String failingUrl);
+
+        void onReceivedError(WebView view, int errorCode, String description, String failingUrl);
+
+        void setNaviBar(NaviBarInfoList naviBarInfoList);
     }
 
     interface Presenter extends Pr {
         void onBackPressed();
-       boolean isPtrEnable();
-       boolean getHaveHead();
+
+        boolean isPtrEnable();
+
+        boolean getHaveHead();
+
+        void openPage(String url);
     }
 }
