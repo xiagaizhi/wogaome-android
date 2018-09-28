@@ -1,19 +1,12 @@
 package com.yushi.leke.fragment.home;
 
-import com.yufan.library.manager.DialogManager;
-import com.yufan.library.util.PxUtil;
 import com.yushi.leke.R;
 
-import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.AnimationDrawable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.yufan.library.base.BaseListVu;
@@ -24,7 +17,6 @@ import com.yufan.library.widget.StateLayout;
 import com.yufan.library.widget.AppToolbar;
 import com.yufan.library.view.recycler.YFRecyclerView;
 import com.yushi.leke.UIHelper;
-import com.yushi.leke.activity.MusicPlayerActivity;
 
 /**
  * Created by mengfantao on 18/8/2.
@@ -38,7 +30,6 @@ public class SubscriptionsVu extends BaseListVu<SubscriptionsContract.Presenter>
     private float topHeightMin;
     private float searchBarBottom;
     private TextView mTitleView;
-    private AppToolbar appToolbar;
     private ImageView musicAnim;
     private ImageView searchBar;
 
@@ -47,7 +38,7 @@ public class SubscriptionsVu extends BaseListVu<SubscriptionsContract.Presenter>
         super.initView(view);
         topHeightMin = getContext().getResources().getDimension(R.dimen.px68);
         topHeightMax = topHeightMin * 3 / 2;
-        searchBarBottom=getContext().getResources().getDimension(R.dimen.px158);
+        searchBarBottom = getContext().getResources().getDimension(R.dimen.px158);
         mYFRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
@@ -65,12 +56,12 @@ public class SubscriptionsVu extends BaseListVu<SubscriptionsContract.Presenter>
                     if (top_offset > topHeightMin) {
                         if (top_offset < topHeightMax) {
                             if (mTitleView != null) {
-                                float offset = (top_offset - topHeightMin) / (topHeightMax-topHeightMin);
+                                float offset = (top_offset - topHeightMin) / (topHeightMax - topHeightMin);
                                 Log.d("offset", "appToolbar:" + topHeightMin);
                                 mTitleView.setAlpha(offset);
                                 musicAnim.setAlpha(offset);
                             }
-                        }else {
+                        } else {
                             mTitleView.setAlpha(1f);
                             musicAnim.setAlpha(1f);
                         }
@@ -78,10 +69,10 @@ public class SubscriptionsVu extends BaseListVu<SubscriptionsContract.Presenter>
                         mTitleView.setAlpha(0f);
                         musicAnim.setAlpha(0f);
                     }
-                    if(top_offset>searchBarBottom){
-                        float offset=(top_offset-searchBarBottom)/(topHeightMax-topHeightMin);
+                    if (top_offset > searchBarBottom) {
+                        float offset = (top_offset - searchBarBottom) / (topHeightMax - topHeightMin);
                         searchBar.setAlpha(offset);
-                    }else {
+                    } else {
                         searchBar.setAlpha(0f);
                     }
                 }
@@ -96,33 +87,31 @@ public class SubscriptionsVu extends BaseListVu<SubscriptionsContract.Presenter>
 
     @Override
     public boolean initTitle(AppToolbar appToolbar) {
-        this.appToolbar = appToolbar;
-
         mTitleView = appToolbar.creatCenterView(TextView.class);
         searchBar = appToolbar.creatRightView(ImageView.class);
         searchBar.setImageResource(R.drawable.ic_search_blue);
         mTitleView.setText("订阅专栏");
         mTitleView.setAlpha(0f);
-        mTitleView .getPaint().setFakeBoldText(true);
+        mTitleView.getPaint().setFakeBoldText(true);
         searchBar.setAlpha(0f);
-        musicAnim = UIHelper.getMusicView(mPersenter.getActivity(),appToolbar);
-        musicAnim.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if( v.getAlpha()>0) {
-                    mPersenter.onMusicMenuClick();
-                }
-            }
-        });
         searchBar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if( v.getAlpha()>0){
+                if (v.getAlpha() > 0) {
                     mPersenter.onSearchBarClick();
                 }
             }
         });
         appToolbar.build();
+        musicAnim = UIHelper.getMusicView(mPersenter.getActivity(), appToolbar);
+        musicAnim.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (v.getAlpha() > 0) {
+                    mPersenter.onMusicMenuClick();
+                }
+            }
+        });
         return true;
     }
 

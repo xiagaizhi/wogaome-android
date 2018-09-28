@@ -101,18 +101,7 @@ public class AlbumDetailVu extends BaseVu<AlbumDetailContract.Presenter> impleme
     public boolean initTitle(AppToolbar appToolbar) {
         img_share=appToolbar.creatRightView(ImageView.class);
         img_share.setImageResource(R.drawable.ic_share_white);
-        musicAnim = UIHelper.getMusicView(mPersenter.getActivity(),appToolbar);
-        musicAnim.setImageResource(R.drawable.anim_player_white);
-        ((AnimationDrawable) musicAnim.getDrawable()).start();
         backButton=   appToolbar.creatLeftView(ImageView.class);
-        musicAnim.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if( v.getAlpha()>0) {
-                    mPersenter.onMusicMenuClick();
-                }
-            }
-        });
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -121,6 +110,17 @@ public class AlbumDetailVu extends BaseVu<AlbumDetailContract.Presenter> impleme
         });
         backButton.setImageResource(com.yufan.library.R.drawable.left_back_white_arrows);
         appToolbar.build(false);
+        musicAnim = UIHelper.getMusicView(mPersenter.getActivity(),appToolbar);
+        musicAnim.setImageResource(R.drawable.anim_player_white);
+        ((AnimationDrawable) musicAnim.getDrawable()).start();
+        musicAnim.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if( v.getAlpha()>0) {
+                    mPersenter.onMusicMenuClick();
+                }
+            }
+        });
         return true;
     }
 
