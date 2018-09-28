@@ -7,6 +7,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -80,6 +81,10 @@ public class ShareDialog extends DialogFragment {
             shareurl=bundle.getString("shareurl");
             username=bundle.getString("username");
             city=bundle.getString("city");
+        }
+        if (logo==""){
+            //默认图
+            logo="http://lelian-dev.oss-cn-shanghai.aliyuncs.com/img/QQ%E6%88%AA%E5%9B%BE20180921173007.png";
         }
         img_qrcode = view.findViewById(R.id.img_qrcode);
         tv_name = view.findViewById(R.id.tv_name);
@@ -188,6 +193,8 @@ public class ShareDialog extends DialogFragment {
             e.printStackTrace();
         }
         // 通知图库更新
-        getContext().sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.parse(Global.SAVE_SHARE_IMAGE_PATH)));
+        MediaScannerConnection.scanFile(getContext(), new String[]{file.getAbsolutePath()}, null, null);
+
+
     }
 }

@@ -70,13 +70,11 @@
                <RelativeLayout
                    android:layout_width="match_parent"
                    android:layout_height="match_parent">
-                  <cn.lankton.anyshape.AnyshapeImageView
+                  <ImageView
                       android:layout_centerInParent="true"
                       android:layout_width="@dimen/px176"
                       android:layout_height="@dimen/px203"
-                      android:src="@drawable/ic_anyshape_text"
-                      app:anyshapeMask="@drawable/ic_anyshape_out"
-                      />
+                      android:background="@drawable/ic_anyshape_out"/>
                   <cn.lankton.anyshape.AnyshapeImageView
                       android:layout_centerInParent="true"
                       android:id="@+id/anyshape_title"
