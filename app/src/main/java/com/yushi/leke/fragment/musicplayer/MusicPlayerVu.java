@@ -77,6 +77,7 @@ public class MusicPlayerVu extends BaseVu<MusicPlayerContract.Presenter> impleme
         }else {
             img_music_guide.setVisibility(View.GONE);
         }
+
     }
 
     @Override
@@ -233,6 +234,9 @@ public class MusicPlayerVu extends BaseVu<MusicPlayerContract.Presenter> impleme
     @Override
     public void setCanOperation(boolean isCanOperation) {
         this.isCanOperation = isCanOperation;
+        if(mSeekbar!=null){
+            mSeekbar.setEnabled(isCanOperation);
+        }
     }
 
     @Override

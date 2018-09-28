@@ -296,6 +296,7 @@ public class MusicPlayerFragment extends BaseFragment<MusicPlayerContract.IView>
             animator.start();
             return;
         }
+
         isCanOperation = true;
         getVu().setCanOperation(true);
         MediaControllerCompat.setMediaController(getActivity(), mediaController);
