@@ -56,6 +56,7 @@ public class MusicProvider {
     private static final String TAG = LogHelper.makeLogTag(MusicProvider.class);
 
 
+    private final LinkedHashMap<String, MutableMediaMetadata> mList;
     private final LinkedHashMap<String, MutableMediaMetadata> mMusicListById;
     private static MusicProvider musicProvider;
     private final Set<String> mFavoriteTracks;
@@ -118,12 +119,19 @@ public class MusicProvider {
     }
 
     public MusicProvider() {
+        mList = new LinkedHashMap<>();
         mMusicListById = new LinkedHashMap<>();
         mFavoriteTracks = Collections.newSetFromMap(new ConcurrentHashMap<String, Boolean>());//map change to set
         timer = new Timer();
         timer.scheduleAtFixedRate(task, 0, 30 * 60 * 1000);
 
 
+    }
+
+    public void updateProvider(){
+
+        mMusicListById.clear();
+        mMusicListById.putAll(mList);
     }
 
 
@@ -217,7 +225,7 @@ public class MusicProvider {
                 String icon = jsonObject.getString("icon");
                 String albumName = jsonObject.getString("name");
                 List<AlbumAudio> albumAudios = JSON.parseArray(listStr, AlbumAudio.class);
-                mMusicListById.clear();
+                mList.clear();
                 for (int i = 0; i < albumAudios.size(); i++) {
                     AlbumAudio albumAudio = albumAudios.get(i);
                     MediaMetadataCompat item = new MediaMetadataCompat.Builder()
@@ -242,7 +250,7 @@ public class MusicProvider {
                     item.getDescription().getExtras().putInt(MutableMediaMetadata.levelStatus, levelStatus);
                     item.getDescription().getExtras().putString(MutableMediaMetadata.videoId, albumAudio.getAliVideoId());
                     String musicId = item.getString(MediaMetadataCompat.METADATA_KEY_MEDIA_ID);
-                    mMusicListById.put(musicId, new MutableMediaMetadata(musicId, item));
+                    mList.put(musicId, new MutableMediaMetadata(musicId, item));
                 }
                 mCurrentState = State.INITIALIZED;
                 if (callback != null) {
@@ -267,7 +275,7 @@ public class MusicProvider {
 
     public List<MediaBrowserCompat.MediaItem> getChildren() {
         List<MediaBrowserCompat.MediaItem> mediaItems = new ArrayList<>();
-        for (MutableMediaMetadata metadata : getMusics()) {
+        for (MutableMediaMetadata metadata : mList.values()) {
             mediaItems.add(createMediaItem(metadata));
         }
         return mediaItems;
