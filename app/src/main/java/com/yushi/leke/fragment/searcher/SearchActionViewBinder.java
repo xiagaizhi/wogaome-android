@@ -29,6 +29,9 @@ import com.yufan.library.inter.ICallBack;
 import com.yufan.library.util.StringUtil;
 import com.yushi.leke.R;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import me.drakeet.multitype.ItemViewBinder;
 
 /**
@@ -54,7 +57,9 @@ public class SearchActionViewBinder extends ItemViewBinder<SearchActionInfo, Sea
         holder.sdv.setImageURI(Uri.parse(category.horizontalIcon));
         holder.tv_title.setText(category.getTitle());
         holder.tv_organizer.setText(category.getOrganizer());
-        holder.tv_time.setText(StringUtil.formatTime(category.getStartTime(),category.getEndTime()));
+        holder.tv_time.setText(getFormatedDateTime("yy-MM-dd", Long.parseLong(category.getStartTime()))
+                +" / "
+                +getFormatedDateTime("MM-dd", Long.parseLong(category.getEndTime())));
         if (getAdapter().getItemCount()==getPosition(holder)-1) {
             holder.view_bottom_line.setVisibility(View.INVISIBLE);
         } else {
@@ -85,6 +90,10 @@ public class SearchActionViewBinder extends ItemViewBinder<SearchActionInfo, Sea
             tv_organizer=itemView.findViewById(R.id.tv_organizer);
             view_bottom_line = itemView.findViewById(R.id.view_bottom_line);
         }
+    }
+    public static String getFormatedDateTime(String pattern, long dateTime) {
+        SimpleDateFormat sDateFormat = new SimpleDateFormat(pattern);
+        return sDateFormat.format(new Date(dateTime + 0));
     }
 
 

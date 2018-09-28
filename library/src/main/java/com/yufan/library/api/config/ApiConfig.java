@@ -133,7 +133,15 @@ public class ApiConfig {
      */
     public String getSingUp(String projectId) {
         return webDomains[apiType] + "#/play/join/" + projectId;
+    }
 
+    /**
+     * 活动说明页
+     *
+     * @return
+     */
+    public String getActivityIntroduction(String activityid) {
+        return webDomains[apiType] + "#/play/desc/" + activityid;
     }
 
 }
