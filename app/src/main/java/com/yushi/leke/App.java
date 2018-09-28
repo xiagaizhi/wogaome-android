@@ -58,7 +58,7 @@ public class App extends BaseApplication {
         QbSdk.initX5Environment(getApplicationContext(), null);
         ApiManager.getInstance().init(SPManager.getInstance().getInt(Global.SP_KEY_SERVICE_TYPE, BuildConfig.API_TYPE));
         //注册信鸽
-        registerXGPush(UserManager.getInstance().getToken());
+        registerXGPush(UserManager.getInstance().getUid());
         initCustomPushNotificationBuilder(getApplicationContext());
         OkGo.getInstance().init(this);
         initManService();
