@@ -236,7 +236,6 @@ public class MusicProvider {
                     item.getDescription().getExtras().putInt(MutableMediaMetadata.deleted, albumAudio.getDeleted());
                     item.getDescription().getExtras().putInt(MutableMediaMetadata.listenable, albumAudio.getListenable());
                     item.getDescription().getExtras().putInt(MutableMediaMetadata.size, albumAudio.getSize());
-                    item.getDescription().getExtras().putLong(MutableMediaMetadata.utime, albumAudio.getUtime());
                     item.getDescription().getExtras().putLong(MutableMediaMetadata.viewPeople, albumAudio.getViewPeople());
                     item.getDescription().getExtras().putLong(MutableMediaMetadata.viewTimes, albumAudio.getViewTimes());
                     item.getDescription().getExtras().putInt(MutableMediaMetadata.levelStatus, levelStatus);
@@ -293,7 +292,7 @@ public class MusicProvider {
         copy.getDescription().getExtras().putInt(MutableMediaMetadata.deleted, metadata.metadata.getDescription().getExtras().getInt(MutableMediaMetadata.deleted));
         copy.getDescription().getExtras().putInt(MutableMediaMetadata.listenable, metadata.metadata.getDescription().getExtras().getInt(MutableMediaMetadata.listenable));
         copy.getDescription().getExtras().putInt(MutableMediaMetadata.size, metadata.metadata.getDescription().getExtras().getInt(MutableMediaMetadata.size));
-        copy.getDescription().getExtras().putLong(MutableMediaMetadata.utime, metadata.metadata.getDescription().getExtras().getLong(MutableMediaMetadata.utime));
+
         copy.getDescription().getExtras().putLong(MutableMediaMetadata.viewPeople, metadata.metadata.getDescription().getExtras().getLong(MutableMediaMetadata.viewPeople));
         copy.getDescription().getExtras().putLong(MutableMediaMetadata.viewTimes, metadata.metadata.getDescription().getExtras().getLong(MutableMediaMetadata.viewTimes));
         copy.getDescription().getExtras().putInt(MutableMediaMetadata.levelStatus, metadata.metadata.getDescription().getExtras().getInt(MutableMediaMetadata.levelStatus));

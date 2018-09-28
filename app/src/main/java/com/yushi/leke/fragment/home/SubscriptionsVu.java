@@ -97,7 +97,7 @@ public class SubscriptionsVu extends BaseListVu<SubscriptionsContract.Presenter>
     @Override
     public boolean initTitle(AppToolbar appToolbar) {
         this.appToolbar = appToolbar;
-        musicAnim = UIHelper.getMusicView(mPersenter.getActivity(),appToolbar);
+
         mTitleView = appToolbar.creatCenterView(TextView.class);
         searchBar = appToolbar.creatRightView(ImageView.class);
         searchBar.setImageResource(R.drawable.ic_search_blue);
@@ -105,6 +105,7 @@ public class SubscriptionsVu extends BaseListVu<SubscriptionsContract.Presenter>
         mTitleView.setAlpha(0f);
         mTitleView .getPaint().setFakeBoldText(true);
         searchBar.setAlpha(0f);
+        musicAnim = UIHelper.getMusicView(mPersenter.getActivity(),appToolbar);
         musicAnim.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

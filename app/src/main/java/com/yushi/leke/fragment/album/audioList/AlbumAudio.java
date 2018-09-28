@@ -33,7 +33,6 @@ public class AlbumAudio {
     int size;// 大小
 
 
-    long utime;
 
     long viewPeople;//播放人数
 
@@ -128,13 +127,6 @@ public class AlbumAudio {
         this.size = size;
     }
 
-    public long getUtime() {
-        return utime;
-    }
-
-    public void setUtime(long utime) {
-        this.utime = utime;
-    }
 
     public long getViewPeople() {
         return viewPeople;

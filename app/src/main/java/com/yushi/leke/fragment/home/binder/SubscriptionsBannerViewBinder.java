@@ -67,21 +67,7 @@ public class SubscriptionsBannerViewBinder extends ItemViewBinder<SubscriptionBa
 
     @Override
     protected void onBindViewHolder(@NonNull ViewHolder holder, @NonNull final SubscriptionBanner category) {
-        holder.rightMusic.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                callBack.OnBackResult(BANNER_BINDER_MUSIC);
 
-            }
-        });
-
-        holder.rl_searchbar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                callBack.OnBackResult(BANNER_BINDER_SEARCH);
-            }
-        });
-        ((AnimationDrawable) holder.rightMusic.getDrawable()).start();
         holder.mConvenientBanner.setPageTransformer(false, new ScaleTransformer());
         holder.mConvenientBanner.setOffscreenPageLimit(3);
         List<BannerItemInfo> bannerItemInfos = category.getBannerItemInfos();
@@ -147,15 +133,11 @@ public class SubscriptionsBannerViewBinder extends ItemViewBinder<SubscriptionBa
     static class ViewHolder extends RecyclerView.ViewHolder {
 
 
-        private ImageView rightMusic;
-        private RelativeLayout rl_searchbar;
         private Banner mConvenientBanner;
 
         ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            rightMusic = itemView.findViewById(R.id.iv_anim_icon);
-            rl_searchbar = itemView.findViewById(R.id.rl_searchbar);
             mConvenientBanner = itemView.findViewById(R.id.viewpager);
             mConvenientBanner.addOnAttachStateChangeListener(new View.OnAttachStateChangeListener() {
                 @Override

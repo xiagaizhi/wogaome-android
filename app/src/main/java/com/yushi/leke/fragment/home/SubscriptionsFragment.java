@@ -23,6 +23,8 @@ import com.yushi.leke.activity.MusicPlayerActivity;
 import com.yushi.leke.fragment.album.AlbumDetailFragment;
 import com.yushi.leke.fragment.browser.BrowserBaseFragment;
 import com.yushi.leke.fragment.exhibition.detail.ExhibitionDetailFragment;
+import com.yushi.leke.fragment.exhibition.exhibitionHome.bean.ExhibitionEmptyInfo;
+import com.yushi.leke.fragment.exhibition.exhibitionHome.binder.ExhibitionEmptyBinder;
 import com.yushi.leke.fragment.exhibition.exhibitionHome.binder.ExhibitionErrorBinder;
 import com.yushi.leke.fragment.exhibition.exhibitionHome.bean.ExhibitionErrorInfo;
 import com.yushi.leke.fragment.home.bean.BannerItemInfo;
@@ -30,8 +32,10 @@ import com.yushi.leke.fragment.home.bean.Homeinfo;
 import com.yushi.leke.fragment.home.bean.SubscriptionChannelInfo;
 import com.yushi.leke.fragment.home.bean.SubscriptionColumnInfo;
 import com.yushi.leke.fragment.home.binder.SubscriptionBanner;
+import com.yushi.leke.fragment.home.binder.SubscriptionTitle;
 import com.yushi.leke.fragment.home.binder.SubscriptionsBannerViewBinder;
 import com.yushi.leke.fragment.home.binder.SubscriptionsColumnViewBinder;
+import com.yushi.leke.fragment.home.binder.SubscriptionsTitleViewBinder;
 import com.yushi.leke.fragment.home.binder.SubscriptionsViewBinder;
 import com.yushi.leke.fragment.home.subscriptionChannel.SubscriptionChannelFragment;
 import com.yushi.leke.fragment.searcher.SearchFragment;
@@ -49,12 +53,13 @@ import me.drakeet.multitype.MultiTypeAdapter;
 public class SubscriptionsFragment extends BaseListFragment<SubscriptionsContract.IView> implements SubscriptionsContract.Presenter {
     private MultiTypeAdapter adapter;
     private SubscriptionBanner subscriptionBanner;
+    private SubscriptionTitle subscriptionTitle;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         adapter = new MultiTypeAdapter();
-        adapter.register(SubscriptionBanner.class, new SubscriptionsBannerViewBinder(new ICallBack() {
+        adapter.register(SubscriptionTitle.class,new SubscriptionsTitleViewBinder(new ICallBack() {
             @Override
             public void OnBackResult(Object... s) {
                 switch ((int) s[0]) {
@@ -64,6 +69,13 @@ public class SubscriptionsFragment extends BaseListFragment<SubscriptionsContrac
                     case SubscriptionsBannerViewBinder.BANNER_BINDER_SEARCH:
                         onSearchBarClick();
                         break;
+                }
+            }
+        }));
+        adapter.register(SubscriptionBanner.class, new SubscriptionsBannerViewBinder(new ICallBack() {
+            @Override
+            public void OnBackResult(Object... s) {
+                switch ((int) s[0]) {
                     case SubscriptionsBannerViewBinder.BANNER_BINDER_ITEM:
                         int position = (int) s[1];
                         if (subscriptionBanner != null && subscriptionBanner.getBannerItemInfos() != null && subscriptionBanner.getBannerItemInfos().size() > position) {
@@ -106,12 +118,7 @@ public class SubscriptionsFragment extends BaseListFragment<SubscriptionsContrac
                         .build());
             }
         }));
-        adapter.register(ExhibitionErrorInfo.class, new ExhibitionErrorBinder(new ICallBack() {
-            @Override
-            public void OnBackResult(Object... s) {
-                onRefresh();
-            }
-        }));
+
         adapter.register(SubscriptionColumnInfo.class, new SubscriptionsColumnViewBinder(new ICallBack() {
             @Override
             public void OnBackResult(Object... s) {
@@ -121,8 +128,16 @@ public class SubscriptionsFragment extends BaseListFragment<SubscriptionsContrac
                         .put(Global.BUNDLE_CHANNEL_ID, subscriptionColumnInfo.getChannelId()).build());
             }
         }));
+        adapter.register(ExhibitionErrorInfo.class, new ExhibitionErrorBinder(new ICallBack() {
+            @Override
+            public void OnBackResult(Object... s) {
+                onRefresh();
+            }
+        }));
         subscriptionBanner = new SubscriptionBanner();
-        list.add(subscriptionBanner);
+        subscriptionTitle = new SubscriptionTitle();
+        list.add(subscriptionTitle);
+        list.add(new ExhibitionErrorInfo());
         adapter.setItems(list);
         vu.getRecyclerView().setAdapter(adapter);
         onRefresh();
@@ -138,6 +153,7 @@ public class SubscriptionsFragment extends BaseListFragment<SubscriptionsContrac
                         if (!TextUtils.isEmpty(mApiBean.getData())) {
                             List<BannerItemInfo> banners = JSON.parseArray(mApiBean.getData(), BannerItemInfo.class);
                             if (banners != null && banners.size() > 0) {
+                                list.add(subscriptionBanner);
                                 if (subscriptionBanner.getBannerItemInfos() == null) {
                                     subscriptionBanner.setBannerItemInfos(new ArrayList<BannerItemInfo>());
                                 }
@@ -169,6 +185,7 @@ public class SubscriptionsFragment extends BaseListFragment<SubscriptionsContrac
                             List<SubscriptionChannelInfo> subscriptionChannelInfos = JSON.parseArray(mApiBean.getData(), SubscriptionChannelInfo.class);
                             if (subscriptionChannelInfos != null && subscriptionChannelInfos.size() > 0) {
                                 list.clear();
+                                list.add(subscriptionTitle);
                                 list.add(subscriptionBanner);
                                 for (SubscriptionChannelInfo temp : subscriptionChannelInfos) {
                                     SubscriptionColumnInfo subscriptionColumnInfo = new SubscriptionColumnInfo();
