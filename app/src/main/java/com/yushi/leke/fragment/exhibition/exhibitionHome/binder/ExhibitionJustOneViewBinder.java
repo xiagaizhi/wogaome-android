@@ -68,7 +68,7 @@ public class ExhibitionJustOneViewBinder extends ItemViewBinder<ExhibitionJustOn
             @Override
             public void onClick(View v) {
                 if (callBack != null) {
-                    callBack.OnBackResult(category);
+                    callBack.OnBackResult(1,category);
                 }
             }
         });
@@ -76,7 +76,7 @@ public class ExhibitionJustOneViewBinder extends ItemViewBinder<ExhibitionJustOn
             @Override
             public void onClick(View v) {
                 if (callBack != null) {
-                    callBack.OnBackResult(category);
+                    callBack.OnBackResult(2,category);
                 }
             }
         });
