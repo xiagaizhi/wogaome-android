@@ -68,13 +68,6 @@ public class ApiConfig {
     }
 
     /**
-     * 算力说明
-     */
-    public String getPowerInstruction() {
-        return webDomains[apiType] + "#/myPower/powerInstruction";
-    }
-
-    /**
      * 我的路演
      */
     public String getMyRoadShow() {
@@ -96,6 +89,14 @@ public class ApiConfig {
     }
 
     /**
+     * 我的邀请
+     * @return
+     */
+    public String getMyInvite(){
+        return webDomains[apiType]+"/inviteFriends/myInvite";
+    }
+
+    /**
      * 活动详情页 未开始／报名中
      *
      * @param activityId
@@ -112,6 +113,11 @@ public class ApiConfig {
      */
     public String getMessage(int type) {
         return webDomains[apiType] + "#/my/message/" + type;
+    }
+
+
+    public String getPastActivities(){
+        return webDomains[apiType] + "#/play/before";
     }
 
 

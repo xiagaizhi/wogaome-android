@@ -124,16 +124,16 @@ public class PlaybackManager implements Playback.Callback {
         //noinspection ResourceType
         PlaybackStateCompat.Builder stateBuilder = new PlaybackStateCompat.Builder()
                 .setActions(getAvailableActions());
-
         setCustomAction(stateBuilder);
         int state = mPlayback.getState();
-
         // If there is an error message, send it to the playback state:
         if (error != null) {
             // Error states are really only supposed to be used for errors that cause playback to
             // stop unexpectedly and persist until the user takes action to fix it.
             stateBuilder.setErrorMessage(error);
             state = PlaybackStateCompat.STATE_ERROR;
+        }else if(state==PlaybackStateCompat.STATE_NONE){
+            state = PlaybackStateCompat.STATE_STOPPED;
         }
         //noinspection ResourceType
         stateBuilder.setState(state, position, 1.0f, SystemClock.elapsedRealtime());
@@ -168,11 +168,10 @@ public class PlaybackManager implements Playback.Callback {
         if (mediaId == null) {
             return;
         }
-        String musicId = MediaIDHelper.extractMusicIDFromMediaID(mediaId);
-        int favoriteIcon = mMusicProvider.isFavorite(musicId) ?
+        int favoriteIcon = mMusicProvider.isFavorite(mediaId) ?
                 R.drawable.ic_star_on : R.drawable.ic_star_off;
         LogHelper.d(TAG, "updatePlaybackState, setting Favorite custom action of music ",
-                musicId, " current favorite=", mMusicProvider.isFavorite(musicId));
+                mediaId, " current favorite=", mMusicProvider.isFavorite(mediaId));
         Bundle customActionExtras = new Bundle();
 
         stateBuilder.addCustomAction(new PlaybackStateCompat.CustomAction.Builder(
@@ -314,6 +313,13 @@ public class PlaybackManager implements Playback.Callback {
             handlePlayRequest();
         }
 
+        @Override
+        public void onPrepareFromMediaId(String mediaId, Bundle extras) {
+            super.onPrepareFromMediaId(mediaId, extras);
+            mQueueManager.setQueueFromMusic(mediaId);
+            handleStopRequest(null);
+        }
+
         //暂停时触发
         //通过MediaControllerCompat.getTransportControls().pause()触发
         @Override
@@ -363,8 +369,8 @@ public class PlaybackManager implements Playback.Callback {
                 if (currentMusic != null) {
                     String mediaId = currentMusic.getDescription().getMediaId();
                     if (mediaId != null) {
-                        String musicId = MediaIDHelper.extractMusicIDFromMediaID(mediaId);
-                        mMusicProvider.setFavorite(musicId, !mMusicProvider.isFavorite(musicId));
+
+                        mMusicProvider.setFavorite(mediaId, !mMusicProvider.isFavorite(mediaId));
                     }
                 }
                 // playback state needs to be updated because the "Favorite" icon on the

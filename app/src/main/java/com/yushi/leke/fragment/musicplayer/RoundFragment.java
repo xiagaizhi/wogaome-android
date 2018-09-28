@@ -42,7 +42,6 @@ public class RoundFragment extends Fragment {
     private WeakReference<ObjectAnimator> animatorWeakReference;
     private SimpleDraweeView sdv;
     private String albumPath = "";
-    private boolean isEmpty;
     private AnimatorSet mAnimatorSet;
 
 
@@ -56,7 +55,6 @@ public class RoundFragment extends Fragment {
         }
         if (TextUtils.isEmpty(albumPath)) {
             albumPath = "res://com.yushi.leke/" + R.drawable.bg_musicpalyer_default;
-            isEmpty = true;
         }
 
         //  CircleImageView  circleImageView = (CircleImageView) rootView.findViewById(R.id.circle);
@@ -141,22 +139,6 @@ public class RoundFragment extends Fragment {
         };
         if (albumPath != null) {
             sdv.setImageURI(Uri.parse(albumPath));
-        } else {
-            try {
-
-                ImageRequest request = ImageRequestBuilder.newBuilderWithSource(Uri.parse(albumPath)).build();
-
-                DraweeController controller = Fresco.newDraweeControllerBuilder()
-                        .setOldController(sdv.getController())
-                        .setImageRequest(request)
-                        .setControllerListener(controllerListener)
-                        .build();
-
-                sdv.setController(controller);
-                //  sdv.setImageBitmap(BitmapFactory.decodeStream(HttpUtil.getFromCache(getActivity(),getAlbumPath())));
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
         }
         return rootView;
     }
@@ -174,15 +156,7 @@ public class RoundFragment extends Fragment {
         animator.setInterpolator(new LinearInterpolator());
         if (getView() != null)
             getView().setTag(R.id.tag_animator, animator);
-        if (isEmpty) {
-            ObjectAnimator mRotateAnim = (ObjectAnimator) getView().getTag(R.id.tag_animator);
-            mRotateAnim.setDuration(10000L);
-            if (mRotateAnim != null) {
-                mAnimatorSet = new AnimatorSet();
-                mAnimatorSet.playTogether(mRotateAnim, animator);
-                mAnimatorSet.start();
-            }
-        }
+
     }
 
 

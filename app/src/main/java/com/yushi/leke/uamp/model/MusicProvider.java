@@ -35,6 +35,7 @@ import com.yushi.leke.uamp.utils.MediaIDHelper;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Set;
 import java.util.Timer;
@@ -55,9 +56,10 @@ public class MusicProvider {
     private static final String TAG = LogHelper.makeLogTag(MusicProvider.class);
 
 
-    private final ConcurrentMap<String, MutableMediaMetadata> mMusicListById;
+    private final LinkedHashMap<String, MutableMediaMetadata> mMusicListById;
     private static MusicProvider musicProvider;
     private final Set<String> mFavoriteTracks;
+    private String musicAlbum;
     private AliyunAuth aliyunAuth;
     private final Timer timer;
     private final TimerTask task = new TimerTask() {
@@ -116,7 +118,7 @@ public class MusicProvider {
     }
 
     public MusicProvider() {
-        mMusicListById = new ConcurrentHashMap<>();
+        mMusicListById = new LinkedHashMap<>();
         mFavoriteTracks = Collections.newSetFromMap(new ConcurrentHashMap<String, Boolean>());//map change to set
         timer = new Timer();
         timer.scheduleAtFixedRate(task, 0, 30 * 60 * 1000);
@@ -199,13 +201,12 @@ public class MusicProvider {
      */
     public void retrieveMediaAsync(String parentMediaId, final Callback callback) {
         LogHelper.d(TAG, "retrieveMediaAsync called");
-//        if (mCurrentState == State.INITIALIZED) {
-//            if (callback != null) {
-//                // Nothing to do, execute callback immediately
-//                callback.onMusicCatalogReady(true);
-//            }
-//            return;
-//        }
+
+        if(parentMediaId==musicAlbum&&mCurrentState == State.INITIALIZED){
+            callback.onMusicCatalogReady(true);
+            return;
+        }
+        musicAlbum=parentMediaId;
         getAuth();
         ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).getPlayList(parentMediaId)).enqueue(new BaseHttpCallBack() {
             @Override
@@ -220,7 +221,7 @@ public class MusicProvider {
                 for (int i = 0; i < albumAudios.size(); i++) {
                     AlbumAudio albumAudio = albumAudios.get(i);
                     MediaMetadataCompat item = new MediaMetadataCompat.Builder()
-                            .putString(MediaMetadataCompat.METADATA_KEY_MEDIA_ID, String.valueOf(i+1))
+                            .putString(MediaMetadataCompat.METADATA_KEY_MEDIA_ID,albumAudio.getAliVideoId())
                             .putString(MediaMetadataCompat.METADATA_KEY_ALBUM, albumAudio.getAlbumId() + "")
                             .putString(MediaMetadataCompat.METADATA_KEY_ARTIST, albumName)
                             .putString(MediaMetadataCompat.METADATA_KEY_ALBUM_ART_URI, icon)
@@ -236,7 +237,6 @@ public class MusicProvider {
                     item.getDescription().getExtras().putInt(MutableMediaMetadata.deleted, albumAudio.getDeleted());
                     item.getDescription().getExtras().putInt(MutableMediaMetadata.listenable, albumAudio.getListenable());
                     item.getDescription().getExtras().putInt(MutableMediaMetadata.size, albumAudio.getSize());
-                    item.getDescription().getExtras().putLong(MutableMediaMetadata.utime, albumAudio.getUtime());
                     item.getDescription().getExtras().putLong(MutableMediaMetadata.viewPeople, albumAudio.getViewPeople());
                     item.getDescription().getExtras().putLong(MutableMediaMetadata.viewTimes, albumAudio.getViewTimes());
                     item.getDescription().getExtras().putInt(MutableMediaMetadata.levelStatus, levelStatus);
@@ -253,7 +253,7 @@ public class MusicProvider {
 
             @Override
             public void onError(int id, Exception e) {
-
+                mCurrentState = State.NON_INITIALIZED;
             }
 
             @Override
@@ -293,7 +293,7 @@ public class MusicProvider {
         copy.getDescription().getExtras().putInt(MutableMediaMetadata.deleted, metadata.metadata.getDescription().getExtras().getInt(MutableMediaMetadata.deleted));
         copy.getDescription().getExtras().putInt(MutableMediaMetadata.listenable, metadata.metadata.getDescription().getExtras().getInt(MutableMediaMetadata.listenable));
         copy.getDescription().getExtras().putInt(MutableMediaMetadata.size, metadata.metadata.getDescription().getExtras().getInt(MutableMediaMetadata.size));
-        copy.getDescription().getExtras().putLong(MutableMediaMetadata.utime, metadata.metadata.getDescription().getExtras().getLong(MutableMediaMetadata.utime));
+
         copy.getDescription().getExtras().putLong(MutableMediaMetadata.viewPeople, metadata.metadata.getDescription().getExtras().getLong(MutableMediaMetadata.viewPeople));
         copy.getDescription().getExtras().putLong(MutableMediaMetadata.viewTimes, metadata.metadata.getDescription().getExtras().getLong(MutableMediaMetadata.viewTimes));
         copy.getDescription().getExtras().putInt(MutableMediaMetadata.levelStatus, metadata.metadata.getDescription().getExtras().getInt(MutableMediaMetadata.levelStatus));

@@ -25,7 +25,7 @@ public class Global {
     public static final String SP_KEY_MEDIA_ID = "SP_KEY_MEDIA_ID";
     public static final String SP_KEY_ALBUM_ID = "SP_KEY_ALBUM_ID";
     public static final String SP_KEY_MUSIC_PLAYER_GUIDE = "SP_KEY_MUSIC_GUIDE";
-
+    public static final String MEDIA_METADATA_COMPAT="MEDIA_METADATA_COMPAT";
     /**
      * 专辑ID和activityID
      */

@@ -42,28 +42,14 @@ public class QueueHelper {
 
     public static List<MediaSessionCompat.QueueItem> getPlayingQueue(String mediaId,
             MusicProvider musicProvider) {
-
-        // extract the browsing hierarchy from the media ID:
-        String[] hierarchy = MediaIDHelper.getHierarchy(mediaId);
-
-        if (hierarchy.length != 2) {
-            LogHelper.e(TAG, "Could not build a playing queue for this mediaId: ", mediaId);
-            return null;
-        }
-
-        String categoryType = hierarchy[0];
-        String categoryValue = hierarchy[1];
-    LogHelper.d(TAG, "Creating playing queue for ", categoryType, ",  ", categoryValue);
-
         Collection<MutableMediaMetadata> tracks = null;
         // This sample only supports genre and by_search category types.
         tracks = musicProvider.getMusics();
         if (tracks == null) {
-           LogHelper.e(TAG, "Unrecognized category type: ", categoryType, " for media ", mediaId);
             return null;
         }
 
-        return convertToQueue(tracks, hierarchy[0], hierarchy[1]);
+        return convertToQueue(tracks);
     }
 
 
@@ -96,14 +82,8 @@ public class QueueHelper {
         List<MediaSessionCompat.QueueItem> queue = new ArrayList<>();
         int count = 0;
         for (MutableMediaMetadata track : tracks) {
-
-            // We create a hierarchy-aware mediaID, so we know what the queue is about by looking
-            // at the QueueItem media IDs.
-            String hierarchyAwareMediaID = MediaIDHelper.createMediaID(
-                    track.metadata.getDescription().getMediaId(), categories);
-
             MediaMetadataCompat trackCopy = new MediaMetadataCompat.Builder(track.metadata)
-                    .putString(MediaMetadataCompat.METADATA_KEY_MEDIA_ID, hierarchyAwareMediaID)
+                    .putString(MediaMetadataCompat.METADATA_KEY_MEDIA_ID,  track.metadata.getDescription().getMediaId())
                     .build();
 
             trackCopy.getDescription().getExtras().putInt(MediaMetadataCompat.METADATA_KEY_DURATION, track.metadata.getDescription().getExtras().getInt(MediaMetadataCompat.METADATA_KEY_DURATION));
@@ -113,7 +93,7 @@ public class QueueHelper {
             trackCopy.getDescription().getExtras().putInt(MutableMediaMetadata.deleted, track.metadata.getDescription().getExtras().getInt(MutableMediaMetadata.deleted));
             trackCopy.getDescription().getExtras().putInt(MutableMediaMetadata.listenable, track.metadata.getDescription().getExtras().getInt(MutableMediaMetadata.listenable));
             trackCopy.getDescription().getExtras().putInt(MutableMediaMetadata.size, track.metadata.getDescription().getExtras().getInt(MutableMediaMetadata.size));
-            trackCopy.getDescription().getExtras().putLong(MutableMediaMetadata.utime, track.metadata.getDescription().getExtras().getLong(MutableMediaMetadata.utime));
+
             trackCopy.getDescription().getExtras().putLong(MutableMediaMetadata.viewPeople,track.metadata.getDescription().getExtras().getLong(MutableMediaMetadata.viewPeople));
             trackCopy.getDescription().getExtras().putLong(MutableMediaMetadata.viewTimes, track.metadata.getDescription().getExtras().getLong(MutableMediaMetadata.viewTimes));
             trackCopy.getDescription().getExtras().putInt(MutableMediaMetadata.levelStatus, track.metadata.getDescription().getExtras().getInt(MutableMediaMetadata.levelStatus));
@@ -187,11 +167,10 @@ public class QueueHelper {
             long currentPlayingQueueId = controller.getPlaybackState().getActiveQueueItemId();
             String currentPlayingMediaId = controller.getMetadata().getDescription()
                     .getMediaId();
-            String itemMusicId = MediaIDHelper.extractMusicIDFromMediaID(
-                    queueItem.getDescription().getMediaId());
+
             if (queueItem.getQueueId() == currentPlayingQueueId
                     && currentPlayingMediaId != null
-                    && TextUtils.equals(currentPlayingMediaId, itemMusicId)) {
+                    && TextUtils.equals(currentPlayingMediaId, queueItem.getDescription().getMediaId())) {
                 return true;
             }
         }

@@ -50,8 +50,14 @@ public class ExhibitionFragment extends BaseListFragment<ExhibitionContract.IVie
         adapter.register(ExhibitionTopInfo.class, new ExhibitionTopViewBinder(new ICallBack() {
             @Override
             public void OnBackResult(Object... s) {
-                if ((int) s[0] == ExhibitionTopViewBinder.MUSIC_EVENT) {
-                    onMusicMenuClick();
+                int type = (int) s[0];
+                switch (type) {
+                    case ExhibitionTopViewBinder.MUSIC_EVENT:
+                        onMusicMenuClick();
+                        break;
+                    case ExhibitionTopViewBinder.HISTORY_EVENT:
+                        openPastActivities();
+                        break;
                 }
             }
         }));
@@ -91,6 +97,7 @@ public class ExhibitionFragment extends BaseListFragment<ExhibitionContract.IVie
             }
         }));
         list.add(new ExhibitionTopInfo());
+        list.add(new ExhibitionErrorInfo());
         adapter.setItems(list);
         vu.getRecyclerView().setAdapter(adapter);
         onRefresh();
@@ -155,7 +162,7 @@ public class ExhibitionFragment extends BaseListFragment<ExhibitionContract.IVie
                                 vu.setStateEmpty();
                                 vu.getRecyclerView().getPageManager().setPageState(PageInfo.PAGE_STATE_NO_MORE);
                             }
-                        }else {
+                        } else {
                             vu.setStateEmpty();
                         }
                     }
@@ -163,10 +170,6 @@ public class ExhibitionFragment extends BaseListFragment<ExhibitionContract.IVie
                     @Override
                     public void onFinish() {
                         super.onFinish();
-                        if (list.size() <= 1) {
-                            list.add(new ExhibitionErrorInfo());
-                            vu.getRecyclerView().getAdapter().notifyDataSetChanged();
-                        }
                     }
                 });
     }
@@ -176,5 +179,10 @@ public class ExhibitionFragment extends BaseListFragment<ExhibitionContract.IVie
     public void onMusicMenuClick() {
         Intent intent = new Intent(getContext(), MusicPlayerActivity.class);
         startActivity(intent);
+    }
+
+    @Override
+    public void openPastActivities() {
+        getRootFragment().start(UIHelper.creat(BrowserBaseFragment.class).put(Global.BUNDLE_KEY_BROWSER_URL, ApiManager.getInstance().getApiConfig().getPastActivities()).build());
     }
 }

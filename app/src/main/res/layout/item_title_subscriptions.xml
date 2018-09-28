@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/px98"
+            android:layout_marginLeft="@dimen/px36"
+            android:layout_marginRight="@dimen/px36">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="订阅专栏"
+                android:textColor="@color/color_black"
+                android:textSize="@dimen/px64"
+                android:id="@+id/tv_anim_title"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/iv_anim_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:paddingTop="@dimen/px15"
+                android:src="@drawable/anim_player_blue"
+                />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_searchbar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/px60"
+            android:layout_marginBottom="@dimen/px40"
+            android:layout_marginLeft="@dimen/px36"
+            android:layout_marginRight="@dimen/px36"
+            android:layout_marginTop="@dimen/px36"
+            android:background="@drawable/shape_bg_f0f0f0_10">
+
+            <TextView
+                android:id="@+id/tv_searchbar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/px30"
+                android:drawableLeft="@drawable/ic_searchbar"
+                android:drawablePadding="3dp"
+                android:text="搜索音频/活动"
+                android:textColor="@color/color_gray_levelc"
+                android:textSize="@dimen/px24" />
+        </RelativeLayout>
+
+    </LinearLayout>
+</LinearLayout>

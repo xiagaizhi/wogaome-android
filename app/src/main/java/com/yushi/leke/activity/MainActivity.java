@@ -86,9 +86,7 @@ private String     TAG="MainActivity";
                 v.getContext().startActivity(intent);
             }
         });
-//        if(TextUtils.isEmpty(ablumId)){
-//            imageView.setVisibility(View.GONE);
-//        }
+
         return imageView;
     }
 
@@ -283,6 +281,7 @@ private String     TAG="MainActivity";
                                         if(!TextUtils.isEmpty(mediaId)){
                                             MediaControllerCompat.getMediaController(MainActivity.this).getTransportControls()
                                                     .prepareFromMediaId(mediaId, null);
+
                                         }
                                     } catch (Throwable t) {
                                         LogHelper.e(TAG, "Error on childrenloaded", t);

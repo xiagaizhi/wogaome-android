@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import com.yushi.leke.R;
 import com.yufan.library.base.BaseListVu;
 import com.yufan.library.inject.FindLayout;
@@ -34,12 +35,13 @@ public class ExhibitionVu extends BaseListVu<ExhibitionContract.Presenter> imple
     private ImageView musicAnim;
     private ImageView img_history;
     private float historyBottom;
+
     @Override
     public void initView(View view) {
         super.initView(view);
         topHeightMin = getContext().getResources().getDimension(R.dimen.y68);
-        topHeightMax=getContext().getResources().getDimension(R.dimen.y98);
-        historyBottom=getContext().getResources().getDimension(R.dimen.px158);
+        topHeightMax = getContext().getResources().getDimension(R.dimen.y98);
+        historyBottom = getContext().getResources().getDimension(R.dimen.px158);
         mYFRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
@@ -57,14 +59,14 @@ public class ExhibitionVu extends BaseListVu<ExhibitionContract.Presenter> imple
                     if (top_offset > topHeightMin) {
                         if (top_offset < topHeightMax) {
                             if (mTitleView != null) {
-                                float offset = (top_offset - topHeightMin) / (topHeightMax-topHeightMin);
+                                float offset = (top_offset - topHeightMin) / (topHeightMax - topHeightMin);
                                 Log.d("offset", "appToolbar:" + topHeightMax);
                                 mTitleView.setAlpha(offset);
                                 musicAnim.setAlpha(offset);
                                 img_history.setAlpha(offset);
 
                             }
-                        }else {
+                        } else {
                             mTitleView.setAlpha(1f);
                             musicAnim.setAlpha(1f);
                             img_history.setAlpha(1f);
@@ -75,7 +77,7 @@ public class ExhibitionVu extends BaseListVu<ExhibitionContract.Presenter> imple
                         img_history.setAlpha(0f);
 
                     }
-                }else {
+                } else {
                     mTitleView.setAlpha(1f);
                     musicAnim.setAlpha(1f);
                     img_history.setAlpha(1f);
@@ -91,30 +93,32 @@ public class ExhibitionVu extends BaseListVu<ExhibitionContract.Presenter> imple
 
     @Override
     public boolean initTitle(AppToolbar appToolbar) {
-        this.appToolbar=appToolbar;
+        this.appToolbar = appToolbar;
         img_history = appToolbar.creatRightView(ImageView.class);
         img_history.setImageResource(R.drawable.ic_history_exc);
         img_history.setAlpha(0f);
-        musicAnim=   UIHelper.getMusicView(mPersenter.getActivity(),appToolbar);
-        mTitleView=     appToolbar.creatCenterView(TextView.class);
+
+        mTitleView = appToolbar.creatCenterView(TextView.class);
         mTitleView.setText("路演厅");
         mTitleView.setAlpha(0);
-        mTitleView .getPaint().setFakeBoldText(true);
+        mTitleView.getPaint().setFakeBoldText(true);
+
+        img_history.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mPersenter.openPastActivities();
+            }
+        });
+        appToolbar.build();
+        musicAnim = UIHelper.getMusicView(mPersenter.getActivity(), appToolbar);
         musicAnim.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(v.getAlpha()>0){
+                if (v.getAlpha() > 0) {
                     mPersenter.onMusicMenuClick();
                 }
             }
         });
-        img_history.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
-        appToolbar.build();
         return true;
     }
 

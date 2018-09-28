@@ -176,7 +176,7 @@ public class ShareDialog extends DialogFragment {
         if (!appDir.exists()) {
             appDir.mkdir();
         }
-        String fileName = UserManager.getInstance().getUid() + "_share_" + System.currentTimeMillis() + ".png";
+        String fileName = UserManager.getInstance().getUid() + "_share" + ".png";
         File file = new File(appDir, fileName);
         try {
             FileOutputStream fos = new FileOutputStream(file);
