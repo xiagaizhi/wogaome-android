@@ -18,11 +18,17 @@ package com.yushi.leke.fragment.exhibition.exhibitionHome.binder;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.yufan.library.Global;
 import com.yufan.library.inter.ICallBack;
+import com.yufan.library.util.Netutil;
+import com.yushi.leke.App;
 import com.yushi.leke.R;
 import com.yushi.leke.fragment.exhibition.exhibitionHome.bean.ExhibitionErrorInfo;
 
@@ -48,20 +54,38 @@ public class ExhibitionErrorBinder extends ItemViewBinder<ExhibitionErrorInfo, E
     }
 
     @Override
-    protected void onBindViewHolder(@NonNull ViewHolder holder, @NonNull final ExhibitionErrorInfo category) {
+    protected void onBindViewHolder(@NonNull final ViewHolder holder, @NonNull final ExhibitionErrorInfo category) {
+        if (TextUtils.isEmpty(Netutil.GetNetworkType(App.getApp()))) {
+            holder.tv_error_tips.setText("～呲～网络连接异常\\n请检查您的网络设置～呲～");
+            holder.img_error.setImageResource(R.drawable.empty_nonetwork);
+        } else {
+            holder.tv_error_tips.setText("呲～呲～未发现任何数据");
+            holder.img_error.setImageResource(R.drawable.empty_search_nodate);
+        }
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mICallBack.OnBackResult();
+                if (TextUtils.isEmpty(Netutil.GetNetworkType(App.getApp()))) {
+                    holder.tv_error_tips.setText("～呲～网络连接异常\\n请检查您的网络设置～呲～");
+                    holder.img_error.setImageResource(R.drawable.empty_nonetwork);
+                } else {
+                    holder.tv_error_tips.setText("呲～呲～未发现任何数据");
+                    holder.img_error.setImageResource(R.drawable.empty_search_nodate);
+                }
             }
         });
     }
 
 
     static class ViewHolder extends RecyclerView.ViewHolder {
+        private TextView tv_error_tips;
+        private ImageView img_error;
 
         ViewHolder(@NonNull View itemView) {
             super(itemView);
+            tv_error_tips = itemView.findViewById(R.id.tv_error_tips);
+            img_error = itemView.findViewById(R.id.img_error);
         }
     }
 

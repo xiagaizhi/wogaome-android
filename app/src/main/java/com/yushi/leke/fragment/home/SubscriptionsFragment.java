@@ -153,7 +153,6 @@ public class SubscriptionsFragment extends BaseListFragment<SubscriptionsContrac
                         if (!TextUtils.isEmpty(mApiBean.getData())) {
                             List<BannerItemInfo> banners = JSON.parseArray(mApiBean.getData(), BannerItemInfo.class);
                             if (banners != null && banners.size() > 0) {
-                                list.add(subscriptionBanner);
                                 if (subscriptionBanner.getBannerItemInfos() == null) {
                                     subscriptionBanner.setBannerItemInfos(new ArrayList<BannerItemInfo>());
                                 }
