@@ -42,28 +42,14 @@ public class QueueHelper {
 
     public static List<MediaSessionCompat.QueueItem> getPlayingQueue(String mediaId,
             MusicProvider musicProvider) {
-
-        // extract the browsing hierarchy from the media ID:
-        String[] hierarchy = MediaIDHelper.getHierarchy(mediaId);
-
-        if (hierarchy.length != 2) {
-            LogHelper.e(TAG, "Could not build a playing queue for this mediaId: ", mediaId);
-            return null;
-        }
-
-        String categoryType = hierarchy[0];
-        String categoryValue = hierarchy[1];
-    LogHelper.d(TAG, "Creating playing queue for ", categoryType, ",  ", categoryValue);
-
         Collection<MutableMediaMetadata> tracks = null;
         // This sample only supports genre and by_search category types.
         tracks = musicProvider.getMusics();
         if (tracks == null) {
-           LogHelper.e(TAG, "Unrecognized category type: ", categoryType, " for media ", mediaId);
             return null;
         }
 
-        return convertToQueue(tracks, hierarchy[0], hierarchy[1]);
+        return convertToQueue(tracks);
     }
 
 

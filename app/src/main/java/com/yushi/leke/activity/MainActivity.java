@@ -281,6 +281,7 @@ private String     TAG="MainActivity";
                                         if(!TextUtils.isEmpty(mediaId)){
                                             MediaControllerCompat.getMediaController(MainActivity.this).getTransportControls()
                                                     .prepareFromMediaId(mediaId, null);
+
                                         }
                                     } catch (Throwable t) {
                                         LogHelper.e(TAG, "Error on childrenloaded", t);

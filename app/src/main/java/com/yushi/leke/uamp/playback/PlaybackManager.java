@@ -124,16 +124,16 @@ public class PlaybackManager implements Playback.Callback {
         //noinspection ResourceType
         PlaybackStateCompat.Builder stateBuilder = new PlaybackStateCompat.Builder()
                 .setActions(getAvailableActions());
-
         setCustomAction(stateBuilder);
         int state = mPlayback.getState();
-
         // If there is an error message, send it to the playback state:
         if (error != null) {
             // Error states are really only supposed to be used for errors that cause playback to
             // stop unexpectedly and persist until the user takes action to fix it.
             stateBuilder.setErrorMessage(error);
             state = PlaybackStateCompat.STATE_ERROR;
+        }else if(state==PlaybackStateCompat.STATE_NONE){
+            state = PlaybackStateCompat.STATE_STOPPED;
         }
         //noinspection ResourceType
         stateBuilder.setState(state, position, 1.0f, SystemClock.elapsedRealtime());
@@ -311,6 +311,13 @@ public class PlaybackManager implements Playback.Callback {
             LogHelper.d(TAG, "playFromMediaId mediaId:", mediaId, "  extras=", extras);
             mQueueManager.setQueueFromMusic(mediaId);
             handlePlayRequest();
+        }
+
+        @Override
+        public void onPrepareFromMediaId(String mediaId, Bundle extras) {
+            super.onPrepareFromMediaId(mediaId, extras);
+            mQueueManager.setQueueFromMusic(mediaId);
+            handleStopRequest(null);
         }
 
         //暂停时触发
