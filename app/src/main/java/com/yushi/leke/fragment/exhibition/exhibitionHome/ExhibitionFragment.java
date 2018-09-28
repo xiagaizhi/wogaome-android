@@ -71,24 +71,40 @@ public class ExhibitionFragment extends BaseListFragment<ExhibitionContract.IVie
         adapter.register(ExhibitionInfo.class, new ExhibitionViewBinder(new ICallBack() {
             @Override
             public void OnBackResult(Object... s) {
-                ExhibitionInfo info = (ExhibitionInfo) s[0];//活动进度（0--未开始，1--报名中，2--投票中，3--已结束）
-                if (info.getActivityProgress() == 0 || info.getActivityProgress() == 1) {//h5详情页面
-                    getRootFragment().start(UIHelper.creat(BrowserBaseFragment.class).put(Global.BUNDLE_KEY_BROWSER_URL, ApiManager.getInstance().getApiConfig().getExhibitionDetail(info.getActivityId())).build());
-                } else {//原生详情页面
-                    getRootFragment().start(UIHelper.creat(ExhibitionDetailFragment.class)
-                            .put(Global.BUNDLE_KEY_EXHIBITION_TYE, info.getActivityProgress())
-                            .put(Global.BUNDLE_KEY_ACTIVITYID, info.getActivityId())
-                            .build());
+                int type = (int) s[0];
+                ExhibitionInfo info = (ExhibitionInfo) s[1];//活动进度（0--未开始，1--报名中，2--投票中，3--已结束）
+                switch (type){
+                    case 1:
+                        if (info.getActivityProgress() == 0 || info.getActivityProgress() == 1) {//h5详情页面
+                            getRootFragment().start(UIHelper.creat(BrowserBaseFragment.class).put(Global.BUNDLE_KEY_BROWSER_URL, ApiManager.getInstance().getApiConfig().getExhibitionDetail(info.getActivityId())).build());
+                        } else {//原生详情页面
+                            getRootFragment().start(UIHelper.creat(ExhibitionDetailFragment.class)
+                                    .put(Global.BUNDLE_KEY_EXHIBITION_TYE, info.getActivityProgress())
+                                    .put(Global.BUNDLE_KEY_ACTIVITYID, info.getActivityId())
+                                    .build());
+                        }
+                        break;
+                    case 2:
+                        getRootFragment().start(UIHelper.creat(BrowserBaseFragment.class).put(Global.BUNDLE_KEY_BROWSER_URL, ApiManager.getInstance().getApiConfig().getSingUp(info.getActivityId())).build());
+                        break;
                 }
             }
         }));
         adapter.register(ExhibitionJustOneInfo.class, new ExhibitionJustOneViewBinder(new ICallBack() {
             @Override
             public void OnBackResult(Object... s) {
-                ExhibitionJustOneInfo info = (ExhibitionJustOneInfo) s[0];//活动进度（1--报名中， 2--投票中 并且只有一个活动）
-                if (info.getActivityProgress() == 0 || info.getActivityProgress() == 1) {//h5详情页面
+                int type = (int) s[0];
+                ExhibitionJustOneInfo info = (ExhibitionJustOneInfo) s[1];//活动进度（1--报名中， 2--投票中 并且只有一个活动）
+                if (info.getActivityProgress() == 0) {//h5详情页面
                     getRootFragment().start(UIHelper.creat(BrowserBaseFragment.class).put(Global.BUNDLE_KEY_BROWSER_URL, ApiManager.getInstance().getApiConfig().getExhibitionDetail(info.getActivityId())).build());
-                } else {//原生详情页面
+                }else if ( info.getActivityProgress() == 1){
+                    if (type == 1){
+                        getRootFragment().start(UIHelper.creat(BrowserBaseFragment.class).put(Global.BUNDLE_KEY_BROWSER_URL, ApiManager.getInstance().getApiConfig().getExhibitionDetail(info.getActivityId())).build());
+                    }else {
+                        getRootFragment().start(UIHelper.creat(BrowserBaseFragment.class).put(Global.BUNDLE_KEY_BROWSER_URL, ApiManager.getInstance().getApiConfig().getSingUp(info.getActivityId())).build());
+                    }
+                }
+                else {//原生详情页面
                     getRootFragment().start(UIHelper.creat(ExhibitionDetailFragment.class)
                             .put(Global.BUNDLE_KEY_EXHIBITION_TYE, info.getActivityProgress())
                             .put(Global.BUNDLE_KEY_ACTIVITYID, info.getActivityId())

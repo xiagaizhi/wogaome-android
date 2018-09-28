@@ -90,10 +90,11 @@ public class ApiConfig {
 
     /**
      * 我的邀请
+     *
      * @return
      */
-    public String getMyInvite(){
-        return webDomains[apiType]+"/inviteFriends/myInvite";
+    public String getMyInvite() {
+        return webDomains[apiType] + "/inviteFriends/myInvite";
     }
 
     /**
@@ -116,9 +117,23 @@ public class ApiConfig {
     }
 
 
-    public String getPastActivities(){
+    /**
+     * 往期活动
+     *
+     * @return
+     */
+    public String getPastActivities() {
         return webDomains[apiType] + "#/play/before";
     }
 
+    /**
+     * 报名信息页面
+     *
+     * @return
+     */
+    public String getSingUp(String projectId) {
+        return webDomains[apiType] + "#/play/join/" + projectId;
+
+    }
 
 }

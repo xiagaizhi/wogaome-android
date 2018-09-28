@@ -1,21 +1,20 @@
 package com.yushi.leke.fragment.browser;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.content.LocalBroadcastManager;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.alibaba.fastjson.JSON;
-import com.aliyun.vodplayer.utils.JsonUtil;
 import com.tencent.smtt.export.external.interfaces.IX5WebChromeClient.CustomViewCallback;
 import com.tencent.smtt.export.external.interfaces.JsResult;
 import com.tencent.smtt.export.external.interfaces.SslError;
@@ -28,7 +27,6 @@ import com.tencent.smtt.sdk.WebChromeClient;
 import com.tencent.smtt.sdk.WebSettings;
 import com.tencent.smtt.sdk.WebSettings.LayoutAlgorithm;
 import com.tencent.smtt.sdk.WebView;
-import com.tencent.smtt.sdk.WebViewClient;
 import com.tencent.smtt.utils.TbsLog;
 import com.yufan.library.Global;
 import com.yufan.library.api.ApiManager;
@@ -44,6 +42,7 @@ import com.yufan.library.webview.WVJBWebViewClient;
 import com.yufan.share.ShareModel;
 import com.yushi.leke.App;
 import com.yushi.leke.UIHelper;
+import com.yushi.leke.dialog.CommonDialog;
 import com.yushi.leke.dialog.ShareDialog;
 import com.yushi.leke.dialog.recharge.PayDialog;
 import com.yushi.leke.fragment.album.AlbumDetailFragment;
@@ -71,9 +70,52 @@ public class BrowserBaseFragment extends BaseFragment<BrowserContract.View> impl
     private String mIntentUrl;
     private WVJBWebViewClient wVJBWebViewClient;
     private WebSettings webSetting;
-
-    //    private int REQUEST_CODE_CHOOSE=8;
     private boolean haveHead = true;
+
+    private WVJBWebViewClient.WVJBResponseCallback payWVJBResponseCallback;
+    BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            switch (action) {
+                case Global.BROADCAST_PAY_RESUIL_ACTION:
+                    boolean ispaySuccess = intent.getBooleanExtra(Global.INTENT_PAY_RESUIL_DATA, false);
+                    if (ispaySuccess){
+                        if (payWVJBResponseCallback != null){
+                            payWVJBResponseCallback.callback("");
+                        }
+                        new CommonDialog(_mActivity).setTitle("恭喜您，充值成功！")
+                                .setPositiveName("确定")
+                                .setHaveNegative(false)
+                                .setCommonClickListener(new CommonDialog.CommonDialogClick() {
+                                    @Override
+                                    public void onClick(CommonDialog commonDialog, int actionType) {
+                                        commonDialog.dismiss();
+                                    }
+                                }).show();
+                    }else {
+                        new CommonDialog(_mActivity).setTitle("本次充值失败，请重新充值！")
+                                .setPositiveName("确定")
+                                .setHaveNegative(false)
+                                .setCommonClickListener(new CommonDialog.CommonDialogClick() {
+                                    @Override
+                                    public void onClick(CommonDialog commonDialog, int actionType) {
+                                        commonDialog.dismiss();
+                                    }
+                                }).show();
+                    }
+                    break;
+            }
+        }
+    };
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(Global.BROADCAST_PAY_RESUIL_ACTION);
+        LocalBroadcastManager.getInstance(_mActivity).registerReceiver(broadcastReceiver, intentFilter);
+    }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -385,6 +427,7 @@ public class BrowserBaseFragment extends BaseFragment<BrowserContract.View> impl
         if (vu.getWebView() != null)
             vu.getWebView().destroy();
         super.onDestroy();
+        LocalBroadcastManager.getInstance(_mActivity).unregisterReceiver(broadcastReceiver);
     }
 
     @Override
@@ -436,6 +479,7 @@ public class BrowserBaseFragment extends BaseFragment<BrowserContract.View> impl
                         if (!TextUtils.isEmpty(goodsId)) {
                             PayDialog payDialog = new PayDialog(_mActivity, goodsId, 3, true);
                             payDialog.show();
+                            payWVJBResponseCallback = callback;
                         }
                     }
                 }
@@ -450,7 +494,6 @@ public class BrowserBaseFragment extends BaseFragment<BrowserContract.View> impl
                         String shareUrl = mJSONObject.optString("shareUrl");
                         String userName = mJSONObject.optString("userName");
                         String city = mJSONObject.optString("city");
-                        Log.d("LOGH", city + logo + introduction + userName + shareUrl);
                         ShareDialog shareDialog = new ShareDialog();
                         Bundle bundle = new Bundle();
                         bundle.putString("logo", logo);
@@ -557,7 +600,6 @@ public class BrowserBaseFragment extends BaseFragment<BrowserContract.View> impl
         @Override
         public void onPageFinished(WebView view, String url) {
             super.onPageFinished(view, url);
-            Log.d("browser", "onPageFinished");
             if (isError) {
                 vu.setStateError();
             } else {
@@ -580,7 +622,6 @@ public class BrowserBaseFragment extends BaseFragment<BrowserContract.View> impl
         public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
             super.onReceivedError(view, errorCode, description, failingUrl);
             isError = true;
-            Log.d("browser", "onReceivedError");
             vu.onReceivedError(view, errorCode, description, failingUrl);
         }
 
