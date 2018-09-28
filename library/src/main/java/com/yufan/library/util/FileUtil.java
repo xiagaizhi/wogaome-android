@@ -48,6 +48,11 @@ public class FileUtil {
         if (!imageDir.exists()) {
             imageDir.mkdirs();
         }
+
+        File shareDir = new File(Global.SAVE_SHARE_IMAGE_PATH);
+        if (!shareDir.exists()) {
+            shareDir.mkdirs();
+        }
     }
 
     /**
@@ -87,7 +92,8 @@ public class FileUtil {
         }
         return "";
     }
-    public static void clearLogFile(){
+
+    public static void clearLogFile() {
         if (FileUtil.checkFilePathExists(Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "Gamecat/info")) {
             List<File> list = FileUtil.listPathFiles(Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "Gamecat/info");
             if (list.size() > 10) {
@@ -690,7 +696,7 @@ public class FileUtil {
      * @param fileName "1.txt"
      * @return
      */
-    public static String getFromAssets(Context context,String fileName) {
+    public static String getFromAssets(Context context, String fileName) {
         try {
             InputStreamReader inputReader = new InputStreamReader(context.getResources().getAssets().open(fileName));
             BufferedReader bufReader = new BufferedReader(inputReader);

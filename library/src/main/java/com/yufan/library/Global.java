@@ -71,7 +71,7 @@ public class Global {
      */
     public final static String DEFAULT_SAVE_IMAGE_PATH = Environment.getExternalStorageDirectory()
             + File.separator + "LEKE"
-            + File.separator + "cat_img" + File.separator;
+            + File.separator + "leke_img" + File.separator;
 
     /**
      * 裁剪之后图片路径
@@ -83,5 +83,10 @@ public class Global {
      */
     public final static String SAVE_COMPRESSION_IMAGE_PATH = DEFAULT_SAVE_IMAGE_PATH + "compressionPhotos" + File.separator;
 
+
+    /**
+     * 分享生成海报
+     */
+    public final static String SAVE_SHARE_IMAGE_PATH = DEFAULT_SAVE_IMAGE_PATH + "share" + File.separator;
 
 }
