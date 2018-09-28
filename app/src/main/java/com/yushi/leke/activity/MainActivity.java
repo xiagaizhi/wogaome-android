@@ -194,6 +194,7 @@ private String     TAG="MainActivity";
     @Override
     public void onMediaItemSelected(MediaBrowserCompat.MediaItem item) {
         LogHelper.d(TAG, "onMediaItemSelected, mediaId=" + item.getMediaId());
+        MusicProvider.getInstance().updateProvider();
         if (item.isPlayable()) {//可播放状态
             if (MediaIDHelper.isMediaItemPlaying(this, item)) {
                 PlaybackStateCompat state = MediaControllerCompat.getMediaController(this).getPlaybackState();
@@ -277,7 +278,7 @@ private String     TAG="MainActivity";
                                     try {
                                         LogHelper.d(TAG, "fragment onChildrenLoaded, parentId=" + parentId +
                                                 "  count=" + children.size());
-
+                                        MusicProvider.getInstance().updateProvider();
                                         if(!TextUtils.isEmpty(mediaId)){
                                             MediaControllerCompat.getMediaController(MainActivity.this).getTransportControls()
                                                     .prepareFromMediaId(mediaId, null);
