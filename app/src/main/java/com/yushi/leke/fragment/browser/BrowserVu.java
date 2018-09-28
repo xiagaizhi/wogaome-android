@@ -167,10 +167,11 @@ public class BrowserVu extends BaseVu<BrowserContract.Presenter> implements Brow
     public void setNaviBar(NaviBarInfoList naviBarInfoList) {
         String title = naviBarInfoList.getTitle();
         List<NaviBarInfo> naviBarInfos = naviBarInfoList.getActions();
-        if (TextUtils.isEmpty(title)) {
+        if (!TextUtils.isEmpty(title)) {
             titleView.setText(title);
         }
         if (naviBarInfos != null && naviBarInfos.size() > 0) {
+            mAppToolbar.getRightViewGroup().removeAllViews();
             for (final NaviBarInfo naviBarInfo : naviBarInfos) {
                 ImageView imageView = mAppToolbar.creatRightView(ImageView.class);
                 Glide.with(getContext()).load(naviBarInfo.getIcon()).into(imageView);
@@ -182,7 +183,12 @@ public class BrowserVu extends BaseVu<BrowserContract.Presenter> implements Brow
                     }
                 });
             }
-            mAppToolbar.build();
+            mAppToolbar.build(mPersenter.getHaveHead());
+            if (!mPersenter.getHaveHead()) {
+                UIHelper.getWhiteMusicView(mPersenter.getActivity(), mAppToolbar);
+            }else {
+                UIHelper.getMusicView(mPersenter.getActivity(), mAppToolbar);
+            }
         }
 
     }
