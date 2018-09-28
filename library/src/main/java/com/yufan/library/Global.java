@@ -25,12 +25,12 @@ public class Global {
     public static final String SP_KEY_MEDIA_ID = "SP_KEY_MEDIA_ID";
     public static final String SP_KEY_ALBUM_ID = "SP_KEY_ALBUM_ID";
     public static final String SP_KEY_MUSIC_PLAYER_GUIDE = "SP_KEY_MUSIC_GUIDE";
-    public static final String MEDIA_METADATA_COMPAT="MEDIA_METADATA_COMPAT";
+    public static final String MEDIA_METADATA_COMPAT = "MEDIA_METADATA_COMPAT";
     /**
      * 专辑ID和activityID
      */
-    public static String BUNDLE_KEY_ACTIVITYID="BUNDLE_KEY_ACTIVITYID";
-    public static String BUNDLE_KEY_ALBUMID="albumId";
+    public static String BUNDLE_KEY_ACTIVITYID = "BUNDLE_KEY_ACTIVITYID";
+    public static String BUNDLE_KEY_ALBUMID = "albumId";
     /**
      * 新手指引
      */
@@ -71,7 +71,10 @@ public class Global {
      */
     public final static String DEFAULT_SAVE_IMAGE_PATH = Environment.getExternalStorageDirectory()
             + File.separator + "LEKE"
-            + File.separator + "leke_img" + File.separator;
+            + File.separator + "image" + File.separator;
+    public final static String DEFAULT_SAVE_CONFIG_PATH = Environment.getExternalStorageDirectory()
+            + File.separator + "LEKE"
+            + File.separator + "config" + File.separator;
 
     /**
      * 裁剪之后图片路径
@@ -88,5 +91,10 @@ public class Global {
      * 分享生成海报
      */
     public final static String SAVE_SHARE_IMAGE_PATH = DEFAULT_SAVE_IMAGE_PATH + "share" + File.separator;
+
+    /**
+     * 保存sid
+     */
+    public final static String SAVE_SID_PATH = DEFAULT_SAVE_CONFIG_PATH + ".sid" + File.separator;
 
 }
