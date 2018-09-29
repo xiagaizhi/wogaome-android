@@ -201,6 +201,8 @@ public class AlbumDetailFragment extends BaseFragment<AlbumDetailContract.IView>
             model.setIcon(infolist.getAlbum().getHorizontalIcon());
             model.setTargetUrl(infolist.getAlbum().getShareIcon());
             ShareMenuActivity.startShare(getRootFragment(),model);
+            //专辑分享数据埋点
+            ArgsUtil.datapoint("0801","uid",UserManager.getInstance().getUid(),"albumId",albumId);
         }
 
     }

@@ -44,8 +44,9 @@ public class ArgsUtil {
         MANService manService = MANServiceProvider.getService();
         manService.getMANAnalytics().userRegister(uid);
     }
+
     public static ArgsUtil instance;
     private ArgsUtil(){
-
+        instance=new ArgsUtil();
     }
 }
