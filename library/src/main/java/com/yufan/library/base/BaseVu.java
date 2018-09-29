@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.yufan.library.R;
 import com.yufan.library.inject.AnnotateUtils;
+import com.yufan.library.util.Netutil;
 import com.yufan.library.util.PxUtil;
 import com.yufan.library.widget.AppToolbar;
 import com.yufan.library.widget.StateLayout;
@@ -94,6 +95,13 @@ public abstract class BaseVu<T extends Pr> implements Vu ,View.OnClickListener{
 
     @Override
     public void initStatusLayout(StateLayout stateLayout) {
+        if (TextUtils.isEmpty(Netutil.GetNetworkType(BaseApplication.getInstance()))) {
+            stateLayout.getEmptyView().setVisibility(View.GONE);
+            stateLayout.getErrorView().setVisibility(View.VISIBLE);
+        }else {
+            stateLayout.getEmptyView().setVisibility(View.VISIBLE);
+            stateLayout.getErrorView().setVisibility(View.GONE);
+        }
         stateLayout.getEmptyView().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
