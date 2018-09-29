@@ -28,41 +28,23 @@ import com.yushi.leke.fragment.album.AlbumDetailinfo;
 @VuClass(DetailforalbumVu.class)
 public class DetailforalbumFragment extends BaseFragment<DetailforalbumContract.IView> implements DetailforalbumContract.Presenter {
     private String albumId;
+    private String intro;
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         Bundle bundle = getArguments();
         if (bundle!=null){
             albumId=bundle.getString(Global.BUNDLE_KEY_ALBUMID);
+            intro=bundle.getString("intro");
         }
-        getdata();
+       if (intro!=null){
+           getVu().showtext(Html.fromHtml(intro));
+       }
     }
 
 
     @Override
     public void onRefresh() {
 
-    }
-    private void getdata(){
-        ApiManager.getCall(ApiManager.getInstance().create(YFApi.class)
-                .albumdetail(albumId))
-                .useCache(false)
-                .enqueue(new BaseHttpCallBack() {
-                    @Override
-                    public void onSuccess(ApiBean mApiBean) {
-                        if (!TextUtils.isEmpty(mApiBean.getData())) {
-                            AlbumDetailinfo infolist = JSON.parseObject(mApiBean.getData(), AlbumDetailinfo.class);
-                            getVu().showtext(Html.fromHtml(infolist.getAlbum().getIntroduction()));
-                        }
-                    }
-
-                    @Override
-                    public void onError(int id, Exception e) {
-                    }
-
-                    @Override
-                    public void onFinish() {
-                    }
-                });
     }
 }
