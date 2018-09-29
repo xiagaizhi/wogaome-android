@@ -8,7 +8,6 @@ import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +22,7 @@ import com.aliyun.vodplayer.media.AliyunVidSts;
 import com.aliyun.vodplayer.media.IAliyunVodPlayer;
 import com.aliyun.vodplayerview.constants.PlayParameter;
 import com.aliyun.vodplayerview.utils.ScreenUtils;
+import com.aliyun.vodplayerview.utils.VideoTimerUtil;
 import com.aliyun.vodplayerview.view.control.ControlView;
 import com.aliyun.vodplayerview.view.tipsview.ErrorInfo;
 import com.aliyun.vodplayerview.widget.AliyunScreenMode;
@@ -36,7 +36,6 @@ import com.yufan.library.inject.VuClass;
 import com.yufan.library.inter.ICallBack;
 import com.yufan.library.manager.DialogManager;
 import com.yufan.library.manager.UserManager;
-import com.yufan.library.util.AreaUtil;
 import com.yufan.share.ShareModel;
 import com.yushi.leke.R;
 import com.yushi.leke.UIHelper;
@@ -124,7 +123,7 @@ public class ExhibitionDetailFragment extends BaseFragment<ExhibitionDetailContr
                                 shareModel.setTitle(mShareInfo.getTitle());
                                 shareModel.setIcon(mShareInfo.getShareIcon());
                                 shareModel.setTargetUrl(ApiManager.getInstance().getApiConfig().getExhibitionDetail(activityid));
-                                ShareMenuActivity.startShare(ExhibitionDetailFragment.this,shareModel);
+                                ShareMenuActivity.startShare(ExhibitionDetailFragment.this, shareModel);
                             }
                         }
                     }
@@ -154,11 +153,24 @@ public class ExhibitionDetailFragment extends BaseFragment<ExhibitionDetailContr
         String tempTitle = (String) s[1];
         String tempProjectId = (String) s[2];
         if (!TextUtils.equals(currentVid, tempVid)) {//当前播放vid和需要切换vid不同才做切换操作
+            statisticalTime();
             currentVid = tempVid;
             currentTitle = tempTitle;
             currentProjectId = tempProjectId;
             getAliplayerInfo();
         }
+    }
+
+    /**
+     * 统计该活动视频播放时长
+     */
+    private void statisticalTime() {
+        VideoTimerUtil.getInstance().stopTimer();
+        Map<String, String> params = new HashMap<>();
+        params.put("uid", UserManager.getInstance().getUid());
+        params.put("projectId", String.valueOf(VideoTimerUtil.getInstance().getDuration()));
+        ArgsUtil.getInstance().datapoint(AliDotId.id_0100, params);
+        VideoTimerUtil.getInstance().setDuration(0);
     }
 
     /**
@@ -623,6 +635,7 @@ public class ExhibitionDetailFragment extends BaseFragment<ExhibitionDetailContr
 
     @Override
     public void onDestroy() {
+        statisticalTime();
         if (mAliyunVodPlayerView != null) {
             mAliyunVodPlayerView.onDestroy();
             mAliyunVodPlayerView = null;
@@ -648,10 +661,10 @@ public class ExhibitionDetailFragment extends BaseFragment<ExhibitionDetailContr
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
-        if (mAliyunVodPlayerView!=null){
-            if (hidden){
+        if (mAliyunVodPlayerView != null) {
+            if (hidden) {
                 mAliyunVodPlayerView.pause();
-            }else {
+            } else {
                 mAliyunVodPlayerView.start();
             }
         }
@@ -660,7 +673,7 @@ public class ExhibitionDetailFragment extends BaseFragment<ExhibitionDetailContr
     @Override
     public void onPause() {
         super.onPause();
-        if (mAliyunVodPlayerView!=null){
+        if (mAliyunVodPlayerView != null) {
             mAliyunVodPlayerView.pause();
         }
     }
@@ -668,7 +681,7 @@ public class ExhibitionDetailFragment extends BaseFragment<ExhibitionDetailContr
     @Override
     public void onResume() {
         super.onResume();
-        if (mAliyunVodPlayerView!=null){
+        if (mAliyunVodPlayerView != null) {
             mAliyunVodPlayerView.start();
         }
     }
@@ -681,7 +694,7 @@ public class ExhibitionDetailFragment extends BaseFragment<ExhibitionDetailContr
             shareModel.setTitle(mShareInfo.getTitle());
             shareModel.setIcon(mShareInfo.getShareIcon());
             shareModel.setTargetUrl(ApiManager.getInstance().getApiConfig().getExhibitionDetail(activityid));
-            ShareMenuActivity.startShare(ExhibitionDetailFragment.this,shareModel);
+            ShareMenuActivity.startShare(ExhibitionDetailFragment.this, shareModel);
             Map<String, String> params = new HashMap<>();
             params.put("uid", UserManager.getInstance().getUid());
             params.put("projectId", activityid);
@@ -693,7 +706,8 @@ public class ExhibitionDetailFragment extends BaseFragment<ExhibitionDetailContr
 
     @Override
     public void openActivityInstruction() {
-        start(UIHelper.creat(BrowserBaseFragment.class).put(Global.BUNDLE_KEY_BROWSER_URL,ApiManager.getInstance().getApiConfig().getActivityIntroduction(activityid)).build());
+        start(UIHelper.creat(BrowserBaseFragment.class).put(Global.BUNDLE_KEY_BROWSER_URL, ApiManager.getInstance().getApiConfig().getActivityIntroduction(activityid)).build());
     }
+
 
 }

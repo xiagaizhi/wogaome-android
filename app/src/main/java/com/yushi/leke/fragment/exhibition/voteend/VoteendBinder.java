@@ -40,6 +40,14 @@ public class VoteendBinder extends ItemViewBinder<Voteendinfo, VoteendBinder.Vie
         viewHolder.tv_vote_name.setText("创业者：" + voteendinfo.getEntrepreneur());
         viewHolder.btn_vote_support.setText("已结束");
         viewHolder.btn_vote_support.setTextColor(Color.parseColor("#FF999999"));
+        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (callBack != null) {
+                    callBack.OnBackResult(voteendinfo.getAliVideoId(), voteendinfo.getTitle(), voteendinfo.getId());
+                }
+            }
+        });
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
