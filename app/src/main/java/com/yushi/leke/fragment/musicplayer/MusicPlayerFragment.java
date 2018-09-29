@@ -314,7 +314,7 @@ public class MusicPlayerFragment extends BaseFragment<MusicPlayerContract.IView>
         mAdapter.setQueue(mediaController.getQueue());
         mAlbumId = String.valueOf(mediaController.getMetadata().getBundle().getString(MediaMetadataCompat.METADATA_KEY_ALBUM));
         subscribeCheck(mAlbumId);
-        getVu().setAlbumName(String.valueOf(mediaController.getMetadata().getDescription().getSubtitle()));
+        getVu().setAlbumName(mediaController.getMetadata().getDescription().getSubtitle().toString());
         List<MediaSessionCompat.QueueItem> queueItems = mediaController.getQueue();
         for (int i = 0; i < queueItems.size(); i++) {
             if (queueItems.get(i).getQueueId() == state.getActiveQueueItemId()) {

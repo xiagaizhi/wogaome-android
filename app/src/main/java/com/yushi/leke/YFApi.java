@@ -566,13 +566,7 @@ public interface YFApi {
     activitySearch(@Field("content") String content,
                    @Field("currentPage") int currentPage);
 
-    /**
-     * 专辑详情
-     */
-    @FormUrlEncoded
-    @POST("app/v1/albumDetail/getAlbum")
-    Call<ResponseBody>
-    getAlbum(@Field("albumId") String albumId);
+
 
     /**
      * 首页专辑列表
