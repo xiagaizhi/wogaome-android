@@ -42,6 +42,7 @@ import com.yufan.library.inject.VuClass;
 import com.yushi.leke.YFApi;
 import com.yushi.leke.uamp.AlbumArtCache;
 import com.yushi.leke.uamp.MusicService;
+import com.yushi.leke.uamp.playback.PlaybackManager;
 import com.yushi.leke.uamp.utils.LogHelper;
 import com.yushi.leke.widget.MyScroller;
 
@@ -62,7 +63,7 @@ import me.yokeyword.fragmentation.anim.FragmentAnimator;
 public class MusicPlayerFragment extends BaseFragment<MusicPlayerContract.IView> implements MusicPlayerContract.Presenter {
     private final Handler mHandler = new Handler();
     private static final long PROGRESS_UPDATE_INTERNAL = 1000;
-    private static final long PROGRESS_UPDATE_INITIAL_INTERVAL = 100;
+    private static final long PROGRESS_UPDATE_INITIAL_INTERVAL = 2000;
     public static final String EXTRA_CURRENT_MEDIA_DESCRIPTION = "EXTRA_CURRENT_MEDIA_DESCRIPTION";
     private MediaBrowserCompat mMediaBrowser;
     private String mCurrentArtUrl;
@@ -434,15 +435,17 @@ public class MusicPlayerFragment extends BaseFragment<MusicPlayerContract.IView>
         if (mLastPlaybackState == null) {
             return;
         }
-        long currentPosition = mLastPlaybackState.getPosition();
+        long currentPosition = PlaybackManager.getManager().getCurrentPosition();
+        Log.d("currentPosition",""+currentPosition);
         if (mLastPlaybackState.getState() == PlaybackStateCompat.STATE_PLAYING) {
             // Calculate the elapsed time between the last position update and now and unless
             // paused, we can assume (delta * speed) + current position is approximately the
             // latest position. This ensure that we do not repeatedly call the getPlaybackState()
             // on MediaControllerCompat.
-            long timeDelta = SystemClock.elapsedRealtime() -
-                    mLastPlaybackState.getLastPositionUpdateTime();
-            currentPosition += (int) timeDelta * mLastPlaybackState.getPlaybackSpeed();
+//            long timeDelta = SystemClock.elapsedRealtime() -
+//                    mLastPlaybackState.getLastPositionUpdateTime();
+//            currentPosition += (int) timeDelta ;
+
         }
         getVu().updateProgress((int) currentPosition);
     }

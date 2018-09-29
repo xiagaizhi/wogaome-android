@@ -7,6 +7,7 @@ import android.support.v4.media.MediaMetadataCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -198,7 +199,7 @@ public class MusicPlayerVu extends BaseVu<MusicPlayerContract.Presenter> impleme
 
     @Override
     public void updateProgress(int currentPosition) {
-
+        Log.d("updateProgress",""+currentPosition);
         mSeekbar.setProgress(currentPosition);
     }
 

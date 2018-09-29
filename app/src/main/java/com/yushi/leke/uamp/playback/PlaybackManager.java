@@ -47,7 +47,7 @@ public class PlaybackManager implements Playback.Callback {
     private Playback mPlayback;
     private PlaybackServiceCallback mServiceCallback;
     private MediaSessionCallback mMediaSessionCallback;
-
+    private static  PlaybackManager manager;
     public PlaybackManager(PlaybackServiceCallback serviceCallback, Resources resources,
                            MusicProvider musicProvider, QueueManager queueManager,
                            Playback playback) {
@@ -58,7 +58,13 @@ public class PlaybackManager implements Playback.Callback {
         mMediaSessionCallback = new MediaSessionCallback();
         mPlayback = playback;
         mPlayback.setCallback(this);
+        manager=this;
     }
+
+    public static PlaybackManager getManager(){
+        return manager;
+    }
+
 
     public Playback getPlayback() {
         return mPlayback;
@@ -228,6 +234,11 @@ public class PlaybackManager implements Playback.Callback {
     public void setCurrentMediaId(String mediaId) {
         LogHelper.d(TAG, "setCurrentMediaId", mediaId);
         mQueueManager.setQueueFromMusic(mediaId);
+    }
+
+    @Override
+    public long getCurrentPosition() {
+        return mPlayback.getCurrentStreamPosition();
     }
 
 
