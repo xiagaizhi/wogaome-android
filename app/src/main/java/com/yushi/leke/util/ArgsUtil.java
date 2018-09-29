@@ -22,10 +22,11 @@ public class ArgsUtil {
     }
 
     public void datapoint(String eventName, Map<String, String> params) {
-        if (params==null)return;
         MANHitBuilders.MANCustomHitBuilder hitBuilder = new MANHitBuilders.MANCustomHitBuilder(eventName);
-        for (String key : params.keySet()) {
-            hitBuilder.setProperty(key, params.get(key));
+        if (params!=null){
+            for (String key : params.keySet()) {
+                hitBuilder.setProperty(key, params.get(key));
+            }
         }
         manService.getMANAnalytics().getDefaultTracker().send(hitBuilder.build());
     }

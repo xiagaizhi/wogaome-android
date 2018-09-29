@@ -165,7 +165,7 @@ public class AlbumDetailFragment extends BaseFragment<AlbumDetailContract.IView>
                         Map<String, String> params = new HashMap<>();
                         params.put("uid", UserManager.getInstance().getUid());
                         params.put("albumId", albumId);
-                        ArgsUtil.getInstance().datapoint(AliDotId.id_0600, params);
+                        ArgsUtil.getInstance().datapoint(AliDotId.id_0500, params);
                     }
 
                     @Override

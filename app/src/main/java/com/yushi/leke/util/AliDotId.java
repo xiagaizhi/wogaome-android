@@ -17,13 +17,16 @@ public class AliDotId {
     //绑定手机数据埋点
     public static final String id_0401 = "0401";
     //订阅专辑数据埋点
+    public static final String id_0500 = "0500";
+    //播放音频时长
     public static final String id_0600 = "0600";
-    //分享
-    public static final String id_0802 = "0802";
-    //专辑分享数据埋点
+    //播放视频时长
+    public static final String id_0700 = "0700";
+    //分享-专辑
     public static final String id_0801 = "0801";
+    //分享-路演
+    public static final String id_0802 = "0802";
     //投票数据埋点
     public static final String id_0900 = "0900";
-
 
 }
