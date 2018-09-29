@@ -108,6 +108,11 @@ public abstract class BaseVu<T extends Pr> implements Vu ,View.OnClickListener{
         });
     }
 
+    protected void resetTitle(AppToolbar appToolbar){
+        mRootLayout.removeView(appToolbar);
+        addTitle(appToolbar,true);
+    }
+
     /**
      * 添加头
      */

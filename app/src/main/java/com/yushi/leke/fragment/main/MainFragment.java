@@ -91,6 +91,10 @@ public class MainFragment extends BaseFragment<MainContract.IView> implements Ma
                 case Global.BROADCAST_ACTION_UPGRADE:
                     UpgradeUtil.checkAppUpdate(_mActivity);
                     break;
+                case Global.BROADCAST_ACTION_XGMESSAGE:
+                    int type = intent.getIntExtra("appMsgType",1);
+                    getRootFragment().start(UIHelper.creat(BrowserBaseFragment.class).put(Global.BUNDLE_KEY_BROWSER_URL, ApiManager.getInstance().getApiConfig().getMessage(type)).build());
+                    break;
             }
         }
     };

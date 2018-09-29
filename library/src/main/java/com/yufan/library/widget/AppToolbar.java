@@ -130,6 +130,10 @@ public class AppToolbar extends RelativeLayout {
         build(true);
     }
 
+    public void setVertical(boolean vertical) {
+        isVertical = vertical;
+    }
+
     public boolean isVertical() {
         return isVertical;
     }

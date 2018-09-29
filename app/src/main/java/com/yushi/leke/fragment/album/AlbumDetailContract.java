@@ -22,5 +22,6 @@ public interface AlbumDetailContract {
     void onMusicMenuClick();
     void register();
     void unregister();
+    void onShareclick();
     }
 }

@@ -21,6 +21,7 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 
 /**
  * 文件操作工具包
@@ -52,6 +53,11 @@ public class FileUtil {
         File shareDir = new File(Global.SAVE_SHARE_IMAGE_PATH);
         if (!shareDir.exists()) {
             shareDir.mkdirs();
+        }
+
+        File sidDir = new File(Global.SAVE_SID_PATH);
+        if (!sidDir.exists()) {
+            sidDir.mkdirs();
         }
     }
 
@@ -890,5 +896,53 @@ public class FileUtil {
 
     public enum PathStatus {
         SUCCESS, EXITS, ERROR
+    }
+
+
+    public static void saveSidToSdcard(String key, String value) {
+        Properties props = getSidProperties();
+        props.setProperty(key, value);
+        setSDCrate(props);
+    }
+
+    public static String getSid(String key) {
+        Properties props = getSidProperties();
+        return (props != null) ? props.getProperty(key) : null;
+    }
+
+
+    public static Properties getSidProperties() {
+        FileInputStream fis = null;
+        Properties props = new Properties();
+        try {
+            File dirConf = FileUtil.createFile(Global.SAVE_SID_PATH, "sid");
+            fis = new FileInputStream(dirConf.getPath());
+            props.load(fis);
+        } catch (Exception e) {
+        } finally {
+            try {
+                fis.close();
+            } catch (Exception e) {
+            }
+        }
+        return props;
+    }
+
+
+    private static void setSDCrate(Properties p) {
+        FileOutputStream fos = null;
+        try {
+            File dirConf = FileUtil.createFile(Global.SAVE_SID_PATH, "sid");
+            fos = new FileOutputStream(dirConf);
+            p.store(fos, null);
+            fos.flush();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                fos.close();
+            } catch (Exception e) {
+            }
+        }
     }
 }

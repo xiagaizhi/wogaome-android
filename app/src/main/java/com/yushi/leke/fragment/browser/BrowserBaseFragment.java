@@ -72,7 +72,6 @@ public class BrowserBaseFragment extends BaseFragment<BrowserContract.View> impl
     private String mIntentUrl;
     private WVJBWebViewClient wVJBWebViewClient;
     private WebSettings webSetting;
-    private boolean haveHead = true;
 
     private WVJBWebViewClient.WVJBResponseCallback payWVJBResponseCallback;
     BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
@@ -130,7 +129,6 @@ public class BrowserBaseFragment extends BaseFragment<BrowserContract.View> impl
         Bundle bundle = getArguments();
         if (bundle != null) {
             mIntentUrl = bundle.getString(Global.BUNDLE_KEY_BROWSER_URL);
-            haveHead = bundle.getBoolean(Global.BUNDLE_KEY_BROWSER_HAVE_HEAD, true);
         }
     }
 
@@ -138,11 +136,6 @@ public class BrowserBaseFragment extends BaseFragment<BrowserContract.View> impl
     @Override
     public boolean isPtrEnable() {
         return false;
-    }
-
-    @Override
-    public boolean getHaveHead() {
-        return haveHead;
     }
 
     @Override

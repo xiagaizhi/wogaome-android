@@ -91,11 +91,8 @@ public class LoginPhoneFragment extends BaseFragment<LoginPhoneContract.IView> i
              UserManager.getInstance().setToken(jsonObject.getString("token"));
               UserManager.getInstance().setUid(jsonObject.getString("uid"));
                 startWithPopTo(UIHelper.creat(MainFragment.class).build(), LoginFragment.class,true);
-                // 用户登录埋点
-                MANService manService = MANServiceProvider.getService();
-                manService.getMANAnalytics().updateUserAccount("usernick", phone);
-                App.getApp().registerXGPush(UserManager.getInstance().getUid());
-                ArgsUtil.datapoint(ArgsUtil.LOGIN_PHONE_NAME,"null",ArgsUtil.UID,ArgsUtil.LOGIN_PHONE_CODE,null,null);
+                //用户手机登陆数据埋点
+                ArgsUtil.datapoint("0301","uid",jsonObject.getString("uid"));
             }
 
             @Override

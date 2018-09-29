@@ -3,6 +3,7 @@ package com.yushi.leke.receiver;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
 import com.tencent.android.tpush.XGPushBaseReceiver;
@@ -10,6 +11,8 @@ import com.tencent.android.tpush.XGPushClickedResult;
 import com.tencent.android.tpush.XGPushRegisterResult;
 import com.tencent.android.tpush.XGPushShowedResult;
 import com.tencent.android.tpush.XGPushTextMessage;
+import com.yufan.library.Global;
+import com.yushi.leke.App;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -87,8 +90,7 @@ public class MessageReceiver extends XGPushBaseReceiver {
 
     // 通知点击回调 actionType=1为该消息被清除，actionType=0为该消息被点击。此处不能做点击消息跳转，详细方法请参照官网的Android常见问题文档
     @Override
-    public void onNotifactionClickedResult(Context context,
-                                           XGPushClickedResult message) {
+    public void onNotifactionClickedResult(Context context, XGPushClickedResult message) {
         Log.e("LC", "+++++++++++++++ 通知被点击 跳转到指定页面。");
         NotificationManager notificationManager = (NotificationManager) context
                 .getSystemService(Context.NOTIFICATION_SERVICE);
@@ -107,23 +109,23 @@ public class MessageReceiver extends XGPushBaseReceiver {
             // APP自己处理通知被清除后的相关动作
             text = "通知被清除 :" + message;
         }
-//        Toast.makeText(context, "广播接收到通知被点击:" + message.toString(),
-//                Toast.LENGTH_SHORT).show();
-        // 获取自定义key-value
+        Intent filter = new Intent();
         String customContent = message.getCustomContent();
         if (customContent != null && customContent.length() != 0) {
             try {
                 JSONObject obj = new JSONObject(customContent);
                 // key1为前台配置的key
-                if (!obj.isNull("key")) {
-                    String value = obj.getString("key");
-                    Log.d(LogTag, "get custom value:" + value);
+                if (!obj.isNull("appMsgType")) {
+                    int appMsgType = obj.getInt("appMsgType");
+                    Log.d("LOGH","intent start......!!!!!");
+                    filter.putExtra("appMsgType", appMsgType);
                 }
-                // ...
             } catch (JSONException e) {
                 e.printStackTrace();
             }
         }
+        filter.setAction(Global.BROADCAST_ACTION_XGMESSAGE);
+        LocalBroadcastManager.getInstance(App.getInstance()).sendBroadcast(filter);
         // APP自主处理的过程。。。
         Log.d(LogTag, text);
         show(context, text);

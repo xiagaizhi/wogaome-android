@@ -28,8 +28,8 @@ public class AllprojectsVu extends BaseListVu<AllprojectsContract.Presenter> imp
     long instroid=-1;
     ImageView backButton;
     private TextView mTitleView;
-    private ImageView musicAnim;
     private ImageView img_seacher;
+    private ImageView musicAnim;
     @Override
     public void initView(View view) {
         super.initView(view);
@@ -46,7 +46,6 @@ public class AllprojectsVu extends BaseListVu<AllprojectsContract.Presenter> imp
     public boolean initTitle(AppToolbar appToolbar) {
         img_seacher = appToolbar.creatRightView(ImageView.class);
         img_seacher.setImageResource(R.drawable.ic_search_blue);
-        musicAnim=   UIHelper.getMusicView(mPersenter.getActivity(),appToolbar);
         mTitleView=     appToolbar.creatCenterView(TextView.class);
         mTitleView.setText("参赛项目活动");
         mTitleView .getPaint().setFakeBoldText(true);
@@ -58,14 +57,6 @@ public class AllprojectsVu extends BaseListVu<AllprojectsContract.Presenter> imp
             }
         });
         backButton.setImageResource(com.yufan.library.R.drawable.left_back_black_arrows);
-        musicAnim.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(v.getAlpha()>0){
-                    //mPersenter.onMusicMenuClick();
-                }
-            }
-        });
         img_seacher.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -73,6 +64,15 @@ public class AllprojectsVu extends BaseListVu<AllprojectsContract.Presenter> imp
             }
         });
         appToolbar.build();
+        musicAnim=UIHelper.getMusicView(mPersenter.getActivity(),appToolbar);
+        musicAnim.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (v.getAlpha() > 0) {
+                    mPersenter.onMusicMenuClick();
+                }
+            }
+        });
         return true;
     }
 

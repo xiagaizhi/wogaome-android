@@ -81,15 +81,8 @@ public class BrowserVu extends BaseVu<BrowserContract.Presenter> implements Brow
         });
         titleView.setLines(1);
         titleView.setEllipsize(TextUtils.TruncateAt.END);
-        if (!mPersenter.getHaveHead()) {
-            titleView.setTextColor(getContext().getResources().getColor(R.color.white));
-            leftView.setImageResource(R.drawable.left_back_white_arrows);
-            UIHelper.getWhiteMusicView(mPersenter.getActivity(), appToolbar);
-        }else {
-            UIHelper.getMusicView(mPersenter.getActivity(), appToolbar);
-        }
-
-        appToolbar.build(mPersenter.getHaveHead());
+        UIHelper.getMusicView(mPersenter.getActivity(), appToolbar);
+        appToolbar.build();
         return true;
     }
 
@@ -143,12 +136,6 @@ public class BrowserVu extends BaseVu<BrowserContract.Presenter> implements Brow
             mPtrClassicFrameLayout.refreshComplete();
         }
         mPageLoadingProgressBar.setVisibility(View.GONE);
-        if (!mPersenter.getHaveHead()) {
-            titleView.setTextColor(getContext().getResources().getColor(R.color.white));
-            leftView.setImageResource(R.drawable.left_back_white_arrows);
-        }
-
-
     }
 
     @Override
@@ -158,25 +145,28 @@ public class BrowserVu extends BaseVu<BrowserContract.Presenter> implements Brow
 
     @Override
     public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
-        if (!mPersenter.getHaveHead()) {
-            titleView.setTextColor(getContext().getResources().getColor(R.color.color_gray_level3));
-            leftView.setImageResource(R.drawable.left_back_black_arrows);
-        }
+
     }
 
     @Override
     public void setNaviBar(NaviBarInfoList naviBarInfoList) {
         String title = naviBarInfoList.getTitle();
+        if (naviBarInfoList.getStyle() == 1) {//透明
+            mAppToolbar.setVertical(false);
+            resetTitle(mAppToolbar);
+            titleView.setTextColor(getContext().getResources().getColor(R.color.white));
+            leftView.setImageResource(R.drawable.left_back_white_arrows);
+        }
         List<NaviBarInfo> naviBarInfos = naviBarInfoList.getActions();
         if (!TextUtils.isEmpty(title)) {
             titleView.setText(title);
         }
+        mAppToolbar.getRightViewGroup().removeAllViews();
         if (naviBarInfos != null && naviBarInfos.size() > 0) {
-            mAppToolbar.getRightViewGroup().removeAllViews();
-            int h = PxUtil.convertDIP2PX(getContext(),22);
+            int h = PxUtil.convertDIP2PX(getContext(), 22);
             for (final NaviBarInfo naviBarInfo : naviBarInfos) {
                 ImageView imageView = mAppToolbar.creatRightView(ImageView.class);
-                Glide.with(getContext()).load(naviBarInfo.getIcon()).override(h,h).into(imageView);
+                Glide.with(getContext()).load(naviBarInfo.getIcon()).override(h, h).into(imageView);
                 imageView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -185,13 +175,13 @@ public class BrowserVu extends BaseVu<BrowserContract.Presenter> implements Brow
                     }
                 });
             }
-            mAppToolbar.build(mPersenter.getHaveHead());
-            if (!mPersenter.getHaveHead()) {
-                UIHelper.getWhiteMusicView(mPersenter.getActivity(), mAppToolbar);
-            }else {
-                UIHelper.getMusicView(mPersenter.getActivity(), mAppToolbar);
-            }
         }
-
+        if (naviBarInfoList.getStyle() == 1) {//透明
+            mAppToolbar.build(false);
+            UIHelper.getWhiteMusicView(mPersenter.getActivity(), mAppToolbar);
+        } else {
+            mAppToolbar.build();
+            UIHelper.getMusicView(mPersenter.getActivity(), mAppToolbar);
+        }
     }
 }

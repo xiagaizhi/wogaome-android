@@ -29,9 +29,11 @@ import com.yufan.library.api.ApiManager;
 import com.yufan.library.api.BaseHttpCallBack;
 import com.yufan.library.inter.ICallBack;
 import com.yufan.library.manager.DialogManager;
+import com.yufan.library.manager.UserManager;
 import com.yushi.leke.R;
 import com.yushi.leke.YFApi;
 import com.yushi.leke.dialog.CommonDialog;
+import com.yushi.leke.util.ArgsUtil;
 import com.yushi.leke.util.RechargeUtil;
 
 import java.math.BigDecimal;
@@ -281,6 +283,8 @@ public class VoteFragment extends DialogFragment implements View.OnClickListener
                             voteInitInfo.setLkc(voteInitInfo.getLkc().subtract(new BigDecimal(getCurrentChoiceVoteNum())));
                             voteInitInfo.setVoteCount(voteInitInfo.getVoteCount().add(new BigDecimal(getCurrentChoiceVoteNum())));
                             bindData(voteInitInfo);
+                            //投票数据埋点
+                            ArgsUtil.datapoint("0900","uid", UserManager.getInstance().getUid(),"projectId ",projectId );
                         }
 
                         @Override

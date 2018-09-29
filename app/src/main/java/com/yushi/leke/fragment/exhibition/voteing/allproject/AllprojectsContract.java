@@ -22,5 +22,6 @@ public interface AllprojectsContract {
         void getCitylist();
         void getWorklist();
         void seacherOnclick();
+        void onMusicMenuClick();
     }
 }
