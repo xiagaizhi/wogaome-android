@@ -10,6 +10,7 @@ import com.yufan.library.api.ApiBean;
 import com.yufan.library.api.ApiManager;
 import com.yufan.library.api.BaseHttpCallBack;
 import com.yufan.library.manager.UserManager;
+import com.yufan.share.ShareModel;
 import com.yushi.leke.R;
 import com.yufan.library.base.BaseFragment;
 
@@ -31,6 +32,7 @@ import com.yushi.leke.fragment.album.audioList.MediaBrowserFragment;
 import com.yushi.leke.fragment.album.detail.DetailFragment;
 import com.yushi.leke.fragment.album.detailforalbum.DetailforalbumFragment;
 import com.yushi.leke.fragment.searcher.SearchFragment;
+import com.yushi.leke.share.ShareMenuActivity;
 import com.yushi.leke.util.ArgsUtil;
 
 import me.yokeyword.fragmentation.SupportFragment;
@@ -42,6 +44,7 @@ import me.yokeyword.fragmentation.SupportFragment;
 public class AlbumDetailFragment extends BaseFragment<AlbumDetailContract.IView> implements AlbumDetailContract.Presenter {
     private SupportFragment[] fragments=new SupportFragment[2];
     private String albumId;
+    AlbumDetailinfo infolist;
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -100,7 +103,7 @@ public class AlbumDetailFragment extends BaseFragment<AlbumDetailContract.IView>
                     @Override
                     public void onSuccess(ApiBean mApiBean) {
                         if (!TextUtils.isEmpty(mApiBean.getData())) {
-                            AlbumDetailinfo infolist = JSON.parseObject(mApiBean.getData(), AlbumDetailinfo.class);
+                            infolist = JSON.parseObject(mApiBean.getData(), AlbumDetailinfo.class);
                             getVu().showtext(infolist);
                             getstatedate();
                         }
@@ -184,5 +187,18 @@ public class AlbumDetailFragment extends BaseFragment<AlbumDetailContract.IView>
                     public void onFinish() {
                     }
                 });
+    }
+
+    @Override
+    public void onShareclick() {
+        ShareModel model=new ShareModel();
+        if (infolist.getAlbum()!=null){
+            model.setTitle(infolist.getAlbum().getAlbumName());
+            model.setContent(infolist.getAlbum().getIntroduction());
+            model.setIcon(infolist.getAlbum().getHorizontalIcon());
+            model.setTargetUrl(infolist.getAlbum().getShareIcon());
+            ShareMenuActivity.startShare(getRootFragment(),model);
+        }
+
     }
 }

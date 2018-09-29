@@ -1,5 +1,6 @@
 package com.yushi.leke.fragment.exhibition.voteing.allproject;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -18,6 +19,7 @@ import com.yufan.library.inter.ICallBack;
 import com.yufan.library.view.recycler.PageInfo;
 import com.yushi.leke.UIHelper;
 import com.yushi.leke.YFApi;
+import com.yushi.leke.activity.MusicPlayerActivity;
 import com.yushi.leke.fragment.exhibition.vote.VoteFragment;
 import com.yushi.leke.fragment.exhibition.voteing.seacher.ActivitySeachFragment;
 import com.yushi.leke.fragment.paySafe.PaySafetyFragment;
@@ -220,5 +222,10 @@ public class AllprojectsFragment extends BaseListFragment<AllprojectsContract.IV
                 }
                 break;
         }
+    }
+    @Override
+    public void onMusicMenuClick() {
+        Intent intent = new Intent(getActivity(), MusicPlayerActivity.class);
+        startActivity(intent);
     }
 }

@@ -121,6 +121,12 @@ public class AlbumDetailVu extends BaseVu<AlbumDetailContract.Presenter> impleme
                 }
             }
         });
+        img_share.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mPersenter.onShareclick();
+            }
+        });
         return true;
     }
 

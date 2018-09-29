@@ -117,6 +117,7 @@ public class MessageReceiver extends XGPushBaseReceiver {
                 // key1为前台配置的key
                 if (!obj.isNull("appMsgType")) {
                     int appMsgType = obj.getInt("appMsgType");
+                    Log.d("LOGH","intent start......!!!!!");
                     filter.putExtra("appMsgType", appMsgType);
                 }
             } catch (JSONException e) {

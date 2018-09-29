@@ -29,6 +29,7 @@ public class AllprojectsVu extends BaseListVu<AllprojectsContract.Presenter> imp
     ImageView backButton;
     private TextView mTitleView;
     private ImageView img_seacher;
+    private ImageView musicAnim;
     @Override
     public void initView(View view) {
         super.initView(view);
@@ -63,7 +64,15 @@ public class AllprojectsVu extends BaseListVu<AllprojectsContract.Presenter> imp
             }
         });
         appToolbar.build();
-        UIHelper.getMusicView(mPersenter.getActivity(),appToolbar);
+        musicAnim=UIHelper.getMusicView(mPersenter.getActivity(),appToolbar);
+        musicAnim.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (v.getAlpha() > 0) {
+                    mPersenter.onMusicMenuClick();
+                }
+            }
+        });
         return true;
     }
 
