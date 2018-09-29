@@ -96,11 +96,9 @@ public abstract class BaseVu<T extends Pr> implements Vu ,View.OnClickListener{
     @Override
     public void initStatusLayout(StateLayout stateLayout) {
         if (TextUtils.isEmpty(Netutil.GetNetworkType(BaseApplication.getInstance()))) {
-            stateLayout.getEmptyView().setVisibility(View.GONE);
-            stateLayout.getErrorView().setVisibility(View.VISIBLE);
+            setStateError();
         }else {
-            stateLayout.getEmptyView().setVisibility(View.VISIBLE);
-            stateLayout.getErrorView().setVisibility(View.GONE);
+            setStateEmpty();
         }
         stateLayout.getEmptyView().setOnClickListener(new View.OnClickListener() {
             @Override
