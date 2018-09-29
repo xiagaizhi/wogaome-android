@@ -34,15 +34,8 @@ import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
 import android.support.v7.media.MediaRouter;
 
-import com.google.android.gms.cast.framework.CastContext;
-import com.google.android.gms.cast.framework.CastSession;
-import com.google.android.gms.cast.framework.SessionManager;
-import com.google.android.gms.cast.framework.SessionManagerListener;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GoogleApiAvailability;
 import com.yushi.leke.activity.MusicPlayerActivity;
 import com.yushi.leke.uamp.model.MusicProvider;
-import com.yushi.leke.uamp.playback.CastPlayback;
 import com.yushi.leke.uamp.playback.Playback;
 import com.yushi.leke.uamp.playback.PlaybackManager;
 import com.yushi.leke.uamp.playback.QueueManager;
@@ -240,7 +233,7 @@ public class MusicService extends MediaBrowserServiceCompat implements
                 if (CMD_PAUSE.equals(command)) {
                     mPlaybackManager.handlePauseRequest();
                 } else if (CMD_STOP_CASTING.equals(command)) {
-                    CastContext.getSharedInstance(this).getSessionManager().endCurrentSession(true);
+
                 }
             } else {
                 // Try to handle the intent as a media button event wrapped by MediaButtonReceiver
@@ -392,66 +385,4 @@ public class MusicService extends MediaBrowserServiceCompat implements
         }
     }
 
-    /**
-     * Session Manager Listener responsible for switching the Playback instances
-     * depending on whether it is connected to a remote player.
-     * 会话管理监听器 根据是否连接到远程播放器 切换相应的Playback实例
-     */
-    private class CastSessionManagerListener implements SessionManagerListener<CastSession> {
-
-        @Override
-        public void onSessionEnded(CastSession session, int error) {
-            LogHelper.d(TAG, "onSessionEnded");
-            mSessionExtras.remove(EXTRA_CONNECTED_CAST);
-            mSession.setExtras(mSessionExtras);
-            Playback playback = new VodPlayback(MusicService.this, mMusicProvider);
-            mMediaRouter.setMediaSessionCompat(null);
-            mPlaybackManager.switchToPlayback(playback, false);
-        }
-
-        @Override
-        public void onSessionResumed(CastSession session, boolean wasSuspended) {
-        }
-
-        @Override
-        public void onSessionStarted(CastSession session, String sessionId) {
-            // In case we are casting, send the device name as an extra on MediaSession metadata.
-            mSessionExtras.putString(EXTRA_CONNECTED_CAST,
-                    session.getCastDevice().getFriendlyName());
-            mSession.setExtras(mSessionExtras);
-            // Now we can switch to CastPlayback
-            Playback playback = new CastPlayback(mMusicProvider, MusicService.this);
-            mMediaRouter.setMediaSessionCompat(mSession);
-            mPlaybackManager.switchToPlayback(playback, true);
-        }
-
-        @Override
-        public void onSessionStarting(CastSession session) {
-        }
-
-        @Override
-        public void onSessionStartFailed(CastSession session, int error) {
-        }
-
-        @Override
-        public void onSessionEnding(CastSession session) {
-            // This is our final chance to update the underlying stream position
-            // In onSessionEnded(), the underlying CastPlayback#mRemoteMediaClient
-            // is disconnected and hence we update our local value of stream position
-            // to the latest position.
-            mPlaybackManager.getPlayback().updateLastKnownStreamPosition();
-        }
-
-        @Override
-        public void onSessionResuming(CastSession session, String sessionId) {
-        }
-
-        @Override
-        public void onSessionResumeFailed(CastSession session, int error) {
-        }
-
-        @Override
-        public void onSessionSuspended(CastSession session, int reason) {
-        }
-    }
 }

@@ -30,7 +30,6 @@ import com.aliyun.vodplayer.media.AliyunPlayAuth;
 import com.aliyun.vodplayer.media.AliyunVidSts;
 import com.aliyun.vodplayer.media.AliyunVodPlayer;
 import com.aliyun.vodplayer.media.IAliyunVodPlayer;
-import com.google.android.exoplayer2.ExoPlayer;
 import com.yufan.library.manager.DialogManager;
 import com.yushi.leke.uamp.MusicService;
 import com.yushi.leke.uamp.model.MusicProvider;
