@@ -73,7 +73,7 @@ public class App extends BaseApplication {
         // 获取MAN服务
         MANService manService = MANServiceProvider.getService();
         // 打开调试日志
-        manService.getMANAnalytics().turnOnDebug();
+//        manService.getMANAnalytics().turnOnDebug();
         manService.getMANAnalytics().setAppVersion("3.0");
         // MAN初始化方法之一，通过插件接入后直接在下发json中获取appKey和appSecret初始化
         manService.getMANAnalytics().init(this, getApplicationContext());
