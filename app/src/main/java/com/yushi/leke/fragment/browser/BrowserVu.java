@@ -161,8 +161,8 @@ public class BrowserVu extends BaseVu<BrowserContract.Presenter> implements Brow
         if (!TextUtils.isEmpty(title)) {
             titleView.setText(title);
         }
+        mAppToolbar.getRightViewGroup().removeAllViews();
         if (naviBarInfos != null && naviBarInfos.size() > 0) {
-            mAppToolbar.getRightViewGroup().removeAllViews();
             int h = PxUtil.convertDIP2PX(getContext(), 22);
             for (final NaviBarInfo naviBarInfo : naviBarInfos) {
                 ImageView imageView = mAppToolbar.creatRightView(ImageView.class);
@@ -175,11 +175,12 @@ public class BrowserVu extends BaseVu<BrowserContract.Presenter> implements Brow
                     }
                 });
             }
-            if (naviBarInfoList.getStyle() == 1) {//透明
-                mAppToolbar.build(false);
-            } else {
-                mAppToolbar.build();
-            }
+        }
+        if (naviBarInfoList.getStyle() == 1) {//透明
+            mAppToolbar.build(false);
+            UIHelper.getWhiteMusicView(mPersenter.getActivity(), mAppToolbar);
+        } else {
+            mAppToolbar.build();
             UIHelper.getMusicView(mPersenter.getActivity(), mAppToolbar);
         }
     }
