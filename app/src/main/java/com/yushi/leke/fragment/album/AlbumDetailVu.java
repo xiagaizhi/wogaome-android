@@ -82,9 +82,9 @@ public class AlbumDetailVu extends BaseVu<AlbumDetailContract.Presenter> impleme
         //applayout竖直方向偏移量监听
         appBarLayout.addOnOffsetChangedListener(new AppBarStateChangeListener() {
             @Override
-            public void onStateChanged(AppBarLayout appBarLayout, State state) {
+            public void onStateChanged(AppBarLayout appBarLayout, State state,int verticalOffset) {
                 Log.d("STATE", state.name());
-                AlbumDetailVu.this.verticalOffset=appBarLayout.get;
+                AlbumDetailVu.this.verticalOffset=verticalOffset;
                 if( state == State.EXPANDED ) {
                     //展开状态
                     flag=true;
