@@ -63,7 +63,7 @@ import me.yokeyword.fragmentation.anim.FragmentAnimator;
 public class MusicPlayerFragment extends BaseFragment<MusicPlayerContract.IView> implements MusicPlayerContract.Presenter {
     private final Handler mHandler = new Handler();
     private static final long PROGRESS_UPDATE_INTERNAL = 1000;
-    private static final long PROGRESS_UPDATE_INITIAL_INTERVAL = 2000;
+    private static final long PROGRESS_UPDATE_INITIAL_INTERVAL = 100;
     public static final String EXTRA_CURRENT_MEDIA_DESCRIPTION = "EXTRA_CURRENT_MEDIA_DESCRIPTION";
     private MediaBrowserCompat mMediaBrowser;
     private String mCurrentArtUrl;
@@ -84,7 +84,7 @@ public class MusicPlayerFragment extends BaseFragment<MusicPlayerContract.IView>
     private String mAlbumId;
     private String subState;
     private boolean isCanOperation;
-
+    private SeekCompleteCallBack completeCallBack;
     private final MediaControllerCompat.Callback mCallback = new MediaControllerCompat.Callback() {
         @Override
         public void onPlaybackStateChanged(@NonNull PlaybackStateCompat state) {
@@ -187,7 +187,12 @@ public class MusicPlayerFragment extends BaseFragment<MusicPlayerContract.IView>
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         }
-
+        PlaybackManager.getManager().setCompleteCallBack(new SeekCompleteCallBack() {
+            @Override
+            public void onSeekComplete() {
+                scheduleSeekbarUpdate();
+            }
+        });
         getVu().getViewPager().addOnPageChangeListener(onPageChangeListener);
 
     }
@@ -517,7 +522,7 @@ public class MusicPlayerFragment extends BaseFragment<MusicPlayerContract.IView>
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
                 MediaControllerCompat.getMediaController(getActivity()).getTransportControls().seekTo(seekBar.getProgress());
-                scheduleSeekbarUpdate();
+
             }
         });
     }
@@ -683,5 +688,9 @@ public class MusicPlayerFragment extends BaseFragment<MusicPlayerContract.IView>
     @Override
     public FragmentAnimator onCreateFragmentAnimator() {
         return new AFVerticalAnimator(); //super.onCreateFragmentAnimator();
+    }
+
+   public interface SeekCompleteCallBack{
+       void onSeekComplete();
     }
 }

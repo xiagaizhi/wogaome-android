@@ -101,6 +101,7 @@ public interface Playback {
         void setCurrentMediaId(String mediaId);
 
         long getCurrentPosition();
+       void onSeekComplete();
     }
 
     void setCallback(Callback callback);

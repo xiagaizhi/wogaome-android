@@ -276,6 +276,12 @@ public final class VodPlayback implements Playback {
                             }
                         }
                     });
+                    mAliyunVodPlayer.setOnSeekCompleteListener(new IAliyunVodPlayer.OnSeekCompleteListener() {
+                        @Override
+                        public void onSeekComplete() {
+                            mCallback.onSeekComplete();
+                        }
+                    });
 
                 }
                 AliyunVidSts aliyunVidSts = new AliyunVidSts();

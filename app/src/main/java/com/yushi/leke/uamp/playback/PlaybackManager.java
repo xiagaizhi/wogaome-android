@@ -24,6 +24,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
 
+import com.yushi.leke.fragment.musicplayer.MusicPlayerFragment;
 import com.yushi.leke.uamp.model.MusicProvider;
 import com.yushi.leke.uamp.utils.LogHelper;
 import com.yushi.leke.uamp.utils.MediaIDHelper;
@@ -40,7 +41,7 @@ public class PlaybackManager implements Playback.Callback {
     // Action to thumbs up a media item
     //对某项媒体内容进行点赞
     private static final String CUSTOM_ACTION_THUMBS_UP = "com.example.android.uamp.THUMBS_UP";
-
+    private MusicPlayerFragment.SeekCompleteCallBack seekCompleteCallBack;
     private MusicProvider mMusicProvider;
     private QueueManager mQueueManager;
     private Resources mResources;
@@ -239,6 +240,17 @@ public class PlaybackManager implements Playback.Callback {
     @Override
     public long getCurrentPosition() {
         return mPlayback.getCurrentStreamPosition();
+    }
+
+
+    public void setCompleteCallBack(MusicPlayerFragment.SeekCompleteCallBack seekCompleteCallBack){
+        this.seekCompleteCallBack=seekCompleteCallBack;
+    }
+    @Override
+    public void onSeekComplete() {
+        if(seekCompleteCallBack!=null){
+            seekCompleteCallBack.onSeekComplete();
+        }
     }
 
 
