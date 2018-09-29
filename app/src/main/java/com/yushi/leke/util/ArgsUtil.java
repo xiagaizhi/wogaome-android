@@ -46,7 +46,16 @@ public class ArgsUtil {
     }
 
     public static ArgsUtil instance;
-    private ArgsUtil(){
+    public static ArgsUtil ArgsUtil(){
         instance=new ArgsUtil();
+        return instance;
+    }
+
+    public static ArgsUtil getInstance() {
+        return instance;
+    }
+
+    public static void setInstance(ArgsUtil instance) {
+        ArgsUtil.instance = instance;
     }
 }

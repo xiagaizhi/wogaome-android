@@ -98,7 +98,7 @@ public class LoginPhoneFragment extends BaseFragment<LoginPhoneContract.IView> i
                     binddeviceanduser(SPManager.getInstance().getString("XGTOKEN",""));
                 }
                 //用户手机登陆数据埋点
-                ArgsUtil.datapoint("0301","uid",jsonObject.getString("uid"));
+                ArgsUtil.getInstance().datapoint("0301","uid",jsonObject.getString("uid"));
             }
 
             @Override

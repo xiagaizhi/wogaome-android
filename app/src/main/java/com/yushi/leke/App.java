@@ -67,7 +67,7 @@ public class App extends BaseApplication {
         //初始化数据埋点
         initManService();
         //app启动数据埋点
-        ArgsUtil.datapoint("0100","uid",UserManager.getInstance().getUid());
+        ArgsUtil.getInstance().datapoint("0100","uid",UserManager.getInstance().getUid());
     }
     /**
      * 初始化Mobile Analytics服务

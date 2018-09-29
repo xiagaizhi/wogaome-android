@@ -156,7 +156,7 @@ public class LoginFragment extends BaseFragment<LoginContract.IView> implements 
                                 binddeviceanduser(SPManager.getInstance().getString("XGTOKEN",""));
                             }
                             //微信登陆数据埋点
-                            ArgsUtil.datapoint("0302","uid",jsonObject.getString("uid"));
+                            ArgsUtil.getInstance().datapoint("0302","uid",jsonObject.getString("uid"));
                         }
 
                         @Override

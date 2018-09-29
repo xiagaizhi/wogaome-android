@@ -79,7 +79,7 @@ public class RegisterFragment extends BaseFragment<RegisterContract.IView> imple
               App.getApp().registerXGPush(UserManager.getInstance().getUid());
               startWithPopTo(UIHelper.creat(MainFragment.class).build(), LoginFragment.class,true);
               //用户注册数据埋点
-              ArgsUtil.registerpoint(jsonObject.getString("uid"));
+              ArgsUtil.getInstance().registerpoint(jsonObject.getString("uid"));
           }
 
           @Override

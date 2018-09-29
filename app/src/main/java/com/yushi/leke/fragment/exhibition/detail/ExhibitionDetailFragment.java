@@ -679,7 +679,7 @@ public class ExhibitionDetailFragment extends BaseFragment<ExhibitionDetailContr
             shareModel.setIcon(mShareInfo.getShareIcon());
             shareModel.setTargetUrl(ApiManager.getInstance().getApiConfig().getExhibitionDetail(activityid));
             ShareMenuActivity.startShare(ExhibitionDetailFragment.this,shareModel);
-            ArgsUtil.datapoint("0802","uid", UserManager.getInstance().getUid(),"projectId",activityid);
+            ArgsUtil.getInstance().datapoint("0802","uid", UserManager.getInstance().getUid(),"projectId",activityid);
         } else {
             getShareinfo(true);
         }

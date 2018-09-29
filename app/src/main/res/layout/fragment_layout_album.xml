@@ -133,7 +133,7 @@
                     android:layout_marginBottom="@dimen/px60"
                     android:layout_marginRight="@dimen/px36"
                     android:layout_marginLeft="@dimen/px36"
-                    app:maxCollapsedLines="5"
+                    app:maxCollapsedLines="3"
                     >
                     <TextView
                         android:id="@id/expandable_text"
