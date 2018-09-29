@@ -93,6 +93,9 @@ public class MainFragment extends BaseFragment<MainContract.IView> implements Ma
                     break;
                 case Global.BROADCAST_ACTION_XGMESSAGE:
                     int type = intent.getIntExtra("appMsgType",1);
+                    if (type==0){
+                        type=2;
+                    }
                     getRootFragment().start(UIHelper.creat(BrowserBaseFragment.class).put(Global.BUNDLE_KEY_BROWSER_URL, ApiManager.getInstance().getApiConfig().getMessage(type)).build());
                     break;
             }
@@ -106,6 +109,7 @@ public class MainFragment extends BaseFragment<MainContract.IView> implements Ma
         intentFilter.addAction(Global.BROADCAST_TOKEN_LOSE);
         intentFilter.addAction(Global.BROADCAST_ACTION_ADJUMP);
         intentFilter.addAction(Global.BROADCAST_ACTION_UPGRADE);
+        intentFilter.addAction(Global.BROADCAST_ACTION_XGMESSAGE);
         LocalBroadcastManager.getInstance(_mActivity).registerReceiver(broadcastReceiver, intentFilter);
     }
 

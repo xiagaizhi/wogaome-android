@@ -48,10 +48,4 @@ public class ArgsUtil {
     private ArgsUtil(){
 
     }
-    public static ArgsUtil getInstance(){
-        if (instance == null) {
-            instance = new ArgsUtil();
-        }
-        return instance;
-    }
 }

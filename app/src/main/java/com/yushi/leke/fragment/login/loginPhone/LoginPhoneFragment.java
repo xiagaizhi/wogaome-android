@@ -12,12 +12,14 @@ import com.yufan.library.api.ApiManager;
 import com.yufan.library.api.BaseHttpCallBack;
 import com.yufan.library.api.EnhancedCall;
 import com.yufan.library.manager.DialogManager;
+import com.yufan.library.manager.SPManager;
 import com.yufan.library.manager.UserManager;
 import com.yufan.library.util.SoftInputUtil;
 import com.yufan.library.base.BaseFragment;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.View;
 
 import com.yufan.library.inject.VuClass;
@@ -91,6 +93,10 @@ public class LoginPhoneFragment extends BaseFragment<LoginPhoneContract.IView> i
              UserManager.getInstance().setToken(jsonObject.getString("token"));
               UserManager.getInstance().setUid(jsonObject.getString("uid"));
                 startWithPopTo(UIHelper.creat(MainFragment.class).build(), LoginFragment.class,true);
+                //绑定用户和信鸽token
+                if (SPManager.getInstance().getString("XGTOKEN","")!=null){
+                    binddeviceanduser(SPManager.getInstance().getString("XGTOKEN",""));
+                }
                 //用户手机登陆数据埋点
                 ArgsUtil.datapoint("0301","uid",jsonObject.getString("uid"));
             }
@@ -108,7 +114,26 @@ public class LoginPhoneFragment extends BaseFragment<LoginPhoneContract.IView> i
 
         });
     }
+    private void binddeviceanduser(String token){
+        ApiManager.getCall(ApiManager.getInstance().create(YFApi.class)
+                .binddeviceanduser(token))
+                .useCache(false)
+                .enqueue(new BaseHttpCallBack() {
+                    @Override
+                    public void onSuccess(ApiBean mApiBean) {
+                        if (mApiBean.getCode().equals(2000)){
+                        }
+                    }
 
+                    @Override
+                    public void onError(int id, Exception e) {
+                    }
+
+                    @Override
+                    public void onFinish() {
+                    }
+                });
+    }
     @Override
     public void onAgreementClick() {
         start(UIHelper.creat(BrowserBaseFragment.class).put(Global.BUNDLE_KEY_BROWSER_URL,ApiManager.getInstance().getApiConfig().getProtocol()).build());

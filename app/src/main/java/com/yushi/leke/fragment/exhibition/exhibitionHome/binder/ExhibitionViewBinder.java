@@ -89,10 +89,8 @@ public class ExhibitionViewBinder extends ItemViewBinder<ExhibitionInfo, Exhibit
         holder.tv_active_state.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (category.getActivityProgress() == 1) {
-                    if (callBack != null) {
-                        callBack.OnBackResult(2, category);
-                    }
+                if (callBack != null) {
+                    callBack.OnBackResult(2, category);
                 }
             }
         });

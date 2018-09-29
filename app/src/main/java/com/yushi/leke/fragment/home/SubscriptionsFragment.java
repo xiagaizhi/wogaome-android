@@ -115,6 +115,7 @@ public class SubscriptionsFragment extends BaseListFragment<SubscriptionsContrac
                 Homeinfo info = (Homeinfo) s[0];
                 getRootFragment().start(UIHelper.creat(AlbumDetailFragment.class)
                         .put(Global.BUNDLE_KEY_ALBUMID, info.getAlbumId())
+                        .put("intro",info.getIntroduction())
                         .build());
             }
         }));

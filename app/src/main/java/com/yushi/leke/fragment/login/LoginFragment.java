@@ -29,6 +29,7 @@ import android.os.SystemClock;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 
@@ -150,6 +151,10 @@ public class LoginFragment extends BaseFragment<LoginContract.IView> implements 
                             App.getApp().registerXGPush(UserManager.getInstance().getUid());
                             startWithPopTo(UIHelper.creat(MainFragment.class).build(), LoginFragment.class, true);
                             mShareUtils.logout(SHARE_MEDIA.WEIXIN);
+                            //绑定用户和信鸽token
+                            if (SPManager.getInstance().getString("XGTOKEN","")!=null){
+                                binddeviceanduser(SPManager.getInstance().getString("XGTOKEN",""));
+                            }
                             //微信登陆数据埋点
                             ArgsUtil.datapoint("0302","uid",jsonObject.getString("uid"));
                         }
@@ -184,7 +189,27 @@ public class LoginFragment extends BaseFragment<LoginContract.IView> implements 
         });
     }
 
+    private void binddeviceanduser(String token){
+        ApiManager.getCall(ApiManager.getInstance().create(YFApi.class)
+                .binddeviceanduser(token))
+                .useCache(false)
+                .enqueue(new BaseHttpCallBack() {
+                    @Override
+                    public void onSuccess(ApiBean mApiBean) {
+                        if (mApiBean.getCode().equals(2000)){
+                            Log.d("BindDevice","BindDeviceandtoken success!");
+                        }
+                    }
 
+                    @Override
+                    public void onError(int id, Exception e) {
+                    }
+
+                    @Override
+                    public void onFinish() {
+                    }
+                });
+    }
     @Override
     public void onAgreementClick() {
         start(UIHelper.creat(BrowserBaseFragment.class).put(Global.BUNDLE_KEY_BROWSER_URL, ApiManager.getInstance().getApiConfig().getProtocol()).build());

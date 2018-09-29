@@ -681,4 +681,25 @@ public interface YFApi {
     accumulate(
             @Field("duration") long duration
     );
+    /**
+     *信鸽绑定设备与系统类型
+     *
+     */
+    @FormUrlEncoded
+    @POST("app/v1/msg/sendDeviceInfo")
+    Call<ResponseBody>
+    binddevice(
+            @Field("deviceToken")String deviceToken,
+            @Field("osType")String osType
+    );
+    /**
+     *信鸽绑定设备与用户
+     *
+     */
+    @FormUrlEncoded
+    @POST("app/v1/msg/bindUserAndDevice")
+    Call<ResponseBody>
+    binddeviceanduser(
+            @Field("deviceToken")String deviceToken
+    );
 }
