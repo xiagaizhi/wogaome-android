@@ -39,6 +39,7 @@ public class Global {
      */
     public static final String SP_AD_KEY = "SP_AD_KEY";
     public static final String SP_GUIDE_KEY = "SP_GUIDE_KEY";
+    public static final String SP_AUDIO_TIMER_KEY = "SP_AUDIO_TIMER_KEY";
     /**
      * 支付结果通知广播action
      */

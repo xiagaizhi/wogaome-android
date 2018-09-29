@@ -24,10 +24,12 @@ import android.support.annotation.NonNull;
 import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
 
+import com.yushi.leke.fragment.musicplayer.MusicPlayerFragment;
 import com.yushi.leke.uamp.model.MusicProvider;
 import com.yushi.leke.uamp.utils.LogHelper;
 import com.yushi.leke.uamp.utils.MediaIDHelper;
 import com.yushi.leke.plugin.musicplayer.R;
+import com.yushi.leke.util.AudioTimerUtil;
 
 
 /**
@@ -40,14 +42,14 @@ public class PlaybackManager implements Playback.Callback {
     // Action to thumbs up a media item
     //对某项媒体内容进行点赞
     private static final String CUSTOM_ACTION_THUMBS_UP = "com.example.android.uamp.THUMBS_UP";
-
+    private MusicPlayerFragment.SeekCompleteCallBack seekCompleteCallBack;
     private MusicProvider mMusicProvider;
     private QueueManager mQueueManager;
     private Resources mResources;
     private Playback mPlayback;
     private PlaybackServiceCallback mServiceCallback;
     private MediaSessionCallback mMediaSessionCallback;
-
+    private static  PlaybackManager manager;
     public PlaybackManager(PlaybackServiceCallback serviceCallback, Resources resources,
                            MusicProvider musicProvider, QueueManager queueManager,
                            Playback playback) {
@@ -58,7 +60,13 @@ public class PlaybackManager implements Playback.Callback {
         mMediaSessionCallback = new MediaSessionCallback();
         mPlayback = playback;
         mPlayback.setCallback(this);
+        manager=this;
     }
+
+    public static PlaybackManager getManager(){
+        return manager;
+    }
+
 
     public Playback getPlayback() {
         return mPlayback;
@@ -86,6 +94,7 @@ public class PlaybackManager implements Playback.Callback {
      */
     public void handlePauseRequest() {
         LogHelper.d(TAG, "handlePauseRequest: mState=" + mPlayback.getState());
+        AudioTimerUtil.getInstance().stopTimer();
         if (mPlayback.isPlaying()) {
             mPlayback.pause();
             mServiceCallback.onPlaybackStop();
@@ -101,6 +110,7 @@ public class PlaybackManager implements Playback.Callback {
      *                  MediaController clients.
      */
     public void handleStopRequest(String withError) {
+        AudioTimerUtil.getInstance().stopTimer();
         LogHelper.d(TAG, "handleStopRequest: mState=" + mPlayback.getState() + " error=", withError);
         mPlayback.stop(true);
         mServiceCallback.onPlaybackStop();
@@ -132,8 +142,10 @@ public class PlaybackManager implements Playback.Callback {
             // stop unexpectedly and persist until the user takes action to fix it.
             stateBuilder.setErrorMessage(error);
             state = PlaybackStateCompat.STATE_ERROR;
-        }else if(state==PlaybackStateCompat.STATE_NONE){
+            AudioTimerUtil.getInstance().stopTimer();
+        } else if (state == PlaybackStateCompat.STATE_NONE) {
             state = PlaybackStateCompat.STATE_STOPPED;
+            AudioTimerUtil.getInstance().stopTimer();
         }
         //noinspection ResourceType
         stateBuilder.setState(state, position, 1.0f, SystemClock.elapsedRealtime());
@@ -155,6 +167,7 @@ public class PlaybackManager implements Playback.Callback {
 
     /**
      * 设置自定义的操作
+     *
      * @param stateBuilder
      */
     private void setCustomAction(PlaybackStateCompat.Builder stateBuilder) {
@@ -184,10 +197,10 @@ public class PlaybackManager implements Playback.Callback {
     private long getAvailableActions() {
         long actions =
                 PlaybackStateCompat.ACTION_PLAY_PAUSE |
-                PlaybackStateCompat.ACTION_PLAY_FROM_MEDIA_ID |
-                PlaybackStateCompat.ACTION_PLAY_FROM_SEARCH |
-                PlaybackStateCompat.ACTION_SKIP_TO_PREVIOUS |
-                PlaybackStateCompat.ACTION_SKIP_TO_NEXT;
+                        PlaybackStateCompat.ACTION_PLAY_FROM_MEDIA_ID |
+                        PlaybackStateCompat.ACTION_PLAY_FROM_SEARCH |
+                        PlaybackStateCompat.ACTION_SKIP_TO_PREVIOUS |
+                        PlaybackStateCompat.ACTION_SKIP_TO_NEXT;
         if (mPlayback.isPlaying()) {
             actions |= PlaybackStateCompat.ACTION_PAUSE;
         } else {
@@ -216,18 +229,40 @@ public class PlaybackManager implements Playback.Callback {
 
     @Override
     public void onPlaybackStatusChanged(int state) {
+        if (state == PlaybackStateCompat.STATE_PLAYING) {
+            AudioTimerUtil.getInstance().startTimer();
+        } else {
+            AudioTimerUtil.getInstance().stopTimer();
+        }
         updatePlaybackState(null);
     }
 
     @Override
     public void onError(String error) {
         updatePlaybackState(error);
+        AudioTimerUtil.getInstance().stopTimer();
     }
 
     @Override
     public void setCurrentMediaId(String mediaId) {
         LogHelper.d(TAG, "setCurrentMediaId", mediaId);
         mQueueManager.setQueueFromMusic(mediaId);
+    }
+
+    @Override
+    public long getCurrentPosition() {
+        return mPlayback.getCurrentStreamPosition();
+    }
+
+
+    public void setCompleteCallBack(MusicPlayerFragment.SeekCompleteCallBack seekCompleteCallBack){
+        this.seekCompleteCallBack=seekCompleteCallBack;
+    }
+    @Override
+    public void onSeekComplete() {
+        if(seekCompleteCallBack!=null){
+            seekCompleteCallBack.onSeekComplete();
+        }
     }
 
 

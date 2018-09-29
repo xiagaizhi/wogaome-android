@@ -276,6 +276,13 @@ public final class VodPlayback implements Playback {
                             }
                         }
                     });
+                    mAliyunVodPlayer.setOnSeekCompleteListener(new IAliyunVodPlayer.OnSeekCompleteListener() {
+                        @Override
+                        public void onSeekComplete() {
+                            mCallback.onSeekComplete();
+                        }
+                    });
+
                 }
                 AliyunVidSts aliyunVidSts = new AliyunVidSts();
                 String aliVideoId = item.getDescription().getExtras().getString(MutableMediaMetadata.videoId);
@@ -325,6 +332,7 @@ public final class VodPlayback implements Playback {
         if (mAliyunVodPlayer != null) {
             registerAudioNoisyReceiver();
             mAliyunVodPlayer.seekTo((int) position);
+
         }
     }
 

@@ -21,7 +21,6 @@ public interface ExhibitionDetailContract {
     interface Presenter extends Pr {
         void share();
         void openActivityInstruction();
-        int getExhibitionType();
 
     }
 }

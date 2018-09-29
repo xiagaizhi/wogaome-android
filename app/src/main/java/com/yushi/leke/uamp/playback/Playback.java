@@ -99,6 +99,9 @@ public interface Playback {
          * @param mediaId being currently played
          */
         void setCurrentMediaId(String mediaId);
+
+        long getCurrentPosition();
+       void onSeekComplete();
     }
 
     void setCallback(Callback callback);

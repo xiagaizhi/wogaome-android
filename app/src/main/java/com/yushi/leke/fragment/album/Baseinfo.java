@@ -1,7 +1,7 @@
 package com.yushi.leke.fragment.album;
 
 public class Baseinfo {
-    int albumId;
+    long albumId;
     String albumName;
     int albumStatus;
     String creator;
@@ -18,11 +18,11 @@ public class Baseinfo {
     public Baseinfo() {
     }
 
-    public int getAlbumId() {
+    public long getAlbumId() {
         return albumId;
     }
 
-    public void setAlbumId(int albumId) {
+    public void setAlbumId(long albumId) {
         this.albumId = albumId;
     }
 

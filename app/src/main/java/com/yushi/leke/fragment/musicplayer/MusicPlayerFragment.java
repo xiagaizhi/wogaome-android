@@ -42,6 +42,7 @@ import com.yufan.library.inject.VuClass;
 import com.yushi.leke.YFApi;
 import com.yushi.leke.uamp.AlbumArtCache;
 import com.yushi.leke.uamp.MusicService;
+import com.yushi.leke.uamp.playback.PlaybackManager;
 import com.yushi.leke.uamp.utils.LogHelper;
 import com.yushi.leke.widget.MyScroller;
 
@@ -83,7 +84,7 @@ public class MusicPlayerFragment extends BaseFragment<MusicPlayerContract.IView>
     private String mAlbumId;
     private String subState;
     private boolean isCanOperation;
-
+    private SeekCompleteCallBack completeCallBack;
     private final MediaControllerCompat.Callback mCallback = new MediaControllerCompat.Callback() {
         @Override
         public void onPlaybackStateChanged(@NonNull PlaybackStateCompat state) {
@@ -186,7 +187,12 @@ public class MusicPlayerFragment extends BaseFragment<MusicPlayerContract.IView>
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         }
-
+        PlaybackManager.getManager().setCompleteCallBack(new SeekCompleteCallBack() {
+            @Override
+            public void onSeekComplete() {
+                scheduleSeekbarUpdate();
+            }
+        });
         getVu().getViewPager().addOnPageChangeListener(onPageChangeListener);
 
     }
@@ -308,7 +314,7 @@ public class MusicPlayerFragment extends BaseFragment<MusicPlayerContract.IView>
         mAdapter.setQueue(mediaController.getQueue());
         mAlbumId = String.valueOf(mediaController.getMetadata().getBundle().getString(MediaMetadataCompat.METADATA_KEY_ALBUM));
         subscribeCheck(mAlbumId);
-        getVu().setAlbumName(String.valueOf(mediaController.getMetadata().getDescription().getSubtitle()));
+        getVu().setAlbumName(mediaController.getMetadata().getDescription().getSubtitle().toString());
         List<MediaSessionCompat.QueueItem> queueItems = mediaController.getQueue();
         for (int i = 0; i < queueItems.size(); i++) {
             if (queueItems.get(i).getQueueId() == state.getActiveQueueItemId()) {
@@ -434,15 +440,17 @@ public class MusicPlayerFragment extends BaseFragment<MusicPlayerContract.IView>
         if (mLastPlaybackState == null) {
             return;
         }
-        long currentPosition = mLastPlaybackState.getPosition();
+        long currentPosition = PlaybackManager.getManager().getCurrentPosition();
+        Log.d("currentPosition",""+currentPosition);
         if (mLastPlaybackState.getState() == PlaybackStateCompat.STATE_PLAYING) {
             // Calculate the elapsed time between the last position update and now and unless
             // paused, we can assume (delta * speed) + current position is approximately the
             // latest position. This ensure that we do not repeatedly call the getPlaybackState()
             // on MediaControllerCompat.
-            long timeDelta = SystemClock.elapsedRealtime() -
-                    mLastPlaybackState.getLastPositionUpdateTime();
-            currentPosition += (int) timeDelta * mLastPlaybackState.getPlaybackSpeed();
+//            long timeDelta = SystemClock.elapsedRealtime() -
+//                    mLastPlaybackState.getLastPositionUpdateTime();
+//            currentPosition += (int) timeDelta ;
+
         }
         getVu().updateProgress((int) currentPosition);
     }
@@ -514,7 +522,7 @@ public class MusicPlayerFragment extends BaseFragment<MusicPlayerContract.IView>
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
                 MediaControllerCompat.getMediaController(getActivity()).getTransportControls().seekTo(seekBar.getProgress());
-                scheduleSeekbarUpdate();
+
             }
         });
     }
@@ -680,5 +688,9 @@ public class MusicPlayerFragment extends BaseFragment<MusicPlayerContract.IView>
     @Override
     public FragmentAnimator onCreateFragmentAnimator() {
         return new AFVerticalAnimator(); //super.onCreateFragmentAnimator();
+    }
+
+   public interface SeekCompleteCallBack{
+       void onSeekComplete();
     }
 }

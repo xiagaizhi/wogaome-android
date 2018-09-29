@@ -640,6 +640,34 @@ public class ExhibitionDetailFragment extends BaseFragment<ExhibitionDetailContr
     }
 
     @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (mAliyunVodPlayerView!=null){
+            if (hidden){
+                mAliyunVodPlayerView.pause();
+            }else {
+                mAliyunVodPlayerView.start();
+            }
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (mAliyunVodPlayerView!=null){
+            mAliyunVodPlayerView.pause();
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (mAliyunVodPlayerView!=null){
+            mAliyunVodPlayerView.start();
+        }
+    }
+
+    @Override
     public void share() {
         if (mShareInfo != null) {
             ShareModel shareModel = new ShareModel();
@@ -656,11 +684,6 @@ public class ExhibitionDetailFragment extends BaseFragment<ExhibitionDetailContr
     @Override
     public void openActivityInstruction() {
         start(UIHelper.creat(BrowserBaseFragment.class).put(Global.BUNDLE_KEY_BROWSER_URL,ApiManager.getInstance().getApiConfig().getActivityIntroduction(activityid)).build());
-    }
-
-    @Override
-    public int getExhibitionType() {
-        return exhibitionType;
     }
 
 }

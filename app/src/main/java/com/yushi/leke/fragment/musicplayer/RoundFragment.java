@@ -43,7 +43,7 @@ public class RoundFragment extends Fragment {
     private SimpleDraweeView sdv;
     private String albumPath = "";
     private AnimatorSet mAnimatorSet;
-
+    private boolean isEmpty;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -55,6 +55,7 @@ public class RoundFragment extends Fragment {
         }
         if (TextUtils.isEmpty(albumPath)) {
             albumPath = "res://com.yushi.leke/" + R.drawable.bg_musicpalyer_default;
+            isEmpty=true;
         }
 
         //  CircleImageView  circleImageView = (CircleImageView) rootView.findViewById(R.id.circle);
@@ -156,7 +157,11 @@ public class RoundFragment extends Fragment {
         animator.setInterpolator(new LinearInterpolator());
         if (getView() != null)
             getView().setTag(R.id.tag_animator, animator);
-
+        if (isEmpty) {
+            mAnimatorSet = new AnimatorSet();
+            mAnimatorSet.play(animator);
+            mAnimatorSet.start();
+        }
     }
 
 

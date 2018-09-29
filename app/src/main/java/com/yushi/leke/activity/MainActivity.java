@@ -44,6 +44,7 @@ import com.yushi.leke.uamp.ui.MediaBrowserProvider;
 import com.yushi.leke.uamp.utils.LogHelper;
 import com.yushi.leke.uamp.utils.MediaIDHelper;
 import com.yushi.leke.uamp.utils.ResourceHelper;
+import com.yushi.leke.util.AudioTimerUtil;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -130,8 +131,7 @@ private String     TAG="MainActivity";
         }
          ablumId=  SPManager.getInstance().getString(Global.SP_KEY_ALBUM_ID,"");
          mediaId=  SPManager.getInstance().getString(Global.SP_KEY_MEDIA_ID,"");
-
-
+        AudioTimerUtil.getInstance().accumulate();
     }
     private void startFullScreenActivityIfNeeded(Intent intent) {
         if (intent != null && intent.getBooleanExtra(EXTRA_START_FULLSCREEN, false)) {
