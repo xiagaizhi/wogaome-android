@@ -72,6 +72,7 @@ public class MusicPlayerVu extends BaseVu<MusicPlayerContract.Presenter> impleme
         mSkipNext.setOnClickListener(this);
         playing_fav.setOnClickListener(this);
         mPersenter.onSeekBarChangeListener(mDuration, mSeekbar);
+        mSeekbar.setEnabled(false);
         if (!SPManager.getInstance().getBoolean(Global.SP_KEY_MUSIC_PLAYER_GUIDE,false)){
             img_music_guide.setVisibility(VISIBLE);
             SPManager.getInstance().saveValue(Global.SP_KEY_MUSIC_PLAYER_GUIDE,true);
