@@ -23,7 +23,11 @@ import com.yufan.library.base.BaseApplication;
 import com.yufan.library.manager.SPManager;
 import com.yufan.library.manager.UserManager;
 import com.yufan.share.ShareUtils;
+import com.yushi.leke.util.AliDotId;
 import com.yushi.leke.util.ArgsUtil;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by mengfantao on 18/2/2.
@@ -66,8 +70,6 @@ public class App extends BaseApplication {
         OkGo.getInstance().init(this);
         //初始化数据埋点
         initManService();
-        //app启动数据埋点
-        ArgsUtil.getInstance().datapoint("0100","uid",UserManager.getInstance().getUid());
     }
     /**
      * 初始化Mobile Analytics服务

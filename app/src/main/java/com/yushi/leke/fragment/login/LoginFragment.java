@@ -54,8 +54,10 @@ import com.yushi.leke.fragment.login.loginPhone.LoginPhoneFragment;
 import com.yushi.leke.fragment.main.MainFragment;
 import com.yushi.leke.fragment.musicplayer.MusicPlayerFragment;
 import com.yushi.leke.fragment.register.RegisterFragment;
+import com.yushi.leke.util.AliDotId;
 import com.yushi.leke.util.ArgsUtil;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import me.yokeyword.fragmentation.anim.FragmentAnimator;
@@ -152,11 +154,13 @@ public class LoginFragment extends BaseFragment<LoginContract.IView> implements 
                             startWithPopTo(UIHelper.creat(MainFragment.class).build(), LoginFragment.class, true);
                             mShareUtils.logout(SHARE_MEDIA.WEIXIN);
                             //绑定用户和信鸽token
-                            if (SPManager.getInstance().getString("XGTOKEN","")!=null){
-                                binddeviceanduser(SPManager.getInstance().getString("XGTOKEN",""));
+                            if (SPManager.getInstance().getString("XGTOKEN", "") != null) {
+                                binddeviceanduser(SPManager.getInstance().getString("XGTOKEN", ""));
                             }
                             //微信登陆数据埋点
-                            ArgsUtil.getInstance().datapoint("0302","uid",jsonObject.getString("uid"));
+                            Map<String, String> params = new HashMap<>();
+                            params.put("uid", UserManager.getInstance().getUid());
+                            ArgsUtil.getInstance().datapoint(AliDotId.id_0302, params);
                         }
 
                         @Override
@@ -189,15 +193,15 @@ public class LoginFragment extends BaseFragment<LoginContract.IView> implements 
         });
     }
 
-    private void binddeviceanduser(String token){
+    private void binddeviceanduser(String token) {
         ApiManager.getCall(ApiManager.getInstance().create(YFApi.class)
                 .binddeviceanduser(token))
                 .useCache(false)
                 .enqueue(new BaseHttpCallBack() {
                     @Override
                     public void onSuccess(ApiBean mApiBean) {
-                        if (mApiBean.getCode().equals(2000)){
-                            Log.d("BindDevice","BindDeviceandtoken success!");
+                        if (mApiBean.getCode().equals(2000)) {
+                            Log.d("BindDevice", "BindDeviceandtoken success!");
                         }
                     }
 
@@ -210,6 +214,7 @@ public class LoginFragment extends BaseFragment<LoginContract.IView> implements 
                     }
                 });
     }
+
     @Override
     public void onAgreementClick() {
         start(UIHelper.creat(BrowserBaseFragment.class).put(Global.BUNDLE_KEY_BROWSER_URL, ApiManager.getInstance().getApiConfig().getProtocol()).build());

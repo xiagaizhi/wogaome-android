@@ -45,12 +45,15 @@ import com.yushi.leke.fragment.browser.BrowserBaseFragment;
 import com.yushi.leke.fragment.exhibition.voteend.VoteendFragment;
 import com.yushi.leke.fragment.exhibition.voteing.VoteingFragment;
 import com.yushi.leke.share.ShareMenuActivity;
+import com.yushi.leke.util.AliDotId;
 import com.yushi.leke.util.ArgsUtil;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.lang.ref.WeakReference;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by mengfantao on 18/8/2.
@@ -679,7 +682,10 @@ public class ExhibitionDetailFragment extends BaseFragment<ExhibitionDetailContr
             shareModel.setIcon(mShareInfo.getShareIcon());
             shareModel.setTargetUrl(ApiManager.getInstance().getApiConfig().getExhibitionDetail(activityid));
             ShareMenuActivity.startShare(ExhibitionDetailFragment.this,shareModel);
-            ArgsUtil.getInstance().datapoint("0802","uid", UserManager.getInstance().getUid(),"projectId",activityid);
+            Map<String, String> params = new HashMap<>();
+            params.put("uid", UserManager.getInstance().getUid());
+            params.put("projectId", activityid);
+            ArgsUtil.getInstance().datapoint(AliDotId.id_0802, params);
         } else {
             getShareinfo(true);
         }
