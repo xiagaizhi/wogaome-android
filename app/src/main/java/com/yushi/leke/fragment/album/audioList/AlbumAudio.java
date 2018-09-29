@@ -5,7 +5,7 @@ package com.yushi.leke.fragment.album.audioList;
  */
 
 public class AlbumAudio {
-    int albumId;
+    long albumId;
 
     String aliVideoId;// 此音频在阿里云的Id
 
@@ -39,11 +39,11 @@ public class AlbumAudio {
 
     long viewTimes;//播放次数
 
-    public int getAlbumId() {
+    public long getAlbumId() {
         return albumId;
     }
 
-    public void setAlbumId(int albumId) {
+    public void setAlbumId(long albumId) {
         this.albumId = albumId;
     }
 
