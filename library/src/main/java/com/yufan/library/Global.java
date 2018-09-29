@@ -13,7 +13,6 @@ public class Global {
      * 浏览器页面url
      */
     public static final String BUNDLE_KEY_BROWSER_URL = "BUNDLE_KEY_BROWSER_URL";
-    public static final String BUNDLE_KEY_BROWSER_HAVE_HEAD = "BUNDLE_KEY_BROWSER_HAVE_HEAD";
 
     public static final String BUNDLE_KEY_EXHIBITION_TYE = "BUNDLE_KEY_EXHIBITION_TYE";
     public static final String BUNDLE_AD_KEY = "BUNDLE_AD_KEY";

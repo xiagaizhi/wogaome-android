@@ -10,6 +10,15 @@ import java.util.List;
 public class NaviBarInfoList {
     private List<NaviBarInfo> actions;
     private String title;
+    private int style;//0-默认，白色顶部栏黑色返回键 1-顶部栏透明
+
+    public int getStyle() {
+        return style;
+    }
+
+    public void setStyle(int style) {
+        this.style = style;
+    }
 
     public List<NaviBarInfo> getActions() {
         return actions;

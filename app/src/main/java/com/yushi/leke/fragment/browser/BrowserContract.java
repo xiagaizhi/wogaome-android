@@ -55,8 +55,6 @@ public interface BrowserContract {
 
         boolean isPtrEnable();
 
-        boolean getHaveHead();
-
         void openPage(String url);
     }
 }
