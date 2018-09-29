@@ -55,7 +55,7 @@ public class MusicProvider {
 
     private static final String TAG = LogHelper.makeLogTag(MusicProvider.class);
 
-
+    private final LinkedHashMap<String, MutableMediaMetadata> mPrepareList;
     private final LinkedHashMap<String, MutableMediaMetadata> mList;
     private final LinkedHashMap<String, MutableMediaMetadata> mMusicListById;
     private static MusicProvider musicProvider;
@@ -119,6 +119,7 @@ public class MusicProvider {
     }
 
     public MusicProvider() {
+        mPrepareList= new LinkedHashMap<>();
         mList = new LinkedHashMap<>();
         mMusicListById = new LinkedHashMap<>();
         mFavoriteTracks = Collections.newSetFromMap(new ConcurrentHashMap<String, Boolean>());//map change to set
@@ -131,7 +132,7 @@ public class MusicProvider {
     public void updateProvider(){
 
         mMusicListById.clear();
-        mMusicListById.putAll(mList);
+        mMusicListById.putAll(mPrepareList);
     }
 
 
@@ -226,6 +227,8 @@ public class MusicProvider {
                 String albumName = jsonObject.getString("name");
                 List<AlbumAudio> albumAudios = JSON.parseArray(listStr, AlbumAudio.class);
                 mList.clear();
+                mPrepareList.clear();
+
                 for (int i = 0; i < albumAudios.size(); i++) {
                     AlbumAudio albumAudio = albumAudios.get(i);
                     MediaMetadataCompat item = new MediaMetadataCompat.Builder()
@@ -250,7 +253,11 @@ public class MusicProvider {
                     item.getDescription().getExtras().putInt(MutableMediaMetadata.levelStatus, levelStatus);
                     item.getDescription().getExtras().putString(MutableMediaMetadata.videoId, albumAudio.getAliVideoId());
                     String musicId = item.getString(MediaMetadataCompat.METADATA_KEY_MEDIA_ID);
-                    mList.put(musicId, new MutableMediaMetadata(musicId, item));
+                    MutableMediaMetadata mutableMediaMetadata=    new MutableMediaMetadata(musicId, item);
+                    mList.put(musicId,mutableMediaMetadata );
+                    if(levelStatus==0||albumAudio.getListenable()==1){
+                        mPrepareList.put(musicId,mutableMediaMetadata );
+                    }
                 }
                 mCurrentState = State.INITIALIZED;
                 if (callback != null) {
