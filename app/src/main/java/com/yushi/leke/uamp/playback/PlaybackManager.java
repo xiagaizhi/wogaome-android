@@ -29,6 +29,7 @@ import com.yushi.leke.uamp.model.MusicProvider;
 import com.yushi.leke.uamp.utils.LogHelper;
 import com.yushi.leke.uamp.utils.MediaIDHelper;
 import com.yushi.leke.plugin.musicplayer.R;
+import com.yushi.leke.util.AudioTimerUtil;
 
 
 /**
@@ -93,6 +94,7 @@ public class PlaybackManager implements Playback.Callback {
      */
     public void handlePauseRequest() {
         LogHelper.d(TAG, "handlePauseRequest: mState=" + mPlayback.getState());
+        AudioTimerUtil.getInstance().stopTimer();
         if (mPlayback.isPlaying()) {
             mPlayback.pause();
             mServiceCallback.onPlaybackStop();
@@ -108,6 +110,7 @@ public class PlaybackManager implements Playback.Callback {
      *                  MediaController clients.
      */
     public void handleStopRequest(String withError) {
+        AudioTimerUtil.getInstance().stopTimer();
         LogHelper.d(TAG, "handleStopRequest: mState=" + mPlayback.getState() + " error=", withError);
         mPlayback.stop(true);
         mServiceCallback.onPlaybackStop();
@@ -139,8 +142,10 @@ public class PlaybackManager implements Playback.Callback {
             // stop unexpectedly and persist until the user takes action to fix it.
             stateBuilder.setErrorMessage(error);
             state = PlaybackStateCompat.STATE_ERROR;
-        }else if(state==PlaybackStateCompat.STATE_NONE){
+            AudioTimerUtil.getInstance().stopTimer();
+        } else if (state == PlaybackStateCompat.STATE_NONE) {
             state = PlaybackStateCompat.STATE_STOPPED;
+            AudioTimerUtil.getInstance().stopTimer();
         }
         //noinspection ResourceType
         stateBuilder.setState(state, position, 1.0f, SystemClock.elapsedRealtime());
@@ -162,6 +167,7 @@ public class PlaybackManager implements Playback.Callback {
 
     /**
      * 设置自定义的操作
+     *
      * @param stateBuilder
      */
     private void setCustomAction(PlaybackStateCompat.Builder stateBuilder) {
@@ -191,10 +197,10 @@ public class PlaybackManager implements Playback.Callback {
     private long getAvailableActions() {
         long actions =
                 PlaybackStateCompat.ACTION_PLAY_PAUSE |
-                PlaybackStateCompat.ACTION_PLAY_FROM_MEDIA_ID |
-                PlaybackStateCompat.ACTION_PLAY_FROM_SEARCH |
-                PlaybackStateCompat.ACTION_SKIP_TO_PREVIOUS |
-                PlaybackStateCompat.ACTION_SKIP_TO_NEXT;
+                        PlaybackStateCompat.ACTION_PLAY_FROM_MEDIA_ID |
+                        PlaybackStateCompat.ACTION_PLAY_FROM_SEARCH |
+                        PlaybackStateCompat.ACTION_SKIP_TO_PREVIOUS |
+                        PlaybackStateCompat.ACTION_SKIP_TO_NEXT;
         if (mPlayback.isPlaying()) {
             actions |= PlaybackStateCompat.ACTION_PAUSE;
         } else {
@@ -223,12 +229,18 @@ public class PlaybackManager implements Playback.Callback {
 
     @Override
     public void onPlaybackStatusChanged(int state) {
+        if (state == PlaybackStateCompat.STATE_PLAYING) {
+            AudioTimerUtil.getInstance().startTimer();
+        } else {
+            AudioTimerUtil.getInstance().stopTimer();
+        }
         updatePlaybackState(null);
     }
 
     @Override
     public void onError(String error) {
         updatePlaybackState(error);
+        AudioTimerUtil.getInstance().stopTimer();
     }
 
     @Override

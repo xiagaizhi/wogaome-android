@@ -475,6 +475,7 @@ public interface YFApi {
             @Field("industry") long industry,
             @Field("address") String address
     );
+
     /**
      * 搜索活动中项目
      *
@@ -489,6 +490,7 @@ public interface YFApi {
             @Field("activityId") String activityId,
             @Field("projectTitle") String projectTitle
     );
+
     /**
      * 搜索活动已结束项目
      *
@@ -503,6 +505,7 @@ public interface YFApi {
             @Field("activityId") String activityId,
             @Field("projectTitle") String projectTitle
     );
+
     @FormUrlEncoded
     @POST("app/v1/common/getGuideAd")
     Call<ResponseBody>
@@ -596,62 +599,61 @@ public interface YFApi {
     );
 
     /**
-     *专辑详情播放列表
-     *
+     * 专辑详情播放列表
      */
     @FormUrlEncoded
     @POST("app/v1/albumDetail/getPlayList")
     Call<ResponseBody>
     albummusiclist(
-            @Field("albumId")String albumId,
-            @Field("currentPage")String currentPage
+            @Field("albumId") String albumId,
+            @Field("currentPage") String currentPage
     );
+
     /**
      * 首页banner
      */
     @POST("app/v1/banner/showBanners")
     Call<ResponseBody>
     showBanners();
+
     /**
-     *是否订阅
-     *
+     * 是否订阅
      */
     @FormUrlEncoded
     @POST("app/v1/albumDetail/subscribeCheck")
     Call<ResponseBody>
     substate(
-            @Field("albumId")String albumId
+            @Field("albumId") String albumId
     );
+
     /**
-     *订阅专辑
-     *
+     * 订阅专辑
      */
     @FormUrlEncoded
     @POST("app/v1/albumDetail/subscribe")
     Call<ResponseBody>
     registeralbum(
-            @Field("albumId")String albumId
+            @Field("albumId") String albumId
     );
+
     /**
-     *取消订阅专辑
-     *
+     * 取消订阅专辑
      */
     @FormUrlEncoded
     @POST("app/v1/mySubscribe/cancelSubscribe")
     Call<ResponseBody>
     unregisteralbum(
-            @Field("albumId")String albumId
+            @Field("albumId") String albumId
     );
 
     /**
-     *我的订阅
-     *
+     * 我的订阅
      */
     @FormUrlEncoded
     @POST("app/v1/mySubscribe/getMySubscribe")
     Call<ResponseBody>
     getMySubscribe(
-            @Field("currentPage")int currentPage
+            @Field("currentPage") int currentPage
     );
 
 
@@ -670,6 +672,13 @@ public interface YFApi {
     @POST("app/v1/activity/sharedetail")
     Call<ResponseBody>
     sharedetail(
-            @Field("activityId")String activityId
+            @Field("activityId") String activityId
+    );
+
+    @FormUrlEncoded
+    @POST("app/v1/video/accumulate")
+    Call<ResponseBody>
+    accumulate(
+            @Field("duration") long duration
     );
 }
