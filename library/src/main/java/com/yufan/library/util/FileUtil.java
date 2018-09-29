@@ -59,6 +59,11 @@ public class FileUtil {
         if (!sidDir.exists()) {
             sidDir.mkdirs();
         }
+
+        File logDir = new File(Global.SAVE_LOG_PATH);
+        if (!logDir.exists()) {
+            logDir.mkdirs();
+        }
     }
 
     /**
