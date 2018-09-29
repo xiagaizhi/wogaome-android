@@ -9,6 +9,7 @@ import com.yufan.library.Global;
 import com.yufan.library.api.ApiBean;
 import com.yufan.library.api.ApiManager;
 import com.yufan.library.api.BaseHttpCallBack;
+import com.yufan.library.manager.UserManager;
 import com.yushi.leke.R;
 import com.yufan.library.base.BaseFragment;
 
@@ -30,6 +31,7 @@ import com.yushi.leke.fragment.album.audioList.MediaBrowserFragment;
 import com.yushi.leke.fragment.album.detail.DetailFragment;
 import com.yushi.leke.fragment.album.detailforalbum.DetailforalbumFragment;
 import com.yushi.leke.fragment.searcher.SearchFragment;
+import com.yushi.leke.util.ArgsUtil;
 
 import me.yokeyword.fragmentation.SupportFragment;
 
@@ -147,6 +149,8 @@ public class AlbumDetailFragment extends BaseFragment<AlbumDetailContract.IView>
                     public void onSuccess(ApiBean mApiBean) {
                         Toast.makeText(getContext(),"订阅成功",Toast.LENGTH_SHORT).show();
                         getstatedate();
+                        //订阅专辑数据埋点
+                        ArgsUtil.datapoint("0600","uid", UserManager.getInstance().getUid(),"albumId",albumId);
                     }
 
                     @Override

@@ -11,8 +11,10 @@ import com.yufan.library.api.BaseHttpCallBack;
 import com.yufan.library.base.BaseFragment;
 import com.yufan.library.inject.VuClass;
 import com.yufan.library.manager.DialogManager;
+import com.yufan.library.manager.UserManager;
 import com.yushi.leke.YFApi;
 import com.yushi.leke.dialog.CommonDialog;
+import com.yushi.leke.util.ArgsUtil;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -84,6 +86,8 @@ public class BindPhoneFragment extends BaseFragment<BindPhoneContract.IView> imp
                 bundle.putString("phoneNumber", mPhone);
                 setFragmentResult(RESULT_OK, bundle);
                 pop();
+                //绑定手机数据埋点
+                ArgsUtil.datapoint("0401","uid", UserManager.getInstance().getUid(),"phone",mPhone);
             } else {
                 new CommonDialog(_mActivity).setTitle("" + mApiBean.getMessage())
                         .setNegativeName("取消")

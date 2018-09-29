@@ -61,7 +61,10 @@ public class App extends BaseApplication {
         registerXGPush(UserManager.getInstance().getUid());
         initCustomPushNotificationBuilder(getApplicationContext());
         OkGo.getInstance().init(this);
+        //初始化数据埋点
         initManService();
+        //app启动数据埋点
+        ArgsUtil.datapoint("0100","uid",UserManager.getInstance().getUid());
     }
     /**
      * 初始化Mobile Analytics服务
@@ -87,7 +90,6 @@ public class App extends BaseApplication {
         // 若AndroidManifest.xml 中的 android:versionName 不能满足需求，可在此指定；
         // 若既没有设置AndroidManifest.xml 中的 android:versionName，也没有调用setAppVersion，appVersion则为null
         //manService.getMANAnalytics().setAppVersion("2.0");
-        ArgsUtil.datapoint(ArgsUtil.APP_START,"null",ArgsUtil.UID,ArgsUtil.STARTCODE,null,null);
     }
     public void registerXGPush(String uid) {
         if (TextUtils.isEmpty(uid)){

@@ -15,12 +15,16 @@ import android.support.v4.media.session.MediaControllerCompat;
 import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
+import com.tencent.android.tpush.XGPushClickedResult;
+import com.tencent.android.tpush.XGPushManager;
 import com.umeng.socialize.UMShareAPI;
 import com.yufan.library.Global;
 import com.yufan.library.base.BaseActivity;
@@ -40,6 +44,9 @@ import com.yushi.leke.uamp.ui.MediaBrowserProvider;
 import com.yushi.leke.uamp.utils.LogHelper;
 import com.yushi.leke.uamp.utils.MediaIDHelper;
 import com.yushi.leke.uamp.utils.ResourceHelper;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -313,7 +320,39 @@ private String     TAG="MainActivity";
         void onActivityResult(int requestCode, int resultCode, Intent data) ;
     }
 
+    @Override
+    protected void onResume() {
+        // TODO Auto-generated method stub
+        super.onResume();
+        XGPushClickedResult click = XGPushManager.onActivityStarted(this);
+        // click.getCustomContent()
+        Log.d("TPush", "onResumeXGPushClickedResult:" + click);
+        if (click != null) { // 判断是否来自信鸽的打开方式
+            Toast.makeText(this, "通知被点击:" + click.toString(),
+                    Toast.LENGTH_SHORT).show();
+            try {
+                JSONObject obj = new JSONObject(click.getCustomContent());
+                // key1为前台配置的key
+                if (!obj.isNull("qaq")) {
+                   Log.d("LOGH","nonull!!!"+obj.getString("qaq"));
 
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        XGPushManager.onActivityStoped(this);
+
+    }
 
 
 }

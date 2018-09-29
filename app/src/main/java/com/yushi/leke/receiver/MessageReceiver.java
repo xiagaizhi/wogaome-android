@@ -4,12 +4,14 @@ import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.tencent.android.tpush.XGPushBaseReceiver;
 import com.tencent.android.tpush.XGPushClickedResult;
 import com.tencent.android.tpush.XGPushRegisterResult;
 import com.tencent.android.tpush.XGPushShowedResult;
 import com.tencent.android.tpush.XGPushTextMessage;
+import com.yushi.leke.activity.MusicPlayerActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -85,6 +87,7 @@ public class MessageReceiver extends XGPushBaseReceiver {
 
     }
 
+
     // 通知点击回调 actionType=1为该消息被清除，actionType=0为该消息被点击。此处不能做点击消息跳转，详细方法请参照官网的Android常见问题文档
     @Override
     public void onNotifactionClickedResult(Context context,
@@ -107,17 +110,20 @@ public class MessageReceiver extends XGPushBaseReceiver {
             // APP自己处理通知被清除后的相关动作
             text = "通知被清除 :" + message;
         }
-//        Toast.makeText(context, "广播接收到通知被点击:" + message.toString(),
-//                Toast.LENGTH_SHORT).show();
+        Toast.makeText(context, "广播接收到通知被点击:" + message.toString(),
+                Toast.LENGTH_SHORT).show();
         // 获取自定义key-value
         String customContent = message.getCustomContent();
         if (customContent != null && customContent.length() != 0) {
             try {
                 JSONObject obj = new JSONObject(customContent);
                 // key1为前台配置的key
-                if (!obj.isNull("key")) {
-                    String value = obj.getString("key");
+                if (!obj.isNull("qaq")) {
+                    String value = obj.getString("qaq");
                     Log.d(LogTag, "get custom value:" + value);
+                    Intent deviceIntent = new Intent();
+                    deviceIntent.setClass(context, MusicPlayerActivity.class);
+                    context.startActivity(deviceIntent);
                 }
                 // ...
             } catch (JSONException e) {

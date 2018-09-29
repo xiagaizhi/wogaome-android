@@ -78,10 +78,8 @@ public class RegisterFragment extends BaseFragment<RegisterContract.IView> imple
               UserManager.getInstance().setUid(jsonObject.getString("uid"));
               App.getApp().registerXGPush(UserManager.getInstance().getUid());
               startWithPopTo(UIHelper.creat(MainFragment.class).build(), LoginFragment.class,true);
-              // 注册用户埋点
-              MANService manService = MANServiceProvider.getService();
-              manService.getMANAnalytics().userRegister(phone);
-              ArgsUtil.datapoint(ArgsUtil.REG_PHONE_NAME,"null",ArgsUtil.UID,ArgsUtil.REG_PHONE_CODE,null,null);
+              //用户注册数据埋点
+              ArgsUtil.registerpoint(jsonObject.getString("uid"));
           }
 
           @Override

@@ -14,12 +14,14 @@ import android.text.TextUtils;
 import android.view.View;
 
 import com.yufan.library.inject.VuClass;
+import com.yufan.library.manager.UserManager;
 import com.yushi.leke.UIHelper;
 import com.yushi.leke.YFApi;
 import com.yushi.leke.fragment.bindPhone.BindPhoneFragment;
 import com.yushi.leke.fragment.bindPhone.checkPhone.CheckPhoneFragment;
 import com.yushi.leke.fragment.bindPhone.updatePhone.UpdatePhoneFragment;
 import com.yushi.leke.fragment.setting.modifyLoginPwd.ModifyLoginPwdFragment;
+import com.yushi.leke.util.ArgsUtil;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -86,6 +88,8 @@ public class AccountAndSafetyFragment extends BaseFragment<AccountAndSafetyContr
         if (requestCode == 100 && resultCode == RESULT_OK && data != null) {//绑定手机成功返回
             phoneNumber = data.getString("phoneNumber");
             getVu().updatePage(phoneNumber);
+            //解绑手机数据埋点
+            ArgsUtil.datapoint("0400","uid", UserManager.getInstance().getUid(),"phone",phoneNumber);
         } else if (requestCode == 200 && resultCode == RESULT_OK && data != null) {//手机验证码校验过通过，换绑
             String token = data.getString("token");
             startForResult(UIHelper.creat(UpdatePhoneFragment.class).put("token", token).build(), 100);

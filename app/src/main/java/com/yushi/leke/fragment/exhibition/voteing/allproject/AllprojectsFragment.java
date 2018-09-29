@@ -70,7 +70,6 @@ public class AllprojectsFragment extends BaseListFragment<AllprojectsContract.IV
                     args.putString(Global.BUNDLE_PROJECT_ID, projectId);
                     voteFragment.setArguments(args);
                     voteFragment.show(getFragmentManager(), "VoteFragment");
-                    ArgsUtil.datapoint(ArgsUtil.VOTE_NAME, "null", ArgsUtil.UID, ArgsUtil.VOTE_CODE, projectId, null);
                 }
             }
         }));
