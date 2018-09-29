@@ -59,6 +59,11 @@ public class Global {
      * 更新
      */
     public static final String BROADCAST_ACTION_UPGRADE = "BROADCAST_ACTION_UPGRADE";
+
+    /**
+     * 信鸽消息
+     */
+    public static final String BROADCAST_ACTION_XGMESSAGE = "BROADCAST_ACTION_XGMESSAGE";
     /**
      * 支付结果返回data true:成功 false:失败
      */
