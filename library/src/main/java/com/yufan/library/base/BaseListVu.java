@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.yufan.library.R;
 import com.yufan.library.inject.AnnotateUtils;
+import com.yufan.library.util.Netutil;
 import com.yufan.library.view.recycler.PageInfo;
 import com.yufan.library.view.recycler.YFRecyclerView;
 import com.yufan.library.widget.AppToolbar;
@@ -36,6 +37,11 @@ public abstract class BaseListVu <T extends Pr>extends BaseVu implements VuList{
     }
     @Override
     public void initStatusLayout(StateLayout stateLayout) {
+        if (TextUtils.isEmpty(Netutil.GetNetworkType(BaseApplication.getInstance()))) {
+            setStateError();
+        }else {
+            setStateEmpty();
+        }
         stateLayout.getEmptyView().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -98,14 +104,14 @@ public abstract class BaseListVu <T extends Pr>extends BaseVu implements VuList{
     }
     public  void setStateError() {
 
-        if(getRecyclerView().getPageManager().getCurrentIndex()!=1){
+        if(getRecyclerView().getPageManager().getCurrentIndex()==1){
             mStateLayout.setStateError();
         }
     }
 
     public final void setStateEmpty() {
 
-        if(getRecyclerView().getPageManager().getCurrentIndex()!=1){
+        if(getRecyclerView().getPageManager().getCurrentIndex()==1){
             mStateLayout.setStateEmpty();
         }
     }
