@@ -284,7 +284,7 @@ public class VoteFragment extends DialogFragment implements View.OnClickListener
                             voteInitInfo.setVoteCount(voteInitInfo.getVoteCount().add(new BigDecimal(getCurrentChoiceVoteNum())));
                             bindData(voteInitInfo);
                             //投票数据埋点
-                            ArgsUtil.datapoint("0900","uid", UserManager.getInstance().getUid(),"projectId ",projectId );
+                            ArgsUtil.getInstance().datapoint("0900","uid", UserManager.getInstance().getUid(),"projectId ",projectId );
                         }
 
                         @Override

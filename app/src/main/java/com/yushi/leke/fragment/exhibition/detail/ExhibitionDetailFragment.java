@@ -35,6 +35,8 @@ import com.yufan.library.base.BaseFragment;
 import com.yufan.library.inject.VuClass;
 import com.yufan.library.inter.ICallBack;
 import com.yufan.library.manager.DialogManager;
+import com.yufan.library.manager.UserManager;
+import com.yufan.library.util.AreaUtil;
 import com.yufan.share.ShareModel;
 import com.yushi.leke.R;
 import com.yushi.leke.UIHelper;
@@ -43,6 +45,7 @@ import com.yushi.leke.fragment.browser.BrowserBaseFragment;
 import com.yushi.leke.fragment.exhibition.voteend.VoteendFragment;
 import com.yushi.leke.fragment.exhibition.voteing.VoteingFragment;
 import com.yushi.leke.share.ShareMenuActivity;
+import com.yushi.leke.util.ArgsUtil;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -676,6 +679,7 @@ public class ExhibitionDetailFragment extends BaseFragment<ExhibitionDetailContr
             shareModel.setIcon(mShareInfo.getShareIcon());
             shareModel.setTargetUrl(ApiManager.getInstance().getApiConfig().getExhibitionDetail(activityid));
             ShareMenuActivity.startShare(ExhibitionDetailFragment.this,shareModel);
+            ArgsUtil.getInstance().datapoint("0802","uid", UserManager.getInstance().getUid(),"projectId",activityid);
         } else {
             getShareinfo(true);
         }

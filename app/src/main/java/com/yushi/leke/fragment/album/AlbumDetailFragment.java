@@ -158,7 +158,7 @@ public class AlbumDetailFragment extends BaseFragment<AlbumDetailContract.IView>
                         Toast.makeText(getContext(),"订阅成功",Toast.LENGTH_SHORT).show();
                         getstatedate();
                         //订阅专辑数据埋点
-                        ArgsUtil.datapoint("0600","uid", UserManager.getInstance().getUid(),"albumId",albumId);
+                        ArgsUtil.getInstance().datapoint("0600","uid", UserManager.getInstance().getUid(),"albumId",albumId);
                     }
 
                     @Override
@@ -203,6 +203,8 @@ public class AlbumDetailFragment extends BaseFragment<AlbumDetailContract.IView>
             model.setIcon(infolist.getAlbum().getHorizontalIcon());
             model.setTargetUrl(infolist.getAlbum().getShareIcon());
             ShareMenuActivity.startShare(getRootFragment(),model);
+            //专辑分享数据埋点
+            ArgsUtil.getInstance().datapoint("0801","uid",UserManager.getInstance().getUid(),"albumId",albumId);
         }
 
     }

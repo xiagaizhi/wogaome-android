@@ -87,7 +87,7 @@ public class BindPhoneFragment extends BaseFragment<BindPhoneContract.IView> imp
                 setFragmentResult(RESULT_OK, bundle);
                 pop();
                 //绑定手机数据埋点
-                ArgsUtil.datapoint("0401","uid", UserManager.getInstance().getUid(),"phone",mPhone);
+                ArgsUtil.getInstance().datapoint("0401","uid", UserManager.getInstance().getUid(),"phone",mPhone);
             } else {
                 new CommonDialog(_mActivity).setTitle("" + mApiBean.getMessage())
                         .setNegativeName("取消")

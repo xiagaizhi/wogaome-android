@@ -89,7 +89,7 @@ public class AccountAndSafetyFragment extends BaseFragment<AccountAndSafetyContr
             phoneNumber = data.getString("phoneNumber");
             getVu().updatePage(phoneNumber);
             //解绑手机数据埋点
-            ArgsUtil.datapoint("0400","uid", UserManager.getInstance().getUid(),"phone",phoneNumber);
+            ArgsUtil.getInstance().datapoint("0400","uid", UserManager.getInstance().getUid(),"phone",phoneNumber);
         } else if (requestCode == 200 && resultCode == RESULT_OK && data != null) {//手机验证码校验过通过，换绑
             String token = data.getString("token");
             startForResult(UIHelper.creat(UpdatePhoneFragment.class).put("token", token).build(), 100);

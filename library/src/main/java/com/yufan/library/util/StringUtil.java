@@ -133,4 +133,10 @@ public class StringUtil {
         SimpleDateFormat sDateFormat = new SimpleDateFormat(pattern);
         return sDateFormat.format(new Date(dateTime + 0));
     }
+
+
+    public static String getDataTime(String format) {
+        SimpleDateFormat df = new SimpleDateFormat(format);
+        return df.format(new Date());
+    }
 }

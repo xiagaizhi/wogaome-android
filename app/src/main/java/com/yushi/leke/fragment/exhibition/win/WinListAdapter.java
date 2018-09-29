@@ -52,6 +52,7 @@ public class WinListAdapter extends RecyclerView.Adapter<WinListAdapter.ItemView
 
     @Override
     public void onBindViewHolder(@NonNull ItemViewHolder holder, int position) {
+        WinProjectInfo winProjectInfo = winListInfoList.get(position);
         if (position == 0) {
             holder.tv_rank.setTextColor(mContext.getResources().getColor(R.color.color_FA5A5A));
             holder.view_line_top.setVisibility(View.VISIBLE);
@@ -75,8 +76,11 @@ public class WinListAdapter extends RecyclerView.Adapter<WinListAdapter.ItemView
             holder.tv_ticket.setTextColor(mContext.getResources().getColor(R.color.color_blue_level6));
         }
         holder.tv_rank.setText(String.valueOf(position + 1));
-        holder.img_logo.setImageURI("https://lelian-dev.oss-cn-shanghai.aliyuncs.com/avatar/2018-09-07/96c8cceb-3671-42dc-904c-86e2e9ddeb70.jpg");
-        holder.tv_title.setText("标题");
+        holder.img_logo.setImageURI(winProjectInfo.getLogo());
+        holder.tv_title.setText(winProjectInfo.getTitle());
+        holder.tv_area_industry.setText(winProjectInfo.getAddress()+"／"+winProjectInfo.getIndustry());
+        holder.tv_username.setText(winProjectInfo.getEntrepreneur());
+        holder.tv_ticket.setText(winProjectInfo.getHaveVote()+"票");
     }
 
     @Override

@@ -75,10 +75,10 @@ public class Global {
      * 默认存放图片的路径
      */
     public final static String DEFAULT_SAVE_IMAGE_PATH = Environment.getExternalStorageDirectory()
-            + File.separator + "LEKE"
+            + File.separator + "leke"
             + File.separator + "image" + File.separator;
     public final static String DEFAULT_SAVE_CONFIG_PATH = Environment.getExternalStorageDirectory()
-            + File.separator + "LEKE"
+            + File.separator + "leke"
             + File.separator + "config" + File.separator;
 
     /**
@@ -101,5 +101,11 @@ public class Global {
      * 保存sid
      */
     public final static String SAVE_SID_PATH = DEFAULT_SAVE_CONFIG_PATH + ".sid" + File.separator;
+
+    /**
+     * 崩溃日志收集
+     */
+    public final static String SAVE_LOG_PATH = Environment.getExternalStorageDirectory()
+            + File.separator + "leke" + File.separator + "log" + File.separator;
 
 }

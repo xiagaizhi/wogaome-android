@@ -80,27 +80,31 @@ public class AlbumDetailVu extends BaseVu<AlbumDetailContract.Presenter> impleme
             }
         });
         //applayout竖直方向偏移量监听
-        appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+        appBarLayout.addOnOffsetChangedListener(new AppBarStateChangeListener() {
             @Override
-            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-                int[] position = new int[2];
-                AlbumDetailVu.this.verticalOffset=verticalOffset;
-                //获取tablayout距离当前窗口顶部位置
-                mTabLayout.getLocationInWindow(position);
-                if (position[1]<=220&&flag){
-                        expandableTextView.setVisibility(View.INVISIBLE);
-                        backButton.setImageResource(com.yufan.library.R.drawable.left_back_black_arrows);
-                        img_share.setImageResource(R.drawable.ic_share_blue);
-                        musicAnim.setImageResource(R.drawable.anim_player_blue);
-                        ((AnimationDrawable) musicAnim.getDrawable()).start();
-                        flag=false;
-                }else if (position[1]>220&&!flag){
+            public void onStateChanged(AppBarLayout appBarLayout, State state) {
+                Log.d("STATE", state.name());
+                AlbumDetailVu.this.verticalOffset=appBarLayout.get;
+                if( state == State.EXPANDED ) {
+                    //展开状态
                     flag=true;
                     expandableTextView.setVisibility(View.VISIBLE);
                     backButton.setImageResource(com.yufan.library.R.drawable.left_back_white_arrows);
                     img_share.setImageResource(R.drawable.ic_share_white);
                     musicAnim.setImageResource(R.drawable.anim_player_white);
                     ((AnimationDrawable) musicAnim.getDrawable()).start();
+
+                }else if(state == State.COLLAPSED){
+                    //折叠状态
+                    expandableTextView.setVisibility(View.INVISIBLE);
+                    backButton.setImageResource(com.yufan.library.R.drawable.left_back_black_arrows);
+                    img_share.setImageResource(R.drawable.ic_share_blue);
+                    musicAnim.setImageResource(R.drawable.anim_player_blue);
+                    ((AnimationDrawable) musicAnim.getDrawable()).start();
+                }else {
+
+                    //中间状态
+
                 }
             }
         });

@@ -80,7 +80,7 @@ public class WinlistDialogFragment extends DialogFragment implements View.OnClic
                 .enqueue(new BaseHttpCallBack() {
                     @Override
                     public void onSuccess(ApiBean mApiBean) {
-                        if (TextUtils.isEmpty(mApiBean.getData())) {
+                        if (!TextUtils.isEmpty(mApiBean.getData())) {
                             winProjectInfoList = JSON.parseObject(mApiBean.getData(), WinProjectInfoList.class);
                             if (winProjectInfoList != null && winProjectInfoList.getWinList() != null && winProjectInfoList.getWinList().size() > 0) {
                                 winListInfoList.clear();
