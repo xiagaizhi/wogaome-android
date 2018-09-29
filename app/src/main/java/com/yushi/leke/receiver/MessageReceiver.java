@@ -112,12 +112,13 @@ public class MessageReceiver extends XGPushBaseReceiver {
         Intent filter = new Intent();
         String customContent = message.getCustomContent();
         if (customContent != null && customContent.length() != 0) {
+            Log.d("LOGH",customContent);
             try {
                 JSONObject obj = new JSONObject(customContent);
                 // key1为前台配置的key
                 if (!obj.isNull("appMsgType")) {
                     int appMsgType = obj.getInt("appMsgType");
-                    Log.d("LOGH","intent start......!!!!!");
+                    Log.d("LOGH","intent start......!!!!!"+appMsgType);
                     filter.putExtra("appMsgType", appMsgType);
                 }
             } catch (JSONException e) {

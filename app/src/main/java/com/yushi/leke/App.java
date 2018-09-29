@@ -16,10 +16,13 @@ import com.tencent.android.tpush.common.Constants;
 import com.tencent.smtt.sdk.QbSdk;
 import com.umeng.socialize.PlatformConfig;
 import com.yufan.library.Global;
+import com.yufan.library.api.ApiBean;
 import com.yufan.library.api.ApiManager;
+import com.yufan.library.api.BaseHttpCallBack;
 import com.yufan.library.base.BaseApplication;
 import com.yufan.library.manager.SPManager;
 import com.yufan.library.manager.UserManager;
+import com.yufan.share.ShareUtils;
 import com.yushi.leke.util.ArgsUtil;
 
 /**
@@ -100,7 +103,10 @@ public class App extends BaseApplication {
                     @Override
                     public void onSuccess(Object data, int flag) {
                         Log.w(Constants.LogTag, "+++ register push sucess. token:" + data + "flag" + flag);
-
+                        if (data!=null){
+                            SPManager.getInstance().saveValue("XGTOKEN",data.toString());
+                            binddevice(data.toString(),"2");
+                        }
                     }
 
                     @Override
@@ -113,7 +119,28 @@ public class App extends BaseApplication {
                     }
                 });
     }
+    private void binddevice(String token,String os){
+        ApiManager.getCall(ApiManager.getInstance().create(YFApi.class)
+                .binddevice(token,os))
+                .useCache(false)
+                .enqueue(new BaseHttpCallBack() {
+                    @Override
+                    public void onSuccess(ApiBean mApiBean) {
+                      if (mApiBean.getCode().equals(2000)){
+                      }
+                    }
 
+                    @Override
+                    public void onError(int id, Exception e) {
+                        Log.d(Constants.LogTag,e.toString());
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        Log.d(Constants.LogTag,"finsh");
+                    }
+                });
+    }
     /**
      * 设置通知自定义View，这样在下发通知时可以指定build_id。编号由开发者自己维护,build_id=0为默认设置
      *
