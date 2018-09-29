@@ -10,11 +10,16 @@ import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.yufan.library.inject.FindView;
 import com.yufan.library.util.PxUtil;
 import com.yufan.library.util.ViewUtils;
+import com.yufan.library.view.ptr.PtrClassicFrameLayout;
+import com.yufan.library.view.ptr.PtrDefaultHandler;
+import com.yufan.library.view.ptr.PtrFrameLayout;
+import com.yufan.library.view.ptr.PtrHandler;
 import com.yufan.library.widget.ExpandableTextView;
 import com.yufan.library.widget.NoScrollViewPager;
 import com.yushi.leke.R;
@@ -57,8 +62,12 @@ public class AlbumDetailVu extends BaseVu<AlbumDetailContract.Presenter> impleme
     @FindView(R.id.app_bar_layout)
     private AppBarLayout appBarLayout;
     ImageView backButton;
+
+    @FindView(R.id.ptr)
+    private PtrClassicFrameLayout ptrClassicFrameLayout;
     private Boolean flag=false;//全局刷新判定
     private ImageView img_share;
+    private int verticalOffset;
     @Override
     public void initView(View view) {
         mTabLayout.addTab(mTabLayout.newTab().setText("课程内容"));
@@ -75,6 +84,7 @@ public class AlbumDetailVu extends BaseVu<AlbumDetailContract.Presenter> impleme
             @Override
             public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
                 int[] position = new int[2];
+                AlbumDetailVu.this.verticalOffset=verticalOffset;
                 //获取tablayout距离当前窗口顶部位置
                 mTabLayout.getLocationInWindow(position);
                 if (position[1]<=220&&flag){
@@ -92,6 +102,19 @@ public class AlbumDetailVu extends BaseVu<AlbumDetailContract.Presenter> impleme
                     musicAnim.setImageResource(R.drawable.anim_player_white);
                     ((AnimationDrawable) musicAnim.getDrawable()).start();
                 }
+            }
+        });
+        ptrClassicFrameLayout.setPtrHandler(new PtrHandler() {
+            @Override
+            public void onRefreshBegin(PtrFrameLayout frame) {
+                //处理刷新逻辑
+              mPersenter.onRefresh();
+
+            }
+
+            @Override
+            public boolean checkCanDoRefresh(PtrFrameLayout frame, View content, View header) {
+                return verticalOffset==0;
             }
         });
 
@@ -184,5 +207,10 @@ public class AlbumDetailVu extends BaseVu<AlbumDetailContract.Presenter> impleme
     @Override
     public SimpleDraweeView getDraweeView() {
         return sdv;
+    }
+
+    @Override
+    public PtrClassicFrameLayout getPTR() {
+        return ptrClassicFrameLayout;
     }
 }

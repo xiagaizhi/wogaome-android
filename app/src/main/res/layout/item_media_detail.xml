@@ -32,45 +32,19 @@
             android:src="@drawable/ic_subscription_headset_center" />
 
     </RelativeLayout>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_marginLeft="@dimen/px20"
-        android:layout_toRightOf="@id/rl_1"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/tv_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="永不放弃01集"
-            android:textColor="@color/color_gray_level3"
-            android:textSize="@dimen/px32"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/tv_info"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/px20"
-            android:text="00:11:12 / 54583 人听过"
-            android:textColor="@color/color_gray_level6"
-            android:textSize="@dimen/px24" />
-    </LinearLayout>
-
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
+        android:id="@+id/ll_2"
         android:layout_marginRight="@dimen/px36"
         android:orientation="vertical">
 
         <RelativeLayout
             android:layout_width="@dimen/px133"
             android:layout_height="@dimen/px54"
+
             android:background="@drawable/shape_bg_bt_c9_radius_27">
 
             <TextView
@@ -94,6 +68,36 @@
             android:textColor="@color/color_gray_level9"
             android:textSize="@dimen/px18" />
     </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@+id/ll_2"
+        android:layout_marginLeft="@dimen/px20"
+        android:layout_toRightOf="@id/rl_1"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="永不放弃01集永不放弃01集永不放弃01集"
+            android:singleLine="true"
+            android:textColor="@color/color_gray_level3"
+            android:textSize="@dimen/px32"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/px20"
+            android:text="00:11:12 / 54583 人听过"
+            android:textColor="@color/color_gray_level6"
+            android:textSize="@dimen/px24" />
+    </LinearLayout>
+
+
 
     <View
         android:id="@+id/view_bottom_line"

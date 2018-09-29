@@ -83,13 +83,14 @@ public class AlbumDetailFragment extends BaseFragment<AlbumDetailContract.IView>
             }
 
         });
-      getdata();
+        getdata();
     }
 
 
     @Override
     public void onRefresh() {
-
+        getdata();
+        ((MediaBrowserFragment) fragments[0]). onRefresh();
     }
 
     @Override
@@ -109,6 +110,7 @@ public class AlbumDetailFragment extends BaseFragment<AlbumDetailContract.IView>
                             infolist = JSON.parseObject(mApiBean.getData(), AlbumDetailinfo.class);
                             getVu().showtext(infolist);
                             getstatedate();
+                            getVu().getPTR().refreshComplete();
                         }
                     }
 

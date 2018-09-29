@@ -117,6 +117,12 @@ public class MediaBrowserFragment extends BaseListFragment<MediaBrowserContract.
         }
     }
 
+    public void onRefresh(){
+        mMediaFragmentListener.getMediaBrowser().unsubscribe(mAlbumId);
+
+        mMediaFragmentListener.getMediaBrowser().subscribe(mAlbumId, mSubscriptionCallback);
+    }
+
     // Receive callbacks from the MediaController. Here we update our state such as which queue
     // is being shown, the current title and description and the PlaybackState.
     /**
@@ -197,10 +203,6 @@ public class MediaBrowserFragment extends BaseListFragment<MediaBrowserContract.
 
     }
 
-    @Override
-    public void onRefresh() {
-
-    }
 
 
 }
