@@ -1,12 +1,17 @@
 package com.yushi.leke.util;
 
+import android.text.TextUtils;
+
 import com.yufan.library.Global;
 import com.yufan.library.api.ApiBean;
 import com.yufan.library.api.ApiManager;
 import com.yufan.library.api.BaseHttpCallBack;
 import com.yufan.library.manager.SPManager;
+import com.yufan.library.manager.UserManager;
 import com.yushi.leke.YFApi;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -21,9 +26,13 @@ public class AudioTimerUtil {
     private Timer mTimer;
     private TimerTask mTimerTask;
     private long currentAccumulateTime;//当前上报时间点
+    private long schedule;
+    private String currentAudioId;
 
     private AudioTimerUtil() {
         duration = SPManager.getInstance().getLong(Global.SP_AUDIO_TIMER_KEY, 0);
+        schedule = SPManager.getInstance().getLong(Global.SP_CURRENT_AUDIO_SCHEDULE, 0);
+        currentAudioId = SPManager.getInstance().getString(Global.SP_CURRENT_AUDIO_ID, "");
     }
 
     public static AudioTimerUtil getInstance() {
@@ -33,7 +42,11 @@ public class AudioTimerUtil {
         return instance;
     }
 
-    public void startTimer() {
+    public void startTimer(String audioId) {
+        if (!TextUtils.equals(audioId, currentAudioId)) {
+            accumulateByAudioId();
+            currentAudioId = audioId;
+        }
         if (mTimer != null) {
             mTimer.cancel();
         }
@@ -45,8 +58,11 @@ public class AudioTimerUtil {
             @Override
             public void run() {
                 duration++;
+                schedule++;
                 SPManager.getInstance().saveValue(Global.SP_AUDIO_TIMER_KEY, duration);
-                if (duration >= 600) {
+                SPManager.getInstance().saveValue(Global.SP_CURRENT_AUDIO_ID, currentAudioId);
+                SPManager.getInstance().saveValue(Global.SP_CURRENT_AUDIO_SCHEDULE, schedule);
+                if (duration >= 300) {
                     accumulate();
                 }
             }
@@ -59,10 +75,12 @@ public class AudioTimerUtil {
             mTimer.cancel();
             mTimer = null;
         }
+        accumulateByAudioId();
+        SPManager.getInstance().saveValue(Global.SP_CURRENT_AUDIO_ID, "");
     }
 
     /**
-     * 收听时长上报
+     * 统计总的收听时长上报
      */
     public void accumulate() {
         if (duration <= 0) {
@@ -90,5 +108,20 @@ public class AudioTimerUtil {
 
             }
         });
+    }
+
+    /**
+     * 统计单个音频播放时长
+     */
+    public void accumulateByAudioId() {
+        if (!TextUtils.isEmpty(currentAudioId) && schedule > 0) {
+            Map<String, String> params = new HashMap<>();
+            params.put("uid", UserManager.getInstance().getUid());
+            params.put("audioId", currentAudioId);
+            params.put("schedule", "" + schedule);
+            ArgsUtil.getInstance().datapoint(AliDotId.id_0600, params);
+        }
+        schedule = 0;
+        SPManager.getInstance().saveValue(Global.SP_CURRENT_AUDIO_SCHEDULE, schedule);
     }
 }

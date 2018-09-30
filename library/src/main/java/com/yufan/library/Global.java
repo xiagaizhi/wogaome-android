@@ -40,6 +40,8 @@ public class Global {
     public static final String SP_AD_KEY = "SP_AD_KEY";
     public static final String SP_GUIDE_KEY = "SP_GUIDE_KEY";
     public static final String SP_AUDIO_TIMER_KEY = "SP_AUDIO_TIMER_KEY";
+    public static final String SP_CURRENT_AUDIO_ID = "SP_CURRENT_AUDIO_ID";//当前播放AUDIO_ID
+    public static final String SP_CURRENT_AUDIO_SCHEDULE = "SP_CURRENT_AUDIO_SCHEDULE";//当前播放AUDIO_ID 对应播放时长
     /**
      * 支付结果通知广播action
      */

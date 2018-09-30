@@ -98,7 +98,7 @@ public class QueueHelper {
             trackCopy.getDescription().getExtras().putLong(MutableMediaMetadata.viewTimes, track.metadata.getDescription().getExtras().getLong(MutableMediaMetadata.viewTimes));
             trackCopy.getDescription().getExtras().putInt(MutableMediaMetadata.levelStatus, track.metadata.getDescription().getExtras().getInt(MutableMediaMetadata.levelStatus));
             trackCopy.getDescription().getExtras().putString(MutableMediaMetadata.videoId, track.metadata.getDescription().getExtras().getString(MutableMediaMetadata.videoId));
-
+            trackCopy.getDescription().getExtras().putString(MutableMediaMetadata.audioId, track.metadata.getDescription().getExtras().getString(MutableMediaMetadata.audioId));
             // We don't expect queues to change after created, so we use the item index as the
             // queueId. Any other number unique in the queue would work.
             MediaSessionCompat.QueueItem item = new MediaSessionCompat.QueueItem(

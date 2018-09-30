@@ -18,9 +18,7 @@ package com.yushi.leke.uamp.model;
 
 import android.graphics.Bitmap;
 import android.support.v4.media.MediaBrowserCompat;
-import android.support.v4.media.MediaDescriptionCompat;
 import android.support.v4.media.MediaMetadataCompat;
-
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
@@ -41,7 +39,6 @@ import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
 
 import static com.yushi.leke.uamp.utils.MediaIDHelper.MEDIA_ID_MUSICS_BY_GENRE;
 
@@ -247,6 +244,7 @@ public class MusicProvider {
                     item.getDescription().getExtras().putLong(MutableMediaMetadata.viewTimes, albumAudio.getViewTimes());
                     item.getDescription().getExtras().putInt(MutableMediaMetadata.levelStatus, levelStatus);
                     item.getDescription().getExtras().putString(MutableMediaMetadata.videoId, albumAudio.getAliVideoId());
+                    item.getDescription().getExtras().putString(MutableMediaMetadata.audioId, albumAudio.getAudioId());
                     String musicId = item.getString(MediaMetadataCompat.METADATA_KEY_MEDIA_ID);
                     MutableMediaMetadata mutableMediaMetadata=    new MutableMediaMetadata(musicId, item);
                     mList.put(musicId,mutableMediaMetadata );
@@ -306,6 +304,7 @@ public class MusicProvider {
         copy.getDescription().getExtras().putLong(MutableMediaMetadata.viewTimes, metadata.metadata.getDescription().getExtras().getLong(MutableMediaMetadata.viewTimes));
         copy.getDescription().getExtras().putInt(MutableMediaMetadata.levelStatus, metadata.metadata.getDescription().getExtras().getInt(MutableMediaMetadata.levelStatus));
         copy.getDescription().getExtras().putString(MutableMediaMetadata.videoId, metadata.metadata.getDescription().getExtras().getString(MutableMediaMetadata.videoId));
+        copy.getDescription().getExtras().putString(MutableMediaMetadata.audioId, metadata.metadata.getDescription().getExtras().getString(MutableMediaMetadata.audioId));
         return new MediaBrowserCompat.MediaItem(copy.getDescription(), MediaBrowserCompat.MediaItem.FLAG_PLAYABLE);
 
     }

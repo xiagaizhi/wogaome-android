@@ -7,7 +7,6 @@ import android.support.v4.app.DialogFragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -77,7 +76,7 @@ public class WinlistDialogFragment extends DialogFragment implements View.OnClic
         }
         ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).winlist(activityId))
                 .useCache(true)
-                .enqueue(new BaseHttpCallBack() {
+                .enqueue(new BaseHttpCallBack() {//chong
                     @Override
                     public void onSuccess(ApiBean mApiBean) {
                         if (!TextUtils.isEmpty(mApiBean.getData())) {

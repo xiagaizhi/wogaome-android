@@ -4,6 +4,14 @@ import android.Manifest;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.content.LocalBroadcastManager;
+import android.text.TextUtils;
+import android.view.View;
+import android.view.WindowManager;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
@@ -16,16 +24,6 @@ import com.yufan.library.api.ApiManager;
 import com.yufan.library.api.BaseHttpCallBack;
 import com.yufan.library.base.BaseApplication;
 import com.yufan.library.base.BaseFragment;
-
-import android.os.Handler;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.content.LocalBroadcastManager;
-import android.text.TextUtils;
-import android.view.View;
-import android.view.WindowManager;
-
 import com.yufan.library.cache.CacheManager;
 import com.yufan.library.inject.VuClass;
 import com.yufan.library.manager.SPManager;
@@ -120,7 +118,9 @@ public class SplashFragment extends BaseFragment<SplashContract.IView> implement
             }
         }
         //有没有广告缓存，都发起网络请求，请求最新广告信息并且缓存，供下次启动备用
-        if (TextUtils.isEmpty(UserManager.getInstance().getToken()))return;
+        if (TextUtils.isEmpty(UserManager.getInstance().getToken())) {
+            return;
+        }
         ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).getGuideAd(2)).useCache(false).enqueue(new BaseHttpCallBack() {
             @Override
             public void onResponse(ApiBean mApiBean) {
