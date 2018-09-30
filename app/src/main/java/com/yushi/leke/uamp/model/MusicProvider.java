@@ -60,7 +60,7 @@ public class MusicProvider {
     private final LinkedHashMap<String, MutableMediaMetadata> mMusicListById;
     private static MusicProvider musicProvider;
     private final Set<String> mFavoriteTracks;
-    private String musicAlbum;
+
     private AliyunAuth aliyunAuth;
     private final Timer timer;
     private final TimerTask task = new TimerTask() {
@@ -208,14 +208,9 @@ public class MusicProvider {
      * 从服务端获取音乐路径列表，以及缓存列表数据以便将来直接引用
      * 使用musicId作为列表的关键字并将音乐按类型分组
      */
-    public void retrieveMediaAsync(String parentMediaId, final Callback callback) {
+    public void retrieveMediaAsync( String parentMediaId, final Callback callback) {
         LogHelper.d(TAG, "retrieveMediaAsync called");
 
-        if(parentMediaId==musicAlbum&&mCurrentState == State.INITIALIZED){
-            callback.onMusicCatalogReady(true);
-            return;
-        }
-        musicAlbum=parentMediaId;
         getAuth();
         ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).getPlayList(parentMediaId)).enqueue(new BaseHttpCallBack() {
             @Override
@@ -260,6 +255,7 @@ public class MusicProvider {
                     }
                 }
                 mCurrentState = State.INITIALIZED;
+
                 if (callback != null) {
                     callback.onMusicCatalogReady(true);
                 }
