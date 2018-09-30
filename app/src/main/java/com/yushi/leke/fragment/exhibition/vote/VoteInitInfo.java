@@ -13,7 +13,7 @@ public class VoteInitInfo {
     private String title;
     private String address;
     private String industry;
-    private BigDecimal voteCount;
+    private BigDecimal voteCount = new BigDecimal(0);
     private String entrepreneur;
     private BigDecimal lkc;
     private int isHaveTradePwd;

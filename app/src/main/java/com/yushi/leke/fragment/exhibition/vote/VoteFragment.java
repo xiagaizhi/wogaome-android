@@ -122,11 +122,11 @@ public class VoteFragment extends DialogFragment implements View.OnClickListener
     }
 
     private void bindData(VoteInitInfo voteInitInfo) {
-        img_logo.setImageURI(FormatImageUtil.converImageUrl(voteInitInfo.getLogo(),160,160));
+        img_logo.setImageURI(FormatImageUtil.converImageUrl(voteInitInfo.getLogo(), 160, 160));
         tv_title.setText(voteInitInfo.getTitle());
         tv_area_industry.setText(voteInitInfo.getAddress() + "/" + voteInitInfo.getIndustry());
         tv_username.setText("创业者：" + voteInitInfo.getEntrepreneur());
-        tv_vote_num.setText(String.valueOf(voteInitInfo.getVoteCount()));
+        tv_vote_num.setText(String.valueOf(voteInitInfo.getVoteCount()) + "票");
         tv_lkc_num.setText(Html.fromHtml("我的LKC余额:<<font color='#FA5A5A'>" + voteInitInfo.getLkc() + "</font>(1LKC等于1票)"));
     }
 

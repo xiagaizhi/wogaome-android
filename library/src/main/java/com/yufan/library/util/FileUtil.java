@@ -64,6 +64,16 @@ public class FileUtil {
         if (!logDir.exists()) {
             logDir.mkdirs();
         }
+
+        File screenDir = new File(Global.SAVE_SCREEN_CAPTURE_IMAGE_PATH);
+        if (!screenDir.exists()) {
+            screenDir.mkdirs();
+        }
+
+        File downloadImageDir = new File(Global.SAVE_DOWNLOAD_IMAGE_IMAGE_PATH);
+        if (!downloadImageDir.exists()) {
+            downloadImageDir.mkdirs();
+        }
     }
 
     /**
