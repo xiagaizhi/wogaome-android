@@ -51,13 +51,7 @@ public class SettingVu extends BaseVu<SettingContract.Presenter> implements Sett
     @Override
     public boolean initTitle(AppToolbar appToolbar) {
         super.initTitle(appToolbar);
-        ImageView musicAnim = UIHelper.getMusicView(mPersenter.getActivity(),appToolbar);
-        musicAnim.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mPersenter.openPlayer();
-            }
-        });
+        UIHelper.getMusicView(mPersenter.getActivity(),appToolbar);
         appToolbar.build();
         return true;
     }

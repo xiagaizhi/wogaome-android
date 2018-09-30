@@ -187,10 +187,7 @@ public class SettingFragment extends BaseFragment<SettingContract.IView> impleme
         start(UIHelper.creat(AccountAndSafetyFragment.class).build());
     }
 
-    @Override
-    public void openPlayer() {
 
-    }
 
     /**
      * 清除app缓存

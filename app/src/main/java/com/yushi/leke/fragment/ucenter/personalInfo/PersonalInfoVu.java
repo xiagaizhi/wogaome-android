@@ -30,6 +30,7 @@ import com.yufan.library.inject.FindView;
 import com.yufan.library.inject.Title;
 import com.yufan.library.widget.StateLayout;
 import com.yufan.library.widget.AppToolbar;
+import com.yushi.leke.UIHelper;
 import com.yushi.leke.dialog.CommonListDialog;
 import com.yushi.leke.util.FormatImageUtil;
 
@@ -224,15 +225,7 @@ public class PersonalInfoVu extends BaseListVu<PersonalInfoContract.Presenter> i
                 mPersenter.onBackPressed();
             }
         });
-
-        ImageView playerIcon = appToolbar.creatRightView(ImageView.class);
-        playerIcon.setImageResource(R.drawable.ic_toolbar_player_white);
-        playerIcon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mPersenter.openPlayer();
-            }
-        });
+        UIHelper.getWhiteMusicView(mPersenter.getActivity(),appToolbar);
 
         appToolbar.build(false);
         return true;

@@ -21,6 +21,5 @@ public interface SettingContract {
         void upgrade();
         void lekeAbout();
         void accountAndSafety();
-        void openPlayer();
     }
 }
