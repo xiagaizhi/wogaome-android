@@ -1,7 +1,6 @@
 package com.yushi.leke.util;
 
 import android.text.TextUtils;
-import android.util.Log;
 
 import com.yufan.library.Global;
 import com.yufan.library.api.ApiBean;
@@ -120,8 +119,7 @@ public class AudioTimerUtil {
             params.put("uid", UserManager.getInstance().getUid());
             params.put("audioId", currentAudioId);
             params.put("schedule", "" + schedule);
-            ArgsUtil.getInstance().datapoint(AliDotId.id_0802, params);
-            Log.e("accumulateByAudioId", "audioId:" + currentAudioId + ",schedule:" + schedule);
+            ArgsUtil.getInstance().datapoint(AliDotId.id_0600, params);
         }
         schedule = 0;
         SPManager.getInstance().saveValue(Global.SP_CURRENT_AUDIO_SCHEDULE, schedule);
