@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.yushi.leke.R;
+import com.yushi.leke.util.FormatImageUtil;
 
 import java.util.List;
 
@@ -76,7 +77,7 @@ public class WinListAdapter extends RecyclerView.Adapter<WinListAdapter.ItemView
             holder.tv_ticket.setTextColor(mContext.getResources().getColor(R.color.color_blue_level6));
         }
         holder.tv_rank.setText(String.valueOf(position + 1));
-        holder.img_logo.setImageURI(winProjectInfo.getLogo());
+        holder.img_logo.setImageURI(FormatImageUtil.converImageUrl(winProjectInfo.getLogo(),160,160));
         holder.tv_title.setText(winProjectInfo.getTitle());
         holder.tv_area_industry.setText(winProjectInfo.getAddress()+"／"+winProjectInfo.getIndustry());
         holder.tv_username.setText(winProjectInfo.getEntrepreneur());

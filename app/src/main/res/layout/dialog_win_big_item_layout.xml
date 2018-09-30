@@ -48,6 +48,8 @@
                 android:layout_height="@dimen/px160"
                 fresco:failureImage="@drawable/default_video_square"
                 fresco:placeholderImage="@drawable/default_video_square"
+                fresco:failureImageScaleType="focusCrop"
+                fresco:placeholderImageScaleType="focusCrop"
                 fresco:roundedCornerRadius="@dimen/px12" />
         </LinearLayout>
 

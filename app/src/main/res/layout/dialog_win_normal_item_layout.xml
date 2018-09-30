@@ -28,6 +28,10 @@
             android:layout_width="@dimen/px120"
             android:layout_height="@dimen/px120"
             android:layout_marginLeft="@dimen/px87"
+            fresco:failureImage="@drawable/default_video_square"
+            fresco:placeholderImage="@drawable/default_video_square"
+            fresco:failureImageScaleType="focusCrop"
+            fresco:placeholderImageScaleType="focusCrop"
             fresco:roundedCornerRadius="@dimen/px12" />
 
         <TextView
