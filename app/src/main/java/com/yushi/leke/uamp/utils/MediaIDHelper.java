@@ -152,10 +152,9 @@ public class MediaIDHelper {
         if (controller != null && controller.getMetadata() != null) {
             String currentPlayingMediaId = controller.getMetadata().getDescription()
                     .getMediaId();
-            String itemMusicId = MediaIDHelper.extractMusicIDFromMediaID(
-                    mediaItem.getDescription().getMediaId());
+
             if (currentPlayingMediaId != null
-                    && TextUtils.equals(currentPlayingMediaId, itemMusicId)) {
+                    && TextUtils.equals(currentPlayingMediaId, mediaItem.getDescription().getMediaId())) {
                 return true;
             }
         }

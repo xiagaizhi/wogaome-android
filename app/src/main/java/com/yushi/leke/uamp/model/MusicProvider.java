@@ -291,11 +291,8 @@ public class MusicProvider {
         // when we get a onPlayFromMusicID call, so we can create the proper queue based
         // on where the music was selected from (by artist, by genre, random, etc)
         //我们可以基于在音乐类型的选择（由艺术家、流派、随机、等）构建适当的音乐队列
-        String genre = metadata.metadata.getString(MediaMetadataCompat.METADATA_KEY_GENRE);
-        String hierarchyAwareMediaID = MediaIDHelper.createMediaID(
-                metadata.metadata.getDescription().getMediaId(), MEDIA_ID_MUSICS_BY_GENRE, genre);
         MediaMetadataCompat copy = new MediaMetadataCompat.Builder(metadata.metadata)
-                .putString(MediaMetadataCompat.METADATA_KEY_MEDIA_ID, hierarchyAwareMediaID)
+                .putString(MediaMetadataCompat.METADATA_KEY_MEDIA_ID, metadata.metadata.getDescription().getMediaId())
                 .build();
         copy.getDescription().getExtras().putInt(MediaMetadataCompat.METADATA_KEY_DURATION, metadata.metadata.getDescription().getExtras().getInt(MediaMetadataCompat.METADATA_KEY_DURATION));
         copy.getDescription().getExtras().putInt(MutableMediaMetadata.baseCount, metadata.metadata.getDescription().getExtras().getInt(MutableMediaMetadata.baseCount));

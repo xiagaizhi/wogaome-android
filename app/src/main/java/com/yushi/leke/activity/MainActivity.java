@@ -209,7 +209,7 @@ public class MainActivity extends BaseActivity implements MediaBrowserProvider {
 
     @Override
     public void onMediaItemSelected(MediaBrowserCompat.MediaItem item) {
-        LogHelper.d(TAG, "onMediaItemSelected, mediaId=" + item.getMediaId());
+        LogHelper.d(TAG, "onMediaItemSelected, mediaId=" + item.getDescription().getMediaId());
         MusicProvider.getInstance().updateProvider();
         if (item.isPlayable()) {//可播放状态
             if (MediaIDHelper.isMediaItemPlaying(this, item)) {
@@ -232,7 +232,7 @@ public class MainActivity extends BaseActivity implements MediaBrowserProvider {
                 }
             } else {
                 MediaControllerCompat.getMediaController(MainActivity.this).getTransportControls()
-                        .playFromMediaId(item.getMediaId(), null);
+                        .playFromMediaId(item.getDescription().getMediaId(), null);
             }
         } else {
             LogHelper.w(TAG, "Ignoring MediaItem that is neither browsable nor playable: ",
