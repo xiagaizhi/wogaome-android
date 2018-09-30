@@ -31,6 +31,7 @@ import com.yufan.library.inject.Title;
 import com.yufan.library.widget.StateLayout;
 import com.yufan.library.widget.AppToolbar;
 import com.yushi.leke.dialog.CommonListDialog;
+import com.yushi.leke.util.FormatImageUtil;
 
 import java.util.List;
 
@@ -174,7 +175,7 @@ public class PersonalInfoVu extends BaseListVu<PersonalInfoContract.Presenter> i
 //            url = "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1535611272761&di=edb2ad0ac1e9fae8c791398bffecffdd&imgtype=0&src=http%3A%2F%2Fp1.wmpic.me%2Farticle%2F2017%2F10%2F23%2F1508744874_AaXhrBZE.jpg";
 //        }
         Glide.with(getContext()).load(url).bitmapTransform(new BlurTransformation(getContext(), 15)).into(img_personal_top_bg);
-        img_head.setImageURI(url);
+        img_head.setImageURI(FormatImageUtil.converImageUrl(url,200,200));
     }
 
     private void toShowCityPickView() {

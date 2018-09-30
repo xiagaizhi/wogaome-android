@@ -16,7 +16,6 @@
 
 package com.yushi.leke.fragment.exhibition.exhibitionHome.binder;
 
-import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -30,6 +29,7 @@ import com.yufan.library.inter.ICallBack;
 import com.yufan.library.util.StringUtil;
 import com.yushi.leke.R;
 import com.yushi.leke.fragment.exhibition.exhibitionHome.bean.ExhibitionInfo;
+import com.yushi.leke.util.FormatImageUtil;
 
 import me.drakeet.multitype.ItemViewBinder;
 
@@ -73,7 +73,7 @@ public class ExhibitionViewBinder extends ItemViewBinder<ExhibitionInfo, Exhibit
                 break;
         }
 
-        holder.sdv.setImageURI(Uri.parse(category.getBgPicture()));
+        holder.sdv.setImageURI(FormatImageUtil.converImageUrl(category.getBgPicture()));
         holder.tv_title.setText(category.getTitle());
         holder.tv_action_company.setText("主办方：" + category.getOrganizer());
         holder.tv_action_time.setText("活动时间：" + StringUtil.formatTime(category.getStartDate(), category.getEndDate()));

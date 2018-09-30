@@ -51,8 +51,8 @@ public class FormatImageUtil {
      * @param quality     (取值范围:1-100)   决定图片的绝对质量，把原图质量压到Q%，如果原图质量小于指定数字，则不压缩。如果原图质量是100%，使用”90Q”会得到质量90％的图片；如果原图质量是95%，使用“90Q”还会得到质量90%的图片；如果原图质量是80%，使用“90Q”不会压缩，返回质量80%的原图。
      * @param w
      * @param h
-     * @param blurR       [1,50]r 越大图片越模糊。
-     * @param blurS       [1,50]s 越大图片越模糊。
+     * @param blurR      模糊半径  [1,50]r 越大图片越模糊。
+     * @param blurS       正态分布的标准差 [1,50]s 越大图片越模糊。
      * @return
      */
     public static String converImageUrl(String originalUrl, int quality, int w, int h, int blurR, int blurS) {
@@ -104,8 +104,8 @@ public class FormatImageUtil {
      * 高斯模糊
      *
      * @param originalUrl
-     * @param blurR       [1,50]r 越大图片越模糊。
-     * @param blurS       [1,50]s 越大图片越模糊。
+     * @param blurR      模糊半径 [1,50]r 越大图片越模糊。
+     * @param blurS      正态分布的标准差 [1,50]s 越大图片越模糊。
      * @return
      */
     public static String blurImage(String originalUrl, int blurR, int blurS) {

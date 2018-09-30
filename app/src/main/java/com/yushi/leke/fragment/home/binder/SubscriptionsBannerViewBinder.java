@@ -17,14 +17,11 @@
 package com.yushi.leke.fragment.home.binder;
 
 import android.content.Context;
-import android.graphics.drawable.AnimationDrawable;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
 
 import com.facebook.drawee.generic.GenericDraweeHierarchy;
 import com.facebook.drawee.generic.GenericDraweeHierarchyBuilder;
@@ -37,6 +34,7 @@ import com.yufan.library.view.banner.listener.OnBannerClickListener;
 import com.yufan.library.view.banner.loader.ImageLoaderInterface;
 import com.yushi.leke.R;
 import com.yushi.leke.fragment.home.bean.BannerItemInfo;
+import com.yushi.leke.util.FormatImageUtil;
 import com.yushi.leke.widget.transformer.ScaleTransformer;
 
 import java.util.ArrayList;
@@ -75,7 +73,7 @@ public class SubscriptionsBannerViewBinder extends ItemViewBinder<SubscriptionBa
 //        for (BannerItemInfo bannerItemInfo : bannerItemInfos) {
 //            imgs.add(bannerItemInfo.getIcon());
 //        }
-        if (bannerItemInfos == null || bannerItemInfos.size()==0){
+        if (bannerItemInfos == null || bannerItemInfos.size() == 0) {
             bannerItemInfos = new ArrayList<>();
             bannerItemInfos.add(new BannerItemInfo());
         }
@@ -84,7 +82,7 @@ public class SubscriptionsBannerViewBinder extends ItemViewBinder<SubscriptionBa
             public void displayImage(int position, Context context, Object path, View view) {
                 SimpleDraweeView simpleDraweeView = (SimpleDraweeView) view;
                 BannerItemInfo bannerItemInfo = (BannerItemInfo) path;
-                simpleDraweeView.setImageURI(String.valueOf(bannerItemInfo.getIcon()));
+                simpleDraweeView.setImageURI(FormatImageUtil.converImageUrl(String.valueOf(bannerItemInfo.getIcon())));
             }
 
             @Override

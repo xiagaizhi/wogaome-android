@@ -1,7 +1,6 @@
 package com.yushi.leke.fragment.exhibition.vote;
 
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
@@ -35,6 +34,7 @@ import com.yushi.leke.YFApi;
 import com.yushi.leke.dialog.CommonDialog;
 import com.yushi.leke.util.AliDotId;
 import com.yushi.leke.util.ArgsUtil;
+import com.yushi.leke.util.FormatImageUtil;
 import com.yushi.leke.util.RechargeUtil;
 
 import java.math.BigDecimal;
@@ -122,7 +122,7 @@ public class VoteFragment extends DialogFragment implements View.OnClickListener
     }
 
     private void bindData(VoteInitInfo voteInitInfo) {
-        img_logo.setImageURI(voteInitInfo.getLogo());
+        img_logo.setImageURI(FormatImageUtil.converImageUrl(voteInitInfo.getLogo(),160,160));
         tv_title.setText(voteInitInfo.getTitle());
         tv_area_industry.setText(voteInitInfo.getAddress() + "/" + voteInitInfo.getIndustry());
         tv_username.setText("创业者：" + voteInitInfo.getEntrepreneur());

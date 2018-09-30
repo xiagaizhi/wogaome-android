@@ -7,28 +7,25 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.facebook.drawee.view.SimpleDraweeView;
-import com.yufan.library.inject.FindView;
-import com.yufan.library.util.PxUtil;
-import com.yufan.library.util.ViewUtils;
-import com.yufan.library.view.ptr.PtrClassicFrameLayout;
-import com.yufan.library.view.ptr.PtrDefaultHandler;
-import com.yufan.library.view.ptr.PtrFrameLayout;
-import com.yufan.library.view.ptr.PtrHandler;
-import com.yufan.library.widget.ExpandableTextView;
-import com.yufan.library.widget.NoScrollViewPager;
-import com.yushi.leke.R;
 import com.yufan.library.base.BaseVu;
 import com.yufan.library.inject.FindLayout;
+import com.yufan.library.inject.FindView;
 import com.yufan.library.inject.Title;
-import com.yufan.library.widget.StateLayout;
+import com.yufan.library.util.ViewUtils;
+import com.yufan.library.view.ptr.PtrClassicFrameLayout;
+import com.yufan.library.view.ptr.PtrFrameLayout;
+import com.yufan.library.view.ptr.PtrHandler;
 import com.yufan.library.widget.AppToolbar;
+import com.yufan.library.widget.ExpandableTextView;
+import com.yufan.library.widget.NoScrollViewPager;
+import com.yufan.library.widget.StateLayout;
+import com.yushi.leke.R;
 import com.yushi.leke.UIHelper;
+import com.yushi.leke.util.FormatImageUtil;
 
 /**
  * Created by mengfantao on 18/8/2.
@@ -170,7 +167,7 @@ public class AlbumDetailVu extends BaseVu<AlbumDetailContract.Presenter> impleme
             tv_playcount.setText(info.getAlbumViewTimes()+"次");
             tv_total.setText("全"+info.getAudioQuantity()+"集");
             expandableTextView.setText(info.getAlbum().getCreatorInfo());
-            sdv.setImageURI(info.getAlbum().getHorizontalIcon());
+            sdv.setImageURI(FormatImageUtil.converImageUrl(info.getAlbum().getHorizontalIcon(),0,562));
         }
     }
 

@@ -1,7 +1,5 @@
 package com.yushi.leke.util;
 
-import android.util.Log;
-
 import com.yufan.library.Global;
 import com.yufan.library.api.ApiBean;
 import com.yufan.library.api.ApiManager;
@@ -22,6 +20,7 @@ public class AudioTimerUtil {
     private long duration;
     private Timer mTimer;
     private TimerTask mTimerTask;
+    private long currentAccumulateTime;//当前上报时间点
 
     private AudioTimerUtil() {
         duration = SPManager.getInstance().getLong(Global.SP_AUDIO_TIMER_KEY, 0);
@@ -69,6 +68,10 @@ public class AudioTimerUtil {
         if (duration <= 0) {
             return;
         }
+        if (System.currentTimeMillis() - currentAccumulateTime < 10 * 60 * 1000) {//不足十分钟即便上报失败也不再上报，等再过十分钟再重试上报
+            return;
+        }
+        currentAccumulateTime = System.currentTimeMillis();
         final long temp = duration;
         ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).accumulate(temp)).enqueue(new BaseHttpCallBack() {
             @Override

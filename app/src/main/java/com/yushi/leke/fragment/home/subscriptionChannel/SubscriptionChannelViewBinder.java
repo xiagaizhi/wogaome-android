@@ -13,6 +13,7 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.yufan.library.inter.ICallBack;
 import com.yushi.leke.R;
 import com.yushi.leke.fragment.home.bean.Homeinfo;
+import com.yushi.leke.util.FormatImageUtil;
 
 import me.drakeet.multitype.ItemViewBinder;
 
@@ -36,7 +37,7 @@ public class SubscriptionChannelViewBinder extends ItemViewBinder<Homeinfo, Subs
 
     @Override
     protected void onBindViewHolder(@NonNull ViewHolder viewHolder, @NonNull final Homeinfo homeinfo) {
-        viewHolder.img_logo.setImageURI(homeinfo.getHorizontalIcon());
+        viewHolder.img_logo.setImageURI(FormatImageUtil.converImageUrl(homeinfo.getHorizontalIcon(),218,168));
         viewHolder.tv_title.setText(homeinfo.getAlbumName());
         viewHolder.tv_name.setText(homeinfo.getCreator());
         viewHolder.tv_industry.setText(homeinfo.getCreatorInfo());
