@@ -16,7 +16,6 @@
 
 package com.yushi.leke.fragment.searcher;
 
-import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -26,8 +25,8 @@ import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.yufan.library.inter.ICallBack;
-import com.yufan.library.util.StringUtil;
 import com.yushi.leke.R;
+import com.yushi.leke.util.FormatImageUtil;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -54,7 +53,7 @@ public class SearchActionViewBinder extends ItemViewBinder<SearchActionInfo, Sea
     @Override
     protected void onBindViewHolder(@NonNull ViewHolder holder, @NonNull final SearchActionInfo category) {
 
-        holder.sdv.setImageURI(Uri.parse(category.horizontalIcon));
+        holder.sdv.setImageURI(FormatImageUtil.converImageUrl(category.horizontalIcon,256,144));
         holder.tv_title.setText(category.getTitle());
         holder.tv_organizer.setText(category.getOrganizer());
         holder.tv_time.setText(getFormatedDateTime("yy-MM-dd", Long.parseLong(category.getStartTime()))

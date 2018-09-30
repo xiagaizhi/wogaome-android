@@ -2,31 +2,26 @@ package com.yushi.leke.fragment.album.audioList;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v4.media.MediaBrowserCompat;
 import android.support.v4.media.MediaMetadataCompat;
 import android.support.v4.media.session.MediaControllerCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
-import com.yufan.library.Global;
 import com.yufan.library.util.StringUtil;
 import com.yushi.leke.R;
-import com.yushi.leke.fragment.test.CategoryItemViewBinder;
 import com.yushi.leke.uamp.model.MutableMediaMetadata;
 import com.yushi.leke.uamp.utils.MediaIDHelper;
+import com.yushi.leke.util.FormatImageUtil;
 
 import me.drakeet.multitype.ItemViewBinder;
 
@@ -57,7 +52,7 @@ public class MediaBrowserViewBinder extends ItemViewBinder<MediaBrowserCompat.Me
     @Override
     protected void onBindViewHolder(@NonNull final ViewHolder viewHolder, @NonNull final MediaBrowserCompat.MediaItem mediaItem) {
         viewHolder.tv_name.setText(mediaItem.getDescription().getTitle());
-        viewHolder.sdv.setImageURI(mediaItem.getDescription().getIconUri());
+        viewHolder.sdv.setImageURI(FormatImageUtil.converImageUrl(mediaItem.getDescription().getIconUri().toString(),160,120));
         viewHolder.tv_info.setText(StringUtil.stringForTime(mediaItem.getDescription().getExtras().getInt(MediaMetadataCompat.METADATA_KEY_DURATION)) + "/" + mediaItem.getDescription().getExtras().getLong(MutableMediaMetadata.viewPeople) + "人听过");
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

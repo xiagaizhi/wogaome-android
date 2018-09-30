@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.yufan.library.inter.ICallBack;
 import com.yushi.leke.R;
+import com.yushi.leke.util.FormatImageUtil;
 
 import me.drakeet.multitype.ItemViewBinder;
 
@@ -35,7 +36,7 @@ public class MySubscriptionViewBinder extends ItemViewBinder<MySubscriptionInfo,
 
     @Override
     protected void onBindViewHolder(@NonNull ViewHolder viewHolder, @NonNull final MySubscriptionInfo mySubscriptionInfo) {
-        viewHolder.img_logo.setImageURI(mySubscriptionInfo.getHorizontalIcon());
+        viewHolder.img_logo.setImageURI(FormatImageUtil.converImageUrl(mySubscriptionInfo.getHorizontalIcon(),218,168));
         viewHolder.tv_title.setText(mySubscriptionInfo.getAlbumName());
         viewHolder.tv_name.setText(mySubscriptionInfo.getCreator());
         viewHolder.tv_industry.setText(mySubscriptionInfo.getCreatorInfo());

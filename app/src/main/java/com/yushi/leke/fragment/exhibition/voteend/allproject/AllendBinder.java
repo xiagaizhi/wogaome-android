@@ -14,6 +14,7 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.yufan.library.inter.ICallBack;
 import com.yushi.leke.R;
 import com.yushi.leke.fragment.exhibition.voteing.allproject.Allprojectsinfo;
+import com.yushi.leke.util.FormatImageUtil;
 
 import me.drakeet.multitype.ItemViewBinder;
 
@@ -30,13 +31,13 @@ public class AllendBinder extends ItemViewBinder<Allprojectsinfo, AllendBinder.V
 
     @SuppressLint("ResourceAsColor")
     @Override
-    protected void onBindViewHolder(@NonNull ViewHolder viewHolder, @NonNull final Allprojectsinfo Allendinfo) {
-        viewHolder.sdv.setImageURI(Allendinfo.getVideo100Pic());
-        viewHolder.tv_vote_playsum.setText(String.valueOf(Allendinfo.getPlayCount()));
-        viewHolder.tv_vote_title.setText(Allendinfo.getTitle());
-        viewHolder.tv_vote_sum.setText(String.valueOf(Allendinfo.getVotes()));
-        viewHolder.tv_vote_province.setText(Allendinfo.getAddress()+" / "+ Allendinfo.getIndustry());
-        viewHolder.tv_vote_name.setText("创业者："+ Allendinfo.getEntrepreneur());
+    protected void onBindViewHolder(@NonNull ViewHolder viewHolder, @NonNull final Allprojectsinfo allendinfo) {
+        viewHolder.sdv.setImageURI(FormatImageUtil.converImageUrl(allendinfo.getVideo100Pic(),256,144));
+        viewHolder.tv_vote_playsum.setText(String.valueOf(allendinfo.getPlayCount()));
+        viewHolder.tv_vote_title.setText(allendinfo.getTitle());
+        viewHolder.tv_vote_sum.setText(String.valueOf(allendinfo.getVotes()));
+        viewHolder.tv_vote_province.setText(allendinfo.getAddress()+" / "+ allendinfo.getIndustry());
+        viewHolder.tv_vote_name.setText("创业者："+ allendinfo.getEntrepreneur());
         viewHolder.btn_vote_support.setText("已结束");
         viewHolder.btn_vote_support.setTextColor(Color.parseColor("#FF999999"));
     }

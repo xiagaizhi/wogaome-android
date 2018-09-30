@@ -16,7 +16,6 @@
 
 package com.yushi.leke.fragment.home.binder;
 
-import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -30,6 +29,7 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.yufan.library.inter.ICallBack;
 import com.yushi.leke.R;
 import com.yushi.leke.fragment.home.bean.Homeinfo;
+import com.yushi.leke.util.FormatImageUtil;
 
 import me.drakeet.multitype.ItemViewBinder;
 
@@ -87,7 +87,7 @@ this.callBack=callBack;
             holder.ll_tag.setVisibility(View.GONE);
         }
 
-        holder.sdv.setImageURI(Uri.parse(category.getHorizontalIcon()));
+        holder.sdv.setImageURI(FormatImageUtil.converImageUrl(category.getHorizontalIcon(),218,168));
         if (getAdapter().getItemCount()==getPosition(holder)-1) {
             holder.view_bottom_line.setVisibility(View.INVISIBLE);
         } else {

@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.yufan.library.inter.ICallBack;
 import com.yushi.leke.R;
+import com.yushi.leke.util.FormatImageUtil;
 
 import me.drakeet.multitype.ItemViewBinder;
 
@@ -33,7 +34,7 @@ public class VoteendBinder extends ItemViewBinder<Voteendinfo, VoteendBinder.Vie
     @Override
     protected void onBindViewHolder(@NonNull ViewHolder viewHolder, @NonNull final Voteendinfo voteendinfo) {
         viewHolder.tv_vote_playsum.setText(String.valueOf(voteendinfo.getPlayCount()));
-        viewHolder.sdv.setImageURI(voteendinfo.getVideo100Pic());
+        viewHolder.sdv.setImageURI(FormatImageUtil.converImageUrl(voteendinfo.getVideo100Pic(),256,144));
         viewHolder.tv_vote_title.setText(voteendinfo.getTitle());
         viewHolder.tv_vote_sum.setText(String.valueOf(voteendinfo.getVotes()));
         viewHolder.tv_vote_province.setText(voteendinfo.getAddress() + " / " + voteendinfo.getIndustry());
