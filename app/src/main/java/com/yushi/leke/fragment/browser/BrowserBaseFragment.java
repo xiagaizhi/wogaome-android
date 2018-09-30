@@ -15,6 +15,9 @@ import android.util.Log;
 import android.view.View;
 
 import com.alibaba.fastjson.JSON;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
 import com.tencent.smtt.export.external.interfaces.IX5WebChromeClient.CustomViewCallback;
 import com.tencent.smtt.export.external.interfaces.JsResult;
 import com.tencent.smtt.export.external.interfaces.SslError;
@@ -32,8 +35,10 @@ import com.yufan.library.Global;
 import com.yufan.library.api.ApiManager;
 import com.yufan.library.base.BaseFragment;
 import com.yufan.library.inject.VuClass;
+import com.yufan.library.manager.DialogManager;
 import com.yufan.library.manager.UserManager;
 import com.yufan.library.util.DeviceUtil;
+import com.yufan.library.util.ImageUtil;
 import com.yufan.library.util.SoftInputUtil;
 import com.yufan.library.view.ptr.PtrDefaultHandler;
 import com.yufan.library.view.ptr.PtrFrameLayout;
@@ -578,6 +583,62 @@ public class BrowserBaseFragment extends BaseFragment<BrowserContract.View> impl
                             getRootFragment().start(UIHelper.creat(BrowserBaseFragment.class).put(Global.BUNDLE_KEY_BROWSER_URL, ApiManager.getInstance().getApiConfig().getMyRoadShow()).build());
                             break;
                     }
+                }
+            });
+
+
+            registerHandler("web_openNewPage", new WVJBHandler() {//新窗口打开页面
+                @Override
+                public void request(Object data, WVJBResponseCallback callback) {
+                    JSONObject jsonObject = (JSONObject) data;
+                    String url = jsonObject.optString("url");
+                    getRootFragment().start(UIHelper.creat(BrowserBaseFragment.class).put(Global.BUNDLE_KEY_BROWSER_URL, url).build());
+                }
+            });
+
+
+            /**
+             * 屏幕截图
+             */
+            registerHandler("web_screenshots", new WVJBWebViewClient.WVJBHandler() {
+                @Override
+                public void request(Object data, WVJBWebViewClient.WVJBResponseCallback callback) {
+                    ImageUtil.saveImageFile(ImageUtil.captureWebView(getVu().getWebView()), _mActivity, Global.SAVE_SCREEN_CAPTURE_IMAGE_PATH);
+                    DialogManager.getInstance().toast("截图成功");
+                    if (callback != null) {
+                        callback.callback("{\"code\" :\"000\"}");
+                    }
+                }
+            });
+
+
+            /**
+             *下载图片保存到相册
+             */
+            registerHandler("web_downloadImage", new WVJBWebViewClient.WVJBHandler() {
+                @Override
+                public void request(Object data, WVJBWebViewClient.WVJBResponseCallback callback) {
+                    //{"url":"XXX"}
+
+                    JSONObject mJSONObject = (JSONObject) data;
+                    String url = mJSONObject.optString("url");
+                    Glide.with(_mActivity).load(url).asBitmap().into(new SimpleTarget<Bitmap>() {
+                        @Override
+                        public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
+                            ImageUtil.saveImageFile(resource, _mActivity, Global.SAVE_DOWNLOAD_IMAGE_IMAGE_PATH);
+                        }
+                    });
+                }
+            });
+
+
+            /**
+             * 关闭当前 Web 窗口
+             */
+            registerHandler("web_closeWindow", new WVJBWebViewClient.WVJBHandler() {
+                @Override
+                public void request(Object data, WVJBWebViewClient.WVJBResponseCallback callback) {
+                    pop();
                 }
             });
 

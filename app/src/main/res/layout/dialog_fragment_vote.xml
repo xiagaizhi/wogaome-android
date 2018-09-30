@@ -116,7 +116,6 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:drawableLeft="@drawable/ic_vote_red"
-                        android:text="10000票"
                         android:textColor="@color/message_widget_bg"
                         android:textSize="@dimen/px24" />
                 </LinearLayout>

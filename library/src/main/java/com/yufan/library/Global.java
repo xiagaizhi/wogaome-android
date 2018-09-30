@@ -91,6 +91,16 @@ public class Global {
      */
     public final static String SAVE_COMPRESSION_IMAGE_PATH = DEFAULT_SAVE_IMAGE_PATH + "compressionPhotos" + File.separator;
 
+    /**
+     * 屏幕截图
+     */
+    public final static String SAVE_SCREEN_CAPTURE_IMAGE_PATH = DEFAULT_SAVE_IMAGE_PATH + "screenCapture" + File.separator;
+
+    /**
+     * 下载图片
+     */
+    public final static String SAVE_DOWNLOAD_IMAGE_IMAGE_PATH = DEFAULT_SAVE_IMAGE_PATH + "downloadImage" + File.separator;
+
 
     /**
      * 分享生成海报

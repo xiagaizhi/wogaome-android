@@ -13,9 +13,9 @@ public class VoteInitInfo {
     private String title;
     private String address;
     private String industry;
-    private BigDecimal voteCount;
+    private long voteCount;
     private String entrepreneur;
-    private BigDecimal lkc;
+    private BigDecimal lkc = new BigDecimal(0);
     private int isHaveTradePwd;
 
     public String getLogo() {
@@ -50,14 +50,6 @@ public class VoteInitInfo {
         this.industry = industry;
     }
 
-    public BigDecimal getVoteCount() {
-        return voteCount;
-    }
-
-    public void setVoteCount(BigDecimal voteCount) {
-        this.voteCount = voteCount;
-    }
-
     public String getEntrepreneur() {
         return entrepreneur;
     }
@@ -80,5 +72,13 @@ public class VoteInitInfo {
 
     public void setIsHaveTradePwd(int isHaveTradePwd) {
         this.isHaveTradePwd = isHaveTradePwd;
+    }
+
+    public long getVoteCount() {
+        return voteCount;
+    }
+
+    public void setVoteCount(long voteCount) {
+        this.voteCount = voteCount;
     }
 }

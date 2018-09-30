@@ -1,15 +1,25 @@
 package com.yufan.library.util;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.ContentUris;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Picture;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 
+import com.tencent.smtt.sdk.WebView;
+import com.yufan.library.manager.UserManager;
+
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 import top.zibin.luban.Luban;
 import top.zibin.luban.OnCompressListener;
@@ -139,5 +149,49 @@ public class ImageUtil {
                 .ignoreBy(300)                                  // 忽略不压缩图片的大小
                 .setTargetDir(targetDir)                        // 设置压缩后文件存储位置
                 .setCompressListener(compressListener).launch();    //启动压缩
+    }
+
+
+    public static void saveImageFile(Bitmap mBitmap, Activity activity, String path) {
+        FileOutputStream out = null;
+        try {
+            File file = new File(path);
+            if (!file.exists()) {
+                file.mkdirs();
+            }
+            File img = new File(file, UserManager.getInstance().getUid() + "_img_" + System.currentTimeMillis() + ".jpg");
+            out = new FileOutputStream(img);
+            mBitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
+            out.flush();
+            activity.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(img)));
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (out != null) {
+                try {
+                    out.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+    }
+
+
+    public static Bitmap captureWebView(WebView webView) {
+
+        Picture snapShot = webView.capturePicture();
+
+        Bitmap bmp = Bitmap.createBitmap(snapShot.getWidth(),
+
+                snapShot.getHeight(), Bitmap.Config.ARGB_8888);
+
+        Canvas canvas = new Canvas(bmp);
+
+        snapShot.draw(canvas);
+
+        return bmp;
+
     }
 }
