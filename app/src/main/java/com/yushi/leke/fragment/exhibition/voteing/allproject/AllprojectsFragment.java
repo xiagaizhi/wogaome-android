@@ -150,8 +150,8 @@ public class AllprojectsFragment extends BaseListFragment<AllprojectsContract.IV
                             citylist.clear();
                             for (int i = 0; i< cityinfolist.getAddressList().size(); i++){
                                 citylist.add(cityinfolist.getAddressList().get(i));
-                                getVu().setCitylist(citylist);
                             }
+                            getVu().setCitylist(citylist);
                         }
                     }
                     @Override
@@ -180,8 +180,8 @@ public class AllprojectsFragment extends BaseListFragment<AllprojectsContract.IV
                     for (int i = 0; i< industryinfolist.getIndustryList().size(); i++){
                         worklistname.add(industryinfolist.getIndustryList().get(i).getIndustryName());
                         worklistid.add(industryinfolist.getIndustryList().get(i).getIndustryId());
-                        getVu().setWorklist(worklistname,worklistid);
                     }
+                    getVu().setWorklist(worklistname,worklistid);
                 }
             }
             @Override
