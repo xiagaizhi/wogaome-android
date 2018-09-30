@@ -526,7 +526,7 @@ public class BrowserBaseFragment extends BaseFragment<BrowserContract.View> impl
                 public void request(Object data, WVJBResponseCallback callback) {
                     UserManager.getInstance().setToken("");
                     UserManager.getInstance().setUid("");
-                    App.getApp().registerXGPush("*");
+                    App.getApp().bindUid("*");
                     getRootFragment().startWithPopTo(UIHelper.creat(LoginFragment.class).build(), MainFragment.class, true);
                 }
             });

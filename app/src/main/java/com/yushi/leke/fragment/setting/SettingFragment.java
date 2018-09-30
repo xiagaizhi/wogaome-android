@@ -166,7 +166,7 @@ public class SettingFragment extends BaseFragment<SettingContract.IView> impleme
 
         UserManager.getInstance().setToken("");
         UserManager.getInstance().setUid("");
-        App.getApp().registerXGPush("*");
+        App.getApp().bindUid("*");
         getRootFragment().startWithPopTo(UIHelper.creat(LoginFragment.class).build(), MainFragment.class, true);
     }
 

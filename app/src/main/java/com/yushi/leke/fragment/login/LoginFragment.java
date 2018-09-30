@@ -14,6 +14,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.alibaba.sdk.android.man.MANHitBuilders;
 import com.alibaba.sdk.android.man.MANService;
 import com.alibaba.sdk.android.man.MANServiceProvider;
+import com.tencent.android.tpush.XGPushManager;
 import com.tencent.smtt.sdk.CookieManager;
 import com.tencent.smtt.sdk.CookieSyncManager;
 import com.umeng.socialize.UMShareAPI;
@@ -143,14 +144,15 @@ public class LoginFragment extends BaseFragment<LoginContract.IView> implements 
             public void onSuccess(Map<String, String> map, SHARE_MEDIA share_media, Map<String, String> map1) {
                 DialogManager.getInstance().dismiss();
                 if (share_media == SHARE_MEDIA.WEIXIN) {
-                    EnhancedCall call = ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).registerViaOAuth(map.get("accessToken"), "1", map.get("openid")));
+
+                    EnhancedCall call = ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).registerViaOAuth(map.get("accessToken"), "1", map.get("openid"),"deviceToken"));
                     call.enqueue(new BaseHttpCallBack() {
                         @Override
                         public void onSuccess(ApiBean mApiBean) {
                             JSONObject jsonObject = JSON.parseObject(mApiBean.getData());
                             UserManager.getInstance().setToken(jsonObject.getString("token"));
                             UserManager.getInstance().setUid(jsonObject.getString("uid"));
-                            App.getApp().registerXGPush(UserManager.getInstance().getUid());
+                            App.getApp().bindUid(UserManager.getInstance().getUid());
                             startWithPopTo(UIHelper.creat(MainFragment.class).build(), LoginFragment.class, true);
                             mShareUtils.logout(SHARE_MEDIA.WEIXIN);
                             //绑定用户和信鸽token

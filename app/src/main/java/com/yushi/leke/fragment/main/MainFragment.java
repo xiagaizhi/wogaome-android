@@ -63,7 +63,7 @@ public class MainFragment extends BaseFragment<MainContract.IView> implements Ma
                 case Global.BROADCAST_TOKEN_LOSE://token失效
                     UserManager.getInstance().setToken("");
                     UserManager.getInstance().setUid("");
-                    App.getApp().registerXGPush("*");
+                    App.getApp().bindUid("*");
                     getRootFragment().startWithPopTo(UIHelper.creat(LoginFragment.class).build(), MainFragment.class, true);
                     break;
                 case Global.BROADCAST_ACTION_ADJUMP://广告具体跳转

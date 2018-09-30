@@ -41,7 +41,8 @@ public interface YFApi {
     registerViaOAuth(
             @Field("accessToken") String accessToken,
             @Field("oauthType") String oauthType,
-            @Field("openId") String openId
+            @Field("openId") String openId,
+            @Field("deviceToken") String deviceToken
 
     );
 

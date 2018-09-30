@@ -142,6 +142,7 @@ public class SearchFragment extends BaseListFragment<SearchContract.IView> imple
                 List<SearchActionInfo> searchActionInfos= JSON.parseArray(jsonObject.getString("activity"),SearchActionInfo.class);
                 List<Homeinfo> audioInfos= JSON.parseArray(jsonObject.getString("audio"),Homeinfo.class);
                 list.clear();
+
                 list.add("音频");
                 list.addAll(audioInfos);
                 list.add(new SearchBottomInfo(moreAudio==1,"查看更多项目"));

@@ -65,7 +65,7 @@ public class App extends BaseApplication {
         QbSdk.initX5Environment(getApplicationContext(), null);
         ApiManager.getInstance().init(SPManager.getInstance().getInt(Global.SP_KEY_SERVICE_TYPE, BuildConfig.API_TYPE));
         //注册信鸽
-        registerXGPush(UserManager.getInstance().getUid());
+        registerXGPush();
         initCustomPushNotificationBuilder(getApplicationContext());
         OkGo.getInstance().init(this);
         //初始化数据埋点
@@ -96,18 +96,24 @@ public class App extends BaseApplication {
         // 若既没有设置AndroidManifest.xml 中的 android:versionName，也没有调用setAppVersion，appVersion则为null
         //manService.getMANAnalytics().setAppVersion("2.0");
     }
-    public void registerXGPush(String uid) {
+
+    public void bindUid(String uid){
         if (TextUtils.isEmpty(uid)){
             uid = "*";
         }
-        XGPushManager.registerPush(getApplicationContext(), uid,
+        XGPushManager.bindAccount(getApplicationContext(),uid);
+    }
+    private void registerXGPush() {
+
+        XGPushManager.registerPush(getApplicationContext(),
                 new XGIOperateCallback() {
                     @Override
                     public void onSuccess(Object data, int flag) {
                         Log.w(Constants.LogTag, "+++ register push sucess. token:" + data + "flag" + flag);
                         if (data!=null){
                             SPManager.getInstance().saveValue("XGTOKEN",data.toString());
-                            binddevice(data.toString(),"2");
+
+                           // binddevice(data.toString(),"2");
                         }
                     }
 
@@ -121,28 +127,28 @@ public class App extends BaseApplication {
                     }
                 });
     }
-    private void binddevice(String token,String os){
-        ApiManager.getCall(ApiManager.getInstance().create(YFApi.class)
-                .binddevice(token,os))
-                .useCache(false)
-                .enqueue(new BaseHttpCallBack() {
-                    @Override
-                    public void onSuccess(ApiBean mApiBean) {
-                      if (mApiBean.getCode().equals(2000)){
-                      }
-                    }
-
-                    @Override
-                    public void onError(int id, Exception e) {
-                        Log.d(Constants.LogTag,e.toString());
-                    }
-
-                    @Override
-                    public void onFinish() {
-                        Log.d(Constants.LogTag,"finsh");
-                    }
-                });
-    }
+//    private void binddevice(String token,String os){
+//        ApiManager.getCall(ApiManager.getInstance().create(YFApi.class)
+//                .binddevice(token,os))
+//                .useCache(false)
+//                .enqueue(new BaseHttpCallBack() {
+//                    @Override
+//                    public void onSuccess(ApiBean mApiBean) {
+//                      if (mApiBean.getCode().equals(2000)){
+//                      }
+//                    }
+//
+//                    @Override
+//                    public void onError(int id, Exception e) {
+//                        Log.d(Constants.LogTag,e.toString());
+//                    }
+//
+//                    @Override
+//                    public void onFinish() {
+//                        Log.d(Constants.LogTag,"finsh");
+//                    }
+//                });
+//    }
     /**
      * 设置通知自定义View，这样在下发通知时可以指定build_id。编号由开发者自己维护,build_id=0为默认设置
      *

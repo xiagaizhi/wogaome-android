@@ -76,7 +76,7 @@ public class RegisterFragment extends BaseFragment<RegisterContract.IView> imple
               JSONObject jsonObject= JSON.parseObject(mApiBean.getData());
               UserManager.getInstance().setToken(jsonObject.getString("token"));
               UserManager.getInstance().setUid(jsonObject.getString("uid"));
-              App.getApp().registerXGPush(UserManager.getInstance().getUid());
+              App.getApp().bindUid(UserManager.getInstance().getUid());
               startWithPopTo(UIHelper.creat(MainFragment.class).build(), LoginFragment.class,true);
               //用户注册数据埋点
               ArgsUtil.getInstance().registerpoint(jsonObject.getString("uid"));

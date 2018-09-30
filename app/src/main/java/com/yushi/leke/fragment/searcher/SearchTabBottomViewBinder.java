@@ -74,6 +74,8 @@ public class SearchTabBottomViewBinder extends ItemViewBinder<SearchBottomInfo, 
                         }
                     });
                 }
+            }else {
+                holder.tv_title.setVisibility(View.INVISIBLE);
             }
     }
 
