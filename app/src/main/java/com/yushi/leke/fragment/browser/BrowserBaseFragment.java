@@ -51,15 +51,11 @@ import com.yushi.leke.fragment.login.LoginFragment;
 import com.yushi.leke.fragment.main.MainFragment;
 import com.yushi.leke.share.ShareMenuActivity;
 
-import org.json.JSONException;
 import org.json.JSONObject;
-import org.json.JSONStringer;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
-import java.util.Iterator;
 import java.util.Map;
-import java.util.Set;
 
 
 /**
@@ -605,6 +601,7 @@ public class BrowserBaseFragment extends BaseFragment<BrowserContract.View> impl
             vu.onPageFinished(view, url);
         }
 
+        @Override
         public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
             handler.proceed();  // 接受所有网站的证书
         }
