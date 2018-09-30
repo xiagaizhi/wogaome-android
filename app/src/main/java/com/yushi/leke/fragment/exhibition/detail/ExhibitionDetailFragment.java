@@ -168,8 +168,9 @@ public class ExhibitionDetailFragment extends BaseFragment<ExhibitionDetailContr
         VideoTimerUtil.getInstance().stopTimer();
         Map<String, String> params = new HashMap<>();
         params.put("uid", UserManager.getInstance().getUid());
-        params.put("projectId", String.valueOf(VideoTimerUtil.getInstance().getDuration()));
-        ArgsUtil.getInstance().datapoint(AliDotId.id_0100, params);
+        params.put("projectId", currentProjectId);
+        params.put("schedule", String.valueOf(VideoTimerUtil.getInstance().getDuration()));
+        ArgsUtil.getInstance().datapoint(AliDotId.id_0700, params);
         VideoTimerUtil.getInstance().setDuration(0);
     }
 
