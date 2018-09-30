@@ -25,10 +25,10 @@ import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
 
 import com.yushi.leke.fragment.musicplayer.MusicPlayerFragment;
-import com.yushi.leke.uamp.model.MusicProvider;
-import com.yushi.leke.uamp.utils.LogHelper;
-import com.yushi.leke.uamp.utils.MediaIDHelper;
 import com.yushi.leke.plugin.musicplayer.R;
+import com.yushi.leke.uamp.model.MusicProvider;
+import com.yushi.leke.uamp.model.MutableMediaMetadata;
+import com.yushi.leke.uamp.utils.LogHelper;
 import com.yushi.leke.util.AudioTimerUtil;
 
 
@@ -49,7 +49,8 @@ public class PlaybackManager implements Playback.Callback {
     private Playback mPlayback;
     private PlaybackServiceCallback mServiceCallback;
     private MediaSessionCallback mMediaSessionCallback;
-    private static  PlaybackManager manager;
+    private static PlaybackManager manager;
+
     public PlaybackManager(PlaybackServiceCallback serviceCallback, Resources resources,
                            MusicProvider musicProvider, QueueManager queueManager,
                            Playback playback) {
@@ -60,10 +61,10 @@ public class PlaybackManager implements Playback.Callback {
         mMediaSessionCallback = new MediaSessionCallback();
         mPlayback = playback;
         mPlayback.setCallback(this);
-        manager=this;
+        manager = this;
     }
 
-    public static PlaybackManager getManager(){
+    public static PlaybackManager getManager() {
         return manager;
     }
 
@@ -230,7 +231,8 @@ public class PlaybackManager implements Playback.Callback {
     @Override
     public void onPlaybackStatusChanged(int state) {
         if (state == PlaybackStateCompat.STATE_PLAYING) {
-            AudioTimerUtil.getInstance().startTimer();
+            MediaSessionCompat.QueueItem currentMusic = mQueueManager.getCurrentMusic();
+            AudioTimerUtil.getInstance().startTimer(currentMusic.getDescription().getExtras().getString(MutableMediaMetadata.audioId));
         } else {
             AudioTimerUtil.getInstance().stopTimer();
         }
@@ -255,12 +257,13 @@ public class PlaybackManager implements Playback.Callback {
     }
 
 
-    public void setCompleteCallBack(MusicPlayerFragment.SeekCompleteCallBack seekCompleteCallBack){
-        this.seekCompleteCallBack=seekCompleteCallBack;
+    public void setCompleteCallBack(MusicPlayerFragment.SeekCompleteCallBack seekCompleteCallBack) {
+        this.seekCompleteCallBack = seekCompleteCallBack;
     }
+
     @Override
     public void onSeekComplete() {
-        if(seekCompleteCallBack!=null){
+        if (seekCompleteCallBack != null) {
             seekCompleteCallBack.onSeekComplete();
         }
     }

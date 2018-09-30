@@ -4,7 +4,6 @@ import android.app.ActivityManager;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.AnimationDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.RemoteException;
@@ -25,10 +24,8 @@ import android.widget.Toast;
 
 import com.tencent.android.tpush.XGPushClickedResult;
 import com.tencent.android.tpush.XGPushManager;
-import com.umeng.socialize.UMShareAPI;
 import com.yufan.library.Global;
 import com.yufan.library.base.BaseActivity;
-import com.yufan.library.inter.ICallBack;
 import com.yufan.library.manager.SPManager;
 import com.yufan.library.manager.UserManager;
 import com.yufan.library.util.FileUtil;
@@ -55,8 +52,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import me.yokeyword.fragmentation.SupportFragment;
 
 public class MainActivity extends BaseActivity implements MediaBrowserProvider {
     private String TAG = "MainActivity";
@@ -135,6 +130,7 @@ public class MainActivity extends BaseActivity implements MediaBrowserProvider {
         ablumId = SPManager.getInstance().getString(Global.SP_KEY_ALBUM_ID, "");
         mediaId = SPManager.getInstance().getString(Global.SP_KEY_MEDIA_ID, "");
         AudioTimerUtil.getInstance().accumulate();
+        AudioTimerUtil.getInstance().accumulateByAudioId();
         //app启动数据埋点
         Map<String, String> params = new HashMap<>();
         params.put("uid", UserManager.getInstance().getUid());

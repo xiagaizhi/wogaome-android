@@ -55,13 +55,6 @@ public class AlbumAudio {
         this.aliVideoId = aliVideoId;
     }
 
-    public String getAudioId() {
-        return audioId;
-    }
-
-    public void setAudioId(String audioId) {
-        this.audioId = audioId;
-    }
 
     public String getAudioName() {
         return audioName;
@@ -142,5 +135,13 @@ public class AlbumAudio {
 
     public void setViewTimes(long viewTimes) {
         this.viewTimes = viewTimes;
+    }
+
+    public String getAudioId() {
+        return audioId;
+    }
+
+    public void setAudioId(String audioId) {
+        this.audioId = audioId;
     }
 }
