@@ -39,6 +39,7 @@ import com.aliyun.vodplayerview.utils.ImageLoader;
 import com.aliyun.vodplayerview.utils.NetWatchdog;
 import com.aliyun.vodplayerview.utils.OrientationWatchDog;
 import com.aliyun.vodplayerview.utils.ScreenUtils;
+import com.aliyun.vodplayerview.utils.VideoTimerUtil;
 import com.aliyun.vodplayerview.view.GestureDialogManager;
 import com.aliyun.vodplayerview.view.choice.AlivcCheckItemDialog;
 import com.aliyun.vodplayerview.view.choice.AlivcCheckItemDialog.BottomListCheckBuilder.OnCheckItemClickListener;
@@ -1054,6 +1055,7 @@ public class AliyunVodPlayerView extends RelativeLayout implements ITheme {
         mAliyunVodPlayer.setOnErrorListener(new IAliyunVodPlayer.OnErrorListener() {
             @Override
             public void onError(int errorCode, int errorEvent, String errorMsg) {
+                VideoTimerUtil.getInstance().stopTimer();
                 if (errorCode == AliyunErrorCode.ALIVC_ERR_INVALID_INPUTFILE.getCode()) {
                     //当播放本地报错4003的时候，可能是文件地址不对，也有可能是没有权限。
                     //如果是没有权限导致的，就做一个权限的错误提示。其他还是正常提示：
@@ -1088,6 +1090,7 @@ public class AliyunVodPlayerView extends RelativeLayout implements ITheme {
         mAliyunVodPlayer.setOnTimeExpiredErrorListener(new IAliyunVodPlayer.OnTimeExpiredErrorListener() {
             @Override
             public void onTimeExpiredError() {
+                VideoTimerUtil.getInstance().stopTimer();
                 VcPlayerLog.d(TAG, "过期了！！");
                 if (mOutTimeExpiredErrorListener != null) {
                     mOutTimeExpiredErrorListener.onTimeExpiredError();
@@ -1123,6 +1126,7 @@ public class AliyunVodPlayerView extends RelativeLayout implements ITheme {
             @Override
             public void onCompletion() {
                 inSeek = false;
+                VideoTimerUtil.getInstance().stopTimer();
                 //关闭定时器
                 stopProgressUpdateTimer();
 
@@ -1199,6 +1203,7 @@ public class AliyunVodPlayerView extends RelativeLayout implements ITheme {
         mAliyunVodPlayer.setOnRePlayListener(new IAliyunVodPlayer.OnRePlayListener() {
             @Override
             public void onReplaySuccess() {
+                VideoTimerUtil.getInstance().startTimer();
                 //重播、重试成功
                 mTipsView.hideAll();
                 mGestureView.show();
@@ -1218,6 +1223,7 @@ public class AliyunVodPlayerView extends RelativeLayout implements ITheme {
             @Override
             public void onAutoPlayStarted() {
                 //自动播放开始,需要设置播放状态
+                VideoTimerUtil.getInstance().startTimer();
                 mControlView.setPlayState(ControlView.PlayState.Playing);
                 mAliyunVodPlayer.setMuteMode(true);
                 mControlView.setmPlayVolumeState(ControlView.PlayVoice.Quiet);
@@ -2051,6 +2057,7 @@ public class AliyunVodPlayerView extends RelativeLayout implements ITheme {
         PlayerState playerState = mAliyunVodPlayer.getPlayerState();
         if (playerState == PlayerState.Paused || playerState == PlayerState.Prepared || mAliyunVodPlayer.isPlaying()) {
             mAliyunVodPlayer.start();
+            VideoTimerUtil.getInstance().startTimer();
             hideErrorTipView();
         }
 
@@ -2071,6 +2078,7 @@ public class AliyunVodPlayerView extends RelativeLayout implements ITheme {
         PlayerState playerState = mAliyunVodPlayer.getPlayerState();
         if (playerState == PlayerState.Started || mAliyunVodPlayer.isPlaying()) {
             mAliyunVodPlayer.pause();
+            VideoTimerUtil.getInstance().stopTimer();
         }
     }
 
@@ -2080,7 +2088,7 @@ public class AliyunVodPlayerView extends RelativeLayout implements ITheme {
     private void stop() {
         if (mAliyunVodPlayer != null) {
             mAliyunVodPlayer.stop();
-
+            VideoTimerUtil.getInstance().stopTimer();
             mControlView.setPlayState(ControlView.PlayState.NotPlaying);
         }
     }

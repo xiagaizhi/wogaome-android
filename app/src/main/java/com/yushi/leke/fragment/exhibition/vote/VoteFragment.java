@@ -33,10 +33,13 @@ import com.yufan.library.manager.UserManager;
 import com.yushi.leke.R;
 import com.yushi.leke.YFApi;
 import com.yushi.leke.dialog.CommonDialog;
+import com.yushi.leke.util.AliDotId;
 import com.yushi.leke.util.ArgsUtil;
 import com.yushi.leke.util.RechargeUtil;
 
 import java.math.BigDecimal;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 作者：Created by zhanyangyang on 2018/9/10 10:26
@@ -284,7 +287,10 @@ public class VoteFragment extends DialogFragment implements View.OnClickListener
                             voteInitInfo.setVoteCount(voteInitInfo.getVoteCount().add(new BigDecimal(getCurrentChoiceVoteNum())));
                             bindData(voteInitInfo);
                             //投票数据埋点
-                            ArgsUtil.getInstance().datapoint("0900","uid", UserManager.getInstance().getUid(),"projectId ",projectId );
+                            Map<String, String> params = new HashMap<>();
+                            params.put("uid", UserManager.getInstance().getUid());
+                            params.put("projectId", projectId);
+                            ArgsUtil.getInstance().datapoint(AliDotId.id_0900, params);
                         }
 
                         @Override

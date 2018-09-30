@@ -31,7 +31,11 @@ import com.yushi.leke.fragment.login.LoginFragment;
 import com.yushi.leke.fragment.main.MainFragment;
 import com.yushi.leke.fragment.register.RegisterFragment;
 import com.yushi.leke.fragment.resetPassword.ResetPasswordFragment;
+import com.yushi.leke.util.AliDotId;
 import com.yushi.leke.util.ArgsUtil;
+
+import java.util.HashMap;
+import java.util.Map;
 
 
 /**
@@ -98,7 +102,9 @@ public class LoginPhoneFragment extends BaseFragment<LoginPhoneContract.IView> i
                     binddeviceanduser(SPManager.getInstance().getString("XGTOKEN",""));
                 }
                 //用户手机登陆数据埋点
-                ArgsUtil.getInstance().datapoint("0301","uid",jsonObject.getString("uid"));
+                Map<String, String> params = new HashMap<>();
+                params.put("uid",UserManager.getInstance().getUid());
+                ArgsUtil.getInstance().datapoint(AliDotId.id_0301,params);
             }
 
             @Override

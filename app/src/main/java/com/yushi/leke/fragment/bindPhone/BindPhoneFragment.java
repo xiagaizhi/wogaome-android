@@ -14,10 +14,14 @@ import com.yufan.library.manager.DialogManager;
 import com.yufan.library.manager.UserManager;
 import com.yushi.leke.YFApi;
 import com.yushi.leke.dialog.CommonDialog;
+import com.yushi.leke.util.AliDotId;
 import com.yushi.leke.util.ArgsUtil;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by zhanyangyang on 18/8/25.
@@ -87,7 +91,10 @@ public class BindPhoneFragment extends BaseFragment<BindPhoneContract.IView> imp
                 setFragmentResult(RESULT_OK, bundle);
                 pop();
                 //绑定手机数据埋点
-                ArgsUtil.getInstance().datapoint("0401","uid", UserManager.getInstance().getUid(),"phone",mPhone);
+                Map<String, String> params = new HashMap<>();
+                params.put("uid", UserManager.getInstance().getUid());
+                params.put("phone", mPhone);
+                ArgsUtil.getInstance().datapoint(AliDotId.id_0401, params);
             } else {
                 new CommonDialog(_mActivity).setTitle("" + mApiBean.getMessage())
                         .setNegativeName("取消")

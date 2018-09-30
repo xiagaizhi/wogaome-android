@@ -33,19 +33,20 @@ public class VoteendFragment extends BaseListFragment<VoteendContract.IView> imp
     private ICallBack mICallBack;
     private String activityid;
     private int exhibitionType;
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         Bundle bundle = getArguments();
         if (bundle != null) {
             activityid = bundle.getString(Global.BUNDLE_KEY_ACTIVITYID);
-            exhibitionType=bundle.getInt(Global.BUNDLE_KEY_EXHIBITION_TYE);
+            exhibitionType = bundle.getInt(Global.BUNDLE_KEY_EXHIBITION_TYE);
         }
         adapter = new MultiTypeAdapter();
         adapter.register(Voteendinfo.class, new VoteendBinder(new ICallBack() {
             @Override
             public void OnBackResult(Object... s) {
-
+                mICallBack.OnBackResult(s[0], s[1], s[2]);
             }
         }));
         vu.getRecyclerView().setAdapter(adapter);
@@ -106,7 +107,7 @@ public class VoteendFragment extends BaseListFragment<VoteendContract.IView> imp
                                 vu.setStateEmpty();
                                 vu.getRecyclerView().getPageManager().setPageState(PageInfo.PAGE_STATE_NO_MORE);
                             }
-                        }else {
+                        } else {
                             vu.setStateEmpty();
                         }
                     }
@@ -118,14 +119,14 @@ public class VoteendFragment extends BaseListFragment<VoteendContract.IView> imp
     public void MyCallback() {
         getRootFragment().start(UIHelper.creat(AllendFragment.class)
                 .put(Global.BUNDLE_KEY_ACTIVITYID, activityid)
-                .put(Global.BUNDLE_KEY_EXHIBITION_TYE,exhibitionType)
+                .put(Global.BUNDLE_KEY_EXHIBITION_TYE, exhibitionType)
                 .build());
     }
 
     @Override
     public void openWinPage() {
         WinlistDialogFragment winlistDialogFragment = new WinlistDialogFragment();
-        Bundle bundle=new Bundle();
+        Bundle bundle = new Bundle();
         bundle.putString(Global.BUNDLE_KEY_ACTIVITYID, activityid);
         winlistDialogFragment.setArguments(bundle);
         winlistDialogFragment.show(getFragmentManager(), "WinlistDialogFragment");

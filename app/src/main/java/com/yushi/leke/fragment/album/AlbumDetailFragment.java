@@ -33,7 +33,11 @@ import com.yushi.leke.fragment.album.detail.DetailFragment;
 import com.yushi.leke.fragment.album.detailforalbum.DetailforalbumFragment;
 import com.yushi.leke.fragment.searcher.SearchFragment;
 import com.yushi.leke.share.ShareMenuActivity;
+import com.yushi.leke.util.AliDotId;
 import com.yushi.leke.util.ArgsUtil;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import me.yokeyword.fragmentation.SupportFragment;
 
@@ -158,7 +162,10 @@ public class AlbumDetailFragment extends BaseFragment<AlbumDetailContract.IView>
                         Toast.makeText(getContext(),"订阅成功",Toast.LENGTH_SHORT).show();
                         getstatedate();
                         //订阅专辑数据埋点
-                        ArgsUtil.getInstance().datapoint("0600","uid", UserManager.getInstance().getUid(),"albumId",albumId);
+                        Map<String, String> params = new HashMap<>();
+                        params.put("uid", UserManager.getInstance().getUid());
+                        params.put("albumId", albumId);
+                        ArgsUtil.getInstance().datapoint(AliDotId.id_0500, params);
                     }
 
                     @Override
@@ -204,7 +211,10 @@ public class AlbumDetailFragment extends BaseFragment<AlbumDetailContract.IView>
             model.setTargetUrl(infolist.getAlbum().getShareIcon());
             ShareMenuActivity.startShare(getRootFragment(),model);
             //专辑分享数据埋点
-            ArgsUtil.getInstance().datapoint("0801","uid",UserManager.getInstance().getUid(),"albumId",albumId);
+            Map<String, String> params = new HashMap<>();
+            params.put("uid", UserManager.getInstance().getUid());
+            params.put("albumId", albumId);
+            ArgsUtil.getInstance().datapoint(AliDotId.id_0801, params);
         }
 
     }
