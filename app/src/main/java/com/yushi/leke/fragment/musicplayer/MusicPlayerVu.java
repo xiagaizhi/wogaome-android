@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.yufan.library.Global;
 import com.yufan.library.manager.SPManager;
+import com.yufan.library.util.ImageUtil;
 import com.yushi.leke.R;
 import com.yufan.library.base.BaseVu;
 import com.yufan.library.inject.FindLayout;
@@ -140,7 +141,7 @@ public class MusicPlayerVu extends BaseVu<MusicPlayerContract.Presenter> impleme
 
     @Override
     public void setBackgroundImage(Bitmap bitmap) {
-        albumArt.setImageBitmap(bitmap);
+        albumArt.setImageBitmap(ImageUtil.blurBitmap(getContext(),bitmap,6));
     }
 
     @Override

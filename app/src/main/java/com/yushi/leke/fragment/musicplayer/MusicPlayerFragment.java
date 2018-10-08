@@ -44,6 +44,7 @@ import com.yushi.leke.uamp.AlbumArtCache;
 import com.yushi.leke.uamp.MusicService;
 import com.yushi.leke.uamp.playback.PlaybackManager;
 import com.yushi.leke.uamp.utils.LogHelper;
+import com.yushi.leke.util.FormatImageUtil;
 import com.yushi.leke.widget.MyScroller;
 
 import java.lang.reflect.Field;
@@ -377,6 +378,7 @@ public class MusicPlayerFragment extends BaseFragment<MusicPlayerContract.IView>
             return;
         }
         String artUrl = description.getIconUri().toString();
+        artUrl = FormatImageUtil.converImageUrl(artUrl);
         mCurrentArtUrl = artUrl;
         AlbumArtCache cache = AlbumArtCache.getInstance();
         Bitmap art = cache.getBigImage(artUrl);
