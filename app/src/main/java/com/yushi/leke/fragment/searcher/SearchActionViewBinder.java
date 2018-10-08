@@ -55,8 +55,8 @@ public class SearchActionViewBinder extends ItemViewBinder<SearchActionInfo, Sea
 
         holder.sdv.setImageURI(FormatImageUtil.converImageUrl(category.horizontalIcon,256,144));
         holder.tv_title.setText(category.getTitle());
-        holder.tv_organizer.setText(category.getOrganizer());
-        holder.tv_time.setText(getFormatedDateTime("yy-MM-dd", Long.parseLong(category.getStartTime()))
+        holder.tv_organizer.setText("举办方:"+category.getOrganizer());
+        holder.tv_time.setText("活动时间:"+getFormatedDateTime("yyyy-MM-dd", Long.parseLong(category.getStartTime()))
                 +" / "
                 +getFormatedDateTime("MM-dd", Long.parseLong(category.getEndTime())));
         if (getAdapter().getItemCount()==getPosition(holder)-1) {

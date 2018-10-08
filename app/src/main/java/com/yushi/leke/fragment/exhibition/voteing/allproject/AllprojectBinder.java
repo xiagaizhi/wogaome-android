@@ -31,7 +31,7 @@ public class AllprojectBinder extends ItemViewBinder<Allprojectsinfo,AllprojectB
         viewHolder.sdv.setImageURI(FormatImageUtil.converImageUrl(allprojectsinfo.getVideo100Pic(),256,144));
         viewHolder.tv_vote_playsum.setText(String.valueOf(allprojectsinfo.getPlayCount()));
         viewHolder.tv_vote_title.setText(allprojectsinfo.getTitle());
-        viewHolder.tv_vote_sum.setText(String.valueOf(allprojectsinfo.getVotes()));
+        viewHolder.tv_vote_sum.setText(String.valueOf(allprojectsinfo.getVotes())+"票");
         viewHolder.tv_vote_province.setText(allprojectsinfo.getAddress()+" / "+allprojectsinfo.getIndustry());
         viewHolder.tv_vote_name.setText("创业者："+allprojectsinfo.getEntrepreneur());
         viewHolder.btn_vote_support.setOnClickListener(new View.OnClickListener() {

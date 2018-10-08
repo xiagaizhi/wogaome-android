@@ -35,7 +35,7 @@ public class AllendBinder extends ItemViewBinder<Allprojectsinfo, AllendBinder.V
         viewHolder.sdv.setImageURI(FormatImageUtil.converImageUrl(allendinfo.getVideo100Pic(),256,144));
         viewHolder.tv_vote_playsum.setText(String.valueOf(allendinfo.getPlayCount()));
         viewHolder.tv_vote_title.setText(allendinfo.getTitle());
-        viewHolder.tv_vote_sum.setText(String.valueOf(allendinfo.getVotes()));
+        viewHolder.tv_vote_sum.setText(String.valueOf(allendinfo.getVotes())+"票");
         viewHolder.tv_vote_province.setText(allendinfo.getAddress()+" / "+ allendinfo.getIndustry());
         viewHolder.tv_vote_name.setText("创业者："+ allendinfo.getEntrepreneur());
         viewHolder.btn_vote_support.setText("已结束");

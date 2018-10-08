@@ -32,7 +32,7 @@ public class VoteingBinder extends ItemViewBinder<Voteinginfo, VoteingBinder.Vie
         viewHolder.tv_vote_playsum.setText(String.valueOf(voteinginfo.getPlayCount()));
         viewHolder.sdv.setImageURI(FormatImageUtil.converImageUrl(voteinginfo.getVideo100Pic(),256,144));
         viewHolder.tv_vote_title.setText(voteinginfo.getTitle());
-        viewHolder.tv_vote_sum.setText(String.valueOf(voteinginfo.getVotes()));
+        viewHolder.tv_vote_sum.setText(String.valueOf(voteinginfo.getVotes())+"票");
         viewHolder.tv_vote_province.setText(voteinginfo.getAddress() + " / " + voteinginfo.getIndustry());
         viewHolder.tv_vote_name.setText("创业者：" + voteinginfo.getEntrepreneur());
         viewHolder.btn_vote_support.setOnClickListener(new View.OnClickListener() {
