@@ -1,6 +1,9 @@
 package com.yushi.leke.fragment.ucenter;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 
 import com.alibaba.fastjson.JSON;
@@ -13,7 +16,9 @@ import com.yufan.library.base.BaseFragment;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.LocalBroadcastManager;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 
 import com.yufan.library.inject.VuClass;
@@ -262,4 +267,25 @@ public class UCenterFragment extends BaseFragment<UCenterContract.IView> impleme
             hasUnreadmsg();
         }
     }
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(Global.BROADCAST_ACTION_SUBCRIBE);
+        LocalBroadcastManager.getInstance(_mActivity).registerReceiver(broadcastReceiver, intentFilter);
+    }
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        LocalBroadcastManager.getInstance(_mActivity).unregisterReceiver(broadcastReceiver);
+    }
+    private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if (action.equals(Global.BROADCAST_ACTION_SUBCRIBE)){
+                vu.updatcount(intent.getIntExtra("more",0));
+            }
+        }
+    };
 }

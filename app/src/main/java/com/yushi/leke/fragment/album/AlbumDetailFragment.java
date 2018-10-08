@@ -11,6 +11,7 @@ import com.yufan.library.api.ApiManager;
 import com.yufan.library.api.BaseHttpCallBack;
 import com.yufan.library.manager.UserManager;
 import com.yufan.share.ShareModel;
+import com.yushi.leke.App;
 import com.yushi.leke.R;
 import com.yufan.library.base.BaseFragment;
 
@@ -18,6 +19,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.content.LocalBroadcastManager;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -166,6 +168,11 @@ public class AlbumDetailFragment extends BaseFragment<AlbumDetailContract.IView>
                         params.put("uid", UserManager.getInstance().getUid());
                         params.put("albumId", albumId);
                         ArgsUtil.getInstance().datapoint(AliDotId.id_0500, params);
+                        //发送更新订阅数量广播
+                        Intent intent=new Intent();
+                        intent.putExtra("more",1);
+                        intent.setAction(Global.BROADCAST_ACTION_SUBCRIBE);
+                        LocalBroadcastManager.getInstance(App.getInstance()).sendBroadcast(intent);
                     }
 
                     @Override
@@ -189,6 +196,11 @@ public class AlbumDetailFragment extends BaseFragment<AlbumDetailContract.IView>
                     public void onSuccess(ApiBean mApiBean) {
                         Toast.makeText(getContext(),"取消订阅成功",Toast.LENGTH_SHORT).show();
                         getstatedate();
+                        //发送更新订阅数量广播
+                        Intent intent=new Intent();
+                        intent.putExtra("more",-1);
+                        intent.setAction(Global.BROADCAST_ACTION_SUBCRIBE);
+                        LocalBroadcastManager.getInstance(App.getInstance()).sendBroadcast(intent);
                     }
 
                     @Override

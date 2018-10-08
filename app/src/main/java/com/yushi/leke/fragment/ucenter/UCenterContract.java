@@ -1,5 +1,7 @@
 package com.yushi.leke.fragment.ucenter;
 
+import android.widget.TextView;
+
 import com.yufan.library.base.Pr;
 import com.yufan.library.base.Vu;
 
@@ -15,6 +17,7 @@ public interface UCenterContract {
 
         void refreshComplete();
 
+        void updatcount(int count);
     }
 
     interface Presenter extends Pr {

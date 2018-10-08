@@ -101,6 +101,7 @@ public class AlbumDetailVu extends BaseVu<AlbumDetailContract.Presenter> impleme
                     img_share.setAlpha(1.0f);
                 }else {
                     float per=(float) (appBarLayout.getTotalScrollRange()-Math.abs(index))/(float)appBarLayout.getTotalScrollRange();
+                    Log.d("LOGH", String.valueOf(per));
                     musicAnim.setAlpha(per);
                     backButton.setAlpha(per);
                     img_share.setAlpha(per);

@@ -221,4 +221,11 @@ public class UCenterVu extends BaseVu<UCenterContract.Presenter> implements UCen
     public void refreshComplete() {
         mPtrClassicFrameLayout.refreshComplete();
     }
+
+    @Override
+    public void updatcount(int count) {
+        if (tv_subscribe_num.getText().toString()!=null){
+            tv_subscribe_num.setText(String.valueOf(Integer.parseInt(tv_subscribe_num.getText().toString())+count));
+        }
+    }
 }

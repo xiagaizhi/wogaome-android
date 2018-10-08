@@ -70,6 +70,10 @@ public class Global {
      */
     public static final String BROADCAST_ACTION_XGMESSAGE = "BROADCAST_ACTION_XGMESSAGE";
     /**
+     * 订阅数量消息
+     */
+    public static final String BROADCAST_ACTION_SUBCRIBE = "BROADCAST_ACTION_SUBCRIBE";
+    /**
      * 支付结果返回data true:成功 false:失败
      */
     public static final String INTENT_PAY_RESUIL_DATA = "INTENT_PAY_RESUIL_DATA";

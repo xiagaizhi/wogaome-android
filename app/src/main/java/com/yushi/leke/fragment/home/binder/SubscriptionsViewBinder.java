@@ -54,7 +54,7 @@ this.callBack=callBack;
         holder.tv_title.setText(category.getAlbumName());
         holder.tv_name.setText(category.getCreator());
         holder.tv_industry.setText(category.getCreatorInfo());
-        holder.tv_othertitle.setText(category.getIntro());
+        //holder.tv_othertitle.setText(category.getIntro());
 
         category.getTags();
         if (!TextUtils.isEmpty(category.getTags())) {

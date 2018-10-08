@@ -1,8 +1,10 @@
 package com.yushi.leke.fragment.ucenter.mineSubscription;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.content.LocalBroadcastManager;
 import android.view.View;
 
 import com.alibaba.fastjson.JSON;
@@ -15,6 +17,7 @@ import com.yufan.library.base.BaseListFragment;
 import com.yufan.library.inject.VuClass;
 import com.yufan.library.inter.ICallBack;
 import com.yufan.library.view.recycler.PageInfo;
+import com.yushi.leke.App;
 import com.yushi.leke.UIHelper;
 import com.yushi.leke.YFApi;
 import com.yushi.leke.dialog.CommonDialog;
@@ -50,6 +53,11 @@ public class MySubscriptionFragment extends BaseListFragment<MySubscriptionContr
                                     unregisteralbum(mySubscriptionInfo.getAlbumId());
                                     list.remove(mySubscriptionInfo);
                                     getVu().getRecyclerView().getAdapter().notifyDataSetChanged();
+                                    //发送更新订阅数量广播
+                                    Intent intent=new Intent();
+                                    intent.putExtra("more",-1);
+                                    intent.setAction(Global.BROADCAST_ACTION_SUBCRIBE);
+                                    LocalBroadcastManager.getInstance(App.getInstance()).sendBroadcast(intent);
                                 }
                                 commonDialog.dismiss();
                             }
