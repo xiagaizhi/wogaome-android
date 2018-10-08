@@ -13,6 +13,7 @@ public class Global {
      * 浏览器页面url
      */
     public static final String BUNDLE_KEY_BROWSER_URL = "BUNDLE_KEY_BROWSER_URL";
+    public static final String BUNDLE_KEY_NEED_REFRESH_MSG = "BUNDLE_KEY_NEED_REFRESH_MSG";
 
     public static final String BUNDLE_KEY_EXHIBITION_TYE = "BUNDLE_KEY_EXHIBITION_TYE";
     public static final String BUNDLE_AD_KEY = "BUNDLE_AD_KEY";
@@ -69,6 +70,8 @@ public class Global {
      * 信鸽消息
      */
     public static final String BROADCAST_ACTION_XGMESSAGE = "BROADCAST_ACTION_XGMESSAGE";
+
+    public static final String BROADCAST_ACTION_REFRESH_MESSAGE= "BROADCAST_ACTION_REFRESH_MESSAGE";
     /**
      * 支付结果返回data true:成功 false:失败
      */

@@ -112,13 +112,13 @@ public class MessageReceiver extends XGPushBaseReceiver {
         Intent filter = new Intent();
         String customContent = message.getCustomContent();
         if (customContent != null && customContent.length() != 0) {
-            Log.d("LOGH",customContent);
+            Log.d("LOGH", customContent);
             try {
                 JSONObject obj = new JSONObject(customContent);
                 // key1为前台配置的key
                 if (!obj.isNull("appMsgType")) {
                     int appMsgType = obj.getInt("appMsgType");
-                    Log.d("LOGH","intent start......!!!!!"+appMsgType);
+                    Log.d("LOGH", "intent start......!!!!!" + appMsgType);
                     filter.putExtra("appMsgType", appMsgType);
                 }
             } catch (JSONException e) {
@@ -159,6 +159,7 @@ public class MessageReceiver extends XGPushBaseReceiver {
         String text = "收到消息:" + message.toString();
         // 获取自定义key-value
         String customContent = message.getCustomContent();
+        Intent filter = new Intent();
         if (customContent != null && customContent.length() != 0) {
             try {
                 JSONObject obj = new JSONObject(customContent);
@@ -172,6 +173,8 @@ public class MessageReceiver extends XGPushBaseReceiver {
                 e.printStackTrace();
             }
         }
+        filter.setAction(Global.BROADCAST_ACTION_REFRESH_MESSAGE);
+        LocalBroadcastManager.getInstance(App.getInstance()).sendBroadcast(filter);
         Log.d("LC", "++++++++++++++++透传消息");
         // APP自主处理消息的过程...
         Log.d(LogTag, text);
