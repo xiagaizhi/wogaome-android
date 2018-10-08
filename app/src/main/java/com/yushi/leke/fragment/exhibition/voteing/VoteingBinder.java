@@ -57,7 +57,7 @@ public class VoteingBinder extends ItemViewBinder<Voteinginfo, VoteingBinder.Vie
             viewHolder.tv_vote_name.setTextColor(context.getResources().getColorStateList(R.color.alivc_red));
             viewHolder.tv_vote_title.setTextColor(context.getResources().getColorStateList(R.color.alivc_red));
             viewHolder.tv_vote_province.setTextColor(context.getResources().getColorStateList(R.color.alivc_red));
-            if (vh!=null){
+            if (viewHolder!=vh&&vh!=null){
                 vh.tv_vote_title.setTextColor(context.getResources().getColorStateList(R.color.color_black));
                 vh.tv_vote_province.setTextColor(context.getResources().getColorStateList(R.color.color_gray_level6));
                 vh.tv_vote_name.setTextColor(context.getResources().getColorStateList(R.color.color_gray_level6));
