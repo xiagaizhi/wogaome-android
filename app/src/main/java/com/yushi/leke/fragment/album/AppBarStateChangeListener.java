@@ -1,7 +1,6 @@
 package com.yushi.leke.fragment.album;
 
 import android.support.design.widget.AppBarLayout;
-
 public abstract class AppBarStateChangeListener implements AppBarLayout.OnOffsetChangedListener {
 
     public enum State {

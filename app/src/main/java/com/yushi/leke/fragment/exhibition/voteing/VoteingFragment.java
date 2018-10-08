@@ -35,7 +35,7 @@ public class VoteingFragment extends BaseListFragment<VoteingContract.IView> imp
     private String activityid;
     private Voteinginfo choiceVoteinginfo;
     private int exhibitionType;
-
+    VoteingBinder voteingBinder;
     public void setmICallBack(ICallBack mICallBack) {
         this.mICallBack = mICallBack;
     }
@@ -49,7 +49,7 @@ public class VoteingFragment extends BaseListFragment<VoteingContract.IView> imp
             exhibitionType = bundle.getInt(Global.BUNDLE_KEY_EXHIBITION_TYE);
         }
         adapter = new MultiTypeAdapter();
-        adapter.register(Voteinginfo.class, new VoteingBinder(new ICallBack() {
+        voteingBinder=new VoteingBinder(getContext(),new ICallBack() {
             @Override
             public void OnBackResult(Object... s) {
                 if (mICallBack != null) {
@@ -69,7 +69,8 @@ public class VoteingFragment extends BaseListFragment<VoteingContract.IView> imp
 
                 }
             }
-        }));
+        });
+        adapter.register(Voteinginfo.class, voteingBinder);
         vu.getRecyclerView().setAdapter(adapter);
         adapter.setItems(list);
         vu.getRecyclerView().getAdapter().notifyDataSetChanged();
@@ -114,6 +115,8 @@ public class VoteingFragment extends BaseListFragment<VoteingContract.IView> imp
                                 if (mICallBack != null) {//请求播放第一条视频
                                     Voteinginfo voteinginfo = infolist.getProjectList().get(0);
                                     mICallBack.OnBackResult(voteinginfo.getAliVideoId(), voteinginfo.getTitle(), voteinginfo.getId());
+                                    voteingBinder.flag=true;
+
                                 }
                                 list.addAll(infolist.getProjectList());
                                 vu.getRecyclerView().getAdapter().notifyDataSetChanged();

@@ -1,7 +1,12 @@
 package com.yushi.leke.fragment.exhibition.voteing;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,11 +19,16 @@ import com.yushi.leke.util.FormatImageUtil;
 
 import me.drakeet.multitype.ItemViewBinder;
 
+import static com.yushi.leke.R.color.alivc_red;
+
 public class VoteingBinder extends ItemViewBinder<Voteinginfo, VoteingBinder.ViewHolder> {
     ICallBack callBack;
-
-    public VoteingBinder(ICallBack callBack) {
+    Context context;
+    ViewHolder vh;
+    public Boolean flag;
+    public VoteingBinder(Context context,ICallBack callBack) {
         this.callBack = callBack;
+        this.context=context;
     }
 
     @NonNull
@@ -28,7 +38,7 @@ public class VoteingBinder extends ItemViewBinder<Voteinginfo, VoteingBinder.Vie
     }
 
     @Override
-    protected void onBindViewHolder(@NonNull ViewHolder viewHolder, @NonNull final Voteinginfo voteinginfo) {
+    protected void onBindViewHolder(@NonNull final ViewHolder viewHolder, @NonNull final Voteinginfo voteinginfo) {
         viewHolder.tv_vote_playsum.setText(String.valueOf(voteinginfo.getPlayCount()));
         viewHolder.sdv.setImageURI(FormatImageUtil.converImageUrl(voteinginfo.getVideo100Pic(),256,144));
         viewHolder.tv_vote_title.setText(voteinginfo.getTitle());
@@ -43,11 +53,36 @@ public class VoteingBinder extends ItemViewBinder<Voteinginfo, VoteingBinder.Vie
                 }
             }
         });
+        if (flag){
+            viewHolder.tv_vote_name.setTextColor(context.getResources().getColorStateList(R.color.alivc_red));
+            viewHolder.tv_vote_title.setTextColor(context.getResources().getColorStateList(R.color.alivc_red));
+            viewHolder.tv_vote_province.setTextColor(context.getResources().getColorStateList(R.color.alivc_red));
+            if (vh!=null){
+                vh.tv_vote_title.setTextColor(context.getResources().getColorStateList(R.color.color_black));
+                vh.tv_vote_province.setTextColor(context.getResources().getColorStateList(R.color.color_gray_level6));
+                vh.tv_vote_name.setTextColor(context.getResources().getColorStateList(R.color.color_gray_level6));
+            }
+            vh=viewHolder;
+            flag=false;
+        }
         viewHolder.rl_root.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {//切换视屏
                 if (callBack != null) {
                     callBack.OnBackResult(2, voteinginfo.getAliVideoId(), voteinginfo.getTitle(), voteinginfo.getId());
+                    if (viewHolder!=vh&&vh!=null){
+                        viewHolder.tv_vote_name.setTextColor(context.getResources().getColorStateList(R.color.alivc_red));
+                        viewHolder.tv_vote_title.setTextColor(context.getResources().getColorStateList(R.color.alivc_red));
+                        viewHolder.tv_vote_province.setTextColor(context.getResources().getColorStateList(R.color.alivc_red));
+                        vh.tv_vote_title.setTextColor(context.getResources().getColorStateList(R.color.color_black));
+                        vh.tv_vote_province.setTextColor(context.getResources().getColorStateList(R.color.color_gray_level6));
+                        vh.tv_vote_name.setTextColor(context.getResources().getColorStateList(R.color.color_gray_level6));
+                    }else if (vh==null){
+                        viewHolder.tv_vote_name.setTextColor(context.getResources().getColorStateList(R.color.alivc_red));
+                        viewHolder.tv_vote_title.setTextColor(context.getResources().getColorStateList(R.color.alivc_red));
+                        viewHolder.tv_vote_province.setTextColor(context.getResources().getColorStateList(R.color.alivc_red));
+                    }
+                    vh=viewHolder;
                 }
             }
         });
