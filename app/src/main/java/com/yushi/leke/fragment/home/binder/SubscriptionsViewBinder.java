@@ -18,6 +18,7 @@ package com.yushi.leke.fragment.home.binder;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -54,7 +55,7 @@ this.callBack=callBack;
         holder.tv_title.setText(category.getAlbumName());
         holder.tv_name.setText(category.getCreator());
         holder.tv_industry.setText(category.getCreatorInfo());
-        holder.tv_othertitle.setText(category.getIntroduction());
+        holder.tv_othertitle.setText(Html.fromHtml(category.getIntroduction()));
 
         category.getTags();
         if (!TextUtils.isEmpty(category.getTags())) {
