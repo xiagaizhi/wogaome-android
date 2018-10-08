@@ -97,4 +97,12 @@ public class MyWalletFragment extends BaseFragment<MyWalletContract.IView> imple
             getWalletInfo();
         }
     }
+
+    @Override
+    public void onDestroy() {
+        Bundle bundle = new Bundle();
+        bundle.putBoolean(Global.BUNDLE_UPDATE_PROFILE, true);
+        setFragmentResult(RESULT_OK, bundle);
+        super.onDestroy();
+    }
 }

@@ -158,7 +158,7 @@ public class UCenterFragment extends BaseFragment<UCenterContract.IView> impleme
 
     @Override
     public void openMyWallet() {
-        getRootFragment().start(UIHelper.creat(MyWalletFragment.class).build());
+        getRootFragment().startForResult(UIHelper.creat(MyWalletFragment.class).build(),1000);
     }
 
     @Override
@@ -251,13 +251,15 @@ public class UCenterFragment extends BaseFragment<UCenterContract.IView> impleme
         }
     }
 
-    public void updatePersonInfo(boolean isAll) {
-        if (isAll) {
-            hasUnreadmsg();
+    public void updatePersonInfo(boolean isUpdateProfile,boolean isUpdateBaseInfo,boolean isuUpdateMsg) {
+        if (isUpdateBaseInfo){
+            getMyBaseInfo();
+        }
+        if (isUpdateProfile){
             getMyProfile();
-            getMyBaseInfo();
-        } else {
-            getMyBaseInfo();
+        }
+        if (isuUpdateMsg) {
+            hasUnreadmsg();
         }
     }
 }

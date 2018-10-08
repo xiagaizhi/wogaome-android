@@ -316,7 +316,7 @@ public class PersonalInfoFragment extends BaseListFragment<PersonalInfoContract.
         public void onFinish() {
             DialogManager.getInstance().dismiss();
             Bundle bundle = new Bundle();
-            bundle.putBoolean("isAll", false);
+            bundle.putBoolean(Global.BUNDLE_UPDATE_BASEINFO, true);
             setFragmentResult(RESULT_OK, bundle);
             DialogManager.getInstance().dismiss();
         }
@@ -378,7 +378,7 @@ public class PersonalInfoFragment extends BaseListFragment<PersonalInfoContract.
             @Override
             public void onSuccess(String url) {
                 Bundle bundle = new Bundle();
-                bundle.putBoolean("isAll", false);
+                bundle.putBoolean(Global.BUNDLE_UPDATE_BASEINFO, true);
                 setFragmentResult(RESULT_OK, bundle);
                 Message message = mHandler.obtainMessage();
                 message.obj = url;

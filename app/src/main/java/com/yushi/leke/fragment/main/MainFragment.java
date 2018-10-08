@@ -92,9 +92,9 @@ public class MainFragment extends BaseFragment<MainContract.IView> implements Ma
                     UpgradeUtil.checkAppUpdate(_mActivity);
                     break;
                 case Global.BROADCAST_ACTION_XGMESSAGE:
-                    int type = intent.getIntExtra("appMsgType",1);
-                    if (type==0){
-                        type=2;
+                    int type = intent.getIntExtra("appMsgType", 1);
+                    if (type == 0) {
+                        type = 2;
                     }
                     getRootFragment().start(UIHelper.creat(BrowserBaseFragment.class).put(Global.BUNDLE_KEY_BROWSER_URL, ApiManager.getInstance().getApiConfig().getMessage(type)).build());
                     break;
@@ -148,17 +148,14 @@ public class MainFragment extends BaseFragment<MainContract.IView> implements Ma
     public void onFragmentResult(int requestCode, int resultCode, Bundle data) {
         super.onFragmentResult(requestCode, resultCode, data);
         if (requestCode == 1000 && resultCode == RESULT_OK && data != null) {
-            boolean isAll = data.getBoolean("isAll");
-            updatePersonInfo(isAll);
+            boolean isUpdateBaseInfo = data.getBoolean(Global.BUNDLE_UPDATE_BASEINFO, false);
+            boolean isUpdateProfile = data.getBoolean(Global.BUNDLE_UPDATE_PROFILE, false);
+            boolean isuUpdateMsg = data.getBoolean(Global.BUNDLE_UPDATE_MSG, false);
+            if (mFragments[2] != null && mFragments[2] instanceof UCenterFragment) {
+                ((UCenterFragment) mFragments[2]).updatePersonInfo(isUpdateProfile, isUpdateBaseInfo, isuUpdateMsg);
+            }
         }
     }
-
-    public void updatePersonInfo(boolean isAll) {
-        if (mFragments[2] != null && mFragments[2] instanceof UCenterFragment) {
-            ((UCenterFragment) mFragments[2]).updatePersonInfo(isAll);
-        }
-    }
-
 
     @Override
     public void onRefresh() {
