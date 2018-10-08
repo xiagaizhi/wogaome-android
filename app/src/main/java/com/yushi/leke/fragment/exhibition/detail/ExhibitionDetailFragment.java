@@ -457,8 +457,8 @@ public class ExhibitionDetailFragment extends BaseFragment<ExhibitionDetailContr
 
 
     private void onStopped() {
-        Toast.makeText(getContext(), com.aliyun.vodplayer.R.string.log_play_stopped,
-                Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getContext(), com.aliyun.vodplayer.R.string.log_play_stopped,
+//                Toast.LENGTH_SHORT).show();
     }
 
     private void setPlaySource() {

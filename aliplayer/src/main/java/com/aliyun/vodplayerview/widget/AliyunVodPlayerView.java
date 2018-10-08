@@ -1225,8 +1225,8 @@ public class AliyunVodPlayerView extends RelativeLayout implements ITheme {
                 //自动播放开始,需要设置播放状态
                 VideoTimerUtil.getInstance().startTimer();
                 mControlView.setPlayState(ControlView.PlayState.Playing);
-                mAliyunVodPlayer.setMuteMode(true);
-                mControlView.setmPlayVolumeState(ControlView.PlayVoice.Quiet);
+//                mAliyunVodPlayer.setMuteMode(true);
+                mControlView.setmPlayVolumeState(ControlView.PlayVoice.NotQuiet);
                 if (mOutAutoPlayListener != null) {
                     mOutAutoPlayListener.onAutoPlayStarted();
                 }
@@ -1754,7 +1754,7 @@ public class AliyunVodPlayerView extends RelativeLayout implements ITheme {
 
         clearAllSource();
         reset();
-        mControlView.setmPlayVolumeState(ControlView.PlayVoice.Quiet);
+        mControlView.setmPlayVolumeState(ControlView.PlayVoice.NotQuiet);
 
 
         mAliyunVidSts = vidSts;

@@ -61,7 +61,7 @@ public class ControlView extends RelativeLayout implements ViewAction, ITheme {
     //播放按钮
     private ImageView mPlayStateBtn;
     //视频播放音量
-    private PlayVoice mPlayVolumeState = PlayVoice.Quiet;
+    private PlayVoice mPlayVolumeState = PlayVoice.NotQuiet;
     //控制静音
     private ImageView mPlayControlVolume;
 
