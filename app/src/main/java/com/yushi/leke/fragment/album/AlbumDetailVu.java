@@ -62,7 +62,6 @@ public class AlbumDetailVu extends BaseVu<AlbumDetailContract.Presenter> impleme
 
     @FindView(R.id.ptr)
     private PtrClassicFrameLayout ptrClassicFrameLayout;
-    private Boolean flag=false;//全局刷新判定
     private ImageView img_share;
     private int verticalOffset;
     @Override
@@ -77,31 +76,34 @@ public class AlbumDetailVu extends BaseVu<AlbumDetailContract.Presenter> impleme
             }
         });
         //applayout竖直方向偏移量监听
-        appBarLayout.addOnOffsetChangedListener(new AppBarStateChangeListener() {
+        appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
             @Override
-            public void onStateChanged(AppBarLayout appBarLayout, State state,int verticalOffset) {
-                Log.d("STATE", state.name());
-                AlbumDetailVu.this.verticalOffset=verticalOffset;
-                if( state == State.EXPANDED ) {
-                    //展开状态
-                    flag=true;
+            public void onOffsetChanged(AppBarLayout appBarLayout, int index) {
+                AlbumDetailVu.this.verticalOffset=index;
+                if (index==0){
                     expandableTextView.setVisibility(View.VISIBLE);
                     backButton.setImageResource(com.yufan.library.R.drawable.left_back_white_arrows);
                     img_share.setImageResource(R.drawable.ic_share_white);
                     musicAnim.setImageResource(R.drawable.anim_player_white);
                     ((AnimationDrawable) musicAnim.getDrawable()).start();
-
-                }else if(state == State.COLLAPSED){
+                    musicAnim.setAlpha(1.0f);
+                    backButton.setAlpha(1.0f);
+                    img_share.setAlpha(1.0f);
+                }else if (Math.abs(index) >= appBarLayout.getTotalScrollRange()){
                     //折叠状态
                     expandableTextView.setVisibility(View.INVISIBLE);
                     backButton.setImageResource(com.yufan.library.R.drawable.left_back_black_arrows);
                     img_share.setImageResource(R.drawable.ic_share_blue);
                     musicAnim.setImageResource(R.drawable.anim_player_blue);
                     ((AnimationDrawable) musicAnim.getDrawable()).start();
+                    musicAnim.setAlpha(1.0f);
+                    backButton.setAlpha(1.0f);
+                    img_share.setAlpha(1.0f);
                 }else {
-
-                    //中间状态
-
+                    float per=(float) (appBarLayout.getTotalScrollRange()-Math.abs(index))/(float)appBarLayout.getTotalScrollRange();
+                    musicAnim.setAlpha(per);
+                    backButton.setAlpha(per);
+                    img_share.setAlpha(per);
                 }
             }
         });
