@@ -703,4 +703,15 @@ public interface YFApi {
     binddeviceanduser(
             @Field("deviceToken")String deviceToken
     );
+
+    /**
+     *统计播放次数
+     *
+     */
+    @FormUrlEncoded
+    @POST("app/v1/albumDetail/addViewTimes")
+    Call<ResponseBody>
+    addViewTimes(
+            @Field("audioId")String audioId
+    );
 }

@@ -25,6 +25,9 @@ import android.widget.Toast;
 import com.tencent.android.tpush.XGPushClickedResult;
 import com.tencent.android.tpush.XGPushManager;
 import com.yufan.library.Global;
+import com.yufan.library.api.ApiBean;
+import com.yufan.library.api.ApiManager;
+import com.yufan.library.api.BaseHttpCallBack;
 import com.yufan.library.base.BaseActivity;
 import com.yufan.library.manager.SPManager;
 import com.yufan.library.manager.UserManager;
@@ -32,11 +35,13 @@ import com.yufan.library.util.FileUtil;
 import com.yufan.library.util.PxUtil;
 import com.yushi.leke.R;
 import com.yushi.leke.UIHelper;
+import com.yushi.leke.YFApi;
 import com.yushi.leke.fragment.login.LoginFragment;
 import com.yushi.leke.fragment.main.MainFragment;
 import com.yushi.leke.fragment.splash.SplashFragment;
 import com.yushi.leke.uamp.MusicService;
 import com.yushi.leke.uamp.model.MusicProvider;
+import com.yushi.leke.uamp.model.MutableMediaMetadata;
 import com.yushi.leke.uamp.ui.MediaBrowserProvider;
 import com.yushi.leke.uamp.utils.LogHelper;
 import com.yushi.leke.uamp.utils.MediaIDHelper;
@@ -227,6 +232,24 @@ public class MainActivity extends BaseActivity implements MediaBrowserProvider {
                     }
                 }
             } else {
+                String audioId = item.getDescription().getExtras().getString(MutableMediaMetadata.audioId);
+                ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).addViewTimes(audioId)).enqueue(new BaseHttpCallBack() {
+                    @Override
+                    public void onSuccess(ApiBean mApiBean) {
+                    }
+
+                    @Override
+                    public void onResponse(ApiBean mApiBean) {
+                    }
+
+                    @Override
+                    public void onError(int id, Exception e) {
+                    }
+
+                    @Override
+                    public void onFinish() {
+                    }
+                });
                 MediaControllerCompat.getMediaController(MainActivity.this).getTransportControls()
                         .playFromMediaId(item.getDescription().getMediaId(), null);
             }
