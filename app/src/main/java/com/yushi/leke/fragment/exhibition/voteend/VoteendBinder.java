@@ -21,7 +21,6 @@ import me.drakeet.multitype.ItemViewBinder;
 public class VoteendBinder extends ItemViewBinder<Voteendinfo, VoteendBinder.ViewHolder> {
     ICallBack callBack;
     Context context;
-    public Boolean flag;
     ViewHolder vh;
     public VoteendBinder(Context context,ICallBack callBack) {
         this.callBack = callBack;
@@ -45,18 +44,6 @@ public class VoteendBinder extends ItemViewBinder<Voteendinfo, VoteendBinder.Vie
         viewHolder.tv_vote_name.setText("创业者：" + voteendinfo.getEntrepreneur());
         viewHolder.btn_vote_support.setText("已结束");
         viewHolder.btn_vote_support.setTextColor(Color.parseColor("#FF999999"));
-        if (flag){
-            viewHolder.tv_vote_name.setTextColor(context.getResources().getColorStateList(R.color.alivc_red));
-            viewHolder.tv_vote_title.setTextColor(context.getResources().getColorStateList(R.color.alivc_red));
-            viewHolder.tv_vote_province.setTextColor(context.getResources().getColorStateList(R.color.alivc_red));
-            if (viewHolder!=vh&&vh!=null){
-                vh.tv_vote_title.setTextColor(context.getResources().getColorStateList(R.color.color_black));
-                vh.tv_vote_province.setTextColor(context.getResources().getColorStateList(R.color.color_gray_level6));
-                vh.tv_vote_name.setTextColor(context.getResources().getColorStateList(R.color.color_gray_level6));
-            }
-            vh=viewHolder;
-            flag=false;
-        }
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
