@@ -59,11 +59,12 @@ public class AlbumDetailVu extends BaseVu<AlbumDetailContract.Presenter> impleme
     @FindView(R.id.app_bar_layout)
     private AppBarLayout appBarLayout;
     ImageView backButton;
-
+    AppToolbar appToolbar;
     @FindView(R.id.ptr)
     private PtrClassicFrameLayout ptrClassicFrameLayout;
     private ImageView img_share;
     private int verticalOffset;
+    private Boolean flag;
     @Override
     public void initView(View view) {
         mTabLayout.addTab(mTabLayout.newTab().setText("课程内容"));
@@ -81,7 +82,10 @@ public class AlbumDetailVu extends BaseVu<AlbumDetailContract.Presenter> impleme
             public void onOffsetChanged(AppBarLayout appBarLayout, int index) {
                 AlbumDetailVu.this.verticalOffset=index;
                 if (index==0){
-                    expandableTextView.setVisibility(View.VISIBLE);
+                    flag=true;
+                    appToolbar.setAlpha(1f);
+                    appToolbar.setBackgroundResource(R.color.transparent);
+                    //expandableTextView.setVisibility(View.VISIBLE);
                     backButton.setImageResource(com.yufan.library.R.drawable.left_back_white_arrows);
                     img_share.setImageResource(R.drawable.ic_share_white);
                     musicAnim.setImageResource(R.drawable.anim_player_white);
@@ -91,20 +95,25 @@ public class AlbumDetailVu extends BaseVu<AlbumDetailContract.Presenter> impleme
                     img_share.setAlpha(1.0f);
                 }else if (Math.abs(index) >= appBarLayout.getTotalScrollRange()){
                     //折叠状态
-                    expandableTextView.setVisibility(View.INVISIBLE);
-                    backButton.setImageResource(com.yufan.library.R.drawable.left_back_black_arrows);
-                    img_share.setImageResource(R.drawable.ic_share_blue);
-                    musicAnim.setImageResource(R.drawable.anim_player_blue);
-                    ((AnimationDrawable) musicAnim.getDrawable()).start();
+                    flag=false;
+                    appToolbar.setAlpha(1f);
                     musicAnim.setAlpha(1.0f);
                     backButton.setAlpha(1.0f);
                     img_share.setAlpha(1.0f);
                 }else {
+                    if (flag){
+                        appToolbar.setBackgroundResource(R.color.white);
+                        backButton.setImageResource(com.yufan.library.R.drawable.left_back_black_arrows);
+                        img_share.setImageResource(R.drawable.ic_share_blue);
+                        musicAnim.setImageResource(R.drawable.anim_player_blue);
+                        ((AnimationDrawable) musicAnim.getDrawable()).start();
+                        flag=false;
+                    }
                     float per=(float) (appBarLayout.getTotalScrollRange()-Math.abs(index))/(float)appBarLayout.getTotalScrollRange();
-                    Log.d("LOGH", String.valueOf(per));
                     musicAnim.setAlpha(per);
                     backButton.setAlpha(per);
                     img_share.setAlpha(per);
+                    appToolbar.setAlpha(1f-per);
                 }
             }
         });
@@ -126,6 +135,7 @@ public class AlbumDetailVu extends BaseVu<AlbumDetailContract.Presenter> impleme
 
     @Override
     public boolean initTitle(AppToolbar appToolbar) {
+        this.appToolbar=appToolbar;
         img_share=appToolbar.creatRightView(ImageView.class);
         img_share.setImageResource(R.drawable.ic_share_white);
         backButton=   appToolbar.creatLeftView(ImageView.class);

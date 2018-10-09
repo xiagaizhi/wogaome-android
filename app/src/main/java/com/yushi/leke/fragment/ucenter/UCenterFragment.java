@@ -243,7 +243,7 @@ public class UCenterFragment extends BaseFragment<UCenterContract.IView> impleme
     @Override
     public void openMessagePage() {
         getRootFragment().start(UIHelper.creat(BrowserBaseFragment.class)
-                .put(Global.BUNDLE_KEY_BROWSER_URL, ApiManager.getInstance().getApiConfig().getMessage(1))
+                .put(Global.BUNDLE_KEY_BROWSER_URL, ApiManager.getInstance().getApiConfig().getMessage(2))
                 .put(Global.BUNDLE_KEY_NEED_REFRESH_MSG,true)
                 .build());
         getVu().hasUnreadMsg(false);

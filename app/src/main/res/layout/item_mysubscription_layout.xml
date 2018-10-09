@@ -143,7 +143,6 @@
             android:layout_weight="1"
             android:gravity="bottom"
             android:singleLine="true"
-            android:text="这里显示副标题，简历奖励简历简历这里显示副标题，简历奖励简历简历..."
             android:textColor="@color/color_gray_level6"
             android:textSize="@dimen/px24" />
 

@@ -40,7 +40,7 @@ public class MySubscriptionViewBinder extends ItemViewBinder<MySubscriptionInfo,
         viewHolder.tv_title.setText(mySubscriptionInfo.getAlbumName());
         viewHolder.tv_name.setText(mySubscriptionInfo.getCreator());
         viewHolder.tv_industry.setText(mySubscriptionInfo.getCreatorInfo());
-        viewHolder.tv_othertitle.setText(mySubscriptionInfo.getIntroduction());
+        //viewHolder.tv_othertitle.setText(mySubscriptionInfo.getIntroduction());
         viewHolder.tv_playcount.setText(mySubscriptionInfo.getViewTimes());
         if (!TextUtils.isEmpty(mySubscriptionInfo.getTags())) {
             String[] tags = mySubscriptionInfo.getTags().split(",");

@@ -96,7 +96,15 @@ public class AllendFragment extends BaseListFragment<AllendContract.IView> imple
         if (getVu().getcity().equals("请选择城市")&&getVu().getindustry()==-1){
             arg1=0;
             arg2="";
-        }else {
+        }else if (getVu().getcity().equals("请选择城市")&&getVu().getindustry()!=-1){
+            arg1=getVu().getindustry();
+            arg2="";
+        }else if (!getVu().getcity().equals("请选择城市")&&getVu().getindustry()==-1){
+            arg1=0;
+            arg2=getVu().getcity();
+        }
+        else
+        {
             arg1=getVu().getindustry();
             arg2=getVu().getcity();
         }
@@ -114,6 +122,8 @@ public class AllendFragment extends BaseListFragment<AllendContract.IView> imple
                                 list.addAll(infolist.getProjectList());
                                 vu.getRecyclerView().getAdapter().notifyDataSetChanged();
                             } else {
+                                list.clear();
+                                vu.getRecyclerView().getAdapter().notifyDataSetChanged();
                                 vu.setStateEmpty();
                                 vu.getRecyclerView().getPageManager().setPageState(PageInfo.PAGE_STATE_NO_MORE);
                             }
