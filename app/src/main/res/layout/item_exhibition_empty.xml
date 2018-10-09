@@ -22,6 +22,7 @@
         android:layout_marginBottom="@dimen/y12"
         android:layout_marginLeft="@dimen/px36"
         android:layout_marginRight="@dimen/px36"
+
         android:layout_marginTop="@dimen/y18"
         fresco:roundedCornerRadius="5dp" />
 

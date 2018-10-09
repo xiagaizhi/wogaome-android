@@ -16,6 +16,7 @@
         fresco:placeholderImage="@drawable/default_video_square"
         fresco:placeholderImageScaleType="focusCrop"
         fresco:failureImageScaleType="focusCrop"
+        fresco:overlayImage="@color/overlay_30"
         fresco:roundedCornerRadius="2dp"
         android:layout_height="@dimen/px168" />
     <TextView

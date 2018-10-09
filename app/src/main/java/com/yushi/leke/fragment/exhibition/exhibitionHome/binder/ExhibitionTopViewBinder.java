@@ -17,7 +17,6 @@
 package com.yushi.leke.fragment.exhibition.exhibitionHome.binder;
 
 import android.app.Activity;
-import android.graphics.drawable.AnimationDrawable;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -29,7 +28,6 @@ import com.yufan.library.inter.ICallBack;
 import com.yushi.leke.R;
 import com.yushi.leke.UIHelper;
 import com.yushi.leke.fragment.exhibition.exhibitionHome.bean.ExhibitionTopInfo;
-import com.yushi.leke.fragment.ucenter.UCenterVu;
 
 import me.drakeet.multitype.ItemViewBinder;
 

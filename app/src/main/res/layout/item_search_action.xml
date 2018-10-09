@@ -12,6 +12,7 @@
     <com.facebook.drawee.view.SimpleDraweeView
         android:layout_width="@dimen/px256"
         android:id="@+id/sdv"
+        fresco:overlayImage="@color/overlay_30"
         fresco:roundedCornerRadius="2dp"
         android:layout_height="@dimen/px144" />
     <!--<TextView-->

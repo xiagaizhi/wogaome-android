@@ -62,6 +62,7 @@
                 fresco:placeholderImage="@drawable/default_video_square"
                 fresco:placeholderImageScaleType="focusCrop"
                 fresco:failureImageScaleType="focusCrop"
+
                 fresco:roundedCornerRadius="@dimen/px12" />
 
             <LinearLayout

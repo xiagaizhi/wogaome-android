@@ -23,6 +23,7 @@
         android:layout_marginLeft="@dimen/px36"
         android:layout_marginRight="@dimen/px36"
         android:layout_marginTop="@dimen/y22"
+        fresco:overlayImage="@color/overlay_30"
         fresco:roundedCornerRadius="5dp" />
 
     <RelativeLayout

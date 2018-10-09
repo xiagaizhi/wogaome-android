@@ -19,6 +19,7 @@
         android:layout_height="@dimen/px144"
         android:layout_marginLeft="@dimen/px36"
         android:layout_marginTop="@dimen/px50"
+        fresco:overlayImage="@color/overlay_30"
         fresco:failureImage="@drawable/default_video_rectangle"
         fresco:failureImageScaleType="focusCrop"
         fresco:placeholderImage="@drawable/default_video_rectangle"
