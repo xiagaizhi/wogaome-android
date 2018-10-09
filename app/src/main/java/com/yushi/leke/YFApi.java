@@ -22,9 +22,9 @@ public interface YFApi {
      * @return
      */
 
-    @POST("app/v1/common/init")
+    @POST("app/v1/common/initApp")
     Call<ResponseBody>
-    init(
+    initApp(
 
     );
 
