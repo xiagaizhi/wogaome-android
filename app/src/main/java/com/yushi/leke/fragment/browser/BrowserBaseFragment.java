@@ -600,7 +600,13 @@ public class BrowserBaseFragment extends BaseFragment<BrowserContract.View> impl
                 public void request(Object data, WVJBResponseCallback callback) {
                     JSONObject jsonObject = (JSONObject) data;
                     String url = jsonObject.optString("url");
-                    getRootFragment().start(UIHelper.creat(BrowserBaseFragment.class).put(Global.BUNDLE_KEY_BROWSER_URL, url).build());
+                    try {
+                        url = URLDecoder.decode(url, "UTF-8");
+                        getRootFragment().start(UIHelper.creat(BrowserBaseFragment.class).put(Global.BUNDLE_KEY_BROWSER_URL, url).build());
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                    }
+
                 }
             });
 
