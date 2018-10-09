@@ -145,7 +145,8 @@ public class LoginFragment extends BaseFragment<LoginContract.IView> implements 
                 DialogManager.getInstance().dismiss();
                 if (share_media == SHARE_MEDIA.WEIXIN) {
 
-                    EnhancedCall call = ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).registerViaOAuth(map.get("accessToken"), "1", map.get("openid"),"deviceToken"));
+                    EnhancedCall call = ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).registerViaOAuth(map.get("accessToken"), "1", map.get("openid"),
+                            SPManager.getInstance().getString("XGTOKEN", "")));
                     call.enqueue(new BaseHttpCallBack() {
                         @Override
                         public void onSuccess(ApiBean mApiBean) {
@@ -155,10 +156,6 @@ public class LoginFragment extends BaseFragment<LoginContract.IView> implements 
                             App.getApp().bindUid(UserManager.getInstance().getUid());
                             startWithPopTo(UIHelper.creat(MainFragment.class).build(), LoginFragment.class, true);
                             mShareUtils.logout(SHARE_MEDIA.WEIXIN);
-                            //绑定用户和信鸽token
-                            if (SPManager.getInstance().getString("XGTOKEN", "") != null) {
-                                binddeviceanduser(SPManager.getInstance().getString("XGTOKEN", ""));
-                            }
                             //微信登陆数据埋点
                             Map<String, String> params = new HashMap<>();
                             params.put("uid", UserManager.getInstance().getUid());
@@ -193,28 +190,6 @@ public class LoginFragment extends BaseFragment<LoginContract.IView> implements 
                 DialogManager.getInstance().toast("取消登录");
             }
         });
-    }
-
-    private void binddeviceanduser(String token) {
-        ApiManager.getCall(ApiManager.getInstance().create(YFApi.class)
-                .binddeviceanduser(token))
-                .useCache(false)
-                .enqueue(new BaseHttpCallBack() {
-                    @Override
-                    public void onSuccess(ApiBean mApiBean) {
-                        if (mApiBean.getCode().equals(2000)) {
-                            Log.d("BindDevice", "BindDeviceandtoken success!");
-                        }
-                    }
-
-                    @Override
-                    public void onError(int id, Exception e) {
-                    }
-
-                    @Override
-                    public void onFinish() {
-                    }
-                });
     }
 
     @Override

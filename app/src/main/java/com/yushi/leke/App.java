@@ -113,7 +113,7 @@ public class App extends BaseApplication {
                         if (data!=null){
                             SPManager.getInstance().saveValue("XGTOKEN",data.toString());
 
-                           // binddevice(data.toString(),"2");
+                            binddevice(data.toString(),"2");
                         }
                     }
 
@@ -127,28 +127,28 @@ public class App extends BaseApplication {
                     }
                 });
     }
-//    private void binddevice(String token,String os){
-//        ApiManager.getCall(ApiManager.getInstance().create(YFApi.class)
-//                .binddevice(token,os))
-//                .useCache(false)
-//                .enqueue(new BaseHttpCallBack() {
-//                    @Override
-//                    public void onSuccess(ApiBean mApiBean) {
-//                      if (mApiBean.getCode().equals(2000)){
-//                      }
-//                    }
-//
-//                    @Override
-//                    public void onError(int id, Exception e) {
-//                        Log.d(Constants.LogTag,e.toString());
-//                    }
-//
-//                    @Override
-//                    public void onFinish() {
-//                        Log.d(Constants.LogTag,"finsh");
-//                    }
-//                });
-//    }
+    private void binddevice(String token,String os){
+        ApiManager.getCall(ApiManager.getInstance().create(YFApi.class)
+                .binddevice(token,os))
+                .useCache(false)
+                .enqueue(new BaseHttpCallBack() {
+                    @Override
+                    public void onSuccess(ApiBean mApiBean) {
+                      if (mApiBean.getCode().equals(2000)){
+                      }
+                    }
+
+                    @Override
+                    public void onError(int id, Exception e) {
+                        Log.d(Constants.LogTag,e.toString());
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        Log.d(Constants.LogTag,"finsh");
+                    }
+                });
+    }
     /**
      * 设置通知自定义View，这样在下发通知时可以指定build_id。编号由开发者自己维护,build_id=0为默认设置
      *

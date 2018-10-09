@@ -1,6 +1,8 @@
 package com.yushi.leke;
 
 
+import java.io.File;
+
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Field;
@@ -58,7 +60,8 @@ public interface YFApi {
     Call<ResponseBody>
     loginViaPwd(
             @Field("mobile") String mobile,
-            @Field("pwd") String pwd
+            @Field("pwd") String pwd,
+            @Field("deviceToken") String deviceToken
     );
 
     /**
@@ -99,7 +102,8 @@ public interface YFApi {
     registerViaVcode(
             @Field("mobile") String mobile,
             @Field("pwd") String pwd,
-            @Field("vcode") String vcode
+            @Field("vcode") String vcode,
+            @Field("deviceToken") String deviceToken
     );
 
     @FormUrlEncoded
@@ -693,15 +697,6 @@ public interface YFApi {
             @Field("osType") String osType
     );
 
-    /**
-     * 信鸽绑定设备与用户
-     */
-    @FormUrlEncoded
-    @POST("app/v1/msg/bindUserAndDevice")
-    Call<ResponseBody>
-    binddeviceanduser(
-            @Field("deviceToken") String deviceToken
-    );
 
     /**
      * 统计播放次数

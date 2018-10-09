@@ -89,7 +89,7 @@ public class LoginPhoneFragment extends BaseFragment<LoginPhoneContract.IView> i
     @Override
     public void login(final String phone, String password) {
         DialogManager.getInstance().showLoadingDialog();
-        EnhancedCall call= ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).loginViaPwd(phone,password));//
+        EnhancedCall call= ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).loginViaPwd(phone,password,SPManager.getInstance().getString("XGTOKEN", "")));//
         call.enqueue(new BaseHttpCallBack() {
             @Override
             public void onSuccess(ApiBean mApiBean) {
@@ -98,9 +98,7 @@ public class LoginPhoneFragment extends BaseFragment<LoginPhoneContract.IView> i
               UserManager.getInstance().setUid(jsonObject.getString("uid"));
                 startWithPopTo(UIHelper.creat(MainFragment.class).build(), LoginFragment.class,true);
                 //绑定用户和信鸽token
-                if (SPManager.getInstance().getString("XGTOKEN","")!=null){
-                    binddeviceanduser(SPManager.getInstance().getString("XGTOKEN",""));
-                }
+
                 //用户手机登陆数据埋点
                 Map<String, String> params = new HashMap<>();
                 params.put("uid",UserManager.getInstance().getUid());
@@ -119,26 +117,6 @@ public class LoginPhoneFragment extends BaseFragment<LoginPhoneContract.IView> i
 
 
         });
-    }
-    private void binddeviceanduser(String token){
-        ApiManager.getCall(ApiManager.getInstance().create(YFApi.class)
-                .binddeviceanduser(token))
-                .useCache(false)
-                .enqueue(new BaseHttpCallBack() {
-                    @Override
-                    public void onSuccess(ApiBean mApiBean) {
-                        if (mApiBean.getCode().equals(2000)){
-                        }
-                    }
-
-                    @Override
-                    public void onError(int id, Exception e) {
-                    }
-
-                    @Override
-                    public void onFinish() {
-                    }
-                });
     }
     @Override
     public void onAgreementClick() {
