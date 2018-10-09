@@ -1,6 +1,5 @@
 package com.yushi.leke.fragment.exhibition.win;
 
-import java.math.BigDecimal;
 
 /**
  * 作者：Created by zhanyangyang on 2018/9/12 09:30
@@ -13,7 +12,7 @@ public class WinProjectInfo {
     private String address;
     private String industry;
     private String entrepreneur;
-    private BigDecimal haveVote;
+    private long haveVote;
 
     public String getLogo() {
         return logo;
@@ -55,11 +54,11 @@ public class WinProjectInfo {
         this.entrepreneur = entrepreneur;
     }
 
-    public BigDecimal getHaveVote() {
+    public long getHaveVote() {
         return haveVote;
     }
 
-    public void setHaveVote(BigDecimal haveVote) {
+    public void setHaveVote(long haveVote) {
         this.haveVote = haveVote;
     }
 }
