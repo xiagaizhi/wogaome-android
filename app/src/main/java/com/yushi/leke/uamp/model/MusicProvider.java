@@ -16,15 +16,21 @@
 
 package com.yushi.leke.uamp.model;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.media.MediaBrowserCompat;
 import android.support.v4.media.MediaMetadataCompat;
+import android.text.TextUtils;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.yufan.library.Global;
 import com.yufan.library.api.ApiBean;
 import com.yufan.library.api.ApiManager;
 import com.yufan.library.api.BaseHttpCallBack;
+import com.yufan.library.base.BaseApplication;
+import com.yufan.library.manager.DialogManager;
 import com.yushi.leke.YFApi;
 import com.yushi.leke.fragment.album.audioList.AlbumAudio;
 import com.yushi.leke.uamp.utils.LogHelper;
@@ -116,7 +122,7 @@ public class MusicProvider {
     }
 
     public MusicProvider() {
-        mPrepareList= new LinkedHashMap<>();
+        mPrepareList = new LinkedHashMap<>();
         mList = new LinkedHashMap<>();
         mMusicListById = new LinkedHashMap<>();
         mFavoriteTracks = Collections.newSetFromMap(new ConcurrentHashMap<String, Boolean>());//map change to set
@@ -126,7 +132,7 @@ public class MusicProvider {
 
     }
 
-    public void updateProvider(){
+    public void updateProvider() {
 
         mMusicListById.clear();
         mMusicListById.putAll(mPrepareList);
@@ -205,11 +211,24 @@ public class MusicProvider {
      * 从服务端获取音乐路径列表，以及缓存列表数据以便将来直接引用
      * 使用musicId作为列表的关键字并将音乐按类型分组
      */
-    public void retrieveMediaAsync( String parentMediaId, final Callback callback) {
+    public void retrieveMediaAsync(String parentMediaId, final Callback callback) {
         LogHelper.d(TAG, "retrieveMediaAsync called");
-
         getAuth();
         ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).getPlayList(parentMediaId)).enqueue(new BaseHttpCallBack() {
+
+            @Override
+            public void onResponse(ApiBean mApiBean) {
+                if (ApiBean.checkOK(mApiBean.getCode())) {
+                    onSuccess(mApiBean);
+                } else if (TextUtils.equals(ApiBean.TOKEN_LOSE, mApiBean.getCode())
+                        || TextUtils.equals(ApiBean.ACCOUNT_FROZEN, mApiBean.getCode())) {
+                    //登录
+                    Intent filter = new Intent();
+                    filter.setAction(Global.BROADCAST_TOKEN_LOSE);
+                    LocalBroadcastManager.getInstance(BaseApplication.getInstance()).sendBroadcast(filter);
+                }
+            }
+
             @Override
             public void onSuccess(ApiBean mApiBean) {
                 JSONObject jsonObject = JSON.parseObject(mApiBean.data);
@@ -224,7 +243,7 @@ public class MusicProvider {
                 for (int i = 0; i < albumAudios.size(); i++) {
                     AlbumAudio albumAudio = albumAudios.get(i);
                     MediaMetadataCompat item = new MediaMetadataCompat.Builder()
-                            .putString(MediaMetadataCompat.METADATA_KEY_MEDIA_ID,albumAudio.getAliVideoId())
+                            .putString(MediaMetadataCompat.METADATA_KEY_MEDIA_ID, albumAudio.getAliVideoId())
                             .putString(MediaMetadataCompat.METADATA_KEY_ALBUM, albumAudio.getAlbumId() + "")
                             .putString(MediaMetadataCompat.METADATA_KEY_ARTIST, albumName)
                             .putString(MediaMetadataCompat.METADATA_KEY_ALBUM_ART_URI, icon)
@@ -246,10 +265,10 @@ public class MusicProvider {
                     item.getDescription().getExtras().putString(MutableMediaMetadata.videoId, albumAudio.getAliVideoId());
                     item.getDescription().getExtras().putString(MutableMediaMetadata.audioId, albumAudio.getAudioId());
                     String musicId = item.getString(MediaMetadataCompat.METADATA_KEY_MEDIA_ID);
-                    MutableMediaMetadata mutableMediaMetadata=    new MutableMediaMetadata(musicId, item);
-                    mList.put(musicId,mutableMediaMetadata );
-                    if(levelStatus==0||albumAudio.getListenable()==1){
-                        mPrepareList.put(musicId,mutableMediaMetadata );
+                    MutableMediaMetadata mutableMediaMetadata = new MutableMediaMetadata(musicId, item);
+                    mList.put(musicId, mutableMediaMetadata);
+                    if (levelStatus == 0 || albumAudio.getListenable() == 1) {
+                        mPrepareList.put(musicId, mutableMediaMetadata);
                     }
                 }
                 mCurrentState = State.INITIALIZED;

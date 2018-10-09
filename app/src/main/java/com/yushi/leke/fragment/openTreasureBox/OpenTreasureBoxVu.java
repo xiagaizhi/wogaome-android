@@ -63,15 +63,6 @@ public class OpenTreasureBoxVu extends BaseVu<OpenTreasureBoxContract.Presenter>
                 mPersenter.openTreasureBoxDetail();
             }
         });
-
-        ImageView playerIcon = appToolbar.creatRightView(ImageView.class);
-        playerIcon.setImageResource(R.drawable.ic_toolbar_player_white);
-        playerIcon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
         appToolbar.build(false);
         return true;
     }
