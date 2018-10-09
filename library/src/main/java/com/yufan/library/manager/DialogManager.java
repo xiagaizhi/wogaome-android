@@ -39,7 +39,9 @@ public class DialogManager {
         if(TextUtils.isEmpty(hint)){
             return ;
         }
-        ToastUtil.showToast(mActivity, hint, Toast.LENGTH_SHORT);
+        if (isAttach()){
+            ToastUtil.showToast(mActivity, hint, Toast.LENGTH_SHORT);
+        }
     }
     public final void toast(int strId){
         String text = mActivity.getResources().getString(strId);
