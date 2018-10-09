@@ -91,6 +91,7 @@ public class ExhibitionDetailFragment extends BaseFragment<ExhibitionDetailContr
                         .put(Global.BUNDLE_KEY_ACTIVITYID, activityid)
                         .put(Global.BUNDLE_KEY_EXHIBITION_TYE, exhibitionType)
                         .build();
+                voteendFragment.setmICallBack(this);
                 loadRootFragment(R.id.fl_exhibition_content, voteendFragment);
                 break;
         }

@@ -1,6 +1,7 @@
 package com.yushi.leke.fragment.exhibition.voteend;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -19,9 +20,12 @@ import me.drakeet.multitype.ItemViewBinder;
 
 public class VoteendBinder extends ItemViewBinder<Voteendinfo, VoteendBinder.ViewHolder> {
     ICallBack callBack;
-
-    public VoteendBinder(ICallBack callBack) {
+    Context context;
+    public Boolean flag;
+    ViewHolder vh;
+    public VoteendBinder(Context context,ICallBack callBack) {
         this.callBack = callBack;
+        this.context=context;
     }
 
     @NonNull
@@ -32,7 +36,7 @@ public class VoteendBinder extends ItemViewBinder<Voteendinfo, VoteendBinder.Vie
 
     @SuppressLint("ResourceAsColor")
     @Override
-    protected void onBindViewHolder(@NonNull ViewHolder viewHolder, @NonNull final Voteendinfo voteendinfo) {
+    protected void onBindViewHolder(@NonNull final ViewHolder viewHolder, @NonNull final Voteendinfo voteendinfo) {
         viewHolder.tv_vote_playsum.setText(String.valueOf(voteendinfo.getPlayCount()));
         viewHolder.sdv.setImageURI(FormatImageUtil.converImageUrl(voteendinfo.getVideo100Pic(),256,144));
         viewHolder.tv_vote_title.setText(voteendinfo.getTitle());
@@ -41,11 +45,36 @@ public class VoteendBinder extends ItemViewBinder<Voteendinfo, VoteendBinder.Vie
         viewHolder.tv_vote_name.setText("创业者：" + voteendinfo.getEntrepreneur());
         viewHolder.btn_vote_support.setText("已结束");
         viewHolder.btn_vote_support.setTextColor(Color.parseColor("#FF999999"));
+        if (flag){
+            viewHolder.tv_vote_name.setTextColor(context.getResources().getColorStateList(R.color.alivc_red));
+            viewHolder.tv_vote_title.setTextColor(context.getResources().getColorStateList(R.color.alivc_red));
+            viewHolder.tv_vote_province.setTextColor(context.getResources().getColorStateList(R.color.alivc_red));
+            if (viewHolder!=vh&&vh!=null){
+                vh.tv_vote_title.setTextColor(context.getResources().getColorStateList(R.color.color_black));
+                vh.tv_vote_province.setTextColor(context.getResources().getColorStateList(R.color.color_gray_level6));
+                vh.tv_vote_name.setTextColor(context.getResources().getColorStateList(R.color.color_gray_level6));
+            }
+            vh=viewHolder;
+            flag=false;
+        }
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (callBack != null) {
                     callBack.OnBackResult(voteendinfo.getAliVideoId(), voteendinfo.getTitle(), voteendinfo.getId());
+                    if (viewHolder!=vh&&vh!=null){
+                        viewHolder.tv_vote_name.setTextColor(context.getResources().getColorStateList(R.color.alivc_red));
+                        viewHolder.tv_vote_title.setTextColor(context.getResources().getColorStateList(R.color.alivc_red));
+                        viewHolder.tv_vote_province.setTextColor(context.getResources().getColorStateList(R.color.alivc_red));
+                        vh.tv_vote_title.setTextColor(context.getResources().getColorStateList(R.color.color_black));
+                        vh.tv_vote_province.setTextColor(context.getResources().getColorStateList(R.color.color_gray_level6));
+                        vh.tv_vote_name.setTextColor(context.getResources().getColorStateList(R.color.color_gray_level6));
+                    }else if (vh==null){
+                        viewHolder.tv_vote_name.setTextColor(context.getResources().getColorStateList(R.color.alivc_red));
+                        viewHolder.tv_vote_title.setTextColor(context.getResources().getColorStateList(R.color.alivc_red));
+                        viewHolder.tv_vote_province.setTextColor(context.getResources().getColorStateList(R.color.alivc_red));
+                    }
+                    vh=viewHolder;
                 }
             }
         });
