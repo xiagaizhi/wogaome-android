@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
+import com.lzy.okgo.model.HttpHeaders;
 import com.yufan.library.BuildConfig;
 import com.yufan.library.Global;
 import com.yufan.library.api.config.ApiConfig;
@@ -151,6 +152,7 @@ public class ApiManager {
         apiHeaders.put("LK-CPU", Build.CPU_ABI);//CPU 架构
         apiHeaders.put("LK-Sid", SIDUtil.getSID(context));//sid
         apiHeaders.put("LK-App-Id", "com.yushi.leke");//包名
+        apiHeaders.put("User-Agent", HttpHeaders.getUserAgent());
         return apiHeaders;
     }
 }
