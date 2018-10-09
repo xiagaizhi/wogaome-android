@@ -221,6 +221,7 @@ public class AlbumDetailFragment extends BaseFragment<AlbumDetailContract.IView>
             model.setContent(infolist.getAlbum().getIntroduction());
             model.setIcon(infolist.getAlbum().getHorizontalIcon());
             model.setTargetUrl(infolist.getAlbum().getShareIcon());
+            model.setNeedCount(true);
             ShareMenuActivity.startShare(getRootFragment(),model);
             //专辑分享数据埋点
             Map<String, String> params = new HashMap<>();

@@ -13,12 +13,16 @@ import com.umeng.socialize.UMShareAPI;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.media.UMImage;
 import com.umeng.socialize.media.UMWeb;
+import com.yufan.library.api.ApiBean;
+import com.yufan.library.api.ApiManager;
+import com.yufan.library.api.BaseHttpCallBack;
 import com.yufan.library.base.BaseActivity;
 import com.yufan.library.manager.DialogManager;
 import com.yufan.share.IShareCallback;
 import com.yufan.share.ShareModel;
 import com.yufan.share.ShareUtils;
 import com.yushi.leke.R;
+import com.yushi.leke.YFApi;
 
 /**
  * Created by mengfantao on 17/8/28.
@@ -162,7 +166,6 @@ public class ShareMenuActivity extends BaseActivity {
         return web;
     }
     private void share(SHARE_MEDIA share_media) {
-
         if (model == null) {
            return;
         }
@@ -196,6 +199,9 @@ public class ShareMenuActivity extends BaseActivity {
                 finish();
             }
         });
+        if (model.isNeedCount()){
+            addPowerByShare();
+        }
     }
 
     @Override
@@ -221,5 +227,25 @@ public class ShareMenuActivity extends BaseActivity {
         su.onActivityResult(requestCode, resultCode, data);
     }
 
+    /**
+     * 分享统计
+     */
+    private void addPowerByShare(){
+        ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).addPowerByShare()).enqueue(new BaseHttpCallBack() {
+            @Override
+            public void onSuccess(ApiBean mApiBean) {
 
+            }
+
+            @Override
+            public void onError(int id, Exception e) {
+
+            }
+
+            @Override
+            public void onFinish() {
+
+            }
+        });
+    }
 }

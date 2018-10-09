@@ -123,6 +123,7 @@ public class ExhibitionDetailFragment extends BaseFragment<ExhibitionDetailContr
                                 shareModel.setContent(mShareInfo.getSubTitle());
                                 shareModel.setTitle(mShareInfo.getTitle());
                                 shareModel.setIcon(mShareInfo.getShareIcon());
+                                shareModel.setNeedCount(true);
                                 shareModel.setTargetUrl(ApiManager.getInstance().getApiConfig().getExhibitionDetail(activityid));
                                 ShareMenuActivity.startShare(ExhibitionDetailFragment.this, shareModel);
                             }
@@ -695,6 +696,7 @@ public class ExhibitionDetailFragment extends BaseFragment<ExhibitionDetailContr
             shareModel.setContent(mShareInfo.getSubTitle());
             shareModel.setTitle(mShareInfo.getTitle());
             shareModel.setIcon(mShareInfo.getShareIcon());
+            shareModel.setNeedCount(true);
             shareModel.setTargetUrl(ApiManager.getInstance().getApiConfig().getExhibitionDetail(activityid));
             ShareMenuActivity.startShare(ExhibitionDetailFragment.this, shareModel);
             Map<String, String> params = new HashMap<>();

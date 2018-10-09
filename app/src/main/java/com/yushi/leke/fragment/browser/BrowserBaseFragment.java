@@ -160,7 +160,7 @@ public class BrowserBaseFragment extends BaseFragment<BrowserContract.View> impl
                         String digest = uri.getQueryParameter("digest");
                         String shareUrl = uri.getQueryParameter("shareUrl");
                         String icon = uri.getQueryParameter("icon");
-                        openShare(title, digest, icon, shareUrl);
+                        openShare(title, digest, icon, shareUrl,true);
                     }
                 } catch (Exception e) {
                 }
@@ -555,7 +555,7 @@ public class BrowserBaseFragment extends BaseFragment<BrowserContract.View> impl
                     String icon = jsonObject.optString("icon");
                     String shareUrl = jsonObject.optString("shareUrl");
                     String title = jsonObject.optString("title");
-                    openShare(title, digest, icon, shareUrl);
+                    openShare(title, digest, icon, shareUrl,false);
                 }
             });
 
@@ -697,7 +697,7 @@ public class BrowserBaseFragment extends BaseFragment<BrowserContract.View> impl
      * @param icon
      * @param shareUrl
      */
-    private void openShare(String title, String digest, String icon, String shareUrl) {
+    private void openShare(String title, String digest, String icon, String shareUrl,boolean isNeedCount) {
         try {
             title = URLDecoder.decode(title, "UTF-8");
             digest = URLDecoder.decode(digest, "UTF-8");
@@ -707,6 +707,7 @@ public class BrowserBaseFragment extends BaseFragment<BrowserContract.View> impl
             shareModel.setContent(digest);
             shareModel.setTitle(title);
             shareModel.setIcon(icon);
+            shareModel.setNeedCount(isNeedCount);
             shareModel.setTargetUrl(shareUrl);
             ShareMenuActivity.startShare(BrowserBaseFragment.this, shareModel);
         } catch (UnsupportedEncodingException e) {

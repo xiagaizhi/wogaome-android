@@ -104,4 +104,17 @@ public class ShareModel implements Serializable {
     public void setVideoMedia(UMVideo videoMedia) {
         this.videoMedia = videoMedia;
     }
+
+    /**
+     * 是否需要统计分享
+     */
+    private boolean isNeedCount;
+
+    public boolean isNeedCount() {
+        return isNeedCount;
+    }
+
+    public void setNeedCount(boolean needCount) {
+        isNeedCount = needCount;
+    }
 }

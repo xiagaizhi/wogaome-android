@@ -571,7 +571,6 @@ public interface YFApi {
                    @Field("currentPage") int currentPage);
 
 
-
     /**
      * 首页专辑列表
      */
@@ -682,36 +681,43 @@ public interface YFApi {
     accumulate(
             @Field("duration") long duration
     );
+
     /**
-     *信鸽绑定设备与系统类型
-     *
+     * 信鸽绑定设备与系统类型
      */
     @FormUrlEncoded
     @POST("app/v1/msg/sendDeviceInfo")
     Call<ResponseBody>
     binddevice(
-            @Field("deviceToken")String deviceToken,
-            @Field("osType")String osType
+            @Field("deviceToken") String deviceToken,
+            @Field("osType") String osType
     );
+
     /**
-     *信鸽绑定设备与用户
-     *
+     * 信鸽绑定设备与用户
      */
     @FormUrlEncoded
     @POST("app/v1/msg/bindUserAndDevice")
     Call<ResponseBody>
     binddeviceanduser(
-            @Field("deviceToken")String deviceToken
+            @Field("deviceToken") String deviceToken
     );
 
     /**
-     *统计播放次数
-     *
+     * 统计播放次数
      */
     @FormUrlEncoded
     @POST("app/v1/albumDetail/addViewTimes")
     Call<ResponseBody>
     addViewTimes(
-            @Field("audioId")String audioId
+            @Field("audioId") String audioId
+    );
+
+    /**
+     * 统计分享
+     */
+    @POST("app/v1/common/addPowerByShare")
+    Call<ResponseBody>
+    addPowerByShare(
     );
 }
