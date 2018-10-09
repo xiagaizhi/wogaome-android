@@ -85,7 +85,6 @@ public class AlbumDetailVu extends BaseVu<AlbumDetailContract.Presenter> impleme
                     flag=true;
                     appToolbar.setAlpha(1f);
                     appToolbar.setBackgroundResource(R.color.transparent);
-                    //expandableTextView.setVisibility(View.VISIBLE);
                     backButton.setImageResource(com.yufan.library.R.drawable.left_back_white_arrows);
                     img_share.setImageResource(R.drawable.ic_share_white);
                     musicAnim.setImageResource(R.drawable.anim_player_white);

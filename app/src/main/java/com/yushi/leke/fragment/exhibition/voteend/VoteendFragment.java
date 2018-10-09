@@ -33,7 +33,10 @@ public class VoteendFragment extends BaseListFragment<VoteendContract.IView> imp
     private ICallBack mICallBack;
     private String activityid;
     private int exhibitionType;
-
+    VoteendBinder voteendBinder;
+    public void setmICallBack(ICallBack mICallBack) {
+        this.mICallBack = mICallBack;
+    }
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -43,12 +46,15 @@ public class VoteendFragment extends BaseListFragment<VoteendContract.IView> imp
             exhibitionType = bundle.getInt(Global.BUNDLE_KEY_EXHIBITION_TYE);
         }
         adapter = new MultiTypeAdapter();
-        adapter.register(Voteendinfo.class, new VoteendBinder(new ICallBack() {
+        voteendBinder=new VoteendBinder(getContext(),new ICallBack() {
             @Override
             public void OnBackResult(Object... s) {
-                mICallBack.OnBackResult(s[0], s[1], s[2]);
+                if (mICallBack!=null){
+                    mICallBack.OnBackResult(s[0], s[1], s[2]);
+                }
             }
-        }));
+        });
+        adapter.register(Voteendinfo.class, voteendBinder);
         vu.getRecyclerView().setAdapter(adapter);
         adapter.setItems(list);
         vu.getRecyclerView().getAdapter().notifyDataSetChanged();
@@ -68,11 +74,6 @@ public class VoteendFragment extends BaseListFragment<VoteendContract.IView> imp
                         if (!TextUtils.isEmpty(mApiBean.getData())) {
                             infolist = JSON.parseObject(mApiBean.getData(), Voteendinfolist.class);
                             if (infolist != null && infolist.getProjectList().size() > 0) {
-                                list.clear();
-                                if (mICallBack != null) {//请求播放第一条视频
-                                    Voteendinfo voteendinfo = infolist.getProjectList().get(0);
-                                    mICallBack.OnBackResult(voteendinfo.getAliVideoId(), voteendinfo.getTitle(), voteendinfo.getId());
-                                }
                                 list.addAll(infolist.getProjectList());
                                 vu.getRecyclerView().getAdapter().notifyDataSetChanged();
                             } else {
@@ -100,6 +101,7 @@ public class VoteendFragment extends BaseListFragment<VoteendContract.IView> imp
                                 if (mICallBack != null) {//请求播放第一条视频
                                     Voteendinfo voteendinfo = infolist.getProjectList().get(0);
                                     mICallBack.OnBackResult(voteendinfo.getAliVideoId(), voteendinfo.getTitle(), voteendinfo.getId());
+                                    voteendBinder.flag=true;
                                 }
                                 list.addAll(infolist.getProjectList());
                                 vu.getRecyclerView().getAdapter().notifyDataSetChanged();
@@ -116,7 +118,7 @@ public class VoteendFragment extends BaseListFragment<VoteendContract.IView> imp
 
 
     @Override
-    public void MyCallback() {
+    public void allprojectOnclick() {
         getRootFragment().start(UIHelper.creat(AllendFragment.class)
                 .put(Global.BUNDLE_KEY_ACTIVITYID, activityid)
                 .put(Global.BUNDLE_KEY_EXHIBITION_TYE, exhibitionType)

@@ -36,7 +36,7 @@ public class VoteendVu extends BaseListVu<VoteendContract.Presenter> implements 
         super.onClick(v);
         switch (v.getId()){
             case R.id.tv_vote_checkall:
-                mPersenter.MyCallback();
+                mPersenter.allprojectOnclick();
                 break;
             case R.id.sdv:
                 mPersenter.openWinPage();
