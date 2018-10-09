@@ -278,7 +278,7 @@ public class DeviceUtil {
      *
      * @return
      */
-    private static String getUserAgent() {
+    public static String getUserAgent() {
 
         StringBuffer sb = new StringBuffer();
         String userAgent = System.getProperty("http.agent");//Dalvik/2.1.0 (Linux; U; Android 6.0.1; vivo X9L Build/MMB29M)
