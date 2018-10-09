@@ -1,6 +1,8 @@
 package com.yushi.leke;
 
 
+import java.io.File;
+
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Field;
@@ -22,9 +24,9 @@ public interface YFApi {
      * @return
      */
 
-    @POST("app/v1/common/init")
+    @POST("app/v1/common/initApp")
     Call<ResponseBody>
-    init(
+    initApp(
 
     );
 
@@ -58,7 +60,8 @@ public interface YFApi {
     Call<ResponseBody>
     loginViaPwd(
             @Field("mobile") String mobile,
-            @Field("pwd") String pwd
+            @Field("pwd") String pwd,
+            @Field("deviceToken") String deviceToken
     );
 
     /**
@@ -99,7 +102,8 @@ public interface YFApi {
     registerViaVcode(
             @Field("mobile") String mobile,
             @Field("pwd") String pwd,
-            @Field("vcode") String vcode
+            @Field("vcode") String vcode,
+            @Field("deviceToken") String deviceToken
     );
 
     @FormUrlEncoded
@@ -473,7 +477,7 @@ public interface YFApi {
     getvoteendallpro(
             @Field("currentPage") int currentPage,
             @Field("activityId") String activityId,
-            @Field("industry") long industry,
+            @Field("industryId") long industry,
             @Field("address") String address
     );
 
@@ -569,7 +573,6 @@ public interface YFApi {
     Call<ResponseBody>
     activitySearch(@Field("content") String content,
                    @Field("currentPage") int currentPage);
-
 
 
     /**
@@ -682,36 +685,34 @@ public interface YFApi {
     accumulate(
             @Field("duration") long duration
     );
+
     /**
-     *信鸽绑定设备与系统类型
-     *
+     * 信鸽绑定设备与系统类型
      */
     @FormUrlEncoded
     @POST("app/v1/msg/sendDeviceInfo")
     Call<ResponseBody>
     binddevice(
-            @Field("deviceToken")String deviceToken,
-            @Field("osType")String osType
-    );
-    /**
-     *信鸽绑定设备与用户
-     *
-     */
-    @FormUrlEncoded
-    @POST("app/v1/msg/bindUserAndDevice")
-    Call<ResponseBody>
-    binddeviceanduser(
-            @Field("deviceToken")String deviceToken
+            @Field("deviceToken") String deviceToken,
+            @Field("osType") String osType
     );
 
+
     /**
-     *统计播放次数
-     *
+     * 统计播放次数
      */
     @FormUrlEncoded
     @POST("app/v1/albumDetail/addViewTimes")
     Call<ResponseBody>
     addViewTimes(
-            @Field("audioId")String audioId
+            @Field("audioId") String audioId
+    );
+
+    /**
+     * 统计分享
+     */
+    @POST("app/v1/common/addPowerByShare")
+    Call<ResponseBody>
+    addPowerByShare(
     );
 }

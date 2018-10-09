@@ -176,5 +176,11 @@ public class BrowserVu extends BaseVu<BrowserContract.Presenter> implements Brow
             }
         }
 
+        if (naviBarInfoList.getStyle() == 1) {//透明
+            mAppToolbar.build(false);
+        } else {
+            mAppToolbar.build();
+        }
+
     }
 }

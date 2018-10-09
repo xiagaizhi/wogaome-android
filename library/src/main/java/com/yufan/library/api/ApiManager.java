@@ -2,23 +2,13 @@ package com.yufan.library.api;
 
 import android.content.Context;
 import android.os.Build;
-import android.text.TextUtils;
-import android.util.Log;
 
-import com.alibaba.fastjson.JSON;
-import com.yufan.library.BuildConfig;
-import com.yufan.library.Global;
 import com.yufan.library.api.config.ApiConfig;
-import com.yufan.library.base.BaseApplication;
-import com.yufan.library.manager.SPManager;
 import com.yufan.library.manager.UserManager;
 import com.yufan.library.util.DeviceUtil;
 import com.yufan.library.util.Netutil;
 import com.yufan.library.util.SIDUtil;
 
-import java.io.IOException;
-import java.net.URLEncoder;
-import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -28,16 +18,9 @@ import java.util.concurrent.TimeUnit;
 
 import okhttp3.Cookie;
 import okhttp3.CookieJar;
-import okhttp3.Headers;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
-import okhttp3.ResponseBody;
-import okio.Buffer;
 import retrofit2.Call;
-import retrofit2.Callback;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -140,7 +123,6 @@ public class ApiManager {
         apiHeaders.put("Accept-Language", Locale.getDefault().toString());
         apiHeaders.put("Connection", "Keep-Alive");
         apiHeaders.put("Content-Type", "application/x-www-form-urlencoded");
-
         apiHeaders.put("LK-App-Version", DeviceUtil.VersionName(context) + "_" + DeviceUtil.VersionCode(context));//app版本  1.0.0_101_10
         apiHeaders.put("LK-Device-Id", DeviceUtil.IMEI(context));//imei
         apiHeaders.put("LK-Network-Type", Netutil.GetNetworkType(context));//网络类型
@@ -151,6 +133,7 @@ public class ApiManager {
         apiHeaders.put("LK-CPU", Build.CPU_ABI);//CPU 架构
         apiHeaders.put("LK-Sid", SIDUtil.getSID(context));//sid
         apiHeaders.put("LK-App-Id", "com.yushi.leke");//包名
+        apiHeaders.put("User-Agent", DeviceUtil.getUserAgent());
         return apiHeaders;
     }
 }

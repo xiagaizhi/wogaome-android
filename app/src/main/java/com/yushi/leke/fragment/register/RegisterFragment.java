@@ -23,6 +23,7 @@ import android.view.WindowManager;
 
 import com.yufan.library.inject.VuClass;
 import com.yufan.library.manager.DialogManager;
+import com.yufan.library.manager.SPManager;
 import com.yufan.library.manager.UserManager;
 import com.yufan.library.util.SoftInputUtil;
 import com.yushi.leke.App;
@@ -69,7 +70,8 @@ public class RegisterFragment extends BaseFragment<RegisterContract.IView> imple
     @Override
     public void register(final String phone, String password, String verifcationCode) {
         DialogManager.getInstance().showLoadingDialog();
-        EnhancedCall call= ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).registerViaVcode(phone,password,verifcationCode));
+        EnhancedCall call= ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).registerViaVcode(phone,password,verifcationCode,
+                SPManager.getInstance().getString("XGTOKEN", "")));
       call.enqueue(new BaseHttpCallBack() {
           @Override
           public void onSuccess(ApiBean mApiBean) {

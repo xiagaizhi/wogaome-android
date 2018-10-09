@@ -48,24 +48,25 @@ import me.yokeyword.fragmentation.SupportFragment;
  */
 @VuClass(AlbumDetailVu.class)
 public class AlbumDetailFragment extends BaseFragment<AlbumDetailContract.IView> implements AlbumDetailContract.Presenter {
-    private SupportFragment[] fragments=new SupportFragment[2];
+    private SupportFragment[] fragments = new SupportFragment[2];
     private String albumId;
     private String intro;
     AlbumDetailinfo infolist;
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         Bundle bundle = getArguments();
-        if (bundle!=null){
-            albumId=bundle.getString(Global.BUNDLE_KEY_ALBUMID);
-            intro=bundle.getString("intro");
+        if (bundle != null) {
+            albumId = bundle.getString(Global.BUNDLE_KEY_ALBUMID);
+            intro = bundle.getString("intro");
         }
-        fragments[0] = UIHelper.creat(MediaBrowserFragment.class) .put(Global.BUNDLE_KEY_ALBUMID,albumId).build();
+        fragments[0] = UIHelper.creat(MediaBrowserFragment.class).put(Global.BUNDLE_KEY_ALBUMID, albumId).build();
         fragments[1] = UIHelper.creat(DetailforalbumFragment.class)
-                .put(Global.BUNDLE_KEY_ALBUMID,albumId)
-                .put("intro",intro)
+                .put(Global.BUNDLE_KEY_ALBUMID, albumId)
+                .put("intro", intro)
                 .build();
-                getVu().getViewPager().setAdapter(new FragmentPagerAdapter(getChildFragmentManager()) {
+        getVu().getViewPager().setAdapter(new FragmentPagerAdapter(getChildFragmentManager()) {
             @Override
             public int getCount() {
                 return fragments.length;
@@ -79,9 +80,9 @@ public class AlbumDetailFragment extends BaseFragment<AlbumDetailContract.IView>
 
             @Override
             public CharSequence getPageTitle(int position) {
-                if(position==0){
+                if (position == 0) {
                     return "课程内容";
-                }else if(position ==1){
+                } else if (position == 1) {
                     return "专辑简介";
                 }
                 return "";
@@ -96,7 +97,7 @@ public class AlbumDetailFragment extends BaseFragment<AlbumDetailContract.IView>
     @Override
     public void onRefresh() {
         getdata();
-        ((MediaBrowserFragment) fragments[0]). onRefresh();
+        ((MediaBrowserFragment) fragments[0]).onRefresh();
     }
 
     @Override
@@ -104,7 +105,8 @@ public class AlbumDetailFragment extends BaseFragment<AlbumDetailContract.IView>
         Intent intent = new Intent(getActivity(), MusicPlayerActivity.class);
         startActivity(intent);
     }
-    private void getdata(){
+
+    private void getdata() {
         //获取专辑数据
         ApiManager.getCall(ApiManager.getInstance().create(YFApi.class)
                 .albumdetail(albumId))
@@ -129,7 +131,8 @@ public class AlbumDetailFragment extends BaseFragment<AlbumDetailContract.IView>
                     }
                 });
     }
-    private void getstatedate(){
+
+    private void getstatedate() {
         //获取订阅状态
         ApiManager.getCall(ApiManager.getInstance().create(YFApi.class)
                 .substate(albumId))
@@ -138,7 +141,7 @@ public class AlbumDetailFragment extends BaseFragment<AlbumDetailContract.IView>
                     @Override
                     public void onSuccess(ApiBean mApiBean) {
                         if (!TextUtils.isEmpty(mApiBean.getData())) {
-                            int state= Integer.parseInt(mApiBean.getData());
+                            int state = Integer.parseInt(mApiBean.getData());
                             getVu().showsubstate(state);
                         }
                     }
@@ -152,6 +155,7 @@ public class AlbumDetailFragment extends BaseFragment<AlbumDetailContract.IView>
                     }
                 });
     }
+
     @Override
     public void register() {
         //订阅专辑
@@ -161,7 +165,7 @@ public class AlbumDetailFragment extends BaseFragment<AlbumDetailContract.IView>
                 .enqueue(new BaseHttpCallBack() {
                     @Override
                     public void onSuccess(ApiBean mApiBean) {
-                        Toast.makeText(getContext(),"订阅成功",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "订阅成功", Toast.LENGTH_SHORT).show();
                         getstatedate();
                         //订阅专辑数据埋点
                         Map<String, String> params = new HashMap<>();
@@ -169,8 +173,8 @@ public class AlbumDetailFragment extends BaseFragment<AlbumDetailContract.IView>
                         params.put("albumId", albumId);
                         ArgsUtil.getInstance().datapoint(AliDotId.id_0500, params);
                         //发送更新订阅数量广播
-                        Intent intent=new Intent();
-                        intent.putExtra("more",1);
+                        Intent intent = new Intent();
+                        intent.putExtra("more", 1);
                         intent.setAction(Global.BROADCAST_ACTION_SUBCRIBE);
                         LocalBroadcastManager.getInstance(App.getInstance()).sendBroadcast(intent);
                     }
@@ -194,11 +198,11 @@ public class AlbumDetailFragment extends BaseFragment<AlbumDetailContract.IView>
                 .enqueue(new BaseHttpCallBack() {
                     @Override
                     public void onSuccess(ApiBean mApiBean) {
-                        Toast.makeText(getContext(),"取消订阅成功",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "取消订阅成功", Toast.LENGTH_SHORT).show();
                         getstatedate();
                         //发送更新订阅数量广播
-                        Intent intent=new Intent();
-                        intent.putExtra("more",-1);
+                        Intent intent = new Intent();
+                        intent.putExtra("more", -1);
                         intent.setAction(Global.BROADCAST_ACTION_SUBCRIBE);
                         LocalBroadcastManager.getInstance(App.getInstance()).sendBroadcast(intent);
                     }
@@ -215,13 +219,14 @@ public class AlbumDetailFragment extends BaseFragment<AlbumDetailContract.IView>
 
     @Override
     public void onShareclick() {
-        ShareModel model=new ShareModel();
-        if (infolist.getAlbum()!=null){
+        ShareModel model = new ShareModel();
+        if (infolist != null && infolist.getAlbum() != null) {
             model.setTitle(infolist.getAlbum().getAlbumName());
             model.setContent(infolist.getAlbum().getIntroduction());
             model.setIcon(infolist.getAlbum().getHorizontalIcon());
             model.setTargetUrl(infolist.getAlbum().getShareIcon());
-            ShareMenuActivity.startShare(getRootFragment(),model);
+            model.setNeedCount(true);
+            ShareMenuActivity.startShare(getRootFragment(), model);
             //专辑分享数据埋点
             Map<String, String> params = new HashMap<>();
             params.put("uid", UserManager.getInstance().getUid());

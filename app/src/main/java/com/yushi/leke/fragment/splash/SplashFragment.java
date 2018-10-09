@@ -36,6 +36,7 @@ import com.yushi.leke.YFApi;
 import com.yushi.leke.fragment.splash.advert.AdFragmentFragment;
 import com.yushi.leke.fragment.splash.advert.AdInfo;
 import com.yushi.leke.fragment.splash.guide.GuideFragmentFragment;
+import com.yushi.leke.util.FormatImageUtil;
 
 import java.io.ByteArrayOutputStream;
 import java.io.Serializable;
@@ -78,7 +79,7 @@ public class SplashFragment extends BaseFragment<SplashContract.IView> implement
      * 初始化接口
      */
     private void init() {
-        ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).init()).enqueue(new BaseHttpCallBack() {
+        ApiManager.getCall(ApiManager.getInstance().create(YFApi.class).initApp()).enqueue(new BaseHttpCallBack() {
             @Override
             public void onResponse(ApiBean mApiBean) {
                 if (ApiBean.checkOK(mApiBean.getCode())) {
@@ -130,7 +131,7 @@ public class SplashFragment extends BaseFragment<SplashContract.IView> implement
                         final AdInfo mAdInfo = JSON.parseObject(mApiBean.getData(), AdInfo.class);
                         if (mAdInfo != null) {
                             if (!CacheManager.isExistDataCache(_mActivity, mAdInfo.getKey())) {
-                                Glide.with(_mActivity).load(mAdInfo.getIcon()).asBitmap().into(new SimpleTarget<Bitmap>() {
+                                Glide.with(_mActivity).load(FormatImageUtil.converImageUrl(mAdInfo.getIcon())).asBitmap().into(new SimpleTarget<Bitmap>() {
                                     @Override
                                     public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
                                         ByteArrayOutputStream baos = new ByteArrayOutputStream();

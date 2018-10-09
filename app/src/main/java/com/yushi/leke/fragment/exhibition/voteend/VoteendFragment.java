@@ -98,11 +98,6 @@ public class VoteendFragment extends BaseListFragment<VoteendContract.IView> imp
                             infolist = JSON.parseObject(mApiBean.getData(), Voteendinfolist.class);
                             if (infolist != null && infolist.getProjectList().size() > 0) {
                                 list.clear();
-                                if (mICallBack != null) {//请求播放第一条视频
-                                    Voteendinfo voteendinfo = infolist.getProjectList().get(0);
-                                    mICallBack.OnBackResult(voteendinfo.getAliVideoId(), voteendinfo.getTitle(), voteendinfo.getId());
-                                    voteendBinder.flag=true;
-                                }
                                 list.addAll(infolist.getProjectList());
                                 vu.getRecyclerView().getAdapter().notifyDataSetChanged();
                             } else {

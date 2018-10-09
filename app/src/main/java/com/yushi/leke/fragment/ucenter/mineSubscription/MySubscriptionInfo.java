@@ -21,6 +21,15 @@ public class MySubscriptionInfo {
     private String introduction;
     private String viewPeople;
     private String viewTimes;
+    private String intro;
+
+    public String getIntro() {
+        return intro;
+    }
+
+    public void setIntro(String intro) {
+        this.intro = intro;
+    }
 
     public String getViewPeople() {
         return viewPeople;

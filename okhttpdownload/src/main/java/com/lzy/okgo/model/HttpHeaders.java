@@ -105,7 +105,8 @@ public class HttpHeaders implements Serializable {
 
     public void put(HttpHeaders headers) {
         if (headers != null) {
-            if (headers.headersMap != null && !headers.headersMap.isEmpty()) headersMap.putAll(headers.headersMap);
+            if (headers.headersMap != null && !headers.headersMap.isEmpty())
+                headersMap.putAll(headers.headersMap);
         }
     }
 
@@ -185,7 +186,8 @@ public class HttpHeaders implements Serializable {
             String language = locale.getLanguage();
             String country = locale.getCountry();
             StringBuilder acceptLanguageBuilder = new StringBuilder(language);
-            if (!TextUtils.isEmpty(country)) acceptLanguageBuilder.append('-').append(country).append(',').append(language).append(";q=0.8");
+            if (!TextUtils.isEmpty(country))
+                acceptLanguageBuilder.append('-').append(country).append(',').append(language).append(";q=0.8");
             acceptLanguage = acceptLanguageBuilder.toString();
             return acceptLanguage;
         }
@@ -251,9 +253,9 @@ public class HttpHeaders implements Serializable {
                 buffer.append(id);
             }
             userAgent = String.format(webUserAgent, buffer, "Mobile ");
-            return userAgent;
+            return userAgent + "/LekeApp";
         }
-        return userAgent;
+        return userAgent + "/LekeApp";
     }
 
     public static long parseGMTToMillis(String gmtTime) throws ParseException {
