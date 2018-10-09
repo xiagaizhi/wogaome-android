@@ -176,6 +176,7 @@
           android:layout_weight="1">
          <Button
              android:id="@+id/btn_save"
+             style="?android:attr/borderlessButtonStyle"
              android:text="保存至手机"
              android:textSize="@dimen/px38"
              android:textColor="@color/white"
