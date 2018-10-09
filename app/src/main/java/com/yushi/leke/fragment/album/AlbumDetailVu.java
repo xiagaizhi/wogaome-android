@@ -4,6 +4,8 @@ import android.graphics.Color;
 import android.graphics.drawable.AnimationDrawable;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.TabLayout;
+import android.support.v4.media.session.MediaControllerCompat;
+import android.support.v4.media.session.PlaybackStateCompat;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.View;
@@ -25,6 +27,7 @@ import com.yufan.library.widget.NoScrollViewPager;
 import com.yufan.library.widget.StateLayout;
 import com.yushi.leke.R;
 import com.yushi.leke.UIHelper;
+import com.yushi.leke.fragment.exhibition.exhibitionHome.binder.ExhibitionTopViewBinder;
 import com.yushi.leke.util.FormatImageUtil;
 
 /**
@@ -88,7 +91,10 @@ public class AlbumDetailVu extends BaseVu<AlbumDetailContract.Presenter> impleme
                     backButton.setImageResource(com.yufan.library.R.drawable.left_back_white_arrows);
                     img_share.setImageResource(R.drawable.ic_share_white);
                     musicAnim.setImageResource(R.drawable.anim_player_white);
-                    ((AnimationDrawable) musicAnim.getDrawable()).start();
+                    MediaControllerCompat mediaControllerCompat=  MediaControllerCompat.getMediaController(mPersenter.getActivity());
+                    if(mediaControllerCompat!=null&&mediaControllerCompat.getPlaybackState().getState()== PlaybackStateCompat.STATE_PLAYING){
+                        ((AnimationDrawable) musicAnim.getDrawable()).start();
+                    }
                     musicAnim.setAlpha(1.0f);
                     backButton.setAlpha(1.0f);
                     img_share.setAlpha(1.0f);
@@ -105,7 +111,10 @@ public class AlbumDetailVu extends BaseVu<AlbumDetailContract.Presenter> impleme
                         backButton.setImageResource(com.yufan.library.R.drawable.left_back_black_arrows);
                         img_share.setImageResource(R.drawable.ic_share_blue);
                         musicAnim.setImageResource(R.drawable.anim_player_blue);
-                        ((AnimationDrawable) musicAnim.getDrawable()).start();
+                        MediaControllerCompat mediaControllerCompat=  MediaControllerCompat.getMediaController(mPersenter.getActivity());
+                        if(mediaControllerCompat!=null&&mediaControllerCompat.getPlaybackState().getState()== PlaybackStateCompat.STATE_PLAYING){
+                            ((AnimationDrawable) musicAnim.getDrawable()).start();
+                        }
                         flag=false;
                     }
                     float per=(float) (appBarLayout.getTotalScrollRange()-Math.abs(index))/(float)appBarLayout.getTotalScrollRange();
@@ -146,9 +155,7 @@ public class AlbumDetailVu extends BaseVu<AlbumDetailContract.Presenter> impleme
         });
         backButton.setImageResource(com.yufan.library.R.drawable.left_back_white_arrows);
         appToolbar.build(false);
-        musicAnim = UIHelper.getMusicView(mPersenter.getActivity(),appToolbar,AlbumDetailVu.class);
-        musicAnim.setImageResource(R.drawable.anim_player_white);
-        ((AnimationDrawable) musicAnim.getDrawable()).start();
+        musicAnim = UIHelper.getWhiteMusicView(mPersenter.getActivity(),appToolbar,AlbumDetailVu.class);
         musicAnim.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
