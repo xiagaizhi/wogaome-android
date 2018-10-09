@@ -16,6 +16,7 @@
 
 package com.yushi.leke.fragment.exhibition.exhibitionHome.binder;
 
+import android.app.Activity;
 import android.graphics.drawable.AnimationDrawable;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -26,7 +27,9 @@ import android.widget.ImageView;
 
 import com.yufan.library.inter.ICallBack;
 import com.yushi.leke.R;
+import com.yushi.leke.UIHelper;
 import com.yushi.leke.fragment.exhibition.exhibitionHome.bean.ExhibitionTopInfo;
+import com.yushi.leke.fragment.ucenter.UCenterVu;
 
 import me.drakeet.multitype.ItemViewBinder;
 
@@ -38,8 +41,10 @@ public class ExhibitionTopViewBinder extends ItemViewBinder<ExhibitionTopInfo, E
     private ICallBack callBack;
     public static final int MUSIC_EVENT = 1;
     public static final int HISTORY_EVENT = 2;
-    public ExhibitionTopViewBinder(ICallBack callBack) {
+    private Activity activity;
+    public ExhibitionTopViewBinder(ICallBack callBack, Activity activity) {
 this.callBack=callBack;
+this.activity=activity;
     }
 
     @Override
@@ -61,7 +66,7 @@ this.callBack=callBack;
 
             }
         });
-        ((AnimationDrawable) holder.rightMusic.getDrawable()).start();
+        UIHelper. putImageView(activity, holder.rightMusic,ExhibitionTopViewBinder.class);
         holder.img_history_ic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

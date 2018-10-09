@@ -45,19 +45,7 @@ public class AboutLekeVu extends BaseVu<AboutLekeContract.Presenter> implements 
     }
 
 
-    @Override
-    public boolean initTitle(AppToolbar appToolbar) {
-        super.initTitle(appToolbar);
-        ImageView player = UIHelper.getMusicView(mPersenter.getActivity(),appToolbar);
-        player.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mPersenter.openPlayer();
-            }
-        });
-        appToolbar.build();
-        return true;
-    }
+
 
     @Override
     public void initStatusLayout(StateLayout stateLayout) {

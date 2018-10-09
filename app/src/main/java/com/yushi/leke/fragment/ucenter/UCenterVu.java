@@ -19,6 +19,7 @@ import com.yufan.library.inject.FindView;
 import com.yufan.library.inject.Title;
 import com.yufan.library.widget.StateLayout;
 import com.yufan.library.widget.AppToolbar;
+import com.yushi.leke.UIHelper;
 
 /**
  * Created by mengfantao on 18/8/2.
@@ -79,8 +80,8 @@ public class UCenterVu extends BaseVu<UCenterContract.Presenter> implements UCen
     public void initView(View view) {
         ll_personal_info.setOnClickListener(this);
         img_messgae.setOnClickListener(this);
-        ((AnimationDrawable) img_player.getDrawable()).start();
         img_player.setOnClickListener(this);
+       UIHelper. putImageView(mPersenter.getActivity(),img_player,UCenterVu.class);
         rl_roadshow.setOnClickListener(this);
         rl_subscribe.setOnClickListener(this);
         rl_vote.setOnClickListener(this);
@@ -149,6 +150,7 @@ public class UCenterVu extends BaseVu<UCenterContract.Presenter> implements UCen
         appToolbar.build();
         return true;
     }
+
 
     @Override
     public void initStatusLayout(StateLayout stateLayout) {

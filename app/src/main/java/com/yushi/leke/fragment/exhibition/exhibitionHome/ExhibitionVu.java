@@ -110,7 +110,7 @@ public class ExhibitionVu extends BaseListVu<ExhibitionContract.Presenter> imple
             }
         });
         appToolbar.build();
-        musicAnim = UIHelper.getMusicView(mPersenter.getActivity(), appToolbar);
+        musicAnim = UIHelper.getMusicView(mPersenter.getActivity(), appToolbar,ExhibitionVu.class);
         musicAnim.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

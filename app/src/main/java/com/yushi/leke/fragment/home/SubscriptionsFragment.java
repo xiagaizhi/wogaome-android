@@ -71,7 +71,7 @@ public class SubscriptionsFragment extends BaseListFragment<SubscriptionsContrac
                         break;
                 }
             }
-        }));
+        },getActivity()));
         adapter.register(SubscriptionBanner.class, new SubscriptionsBannerViewBinder(new ICallBack() {
             @Override
             public void OnBackResult(Object... s) {

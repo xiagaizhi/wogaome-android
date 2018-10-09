@@ -60,7 +60,7 @@ public class ExhibitionFragment extends BaseListFragment<ExhibitionContract.IVie
                         break;
                 }
             }
-        }));
+        },getActivity()));
         adapter.register(ExhibitionErrorInfo.class, new ExhibitionErrorBinder(new ICallBack() {
             @Override
             public void OnBackResult(Object... s) {

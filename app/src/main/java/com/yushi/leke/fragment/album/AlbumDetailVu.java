@@ -147,7 +147,7 @@ public class AlbumDetailVu extends BaseVu<AlbumDetailContract.Presenter> impleme
         });
         backButton.setImageResource(com.yufan.library.R.drawable.left_back_white_arrows);
         appToolbar.build(false);
-        musicAnim = UIHelper.getMusicView(mPersenter.getActivity(),appToolbar);
+        musicAnim = UIHelper.getMusicView(mPersenter.getActivity(),appToolbar,AlbumDetailVu.class);
         musicAnim.setImageResource(R.drawable.anim_player_white);
         ((AnimationDrawable) musicAnim.getDrawable()).start();
         musicAnim.setOnClickListener(new View.OnClickListener() {

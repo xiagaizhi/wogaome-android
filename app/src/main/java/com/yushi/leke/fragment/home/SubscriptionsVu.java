@@ -17,6 +17,7 @@ import com.yufan.library.widget.StateLayout;
 import com.yufan.library.widget.AppToolbar;
 import com.yufan.library.view.recycler.YFRecyclerView;
 import com.yushi.leke.UIHelper;
+import com.yushi.leke.fragment.home.binder.SubscriptionTitle;
 
 /**
  * Created by mengfantao on 18/8/2.
@@ -103,7 +104,7 @@ public class SubscriptionsVu extends BaseListVu<SubscriptionsContract.Presenter>
             }
         });
         appToolbar.build();
-        musicAnim = UIHelper.getMusicView(mPersenter.getActivity(), appToolbar);
+        musicAnim = UIHelper.getMusicView(mPersenter.getActivity(), appToolbar, SubscriptionsVu.class);
         musicAnim.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

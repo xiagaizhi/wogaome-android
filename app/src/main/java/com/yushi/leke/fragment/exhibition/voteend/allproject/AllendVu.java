@@ -73,7 +73,7 @@ public class AllendVu extends BaseListVu<AllendContract.Presenter> implements Al
             }
         });
         appToolbar.build();
-        UIHelper.getMusicView(mPersenter.getActivity(),appToolbar);
+
         return true;
     }
     @Override

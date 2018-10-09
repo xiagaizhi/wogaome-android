@@ -64,15 +64,7 @@ public class AllprojectsVu extends BaseListVu<AllprojectsContract.Presenter> imp
             }
         });
         appToolbar.build();
-        musicAnim=UIHelper.getMusicView(mPersenter.getActivity(),appToolbar);
-        musicAnim.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (v.getAlpha() > 0) {
-                    mPersenter.onMusicMenuClick();
-                }
-            }
-        });
+
         return true;
     }
 

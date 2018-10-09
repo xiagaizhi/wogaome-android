@@ -16,6 +16,7 @@
 
 package com.yushi.leke.fragment.home.binder;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.AnimationDrawable;
 import android.support.annotation.NonNull;
@@ -36,6 +37,8 @@ import com.yufan.library.view.banner.BannerConfig;
 import com.yufan.library.view.banner.listener.OnBannerClickListener;
 import com.yufan.library.view.banner.loader.ImageLoaderInterface;
 import com.yushi.leke.R;
+import com.yushi.leke.UIHelper;
+import com.yushi.leke.fragment.exhibition.exhibitionHome.binder.ExhibitionTopViewBinder;
 import com.yushi.leke.fragment.home.bean.BannerItemInfo;
 import com.yushi.leke.widget.transformer.ScaleTransformer;
 
@@ -53,9 +56,10 @@ public class SubscriptionsTitleViewBinder extends ItemViewBinder<SubscriptionTit
     public static final int BANNER_BINDER_MUSIC = 1;
     public static final int BANNER_BINDER_SEARCH = 2;
     public static final int BANNER_BINDER_ITEM = 3;
-
-    public SubscriptionsTitleViewBinder(ICallBack callBack) {
+    private Activity activity;
+    public SubscriptionsTitleViewBinder(ICallBack callBack, Activity activity) {
         this.callBack = callBack;
+        this.activity=activity;
     }
 
     @Override
@@ -80,7 +84,8 @@ public class SubscriptionsTitleViewBinder extends ItemViewBinder<SubscriptionTit
                 callBack.OnBackResult(BANNER_BINDER_SEARCH);
             }
         });
-        ((AnimationDrawable) holder.rightMusic.getDrawable()).start();
+        UIHelper. putImageView(activity, holder.rightMusic,SubscriptionsTitleViewBinder.class);
+
 
     }
 

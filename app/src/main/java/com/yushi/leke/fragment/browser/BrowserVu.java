@@ -81,7 +81,6 @@ public class BrowserVu extends BaseVu<BrowserContract.Presenter> implements Brow
         });
         titleView.setLines(1);
         titleView.setEllipsize(TextUtils.TruncateAt.END);
-        UIHelper.getMusicView(mPersenter.getActivity(), appToolbar);
         appToolbar.build();
         return true;
     }
@@ -176,12 +175,6 @@ public class BrowserVu extends BaseVu<BrowserContract.Presenter> implements Brow
                 });
             }
         }
-        if (naviBarInfoList.getStyle() == 1) {//透明
-            mAppToolbar.build(false);
-            UIHelper.getWhiteMusicView(mPersenter.getActivity(), mAppToolbar);
-        } else {
-            mAppToolbar.build();
-            UIHelper.getMusicView(mPersenter.getActivity(), mAppToolbar);
-        }
+
     }
 }

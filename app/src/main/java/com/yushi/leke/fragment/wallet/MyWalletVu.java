@@ -106,7 +106,6 @@ public class MyWalletVu extends BaseVu<MyWalletContract.Presenter> implements My
         });
 
         appToolbar.build(false);
-        UIHelper.getWhiteMusicView(mPersenter.getActivity(),appToolbar);
         return true;
     }
 

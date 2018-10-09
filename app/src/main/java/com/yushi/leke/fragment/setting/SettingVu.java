@@ -48,13 +48,6 @@ public class SettingVu extends BaseVu<SettingContract.Presenter> implements Sett
         tv_current_version.setText(YFUtil.getVersionName());
     }
 
-    @Override
-    public boolean initTitle(AppToolbar appToolbar) {
-        super.initTitle(appToolbar);
-        UIHelper.getMusicView(mPersenter.getActivity(),appToolbar);
-        appToolbar.build();
-        return true;
-    }
 
     @Override
     public void initStatusLayout(StateLayout stateLayout) {

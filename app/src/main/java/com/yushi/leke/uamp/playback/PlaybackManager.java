@@ -209,6 +209,9 @@ public class PlaybackManager implements Playback.Callback {
         }
         return actions;
     }
+    public boolean isPlaying(){
+    return     mPlayback.isPlaying();
+    }
 
     /**
      * Implementation of the Playback.Callback interface

@@ -37,13 +37,7 @@ public class PaySafetyVu extends BaseVu<PaySafetyContract.Presenter> implements 
 
     }
 
-    @Override
-    public boolean initTitle(AppToolbar appToolbar) {
-        super.initTitle(appToolbar);
-        UIHelper.getMusicView(mPersenter.getActivity(),appToolbar);
-        appToolbar.build();
-        return true;
-    }
+
 
 
     @Override

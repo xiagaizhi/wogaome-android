@@ -225,7 +225,6 @@ public class PersonalInfoVu extends BaseListVu<PersonalInfoContract.Presenter> i
                 mPersenter.onBackPressed();
             }
         });
-        UIHelper.getWhiteMusicView(mPersenter.getActivity(),appToolbar);
 
         appToolbar.build(false);
         return true;

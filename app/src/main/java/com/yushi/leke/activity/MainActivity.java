@@ -1,9 +1,11 @@
 package com.yushi.leke.activity;
 
+import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.RemoteException;
@@ -42,6 +44,7 @@ import com.yushi.leke.fragment.splash.SplashFragment;
 import com.yushi.leke.uamp.MusicService;
 import com.yushi.leke.uamp.model.MusicProvider;
 import com.yushi.leke.uamp.model.MutableMediaMetadata;
+import com.yushi.leke.uamp.playback.PlaybackManager;
 import com.yushi.leke.uamp.ui.MediaBrowserProvider;
 import com.yushi.leke.uamp.utils.LogHelper;
 import com.yushi.leke.uamp.utils.MediaIDHelper;
@@ -54,9 +57,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class MainActivity extends BaseActivity implements MediaBrowserProvider {
     private String TAG = "MainActivity";
@@ -66,7 +71,7 @@ public class MainActivity extends BaseActivity implements MediaBrowserProvider {
             "com.yushi.leke.uamp.CURRENT_MEDIA_DESCRIPTION";
     private MediaBrowserCompat mMediaBrowser;
     private List<IActivityResult> results = new ArrayList<>();
-
+    private  HashMap<Class ,ImageView> imageViews=new HashMap<>();
     private String mediaId;
     private String ablumId;
 
@@ -82,14 +87,14 @@ public class MainActivity extends BaseActivity implements MediaBrowserProvider {
         }
     }
 
-
-    public ImageView getMusicView() {
-        ImageView imageView = new ImageView(this);
+    public   ImageView getMusicView(Activity activity, Class clz) {
+        if(imageViews.containsKey(clz)){
+            imageViews.remove(clz);
+        }
+        ImageView imageView = new ImageView(activity);
         LinearLayout.LayoutParams rightLayoutParams = new LinearLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
         imageView.setLayoutParams(rightLayoutParams);
-
-
-        imageView.setPadding(0, 0, PxUtil.convertDIP2PX(this, 18), 0);
+        imageView.setPadding(0, 0, PxUtil.convertDIP2PX(activity, 18), 0);
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -97,8 +102,15 @@ public class MainActivity extends BaseActivity implements MediaBrowserProvider {
                 v.getContext().startActivity(intent);
             }
         });
-
+        imageViews.put(clz,imageView);
         return imageView;
+    }
+    public void putImageView(ImageView imageView,Class clz){
+        if(imageViews.containsKey(clz)){
+            imageViews.remove(clz);
+        }
+        imageViews.put(clz,imageView);
+
     }
 
     @Override
@@ -281,7 +293,21 @@ public class MainActivity extends BaseActivity implements MediaBrowserProvider {
             new MediaControllerCompat.Callback() {
                 @Override
                 public void onPlaybackStateChanged(@NonNull PlaybackStateCompat state) {
+                    if(state.getState()==PlaybackStateCompat.STATE_PLAYING){
+                          for (Map.Entry<Class, ImageView> entry : imageViews.entrySet()) {
+                              if(entry.getValue()!=null&&entry.getValue().getParent()!=null){
+                                  ((AnimationDrawable) entry.getValue().getDrawable()).start();
+                              }
+                          }
 
+                    }else  {
+                        for (Map.Entry<Class, ImageView> entry : imageViews.entrySet()) {
+                            if(entry.getValue()!=null&&entry.getValue().getParent()!=null){
+                                ((AnimationDrawable) entry.getValue().getDrawable()).stop();
+                            }
+                        }
+
+                    }
                 }
 
                 @Override
