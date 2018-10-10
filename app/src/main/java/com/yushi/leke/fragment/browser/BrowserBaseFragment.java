@@ -73,6 +73,7 @@ public class BrowserBaseFragment extends BaseFragment<BrowserContract.View> impl
     private String mIntentUrl;
     private WVJBWebViewClient wVJBWebViewClient;
     private WebSettings webSetting;
+    private boolean isMsgPage;
 
     private WVJBWebViewClient.WVJBResponseCallback payWVJBResponseCallback;
     BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
@@ -138,9 +139,13 @@ public class BrowserBaseFragment extends BaseFragment<BrowserContract.View> impl
         Bundle bundle = getArguments();
         if (bundle != null) {
             mIntentUrl = bundle.getString(Global.BUNDLE_KEY_BROWSER_URL);
+            isMsgPage = bundle.getBoolean(Global.BUNDLE_KEY_IS_MESSAGE_PAGE,false);
         }
     }
 
+    public boolean isMsgPage() {
+        return isMsgPage;
+    }
 
     @Override
     public boolean isPtrEnable() {

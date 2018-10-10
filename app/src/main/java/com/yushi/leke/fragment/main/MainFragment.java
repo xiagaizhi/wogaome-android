@@ -43,6 +43,7 @@ import com.yushi.leke.fragment.splash.advert.NativeJumpInfo;
 import com.yushi.leke.fragment.test.TestListFragment;
 import com.yushi.leke.fragment.ucenter.UCenterFragment;
 
+import me.yokeyword.fragmentation.ISupportFragment;
 import me.yokeyword.fragmentation.SupportFragment;
 import me.yokeyword.fragmentation.anim.FragmentAnimator;
 
@@ -92,6 +93,12 @@ public class MainFragment extends BaseFragment<MainContract.IView> implements Ma
                     UpgradeUtil.checkAppUpdate(_mActivity);
                     break;
                 case Global.BROADCAST_ACTION_XGMESSAGE:
+                    ISupportFragment iSupportFragment = getTopFragment();
+                    if (iSupportFragment != null && iSupportFragment instanceof BrowserBaseFragment) {
+                        if (((BrowserBaseFragment) iSupportFragment).isMsgPage()) {
+                            return;
+                        }
+                    }
                     int type = intent.getIntExtra("appMsgType", 1);
                     if (type == 0) {
                         type = 2;

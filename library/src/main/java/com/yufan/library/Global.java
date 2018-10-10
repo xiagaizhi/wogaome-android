@@ -14,6 +14,7 @@ public class Global {
      */
     public static final String BUNDLE_KEY_BROWSER_URL = "BUNDLE_KEY_BROWSER_URL";
     public static final String BUNDLE_KEY_NEED_REFRESH_MSG = "BUNDLE_KEY_NEED_REFRESH_MSG";
+    public static final String BUNDLE_KEY_IS_MESSAGE_PAGE = "BUNDLE_KEY_IS_MESSAGE_PAGE";
 
     public static final String BUNDLE_KEY_EXHIBITION_TYE = "BUNDLE_KEY_EXHIBITION_TYE";
     public static final String BUNDLE_AD_KEY = "BUNDLE_AD_KEY";
