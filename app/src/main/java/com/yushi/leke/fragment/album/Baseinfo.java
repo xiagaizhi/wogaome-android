@@ -1,5 +1,7 @@
 package com.yushi.leke.fragment.album;
 
+import java.util.List;
+
 public class Baseinfo {
     long albumId;
     String albumName;
@@ -9,13 +11,20 @@ public class Baseinfo {
     long ctime;
     int deleted;
     String horizontalIcon;
-    String introduction;
+    List<Introduction> introduction;
     int lockLevel;
     String shareIcon;
     String tags;
     long utime;
-
     public Baseinfo() {
+    }
+
+    public List<Introduction> getIntroduction() {
+        return introduction;
+    }
+
+    public void setIntroduction(List<Introduction> introduction) {
+        this.introduction = introduction;
     }
 
     public long getAlbumId() {
@@ -72,14 +81,6 @@ public class Baseinfo {
 
     public void setHorizontalIcon(String horizontalIcon) {
         this.horizontalIcon = horizontalIcon;
-    }
-
-    public String getIntroduction() {
-        return introduction;
-    }
-
-    public void setIntroduction(String introduction) {
-        this.introduction = introduction;
     }
 
     public int getLockLevel() {

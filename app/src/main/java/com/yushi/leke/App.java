@@ -171,10 +171,10 @@ public class App extends BaseApplication {
         // 设置自定义通知图片id
         build.setLayoutIconId(R.id.icon);
         // 设置自定义通知图片资源
-        build.setLayoutIconDrawableId(R.drawable.ic_launcher);
+        build.setLayoutIconDrawableId(R.drawable.ic_logo_leke);
         // 设置状态栏的通知小图标
         //build.setbigContentView()
-        build.setIcon(R.drawable.ic_launcher);
+        build.setIcon(R.drawable.ic_logo_leke);
         // 设置时间id
         build.setLayoutTimeId(R.id.time);
         // 若不设定以上自定义layout，又想简单指定通知栏图片资源

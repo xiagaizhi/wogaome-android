@@ -3,13 +3,14 @@ package com.yushi.leke.util;
 import com.alibaba.sdk.android.man.MANHitBuilders;
 import com.alibaba.sdk.android.man.MANService;
 import com.alibaba.sdk.android.man.MANServiceProvider;
+import com.yushi.leke.fragment.album.AlbumDetailinfo;
 
 import java.util.Map;
 
 public class ArgsUtil {
     public static ArgsUtil instance;
     private MANService manService;
-
+    public  AlbumDetailinfo infolist;
     private ArgsUtil() {
         manService = MANServiceProvider.getService();
     }

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+    <TextView
+        android:id="@+id/tv_intro_title"
+        android:singleLine="true"
+        android:layout_marginTop="@dimen/px50"
+        android:layout_marginLeft="@dimen/px36"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="课程简介"
+        android:textColor="#FF333333"
+        android:textSize="@dimen/px42"
+        />
+    <TextView
+        android:id="@+id/tv_intro_content"
+        android:layout_below="@+id/tv_intro_title"
+        android:layout_marginTop="@dimen/px20"
+        android:layout_marginLeft="@dimen/px36"
+        android:layout_marginRight="@dimen/px36"
+        android:layout_marginBottom="@dimen/px41"
+        android:text="1.大量有段落的文案字体间距为S28L46.P28（段落基2.本是2倍到3倍之间，但日式为1倍）,所以当前这段文3.案的行距L和字体大小不一样时，就会产生温范围分为方法。"
+        android:textColor="#FF999999"
+        android:textSize="@dimen/px28"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <View
+        android:id="@+id/view_bottom_line"
+        android:layout_below="@+id/tv_intro_content"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px1"
+        android:background="@color/color_gray_levele" />
+</RelativeLayout>

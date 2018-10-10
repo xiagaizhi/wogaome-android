@@ -1,18 +1,27 @@
 package com.yushi.leke.fragment.album;
 
 public class AlbumDetailinfo {
-    Baseinfo album;
+    Baseinfo albumDetailInfo;
     int albumViewTimes;
     int audioQuantity;
+    String h5Url;
     public AlbumDetailinfo() {
     }
 
-    public Baseinfo getAlbum() {
-        return album;
+    public Baseinfo getAlbumDetailInfo() {
+        return albumDetailInfo;
     }
 
-    public void setAlbum(Baseinfo album) {
-        this.album = album;
+    public void setAlbumDetailInfo(Baseinfo albumDetailInfo) {
+        this.albumDetailInfo = albumDetailInfo;
+    }
+
+    public String getH5Url() {
+        return h5Url;
+    }
+
+    public void setH5Url(String h5Url) {
+        this.h5Url = h5Url;
     }
 
     public int getAlbumViewTimes() {

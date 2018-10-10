@@ -158,12 +158,12 @@ public class AlbumDetailVu extends BaseVu<AlbumDetailContract.Presenter> impleme
     @Override
     public void showtext(AlbumDetailinfo info) {
         if (info!=null){
-            tv_subject_title.setText(info.getAlbum().getCreator()+"·"+info.getAlbum().getAlbumName());
-            tv_name.setText(info.getAlbum().getCreator()+"·简介");
+            tv_subject_title.setText(info.getAlbumDetailInfo().getCreator()+"·"+info.getAlbumDetailInfo().getAlbumName());
+            tv_name.setText(info.getAlbumDetailInfo().getCreator()+"·简介");
             tv_playcount.setText(info.getAlbumViewTimes()+"次");
             tv_total.setText("全"+info.getAudioQuantity()+"集");
-            expandableTextView.setText(info.getAlbum().getCreatorInfo());
-            sdv.setImageURI(FormatImageUtil.converImageUrl(info.getAlbum().getHorizontalIcon(),0,562));
+            expandableTextView.setText(info.getAlbumDetailInfo().getCreatorInfo());
+            sdv.setImageURI(FormatImageUtil.converImageUrl(info.getAlbumDetailInfo().getHorizontalIcon(),0,562));
         }
     }
 

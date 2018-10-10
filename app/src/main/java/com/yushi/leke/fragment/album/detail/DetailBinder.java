@@ -9,10 +9,11 @@ import android.widget.TextView;
 
 import com.yufan.library.inter.ICallBack;
 import com.yushi.leke.R;
+import com.yushi.leke.fragment.album.Introduction;
 
 import me.drakeet.multitype.ItemViewBinder;
 
-public class DetailBinder extends ItemViewBinder<Detailinfo, DetailBinder.ViewHolder> {
+public class DetailBinder extends ItemViewBinder<Introduction, DetailBinder.ViewHolder> {
     private ICallBack callBack;
     public DetailBinder(ICallBack callBack){
         this.callBack=callBack;
@@ -20,11 +21,11 @@ public class DetailBinder extends ItemViewBinder<Detailinfo, DetailBinder.ViewHo
     @NonNull
     @Override
     protected ViewHolder onCreateViewHolder(@NonNull LayoutInflater layoutInflater, @NonNull ViewGroup viewGroup) {
-        return new ViewHolder(layoutInflater.inflate(R.layout.xx_introduction_item, viewGroup, false));
+        return new ViewHolder(layoutInflater.inflate(R.layout.detailforalbum_item, viewGroup, false));
     }
 
     @Override
-    protected void onBindViewHolder(@NonNull ViewHolder viewHolder, @NonNull Detailinfo detailinfo) {
+    protected void onBindViewHolder(@NonNull ViewHolder viewHolder, @NonNull Introduction detailinfo) {
         viewHolder.tv_title.setText(detailinfo.getTitle());
         viewHolder.tv_content.setText(detailinfo.getContent());
     }
@@ -33,8 +34,8 @@ public class DetailBinder extends ItemViewBinder<Detailinfo, DetailBinder.ViewHo
         TextView tv_title,tv_content;
         ViewHolder(@NonNull View itemView) {
             super(itemView);
-            tv_title=itemView.findViewById(R.id.tv_introduction_title);
-            tv_content=itemView.findViewById(R.id.tv_introduction_content);
+            tv_title=itemView.findViewById(R.id.tv_intro_title);
+            tv_content=itemView.findViewById(R.id.tv_intro_content);
         }
     }
 }

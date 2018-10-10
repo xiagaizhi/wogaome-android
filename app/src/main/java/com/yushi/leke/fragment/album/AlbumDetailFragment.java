@@ -1,9 +1,7 @@
 package com.yushi.leke.fragment.album;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-
 import com.alibaba.fastjson.JSON;
 import com.yufan.library.Global;
 import com.yufan.library.api.ApiBean;
@@ -12,32 +10,24 @@ import com.yufan.library.api.BaseHttpCallBack;
 import com.yufan.library.manager.UserManager;
 import com.yufan.share.ShareModel;
 import com.yushi.leke.App;
-import com.yushi.leke.R;
 import com.yufan.library.base.BaseFragment;
-
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.content.LocalBroadcastManager;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
-
-import com.yufan.library.base.BaseFragment;
 import com.yufan.library.inject.VuClass;
 import com.yushi.leke.UIHelper;
 import com.yushi.leke.YFApi;
 import com.yushi.leke.activity.MusicPlayerActivity;
 import com.yushi.leke.fragment.album.audioList.MediaBrowserFragment;
 import com.yushi.leke.fragment.album.detail.DetailFragment;
-import com.yushi.leke.fragment.album.detailforalbum.DetailforalbumFragment;
-import com.yushi.leke.fragment.searcher.SearchFragment;
 import com.yushi.leke.share.ShareMenuActivity;
 import com.yushi.leke.util.AliDotId;
 import com.yushi.leke.util.ArgsUtil;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -62,11 +52,12 @@ public class AlbumDetailFragment extends BaseFragment<AlbumDetailContract.IView>
             intro = bundle.getString("intro");
         }
         fragments[0] = UIHelper.creat(MediaBrowserFragment.class).put(Global.BUNDLE_KEY_ALBUMID, albumId).build();
-        fragments[1] = UIHelper.creat(DetailforalbumFragment.class)
+        DetailFragment detailFragment= (DetailFragment) UIHelper.creat(DetailFragment.class)
                 .put(Global.BUNDLE_KEY_ALBUMID, albumId)
                 .put("intro", intro)
                 .build();
-        getVu().getViewPager().setAdapter(new FragmentPagerAdapter(getChildFragmentManager()) {
+        fragments[1] =detailFragment;
+                getVu().getViewPager().setAdapter(new FragmentPagerAdapter(getChildFragmentManager()) {
             @Override
             public int getCount() {
                 return fragments.length;
@@ -116,6 +107,7 @@ public class AlbumDetailFragment extends BaseFragment<AlbumDetailContract.IView>
                     public void onSuccess(ApiBean mApiBean) {
                         if (!TextUtils.isEmpty(mApiBean.getData())) {
                             infolist = JSON.parseObject(mApiBean.getData(), AlbumDetailinfo.class);
+                            ArgsUtil.getInstance().infolist=infolist;
                             getVu().showtext(infolist);
                             getstatedate();
                             getVu().getPTR().refreshComplete();
@@ -220,11 +212,11 @@ public class AlbumDetailFragment extends BaseFragment<AlbumDetailContract.IView>
     @Override
     public void onShareclick() {
         ShareModel model = new ShareModel();
-        if (infolist != null && infolist.getAlbum() != null) {
-            model.setTitle(infolist.getAlbum().getAlbumName());
-            model.setContent(infolist.getAlbum().getIntroduction());
-            model.setIcon(infolist.getAlbum().getHorizontalIcon());
-            model.setTargetUrl(infolist.getAlbum().getShareIcon());
+        if (infolist != null && infolist.getAlbumDetailInfo() != null) {
+            model.setTitle(infolist.getAlbumDetailInfo().getAlbumName());
+            model.setContent(infolist.getAlbumDetailInfo().getCreatorInfo());
+            model.setIcon(infolist.getAlbumDetailInfo().getHorizontalIcon());
+            model.setTargetUrl(infolist.getAlbumDetailInfo().getShareIcon());
             model.setNeedCount(true);
             ShareMenuActivity.startShare(getRootFragment(), model);
             //专辑分享数据埋点

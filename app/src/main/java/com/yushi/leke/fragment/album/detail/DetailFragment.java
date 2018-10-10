@@ -8,6 +8,9 @@ import android.view.View;
 import com.yufan.library.base.BaseListFragment;
 import com.yufan.library.inject.VuClass;
 import com.yufan.library.inter.ICallBack;
+import com.yushi.leke.fragment.album.Introduction;
+import com.yushi.leke.fragment.exhibition.voteing.VoteingFragment;
+import com.yushi.leke.util.ArgsUtil;
 
 import me.drakeet.multitype.MultiTypeAdapter;
 
@@ -22,29 +25,24 @@ public class DetailFragment extends BaseListFragment<DetailContract.IView> imple
         super.onViewCreated(view, savedInstanceState);
         init();
     }
-
-    @Override
-    public void onLoadMore(int index) {
-
-    }
-
-
-    @Override
-    public void onRefresh() {
-
-    }
     void init(){
         adapter = new MultiTypeAdapter();
-        adapter.register(Detailinfo.class,new DetailBinder(new ICallBack() {
+        adapter.register(Introduction.class,new DetailBinder(new ICallBack() {
             @Override
             public void OnBackResult(Object... s) {
 
             }
         }));
         vu.getRecyclerView().setAdapter(adapter);
-        list.add(new Detailinfo());
-        list.add(new Detailinfo());
         adapter.setItems(list);
+        if (ArgsUtil.getInstance().infolist!=null){
+            list.addAll(ArgsUtil.getInstance().infolist.getAlbumDetailInfo().getIntroduction());
+        }
         vu.getRecyclerView().getAdapter().notifyDataSetChanged();
+    }
+
+    @Override
+    public void onRefresh() {
+
     }
 }
