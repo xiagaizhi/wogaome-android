@@ -103,7 +103,7 @@ public class MainFragment extends BaseFragment<MainContract.IView> implements Ma
                     if (type == 0) {
                         type = 2;
                     }
-                    getRootFragment().start(UIHelper.creat(BrowserBaseFragment.class).put(Global.BUNDLE_KEY_BROWSER_URL, ApiManager.getInstance().getApiConfig().getMessage(type)).build());
+                    getRootFragment().start(UIHelper.creat(BrowserBaseFragment.class).put(Global.BUNDLE_KEY_IS_MESSAGE_PAGE,true).put(Global.BUNDLE_KEY_BROWSER_URL, ApiManager.getInstance().getApiConfig().getMessage(type)).build());
                     break;
             }
         }
