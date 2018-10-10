@@ -15,7 +15,7 @@ import com.yufan.library.view.recycler.YFRecyclerView;
 /**
  * Created by mengfantao on 18/8/2.
  */
-@FindLayout(layout = R.layout.xx_introduction_main)
+@FindLayout(layout = R.layout.layout_fragment_list_no_ptr)
 public class DetailVu extends BaseListVu<DetailContract.Presenter> implements DetailContract.IView {
     @FindView(R.id.recyclerview)
     private YFRecyclerView mYFRecyclerView;

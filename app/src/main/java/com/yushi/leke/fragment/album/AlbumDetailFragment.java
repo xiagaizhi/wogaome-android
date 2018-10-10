@@ -56,10 +56,7 @@ public class AlbumDetailFragment extends BaseFragment<AlbumDetailContract.IView>
             intro = bundle.getString("intro");
         }
         fragments[0] = UIHelper.creat(MediaBrowserFragment.class).put(Global.BUNDLE_KEY_ALBUMID, albumId).build();
-        DetailFragment detailFragment= (DetailFragment) UIHelper.creat(DetailFragment.class)
-                .put(Global.BUNDLE_KEY_ALBUMID, albumId)
-                .put("intro", intro)
-                .build();
+        DetailFragment detailFragment= (DetailFragment) UIHelper.creat(DetailFragment.class).build();
         fragments[1] =detailFragment;
                 getVu().getViewPager().setAdapter(new FragmentPagerAdapter(getChildFragmentManager()) {
             @Override
