@@ -108,9 +108,6 @@ public class BrowserBaseFragment extends BaseFragment<BrowserContract.View> impl
                                 }).show();
                     }
                     break;
-                case Global.BROADCAST_ACTION_REFRESH_MESSAGE:
-                    getVu().getWebView().reload();
-                    break;
             }
         }
     };
@@ -120,11 +117,6 @@ public class BrowserBaseFragment extends BaseFragment<BrowserContract.View> impl
         super.onCreate(savedInstanceState);
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(Global.BROADCAST_PAY_RESUIL_ACTION);
-        Bundle bundle = getArguments();
-        boolean needRefreshMsg = bundle.getBoolean(Global.BUNDLE_KEY_NEED_REFRESH_MSG, false);
-        if (needRefreshMsg) {
-            intentFilter.addAction(Global.BROADCAST_ACTION_REFRESH_MESSAGE);
-        }
         LocalBroadcastManager.getInstance(_mActivity).registerReceiver(broadcastReceiver, intentFilter);
     }
 

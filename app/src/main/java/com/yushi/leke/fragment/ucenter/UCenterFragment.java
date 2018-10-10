@@ -245,6 +245,7 @@ public class UCenterFragment extends BaseFragment<UCenterContract.IView> impleme
         getRootFragment().start(UIHelper.creat(BrowserBaseFragment.class)
                 .put(Global.BUNDLE_KEY_BROWSER_URL, ApiManager.getInstance().getApiConfig().getMessage(2))
                 .put(Global.BUNDLE_KEY_NEED_REFRESH_MSG,true)
+                .put(Global.BUNDLE_KEY_IS_MESSAGE_PAGE,true)
                 .build());
         getVu().hasUnreadMsg(false);
         setMainTabMsgState(false);

@@ -54,7 +54,7 @@ import me.yokeyword.fragmentation.anim.FragmentAnimator;
 public class MainFragment extends BaseFragment<MainContract.IView> implements MainContract.Presenter {
     private SupportFragment[] mFragments = new SupportFragment[3];
     private long[] mHits = new long[2];
-
+    ISupportFragment iSupportFragment;
 
     private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
         @Override
@@ -93,9 +93,10 @@ public class MainFragment extends BaseFragment<MainContract.IView> implements Ma
                     UpgradeUtil.checkAppUpdate(_mActivity);
                     break;
                 case Global.BROADCAST_ACTION_XGMESSAGE:
-                    ISupportFragment iSupportFragment = getTopFragment();
+                   iSupportFragment = getTopFragment();
                     if (iSupportFragment != null && iSupportFragment instanceof BrowserBaseFragment) {
                         if (((BrowserBaseFragment) iSupportFragment).isMsgPage()) {
+                            ((BrowserBaseFragment) iSupportFragment).getVu().getWebView().reload();
                             return;
                         }
                     }
@@ -103,7 +104,18 @@ public class MainFragment extends BaseFragment<MainContract.IView> implements Ma
                     if (type == 0) {
                         type = 2;
                     }
-                    getRootFragment().start(UIHelper.creat(BrowserBaseFragment.class).put(Global.BUNDLE_KEY_IS_MESSAGE_PAGE,true).put(Global.BUNDLE_KEY_BROWSER_URL, ApiManager.getInstance().getApiConfig().getMessage(type)).build());
+                    getRootFragment().start(UIHelper.creat(BrowserBaseFragment.class).
+                            put(Global.BUNDLE_KEY_IS_MESSAGE_PAGE,true)
+                            .put(Global.BUNDLE_KEY_BROWSER_URL, ApiManager.getInstance().getApiConfig().getMessage(type))
+                            .build());
+                    break;
+                case Global.BROADCAST_ACTION_REFRESH_MESSAGE:
+                    if (iSupportFragment != null && iSupportFragment instanceof BrowserBaseFragment) {
+                        if (((BrowserBaseFragment) iSupportFragment).isMsgPage()) {
+                            ((BrowserBaseFragment) iSupportFragment).getVu().getWebView().reload();
+                            return;
+                        }
+                    }
                     break;
             }
         }
@@ -117,6 +129,9 @@ public class MainFragment extends BaseFragment<MainContract.IView> implements Ma
         intentFilter.addAction(Global.BROADCAST_ACTION_ADJUMP);
         intentFilter.addAction(Global.BROADCAST_ACTION_UPGRADE);
         intentFilter.addAction(Global.BROADCAST_ACTION_XGMESSAGE);
+        Bundle bundle = getArguments();
+        boolean needRefreshMsg = bundle.getBoolean(Global.BUNDLE_KEY_NEED_REFRESH_MSG, false);
+        intentFilter.addAction(Global.BROADCAST_ACTION_REFRESH_MESSAGE);
         LocalBroadcastManager.getInstance(_mActivity).registerReceiver(broadcastReceiver, intentFilter);
     }
 
