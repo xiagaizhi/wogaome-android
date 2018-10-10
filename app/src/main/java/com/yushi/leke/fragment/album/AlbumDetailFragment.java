@@ -7,6 +7,7 @@ import com.yufan.library.Global;
 import com.yufan.library.api.ApiBean;
 import com.yufan.library.api.ApiManager;
 import com.yufan.library.api.BaseHttpCallBack;
+import com.yufan.library.inter.ICallBack;
 import com.yufan.library.manager.UserManager;
 import com.yufan.share.ShareModel;
 import com.yushi.leke.App;
@@ -42,7 +43,10 @@ public class AlbumDetailFragment extends BaseFragment<AlbumDetailContract.IView>
     private String albumId;
     private String intro;
     AlbumDetailinfo infolist;
-
+    ICallBack mICallBack;
+    public void setmICallBack(ICallBack mICallBack) {
+        this.mICallBack = mICallBack;
+    }
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -107,7 +111,7 @@ public class AlbumDetailFragment extends BaseFragment<AlbumDetailContract.IView>
                     public void onSuccess(ApiBean mApiBean) {
                         if (!TextUtils.isEmpty(mApiBean.getData())) {
                             infolist = JSON.parseObject(mApiBean.getData(), AlbumDetailinfo.class);
-                            ArgsUtil.getInstance().infolist=infolist;
+                            mICallBack.OnBackResult(infolist);
                             getVu().showtext(infolist);
                             getstatedate();
                             getVu().getPTR().refreshComplete();
@@ -227,4 +231,5 @@ public class AlbumDetailFragment extends BaseFragment<AlbumDetailContract.IView>
         }
 
     }
+
 }

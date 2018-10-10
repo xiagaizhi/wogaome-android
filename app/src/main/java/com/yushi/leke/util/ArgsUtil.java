@@ -10,7 +10,6 @@ import java.util.Map;
 public class ArgsUtil {
     public static ArgsUtil instance;
     private MANService manService;
-    public  AlbumDetailinfo infolist;
     private ArgsUtil() {
         manService = MANServiceProvider.getService();
     }
