@@ -74,10 +74,13 @@ public class UpdateDialog extends Dialog implements View.OnClickListener {
         rey_upgrade_info.setLayoutManager(new LinearLayoutManager(mContext));
         mUpdateInfoAdapter = new UpdateInfoAdapter(mContext, upgradeInfos);
         rey_upgrade_info.setAdapter(mUpdateInfoAdapter);
-        upgradeInfos.add("更新信息1更新信息1更新信息1");
-        upgradeInfos.add("更新信息2更新信息1更新信息1");
-        upgradeInfos.add("更新信息3");
-
+        String updateInfo = mUpdateInfo.getUpdateInfo();
+        if (updateInfo != null) {
+            String[] infos = updateInfo.split("\\n");
+            for (String temp : infos) {
+                upgradeInfos.add(temp);
+            }
+        }
         if (mUpdateInfo.isForceUpdate()) {
             setOnKeyListener(new DialogInterface.OnKeyListener() {//点返回键强制不让dialog消失
                 @Override
@@ -112,7 +115,7 @@ public class UpdateDialog extends Dialog implements View.OnClickListener {
         switch (v.getId()) {
             case R.id.btn_upgrade:
                 btn_upgrade.setEnabled(false);
-                UpgradeUtil.upgrade(mContext,mUpdateInfo.getPkgPath());
+                UpgradeUtil.upgrade(mContext, mUpdateInfo.getPkgPath());
                 if (!mUpdateInfo.isForceUpdate()) {
                     dismiss();
                 }
