@@ -235,7 +235,7 @@ public class MusicProvider {
                 String listStr = jsonObject.getString("audioViewInfoList");
                 int levelStatus = jsonObject.getInteger("levelStatus");
                 String icon = jsonObject.getString("icon");
-                String albumName = jsonObject.getString("name");
+                String albumName = jsonObject.getString("albumName");
                 List<AlbumAudio> albumAudios = JSON.parseArray(listStr, AlbumAudio.class);
                 mList.clear();
                 mPrepareList.clear();
