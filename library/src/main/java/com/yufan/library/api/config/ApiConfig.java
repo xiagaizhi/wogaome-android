@@ -94,7 +94,7 @@ public class ApiConfig {
      * @return
      */
     public String getMyInvite() {
-        return webDomains[apiType] + "/inviteFriends/myInvite";
+        return webDomains[apiType] + "#/inviteFriends/myInvite";
     }
 
     /**

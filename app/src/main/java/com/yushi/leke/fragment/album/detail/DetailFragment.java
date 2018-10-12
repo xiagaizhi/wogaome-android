@@ -49,9 +49,11 @@ public class DetailFragment extends BaseListFragment<DetailContract.IView> imple
 
     @Override
     public void OnBackResult(Object... s) {
-        AlbumDetailinfo infolist= (AlbumDetailinfo) s[0];
         list.clear();
-        list.addAll(infolist.getAlbumDetailInfo().getIntroduction());
-        vu.getRecyclerView().getAdapter().notifyDataSetChanged();
+        AlbumDetailinfo infolist= (AlbumDetailinfo) s[0];
+       if (infolist!=null){
+           list.addAll(infolist.getAlbumDetailInfo().getIntroduction());
+           vu.getRecyclerView().getAdapter().notifyDataSetChanged();
+       }
     }
 }

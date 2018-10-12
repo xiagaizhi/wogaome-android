@@ -579,10 +579,16 @@ public class BrowserBaseFragment extends BaseFragment<BrowserContract.View> impl
                             }
                             break;
                         case 3://我的投票
-                            getRootFragment().start(UIHelper.creat(BrowserBaseFragment.class).put(Global.BUNDLE_KEY_BROWSER_URL, ApiManager.getInstance().getApiConfig().getMyVote()).build());
+                            getRootFragment().start(UIHelper
+                                    .creat(BrowserBaseFragment.class)
+                                    .put(Global.BUNDLE_KEY_BROWSER_URL, ApiManager.getInstance().getApiConfig().getMyVote())
+                                    .build());
                             break;
                         case 4://我的邀请
-                            getRootFragment().start(UIHelper.creat(BrowserBaseFragment.class).put(Global.BUNDLE_KEY_BROWSER_URL, ApiManager.getInstance().getApiConfig().getMyInvite()).build());
+                            getRootFragment().start(UIHelper
+                                    .creat(BrowserBaseFragment.class)
+                                    .put(Global.BUNDLE_KEY_BROWSER_URL, ApiManager.getInstance().getApiConfig().getMyInvite())
+                                    .build());
                             break;
                         case 5://我的路演
                             getRootFragment().start(UIHelper.creat(BrowserBaseFragment.class).put(Global.BUNDLE_KEY_BROWSER_URL, ApiManager.getInstance().getApiConfig().getMyRoadShow()).build());
