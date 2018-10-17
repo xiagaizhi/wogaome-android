@@ -4,9 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/rl_fragment"
-    tools:context="com.yushi.leke.plugin.MainActivity">
+    tools:context="com.yushi.leke.activity.MainActivity">
 
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:id="@+id/activity_content_level0"
+        android:layout_height="match_parent" />
 
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:id="@+id/activity_content_level1"
+        android:layout_height="match_parent" />
 
 </RelativeLayout>

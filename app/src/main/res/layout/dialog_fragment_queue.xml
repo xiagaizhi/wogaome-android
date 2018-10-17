@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:background="@drawable/shape_bg_fff_10"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/px26"
+
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:textSize="@dimen/px42"
+            android:layout_marginLeft="@dimen/px26"
+            android:layout_marginRight="@dimen/px26"
+            android:id="@+id/tv_queue_name"
+            android:textColor="@color/color_gray_level3"
+            android:padding="@dimen/px23"
+            android:layout_height="wrap_content" />
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/play_list"
+            android:layout_weight="1"
+            android:layout_marginLeft="@dimen/px26"
+            android:layout_marginRight="@dimen/px26"
+            android:layout_width="match_parent"
+            android:layout_height="0dp" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/color_gray_levele"
+            />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:id="@+id/rl_close"
+            android:layout_height="@dimen/px98">
+            <ImageView
+                android:layout_width="wrap_content"
+
+                android:src="@drawable/ic_close_dialog_bottom"
+               android:layout_centerInParent="true"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

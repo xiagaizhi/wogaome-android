@@ -5,11 +5,17 @@ import android.app.Application;
 import android.content.pm.PackageManager;
 import android.support.multidex.MultiDexApplication;
 
+import com.facebook.drawee.BuildConfig;
 import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.imagepipeline.core.ImagePipelineConfig;
 import com.tencent.bugly.Bugly;
+import com.umeng.commonsdk.UMConfigure;
+import com.yufan.library.util.AppException;
 
 import java.util.Iterator;
 import java.util.List;
+
+import okhttp3.OkHttpClient;
 
 /**
  * Created by mengfantao on 18/2/2.
@@ -17,7 +23,8 @@ import java.util.List;
 
 public class BaseApplication extends MultiDexApplication {
 
-private static BaseApplication instance;
+    private static BaseApplication instance;
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -29,15 +36,19 @@ private static BaseApplication instance;
         if (processAppName == null || !processAppName.equalsIgnoreCase(getPackageName())) {
             return;
         }
-        instance=this;
-        Bugly.init(getApplicationContext(), "6ab19dd791", false);
+        Thread.setDefaultUncaughtExceptionHandler(new AppException());
+        instance = this;
+        if (!BuildConfig.DEBUG) {
+            Bugly.init(getApplicationContext(), "f01636373e16a", false);
+        }
+
+        UMConfigure.init(this, "5b6bafa0b27b0a7d06000033", "leke", UMConfigure.DEVICE_TYPE_PHONE, "");
         Fresco.initialize(this);
     }
 
-    public static BaseApplication getInstance(){
+    public static BaseApplication getInstance() {
         return instance;
     }
-
 
 
     public String getAppName(int pID) {

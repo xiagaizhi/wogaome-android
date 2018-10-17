@@ -1,52 +1,134 @@
 apply plugin: 'com.android.application'
-apply plugin: 'com.didi.virtualapk.plugin'
 android {
 
     compileSdkVersion gradle.compileSdkVersion
-    buildToolsVersion gradle.buildToolsVersion
+   // buildToolsVersion gradle.buildToolsVersion
     defaultConfig {
-        applicationId "com.yushi.leke.plugin"
+        applicationId "com.yushi.leke"
+        versionCode project.hasProperty('VERSION_CODE') ? Integer.parseInt(project.getProperty("VERSION_CODE")) : gradle.versionCode
+        versionName project.hasProperty('VERSION_NAME') ? project.getProperty("VERSION_NAME") : gradle.versionName
         minSdkVersion gradle.minSdkVersion
         targetSdkVersion gradle.targetSdkVersion
-        versionCode gradle.versionCode
-        versionName gradle.versionName
         aaptOptions.cruncherEnabled = false
         aaptOptions.useNewCruncher = false
         multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        if(project.hasProperty('API_HOST')){
+            gradle.apiType=  project.getProperty("API_HOST")
+        }
+        buildConfigField "int", "API_TYPE", "${gradle.apiType}"
+        ndk {
+            abiFilters  'armeabi', "armeabi-v7a"
+        }
+        manifestPlaceholders = [
+                XG_ACCESS_ID:"2100309515",
+                XG_ACCESS_KEY : "A2L91D7LMB8T",
+        ]
+    }
+
+    dexOptions {
+        preDexLibraries = false
+        javaMaxHeapSize "2048M"
+        jumboMode = true
+    }
+
+    lintOptions {
+        abortOnError false
+        checkReleaseBuilds false
+    }
+
+    packagingOptions {
+        exclude 'META-INF/ASL2.0'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+    }
+
+    sourceSets {
+
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
+    }
+
+
+    signingConfigs {
+        release {
+            storeFile file('leke.keystore')
+            storePassword 'yushikeji'
+            keyAlias 'leke'
+            keyPassword 'yushikeji'
+//02:F5:28:92:B2:C2:BF:15:82:5E:C7:4F:77:26:8B:3C 签名指纹信息
+            //02f52892b2c2bf15825ec74f77268b3c
+        }
 
     }
 
     packagingOptions {
         packagingOptions { exclude 'META-INF/rxjava.properties' }
     }
-
     buildTypes {
         release {
+            //manifestPlaceholders = [IS_DEBUG: 'false']
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            proguardFile file('proguard.cfg')
+            signingConfig signingConfigs.release
+            shrinkResources false    // 开启去除无用资源
+            debuggable false
+
+        }
+        debug {
+            // 更改需调整debug/res/values/strings.xml其中的包名部分
+            proguardFile 'Unrecognized value'
+            signingConfig signingConfigs.release
+            debuggable true
+            minifyEnabled false
+            shrinkResources false
         }
     }
+    android.applicationVariants.all { variant ->
+        variant.outputs.all {
+            def versionName = variant.versionName
+            def newName = ""
+            if (variant.productFlavors.size() != 0) {
+                def flavor = variant.productFlavors.get(0)
+                newName = "leke-" + versionName + "-" + flavor.name + ".apk"
+            } else {
+                newName = "leke.apk"
+            }
+            outputFileName = newName
+        }
+    }
+
 }
 
 
 dependencies {
-    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation fileTree(include: ['*.jar', '*.aar'], dir: 'libs')
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-    compile 'com.didi.virtualapk:core:0.9.6'
+    implementation 'com.squareup.leakcanary:leakcanary-android:1.5'
+    implementation 'com.android.support:mediarouter-v7:' + gradle.supportLibraryVersion
+
+    //信鸽jar
+    implementation 'com.tencent.xinge:xinge:3.2.6-release'
+    //jg包
+    implementation'com.tencent.jg:jg:1.1'
+    //wup包
+    implementation 'com.tencent.wup:wup:1.0.0.E-release'
+    //mid包
+    implementation 'com.tencent.mid:mid:4.0.6-release'
+
+    implementation project(':aliplayer')
     implementation project(':library')
-    implementation project(':multi-type')
-    // 插件配置信息,放在文件最下面
-    virtualApk {
-        // 插件资源表中的packageId，需要确保不同插件有不同的packageId.
-        packageId = 0x6f
-        // 宿主工程application模块的路径，插件的构建需要依赖这个路径,我这个宿主工程和插件工程在同一级目录下,所以下面这样写
-        targetHost = '../leke-host/app'
-
-        //默认为true，如果插件有引用宿主的类，那么这个选项可以使得插件和宿主保持混淆一致
-        applyHostMapping = true
-    }
-
+    implementation project(':musicplayer')
+    //二维码
+    implementation 'com.google.zxing:core:3.3.3'
+    implementation 'com.journeyapps:zxing-android-embedded:3.3.0'
+    //百分比布局
+    implementation'com.android.support:percent:25.3.0'
+    //不规则图片布局
+    implementation 'cn.lankton:anyshape:1.0.0'
 }

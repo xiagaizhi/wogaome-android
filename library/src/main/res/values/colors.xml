@@ -1,24 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="color_un_enable">#999999</color>
-    <color name="color_enable">#333333</color>
-    <color name="white">#ffffff</color>
-    <color name="color_main">#673AB7</color>
-    <color name="color_accent">#512DA8</color>
-    <color name="c_28004d">#28004d</color>
-    <color name="c_e5e5e5">#e5e5e5</color>
-    <color name="c_ffd39b">#FFD39B</color>
-    <color name="c_ffffe0">#FFFFE0</color>
-    <color name="color_333333">#333333</color>
-    <color name="color_f0f0f0">#f0f0f0</color>
-    <color name="color_666666">#666666</color>
-    <color name="color_E5E5E5">#e5e5e5</color>
-    <color name="ic_default_bg_color">#33000000</color>
-    <!--统一颜色变化-->
-    <color name="colorMainBackground">#eef1f4</color>
-    <color name="color_window_background">#fff2f4f7</color>
+    <color name="color_gray_level9">#999999</color>
+    <color name="color_gray_levele">#eeeeee</color>
 
+    <color name="white">#ffffff</color>
+    <color name="color_f0f0f0">#f0f0f0</color>
+    <color name="color_gray_levelf0">#f0f0f0</color>
+    <color name="color_gray_level6">#666666</color>
+    <color name="color_gray_levelc">#cccccc</color>
+    <color name="color_gray_level3">#333333</color>
+    <color name="color_blue_level3">#00B2FF</color>
+    <color name="color_blue_level6">#007AFF</color>
+    <color name="color_yellow_level0">#FFCC00</color>
+    <color name="clolor_transparent">#00000000</color>
+
+    <color name="color_E5E5E5">#e5e5e5</color>
+    <color name="color_line_1">#eeeeee</color>
+    <!--统一颜色变化-->
+    <color name="transparent">#00000000</color>
     <color name="tv_gray">#666666</color>
-    <color name="tv_blue">#308BE9</color>     //蓝色
+    <color name="tv_blue">#308BE9</color>
+    //蓝色
     <color name="divider_gray">#d9d9d9</color>//细分割线颜色
+    <color name="message_widget_bg">#FA5A5A</color>
+    <color name="overlay_30">#4D000000</color>
+    <color name="keyboard_bg">#BDBDBD</color>
+    <color name="iv_back_bg">#F5F5F5</color>
+    <color name="key_pressed_bg">#33000000</color>
+    <color name="btn_gray">#E0E0E0</color>
+
+    <color name="color_bfbfbf">#bfbfbf</color>
+    <color name="color_f67b29">#f67b29</color>
+    <color name="color_999999">#999999</color>
+    <color name="color_151515">#151515</color>
+    <color name="color_73000000">#73000000</color>
+
+    <color name="color_EFBA45">#EFBA45</color>
+    <color name="color_BA9542">#BA9542</color>
+    <color name="color_f7f7f7">#f7f7f7</color>
+    <color name="color_C7C7C7">#C7C7C7</color>
+    <color name="color_33007AFF">#33007AFF</color>
+    <color name="color_FF4040">#FF4040</color>
+    <color name="color_F45D5D">#F45D5D</color>
+    <color name="color_FA5A5A">#FA5A5A</color>
+    <color name="color_B3666666">#B3666666</color>
+    <color name="color_9B9B9B">#9B9B9B</color>
+    <color name="color_D8D8D8">#D8D8D8</color>
 </resources>

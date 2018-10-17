@@ -14,13 +14,10 @@ import com.yufan.library.view.recycler.YFRecyclerView;
 */
 @FindLayout(layout = R.layout.layout_fragment_list)
 @Title("${TitleName}")
-public class ${VuName} extends BaseListVu<${ContractName}.Presenter> implements ${ContractName}.View{
+public class ${VuName} extends BaseListVu<${ContractName}.Presenter> implements ${ContractName}.IView{
 @FindView(R.id.recyclerview)
 private YFRecyclerView mYFRecyclerView;
-@Override
-public void initView(View view) {
 
-}
 @Override
 public void initStatusLayout(StateLayout stateLayout) {
 super.initStatusLayout(stateLayout);

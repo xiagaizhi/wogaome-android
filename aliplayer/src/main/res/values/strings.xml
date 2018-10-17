@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="alivc_error_msg">Error message</string>
+    <string name="alivc_error_code">Error code:</string>
+    <string name="alivc_retry">Retry</string>
+
+
+    <string name="alivc_net_state_mobile">The current network is cell-network, whether to continue?</string>
+    <string name="alivc_net_state_mobile_yes">Resume</string>
+    <string name="alivc_net_state_mobile_no">Exit</string>
+    <string name="alivc_alivc_replay_msg">Video ended</string>
+    <string name="alivc_replay">Replay</string>
+    <string name="alivc_loading">Loading...</string>
+
+
+    <string name="alivc_speed_one_times">Normal</string>
+    <string name="alivc_speed_optf_times">1.25X</string>
+    <string name="alivc_speed_opt_times">1.5X</string>
+    <string name="alivc_speed_twice_times">2.0X</string>
+    <string name="alivc_speed_mode">Fast Speed Play</string>
+    <string name="alivc_speed_tips">the current video has switched to %1$s speed rate</string>
+    <string name="alivc_left_side">left side</string>
+    <string name="alivc_brightness">brightness</string>
+    <string name="alivc_control">&#160;control</string>
+    <string name="alivc_center">center</string>
+    <string name="alivc_progress">progress</string>
+    <string name="alivc_right_side">right side</string>
+    <string name="alivc_volume">volume</string>
+
+    <string name="request_vidsts_fail">Request a vidsts failed</string>
+
+    <string name="toast_play_compleion">video ended</string>
+    <string name="log_play_stopped">&#160;play operation stopped</string>
+    <string name="log_change_quality_success">&#160;Video quality switched successfully</string>
+    <string name="log_change_quality_fail">&#160;Video quality switched unsuccessfully</string>
+
+    <string name="alivc_checkbox_all_select">Select All</string>
+    <string name="alivc_download_edit">Edit</string>
+
+    <string name="add_to_download">To add</string>
+    <string name="no_download_right">No permission for downloading</string>
+    <string name="encrypted">Encrypted</string>
+    <string name="encrypted_no">Unencrypted</string>
+    <string name="choose_a_definition_to_download">Please choose a definition to download</string>
+    <string name="choose_download_sharpness">Choose download sharpness</string>
+    <string name="already_downloaded">Already Downloaded</string>
+    <string name="download_caching">Caching</string>
+    <string name="download_prepare">preparing</string>
+    <string name="download_wait">waiting</string>
+    <string name="download_downloading">downloading</string>
+    <string name="download_pause">pausing</string>
+    <string name="download_error">error</string>
+    <string name="download_no_downloaded">You haven’t downloaded the video yet</string>
+    <string name="download_no_downloaded_tips">You can click the download button to add video</string>
+    <string name="alivc_start_download">start download</string>
+    <string name="alivc_native_video">native video</string>
+
+    <string name="alivc_check_list_close">Close</string>
+
+    <string name="alivc_download_video">download video</string>
+
+    <string name="slivc_not_support_url">not support url download...</string>
+
+    <string name="alivc_speed">speed</string>
+</resources>

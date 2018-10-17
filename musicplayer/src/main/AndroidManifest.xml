@@ -1,0 +1,26 @@
+
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:tools="http://schemas.android.com/tools"
+package="com.yushi.leke.plugin.musicplayer" >
+
+<uses-permission android:name="android.permission.INTERNET" />
+<uses-permission android:name="android.permission.WAKE_LOCK" />
+<uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+<!-- Set android.software.leanback to false, so the APK will be available to both
+TV and regular devices. -->
+
+<application>
+
+
+
+    <!--
+         (OPTIONAL) use this meta data to indicate which icon should be
+         used in Android Auto media notifications (for example, when the
+         music changes and the user is looking at another app)
+    -->
+
+</application>
+
+</manifest>

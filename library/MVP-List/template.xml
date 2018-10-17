@@ -28,7 +28,7 @@
     name="Package Name"
     type="string"
     constraints="nonempty"
-    default="com.youximao.anew.myapplication"
+    default="com.yushi.leke"
     help="By" />
 
 

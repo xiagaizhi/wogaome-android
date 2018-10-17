@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/px80"
+        android:src="@drawable/ic_about_leke" />
+
+    <TextView
+        android:id="@+id/tv_version"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/px30"
+        android:text="V1.0.0"
+        android:textColor="@color/color_gray_level9"
+        android:textSize="@dimen/px30" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/px90"
+        android:gravity="center"
+        android:lineSpacingExtra="@dimen/px36"
+        android:text="加入乐客轻松创业,\n让创业者不再孤军奋战!"
+        android:textColor="@color/color_gray_level9"
+        android:textSize="@dimen/px42" />
+
+    <RelativeLayout
+        android:layout_width="@dimen/px348"
+        android:layout_height="@dimen/px90"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/px44">
+
+        <Button
+            android:id="@+id/btn_upgrade"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="@dimen/px302"
+            android:layout_height="@dimen/px78"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/shape_bg_00b2ff_007afff"
+            android:gravity="center"
+            android:layout_centerHorizontal="true"
+            android:text="检测新版本"
+            android:textColor="@color/white"
+            android:textSize="@dimen/px30" />
+
+        <TextView
+            android:id="@+id/tv_new_tips"
+            android:layout_width="@dimen/px58"
+            android:layout_height="@dimen/px32"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/bg_widget_redwithboder_shape"
+            android:gravity="center"
+            android:text="new"
+            android:visibility="gone"
+            android:textColor="@color/white"
+            android:textSize="@dimen/px20" />
+    </RelativeLayout>
+
+
+</LinearLayout>

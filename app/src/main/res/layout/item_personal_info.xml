@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:paddingLeft="@dimen/px36"
+        android:paddingRight="@dimen/px36">
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/px32"
+            android:layout_marginBottom="@dimen/px32"
+            android:text="用户ID:"
+            android:textColor="@color/color_gray_level3"
+            android:textSize="@dimen/px28" />
+
+        <TextView
+            android:id="@+id/tv_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/px176"
+            android:text="123312321"
+            android:layout_marginTop="@dimen/px32"
+            android:layout_marginBottom="@dimen/px32"
+            android:textColor="@color/color_gray_level3"
+            android:textSize="@dimen/px28" />
+
+        <EditText
+            android:id="@+id/et_value"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/px176"
+            android:background="@null"
+            android:layout_marginTop="@dimen/px32"
+            android:layout_marginBottom="@dimen/px32"
+            android:text="123312321"
+            android:lineSpacingExtra="@dimen/px15"
+            android:textColor="@color/color_gray_level3"
+            android:textSize="@dimen/px28" />
+
+        <TextView
+            android:id="@+id/tv_ext"
+            android:layout_width="@dimen/px57"
+            android:layout_height="@dimen/px28"
+            android:layout_marginLeft="@dimen/px5"
+            android:layout_toRightOf="@+id/tv_value"
+            android:background="@drawable/shape_bg_999_100"
+            android:gravity="center"
+            android:layout_marginTop="@dimen/px38"
+            android:layout_marginBottom="@dimen/px32"
+            android:text="复制"
+            android:textColor="@color/color_gray_level9"
+            android:textSize="@dimen/px18"
+            android:visibility="invisible" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/px1"
+            android:layout_alignParentBottom="true"
+            android:background="@color/color_f0f0f0" />
+    </RelativeLayout>
+
+</LinearLayout>

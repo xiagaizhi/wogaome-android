@@ -1,9 +1,9 @@
-include ':app', ':library', ':multi-type'
+include ':app', ':library', ':multi-type', ':aliplayer', ':musicplayer', ':share','okhttpdownload'
 gradle.ext.supportLibraryVersion = '27.1.1'
-gradle.ext.buildToolsVersion = '26.0.2'
-gradle.ext.versionCode = 344
-gradle.ext.versionName = "3.4.4"
+//gradle.ext.buildToolsVersion = '26.0.2'
+gradle.ext.versionCode = 2018090701
+gradle.ext.versionName = "1.0.0"
 gradle.ext.compileSdkVersion = 27
 gradle.ext.minSdkVersion = 17
-gradle.ext.targetSdkVersion = 25
-gradle.ext.ijkPlayerVersion="0.8.8"
+gradle.ext.targetSdkVersion = 22
+gradle.ext.apiType=2//环境配置 0正式；1预发；2测试；3开发,4mock

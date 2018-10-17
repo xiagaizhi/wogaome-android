@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_marginLeft="@dimen/px36"
+        android:layout_marginRight="@dimen/px36"
+        android:id="@+id/rl_more"
+        android:layout_height="@dimen/px88">
+        <TextView
+            android:layout_width="wrap_content"
+            android:text="查看更多项目"
+            android:id="@+id/tv_title"
+            android:textColor="@color/color_blue_level6"
+            android:drawablePadding="@dimen/px10"
+            android:drawableRight="@drawable/ic_search_arrows_right_blue"
+            android:layout_centerInParent="true"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px20"
+        android:id="@+id/view_line"
+        android:background="@color/color_f7f7f7"
+        />
+
+</LinearLayout>

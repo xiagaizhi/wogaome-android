@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <View
+        android:id="@+id/view_line_top"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px48" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/px36"
+        android:layout_marginRight="@dimen/px36">
+
+        <TextView
+            android:id="@+id/tv_rank"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/px75"
+            android:drawableBottom="@drawable/win_rank_bottom_shape"
+            android:drawablePadding="@dimen/px20"
+            android:text="1"
+            android:textColor="@color/color_F45D5D"
+            android:textSize="@dimen/px64"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:id="@+id/ll_head"
+            android:layout_width="@dimen/px160"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/px86"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/img_rank"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_win_rank1" />
+
+            <com.facebook.drawee.view.SimpleDraweeView
+                android:id="@+id/img_logo"
+                android:layout_width="@dimen/px160"
+                android:layout_height="@dimen/px160"
+                fresco:failureImage="@drawable/default_video_square"
+                fresco:placeholderImage="@drawable/default_video_square"
+                fresco:failureImageScaleType="focusCrop"
+                fresco:placeholderImageScaleType="focusCrop"
+                fresco:roundedCornerRadius="@dimen/px12" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/px20"
+            android:layout_marginTop="@dimen/px45"
+            android:layout_toRightOf="@+id/ll_head"
+            android:text="标题"
+            android:textColor="@color/color_gray_level3"
+            android:textSize="@dimen/px36" />
+
+        <TextView
+            android:id="@+id/tv_area_industry"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_title"
+            android:layout_marginLeft="@dimen/px20"
+            android:layout_marginTop="@dimen/px24"
+            android:layout_toRightOf="@+id/ll_head"
+            android:text="地区／行业"
+            android:textColor="@color/color_gray_level6"
+            android:textSize="@dimen/px24" />
+
+        <TextView
+            android:id="@+id/tv_username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_area_industry"
+            android:layout_marginLeft="@dimen/px20"
+            android:layout_marginTop="@dimen/px16"
+            android:layout_toRightOf="@+id/ll_head"
+            android:text="创业者"
+            android:textColor="@color/color_gray_level6"
+            android:textSize="@dimen/px24" />
+
+
+        <TextView
+            android:id="@+id/tv_ticket"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/tv_area_industry"
+            android:layout_marginTop="@dimen/px16"
+            android:text="1232票"
+            android:textColor="@color/color_FA5A5A"
+            android:textSize="@dimen/px24" />
+    </RelativeLayout>
+
+    <View
+        android:id="@+id/view_line_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px43" />
+
+</LinearLayout>

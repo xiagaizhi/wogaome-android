@@ -39,7 +39,9 @@ public class DialogManager {
         if(TextUtils.isEmpty(hint)){
             return ;
         }
-        ToastUtil.showToast(mActivity, hint, Toast.LENGTH_SHORT);
+        if (isAttach()){
+            ToastUtil.showToast(mActivity, hint, Toast.LENGTH_SHORT);
+        }
     }
     public final void toast(int strId){
         String text = mActivity.getResources().getString(strId);
@@ -78,8 +80,8 @@ public class DialogManager {
 
     ////dialog
     public final void showLoadingDialog() {
-        String hint = "加载中...";
-        showLoadingDialog(hint);
+
+        showLoadingDialog(null);
     }
 
     public final void showLoadingDialog(String hint) {

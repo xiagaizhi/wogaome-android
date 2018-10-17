@@ -1,8 +1,11 @@
 package com.yufan.library.api;
 
-import android.util.Log;
-import android.widget.Toast;
+import android.content.Intent;
+import android.support.v4.content.LocalBroadcastManager;
+import android.text.TextUtils;
 
+import com.yufan.library.Global;
+import com.yufan.library.base.BaseApplication;
 import com.yufan.library.base.BaseVu;
 import com.yufan.library.manager.DialogManager;
 import com.yufan.library.view.recycler.PageInfo;
@@ -12,15 +15,14 @@ import com.yufan.library.view.recycler.PageInfo;
  * Created by mengfantao on 18/2/27.
  */
 
-public  abstract class BaseHttpCallBack implements IHttpCallBack {
-
+public abstract class BaseHttpCallBack implements IHttpCallBack {
 
 
     public abstract void onSuccess(ApiBean mApiBean);
 
     public abstract void onError(int id, Exception e);
 
-    public  abstract void onFinish();
+    public abstract void onFinish();
 
     private BaseVu vu;
 
@@ -32,24 +34,31 @@ public  abstract class BaseHttpCallBack implements IHttpCallBack {
     }
 
     @Override
-    public final void onResponse(ApiBean mApiBean) {
-        if(ApiBean.checkOK(mApiBean.getCode())){
-            if(vu!=null){
+    public void onResponse(ApiBean mApiBean) {
+        if (ApiBean.checkOK(mApiBean.getCode())) {
+            if (vu != null) {
                 vu.setStateGone();
             }
-
             onSuccess(mApiBean);
-        }else {
+        } else if (TextUtils.equals(ApiBean.TOKEN_LOSE, mApiBean.getCode())
+                || TextUtils.equals(ApiBean.ACCOUNT_FROZEN, mApiBean.getCode())) {
+            //登录
+            Intent filter = new Intent();
+            filter.setAction(Global.BROADCAST_TOKEN_LOSE);
+            LocalBroadcastManager.getInstance(BaseApplication.getInstance()).sendBroadcast(filter);
+        } else {
             DialogManager.getInstance().toast(mApiBean.message);
         }
+        onFinish();
     }
 
     @Override
-    public final void onFailure(int id, Exception e) {
+    public void onFailure(int id, Exception e) {
         DialogManager.getInstance().toast(e.getMessage());
-        if(vu!=null){
+        if (vu != null) {
             vu.setStateError();
         }
-        onError( id,  e);
+        onError(id, e);
+        onFinish();
     }
 }

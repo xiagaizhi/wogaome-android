@@ -1,6 +1,7 @@
 package com.yufan.library.widget;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.view.Gravity;
@@ -38,6 +39,7 @@ public class AppToolbar extends RelativeLayout {
     private List<View> rightViews = new ArrayList<>();
     private List<View> centerViews = new ArrayList<>();
     private boolean isVertical;
+    private View titleView;
 
     public AppToolbar(Context context) {
         super(context);
@@ -46,15 +48,16 @@ public class AppToolbar extends RelativeLayout {
         setId(R.id.title_id);
     }
 
-
     public AppToolbar(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context);
 
     }
 
+
+
     private void init(Context context) {
-        View titleView = View.inflate(context, R.layout.toptitle, this);
+         titleView = View.inflate(context, R.layout.toptitle, this);
         toptitle_left = (LinearLayout) titleView
                 .findViewById(R.id.toptitle_left);
         toptitle_right = (LinearLayout) titleView
@@ -63,7 +66,6 @@ public class AppToolbar extends RelativeLayout {
                 .findViewById(R.id.toptitle_center);
         background=  titleView.findViewById(R.id.background);
         line= titleView.findViewById(R.id.line);
-
 
     }
 
@@ -128,6 +130,10 @@ public class AppToolbar extends RelativeLayout {
         build(true);
     }
 
+    public void setVertical(boolean vertical) {
+        isVertical = vertical;
+    }
+
     public boolean isVertical() {
         return isVertical;
     }
@@ -156,11 +162,12 @@ public class AppToolbar extends RelativeLayout {
         centerViews.clear();
         leftViews.clear();
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && isVertical) {
-            setClipToPadding(false);
-            setOutlineProvider(ViewOutlineProvider.BOUNDS);
-            setElevation((float) PxUtil.convertDIP2PX(getContext(), 4));
-        }
+
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && isVertical) {
+//            setClipToPadding(false);
+//            setOutlineProvider(ViewOutlineProvider.BOUNDS);
+//            setElevation((float) PxUtil.convertDIP2PX(getContext(), 4));
+//        }
     }
 
     public void putRightView(View view) {
@@ -187,7 +194,7 @@ public class AppToolbar extends RelativeLayout {
     //单位为dp
     public <T> T creatLeftView(Class<T> t,int[] paddings,int[] margins) {
         if(paddings==null){
-            paddings=new int[]{16,5,5,5};
+            paddings=new int[]{0,0,0,0};
 
         }
         if(margins==null){
@@ -250,7 +257,7 @@ public class AppToolbar extends RelativeLayout {
     //单位为dp
     public <T> T creatRightView(Class<T> t,int[] paddings,int[] margins) {
         if(paddings==null){
-            paddings=new int[]{5,5,16,5};
+            paddings=new int[]{0,0,18,0};
 
         }
         if(margins==null){
@@ -323,7 +330,7 @@ public class AppToolbar extends RelativeLayout {
             TextView textView = new TextView(getContext());
             textView.setTextSize(18);
             textView.setSingleLine();
-            textView.setTextColor(getResources().getColor(R.color.white));
+            textView.setTextColor(getResources().getColor(R.color.color_gray_level3));
             textView.setPadding(PxUtil.convertDIP2PX(getContext(), paddings[0]), PxUtil.convertDIP2PX(getContext(), paddings[1]), PxUtil.convertDIP2PX(getContext(), paddings[2]), PxUtil.convertDIP2PX(getContext(), paddings[3]));
 //            textView.getPaint().setFakeBoldText(true);
             textView.setLayoutParams(centerLayoutParams);

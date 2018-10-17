@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/id_container"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/rl_setpwd"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px100"
+        android:layout_marginTop="@dimen/px40"
+        android:layout_marginLeft="@dimen/px36"
+        android:layout_marginRight="@dimen/px36">
+
+        <TextView
+            android:id="@+id/tv_setpwd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="设置交易密码"
+            android:textColor="@color/color_gray_level3"
+            android:textSize="@dimen/px30" />
+
+        <ImageView
+            android:id="@+id/img_arrows"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_arrows_right" />
+
+        <TextView
+            android:id="@+id/tv_tips"
+            android:layout_width="wrap_content"
+            android:text="未设置"
+            android:textColor="@color/color_gray_level9"
+            android:textSize="@dimen/px24"
+            android:layout_toLeftOf="@+id/img_arrows"
+            android:layout_centerVertical="true"
+            android:layout_height="wrap_content" />
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px1"
+        android:layout_marginLeft="@dimen/px36"
+        android:background="@color/color_line_1" />
+
+    <RelativeLayout
+        android:id="@+id/rl_forget_pwd"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px100"
+        android:layout_marginLeft="@dimen/px36"
+        android:layout_marginRight="@dimen/px36"
+        android:layout_marginTop="@dimen/px30">
+
+        <TextView
+            android:id="@+id/tv_forgetpwd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="忘记交易密码"
+            android:textColor="@color/color_gray_level3"
+            android:textSize="@dimen/px30" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_arrows_right" />
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px1"
+        android:layout_marginLeft="@dimen/px36"
+        android:background="@color/color_line_1" />
+</LinearLayout>

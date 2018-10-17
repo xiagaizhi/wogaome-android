@@ -9,8 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.yufan.library.inject.AnnotateUtils;
-import com.yufan.library.inter.Vu;
-import com.yufan.library.inter.VuList;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,18 +27,16 @@ public abstract class BaseListFragment<V extends VuList> extends BaseFragment {
     public V getVu() {
         return vu;
     }
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        vu.initView(view);
-    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = null;
         try {
             vu =(V) AnnotateUtils.getVu(this).newInstance();
-            vu.init(inflater, container);
             vu.setPresenter(this);
+            getBundleDate();
+            vu.init(inflater, container);
             view = vu.getView();
         } catch (java.lang.InstantiationException e) {
             e.printStackTrace();

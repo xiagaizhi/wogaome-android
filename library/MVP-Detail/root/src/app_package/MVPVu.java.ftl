@@ -15,7 +15,7 @@ import com.yufan.library.widget.AppToolbar;
 */
 @FindLayout(layout = R.layout.${fragment_layout})
 @Title("${TitleName}")
-public class ${VuName} extends BaseVu <${ContractName}.Presenter>implements ${ContractName}.View{
+public class ${VuName} extends BaseVu <${ContractName}.Presenter>implements ${ContractName}.IView{
 @Override
 public void initView(View view) {
 

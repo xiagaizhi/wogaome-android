@@ -1,4 +1,4 @@
 <resources>
     <string name="app_name">library</string>
-    <string name="select">%1$s/%2$s</string>
+    <string name="browse_musics_by_genre_subtitle">专辑 %1$s</string>
 </resources>

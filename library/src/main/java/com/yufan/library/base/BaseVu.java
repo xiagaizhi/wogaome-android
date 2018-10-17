@@ -6,14 +6,14 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.yufan.library.R;
 import com.yufan.library.inject.AnnotateUtils;
-import com.yufan.library.inter.Vu;
+import com.yufan.library.util.Netutil;
 import com.yufan.library.util.PxUtil;
-import com.yufan.library.view.recycler.YFRecyclerView;
 import com.yufan.library.widget.AppToolbar;
 import com.yufan.library.widget.StateLayout;
 
@@ -23,7 +23,7 @@ import com.yufan.library.widget.StateLayout;
  * vu view模块基础类,
  */
 
-public abstract class BaseVu<T extends Pr> implements Vu {
+public abstract class BaseVu<T extends Pr> implements Vu ,View.OnClickListener{
     protected RelativeLayout mRootLayout;
     protected View mContentLayout;
     protected StateLayout mStateLayout;
@@ -50,6 +50,10 @@ public abstract class BaseVu<T extends Pr> implements Vu {
         return mContext;
     }
 
+    @Override
+    public void onClick(View v) {
+
+    }
 
     @Override
     public final void init(LayoutInflater inflater, ViewGroup container) {
@@ -67,6 +71,7 @@ public abstract class BaseVu<T extends Pr> implements Vu {
         addTitle(mToolbarLayout, initTitle(mToolbarLayout));
         initState();
         AnnotateUtils.injectViews(this);
+        initView(mRootLayout);
     }
 
     @Override
@@ -76,12 +81,25 @@ public abstract class BaseVu<T extends Pr> implements Vu {
             TextView titleName = appToolbar.creatCenterView(TextView.class);
             titleName.setText(titleNameStr);
         }
+        ImageView leftView=  appToolbar.creatLeftView(ImageView.class);
+        leftView.setImageResource(R.drawable.left_back_black_arrows);
+        leftView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mPersenter.onBackPressed();
+            }
+        });
         appToolbar.build();
         return true;
     }
 
     @Override
     public void initStatusLayout(StateLayout stateLayout) {
+        if (TextUtils.isEmpty(Netutil.GetNetworkType(BaseApplication.getInstance()))) {
+            setStateError();
+        }else {
+            setStateEmpty();
+        }
         stateLayout.getEmptyView().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -96,20 +114,25 @@ public abstract class BaseVu<T extends Pr> implements Vu {
         });
     }
 
+    protected void resetTitle(AppToolbar appToolbar){
+        mRootLayout.removeView(appToolbar);
+        addTitle(appToolbar,true);
+    }
+
     /**
      * 添加头
      */
     private final void addTitle(AppToolbar appToolbar, boolean isShowTitle) {
         if (isShowTitle) {
-            RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, PxUtil.convertDIP2PX(mContext, 56));
+            RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, PxUtil.convertDIP2PX(mContext, 44));
             mRootLayout.addView(appToolbar, lp);
             if (appToolbar.isVertical()) {
-                appToolbar.getBackgroundView().setBackgroundResource(R.drawable.shape_title_backgound);
+               // appToolbar.getBackgroundView().setBackgroundResource(R.drawable.shape_title_backgound);
                 RelativeLayout.LayoutParams rlp = (RelativeLayout.LayoutParams) mContentLayout.getLayoutParams();
                 rlp.addRule(RelativeLayout.BELOW, R.id.title_id);
                 mContentLayout.setLayoutParams(rlp);
             } else {
-                appToolbar.getBackgroundView().setBackgroundResource(R.drawable.shape_title_backgound);
+               // appToolbar.getBackgroundView().setBackgroundResource(R.drawable.shape_title_backgound);
                 appToolbar.getBackgroundView().setAlpha(0);
                 RelativeLayout.LayoutParams rlp = (RelativeLayout.LayoutParams) mContentLayout.getLayoutParams();
                 rlp.removeRule(RelativeLayout.BELOW);
@@ -140,11 +163,13 @@ public abstract class BaseVu<T extends Pr> implements Vu {
         mStateLayout.setVisibility(View.GONE);
     }
 
-    public final void setStateError() {
+    public  void setStateError() {
+
+
         mStateLayout.setStateError();
     }
 
-    public final void setStateEmpty() {
+    public  void setStateEmpty() {
         mStateLayout.setStateEmpty();
     }
 

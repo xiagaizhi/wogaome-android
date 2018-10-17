@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:paddingLeft="@dimen/px36"
+    android:paddingRight="@dimen/px36"
+    android:paddingTop="@dimen/px35"
+
+    android:background="@color/white"
+    android:layout_height="wrap_content">
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:layout_width="@dimen/px256"
+        android:id="@+id/sdv"
+        fresco:overlayImage="@color/overlay_30"
+        fresco:roundedCornerRadius="2dp"
+        android:layout_height="@dimen/px144" />
+    <!--<TextView-->
+        <!--android:id="@+id/tv_playcount"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:textSize="@dimen/px20"-->
+        <!--android:textColor="@color/white"-->
+        <!--android:drawableLeft="@drawable/ic_subscription_vod"-->
+        <!--android:drawablePadding="2dp"-->
+        <!--android:text="123"-->
+        <!--android:layout_alignBottom="@id/sdv"-->
+        <!--android:padding="@dimen/px11"-->
+        <!--android:layout_height="wrap_content" />-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_toRightOf="@+id/sdv"
+        android:layout_marginLeft="@dimen/px20"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:text="永不放弃"
+            android:textColor="@color/color_gray_level3"
+            android:textSize="@dimen/px32"
+            android:singleLine="true"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/tv_time"
+            android:layout_width="wrap_content"
+            android:text="阿里巴巴创始人"
+            android:textSize="@dimen/px24"
+            android:layout_marginTop="@dimen/px30"
+            android:singleLine="true"
+            android:textColor="@color/color_gray_level6"
+            android:layout_marginBottom="@dimen/px5"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/tv_organizer"
+            android:layout_width="wrap_content"
+            android:textColor="@color/color_gray_level6"
+            android:textSize="@dimen/px24"
+            android:text="这里显示副标题，简历奖这里显示副标题，简历奖这里显示副标题，简历奖"
+            android:layout_weight="1"
+            android:singleLine="true"
+            android:gravity="bottom"
+            android:layout_height="0dp" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/px1"
+            android:layout_marginTop="@dimen/px35"
+            android:id="@+id/view_bottom_line"
+            android:background="@color/color_gray_levele"
+            />
+    </LinearLayout>
+
+</RelativeLayout>

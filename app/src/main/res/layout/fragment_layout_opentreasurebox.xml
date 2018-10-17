@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="@color/white"
+    android:layout_height="match_parent">
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/id_treasure_box_top"
+                android:layout_width="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/bg_treasure_box_top"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/id_topup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/id_treasure_box_top"
+                android:layout_marginLeft="@dimen/px36"
+                android:layout_marginTop="@dimen/px60"
+                android:text="@string/top_up_level"
+                android:textColor="@color/color_gray_level3"
+                android:textSize="@dimen/px42" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/id_recharge_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/id_topup"
+                android:layout_marginLeft="@dimen/px36"
+                android:layout_marginRight="@dimen/px36"
+                android:layout_marginTop="@dimen/px40" />
+
+            <Button
+                android:id="@+id/id_open_pay"
+                android:layout_width="@dimen/px366"
+                android:layout_height="@dimen/px106"
+                android:layout_below="@+id/id_recharge_container"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/px60"
+                android:background="@drawable/btn_open_pay" />
+
+        </RelativeLayout>
+    </ScrollView>
+</RelativeLayout>

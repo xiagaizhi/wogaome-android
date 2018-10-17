@@ -10,7 +10,7 @@ import com.yufan.library.inject.VuClass;
 * Created by mengfantao on 18/8/2.
 */
 @VuClass(${VuName}.class)
-public class ${FragmentName} extends BaseListFragment<${ContractName}.View> implements ${ContractName}.Presenter{
+public class ${FragmentName} extends BaseListFragment<${ContractName}.IView> implements ${ContractName}.Presenter{
 
 @Override
 public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {

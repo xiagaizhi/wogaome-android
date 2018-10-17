@@ -27,7 +27,7 @@ public class PayHandler extends Handler {
         super.handleMessage(msg);
         switch (msg.what) {
             case SDK_PAY_FLAG:
-                PayResult payResult = new PayResult((Map<String, String>) msg.obj);
+                PayResult payResult = new PayResult((String) msg.obj);
                 //同步获取结果
                 String resultInfo = payResult.getResult();
                 Log.i("Pay", "Pay:" + resultInfo);

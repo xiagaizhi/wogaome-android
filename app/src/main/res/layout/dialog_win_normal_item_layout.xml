@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px120"
+        android:layout_marginLeft="@dimen/px36"
+        android:layout_marginRight="@dimen/px36">
+
+        <TextView
+            android:id="@+id/tv_rank"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:drawableBottom="@drawable/win_rank_bottom_shape"
+            android:drawablePadding="@dimen/px20"
+            android:text="4"
+            android:textColor="@color/color_gray_level6"
+            android:textSize="@dimen/px40"
+            android:textStyle="bold" />
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/img_logo"
+            android:layout_width="@dimen/px120"
+            android:layout_height="@dimen/px120"
+            android:layout_marginLeft="@dimen/px87"
+            fresco:failureImage="@drawable/default_video_square"
+            fresco:placeholderImage="@drawable/default_video_square"
+            fresco:failureImageScaleType="focusCrop"
+            fresco:placeholderImageScaleType="focusCrop"
+            fresco:roundedCornerRadius="@dimen/px12" />
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/px20"
+            android:layout_toRightOf="@+id/img_logo"
+            android:text="标题"
+            android:textColor="@color/color_gray_level3"
+            android:textSize="@dimen/px30" />
+
+        <TextView
+            android:id="@+id/tv_area_industry"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/px20"
+            android:layout_toRightOf="@+id/img_logo"
+            android:text="地区／行业"
+            android:textColor="@color/color_gray_level6"
+            android:textSize="@dimen/px24" />
+
+        <TextView
+            android:id="@+id/tv_username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/px20"
+            android:layout_toRightOf="@+id/img_logo"
+            android:text="创业者"
+            android:layout_alignParentBottom="true"
+            android:textColor="@color/color_gray_level6"
+            android:textSize="@dimen/px24" />
+
+
+        <TextView
+            android:id="@+id/tv_ticket"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:drawableLeft="@drawable/ic_vote_gray"
+            android:drawablePadding="@dimen/px9"
+            android:gravity="center"
+            android:text="1232票"
+            android:textColor="@color/color_gray_level6"
+            android:textSize="@dimen/px24" />
+
+    </RelativeLayout>
+    <View
+        android:id="@+id/view_line"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px50"/>
+
+</LinearLayout>

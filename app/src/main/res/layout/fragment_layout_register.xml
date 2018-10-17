@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@id/ll_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:textSize="29sp"
+        android:textColor="@color/color_gray_level3"
+        android:text="新用户注册"
+        android:layout_marginLeft="@dimen/px80"
+        android:layout_marginTop="@dimen/y45"
+        android:textStyle="bold"
+        android:layout_height="wrap_content" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:paddingTop="@dimen/y35"
+        android:id="@+id/ll_content"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_marginRight="@dimen/px80"
+            android:layout_marginLeft="@dimen/px80"
+            android:layout_height="@dimen/y100">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:layout_weight="1"
+                android:layout_height="0dp">
+
+                <EditText
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:hint="请输入你的手机号"
+                    android:inputType="phone"
+                    android:background="@null"
+                    android:textSize="17sp"
+                    android:id="@+id/et_phone"
+                    android:maxLength="11"
+                    android:layout_height="match_parent" />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:id="@+id/iv_clear_phone"
+                    android:visibility="gone"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/iv_small_close"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+            <com.yufan.library.widget.LoginLineView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/px1"
+                android:id="@+id/line_view1"
+                android:background="@color/color_line_1"
+                />
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_marginRight="@dimen/px80"
+            android:layout_marginTop="@dimen/y30"
+            android:layout_marginLeft="@dimen/px80"
+            android:layout_height="@dimen/y100">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:layout_weight="1"
+                android:layout_height="0dp">
+
+                <EditText
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:hint="请输入登录密码"
+                    android:inputType="textPassword"
+                    android:textSize="17sp"
+                    android:background="@null"
+                    android:maxLength="18"
+                    android:id="@+id/et_password"
+                    android:layout_height="match_parent" />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:id="@+id/iv_clear_password"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/iv_small_close"
+                    android:visibility="gone"
+                    android:layout_marginRight="@dimen/px50"
+                    android:layout_height="wrap_content" />
+
+                <CheckBox
+                    android:layout_width="wrap_content"
+                    android:id="@+id/cb_showeye"
+                    android:button="@drawable/selector_password_eye"
+                    android:layout_gravity="center_vertical"
+
+                    android:layout_height="wrap_content" />
+
+
+
+            </LinearLayout>
+            <com.yufan.library.widget.LoginLineView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/px1"
+                android:id="@+id/line_view2"
+                android:background="@color/color_line_1"
+                />
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_marginRight="@dimen/px80"
+            android:layout_marginLeft="@dimen/px80"
+            android:layout_marginTop="@dimen/y30"
+            android:layout_height="@dimen/y100">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:layout_weight="1"
+                android:layout_height="0dp">
+
+                <EditText
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:hint="请输入短信验证码"
+                    android:inputType="number"
+                    android:background="@null"
+                    android:textSize="17sp"
+                    android:id="@+id/et_verification_code"
+                    android:layout_height="match_parent" />
+
+
+                <com.yushi.leke.widget.VerificationCodeTextView
+                    android:layout_width="wrap_content"
+                    android:text="获取验证码"
+                    android:textColor="@color/color_blue_level6"
+                    android:textSize="15sp"
+                    android:id="@+id/tv_vcode"
+                    app:checkMobileExist="needMobileInexistence"
+                    android:layout_height="wrap_content" />
+
+
+            </LinearLayout>
+            <com.yufan.library.widget.LoginLineView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/px1"
+                android:id="@+id/line_view3"
+                android:background="@color/color_line_1"
+                />
+        </LinearLayout>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_marginLeft="@dimen/px60"
+            android:layout_marginTop="@dimen/y20"
+            android:layout_marginRight="@dimen/px60"
+            android:text="注册"
+            android:textColor="@color/white"
+            android:textSize="17sp"
+            android:enabled="false"
+            android:background="@drawable/selector_big_btn_blue"
+            android:id="@+id/bt_register"
+            android:layout_height="wrap_content" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:orientation="horizontal"
+
+            android:layout_gravity="center_horizontal"
+           android:layout_marginTop="@dimen/y16"
+            android:layout_height="wrap_content"
+           >
+            <TextView
+                android:layout_width="wrap_content"
+                android:textSize="12sp"
+                android:text="登录即代表您已同意"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:text="《乐客服务协议》"
+                android:id="@+id/tv_agreement"
+                android:textColor="@color/color_blue_level6"
+
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+    </LinearLayout>
+</LinearLayout>
