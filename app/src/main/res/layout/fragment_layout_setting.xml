@@ -54,7 +54,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/px36"
             android:layout_marginTop="@dimen/px65"
-            android:text="关于乐客"
+            android:text="关于蔷薇视听"
             android:textColor="@color/color_gray_level3"
             android:textSize="@dimen/px30" />
 

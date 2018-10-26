@@ -32,7 +32,7 @@ public class PtrClassicFrameLayout extends PtrFrameLayout {
 
     private void initViews() {
         mPtrClassicHeader = new StoreHouseHeader(getContext());
-        mPtrClassicHeader.initWithString("leke");
+        mPtrClassicHeader.initWithString("qiangwei");
         mPtrClassicHeader.setTextColor(Color.BLACK);
         setHeaderView(mPtrClassicHeader);
         addPtrUIHandler(mPtrClassicHeader);

@@ -42,7 +42,7 @@
                     android:scaleType="fitCenter"
                     android:layout_marginTop="@dimen/y144"
                     android:src="@drawable/play_disc_halo" />
-                <com.yushi.leke.widget.AlbumViewPager
+                <com.yushi.qiangwei.widget.AlbumViewPager
                     android:id="@+id/view_pager"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/y618"
@@ -129,7 +129,7 @@
                     android:textColor="@color/white"
                     android:textSize="10sp" />
 
-                <com.yushi.leke.widget.PlayerSeekBar
+                <com.yushi.qiangwei.widget.PlayerSeekBar
                     android:id="@+id/play_seek"
                     style="@style/Widget.AppCompat.ProgressBar.Horizontal"
                     android:layout_width="0dp"

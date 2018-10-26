@@ -28,7 +28,7 @@
     name="Package Name"
     type="string"
     constraints="nonempty"
-    default="com.yushi.leke"
+    default="com.yushi.qiangwei"
     help="By" />
 
 

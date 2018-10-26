@@ -1,10 +1,9 @@
 apply plugin: 'com.android.application'
 android {
-
     compileSdkVersion gradle.compileSdkVersion
-   // buildToolsVersion gradle.buildToolsVersion
+    // buildToolsVersion gradle.buildToolsVersion
     defaultConfig {
-        applicationId "com.yushi.leke"
+        applicationId 'com.yushi.qiangwei'
         versionCode project.hasProperty('VERSION_CODE') ? Integer.parseInt(project.getProperty("VERSION_CODE")) : gradle.versionCode
         versionName project.hasProperty('VERSION_NAME') ? project.getProperty("VERSION_NAME") : gradle.versionName
         minSdkVersion gradle.minSdkVersion
@@ -13,30 +12,27 @@ android {
         aaptOptions.useNewCruncher = false
         multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-        if(project.hasProperty('API_HOST')){
-            gradle.apiType=  project.getProperty("API_HOST")
+        if (project.hasProperty('API_HOST')) {
+            gradle.apiType = project.getProperty("API_HOST")
         }
         buildConfigField "int", "API_TYPE", "${gradle.apiType}"
         ndk {
-            abiFilters  'armeabi', "armeabi-v7a"
+            abiFilters 'armeabi', "armeabi-v7a"
         }
         manifestPlaceholders = [
-                XG_ACCESS_ID:"2100309515",
-                XG_ACCESS_KEY : "A2L91D7LMB8T",
+                XG_ACCESS_ID : "2100309515",
+                XG_ACCESS_KEY: "A2L91D7LMB8T",
         ]
     }
-
     dexOptions {
         preDexLibraries = false
         javaMaxHeapSize "2048M"
         jumboMode = true
     }
-
     lintOptions {
         abortOnError false
         checkReleaseBuilds false
     }
-
     packagingOptions {
         exclude 'META-INF/ASL2.0'
         exclude 'META-INF/LICENSE'
@@ -44,15 +40,12 @@ android {
         exclude 'META-INF/LICENSE.txt'
         exclude 'META-INF/NOTICE.txt'
     }
-
     sourceSets {
 
         main {
             jniLibs.srcDirs = ['libs']
         }
     }
-
-
     signingConfigs {
         release {
             storeFile file('leke.keystore')
@@ -64,7 +57,6 @@ android {
         }
 
     }
-
     packagingOptions {
         packagingOptions { exclude 'META-INF/rxjava.properties' }
     }
@@ -93,14 +85,15 @@ android {
             def newName = ""
             if (variant.productFlavors.size() != 0) {
                 def flavor = variant.productFlavors.get(0)
-                newName = "leke-" + versionName + "-" + flavor.name + ".apk"
+                newName = "蔷薇视听-" + versionName + "-" + flavor.name + ".apk"
             } else {
-                newName = "leke.apk"
+                newName = "蔷薇视听.apk"
             }
             outputFileName = newName
         }
     }
-
+    productFlavors {
+    }
 }
 
 
@@ -111,24 +104,21 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     implementation 'com.squareup.leakcanary:leakcanary-android:1.5'
     implementation 'com.android.support:mediarouter-v7:' + gradle.supportLibraryVersion
-
     //信鸽jar
     implementation 'com.tencent.xinge:xinge:3.2.6-release'
     //jg包
-    implementation'com.tencent.jg:jg:1.1'
+    implementation 'com.tencent.jg:jg:1.1'
     //wup包
     implementation 'com.tencent.wup:wup:1.0.0.E-release'
     //mid包
     implementation 'com.tencent.mid:mid:4.0.6-release'
-
     implementation project(':aliplayer')
     implementation project(':library')
-    implementation project(':musicplayer')
     //二维码
     implementation 'com.google.zxing:core:3.3.3'
     implementation 'com.journeyapps:zxing-android-embedded:3.3.0'
     //百分比布局
-    implementation'com.android.support:percent:25.3.0'
+    implementation 'com.android.support:percent:25.3.0'
     //不规则图片布局
     implementation 'cn.lankton:anyshape:1.0.0'
 }

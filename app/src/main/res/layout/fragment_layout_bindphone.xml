@@ -80,7 +80,7 @@
                     android:textSize="17sp" />
 
 
-                <com.yushi.leke.widget.VerificationCodeTextView
+                <com.yushi.qiangwei.widget.VerificationCodeTextView
                     android:id="@+id/tv_vcode"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

@@ -1,8 +1,8 @@
-include ':app', ':library', ':multi-type', ':aliplayer', ':musicplayer', ':share','okhttpdownload'
+include ':app', ':library', ':multi-type', ':aliplayer', ':share','okhttpdownload'
 gradle.ext.supportLibraryVersion = '27.1.1'
 //gradle.ext.buildToolsVersion = '26.0.2'
 gradle.ext.versionCode = 2018090701
-gradle.ext.versionName = "1.0.0"
+gradle.ext.versionName = "1.0.1"
 gradle.ext.compileSdkVersion = 27
 gradle.ext.minSdkVersion = 17
 gradle.ext.targetSdkVersion = 22

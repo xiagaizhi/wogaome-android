@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.yufan.library.R;
 import com.yufan.library.inject.AnnotateUtils;
 import com.yufan.library.util.Netutil;
+import com.yufan.library.view.ptr.PtrHandler;
 import com.yufan.library.view.recycler.PageInfo;
 import com.yufan.library.view.recycler.YFRecyclerView;
 import com.yufan.library.widget.AppToolbar;
@@ -21,7 +22,6 @@ import com.yufan.library.widget.StateLayout;
 public abstract class BaseListVu <T extends Pr>extends BaseVu implements VuList{
 
     protected T mPersenter;
-
     @Override
     public void initView(View view) {
         initRecyclerview(getRecyclerView());
